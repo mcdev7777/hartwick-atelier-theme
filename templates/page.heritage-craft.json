@@ -1,0 +1,240 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "hdr_alignment": "align-center",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "image_banner_cYE8qV": {
+      "type": "image-banner",
+      "settings": {
+        "banner_size": "banner-style-large",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/007_HARTWICK_ATELIER_LANDSCAPES132_L1050394.jpg",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 20,
+        "main_image_animation": "none",
+        "image_blur": 0,
+        "primary_image_mobile_show": true,
+        "secondary_image_size": "dt-full-bleed",
+        "secondary_image_padding": 0,
+        "secondary_image_animation": "none",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 75,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "",
+        "overlay_level": 0
+      }
+    },
+    "rich_text_9WggG4": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VHAqXd": {
+          "type": "heading",
+          "settings": {
+            "heading": "Heritage Craft",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_Nnx9KJ": {
+          "type": "text",
+          "settings": {
+            "text": "<p>This collection, made by masters of refined Indian handcraft whose knowledge is ancient and rare, features exquisite heritage techniques including hand spun and handwoven fabrics, natural and ayurvedic dyes, hand block prints and embroidery, hand carved precious stones and fine gold jewellery. </p><p>Each handcrafted piece in this collection is a glimpse into the rich history, intricate process, and generations of skill that have gone into its creation.</p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VHAqXd",
+        "text_Nnx9KJ"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "video_CyeLBR": {
+      "type": "video",
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "header_alignment": "center",
+        "player_size": "page-width",
+        "video_title": "",
+        "autoplay": false,
+        "enable_video_looping": false,
+        "video_aspect_ratio": "16x9",
+        "play_button_color": "default",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_link": "",
+        "btn_style": "solid",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 80,
+        "bottom_padding": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "image_with_text_fQecii": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_fnJgEi": {
+          "type": "caption",
+          "settings": {
+            "caption": "Add a tagline"
+          }
+        },
+        "heading_fTNhyR": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image with text",
+            "heading_size": "h2"
+          }
+        },
+        "text_9WxhRR": {
+          "type": "text",
+          "settings": {
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or brand story.</p>"
+          }
+        },
+        "button_GEPd6M": {
+          "type": "button",
+          "settings": {
+            "btn_txt": "Button label",
+            "btn_link": "",
+            "btn_color_scheme": "default",
+            "btn_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "caption_fnJgEi",
+        "heading_fTNhyR",
+        "text_9WxhRR",
+        "button_GEPd6M"
+      ],
+      "settings": {
+        "section_size": "flexible",
+        "image_ratio": "square",
+        "secondary_image_scale": "small",
+        "image_alignment": "right",
+        "dt_image_width": 50,
+        "card_spacing": 20,
+        "content_width": "page-width",
+        "txt_alignment": "left",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 80,
+        "bottom_padding": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "image_with_text_qpbaNU": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_QjQArM": {
+          "type": "caption",
+          "settings": {
+            "caption": "Add a tagline"
+          }
+        },
+        "heading_x6MeBi": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image with text",
+            "heading_size": "h2"
+          }
+        },
+        "text_xNEAHm": {
+          "type": "text",
+          "settings": {
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or brand story.</p>"
+          }
+        },
+        "button_MTLBip": {
+          "type": "button",
+          "settings": {
+            "btn_txt": "Button label",
+            "btn_link": "",
+            "btn_color_scheme": "default",
+            "btn_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "caption_QjQArM",
+        "heading_x6MeBi",
+        "text_xNEAHm",
+        "button_MTLBip"
+      ],
+      "settings": {
+        "section_size": "flexible",
+        "image_ratio": "square",
+        "secondary_image_scale": "small",
+        "image_alignment": "left",
+        "dt_image_width": 50,
+        "card_spacing": 20,
+        "content_width": "page-width",
+        "txt_alignment": "left",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 80,
+        "bottom_padding": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_cYE8qV",
+    "rich_text_9WggG4",
+    "video_CyeLBR",
+    "image_with_text_fQecii",
+    "image_with_text_qpbaNU"
+  ]
+}

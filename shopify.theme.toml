@@ -1,0 +1,12 @@
+# Shopify CLI environments for the Hartwick Atelier build.
+#   shopify theme dev -e dev
+#
+# Auth is NOT stored here. Export the Theme Access token first:
+#   export SHOPIFY_CLI_THEME_TOKEN=shptka_xxxxxxxxxxxx
+# (add it to ~/.zshrc so it persists)
+
+[environments.dev]
+store = "9c8a52-dc.myshopify.com"
+store-password = "angela"   # storefront preview gate, not an admin credential
+live-reload = "hot-reload"
+port = 9292

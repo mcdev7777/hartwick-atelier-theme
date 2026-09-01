@@ -1,0 +1,215 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "hdr_alignment": "align-center",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "image_banner_VezdWX": {
+      "type": "image-banner",
+      "settings": {
+        "banner_size": "banner-style-large",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 20,
+        "main_image_animation": "none",
+        "image_blur": 0,
+        "primary_image_mobile_show": true,
+        "secondary_image_size": "dt-full-bleed",
+        "secondary_image_padding": 0,
+        "secondary_image_animation": "none",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 75,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "",
+        "overlay_level": 0
+      }
+    },
+    "rich_text_tbWUUH": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_mr3a4C": {
+          "type": "heading",
+          "settings": {
+            "heading": "Talk about your brand",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_tPpwLd": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_mr3a4C",
+        "text_tPpwLd"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_AV3x4V": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_HD7Jja": {
+          "type": "card",
+          "settings": {
+            "image_overlay": 0,
+            "title": "Card",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_6hfQGn": {
+          "type": "card",
+          "settings": {
+            "image_overlay": 0,
+            "title": "Card",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_jGpcdC": {
+          "type": "card",
+          "settings": {
+            "image_overlay": 0,
+            "title": "Card",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_HD7Jja",
+        "card_6hfQGn",
+        "card_jGpcdC"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "square",
+        "grid_layout": "asymmetrical",
+        "grid_layout_mobile": "2",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 3,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 40,
+        "section_padding_bottom": 40,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "rich_text_Q6ywAd": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_CQKDh8": {
+          "type": "heading",
+          "settings": {
+            "heading": "Talk about your brand",
+            "heading_size": "h2",
+            "alignment": "left"
+          }
+        },
+        "text_cydWdN": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_size": "text-std",
+            "alignment": "left",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_CQKDh8",
+        "text_cydWdN"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_VezdWX",
+    "rich_text_tbWUUH",
+    "section_content_cards_AV3x4V",
+    "rich_text_Q6ywAd"
+  ]
+}

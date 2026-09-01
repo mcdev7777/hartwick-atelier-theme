@@ -1,0 +1,376 @@
+{{ 'product-gallery.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'video-player.js' | asset_url }}" defer="defer"></script>
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_media = current_variant.featured_media %}
+
+{% if video_autoplay %}
+{% assign autoplay = true %}
+{% assign controls = false %}
+
+{% else %}
+{% assign autoplay = false %}
+{% assign controls = true %}
+{% endif %}
+
+{% assign plus = 0 %}
+
+{% if featured_media %}
+  {% assign plus = 1 %}
+{% endif %}
+
+{% for media in product.media %}
+{% if media == featured_media %}
+{% assign feat_number = forloop.index %}
+{% endif %}
+{% endfor %}
+
+{% unless enable_zoom %}
+<style>
+  .magnify-icon {
+    display: none;
+  }
+</style>
+{% endunless %}
+
+{% assign pagination_style = settings.media_pagination_style %}
+
+{% assign media_qty = product.media.size %}
+
+{% assign media_value = media_qty | modulo: 2 %}
+{% if media_value == 0 %}
+  {% assign grid_layout = 'even' %}
+{% else %}
+  {% assign grid_layout = 'odd' %}
+{% endif %}
+
+<div class="product-media-component pmc--mobile-margins-{{ section.settings.media_mobile_width }} pmc-{{ media_aspect_ratio }} media-scale--{{ media_scale }}{% if layout == 'slider' and desktop_navigation == 'thumbnails' and thumbnail_placement == 'adjacent' %} pmc-thumbnail-position--adjacent-{{ thumbnail_position_setting }}-{{ thumbnail_size_setting }}{% endif %} grid-spacing-{{ grid_spacing }}{% if media_screen_height %} pmc-mediascreen-height{% endif %} product-media-qty-{{ media_qty }} grid-layout-{{ grid_layout }} grid-balance-{{ balance_grid }}">
+
+  <div id="SlidesCon" class="product-media product-media--mobile-slider--desktop-{{ layout }}{% if layout == 'slider' %} disable-touch-scroll-dt{% endif %}">
+
+  {% case featured_media.media_type %}
+  {% when 'image' %}
+
+  <div class="product-media-image product-featured-media-item" data-media-id="{{ media.id }}" data-slide-index="1">
+    <button onclick="openModal();currentSlide(1)" class="magnify-icon" aria-label="{{ 'products.product.media.open_media' | t }}">{% render 'icon-zoom' %}</button>
+    {{ featured_media | image_url: width: 2000 | image_tag }}
+  </div>
+  {% when 'video' %}
+  <div class="product-media-image product-featured-media-item" data-media-id="{{ media.id }}" data-slide-index="1">
+    <button onclick="openModal();currentSlide(1)" class="magnify-icon" aria-label="{{ 'products.product.media.open_media' | t }}">{% render 'icon-zoom' %}</button>
+    {{ featured_media.preview_image | image_url: width: 2000 | image_tag }}
+  </div>
+    
+  {% endcase %}
+  {% for media in product.media %}
+    {% unless media == featured_media %}
+    {% case media.media_type %}
+    {% when 'image' %}
+
+    <div class="product-media-image" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">
+      <button onclick="openModal();currentSlide({{ forloop.index | plus: plus }})" class="magnify-icon" aria-label="{{ 'products.product.media.open_media' | t }}">{% render 'icon-zoom' %}</button>
+      {{ media | image_url: width: 2000 | image_tag: loading: 'lazy' }}
+    </div>
+   
+    {% when 'video' %}
+    <div class="product-media-image{% if autoplay == true %} autoplaying-video product-video-is-autoplay{% endif %}{% if autoplay == false %} product-video-not-autoplay{% endif %}" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">
+      
+        {% if autoplay == false %}
+        <div class="product-video-central-play-button">
+          {% render 'icon-play' %}
+        </div>
+        {% endif %}
+      {{ media | video_tag: image_size: '1200x', autoplay: autoplay, loop: autoplay, muted: autoplay, controls: controls }}
+    </div>
+
+    {% when 'external_video' %}
+      <style>
+        .external-video-{{ media.id }} iframe {
+          height: {{ 100 | divided_by: media.aspect_ratio | round: 1 }}vw;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        @media only screen and (min-width: 950px) {
+        .external-video-{{ media.id }} iframe {
+          height: {{ 100 | divided_by: media.aspect_ratio | times: 0.5 | round: 1 }}vw;
+          top: 50%;
+          transform: translateY(-50%);
+        } 
+        .product-main-section-layout-wide .external-video-{{ media.id }} iframe {
+          height: {{ 100 | divided_by: media.aspect_ratio | times: 0.6 | round: 1 }}vw;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        }
+      </style>
+    <div class="product-media-image product-media-external-media external-video-{{ media.id }}{% if media.host == 'vimeo' %} external-media-vimeo-iframe-container{% endif %}" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">  
+    {{ media | external_video_tag }}
+    </div>
+    
+    {% when 'model' %}
+    <div class="product-media-image product-media-model" data-slide-index="{{ forloop.index | plus: plus }}">
+      <div class="product-media-modal-container">
+        <product-model data-media-id="{{ media.id }}">{{ media | model_viewer_tag }}</product-model>
+      </div>
+      <button
+        class="product__xr-button"
+        type="button"
+        aria-label="{{ 'products.product.xr_button_label' | t }}"
+        data-shopify-xr
+        data-shopify-model3d-id="{{ media.id }}"
+        data-shopify-title="{{ product.title | escape }}"
+        data-shopify-xr-hidden
+      >
+      {% render 'icon-ar' %}
+    </button>
+    </div>
+    {% endcase %}
+    {% endunless %}
+  {% endfor %}
+  </div>
+
+
+  {% if product.media.size > 1 and desktop_navigation == 'arrows' and layout == 'slider' %}
+    <div class="gallery-slider-arrows arrow-style-{{ section.settings.arrow_style }}">
+      <button class="slider-arrow-left" aria-label="{{ 'accessibility.left' | t }}">{% render 'icon-caret' %}</button>
+      <button class="slider-arrow-right" aria-label="{{ 'accessibility.right' | t }}">{% render 'icon-caret' %}</button>      
+    </div>
+  {% endif %}
+  
+  {% if product.media.size > 1 %}
+  {% if featured_media %}
+
+  <div class="gallery-slider-thumbnails gallery-thumbnails-ratio-{{ media_aspect_ratio }} {{ thumbnail_size }}{% if mobile_navigation == 'bullets' %} gallery-slider-thumbnails--{{ mobile_bullet_position }}{% endif %} gst-size--{{ thumbnail_size_setting }} gst-position--{{ thumbnail_position_setting }}{% if mobile_navigation == 'bullets' %} gallery-slider-thumbnails--mobile-bullets-{{ pagination_style }}{% endif %}{% if mobile_navigation == 'none' %} gst-mobile-hide{% endif %}{% unless layout == 'slider' and desktop_navigation == 'thumbnails' %} gst-desktop-hide{% endunless %}">
+    
+  {% for media in product.media %}
+    {% if media == featured_media %}
+    <button class="gallery-slider--thumbnail active" id="gst-1" onclick="changeSlide(this, 1)" data-slide-index="1" aria-label="{{ 'products.product.media.load_image' | t }}">
+    {% if media.media_type == 'video' %}
+    {% render 'icon-play' %}
+    {% endif %}
+    {% if media.media_type == 'model' %}
+    <div class="icon-3d">{% render 'icon-3d-model' %}</div>
+    {% endif %}      
+    {{ featured_media | image_url: width: 140 | image_tag: loading: 'lazy' }}
+    </button>
+    {% endif %}
+  {% endfor %} 
+
+  {% for media in product.media %}
+    {% unless media == featured_media %}
+      {% if forloop.index > feat_number %}
+    <button class="gallery-slider--thumbnail" id="gst-{{ forloop.index }}" onclick="changeSlide(this, {{ forloop.index | minus: 0 }})" data-slide-index="{{ forloop.index | minus: 0 }}" aria-label="{{ 'products.product.media.load_image' | t }}">
+    {% if media.media_type == 'video' %}
+    {% render 'icon-play' %}
+    {% endif %}
+    {% if media.media_type == 'model' %}
+    <div class="icon-3d">{% render 'icon-3d-model' %}</div>
+    {% endif %}
+    {{ media | image_url: width: 140 | image_tag: loading: 'lazy' }}
+    </button>
+    {% else %}
+    <button class="gallery-slider--thumbnail" id="gst-{{ forloop.index | plus: plus }}" onclick="changeSlide(this, {{ forloop.index | plus: plus }})" data-slide-index="{{ forloop.index | plus: plus }}" aria-label="{{ 'products.product.media.load_image' | t }}">
+    {% if media.media_type == 'video' %}
+    {% render 'icon-play' %}
+    {% endif %}
+    {{ media | image_url: width: 140 | image_tag: loading: 'lazy' }}
+    </button>        
+    {% endif %}
+
+    {% endunless %}
+  {% endfor %}    
+   
+  </div>
+  
+  {% else %}
+
+  <div class="gallery-slider-thumbnails gallery-thumbnails-ratio-{{ media_aspect_ratio }} {{ thumbnail_size }}{% if mobile_navigation == 'bullets' %} gallery-slider-thumbnails--mobile-bullets-{{ pagination_style }}{% endif %}{% if mobile_navigation == 'none' %} gst-mobile-hide{% endif %}{% unless layout == 'slider' and desktop_navigation == 'thumbnails' %} gst-desktop-hide{% endunless %}">
+    
+  {% for media in product.media %}
+    {% if media == featured_media %}
+      <button class="gallery-slider--thumbnail active" id="gst-1" onclick="changeSlide(this, 1)" data-slide-index="1" aria-label="{{ 'products.product.media.load_image' | t }}">
+      {% if media.media_type == 'video' %}
+      {% render 'icon-play' %}
+      {% endif %}
+        {{ featured_media | image_url: width: 140 | image_tag: loading: 'lazy' }}
+      </button>
+      {% else %}
+      <button class="gallery-slider--thumbnail" id="gst-{{ forloop.index | plus: plus }}" onclick="changeSlide(this, {{ forloop.index | plus: plusx }})" data-slide-index="{{ forloop.index | plus: plusx }}" aria-label="{{ 'products.product.media.load_image' | t }}">
+      {% if media.media_type == 'video' %}
+      {% render 'icon-play' %}
+      {% endif %}
+      {{ media | image_url: width: 140 | image_tag: loading: 'lazy' }}
+      </button>
+    {% endif %}
+  {% endfor %} 
+  </div>  
+
+  {% endif %}
+  {% endif %}
+  
+</div>
+
+{% if enable_zoom %}
+<div id="galModal" class="modal modal-zoomed modal-gallery-{{ media_aspect_ratio }} media-scale--{{ media_scale }}{% if section.settings.gallery_mega_zoom == 'large' %} gallery-mega-zoom{% endif %}" role="dialog" aria-modal="true">
+  <button class="close" aria-label="{{ 'accessibility.close' | t }}" onclick="closeModal()">{% render 'icon-close' %}</button>
+  <div id="modalSlidesContainer" class="modal-content modal-media-{{ media_aspect_ratio }}">
+    {% case featured_media.media_type %}
+    {% when 'image' %}
+    <div class="product-media-image product-media--image galSlides" data-slide-index="{{ forloop.index | plus: plus }}">
+      {{ featured_media | image_url: width: 2600 | image_tag: loading: 'lazy' }}
+    </div>
+    
+    {% when 'video' %}
+    <div class="product-media-image galSlides{% if autoplay == true %} autoplaying-video product-video-is-autoplay{% endif %}{% if autoplay == false %} product-video-not-autoplay{% endif %}" data-slide-index="{{ forloop.index | plus: plus }}">
+      {% if autoplay == false %}
+      <div class="product-video-central-play-button">
+        {% render 'icon-play' %}
+      </div>
+      {% endif %}
+      {{ featured_media | video_tag: image_size: '1600x', autoplay: autoplay, loop: autoplay, muted: autoplay, controls: controls }}
+    </div>
+
+    {% when 'external_video' %}
+      <style>
+        .external-video-im-{{ media.id }} .external-media-iframe-container {
+          height: {{ 100 | divided_by: media.aspect_ratio | round: 1 }}vw;
+        }
+        @media only screen and (min-width: 900px) {
+          .modal-media-portrait-4x6 .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 70 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }
+          .modal-media-portrait .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 82 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }          
+          .modal-media-square .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 100 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }
+          .modal-media-landscape .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 70 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }
+        }
+      </style>     
+    <div class="product-media-image external-media external-video-im-{{ media.id }}{% if media.host == 'vimeo' %} external-media-vimeo-iframe-container{% endif %} galSlides" data-slide-index="{{ forloop.index | plus: plus }}">
+      {{ media | external_video_tag }}
+    </div>    
+      
+    {% endcase %}
+    
+    {% for media in product.media %}
+      {% case media.media_type %}
+      {% when 'image' %}
+      <div class="product-media-image product-media--image galSlides" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">{{ media | image_url: width: 2600 | image_tag: loading: 'lazy' }}</div>
+      
+      {% when 'video' %}
+      <div class="product-media-image galSlides{% if autoplay == true %} autoplaying-video product-video-is-autoplay{% endif %}{% if autoplay == false %} product-video-not-autoplay{% endif %}" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">
+        {% if autoplay == false %}
+        <div class="product-video-central-play-button">
+          {% render 'icon-play' %}
+        </div>
+        {% endif %}
+        {{ media | video_tag: image_size: '1600x', autoplay: autoplay, loop: autoplay, muted: autoplay, controls: controls }}
+      </div>
+
+      {% when 'external_video' %}
+      <style>
+        .external-video-im-{{ media.id }} .external-media-iframe-container {
+          height: {{ 100 | divided_by: media.aspect_ratio | round: 1 }}vw;
+        }
+        @media only screen and (min-width: 900px) {
+          .modal-media-portrait-4x6 .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 70 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }
+          .modal-media-portrait .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 82 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }          
+          .modal-media-square .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 100 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }
+          .modal-media-landscape .external-video-im-{{ media.id }} .external-media-iframe-container {
+            height: {{ 130 | divided_by: media.aspect_ratio | round: 1 }}%;
+          }
+        }
+      </style> 
+        <div class="product-media-image external-media external-video-im-{{ media.id }} galSlides" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">
+        <div class="external-media-iframe-container{% if media.host == 'vimeo' %} external-media-vimeo-iframe-container{% endif %}">
+          {{ media | external_video_tag }}
+        </div>
+        </div>
+      
+      {% when 'model' %}
+        <div class="product-media-image galSlides" data-slide-index="{{ forloop.index | plus: plus }}">
+          <div class="product-media-modal-container">
+          <product-model data-media-id="{{ media.id }}">{{ media | model_viewer_tag }}</product-model>
+          </div>
+          <button
+              class="product__xr-button xr_button_in_modal"
+              type="button"
+              aria-label="{{ 'products.product.xr_button_label' | t }}"
+              data-shopify-xr
+              data-shopify-model3d-id="{{ media.id }}"
+              data-shopify-title="{{ product.title | escape }}"
+              data-shopify-xr-hidden
+            >
+            {% render 'icon-ar' %}
+          </button>
+        </div>
+      {% endcase %}
+    {% endfor %}
+    </div>
+    
+  {% if product.media.size > 1 %}
+
+    {% if featured_media %}
+
+    <div class="thumbnails">
+        {% for media in product.media %}
+        {% if media == featured_media %}
+        <button class="lightbox-thumbnail" onclick="changeModalSlide(this, 1)" data-media-id="{{ media.id }}" data-slide-index="1">
+          {% if media.media_type == 'video' %}
+          {% render 'icon-play' %}
+          {% endif %}
+          {{ media | image_url: width: 220 | image_tag: loading: 'lazy' }}
+        </button>  
+        {% endif %}
+        {% endfor %}   
+        {% for media in product.media %}
+        {% unless media == featured_media %}
+        <button class="lightbox-thumbnail" onclick="changeModalSlide(this, {{ forloop.index | plus: plus }})" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">
+          {% if media.media_type == 'video' %}
+          {% render 'icon-play' %}
+          {% endif %}
+          {% if media.media_type == 'model' %}
+          <div class="icon-3d">{% render 'icon-3d-model' %}</div>
+          {% endif %}
+          {{ media | image_url: width: 220 | image_tag: loading: 'lazy' }}
+        </button>  
+        {% endunless %}
+        {% endfor %}
+      </div>
+    
+    {% else %}
+    <div class="thumbnails">
+        {% for media in product.media %}
+        <button class="lightbox-thumbnail" onclick="changeModalSlide(this, {{ forloop.index | plus: plus }})" data-media-id="{{ media.id }}" data-slide-index="{{ forloop.index | plus: plus }}">
+          {% if media.media_type == 'video' %}
+          {% render 'icon-play' %}
+          {% endif %}
+          {% if media.media_type == 'model' %}
+          <div class="icon-3d">{% render 'icon-3d-model' %}</div>
+          {% endif %}
+          {{ media | image_url: width: 220 | image_tag: loading: 'lazy' }}
+        </button>  
+        {% endfor %}   
+    </div>
+
+    {% endif %} 
+    
+    {% endif %}
+  
+</div>
+{% endif %}
+<style>
+  .galSlides {
+    display: none;
+  }
+</style>

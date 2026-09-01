@@ -1,0 +1,928 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "hdr_alignment": "align-center",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "rich_text_8hnEHT": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VbKCYd": {
+          "type": "heading",
+          "settings": {
+            "heading": "Media Library",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_ec9WgU": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Founder and Creative Director Angela Hartwick’s elegant lifestyle collection brings together the work of masters in Indian heritage craft with her years working as a stylist and filmmaker in Paris, Dubai and Mumbai. </p><p>Showcasing the analogue beauty of handspun and handwoven fabrics, hand block prints, natural dyes, fine tailoring, and handcarved precious gems – each handcrafted piece in her collection is a glimpse into the rich history and intricate process that has gone into its creation. </p><p><strong>This collection of images is available royalty-free for Hartwick Atelier press purposes. Please email </strong><a href=\"mailto:contact@HartwickAtelier.com\" title=\"mailto:contact@HartwickAtelier.com\"><strong>contact@HartwickAtelier.com</strong></a><strong> for license and high res files.</strong></p><p></p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VbKCYd",
+        "text_ec9WgU"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_jfRnFU": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_DekHVH": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/001_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_3weXzQ": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/002_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_PUdhjM": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/003_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_RtHBxG": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/005_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_QY6zCN": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/006_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_bUKXXy": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/009_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_MqCn3y": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/012_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_ELLweU": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/013_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_DekHVH",
+        "card_3weXzQ",
+        "card_PUdhjM",
+        "card_RtHBxG",
+        "card_QY6zCN",
+        "card_bUKXXy",
+        "card_MqCn3y",
+        "card_ELLweU"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 10,
+        "card_text_padding": 10,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "portrait",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "2",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 4,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 40,
+        "section_padding_bottom": 20,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_P8gNyL": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_VQYHHk": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/010_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_8VXzEA": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/011_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_VQYHHk",
+        "card_8VXzEA"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "landscape",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "1",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 2,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 0,
+        "section_padding_bottom": 0,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_4tG86L": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_wrEPkb": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/015_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_D7a8tP": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/016_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_z9cKLp": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/032_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_wrEPkb",
+        "card_D7a8tP",
+        "card_z9cKLp"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "portrait",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "1",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 3,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_RbVieH": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_LaED6x": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/014_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_m6TnwG": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/031_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_MQhPEp": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/033_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_LaED6x",
+        "card_m6TnwG",
+        "card_MQhPEp"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "landscape",
+        "grid_layout": "asymmetrical-first",
+        "grid_layout_mobile": "1",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 3,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 0,
+        "section_padding_bottom": 0,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_hPgWHL": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_twpFx9": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/034_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_ARt3NE": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/035_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_zUzdGW": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/036_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_bEzyhk": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/037_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_twpFx9",
+        "card_ARt3NE",
+        "card_zUzdGW",
+        "card_bEzyhk"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "portrait",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "2",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 4,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_qRxecT": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_CT9ExK": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/038_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_GhkUfQ": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/039_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_VUx7XE": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/044_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_eWUFqn": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/041_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_CT9ExK",
+        "card_GhkUfQ",
+        "card_VUx7XE",
+        "card_eWUFqn"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "landscape",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "2",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 2,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 0,
+        "section_padding_bottom": 0,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_Bthh4c": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_PVgfGD": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/027_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_4xUkEN": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/028_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_NBHbnF": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/029_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_kVEgYe": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/045_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_UpYGy9": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/030_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_iDUhtH": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/042_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "Card",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_W49BkC": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/019_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_XFYHrT": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/018_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_Nj6TdC": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/020_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_PVgfGD",
+        "card_4xUkEN",
+        "card_NBHbnF",
+        "card_kVEgYe",
+        "card_UpYGy9",
+        "card_iDUhtH",
+        "card_W49BkC",
+        "card_XFYHrT",
+        "card_Nj6TdC"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "portrait",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "1",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 3,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_U9rjbk": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_befXpw": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/043_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_tRxqHC": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/023_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_befXpw",
+        "card_tRxqHC"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "square",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "2",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 2,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 0,
+        "section_padding_bottom": 0,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_content_cards_dcB7bc": {
+      "type": "section-content-cards",
+      "blocks": {
+        "card_k4LiRH": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/021_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_qXdHM8": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/022_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_6Bn6RK": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/025_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "image_overlay": 0,
+            "title": "",
+            "sub_title": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_k4LiRH",
+        "card_qXdHM8",
+        "card_6Bn6RK"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "card_text_color": "fg-white",
+        "text_alignment": "center",
+        "text_position": "bottom",
+        "card_heading_size": "h3",
+        "card_text_padding_mobile": 20,
+        "card_text_padding": 20,
+        "show_link_labels": true,
+        "link_all": true,
+        "card_link_style": "text",
+        "card_link_color": "match",
+        "image_ratio": "portrait",
+        "grid_layout": "equal",
+        "grid_layout_mobile": "1",
+        "grid_stacking_mobile": "vertical",
+        "pagination_show": false,
+        "grid_columns": 3,
+        "grid_spacing": "normal",
+        "section_margins": "page-width",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_url": "",
+        "btn_style": "solid",
+        "btn_color_scheme": "default",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "section_padding_top": 20,
+        "section_padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_8hnEHT",
+    "section_content_cards_jfRnFU",
+    "section_content_cards_P8gNyL",
+    "section_content_cards_4tG86L",
+    "section_content_cards_RbVieH",
+    "section_content_cards_hPgWHL",
+    "section_content_cards_qRxecT",
+    "section_content_cards_Bthh4c",
+    "section_content_cards_U9rjbk",
+    "section_content_cards_dcB7bc"
+  ]
+}

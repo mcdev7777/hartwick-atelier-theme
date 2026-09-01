@@ -1,0 +1,163 @@
+.slider-outer-wrapper, .related-products-grid-wrapper {
+  position: relative;
+}
+
+.slider-grid {
+  width: 100%;
+  display: flex;
+  position: relative;
+  margin: 0 auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  -ms-scroll-snap-type: x mandatory;
+  scroll-snap-type: x mandatory;
+  list-style: none;  
+  flex-wrap: nowrap;
+  padding: 0px var(--page-margin-mobile);
+  column-gap: var(--grid-mobile-horizontal-spacing);
+  scroll-padding-inline: var(--page-margin-mobile);
+  scrollbar-width: none;
+  -ms-overflow-style: none;  
+}
+
+.slider-grid::-webkit-scrollbar {
+  height: 0px;
+  display: none;
+}
+
+/* OPTIONAL SLIDER TRACK
+.slider-grid::-webkit-scrollbar-track {
+  background: rgba(var(--color-foreground),0.1); 
+  margin-left: var(--page-margin-desktop);
+  margin-right: var(--page-margin-desktop);
+}
+
+.slider-grid::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-foreground),0.5); 
+}
+
+.slider-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-foreground),1); 
+}
+*/
+
+.slider-grid .grid__item {
+  flex: none;
+  width: calc(50% - calc(var(--grid-mobile-horizontal-spacing) * 0.5));
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  scroll-snap-align: start;
+}
+
+.slider-grid--columns-mobile-1 .grid__item {
+  width: 100%;
+}
+
+.slider-grid--columns-mobile-2 .grid__item {
+  width: calc(50% - calc(var(--grid-mobile-horizontal-spacing) * 0.5));
+}
+
+.grid-justify-center .grid {
+  justify-content: center;
+}
+
+@media only screen and (min-width: 750px) {
+  .slider-grid {
+    padding: 20px var(--page-margin-tablet);
+    scroll-padding-inline: var(--page-margin-tablet); 
+  }  
+  .slider-grid--columns-tablet-2 .grid__item {
+    width: calc(50% + calc(var(--grid-mobile-horizontal-spacing) / 2) - var(--grid-mobile-horizontal-spacing));
+  }
+  .slider-grid--columns-tablet-3 .grid__item {
+    width: calc(33.33% + calc(var(--grid-mobile-horizontal-spacing) / 3) - var(--grid-mobile-horizontal-spacing));
+  }
+  .slider-grid--columns-tablet-4 .grid__item {
+    width: calc(25% + calc(var(--grid-mobile-horizontal-spacing) / 4) - var(--grid-mobile-horizontal-spacing));
+  }  
+}
+
+
+@media only screen and (min-width: 1025px) {
+  .slider-grid {
+    padding: 0px var(--page-margin-desktop);
+    column-gap: var(--grid-desktop-horizontal-spacing);
+    scroll-padding-inline: var(--page-margin-desktop); 
+  } 
+  .slider-grid .grid__item {
+    width: calc(50% - calc(var(--grid-desktop-horizontal-spacing) * 0.5)); 
+  }
+  .slider-grid--columns-desktop-1 .grid__item {
+    width: 100%;
+    text-align: center;
+  }
+  .slider-grid--columns-desktop-1 .grid__item .card-collection.card-ratio-portrait {
+    margin: 0 auto;
+    max-width: 500px;
+  }
+  .slider-grid--columns-desktop-1 .grid__item .card-collection.card-ratio-square {
+    margin: 0 auto;
+    max-width: 700px;
+  }
+  .slider-grid--columns-desktop-1 .grid__item .card-collection.card-ratio-landscape {
+    margin: 0 auto;
+    max-width: 900px;
+  }
+  .slider-grid--columns-desktop-3 .grid__item {
+    width: calc(33.33% + calc(var(--grid-desktop-horizontal-spacing) / 3) - var(--grid-desktop-horizontal-spacing));
+  }
+  .slider-grid--columns-desktop-4 .grid__item {
+    width: calc(25% + calc(var(--grid-desktop-horizontal-spacing) / 4) - var(--grid-desktop-horizontal-spacing));
+  }
+  .slider-grid--columns-desktop-5 .grid__item {
+    width: calc(20% + calc(var(--grid-desktop-horizontal-spacing) / 5) - var(--grid-desktop-horizontal-spacing));
+  }
+}
+
+.slider-arrows {
+  margin: 0 auto;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  left: 0;
+  z-index: 2;
+  visibility: hidden;
+}
+
+.slider-arrow-left, .slider-arrow-right {
+  transition-property: filter; /* Only apply transition to the filter property */
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+}
+
+.slider-arrow-left {
+  left: calc(var(--page-margin-desktop) + var(--grid-desktop-horizontal-spacing));
+}
+
+.slider-arrow-right {
+  right: calc(var(--page-margin-desktop) + var(--grid-desktop-horizontal-spacing)); 
+}
+
+.slider-arrow-left:hover, .slider-arrow-right:hover {
+  transition-property: filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  background: rgba(var(--color-tertiary-button-background),1);
+}
+
+@media only screen and (min-width: 1025px) {
+ .slider-arrows {
+   visibility: visible;
+ }
+}
+
+.slider-arrow-left.disabled, .slider-arrow-right.disabled {
+  opacity: 0.3;
+}
+
+.grid-arrows-hide .slider-arrows {
+  visibility: hidden;
+}

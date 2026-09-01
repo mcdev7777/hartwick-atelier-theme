@@ -1,0 +1,175 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  - swatches: whether or not to use color swatches for color variants.
+  - swatch_style: visual style of color swatches. Choice of round (default), square or rectangle.
+  - update_url: {Boolean} whether or not to update url when changing variants. If false, the url isn't updated. Default: true (optional).
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+
+{% if swatches == true %}
+{% assign swatch_state = true %}
+{% assign swatch_style = swatch_style %}
+{% endif %}
+
+{%- unless product.has_only_default_variant -%}
+  {%- if block.settings.picker_type == 'button' or block.settings.picker_type == 'minimal' -%}
+    <variant-radios
+      id="variant-radios-{{ section.id }}"
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        {% assign option_handle = option.name | handle %}
+        <fieldset class="js product-form__input">
+          <legend class="form__label{% if labels == false %} visually-hidden{% endif %}">
+            {{ option.name }}{% if block.settings.show_puncuation %}:{% endif %}
+
+            {% if option_handle == 'size' %}
+              {% if block.settings.popup_title != blank and block.settings.popup_page != blank %}
+              <a href="{{ block.settings.page.url }}" class="product-popup-modal__button link no-js">
+                {{ block.settings.popup_title }}
+              </a>
+              
+              <modal-opener class="product-popup-modal__opener no-js-hidden quick-add-hidden" data-modal="#PopupModal-size-guide">
+                <button
+                  id="ProductPopup-size-guide"
+                  class="product-popup-modal__button link button--tertiary"
+                  type="button"
+                  aria-haspopup="dialog">
+                    {{ block.settings.popup_title }}
+                  </button>
+              </modal-opener>
+
+              <modal-dialog id="PopupModal-size-guide" class="product-popup-modal">
+                <div
+                  role="dialog"
+                  aria-label="Size Guide{{ block.settings.title }}"
+                  aria-modal="true"
+                  class="product-popup-modal__content"
+                  tabindex="-1"
+                >
+                  <div class="modal-header modal-header-align-center">
+                  <button
+                    id="ModalClose-size-guide"
+                    type="button"
+                    class="product-popup-modal__toggle"
+                    aria-label="{{ 'accessibility.close' | t }}"
+                  >
+                    {% render 'icon-close' %}
+                  </button>
+                  <span class="dialog-title">{{ block.settings.popup_page.title }}</span>
+                  </div>
+                  <div class="product-popup-modal__content-info">
+                    {{ block.settings.popup_page.content }}
+                  </div>
+                </div>
+              </modal-dialog>
+              {% endif %}
+            {% endif %}
+          </legend>
+          {% render 'product-variant-options', product: product, swatches: swatch_state, swatch_style: swatch_style,  option: option, block: block %}
+        </fieldset>
+      {%- endfor -%}
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-radios>
+  {%- else -%}
+    <variant-selects
+      id="variant-selects-{{ section.id }}"
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label{% if labels == false %} visually-hidden{% endif %}" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}{% if block.settings.show_puncuation %}:{% endif %}
+          </label>
+          <div class="select">
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options', product: product, swatches: swatch_state, option: option, block: block %}
+            </select>
+            {% render 'icon-caret' %}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-selects>
+  {%- endif -%}
+{%- endunless -%}
+
+<noscript class="product-form__noscript-wrapper-{{ section.id }}">
+  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+    <label class="form__label{% if labels == false %} visually-hidden{% endif %}" for="Variants-{{ section.id }}">
+      {{- 'products.product.product_variants' | t -}}
+    </label>
+    <div class="select">
+      <select
+        name="id"
+        id="Variants-{{ section.id }}"
+        class="select__select"
+        form="{{ product_form_id }}"
+      >
+        {%- for variant in product.variants -%}
+          <option
+            {% if variant == product.selected_or_first_available_variant %}
+              selected="selected"
+            {% endif %}
+            {% if variant.available == false %}
+              disabled
+            {% endif %}
+            value="{{ variant.id }}"
+          >
+            {%- liquid
+              echo variant.title
+              echo variant.price | money | strip_html | prepend: ' - '
+              if variant.available == false
+                echo 'products.product.sold_out' | t | prepend: ' - '
+              endif
+              if variant.quantity_rule.increment > 1
+                echo 'products.product.quantity.multiples_of' | t: quantity: variant.quantity_rule.increment | prepend: ' - '
+              endif
+              if variant.quantity_rule.min > 1
+                echo 'products.product.quantity.minimum_of' | t: quantity: variant.quantity_rule.min | prepend: ' - '
+              endif
+              if variant.quantity_rule.max != null
+                echo 'products.product.quantity.maximum_of' | t: quantity: variant.quantity_rule.max | prepend: ' - '
+              endif
+              # theme-check-disable
+              assign cart_quantity = cart | item_count_for_variant: variant.id
+              # theme-check-enable
+              if cart_quantity > 0
+                echo 'products.product.quantity.in_cart_html' | t: quantity: cart_quantity | prepend: ' - '
+              endif
+            -%}
+          </option>
+        {%- endfor -%}
+      </select>
+      {% render 'icon-caret' %}
+    </div>
+  </div>
+</noscript>

@@ -1,0 +1,121 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "hdr_alignment": "align-center",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "rich_text_7zH9qn": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_r9C7wf": {
+          "type": "heading",
+          "settings": {
+            "heading": "Contact Hartwick Atelier",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_T7idxi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Drop us a line below with any questions or comments. </p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_r9C7wf",
+        "text_T7idxi"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "form_padding_top": 0,
+        "form_padding_bottom": 0,
+        "padding_top": 50,
+        "padding_bottom": 100
+      }
+    },
+    "rich_text_hCYrtU": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_g9ifGF": {
+          "type": "heading",
+          "settings": {
+            "heading": "Media Contacts",
+            "heading_size": "h3",
+            "alignment": "center"
+          }
+        },
+        "text_86kLeD": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Olivia Johnston<br/></strong>Head of Marketing<br/>+44(0)7385870056<br/><span style=\"text-decoration:underline\">olivia@hartwickatelier.com</span></p><p><strong>Angela Hartwick<br/></strong>Founder and Creative Director<br/>+13479224342  <br/><span style=\"text-decoration:underline\">angela@hartwickatelier.com</span></p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_g9ifGF",
+        "text_86kLeD"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_7zH9qn",
+    "form",
+    "rich_text_hCYrtU"
+  ]
+}

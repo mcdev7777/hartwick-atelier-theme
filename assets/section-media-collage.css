@@ -1,0 +1,198 @@
+.section-image-collage {
+  line-height: 0;
+  font-size: 0;
+}
+
+.collage-grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(1,1fr);
+  column-gap: var(--grid-mobile-horizontal-spacing);
+  row-gap: var(--grid-mobile-horizontal-spacing);
+}
+
+.collage-grid.grid-no-spacing {
+  column-gap: 0;
+  row-gap: 0;
+}
+
+.collage-image {
+  line-height: 0;  
+  position: relative;
+  overflow: hidden;
+}
+
+.section-image-collage .global-image-placeholder {
+  border-radius: var(--media-radius); 
+  height: 100%;
+  width: 100%;
+}
+
+.collage-image img, .collage-image video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--media-radius);
+}
+
+.collage-image-wrapper {
+  height: 100%;
+}
+
+.ratio-fit .collage-image img, .ratio-fit .collage-image video {
+  height: auto;
+}
+
+.page-width-full .collage-image img, .page-width-full .collage-image video {
+  border-radius: 0;
+}
+
+.collage-image-full-width {
+  width: 100%;
+  grid-column: 1 / span 2;
+}
+
+.collage-image-half-width {
+  width: 100%;
+}
+
+.ratio-square {
+  height: calc(50vw - var(--page-margin-mobile) - var(--grid-mobile-horizontal-spacing));
+}
+
+.grid-no-spacing .ratio-square {
+  height: calc(50vw - var(--page-margin-mobile));
+}
+
+.ratio-square-fw {
+  height: calc(100vw - var(--page-margin-mobile));
+}
+
+.ratio-landscape {
+  height: calc(35vw - var(--page-margin-mobile) - var(--grid-mobile-horizontal-spacing));
+}
+
+.ratio-landscape-16x9 {
+  height: calc(30vw - var(--page-margin-mobile) - var(--grid-mobile-horizontal-spacing));
+}
+
+.ratio-landscape-fw {
+  height: calc(65vw - var(--page-margin-mobile));
+}
+
+.ratio-landscape-16x9-fw {
+  height: calc(60vw - var(--page-margin-mobile));
+}
+
+.ratio-portrait {
+  height: calc(65vw - var(--page-margin-mobile) - var(--grid-mobile-horizontal-spacing));
+}
+
+.ratio-portrait-4x6 {
+  height: calc(74vw - var(--page-margin-mobile) - var(--grid-mobile-horizontal-spacing));
+}
+
+.ratio-portrait-fw {
+  height: calc(120vw - var(--page-margin-mobile));
+}
+
+.ratio-portrait-4x6-fw {
+  height: calc(135vw - var(--page-margin-mobile));
+}
+
+.image-filter-darken img {
+  filter: brightness(0.98);
+}
+
+.image-filter-bw {
+  filter: grayscale(100%);
+}
+
+@media only screen and (min-width: 1025px) {
+  .collage-image-full-width .global-image-placeholder {
+    min-height: 45vw;
+  }
+  .ratio-square {
+    height: calc(50vw - var(--page-margin-desktop) - var(--grid-desktop-horizontal-spacing));
+  }
+  .grid-no-spacing .ratio-square {
+    height: calc(50vw - var(--page-margin-desktop));
+  }
+  .page-width-full .grid-no-spacing .ratio-square {
+    height: 50vw;
+  }
+  .ratio-square-fw {
+    height: calc(100vw - var(--page-margin-desktop));
+  }
+  .ratio-landscape {
+    height: calc(35vw - var(--page-margin-desktop) - var(--grid-desktop-horizontal-spacing));
+  }
+  .ratio-landscape-16x9 {
+    height: calc(32vw - var(--page-margin-desktop) - var(--grid-desktop-horizontal-spacing));
+  }
+  .grid-no-spacing .ratio-landscape-16x9 {
+    height: calc(32vw - var(--page-margin-desktop));
+  }
+  .ratio-landscape-fw {
+    height: calc(60vw - var(--page-margin-desktop));
+  }
+  .ratio-landscape-16x9-fw {
+    height: calc(55vw - var(--page-margin-desktop));
+  }
+  .ratio-portrait {
+    height: calc(63vw - var(--page-margin-desktop) - var(--grid-desktop-horizontal-spacing));
+  }  
+  .page-width-full .ratio-portrait {
+    height: calc(63vw - var(--grid-desktop-horizontal-spacing));
+  }
+  .ratio-portrait-4x6 {
+    height: calc(75vw - var(--page-margin-desktop) - var(--grid-desktop-horizontal-spacing));
+  }
+  .page-width-full .ratio-portrait-4x6 {
+    height: calc(75vw - var(--grid-desktop-horizontal-spacing));
+  }
+  .ratio-portrait-fw {
+    height: calc(120vw - var(--page-margin-desktop));
+  }
+  .ratio-portrait-4x6-fw {
+    height: calc(130vw - var(--page-margin-desktop));
+  }
+  .ci-image-padding-10 {
+    padding: 10px;
+  }
+  .ci-image-padding-20 {
+    padding: 10px;
+  }
+  .ci-image-padding-30 {
+    padding: 30px;
+  }
+  .ci-image-padding-40 {
+    padding: 40px;
+  }
+  .ci-image-padding-50 {
+    padding: 50px;
+  }
+  .ci-image-padding-60 {
+    padding: 60px;
+  }
+  .ci-image-padding-70 {
+    padding: 70px;
+  }
+  .ci-image-padding-80 {
+    padding: 80px;
+  }
+  .ci-image-padding-90 {
+    padding: 90px;
+  }
+  .ci-image-padding-100 {
+    padding: 100px;
+  }
+  .ci-image-padding-110 {
+    padding: 110px;
+  }
+  .ci-image-padding-120 {
+    padding: 120px;
+  }
+}
+

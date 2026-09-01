@@ -1,0 +1,144 @@
+<nav>
+  <ul class="nav-ul--primary" role="list">
+    {% for link in section.settings.main_menu.links %}
+      {% if link.links != blank %}
+      <li>
+        {% if link.url contains '/collections/' and section.settings.images_p_level == true %}
+        {% assign p_collection_handle = link.url | split: '/' | last %}
+        {% assign p_collection = collections[p_collection_handle] %}
+        <a class="mob-parent-button" href="{{ link.url }}">
+              {% if p_collection %}
+              <div class="nav-drawer--collection-image-row">
+              <div class="nav-drawer--collection-image">
+              {% if p_collection.featured_image %}
+                {{ p_collection.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+              {% endif %}
+              </div>
+              <div class="nav-drawer--collection-title">{{ link.title }}<span class="mob-parent-link-icon">{% render 'icon-caret' %}</span></div>
+              </div>
+              {% endif %}
+        </a>
+        {% else %}
+        <a class="mob-parent-button" href="{{ link.url }}">{{ link.title }}<span class="mob-parent-link-icon">{% render 'icon-caret' %}</span></a>
+        {% endif %}   
+        <div class="mob-secondary-level-ul">
+          <button class="nav-secondary-fo-back-button" tabindex="0" aria-label="{{ link.title }}">{% render 'icon-caret' %}{{ link.title }}</button>
+        <ul class="nav-ul--secondary" role="list">
+          {% for childlink in link.links %}
+          {% if childlink.links.size > 0 %}
+          <li>
+            {% if childlink.url contains '/collections/' and section.settings.images_s_level == true %}
+            <a class="mob-parent-button" href="{{ childlink.url }}">
+            {% assign s_collection_handle = childlink.url | split: '/' | last %}
+            {% assign s_collection = collections[s_collection_handle] %}
+            {% if s_collection %}
+              <div class="nav-drawer--collection-image-row">
+              <div class="nav-drawer--collection-image">
+              {% if s_collection.featured_image %}
+                {{ s_collection.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+              {% endif %}
+              </div>
+              <div class="nav-drawer--collection-title">{{ childlink.title }}<span class="mob-parent-link-icon">{% render 'icon-caret' %}</span></div>
+              </div>
+            {% endif %}  
+            </a>
+
+            {% else %}
+            <a class="mob-parent-button" href="{{ childlink.url }}">{{ childlink.title }}<span class="mob-parent-link-icon">{% render 'icon-caret' %}</span></a> 
+            {% endif %}
+            <div class="mob-secondary-level-ul">
+              <button class="nav-secondary-fo-back-button" tabindex="0" aria-label="{{ childlink.title }}">{% render 'icon-caret' %}{{ childlink.title }}</button>
+              <ul class="nav-ul--tertiary" role="list">
+                {% for grandchildlink in childlink.links %}
+                  <li>
+                    {% if grandchildlink.url contains '/collections/' and section.settings.images_t_level == true %}
+                      <a href="{{ grandchildlink.url }}">
+                        {% assign grandchild_collection_handle = grandchildlink.url | split: '/' | last %}
+                        {% assign grandchild_collection = collections[grandchild_collection_handle] %}
+                        {% if grandchild_collection %}
+                          <div class="nav-drawer--collection-image-row">
+                          <div class="nav-drawer--collection-image">
+                          {% if grandchild_collection.featured_image %}
+                            {{ grandchild_collection.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+                            {% endif %}
+                          </div>
+                          <div class="">{{ grandchildlink.title }}</div>
+                          </div>
+                        {% endif %}
+                      </a>
+                    {% else %}
+                      <a href="{{ grandchildlink.url }}">{{ grandchildlink.title }}</a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </li>
+          {% else %}
+          <li>
+          {% if childlink.url contains '/collections/' and section.settings.images_s_level == true %}           
+          {% assign collection_handle_no_child = childlink.url | split: '/' | last %}
+          {% assign collection_no_child = collections[collection_handle_no_child] %} 
+          {% if collection_no_child %}
+          <a href="{{ childlink.url }}">
+          <div class="nav-drawer--collection-image-row">
+          <div class="nav-drawer--collection-image">
+          {% if collection_no_child.featured_image %}
+            {{ collection_no_child.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+          {% endif %}
+          </div>
+          <div class="">{{ childlink.title }}</div>
+          </div>
+          </a>
+          {% endif %}
+          {% else %}
+          <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+          {% endif %}
+          </li>
+          {% endif %}  
+          {% endfor %}
+        </ul>
+        </div>
+      </li>
+      {% else %}
+      <li>
+      {% if link.url contains '/collections/' and section.settings.images_p_level == true %}    
+        {% assign p_collection_handle_no_child = link.url | split: '/' | last %}
+        {% assign p_collection_no_child = collections[p_collection_handle_no_child] %}     
+        <a href="{{ link.url }}">     
+          <div class="nav-drawer--collection-image-row">
+          <div class="nav-drawer--collection-image">
+          {% if p_collection_no_child.featured_image %}
+            {{ p_collection_no_child.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+          {% endif %}
+          </div>
+          <div class="nav-drawer--collection-title">{{ link.title }}</div>
+          </div>     
+        </a>
+      {% else %}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+      {% endif %}
+      </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  {% if section.settings.secondary_menu.links != blank %}
+  <div class="nav-drawer--secondary-menu">
+    <ul role="list">
+    {% for link in section.settings.secondary_menu.links %}
+      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+    {% endfor %}
+    {% if shop.customer_accounts_enabled %}
+      <li><a href="{{ routes.account_url }}">{{ 'customer.account.title' | t }}</a></li>
+    {% endif %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if shop.customer_accounts_enabled and section.settings.secondary_menu.links == blank %}
+  <div class="nav-drawer--secondary-menu">
+  <a href="{{ routes.account_url }}">{{ 'customer.account.title' | t }}</a>
+  </div>
+  {% endif %}
+</nav>

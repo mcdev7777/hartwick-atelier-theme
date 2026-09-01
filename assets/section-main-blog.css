@@ -1,0 +1,29 @@
+.blog-articles {
+  display: grid;
+  grid-gap: 1rem;
+  column-gap: var(--grid-mobile-horizontal-spacing);
+  row-gap: var(--grid-mobile-vertical-spacing);
+}
+
+.blog-articles .card-wrapper {
+  width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .blog-articles {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(1,1fr);
+    column-gap: var(--grid-desktop-horizontal-spacing);
+    row-gap: var(--grid-desktop-vertical-spacing); 
+  }
+  .grid-desktop-2x2 {
+    grid-template-columns: repeat(2,1fr);    
+  }
+}
+
+@media screen and (min-width: 950px) {
+  .grid-desktop-4x4 {
+    grid-template-columns: repeat(4,1fr);    
+  }  
+}

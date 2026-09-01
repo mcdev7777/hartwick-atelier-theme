@@ -1,0 +1,227 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "hdr_alignment": "align-center",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "image_banner_WhTGNM": {
+      "type": "image-banner",
+      "settings": {
+        "banner_size": "banner-style-large",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/004_HARTWICK_ATELIER_LANDSCAPES166_L1050442.jpg",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 20,
+        "main_image_animation": "none",
+        "image_blur": 0,
+        "primary_image_mobile_show": true,
+        "secondary_image_size": "dt-full-bleed",
+        "secondary_image_padding": 0,
+        "secondary_image_animation": "none",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 75,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "",
+        "overlay_level": 0
+      }
+    },
+    "rich_text_wjpEKP": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_TBQHUR": {
+          "type": "heading",
+          "settings": {
+            "heading": "Autumn 2024 Press Release",
+            "heading_size": "h3",
+            "alignment": "left"
+          }
+        },
+        "text_QFk6Tx": {
+          "type": "text",
+          "settings": {
+            "text": "<p><span style=\"text-decoration:underline\"><strong>New York City - 03 October 2024 </strong></span><em><strong> - Hartwick Atelier Unveils Debut Collections in New York: A New Era of Limited Edition Slow Fashion</strong></em></p><ul><li><em>Specializing in Handspun and Handwoven Fabrics, Natural Dye Silks, and Handcrafted Fine Jewellery</em></li><li><em>Sophisticated Lifestyle Collections, Made by Master of Heritage Craft</em></li></ul><p><a href=\"https://www.hartwickatelier.com/\"><span style=\"text-decoration:underline\">Hartwick Atelier</span></a>, an emerging innovator in limited edition slow fashion, is thrilled to announce the launch of its debut collection of apparel, fine silk, and fine jewellery.</p><p>Hartwick Atelier is a fresh arrival on the slow fashion scene, presenting a euro chic ready-to-wear collection in finely-tailored artisanal fabrics and a handcrafted jewellery line that dazzles with hand-carved precious stones and fine gold.</p><p>Founder and Creative Director Angela Hartwick’s elegant lifestyle collection brings together the work of masters in Indian heritage craft with her years working as a stylist and filmmaker in Paris, Dubai and Mumbai. Showcasing the analogue beauty of handspun and handwoven fabrics, hand block prints, natural dyes, fine tailoring, and handcarved precious gems – each handcrafted piece in her collection is a glimpse into the rich history and intricate process that has gone into its creation. </p><p>The scope of the collection is a reflection of its founder’s own lifestyle, a spectacular and fascinating blend of cultures, elegance and earthiness. Her ethos comes together in this luscious offering with authentic range. </p><p>True to form, Hartwick Atelier’s launch is unfolding in a series of salon-style evenings along the path of Hartwick’s travels this fall, starting in Tatlayoko Lake, Canada where she and her photographer husband have hand built their off-grid homestead deep in pristine wilderness. Moderated, invite-only events in New York, Paris and Dubai will lead to a month-long boutique residency on Chiltern Street in London in December [a collaboration with longtime friend Mickey Ashmore, founder of the iconic handcrafted <a href=\"https://uk.sabah.am/\"><span style=\"text-decoration:underline\">Sabah Shoes</span></a> brand.]</p><p><em>“The intention is to invite people into a conversation about true sustainability in fashion, to create an opportunity to really see and feel the fabrics, and to foster an appreciation for the mastery in these pieces…”</em></p><p><em>“This collection came together over decades of world travel as creatives in fashion and film. At first glance, it’s an elegant lifestyle brand with a distinct character and gorgeous texture. But at its roots, this collection is a portrait of nature and sustainability through refined handcraft. It’s an analogue love story\", says Angela Hartwick, Founder and Creative Director. </em></p><p>Click <a href=\"https://www.hartwickatelier.com/pop-ups\"><span style=\"text-decoration:underline\">here</span></a> for an invitation to our New York Press Event on October 17, 2024</p>",
+            "text_size": "text-std",
+            "alignment": "left",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_TBQHUR",
+        "text_QFk6Tx"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "rich_text_nGiEkE": {
+      "type": "rich-text",
+      "blocks": {
+        "button_LjAHLL": {
+          "type": "button",
+          "settings": {
+            "alignment": "center",
+            "btn_one_show": true,
+            "btn_one_txt": "2024/25 Lookbook",
+            "btn_one_link": "https://cdn.shopify.com/s/files/1/0894/7492/4843/files/HARTWICK_ATELIER_LOOKBOOK_2024-25_sm.pdf?v=1733051076",
+            "btn_one_style": "button--outline",
+            "btn_two_show": true,
+            "btn_two_txt": "Media Library",
+            "btn_two_link": "shopify://pages/hartwick-atelier-autumn-2024-media-library",
+            "btn_two_style": "button--outline",
+            "btn_color_scheme": "default",
+            "btn_layout": "inline"
+          }
+        }
+      },
+      "block_order": [
+        "button_LjAHLL"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "multicolumn_JNMxMk": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_pckGny": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Clothing_3fe8454e-9a13-40b5-b7e0-78f530ef6a0b.jpg",
+            "title": "TERRENE Collection",
+            "heading_top_margin": 0,
+            "heading_margin": 5,
+            "text": "<p>Finely Tailored, Artisanal Appare</p>",
+            "block_btn_style": "link--underlined",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_jQVxcE": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Jewellery_4f96b735-41bf-4af9-8f02-6837cb0bf20d.jpg",
+            "title": "LIMINAL Collection",
+            "heading_top_margin": 0,
+            "heading_margin": 5,
+            "text": "<p>Handcrafted, Precious Fine Jewellery</p>",
+            "block_btn_style": "link--underlined",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_QXfYin": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Scarves_d7854bfd-de6e-4065-abf4-0a570c4f4216.jpg",
+            "title": "CELESTIAL Collection",
+            "heading_top_margin": 0,
+            "heading_margin": 5,
+            "text": "<p>Hand Block Printed, Natural Dye Silk Scarves</p>",
+            "block_btn_style": "link--underlined",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_iBTU8D": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Yoga_83955a94-3b1a-4c52-884c-c9a062539910.jpg",
+            "title": "UPAYA Collection",
+            "heading_top_margin": 0,
+            "heading_margin": 5,
+            "text": "<p>Handwoven and Ayurvedic Yoga Mats</p>",
+            "block_btn_style": "link--underlined",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_pckGny",
+        "column_jQVxcE",
+        "column_QXfYin",
+        "column_iBTU8D"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_link": "",
+        "btn_style": "solid",
+        "card_image_alignment": "center",
+        "image_ratio": "fit",
+        "text_alignment": "center",
+        "grid_mobile_layout": "stacked",
+        "mobile_pagination_show": true,
+        "grid_columns": 2,
+        "grid_column_gap": 20,
+        "keylines_show": false,
+        "keyline_colour": "0",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "btn_color_scheme": "default",
+        "top_padding": 0,
+        "bottom_padding": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_WhTGNM",
+    "rich_text_wjpEKP",
+    "rich_text_nGiEkE",
+    "multicolumn_JNMxMk"
+  ]
+}

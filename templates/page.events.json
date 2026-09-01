@@ -1,0 +1,260 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "hdr_alignment": "align-center",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "rich_text_jhNqBJ": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_iPrkDe": {
+          "type": "heading",
+          "settings": {
+            "heading": "Upcoming Events",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "caption_ycwbb4": {
+          "type": "caption",
+          "settings": {
+            "caption": "WANDERLUST.  NATURAL BEAUTY.  EXQUISITE CRAFT.",
+            "alignment": "center"
+          }
+        },
+        "text_6YQxnW": {
+          "type": "text",
+          "settings": {
+            "text": "<p>True to form, Hartwick Atelier’s launch is unfolding in a series of salon-style evenings along the path of Hartwick’s travels this fall, starting in Tatlayoko Lake, Canada where she and her photographer husband have hand built their off grid homestead deep in pristine wilderness. Moderated, invite-only events in New York, Paris and Dubai will lead to a month-long boutique residency on Chiltern Street in London in December [a collaboration with longtime friend Mickey Ashmore, founder of the iconic handcrafted <a href=\"https://uk.sabah.am/\">Sabah Shoes </a>brand.</p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        },
+        "text_dtM6B7": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em>The intention is to invite people into a conversation about true sustainability in fashion, to create an opportunity to really see and feel the fabrics, and to foster an appreciation for the mastery in these pieces…</em></p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_iPrkDe",
+        "caption_ycwbb4",
+        "text_6YQxnW",
+        "text_dtM6B7"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 60,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "multicolumn_dFBP88": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_mqgJrr": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-Event-Dubai.jpg",
+            "title": "Dubai",
+            "heading_top_margin": 5,
+            "heading_margin": 15,
+            "text": "<p>NOVEMBER 24, 2024 | IN PERSON<br/>Limited edition clothing, silk scarves and fine jewellery. </p><p></p>",
+            "block_btn_style": "link--underlined",
+            "link_label": "Get Invite",
+            "link": "shopify://pages/contact-us"
+          }
+        },
+        "column_BMA4eE": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-Event-Paris.jpg",
+            "title": "Paris",
+            "heading_top_margin": 5,
+            "heading_margin": 15,
+            "text": "<p>NOVEMBER 28, 2024 | IN PERSON<br/>Limited edition clothing and fine jewellery. <br/></p><p></p>",
+            "block_btn_style": "link--underlined",
+            "link_label": "Get Invite",
+            "link": "shopify://pages/contact-us"
+          }
+        },
+        "column_b7dUYJ": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-Event-London.jpg",
+            "title": "London",
+            "heading_top_margin": 5,
+            "heading_margin": 15,
+            "text": "<p>DEC 5, 2024 - JAN 5, 2025<br/>IN PERSON + ONLINE<br/>Limited edition clothing and fine jewellery. <br/><br/></p>",
+            "block_btn_style": "link--underlined",
+            "link_label": "Get Invite",
+            "link": "shopify://pages/contact-us"
+          }
+        }
+      },
+      "block_order": [
+        "column_mqgJrr",
+        "column_BMA4eE",
+        "column_b7dUYJ"
+      ],
+      "settings": {
+        "section_label": "",
+        "heading": "",
+        "subheading": "",
+        "hdr_alignment": "center",
+        "btn_enable": false,
+        "btn_txt": "",
+        "btn_link": "",
+        "btn_style": "solid",
+        "card_image_alignment": "center",
+        "image_ratio": "fit",
+        "text_alignment": "left",
+        "grid_mobile_layout": "stacked",
+        "mobile_pagination_show": true,
+        "grid_columns": 3,
+        "grid_column_gap": 60,
+        "keylines_show": false,
+        "keyline_colour": "0",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "btn_color_scheme": "default",
+        "top_padding": 60,
+        "bottom_padding": 60,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "image_with_text_LWf9wU": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_4UJMRW": {
+          "type": "caption",
+          "settings": {
+            "caption": "JOIN US TO CELEBRATE OUR LAUNCH, IN CONVERSATION WITH TIFFANIE DRAKE"
+          }
+        },
+        "heading_nm8Ued": {
+          "type": "heading",
+          "settings": {
+            "heading": "Sustainability in Fashion: A World of Natural Beauty",
+            "heading_size": "h2"
+          }
+        },
+        "text_V4whBM": {
+          "type": "text",
+          "settings": {
+            "description": "<p>SABAH HOUSE LONDON<br/>50 Chiltern Street, London W1U 7Qt</p><p>Thursday, 05 December 2024</p><p>5-6PM Press Review<br/>6PM Q&A and discussion<br/>6-8PM Open House</p><p>Bubbles & Chai on arrival</p>"
+          }
+        },
+        "button_cHJ3KT": {
+          "type": "button",
+          "settings": {
+            "btn_txt": "Get Invite",
+            "btn_link": "shopify://pages/contact-us",
+            "btn_color_scheme": "default",
+            "btn_style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "caption_4UJMRW",
+        "heading_nm8Ued",
+        "text_V4whBM",
+        "button_cHJ3KT"
+      ],
+      "settings": {
+        "section_size": "flexible",
+        "image": "shopify://shop_images/HartwickAtelier-Event-London2.jpg",
+        "image_ratio": "fit",
+        "secondary_image_scale": "small",
+        "image_alignment": "left",
+        "dt_image_width": 50,
+        "card_spacing": 60,
+        "content_width": "page-width",
+        "txt_alignment": "left",
+        "text_color": "fg-body",
+        "bg_color": "bg-01",
+        "top_padding": 20,
+        "bottom_padding": 20,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "rich_text_4HApVY": {
+      "type": "rich-text",
+      "blocks": {
+        "caption_rqYryR": {
+          "type": "caption",
+          "settings": {
+            "caption": "PREVIOUS EVENTS",
+            "alignment": "center"
+          }
+        },
+        "text_9WbLJQ": {
+          "type": "text",
+          "settings": {
+            "text": "<p>TATLAYOKO LAKE: September 25-29, 2024 | NEW YORK CITY: October 11 - 27, 2024</p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "caption_rqYryR",
+        "text_9WbLJQ"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_jhNqBJ",
+    "multicolumn_dFBP88",
+    "image_with_text_LWf9wU",
+    "rich_text_4HApVY"
+  ]
+}

@@ -1,0 +1,143 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer_shopping_info_PrGcJA": {
+      "type": "footer-shopping-info",
+      "blocks": {
+        "column_f8PDBL": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Slow Fashion",
+            "text": "<p>Hartwick Atelier is a luxury fashion brand creating truly sustainable collections</p>"
+          }
+        },
+        "column_9nVpjd": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Heritage Craft",
+            "text": "<p>Masters of handcraft fuse ancient methods and fine tailoring</p>"
+          }
+        },
+        "column_VMH6pt": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Limited Edition",
+            "text": "<p>Limited Editions, defined by the natural cycles of life on Earth</p>"
+          }
+        },
+        "column_73RftU": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Conscious Consumption",
+            "text": "<p>Hartwick Atelier uses a pre-order system to eliminate over production</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_f8PDBL",
+        "column_9nVpjd",
+        "column_VMH6pt",
+        "column_73RftU"
+      ],
+      "settings": {
+        "text_alignment": "center",
+        "content_width": "page-width",
+        "icon_size": "normal",
+        "top_border": true,
+        "bottom_border": true,
+        "grid_column_gap": 20,
+        "keylines_show": true,
+        "keylines_to_edge": false,
+        "keyline_colour": "0",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 40,
+        "bottom_padding": 40
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "10f9701b-2a20-46e3-ad33-b52dc3c5f26d": {
+          "type": "link_list",
+          "settings": {
+            "heading": "COMPANY",
+            "list_type_mobile": "accordion",
+            "block_width": "column_width",
+            "alignment": "left",
+            "list_layout": "vertical",
+            "menu": "company"
+          }
+        },
+        "link_list_nVUdd4": {
+          "type": "link_list",
+          "settings": {
+            "heading": "INFORMATION",
+            "list_type_mobile": "accordion",
+            "block_width": "column_width",
+            "alignment": "left",
+            "list_layout": "vertical",
+            "menu": "support"
+          }
+        },
+        "9aa550d7-fade-44ce-a34f-b46d43c27ead": {
+          "type": "newsletter_signup",
+          "settings": {
+            "heading": "HARTWICK ATELIER NEWSLETTER",
+            "heading_size": "h4",
+            "subheading": "",
+            "disclaimer_show": false,
+            "disclaimer": "",
+            "newsletter_form_width": "normal",
+            "newsletter_style": "minimal",
+            "alignment": "left",
+            "block_width": "column_width"
+          }
+        }
+      },
+      "block_order": [
+        "10f9701b-2a20-46e3-ad33-b52dc3c5f26d",
+        "link_list_nVUdd4",
+        "9aa550d7-fade-44ce-a34f-b46d43c27ead"
+      ],
+      "settings": {
+        "footer_font_size": "small",
+        "footer_font_family": "body",
+        "footer_padding_vertical": 40,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "sub_footer_border": true,
+        "sub_footer_border_color": "dark",
+        "sub_footer_layout": "single",
+        "sub_footer_alignment": "align-center",
+        "show_policies": true,
+        "show_powered_by": false,
+        "payment_enable": false,
+        "location_enable": true,
+        "location_format": "code",
+        "show_currency_symbol": true,
+        "language_enable": false,
+        "show_location_labels": true,
+        "follow_shop_enable": false
+      }
+    }
+  },
+  "order": [
+    "footer_shopping_info_PrGcJA",
+    "footer"
+  ]
+}

@@ -1,0 +1,199 @@
+{% assign menu_image_size = 1080 %}
+
+{% if section.settings.dd_image_size == 'small' %}
+{% assign menu_image_size = 900 %}
+{% endif %}
+
+{% if section.settings.dd_image_size == 'large' and section.settings.dd_image_ratio == 'landscape' %}
+{% assign menu_image_size = 1200 %}
+{% endif %}
+
+{% assign show_images = false %}
+{% if section.blocks.size > 0 %}
+{% assign show_images = true %}
+{% endif %}
+
+<div class="hdr-nav-desktop">
+	<nav>
+	  <ul role="list" class="hdr-nav-primary-level-ul">
+        {% for link in section.settings.main_menu.links %}
+          <li{% if link.links != blank %} class="nav-desktop-li-dd-item"{% endif %}><a href="{{ link.url }}"{% if link.links != blank %} class="nav-desktop-dd-btn"{% endif %}>{{ link.title }}{% if link.links != blank and section.settings.dd_icon == 'arrow' %}{% render 'icon-caret' %}{% endif %}</a>
+          {% if link.links != blank %}
+          {% assign dd_menu_name = link.title | handleize %}
+          <div class="header-nav-desktop-dd-panel {{ section.settings.header_dropdown_panel_width }}{% if section.settings.header_dd_contents_width == 'fixed' %} dd-panel-fixed-width{% endif %}{% if section.settings.header_dd_contents_width == 'fixed-narrow' %} dd-panel-fixed-width-narrow{% endif %} header-dd-panel-justify-{{ section.settings.header_dd_contents_justify }} header-dd-panel-column-alignment-{{ section.settings.header_dd_column_alignment }}">
+            <div class="dd-nav-dd-contents{% if show_images %} dd-nav-contents-with-image{% endif %}">
+            {% assign multicol = false %}
+            {% assign columnsnumber = 0 %}
+            {% for childlink in link.links %}
+              {% assign columnsnumber = columnsnumber | plus: 1 %}
+            {% endfor %}
+            {% for childlink in link.links %}
+              {% if childlink.links.size > 0 %}
+                {% assign multicol = true %}
+                
+                {% endif %}
+              {% endfor %}
+
+              {% if multicol %}
+               <ul class="header-nav-desktop-dd-list-multi header-dd-menu-multi-columns-{{ columnsnumber }} header-dd-menu-layout-optimize dd-list-link-highlight-style-{{ section.settings.dd_menu_link_rollover_style }}{% if section.settings.dd_column_borders %} dd-ul-borders{% endif %}" role="list">
+                {% for childlink in link.links %}
+                  <li class="header-nav-desktop-dd-panel-col{% if section.settings.dd_column_borders %} dd-panel-col-borders{% endif %}">
+                  {% if childlink.url == '#' %}
+                  <span class="dd-nav-column-heading">{{ childlink.title }}</span>
+                  {% else %}
+                  <span class="dd-nav-column-heading"><a href="{{ childlink.url }}">{{ childlink.title }}</a></span>
+                  {% endif %}
+                  <ul>
+                    {% for grandchildlink in childlink.links %}
+                      <li><a href="{{ grandchildlink.url }}">{{ grandchildlink.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  </li>
+                 {% endfor %}
+              </ul>
+                {% if show_images %}
+                {% assign image_count = 0 %}
+                <div class="dd-nav-image dd-image-size-{{ section.settings.dd_image_size }} dd-nav-image-ratio-{{ ratio }}">
+                {% for block in section.blocks %}
+                {% case block.type %}
+                {% when 'image' %}
+
+                {% assign match_name = block.settings.dd_name | handleize %}
+                
+                {% if match_name == dd_menu_name %}
+                {% assign image_count = image_count | plus: 1 %}
+                <div class="dd-nav-img-wrapper dd-image-count-{{ image_count }}">
+                {% if block.settings.image_link != blank %}<a href="{{ block.settings.image_link }}">{% endif %}
+                <div class="dd-nav-img">{{ block.settings.image | image_url: width: menu_image_size | image_tag: loading: 'lazy' }}</div>
+                {% if block.settings.heading != blank %}
+                <div class="dd-nav-image-title dd-nav-image-title-{{ block.settings.text_color }} dd-nav-image-title-{{ block.settings.text_position }}">
+                <span class="dd-nav-image-title-span{% if block.settings.sub_heading != blank %} dd-nav-image-title-with-subtitle{% endif %} text-{{ block.settings.heading_size }}">{{ block.settings.heading }}</span>
+                {% if block.settings.sub_heading != blank %}<div class="dd-nav-image-sub-title">{{ block.settings.sub_heading }}</div>{% endif %}
+                </div>
+                {% endif %}
+                {% if block.settings.image_link != blank %}</a>{% endif %}
+                </div>
+                {% endif %}
+                
+                {% endcase %}
+                {% endfor %}
+                  
+                </div>
+              {% endif %}                
+              {% else %}
+                <ul class="header-nav-desktop-dd-list-single dd-list-link-highlight-style-{{ section.settings.dd_menu_link_rollover_style }}" role="list">{% for childlink in link.links %}
+                  <li><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+                  {% endfor %}
+                </ul>
+                {% if show_images %}
+                <div class="dd-nav-image dd-image-size-{{ section.settings.dd_image_size }} dd-nav-image-ratio-{{ ratio }}">
+                {% for block in section.blocks %}
+                {% case block.type %}
+                {% when 'image' %}
+                
+                {% assign match_name = block.settings.dd_name | handleize %}
+                
+                {% if match_name == dd_menu_name %}
+                <div class="dd-nav-img-wrapper">
+                {% if block.settings.image_link != blank %}<a href="{{ block.settings.image_link }}">{% endif %}
+                {% if block.settings.image != blank %}<div class="dd-nav-img">{{ block.settings.image | image_url: width: menu_image_size | image_tag: loading: 'lazy' }}</div>{% endif %}
+                {% if block.settings.heading != blank %}
+                <div class="dd-nav-image-title dd-nav-image-title-{{ block.settings.text_color }} dd-nav-image-title-{{ block.settings.text_position }}">
+                <span class="dd-nav-image-title-span{% if block.settings.sub_heading != blank %} dd-nav-image-title-with-subtitle{% endif %} text-{{ block.settings.heading_size }}">{{ block.settings.heading }}</span>
+                {% if block.settings.sub_heading != blank %}<div class="dd-nav-image-sub-title">{{ block.settings.sub_heading }}</div>{% endif %}
+                </div>
+                {% endif %}
+                {% if block.settings.image_link != blank %}</a>{% endif %}
+                </div>
+                {% endif %}
+                
+                {% endcase %}
+                {% endfor %}
+                  
+                </div>
+                {% endif %}              
+              {% endif %}
+
+            </div>
+          </div>
+          {% endif %}
+          </li>
+        {% endfor %}
+	 </ul>
+	</nav>
+</div>
+
+<script>
+const buttons = document.querySelectorAll('.nav-desktop-dd-btn');
+const panels = document.querySelectorAll('.header-nav-desktop-dd-panel');
+
+buttons.forEach((button, index) => {
+  const panel = panels[index];
+
+  button.addEventListener('focus', () => {
+    if (panel) {
+      panel.classList.add('dd-visible');
+    }
+  });
+
+  button.addEventListener('blur', () => {
+    setTimeout(() => {
+      if (!button.contains(document.activeElement) && !panel.contains(document.activeElement)) {
+        panel.classList.remove('dd-visible');
+      }
+    }, 0);
+  });
+
+  panel.addEventListener('focusin', () => {
+    if (panel) {
+      panel.classList.add('dd-visible');
+    }
+  });
+
+  panel.addEventListener('focusout', () => {
+    setTimeout(() => {
+      if (!button.contains(document.activeElement) && !panel.contains(document.activeElement)) {
+        panel.classList.remove('dd-visible');
+      }
+    }, 0);
+  });
+
+  panel.querySelectorAll('*').forEach(child => {
+    child.addEventListener('focus', () => {
+      panel.classList.add('dd-visible');
+    });
+    child.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (!button.contains(document.activeElement) && !panel.contains(document.activeElement)) {
+          panel.classList.remove('dd-visible');
+        }
+      }, 0);
+    });
+  });
+});
+
+// Select all elements with class "header-nav-desktop-dd-panel"
+const ddp = document.querySelectorAll('.header-nav-desktop-dd-panel');
+const nav_images = document.querySelectorAll('.dd-nav-image');
+const nav_image_titles = document.querySelectorAll('.dd-nav-image-title');
+  
+// Initialize variables to keep track of the maximum height and the element with the maximum height
+let maxHeight = 0;
+let maxHeightElement;
+
+// Loop through each panel to find the one with the largest height
+ddp.forEach(panel => {
+  const panelHeight = panel.clientHeight;
+  
+  if (panelHeight > maxHeight) {
+    maxHeight = panelHeight;
+    maxHeightElement = panel;
+  }
+});
+
+// Set the minimum height for all ddp based on the tallest element
+ddp.forEach(panel => {
+    panel.style.minHeight = `${maxHeight}px`;
+});
+
+</script>

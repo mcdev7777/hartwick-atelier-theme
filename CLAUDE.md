@@ -1,0 +1,69 @@
+# Hartwick Atelier — Shopify Build (Phase 1)
+
+## What this is
+Local working copy of the **Luxe 5.1.0** theme (Winter Studio) from store
+`9c8a52-dc.myshopify.com`. We are building the full Hartwick Atelier storefront on top
+of it. Work happens in an **unpublished development theme** — never the live theme.
+
+- Launch: **10 September 2026**
+- Budget: **40 hrs max / R600 p/h** (4 hrs already consumed by review & planning)
+- Client contact: **Aloha Makai** (Creative Director) — sole route for scope + approvals.
+  Christina Domecq = payments/brand messaging. Angela Hartwick = founder. Gareth = access.
+- Daily written update required (see `docs/audit-and-plan.md` §Reporting).
+
+## Source-of-truth hierarchy
+1. **Christina's `MASTER_Brand Messaging and Framework v3`** — final authority on all
+   terminology. Overrides everything below.
+2. Aloha's written email instructions.
+3. The approved wireframes (`Wireframe (01) HOMEPAGE`, `Wireframe (03) PRODUCT PAGE`).
+4. The mobile developer briefs (`.docx` / `.pdf` alongside each wireframe).
+5. Strategy + brand-book PDFs — context only, not implementation direction.
+
+Materials live in `~/Documents/Shopify - Ivan/Website Development/`.
+
+## Terminology — NON-NEGOTIABLE
+The mobile homepage brief (`Hartwick_Atelier_Mobile_Homepage_Developer_Brief.docx`) is
+**superseded** on terminology. It says "Join the Circle" and "The Makers". Both are wrong.
+
+| Use | Never use | Meaning |
+|---|---|---|
+| **The Register** | ~~The Circle~~ (for signup) | Public, free-to-join community + waitlist. All newsletter CTAs say **"Join The Register"**. |
+| **The Dispatch** | ~~newsletter~~ | Editorial newsletter sent to The Register. |
+| **The Circle** | — | Invitation-only group of founding friends. **No public form. No application route.** Editorial appearances only, with approval. |
+| **The Masters** | ~~The Makers~~, ~~artisans~~ (as a label) | The artisans in India. |
+| **Style** | — | Permanent silhouette identity: `Skirt 001`, `Shirt 007`. Never a place name. |
+| **Expression** | — | The fabric/dye/colour realisation of a Style. One Style → many Expressions. |
+| **Edition** | — | `3/25` — piece position / run size. |
+| **The Lot** | — | Production batch. Customer-facing as **Roman numerals**: Lot I, Lot II. |
+| **The Release** | — | The curated selection available at a given moment. |
+| **Reserve** | — | Register-only right to secure a piece pre-Release (50% deposit). **Phase 2 — do not build.** |
+| **Origin** | — | Full provenance story of a piece. |
+| **The Archive** | — | Record of everything made; not a sale section. |
+
+Legacy names (Tribeca, Palma, Bombay…) are **internal SKU mapping only** — never
+customer-facing.
+
+## Content rules
+- **Never invent** artisan names, provenance, materials, production detail, health claims,
+  product facts, or Circle member quotations. Anything unverified ships as a clearly
+  labelled placeholder in the unpublished theme, and Aloha is told about it.
+- Do not source or publish external imagery without approval.
+- `[pending Chanchal verification]` in the naming spreadsheet = unverified origin. Treat
+  as placeholder.
+
+## Architecture decisions (approved by Aloha)
+- Reusable sections + **metafields/metaobjects**. No hard-coded product or editorial pages.
+- Retain Luxe natives wherever they meet the requirement; custom sections only where they
+  don't. See `docs/audit-and-plan.md` for the native-vs-custom split.
+- Brand styling stays in **theme settings / CSS variables** — the Brand Book is only
+  partially final, so final colours and type must be applied centrally, not per-section.
+- Structure content and code so **Reserve** (50% deposit) can be added later without rebuild.
+
+## Docs
+- `docs/audit-and-plan.md` — theme audit, native/custom split, day-by-day plan, risks.
+- `docs/data-model.md` — metafield + metaobject specification.
+
+## Working rules
+- Development theme only. Never push to the live theme.
+- Do not exceed 40 hrs or change scope without Aloha's written approval.
+- Log hours per stage as you go.

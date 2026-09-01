@@ -1,0 +1,68 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "blocks": {
+        "8c1551fa-366c-4d2d-a7f8-6f8627471383": {
+          "type": "header",
+          "settings": {
+            "header_style": "banner",
+            "header_img_ratio": "landscape-6x4",
+            "image_top_padding": 40,
+            "image_bottom_padding": 40,
+            "blog_show_title": true,
+            "blog_show_date": true,
+            "blog_show_author": true,
+            "blog_show_excerpt": true,
+            "txt_alignment": "center"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {
+            "top_padding": 0,
+            "bottom_padding": 40
+          }
+        },
+        "4133b15e-9fc9-4543-826c-272ad694901f": {
+          "type": "footer",
+          "settings": {
+            "txt_alignment": "left",
+            "top_padding": 40,
+            "bottom_padding": 40,
+            "show_tags": true,
+            "show_author": true,
+            "show_date": true,
+            "enable_sharing": true,
+            "share_label": "Share",
+            "share_enable_facebook": true,
+            "share_enable_x": true,
+            "share_enable_pinterest": true,
+            "share_enable_linkedin": true
+          }
+        }
+      },
+      "block_order": [
+        "8c1551fa-366c-4d2d-a7f8-6f8627471383",
+        "content",
+        "4133b15e-9fc9-4543-826c-272ad694901f"
+      ],
+      "settings": {
+        "top_padding": 0,
+        "bottom_padding": 100
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

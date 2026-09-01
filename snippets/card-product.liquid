@@ -1,0 +1,302 @@
+{% comment %}
+  Renders a product card
+
+  Accepts:
+  - card_product: {Object} Product Liquid object (optional)
+  - media_aspect_ratio: {String} Size of the product image. Values are "square", "portrait", "landscape" or "fit to image". Default is "square"
+  - show_secondary_image: {Boolean} Show a secondary image on hover. Default: false
+  - show_price: {Boolean} Show the product vendor. Default: true
+  - price_position: Bottom (default) or top
+  - show_sale_badges: Shows a "Sale" badge if a product price is discounted. Default: true
+  - show_vendor: {Boolean} Show the product vendor (brand). Default: false
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+  - show_quick_add: {Boolean} Show the quick add button
+  - section_id: {String} The ID of the section that contains this card
+
+  Usage:
+  {% render 'card-product', show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+
+{% assign media_size = 800 %}
+
+{% if image_resolution == 'high' %}
+{% assign media_size = 1200 %}  
+{% endif %}
+
+<div class="card card-product card-ratio-{{ media_aspect_ratio }}">
+<div class="card-media">
+<a href="{{ card_product.url }}" title="{{ card_product.title }}">
+<div class="card-product--badges pc-badges-{{ settings.card_badge_position }}">  
+{% for tag in card_product.tags %}  
+{% if tag contains 'Badge:' %}<span data-badge="{{ tag | remove: 'Badge: ' | handle }}">{{ tag | remove: 'Badge: '}}</span>
+{% endif %}
+{% endfor %}
+{% if show_sale_badges %}
+  {% if card_product.compare_at_price %}<span>{{ 'products.product.on_sale' | t }}</span>{% endif %}  
+{% endif %}
+</div>
+
+<div class="card-product-image-outer">
+{% if section.settings.show_secondary_image and card_product.media.size > 1 %}
+
+<div class="card-product--image">
+<div class="card-product--image-wrapper">
+
+<div class="product-card-default-image product-card-fade-out-image">
+{% if lazy_load %}
+{{ card_product.featured_media | image_url: width: media_size | image_tag: loading: 'lazy' }}
+{% else %}
+{{ card_product.featured_media | image_url: width: media_size | image_tag }}
+{% endif %}
+
+</div>
+
+<div class="product-card-reveal-image">
+{{ card_product.media[1] | image_url: width: media_size | image_tag: loading: 'lazy' }}
+</div>
+
+</div>
+  
+</div>
+
+{% else %}
+<div class="card-product--image">
+<div class="card-product--image-wrapper card-product--single-image-wrapper">  
+{% if card_product.featured_media %}
+{% if lazy_load %}
+{{ card_product.featured_media | image_url: width: media_size | image_tag:  loading: 'lazy' }}
+{% else %}
+{{ card_product.featured_media | image_url: width: media_size | image_tag }}
+{% endif %}
+{% endif %}
+{% if placeholder and sequence_number == 1 %}
+{% render 'icon-product-image-placeholder' %}
+{% endif %}
+{% if placeholder and sequence_number == 2 %}
+{% render 'icon-product-image-placeholder-2' %}
+{% endif %}
+{% if placeholder and sequence_number == 3 %}
+{% render 'icon-product-image-placeholder-3' %}
+{% endif %}
+{% if placeholder and sequence_number == 4 %}
+{% render 'icon-product-image-placeholder-4' %}
+{% endif %}
+{% if placeholder and sequence_number == 5 %}
+{% render 'icon-product-image-placeholder' %}
+{% endif %}
+{% if placeholder and sequence_number == 6 %}
+{% render 'icon-product-image-placeholder-2' %}
+{% endif %}
+{% if placeholder and sequence_number == 7 %}
+{% render 'icon-product-image-placeholder-3' %}
+{% endif %}
+{% if placeholder and sequence_number == 8 %}
+{% render 'icon-product-image-placeholder-4' %}
+{% endif %}
+{% if placeholder and sequence_number == 9 %}
+{% render 'icon-product-image-placeholder' %}
+{% endif %}
+{% if placeholder and sequence_number == 10 %}
+{% render 'icon-product-image-placeholder-2' %}
+{% endif %}
+{% if placeholder and sequence_number == 11 %}
+{% render 'icon-product-image-placeholder-3' %}
+{% endif %}
+{% if placeholder and sequence_number == 12 %}
+{% render 'icon-product-image-placeholder-4' %}
+{% endif %}
+{% if placeholder and sequence_number == 13 %}
+{% render 'icon-product-image-placeholder' %}
+{% endif %}
+{% if placeholder and sequence_number == 14 %}
+{% render 'icon-product-image-placeholder-2' %}
+{% endif %}
+{% if placeholder and sequence_number == 15 %}
+{% render 'icon-product-image-placeholder-3' %}
+{% endif %}
+{% if placeholder and sequence_number == 16 %}
+{% render 'icon-product-image-placeholder-4' %}
+{% endif %}
+</div>
+  
+</div>
+{% endif %}
+</div>
+</a>
+{%- if show_quick_add and placeholder == true -%}
+  <div class="product-card-quick-add{% if settings.quick_add_desktop_rollover %} quick-add-desktop-hover{% endif %} align-{{ settings.card_text_alignment }} quick-add-button-mobile-{{ settings.card_quick_add_style_mobile }} quick-add-button-desktop-{{ settings.card_quick_add_style_desktop }}">
+  <div class="quick-add no-js-hidden">
+    <span class="button quick-add-f-button">{{ 'products.product.add_to_cart' | t }}</span>
+  </div>
+  </div>
+{%- endif -%}
+{%- if show_quick_add and placeholder != true -%}
+  <div class="product-card-quick-add{% if settings.quick_add_desktop_rollover %} quick-add-desktop-hover{% endif %} align-{{ settings.card_text_alignment }} quick-add-button-mobile-{{ settings.card_quick_add_style_mobile }} quick-add-button-desktop-{{ settings.card_quick_add_style_desktop }}">
+  <div class="quick-add no-js-hidden">
+    {%- liquid
+      assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id
+      assign qty_rules = false
+      if card_product.selected_or_first_available_variant.quantity_rule.min > 1 or card_product.selected_or_first_available_variant.quantity_rule.max != null or card_product.selected_or_first_available_variant.quantity_rule.increment > 1
+        assign qty_rules = true
+      endif
+    -%}
+    {%- if card_product.variants.size > 1 or qty_rules -%}
+      <modal-opener data-modal="#QuickAdd-{{ card_product.id }}">
+        <button
+          id="{{ product_form_id }}-submit"
+          type="submit"
+          name="add"
+          class="quick-add__submit button"
+          aria-haspopup="dialog"
+          aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
+          data-product-url="{{ card_product.url }}"
+        >
+          <span>{{ 'products.product.choose_options' | t }}</span>
+          <div class="loading-overlay__spinner hidden">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              class="spinner"
+              viewBox="0 0 66 66"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+            </svg>
+          </div>
+        </button>
+      </modal-opener>
+
+      <quick-add-modal id="QuickAdd-{{ card_product.id }}" class="quick-add-modal{% if settings.card_quick_card_style_mobile == 'minimal' %} quick-add-modal-mobile-minimal{% endif %} modal-image-ratio-{{ media_aspect_ratio }}">
+        <div
+          role="dialog"
+          aria-label="{{ 'products.product.choose_product_options' | t: product_name: card_product.title | escape }}"
+          aria-modal="true"
+          class="quick-add-modal__content global-settings-popup"
+          tabindex="-1"
+        >
+          {% assign request_parent = quick_add_modal %}
+          <div class="visually-hidden">{{ request_parent }}</div>
+          <div class="quick-add-modal-header">
+            <button
+              id="ModalClose-{{ card_product.id }}"
+              type="button"
+              class="quick-add-modal__toggle"
+              aria-label="{{ 'accessibility.close' | t }}"
+            >
+              {% render 'icon-close' %}
+            </button>
+          </div>
+          <div id="QuickAddInfo-{{ card_product.id }}" class="quick-add-modal__content-info"></div>
+        </div>
+      </quick-add-modal>
+    {%- else -%}
+      <product-form data-section-id="{{ section.id }}">
+        {%- form 'product',
+          card_product,
+          id: product_form_id,
+          class: 'form',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        -%}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ card_product.selected_or_first_available_variant.id }}"
+            {% if card_product.selected_or_first_available_variant.available == false %}
+              disabled
+            {% endif %}
+          >
+          <button
+            id="{{ product_form_id }}-submit"
+            type="submit"
+            name="add"
+            class="quick-add__submit button"
+            aria-haspopup="dialog"
+            aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
+            aria-live="polite"
+            data-sold-out-message="true"
+            {% if card_product.selected_or_first_available_variant.available == false %}
+              disabled
+            {% endif %}
+          >
+            <span class="qa-label">
+              {%- if card_product.selected_or_first_available_variant.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </span>
+            <span class="sold-out-message hidden">
+              {{ 'products.product.sold_out' | t }}
+            </span>
+            <div class="loading-overlay__spinner hidden">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="spinner"
+                viewBox="0 0 66 66"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              </svg>
+            </div>
+          </button>
+        {%- endform -%}
+      </product-form>
+    {%- endif -%}
+  </div>
+  </div>
+
+{%- endif -%}
+</div>
+
+{%liquid
+  assign card_product_title = card_product.title | escape
+
+  if card_product_title contains ' | '
+    assign card_product_title = card_product_title | replace: ' | ', ' <span class="secondary-title"> | ' | append: '</span>'
+  endif
+%}
+<a href="{{ card_product.url }}">
+<div class="card-product--text-section{% if settings.card_text_border %} card-product--text-section-border{% endif %}{% if price_position == 'right' %} card-product--text-section--flex{% endif %}">
+  <div class="card-product--title">
+  {% if show_vendor %}
+    <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+      {% if show_vendor_inline %}
+    <h3 class="card-product-title-h3 card-title-font-family-{{ settings.card_title_font }}">
+      {% if placeholder %}{{ 'products.product.vendor' | t }}{% endif %}
+      {{ card_product.vendor }} 
+      {{ card_product_title }}
+      {% if placeholder %}{{ 'onboarding.product_title' | t }}{% endif %}
+    </h3>
+      {% else %}
+    <div class="card-product-vendor">{{ card_product.vendor }}{% if placeholder %}{{ 'products.product.vendor' | t }}{% endif %}</div>
+    <h3 class="card-product-title-h3 card-title-font-family-{{ settings.card_title_font }}">{{ card_product_title }}{% if placeholder %}{{ 'onboarding.product_title' | t }}{% endif %}</h3>
+      {% endif %}
+  {% else %}
+    <h3 class="card-product-title-h3 card-title-font-family-{{ settings.card_title_font }}">
+      {{ card_product_title }}{% if placeholder %}{{ 'onboarding.product_title' | t }}{% endif %}
+    </h3>
+  {% endif %}
+  {% if settings.card_show_product_type %}
+    <span class="card-product-type-label">{{ card_product.type }}</span>
+  {% endif %}
+  </div>
+
+<div class="card-product--info">
+{% if show_price %}
+{% unless hide_price %}
+<div class="card-product--price{% if settings.card_price_sale_highlight %} card-price-sale-highlighted{% endif %}{% if settings.card_text_alignment == 'center' %} card-price-center{% endif %}">{% render 'price', product: card_product, price_class: '' %}</div>
+{% endunless %}
+{% endif %}
+{% if card_product.available == false %}
+<div class="card-product-badge badge-sold-out">{{- 'products.product.sold_out' | t -}}</div>
+{% endif %}
+
+{% if card_product.metafields.custom.excerpt != blank %}
+<div class="card-product-excerpt">{{ card_product.metafields.custom.excerpt | metafield_tag }}</div>
+{% endif %}
+</div>
+</div>
+</a>  
+</div>

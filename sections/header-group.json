@@ -1,0 +1,204 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "fae0db8d-7080-48c7-b779-9ec074b0c8df": {
+      "type": "announcement-bar",
+      "blocks": {
+        "sections--16000923631783__fae0db8d-7080-48c7-b779-9ec074b0c8df-announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Lot 001 Release September 15 2026 — join The Register for first access",
+            "link": "shopify://collections/hartwick-atelier-drop-one"
+          }
+        }
+      },
+      "block_order": [
+        "sections--16000923631783__fae0db8d-7080-48c7-b779-9ec074b0c8df-announcement-1"
+      ],
+      "settings": {
+        "bar_type": "full-width",
+        "border_opacity": 0,
+        "corner_radius": 0,
+        "font_size_mobile": 11,
+        "font_size_desktop": 12,
+        "anim_style": "fade",
+        "anim_delay": 6
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "image_3BARYP": {
+          "type": "image",
+          "settings": {
+            "dd_name": "Shop",
+            "image": "shopify://shop_images/HartwickAtelier-Menu-Shop.jpg",
+            "text_position": "below-image",
+            "text_color": "normal",
+            "heading": "APPAREL",
+            "heading_size": "default-size",
+            "sub_heading": "",
+            "image_link": "shopify://collections/apparel"
+          }
+        },
+        "image_eLhMez": {
+          "type": "image",
+          "settings": {
+            "dd_name": "Shop",
+            "image": "shopify://shop_images/HartwickAtelier-Menu-Jewellery.jpg",
+            "text_position": "below-image",
+            "text_color": "normal",
+            "heading": "JEWELLERY",
+            "heading_size": "default-size",
+            "sub_heading": "",
+            "image_link": "shopify://collections/fine-jewellery"
+          }
+        },
+        "image_G3BtzT": {
+          "type": "image",
+          "settings": {
+            "dd_name": "About",
+            "image": "shopify://shop_images/HartwickAtelier-Menu-03.jpg",
+            "text_position": "below-image",
+            "text_color": "normal",
+            "heading": "Our Story",
+            "heading_size": "default-size",
+            "sub_heading": "",
+            "image_link": "shopify://pages/story"
+          }
+        },
+        "image_AVf8Xq": {
+          "type": "image",
+          "settings": {
+            "dd_name": "About",
+            "image": "shopify://shop_images/HartwickAtelier-MenuAbout-Events.jpg",
+            "text_position": "below-image",
+            "text_color": "normal",
+            "heading": "Pop Up Events",
+            "heading_size": "default-size",
+            "sub_heading": "",
+            "image_link": "shopify://pages/pop-up-events"
+          }
+        },
+        "image_xKfQLH": {
+          "type": "image",
+          "settings": {
+            "dd_name": "About",
+            "image": "shopify://shop_images/HartwickAtelier-MenuAbout-Story_2642f141-8644-4542-a9e9-2e13c49606ad.jpg",
+            "text_position": "below-image",
+            "text_color": "normal",
+            "heading": "PRESS",
+            "heading_size": "default-size",
+            "sub_heading": "",
+            "image_link": "shopify://pages/press"
+          }
+        },
+        "image_WndbmD": {
+          "type": "image",
+          "settings": {
+            "dd_name": "Sustainability",
+            "image": "shopify://shop_images/HartwickAtelier-Menu-02.jpg",
+            "text_position": "below-image",
+            "text_color": "normal",
+            "heading": "Slow Fashion",
+            "heading_size": "default-size",
+            "sub_heading": "",
+            "image_link": "shopify://pages/slow-fashion"
+          }
+        },
+        "image_Pk8Lk7": {
+          "type": "image",
+          "settings": {
+            "dd_name": "Sustainability",
+            "image": "shopify://shop_images/HartwickAtelier-Menu-05.jpg",
+            "text_position": "below-image",
+            "text_color": "normal",
+            "heading": "Heritage Craft",
+            "heading_size": "default-size",
+            "sub_heading": "",
+            "image_link": "shopify://pages/heritage-craft"
+          }
+        }
+      },
+      "block_order": [
+        "image_3BARYP",
+        "image_eLhMez",
+        "image_G3BtzT",
+        "image_AVf8Xq",
+        "image_xKfQLH",
+        "image_WndbmD",
+        "image_Pk8Lk7"
+      ],
+      "settings": {
+        "logo_mobile_position": "center",
+        "logo_dt_position": "center",
+        "logo_size": 100,
+        "logo_size_dt": 150,
+        "main_menu": "main-menu",
+        "secondary_menu": "main-menu",
+        "secondary_menu_desktop": "",
+        "nav_bar_height_mobile": 60,
+        "nav_bar_height": 80,
+        "header_bar_width": "full",
+        "header_hoz_width": "wide",
+        "header_corner_radius": 0,
+        "header_border_opacity": 10,
+        "header_shadow_opacity": 0,
+        "trans_hp": true,
+        "trans_border_hide": true,
+        "trans_header_color": "white",
+        "desktop_nav_position": "inline",
+        "menu_icon_style": "three_line",
+        "header_drawer_list_spacing": 18,
+        "header_drawer_list_borders": true,
+        "dd_icon": "none",
+        "dd_highlight_style": "underline",
+        "dd_menu_link_rollover_style": "underline",
+        "header_dropdown_panel_width": "dd-panel-full-width",
+        "header_dd_contents_width": "full",
+        "header_dd_contents_justify": "left",
+        "header_dd_column_alignment": "left",
+        "dd_vertical_padding": 30,
+        "dropdown_list_vertical_spacing": 4,
+        "dd_column_borders": false,
+        "dd_image_ratio": "portrait",
+        "dd_image_size": "medium",
+        "nav_font_family": "navigation",
+        "nav_font_case": "caps",
+        "dropdown_font_case": "caps",
+        "nav_font_size_mobile": 12,
+        "nav_font_size_desktop": 12,
+        "font_size_dropdown": 11,
+        "images_p_level": false,
+        "images_s_level": false,
+        "images_t_level": false,
+        "dd_image_radius": 0,
+        "search_enable": false,
+        "search_ui": "word",
+        "account_enable": false,
+        "account_ui": "icon",
+        "cart_ui": "word",
+        "enable_international": false,
+        "international_icon": "none",
+        "social_show": true,
+        "social_heading": "",
+        "social_alignment": "left",
+        "social_ui": "icon"
+      }
+    }
+  },
+  "order": [
+    "fae0db8d-7080-48c7-b779-9ec074b0c8df",
+    "header"
+  ]
+}

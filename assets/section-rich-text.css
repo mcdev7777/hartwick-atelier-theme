@@ -1,0 +1,162 @@
+.section-rich-text {
+  z-index: 1;
+  position: relative;
+}
+
+.rich-text-content {
+  display: flex;
+  justify-content: center;
+}
+
+.rich-text .rich-text-content {
+  margin: auto;
+}
+
+.rich-text__blocks {
+  width: 100%;
+}
+
+.rich-text__image {
+  width: 100px;
+  height: auto;
+}
+
+.rich-text__image img {
+  width: 100%;
+  height: auto;
+}
+
+.rt-img-micro {
+  width: 80px;
+  height: auto;
+}
+
+.rt-img-sml {
+  width: 100px;
+  height: auto;
+}
+
+.rt-img-med {
+  width: 160px;
+  height: auto;
+}
+
+.rt-img-large {
+  width: 200px;
+  height: auto;
+}
+
+.rt-img-full {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (min-width: 750px) {
+  .rich-text-style--left {
+    justify-content: flex-start;
+  }
+  .rich-text-style--right {
+    justify-content: flex-end;
+  }
+  .rt-img-micro {
+    width: 80px;
+    height: auto;
+  }
+  
+  .rt-img-sml {
+    width: 100px;
+    height: auto;
+  }
+  
+  .rt-img-med {
+    width: 200px;
+    height: auto;
+  }
+  
+  .rt-img-large {
+    width: 400px;
+    height: auto;
+  }
+  
+}
+
+.rich-text__blocks * {
+  overflow-wrap: break-word;
+}
+
+.rich-text__blocks > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.rich-text__blocks > * + * {
+  margin-top: 2rem;
+}
+
+.rich-text__blocks > * + a {
+  margin-top: 3rem;
+}
+
+.rich-text__buttons {
+  padding-top: 2rem;
+  word-break: break-word;
+}
+
+.rich-text-content .center .button {
+  margin: 0 auto;
+}
+
+.rich-text__buttons + .rich-text__buttons {
+  margin-top: 1rem;
+}
+
+.rich-text__blocks.left .rich-text__buttons {
+  justify-content: flex-start;
+}
+
+.rich-text__blocks.right .rich-text__buttons {
+  justify-content: flex-end;
+}
+
+.rich-text__pindent p:first-child {
+  text-indent: 4rem;
+}
+
+@media only screen and (min-width: 750px) {
+  .rich-text__pindent p:first-child {
+    text-indent: 8rem;
+  }  
+}
+
+.rich-text-section-bg-image {
+  margin: 0 auto;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.rich-text-section-bg-image img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.rich-text-section-bg-image-overlay {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  z-index: 1;  
+}

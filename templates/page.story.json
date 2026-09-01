@@ -1,0 +1,278 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "hdr_alignment": "align-center",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "image_banner_GYm7y6": {
+      "type": "image-banner",
+      "settings": {
+        "banner_size": "banner-style-large",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/HartwickAtelier-About-Hero.jpg",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 20,
+        "main_image_animation": "none",
+        "image_blur": 0,
+        "primary_image_mobile_show": true,
+        "secondary_image_size": "dt-full-bleed",
+        "secondary_image_padding": 20,
+        "secondary_image_animation": "none",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 75,
+        "fade_in_text": true,
+        "scroll_fade_effect": true,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "",
+        "overlay_level": 0
+      }
+    },
+    "rich_text_m9VY8C": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_FgaLce": {
+          "type": "heading",
+          "settings": {
+            "heading": "The World of Hartwick Atelier",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_TDJzpY": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Hartwick Atelier is a fresh arrival on the slow fashion scene, presenting a euro chic ready-to-wear collection in finely-tailored artisanal fabrics and a handcrafted jewellery line that dazzles with hand-carved precious stones and fine gold.</p><p>Founder and Creative Director Angela Hartwick’s elegant lifestyle collection brings together the work of masters in Indian heritage craft with her years working as a stylist and filmmaker in Paris, Dubai and Mumbai. </p><p>Showcasing the analogue beauty of handspun and handwoven fabrics, hand block prints, natural dyes, fine tailoring, and handcarved precious gems – each handcrafted piece in her collection is a glimpse into the rich history and intricate process that has gone into its creation. </p><p>The scope of the collection is a reflection of its founder’s own lifestyle, a spectacular and fascinating blend of cultures, elegance and earthiness. Her ethos comes together in this luscious offering with authentic range. </p><p></p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FgaLce",
+        "text_TDJzpY"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 120,
+        "padding_bottom": 60,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "image_with_text_QwJb9L": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_H3pmTU": {
+          "type": "text",
+          "settings": {
+            "description": "<p>This collection came together over decades of world travel as creatives in fashion and film. At first glance, it’s an elegant lifestyle brand with a distinct character and gorgeous texture. But at its roots, this collection is a portrait of nature and sustainability through refined handcraft. It’s an analogue love story\", says Angela Hartwick, Founder and Creative Director. </p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_H3pmTU"
+      ],
+      "settings": {
+        "section_size": "flexible",
+        "image": "shopify://shop_images/HartwickAtelier-About-Angela2.jpg",
+        "image_ratio": "fit",
+        "secondary_image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg",
+        "secondary_image_scale": "medium",
+        "image_alignment": "left",
+        "dt_image_width": 50,
+        "card_spacing": 60,
+        "content_width": "page-width",
+        "txt_alignment": "center",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 60,
+        "bottom_padding": 120,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "image_banner_zdBV8r": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_HmGEph": {
+          "type": "heading",
+          "settings": {
+            "heading": "A New Era of Limited Edition Slow Fashion",
+            "heading_tag": "h2",
+            "heading_size": "hxl",
+            "txt_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "heading_HmGEph"
+      ],
+      "settings": {
+        "banner_size": "banner-style-medium",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/HartwickAtelier-About-Hero-02.jpg",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 0,
+        "main_image_animation": "pan-up",
+        "image_blur": 0,
+        "primary_image_mobile_show": true,
+        "secondary_image_size": "dt-full-bleed",
+        "secondary_image_padding": 0,
+        "secondary_image_animation": "pan-up",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 50,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "",
+        "overlay_level": 10
+      }
+    },
+    "rich_text_66cLDR": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_YYFGrC": {
+          "type": "heading",
+          "settings": {
+            "heading": "This collection is a world of happenings.",
+            "heading_size": "h3",
+            "alignment": "center"
+          }
+        },
+        "text_AtKHkf": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every handwoven fabric holds a story of natural fibres, picked and spun into thread by hand then loaded on a loom, where the rhythm and vision of a weaver manifests in the fabric itself.</p><p>Every shade of natural color is a reflection of a season’s delicate balance of rainfall, sun and wind.</p><p>Each block print started as a tree, then a wood block, carved by hand into sets of intricate patterns, dipped and stamped layer by layer, revealing ancient motifs of Earth and sky.</p><p>Each brilliant gem - a piece of the Earth herself - is held in place by precious metals, moulded by fire at the hands of craftsmen whose skill has been refined over generations.</p><p>Then, the layers of influence.</p><p>Glimpses of crumbling palaces, desert villages, ancient temples, cathedrals, old growth forests, glacial rivers, mountains, ranches, movie sets, roadside motels, chic hotels - this is our world of influence distilled into a textiles love story.</p><p>Limited Editions, defined by the natural cycles of life on Earth.</p><p>It’s all happening.</p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_YYFGrC",
+        "text_AtKHkf"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 120,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "section_media_collage_4LAmpK": {
+      "type": "section-media-collage",
+      "blocks": {
+        "image_yKmhR4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-About-Collage-02.jpg",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 20,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        },
+        "image_inWqmp": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-About-Collage-01.jpg",
+            "image_size": "half_width",
+            "image_ratio": "portrait-4x6",
+            "image_padding": 30,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        },
+        "video_wcfYzc": {
+          "type": "video",
+          "settings": {
+            "video_url": "shopify://files/videos/IMG_7936.MP4",
+            "image_size": "half_width",
+            "image_ratio": "portrait-4x6",
+            "image_padding": 30,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        },
+        "image_mR7pJf": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-About-Collage-03.jpg",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 20,
+            "image_offset_vertical": 100,
+            "image_offset_horizontal": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_yKmhR4",
+        "image_inWqmp",
+        "video_wcfYzc",
+        "image_mR7pJf"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "grid_spacing": "default-grid",
+        "bg_color": "bg-body",
+        "padding_top": 0,
+        "padding_bottom": 120
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_GYm7y6",
+    "rich_text_m9VY8C",
+    "image_with_text_QwJb9L",
+    "image_banner_zdBV8r",
+    "rich_text_66cLDR",
+    "section_media_collage_4LAmpK"
+  ]
+}

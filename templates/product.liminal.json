@@ -1,0 +1,354 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h3"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "price_size": "price--large",
+            "price_show_taxes": false,
+            "show_discounts": true,
+            "show_shoppay_banner": false
+          }
+        },
+        "d397b53e-d0be-4717-805f-6ee8a8d247bf": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "show_labels": true,
+            "show_puncuation": true,
+            "border_top": true,
+            "border_bottom": false,
+            "use_color_swatches": false,
+            "color_swatches_style": "round",
+            "color_swatches_array": "White - #f2f2f2\nBlack - #000000\nNavy - #233756\nRed - #912014\nDark Grey - #333333",
+            "popup_title": "Size Guide",
+            "popup_page": "size-guide"
+          }
+        },
+        "870625ea-f97e-4cab-b3b3-04010a7854a5": {
+          "type": "popup",
+          "disabled": true,
+          "settings": {
+            "text": "Size Guide",
+            "text_alignment": "left",
+            "page": ""
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "button_style": "solid",
+            "show_dynamic_checkout": false,
+            "show_payment_methods": false,
+            "show_pickup": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "display_type": "normal",
+            "text_indent": false
+          }
+        },
+        "collapsible_tab_kUHkDk": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "DETAILS",
+            "content": "{{ product.metafields.custom.description | metafield_tag }}",
+            "page": ""
+          }
+        },
+        "collapsible_tab_dm4e4k": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "{{ product.metafields.custom.process_1.value.title.value }}",
+            "content": "{{ product.metafields.custom.process_1.value.description | metafield_tag }}",
+            "page": ""
+          }
+        },
+        "collapsible_tab_h7h3XD": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "{{ product.metafields.custom.process_2.value.title.value }}",
+            "content": "{{ product.metafields.custom.process_2.value.description | metafield_tag }}",
+            "page": ""
+          }
+        },
+        "collapsible_tab_nGN8n7": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "{{ product.metafields.custom.process_3.value.title.value }}",
+            "content": "{{ product.metafields.custom.process_3.value.description | metafield_tag }}",
+            "page": ""
+          }
+        },
+        "collapsible_tab_788c9G": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "{{ product.metafields.custom.process_4.value.title.value }}",
+            "content": "{{ product.metafields.custom.process_4.value.description | metafield_tag }}",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "d397b53e-d0be-4717-805f-6ee8a8d247bf",
+        "870625ea-f97e-4cab-b3b3-04010a7854a5",
+        "buy_buttons",
+        "description",
+        "collapsible_tab_kUHkDk",
+        "collapsible_tab_dm4e4k",
+        "collapsible_tab_h7h3XD",
+        "collapsible_tab_nGN8n7",
+        "collapsible_tab_788c9G"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "enable_sticky_buttons": true,
+        "sticky_buttons_padding": 10,
+        "sticky_buttons_border": false,
+        "sticky_buttons_shadow": 0,
+        "media_bg_col": "rgba(0,0,0,0)",
+        "gallery_aspect_ratio": "portrait",
+        "gallery_media_scale": "default",
+        "media_section_width": "standard",
+        "gallery_height_limit_desktop": false,
+        "mobile_media_nav": "bullets",
+        "mobile_media_nav_position": "below-media",
+        "gallery_layout": "grid",
+        "desktop_media_nav": "thumbnails",
+        "desktop_media_thumbnail_size": "normal",
+        "desktop_media_thumbnail_position": "left",
+        "desktop_media_thumbnail_placement": "adjacent",
+        "arrow_style": "solid-inverted",
+        "product_section_width": "standard",
+        "media_mobile_width": "full-width",
+        "gallery_grid_spacing": 10,
+        "balance_grid": true,
+        "media_video_autoplay": true,
+        "zoom_enable": true,
+        "gallery_mega_zoom": "normal",
+        "info_txt_alignment": "left",
+        "text_section_position": "center",
+        "text_section_vertical_position": "top",
+        "text_section_max_width": 600,
+        "text_section_padding": 0,
+        "blocks_vertical_spacing": 20,
+        "description_split_keyword": "DETAILS",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "bottom_border": false,
+        "border_width": "full",
+        "border_color": "dark"
+      }
+    },
+    "section_shop_the_look_FD8d36": {
+      "type": "section-shop-the-look",
+      "blocks": {
+        "product_8pgkgN": {
+          "type": "product",
+          "settings": {
+            "product": "{{ product.metafields.custom.featured_product_1.value }}"
+          }
+        },
+        "product_WCQmjD": {
+          "type": "product",
+          "settings": {
+            "product": "{{ product.metafields.custom.featured_product_2.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "product_8pgkgN",
+        "product_WCQmjD"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "",
+        "subheading": "STYLE TOGETHER",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "section_heading_position": "normal",
+        "image_placement": "right",
+        "btn_txt": "",
+        "btn_link": "",
+        "button_color": "primary-colour",
+        "btn_position": "top",
+        "btn_style": "solid",
+        "image": "{{ product.metafields.custom.featured_photo.value }}",
+        "image_ratio": "fit",
+        "dt_image_width": 50,
+        "content_width": "page-width",
+        "card_spacing": 40,
+        "txt_position_desktop": "middle",
+        "content_hoz_alignment": "right",
+        "card_grid_layout": "two",
+        "card_layout": "normal",
+        "card_size": "small",
+        "show_price": false,
+        "show_vendor": false,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 100,
+        "bottom_padding": 90,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "complementary-products": {
+      "type": "complementary-products",
+      "disabled": true,
+      "settings": {
+        "heading": "Pair it with",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "products_to_show": 4,
+        "show_secondary_image": true,
+        "show_price": true,
+        "price_highlight": true,
+        "show_vendor": false,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "rich_text_HP7RBH": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_ahrdir": {
+          "type": "heading",
+          "settings": {
+            "heading": "{{ product.metafields.custom.collection.value.title.value }}",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_hfrPei": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.custom.collection.value.description | metafield_tag }}",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_ahrdir",
+        "text_hfrPei"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "section_media_collage_wDpCVC": {
+      "type": "section-media-collage",
+      "blocks": {
+        "image_BC7kbD": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/003CROP02_HARTWICK_LIMINAL_NECKLACE_PENDANT_GOLD_EMERALD_SILVER_2112.jpg",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait-4x6",
+            "image_padding": 0,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        },
+        "video_37BEHi": {
+          "type": "video",
+          "settings": {
+            "video_url": "shopify://files/videos/0022_HARTWICK_LIMINAL_STEPRINGS_24KGOLD_EMERALD_TOURMALINE_RHODOLITE_IMG_6516.mov",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait-4x6",
+            "image_padding": 0,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 50
+          }
+        }
+      },
+      "block_order": [
+        "image_BC7kbD",
+        "video_37BEHi"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "grid_spacing": "default-grid",
+        "bg_color": "bg-body",
+        "padding_top": 0,
+        "padding_bottom": 50
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You May Also Like",
+        "heading_size": "h3",
+        "heading_alignment": "center",
+        "products_to_show": 8,
+        "columns_tablet": 4,
+        "columns_desktop": 4,
+        "arrow_style": "solid-inverted",
+        "show_secondary_image": false,
+        "show_price": false,
+        "show_vendor": false,
+        "enable_quick_add": false,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "top_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_shop_the_look_FD8d36",
+    "complementary-products",
+    "rich_text_HP7RBH",
+    "section_media_collage_wDpCVC",
+    "related-products"
+  ]
+}

@@ -1,0 +1,896 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hH8AfY": {
+          "type": "heading",
+          "settings": {
+            "heading": "MADE BY MASTERS",
+            "heading_tag": "h1",
+            "heading_size": "h2",
+            "txt_alignment": "right"
+          }
+        },
+        "buttons_4XdxQC": {
+          "type": "buttons",
+          "settings": {
+            "btn_one_show": true,
+            "btn_one_txt": "THE COLLECTION",
+            "btn_one_link": "shopify://collections/hartwick-atelier-drop-one",
+            "btn_one_style": "button--outline",
+            "btn_two_show": false,
+            "btn_two_txt": "Button label",
+            "btn_two_link": "",
+            "btn_two_style": "button--solid",
+            "btn_layout": "inline",
+            "btn_color_scheme": "match-section"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hH8AfY",
+        "buttons_4XdxQC"
+      ],
+      "settings": {
+        "banner_size": "banner-style-fullscreen",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/003_HARTWICK_HANDWOVEN_BOMBAY_TROUSERS_IKAT_JODHPUR_SHIRT_FINESILK_STOLE_SCARF_NATURALDYE_BLOCKPRINT_cb2aee0b-115e-485a-9b28-f0fdda824fef.jpg",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 0,
+        "main_image_animation": "none",
+        "image_blur": 0,
+        "primary_image_mobile_show": false,
+        "image_secondary": "shopify://shop_images/003_HARTWICK_HANDWOVEN_BOMBAY_TROUSERS_IKAT_JODHPUR_SHIRT_FINESILK_STOLE_SCARF_NATURALDYE_BLOCKPRINT_23539b02-0b2d-44ec-a492-310dae47b8a4.jpg",
+        "secondary_image_size": "dt-half-center",
+        "secondary_image_padding": 0,
+        "secondary_image_animation": "none",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "bottom_right",
+        "txt_alignment": "right",
+        "content_width": 100,
+        "fade_in_text": true,
+        "scroll_fade_effect": true,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "rgba(0,0,0,0)",
+        "overlay_level": 10
+      }
+    },
+    "rich_text_kBGEpT": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_FJyDjR": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_size": "h2",
+            "alignment": "left"
+          }
+        },
+        "text_nDR7r7": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Textile history dates back to the beginning of human civilization.</p><p>Hartwick Atelier specializes in hand spun and handwoven fabrics, natural and ayurvedic dyes, and detailed handwork. These artisanal techniques rely on rare knowledge and the natural cycles of the sun, wind and rain.</p><p>Each handcrafted piece in the collection is a glimpse into the rich history, intricate process and generations of skill that have gone into its creation.</p>",
+            "text_size": "text-std",
+            "alignment": "left",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FJyDjR",
+        "text_nDR7r7"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "content_width": "page-width",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "rich_text_TpFMjm": {
+      "type": "rich-text",
+      "blocks": {
+        "image_Mf46UJ": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Hartwick_logo_PlainFrame_Square.jpg",
+            "image_size": "rt-img-med",
+            "image_corner_radius": 0,
+            "alignment": "center"
+          }
+        },
+        "heading_GaYm7M": {
+          "type": "heading",
+          "settings": {
+            "heading": "This collection is a world of happenings.",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_hzifJU": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every handwoven fabric holds a story of natural fibres, picked and spun into thread by hand then loaded on a loom, where the rhythm and vision of a weaver manifests in the fabric itself.</p><p>Every shade of natural color is a reflection of a season’s delicate balance of rainfall, sun and wind.</p><p>Each block print started as a tree, then a wood block, carved by hand into sets of intricate patterns, dipped and stamped layer by layer, revealing ancient motifs of Earth and sky.</p><p>Each brilliant gem - a piece of the Earth herself - is held in place by precious metals, moulded by fire at the hands of craftsmen whose skill has been refined over generations.</p><p>Glimpses of crumbling palaces, desert villages, ancient temples, thriving cities, old growth forests, glacial rivers, mountains, ranches, movie sets, roadside motels, chic hotels.</p><p>This is our world of influence distilled into a fashion story.</p><p>It’s all happening.</p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        }
+      },
+      "block_order": [
+        "image_Mf46UJ",
+        "heading_GaYm7M",
+        "text_hzifJU"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "image_banner_QBcFTk": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_3LBLUh": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_tag": "h1",
+            "heading_size": "h1",
+            "txt_alignment": "center"
+          }
+        },
+        "text_NKY4J4": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_size": "text-std"
+          }
+        },
+        "buttons_WKzerJ": {
+          "type": "buttons",
+          "settings": {
+            "btn_one_show": true,
+            "btn_one_txt": "slow and sustainable",
+            "btn_one_link": "",
+            "btn_one_style": "button--outline",
+            "btn_two_show": false,
+            "btn_two_txt": "Button label",
+            "btn_two_link": "",
+            "btn_two_style": "button--solid",
+            "btn_layout": "inline",
+            "btn_color_scheme": "white"
+          }
+        }
+      },
+      "block_order": [
+        "heading_3LBLUh",
+        "text_NKY4J4",
+        "buttons_WKzerJ"
+      ],
+      "settings": {
+        "banner_size": "banner-style-fullscreen",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/005_HARTWICK_HANDWOVEN_PRAGUE_COTTONSILK_NATURALDYE_BLOCKPRINT_27946aa3-0f06-405c-9b09-3268b98ada48.jpg",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 0,
+        "main_image_animation": "none",
+        "image_blur": 0,
+        "primary_image_mobile_show": true,
+        "secondary_image_size": "dt-full-bleed",
+        "secondary_image_padding": 0,
+        "secondary_image_animation": "none",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 75,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "",
+        "overlay_level": 0
+      }
+    },
+    "video_with_text_acXkNM": {
+      "type": "video-with-text",
+      "blocks": {
+        "caption_PN6LjG": {
+          "type": "caption",
+          "settings": {
+            "caption": "HARTWICK ATELIER"
+          }
+        },
+        "heading_wXgzMW": {
+          "type": "heading",
+          "settings": {
+            "heading": "Made by Masters of Handcraft",
+            "heading_size": "h2"
+          }
+        },
+        "text_MJB8tB": {
+          "type": "text",
+          "settings": {
+            "description": "<p>This collection, made by masters of refined handcraft whose knowledge is ancient and rare, features exquisite heritage techniques including hand spun and handwoven fabrics, natural and ayurvedic dyes, hand block prints and embroidery, hand carved precious stones and fine gold jewellery.</p><p>Each handcrafted piece is a glimpse into the rich history and intricate process that has gone into its creation.</p>"
+          }
+        },
+        "button_UdP8Tj": {
+          "type": "button",
+          "settings": {
+            "btn_txt": "SLOW FASHION",
+            "btn_link": "",
+            "button_colour": "primary-colour",
+            "btn_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "caption_PN6LjG",
+        "heading_wXgzMW",
+        "text_MJB8tB",
+        "button_UdP8Tj"
+      ],
+      "settings": {
+        "section_size": "flexible",
+        "video_url": "shopify://files/videos/HA LOGO 02 TRIMMED.mov",
+        "image_ratio": "portrait-4x6",
+        "secondary_image_scale": "small",
+        "dt_image_width": 50,
+        "card_spacing": 20,
+        "content_width": "page-width",
+        "txt_alignment": "left",
+        "video_alignment": "right",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 80,
+        "bottom_padding": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "video_with_text_rJF8ct": {
+      "type": "video-with-text",
+      "blocks": {
+        "caption_iaJiae": {
+          "type": "caption",
+          "settings": {
+            "caption": "FINE SILK"
+          }
+        },
+        "heading_aEnFwB": {
+          "type": "heading",
+          "settings": {
+            "heading": "Natural Dye",
+            "heading_size": "h2"
+          }
+        },
+        "text_wF6d3z": {
+          "type": "text",
+          "settings": {
+            "description": "<p>This collection of fine silk is rooted in thousands of years of knowledge. </p><p>Master Colorists use ancient methods to create natural dyes using indigenous plants and minerals including wild indigo, pomegranate bark and seeds, tamarind, turmeric, jaggery, ash, and iron. </p><p>Using hand carved wooden blocks, Master Printers print each colour, layer by layer using resist dyeing techniques to create intricate interpretations of floral and celestial patterns. </p><p>These processes give way to lustrous geometric colorscapes with deep tonal range.</p>"
+          }
+        },
+        "button_aQWeez": {
+          "type": "button",
+          "settings": {
+            "btn_txt": "SHOP FINE SILK",
+            "btn_link": "",
+            "button_colour": "primary-colour",
+            "btn_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "caption_iaJiae",
+        "heading_aEnFwB",
+        "text_wF6d3z",
+        "button_aQWeez"
+      ],
+      "settings": {
+        "section_size": "flexible",
+        "video_url": "shopify://files/videos/IMG_9647_ea988c8f-d1f4-42d9-bb31-09a2e5cd8db0.mov",
+        "image_ratio": "fit",
+        "secondary_image_scale": "small",
+        "dt_image_width": 50,
+        "card_spacing": 20,
+        "content_width": "page-width",
+        "txt_alignment": "left",
+        "video_alignment": "right",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 80,
+        "bottom_padding": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "image_banner_WfXNQM": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_8RGmhq": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Natural Dye",
+            "heading_tag": "h1",
+            "heading_size": "h1",
+            "txt_alignment": "center"
+          }
+        },
+        "text_kYjnXm": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Block Printed By Hand</p>",
+            "text_size": "text-std"
+          }
+        },
+        "buttons_GXQ9ib": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "btn_one_show": true,
+            "btn_one_txt": "SHOP FINE SILK",
+            "btn_one_link": "",
+            "btn_one_style": "button--solid",
+            "btn_two_show": false,
+            "btn_two_txt": "Button label",
+            "btn_two_link": "",
+            "btn_two_style": "button--solid",
+            "btn_layout": "inline",
+            "btn_color_scheme": "default"
+          }
+        }
+      },
+      "block_order": [
+        "heading_8RGmhq",
+        "text_kYjnXm",
+        "buttons_GXQ9ib"
+      ],
+      "settings": {
+        "banner_size": "banner-style-fullscreen",
+        "banner_full_link": "",
+        "image": "shopify://shop_images/HARTWICK_SILK_MULITSHOT_d0bc2b42-aba9-45e4-a2a0-89ce9c17f85c.png",
+        "primary_image_size": "dt-full-bleed",
+        "image_padding": 40,
+        "main_image_animation": "none",
+        "image_blur": 0,
+        "primary_image_mobile_show": true,
+        "secondary_image_size": "dt-full-bleed",
+        "secondary_image_padding": 0,
+        "secondary_image_animation": "none",
+        "secondary_image_blur": 0,
+        "secondary_image_mobile_show": true,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 75,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "#000000",
+        "overlay_level": 0
+      }
+    },
+    "image_with_text_pRRTr7": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_wPdDa8": {
+          "type": "caption",
+          "settings": {
+            "caption": "NATURAL DYE"
+          }
+        },
+        "heading_UNVnmA": {
+          "type": "heading",
+          "settings": {
+            "heading": "FINE SILK",
+            "heading_size": "h2"
+          }
+        },
+        "text_9xQJMC": {
+          "type": "text",
+          "settings": {
+            "description": "<p>This collection of fine silk is rooted in thousands of years of knowledge. </p><p>Master Colorists use ancient methods to create natural dyes using indigenous plants and minerals including wild indigo, pomegranate bark and seeds, tamarind, turmeric, jaggery, ash, and iron. </p><p>Using hand carved wooden blocks, Master Printers print each colour, layer by layer using resist dyeing techniques to create intricate interpretations of floral and celestial patterns. </p><p>These processes give way to lustrous geometric colorscapes with deep tonal range.</p>"
+          }
+        },
+        "button_fT4m7a": {
+          "type": "button",
+          "settings": {
+            "btn_txt": "Button label",
+            "btn_link": "",
+            "btn_color_scheme": "default",
+            "btn_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "caption_wPdDa8",
+        "heading_UNVnmA",
+        "text_9xQJMC",
+        "button_fT4m7a"
+      ],
+      "settings": {
+        "section_size": "flexible",
+        "image": "shopify://shop_images/012_HARTWICK_FINESILK_LARGESQUARE04_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+        "image_ratio": "portrait",
+        "secondary_image_scale": "small",
+        "image_alignment": "right",
+        "dt_image_width": 50,
+        "card_spacing": 20,
+        "content_width": "page-width",
+        "txt_alignment": "left",
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "top_padding": 80,
+        "bottom_padding": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "border_color": "dark"
+      }
+    },
+    "section_media_collage_Rb8cyf": {
+      "type": "section-media-collage",
+      "blocks": {
+        "image_DdCQKm": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-About.jpg",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 20,
+            "image_offset_vertical": 100,
+            "image_offset_horizontal": 0
+          }
+        },
+        "image_QiMMJk": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-Process3.jpg",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 20,
+            "image_offset_vertical": 100,
+            "image_offset_horizontal": 0
+          }
+        },
+        "video_mL964x": {
+          "type": "video",
+          "settings": {
+            "video_url": "shopify://files/videos/IMG_9647.mov",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait-4x6",
+            "image_padding": 0,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        },
+        "image_nAFDdj": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/042_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait-4x6",
+            "image_padding": 0,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_DdCQKm",
+        "image_QiMMJk",
+        "video_mL964x",
+        "image_nAFDdj"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "grid_spacing": "default-grid",
+        "bg_color": "bg-body",
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
+    },
+    "rich_text_3hdUVn": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_rXBTmz": {
+          "type": "heading",
+          "settings": {
+            "heading": "Layers of Influence",
+            "heading_size": "h2",
+            "alignment": "right"
+          }
+        },
+        "text_tFqCG4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>This collection came together over decades of world travel as creatives in fashion and film. At first glance, it’s an elegant lifestyle brand with a distinct character and gorgeous texture. But at its roots, this collection is a portrait of nature and sustainability through refined handcraft. It’s an analogue love story.</p>",
+            "text_size": "text-std",
+            "alignment": "right",
+            "text_indent": "noindent"
+          }
+        },
+        "button_qNdV88": {
+          "type": "button",
+          "settings": {
+            "alignment": "right",
+            "btn_one_show": true,
+            "btn_one_txt": "Read our Story",
+            "btn_one_link": "shopify://pages/story",
+            "btn_one_style": "button--outline",
+            "btn_two_show": false,
+            "btn_two_txt": "Button text",
+            "btn_two_link": "",
+            "btn_two_style": "button--solid",
+            "btn_color_scheme": "default",
+            "btn_layout": "inline"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rXBTmz",
+        "text_tFqCG4",
+        "button_qNdV88"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "right",
+        "border_color": "dark"
+      }
+    },
+    "section_media_collage_V6rJpz": {
+      "type": "section-media-collage",
+      "blocks": {
+        "image_YNCkgA": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-Collage-03.jpg",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 10,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        },
+        "video_JafgAn": {
+          "type": "video",
+          "settings": {
+            "video_url": "shopify://files/videos/IMG_5624_HARTWICK_LIMINAL_HANDCRAFTED_SILVER_18K_GOLD_EARRINGS_efa4aa22-e7fa-4e95-85d6-f389d10c12a4.mov",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 0,
+            "image_offset_vertical": 0,
+            "image_offset_horizontal": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_YNCkgA",
+        "video_JafgAn"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "grid_spacing": "default-grid",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 20
+      }
+    },
+    "rich_text_WTMWFw": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_yU9prf": {
+          "type": "heading",
+          "settings": {
+            "heading": "Natural Cycles of Life",
+            "heading_size": "h2",
+            "alignment": "left"
+          }
+        },
+        "text_ktgrtk": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Glimpses of crumbling palaces, desert villages, ancient temples, cathedrals, old growth forests, glacial rivers, mountains, ranches, movie sets, roadside motels, chic hotels - this is our world of influence distilled into a textiles love story.</p>",
+            "text_size": "text-std",
+            "alignment": "left",
+            "text_indent": "noindent"
+          }
+        },
+        "button_BxJbHJ": {
+          "type": "button",
+          "settings": {
+            "alignment": "left",
+            "btn_one_show": true,
+            "btn_one_txt": "Read About Our Process",
+            "btn_one_link": "shopify://pages/heritage-craft",
+            "btn_one_style": "button--outline",
+            "btn_two_show": false,
+            "btn_two_txt": "Button text",
+            "btn_two_link": "",
+            "btn_two_style": "button--solid",
+            "btn_color_scheme": "default",
+            "btn_layout": "inline"
+          }
+        }
+      },
+      "block_order": [
+        "heading_yU9prf",
+        "text_ktgrtk",
+        "button_BxJbHJ"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "left",
+        "border_color": "dark"
+      }
+    },
+    "section_media_collage_UfDHcy": {
+      "type": "section-media-collage",
+      "blocks": {
+        "image_zwFaix": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-Collage-05.jpg",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 0,
+            "image_offset_vertical": 100,
+            "image_offset_horizontal": 0
+          }
+        },
+        "image_8DCGbd": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HartwickAtelier-Collage-06.jpg",
+            "url": "",
+            "image_size": "half_width",
+            "image_ratio": "portrait",
+            "image_padding": 20,
+            "image_offset_vertical": 100,
+            "image_offset_horizontal": 50
+          }
+        }
+      },
+      "block_order": [
+        "image_zwFaix",
+        "image_8DCGbd"
+      ],
+      "settings": {
+        "content_width": "page-width",
+        "grid_spacing": "default-grid",
+        "bg_color": "bg-body",
+        "padding_top": 0,
+        "padding_bottom": 20
+      }
+    },
+    "video_banner_cwJtr7": {
+      "type": "video-banner",
+      "blocks": {
+        "heading_VdYQtA": {
+          "type": "heading",
+          "settings": {
+            "heading": "FINE JEWELLERY",
+            "heading_tag": "h2",
+            "heading_size": "h1",
+            "txt_alignment": "center"
+          }
+        },
+        "text_YnDfke": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Hand Carved Precious Stones, Silver and Fine Gold </p>",
+            "text_size": "text-std"
+          }
+        },
+        "buttons_bfXgEF": {
+          "type": "buttons",
+          "settings": {
+            "btn_layout": "inline",
+            "btn_color_scheme": "white",
+            "btn_one_show": true,
+            "btn_one_txt": "GALLERY",
+            "btn_one_link": "",
+            "btn_one_style": "button--solid",
+            "btn_two_show": false,
+            "btn_two_txt": "Button text",
+            "btn_two_link": "",
+            "btn_two_style": "button--solid"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VdYQtA",
+        "text_YnDfke",
+        "buttons_bfXgEF"
+      ],
+      "settings": {
+        "video_url": "shopify://files/videos/HARTWICK_LIMINAL_HANDCRAFTED_EMERALD_RUBY_AQUAMARINE_IMG_5568_CROPPED.mov",
+        "video_mob_url": "shopify://files/videos/HARTWICK_LIMINAL_HANDCRAFTED_EMERALD_RUBY_AQUAMARINE_IMG_5568_CROPPED.mov",
+        "overlay_level": 0,
+        "banner_size": "banner-style-fullscreen",
+        "video_size": "100",
+        "video_position": "center",
+        "video_margin_mobile": 0,
+        "video_margin_desktop": 0,
+        "txt_position": "middle",
+        "txt_alignment": "center",
+        "content_width": 100,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
+        "top_padding": 0,
+        "bottom_padding": 0,
+        "text_color": "fg-white",
+        "bg_color": "#000000"
+      }
+    },
+    "rich_text_8wrNYW": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xXUD6W": {
+          "type": "heading",
+          "settings": {
+            "heading": "A World of Happenings",
+            "heading_size": "h2",
+            "alignment": "center"
+          }
+        },
+        "text_6GerBb": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every handwoven fabric holds a story of natural fibres, picked and spun into thread by hand then loaded on a loom, where the rhythm and vision of a weaver manifests in the fabric itself.</p><p>Every shade of natural color is a reflection of a season’s delicate balance of rainfall, sun and wind.</p><p>Each block print started as a tree, then a wood block, carved by hand into sets of intricate patterns, dipped and stamped layer by layer, revealing ancient motifs of Earth and sky.</p><p>Each brilliant gem - a piece of the Earth herself - is held in place by precious metals, moulded by fire at the hands of craftsmen whose skill has been refined over generations.</p>",
+            "text_size": "text-std",
+            "alignment": "center",
+            "text_indent": "noindent"
+          }
+        },
+        "button_wayBV4": {
+          "type": "button",
+          "settings": {
+            "alignment": "center",
+            "btn_one_show": true,
+            "btn_one_txt": "Shop Apparel",
+            "btn_one_link": "shopify://collections/apparel",
+            "btn_one_style": "button--outline",
+            "btn_two_show": true,
+            "btn_two_txt": "Shop Jewellery",
+            "btn_two_link": "shopify://collections/fine-jewellery",
+            "btn_two_style": "button--outline",
+            "btn_color_scheme": "default",
+            "btn_layout": "inline"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xXUD6W",
+        "text_6GerBb",
+        "button_wayBV4"
+      ],
+      "settings": {
+        "content_width": "page-width-narrow",
+        "bg_image_darken": 0,
+        "bg_image_blur": 0,
+        "text_color": "fg-body",
+        "bg_color": "bg-body",
+        "padding_top": 80,
+        "padding_bottom": 120,
+        "top_border": false,
+        "bottom_border": false,
+        "border_width": "normal",
+        "alignment": "center",
+        "border_color": "dark"
+      }
+    },
+    "1731856929d4af91c0": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_xHCD9x": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_xHCD9x"
+      ],
+      "settings": {
+        "include_margins": false
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "rich_text_kBGEpT",
+    "rich_text_TpFMjm",
+    "image_banner_QBcFTk",
+    "video_with_text_acXkNM",
+    "video_with_text_rJF8ct",
+    "image_banner_WfXNQM",
+    "image_with_text_pRRTr7",
+    "section_media_collage_Rb8cyf",
+    "rich_text_3hdUVn",
+    "section_media_collage_V6rJpz",
+    "rich_text_WTMWFw",
+    "section_media_collage_UfDHcy",
+    "video_banner_cwJtr7",
+    "rich_text_8wrNYW",
+    "1731856929d4af91c0"
+  ]
+}

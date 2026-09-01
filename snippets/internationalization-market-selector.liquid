@@ -1,0 +1,33 @@
+<div class="market-selector-list">
+{% if localization.available_countries.size > 1 %}
+  <localization-form>
+    {% form 'localization' %}
+  <ul id="CountryList-NA" role="list" class="vert-list ui-icon-list ui-nav-element">
+      {% for country in localization.available_countries %}
+        {% if country.iso_code == localization.country.iso_code %}
+        <li class="vert-list-item list-countries market-list-current" tabindex="-1">
+           {% assign coun = country.iso_code %}
+          <a href="#" aria-current="true" class="country-list-current" data-value="{{ country.iso_code }}">
+            {% render 'internationalization-flag', flag: coun %}<span class="list-countries-name">{{ country.name }}</span><span class="list-countries-currency">{{ country.currency.iso_code }} ({{ country.currency.symbol }})</span>
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+       
+      {% for country in localization.available_countries %}
+        {% unless country.iso_code == localization.country.iso_code %}
+            <li class="vert-list-item list-countries" tabindex="-1">
+               {% assign coun = country.iso_code %}
+              <a href="#" data-value="{{ country.iso_code }}">
+                {% render 'internationalization-flag', flag: coun %}<span class="list-countries-name">{{ country.name }}</span><span class="list-countries-currency">{{ country.currency.iso_code }} ({{ country.currency.symbol }})</span>
+              </a>
+            </li>
+        {% endunless %}
+      {% endfor %}
+  </ul>
+
+  <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+    {% endform %}
+  </localization-form>
+{% endif %}
+</div>

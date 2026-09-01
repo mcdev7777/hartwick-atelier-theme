@@ -1,0 +1,104 @@
+.section-collapsible-content {
+  box-sizing: border-box;
+}
+
+.accordion a, .accordion button {
+  color: inherit;
+}
+
+.accordion-group-heading {
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+}
+
+.accordion {
+  position: relative;
+  margin: 0 !important;
+  transition: 0.3s;
+  border-top: 1px solid rgba(var(--color-foreground),var(--accordions-border-opacity));
+  padding: var(--accordions-spacing) 0;
+}
+
+.product-main-info-section .accordion {
+  border-top: 1px solid rgba(var(--color-foreground),var(--accordions-border-opacity));
+  border-bottom: 0;
+}
+
+.product-main-info-section .accordion:last-of-type {
+  border-bottom: 1px solid rgba(var(--color-foreground),var(--accordions-border-opacity));
+}
+
+.accordion-title {
+  font-family: var(--font-body-family) !important;
+  font-weight: normal !important;
+  font-size: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  outline: 0;
+  background: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.accordion-title:focus-visible {
+  outline: 2px solid;
+}
+
+.accordion-icon-open, .accordion-icon-close {
+  float: right;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.accordion-icon-open .icon, .accordion-icon-close .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.accordion-icon-open {
+  margin-right: 0.5rem;
+}
+
+.accordion-icon-close {
+  visibility: hidden;
+  margin-right: -1rem;
+}
+
+.accordion-title.active .accordion-icon-close {
+    visibility: visible;
+}
+
+.accordion-title.active .accordion-icon-open {
+    visibility: hidden;
+}
+
+.accordion-title.active .icon-caret {
+  transform: rotate(180deg);
+}
+
+.accordion-panel {
+  padding: 0;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+}
+
+.product-main-info-section .accordion-panel ul {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.product-main-info-section .accordion-panel li {
+  list-style-type: disc;
+  padding-left: 0px;
+  display: list-item;
+  margin-left: 20px;
+}
