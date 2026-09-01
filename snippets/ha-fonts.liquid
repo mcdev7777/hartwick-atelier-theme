@@ -1,0 +1,97 @@
+{%- comment -%}
+  Hartwick Atelier — the three typographic voices.
+  Source: BRANDING/Typography/"HA Typography Rules _ READ ME.pdf"
+
+    IDENTIFY  Porter Medium              house name, headings, navigation   (uppercase A-Z only)
+    NARRATE   Junicode Medium / Italic   editorial copy, headlines, quotations
+    RECORD    Noto Sans Mono Condensed   specifications, provenance, dates, credits
+
+  Porter is supplied as desktop .otf only and its web licence is unresolved (risk R1),
+  so --ha-font-identify currently carries Junicode. When the licence lands: upload
+  ha-porter-medium.woff2 to assets and tick "Porter webfont licence confirmed" in
+  Theme settings. That is the entire swap — no section code changes.
+
+  Font files are Latin-subset variable WOFF2 built from the Brand Assets originals:
+    Junicode  1.1 MB -> 75 KB   (wght 300-700 retained, wdth/ENLA axes pinned)
+    Noto Mono 400 KB -> 12 KB
+{%- endcomment -%}
+
+{% style %}
+  @font-face {
+    font-family: "Junicode";
+    src: url({{ 'ha-junicode.woff2' | asset_url }}) format("woff2-variations");
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Junicode";
+    src: url({{ 'ha-junicode-italic.woff2' | asset_url }}) format("woff2-variations");
+    font-weight: 300 700;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Noto Sans Mono Condensed";
+    src: url({{ 'ha-noto-mono-cond.woff2' | asset_url }}) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  {%- if settings.ha_porter_licensed -%}
+  @font-face {
+    font-family: "Porter";
+    src: url({{ 'ha-porter-medium.woff2' | asset_url }}) format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  {%- endif -%}
+
+  :root {
+    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", {% endif %}"Junicode", Georgia, "Times New Roman", serif;
+    --ha-font-narrate:  "Junicode", Georgia, "Times New Roman", serif;
+    --ha-font-record:   "Noto Sans Mono Condensed", ui-monospace, "SF Mono", Menlo, monospace;
+
+    /* override Luxe's font_picker-generated families */
+    --font-heading-family: var(--ha-font-identify);
+    --font-body-family:    var(--ha-font-narrate);
+    --font-accent-family:  var(--ha-font-record);
+  }
+
+  /* IDENTIFY — brand book: uppercase only, tracking +20 to +80, line height 90-110% */
+  .ha-identify {
+    font-family: var(--ha-font-identify);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  /* NARRATE — brand book: body line height 140-155%, tracking 0 to +10 */
+  .ha-narrate {
+    font-family: var(--ha-font-narrate);
+    line-height: 1.45;
+    letter-spacing: 0.005em;
+  }
+
+  /* RECORD — brand book: uppercase labels, tabular numerals, left aligned */
+  .ha-record {
+    font-family: var(--ha-font-record);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    text-align: left;
+  }
+
+  /* Wordmark. Colour comes from `color` because the SVG paints with currentColor:
+     Inkstone on light grounds, Chalk Blue on dark. Logo rules give a 220px digital
+     minimum width — below that the framed House Symbol must be used instead. */
+  .ha-wordmark {
+    display: block;
+    width: 220px;
+    max-width: 100%;
+    aspect-ratio: 1225.9 / 301.7;
+    color: var(--ha-inkstone);
+  }
+  .ha-wordmark--invert { color: var(--ha-chalk-blue); }
+{% endstyle %}

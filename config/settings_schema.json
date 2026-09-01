@@ -30,6 +30,101 @@
     ]
   },
   {
+    "name": "Hartwick — Material Archive",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Brand palette from the Colour Language brand book. These feed CSS variables used by the custom Hartwick sections. Luxe's own Colors panel below should be pointed at these same values."
+      },
+      {
+        "type": "header",
+        "content": "Palette"
+      },
+      {
+        "type": "color",
+        "id": "ha_soot_black",
+        "label": "Soot Black (primary)",
+        "default": "#0B0603"
+      },
+      {
+        "type": "color",
+        "id": "ha_cutch_resin",
+        "label": "Cutch Resin (primary)",
+        "default": "#541F00"
+      },
+      {
+        "type": "color",
+        "id": "ha_inkstone",
+        "label": "Inkstone (structural)",
+        "default": "#2D2E38"
+      },
+      {
+        "type": "color",
+        "id": "ha_peat_fibre",
+        "label": "Peat Fibre (structural)",
+        "default": "#332820"
+      },
+      {
+        "type": "color",
+        "id": "ha_loden_moss",
+        "label": "Loden Moss (secondary)",
+        "default": "#B2AA72"
+      },
+      {
+        "type": "color",
+        "id": "ha_bare_clay",
+        "label": "Bare Clay (neutral)",
+        "default": "#DEB6BE"
+      },
+      {
+        "type": "color",
+        "id": "ha_mordant_amber",
+        "label": "Mordant Amber (accent)",
+        "default": "#D5A040"
+      },
+      {
+        "type": "color",
+        "id": "ha_chalk_blue",
+        "label": "Chalk Blue (neutral)",
+        "default": "#E9F3FF"
+      },
+      {
+        "type": "header",
+        "content": "Grounds"
+      },
+      {
+        "type": "paragraph",
+        "content": "PLACEHOLDER — the wireframe's warm page ground is not one of the eight palette colours, and the logo rules name Chalk Blue as the light ground instead. Awaiting Aloha's confirmation. Changing this one field restyles the whole site."
+      },
+      {
+        "type": "color",
+        "id": "ha_page_ground",
+        "label": "Page ground (light)",
+        "default": "#F2EFE9"
+      },
+      {
+        "type": "color",
+        "id": "ha_field_dark",
+        "label": "Dark field",
+        "default": "#332820"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "paragraph",
+        "content": "Porter is a licensed commercial font supplied as desktop OTF only. Until a webfont licence is confirmed it carries Junicode. Turning this on once the licence lands is the only change needed."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_porter_licensed",
+        "label": "Porter webfont licence confirmed",
+        "default": false
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.colors.name",
     "settings": [
       {
@@ -480,7 +575,7 @@
         "unit": "px",
         "label": "t:settings_schema.typography.settings.font_size_desktop.label",
         "default": 17
-      }      
+      }
     ]
   },
   {
@@ -592,7 +687,7 @@
         "default": 40,
         "unit": "px",
         "label": "t:settings_schema.layout.settings.section_footer_spacing.label"
-      }      
+      }
     ]
   },
   {
@@ -772,7 +867,7 @@
         "unit": "px",
         "label": "t:settings_schema.global.settings.corner_radius.label",
         "default": 0
-      }      
+      }
     ]
   },
   {
@@ -1037,7 +1132,7 @@
           {
             "value": "button-text",
             "label": "t:settings_schema.cards.settings.quick_add_button_style_mobile.options__3.label"
-          }          
+          }
         ],
         "default": "button-outline",
         "label": "t:settings_schema.cards.settings.quick_add_button_style_desktop.label"
@@ -1053,7 +1148,7 @@
           {
             "value": "minimal",
             "label": "t:settings_schema.cards.settings.quick_add_card_style_mobile.options__2.label"
-          }          
+          }
         ],
         "default": "normal",
         "label": "t:settings_schema.cards.settings.quick_add_card_style_mobile.label",
@@ -1065,7 +1160,7 @@
         "label": "t:settings_schema.cards.settings.quick_add_desktop_rollover.label",
         "info": "t:settings_schema.cards.settings.quick_add_desktop_rollover.info",
         "default": true
-      },      
+      },
       {
         "type": "range",
         "id": "quick_add_button_padding",
@@ -1215,7 +1310,7 @@
         "type": "color",
         "id": "collection_card_bg_color",
         "label": "t:settings_schema.collection_cards.settings.card_background_color.label"
-      }      
+      }
     ]
   },
   {
@@ -1405,7 +1500,7 @@
         ],
         "default": "uppercase",
         "label": "t:settings_schema.global.settings.font_case.label"
-      },      
+      },
       {
         "type": "header",
         "content": "t:settings_schema.badges.settings.blog_tags.label"

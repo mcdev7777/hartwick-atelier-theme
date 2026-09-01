@@ -1,0 +1,161 @@
+{%- comment -%}
+  Hartwick Atelier — storefront audit dump.
+  Read-only. Renders store structure as JSON so it can be captured without Admin API access.
+
+  INSTALL (Route A — full version, needs "add a page"):
+    1. Admin > Content > Pages > Add page. Title: "ZZ Audit". Save. Leave the body empty.
+    2. Online Store > Themes > [Hartwick — DEV] > ... > Edit code
+    3. Templates > Add a new template > page > name it "audit"  -> creates page.audit.json
+    4. DELETE the generated page.audit.json, then Add a new template > page > "audit" > Liquid
+       (or just replace its whole contents with this file if the editor gave you .liquid)
+    5. Back on the page in step 1, set Theme template = "page.audit". Save.
+    6. Preview the DEV theme and visit  /pages/zz-audit
+    7. Select all on the page, copy, paste into store-snapshot/liquid-audit.json
+    8. For products past the first 50:  /pages/zz-audit?page=2 , ?page=3 ...
+    9. DELETE the template and the page when finished.
+
+  INSTALL (Route B — no page creation, products capped at 50):
+    Theme editor > browse to a 404 URL > Add section > Custom Liquid > paste everything
+    BELOW the "ROUTE B START" marker. Then view any nonexistent URL on the dev theme.
+{%- endcomment -%}
+
+<pre style="white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace">
+{
+"generated_for": "hartwick-audit",
+
+"shop": {
+  "name": {{ shop.name | json }},
+  "domain": {{ shop.domain | json }},
+  "permanent_domain": {{ shop.permanent_domain | json }},
+  "currency": {{ shop.currency | json }},
+  "money_format": {{ shop.money_format | strip_html | json }},
+  "enabled_currencies": [{% for c in shop.enabled_currencies %}{{ c.iso_code | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "published_locales": [{% for l in shop.published_locales %}{"iso":{{ l.iso_code | json }},"primary":{{ l.primary }}}{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "products_count": {{ shop.products_count }},
+  "collections_count": {{ shop.collections_count }},
+  "types": {{ shop.types | json }},
+  "vendors": {{ shop.vendors | json }}
+},
+
+{%- comment -%} ---------- ROUTE B START ---------- {%- endcomment -%}
+
+"collections": [
+{%- for c in collections -%}
+  {
+   "handle": {{ c.handle | json }},
+   "title": {{ c.title | json }},
+   "products_count": {{ c.products_count }},
+   "template_suffix": {{ c.template_suffix | json }},
+   "sort_order": {{ c.default_sort_by | json }},
+   "has_image": {% if c.image %}true{% else %}false{% endif %},
+   "metafields": {
+     {%- assign mfsep = "" -%}
+     {%- for ns in c.metafields -%}
+       {%- for f in ns[1] -%}
+         {{ mfsep }}"{{ ns[0] }}.{{ f[0] }}": {{ f[1].type | json }}
+         {%- assign mfsep = "," -%}
+       {%- endfor -%}
+     {%- endfor -%}
+   }
+  }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+],
+
+"menus": [
+{%- for list in linklists -%}
+  {%- assign menu = list[1] -%}
+  {
+   "handle": {{ menu.handle | json }},
+   "title": {{ menu.title | json }},
+   "links": [
+   {%- for l in menu.links -%}
+     {
+      "title": {{ l.title | json }},
+      "url": {{ l.url | json }},
+      "type": {{ l.type | json }},
+      "children": [
+      {%- for l2 in l.links -%}
+        {
+         "title": {{ l2.title | json }},
+         "url": {{ l2.url | json }},
+         "children": [{% for l3 in l2.links %}{"title":{{ l3.title | json }},"url":{{ l3.url | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+      ]
+     }{% unless forloop.last %},{% endunless %}
+   {%- endfor -%}
+   ]
+  }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+],
+
+"metaobjects": {
+{%- assign mosep = "" -%}
+{%- for def in shop.metaobjects -%}
+  {{ mosep }}{{ def[0] | json }}: [
+  {%- for entry in def[1].values -%}
+    {
+     "handle": {{ entry.system.handle | json }},
+     "fields": {
+       {%- assign fsep = "" -%}
+       {%- for f in entry -%}
+         {%- unless f[0] == "system" -%}
+           {{ fsep }}{{ f[0] | json }}: {{ f[1].type | json }}
+           {%- assign fsep = "," -%}
+         {%- endunless -%}
+       {%- endfor -%}
+     }
+    }{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+  ]
+  {%- assign mosep = "," -%}
+{%- endfor -%}
+},
+
+"blogs": [
+{%- for b in blogs -%}
+  {"handle": {{ b[1].handle | json }}, "title": {{ b[1].title | json }}, "articles_count": {{ b[1].articles_count }}}{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+],
+
+"pages": [
+{%- for p in pages -%}
+  {"handle": {{ p[1].handle | json }}, "title": {{ p[1].title | json }}, "template_suffix": {{ p[1].template_suffix | json }}}{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+],
+
+{%- comment -%} ---------- ROUTE B END ---------- {%- endcomment -%}
+
+{% paginate collections.all.products by 50 %}
+"products_page": {{ paginate.current_page }},
+"products_pages_total": {{ paginate.pages }},
+"products": [
+{%- for p in collections.all.products -%}
+  {
+   "handle": {{ p.handle | json }},
+   "title": {{ p.title | json }},
+   "type": {{ p.type | json }},
+   "vendor": {{ p.vendor | json }},
+   "tags": {{ p.tags | json }},
+   "template_suffix": {{ p.template_suffix | json }},
+   "available": {{ p.available }},
+   "price_min": {{ p.price_min }},
+   "price_max": {{ p.price_max }},
+   "media_count": {{ p.media.size }},
+   "options": [{% for o in p.options_with_values %}{"name":{{ o.name | json }},"values":[{% for v in o.values %}{{ v.name | default: v | json }}{% unless forloop.last %},{% endunless %}{% endfor %}]}{% unless forloop.last %},{% endunless %}{% endfor %}],
+   "variants": [{% for v in p.variants %}{"sku":{{ v.sku | json }},"title":{{ v.title | json }},"price":{{ v.price }},"available":{{ v.available }}}{% unless forloop.last %},{% endunless %}{% endfor %}],
+   "metafields": {
+     {%- assign psep = "" -%}
+     {%- for ns in p.metafields -%}
+       {%- for f in ns[1] -%}
+         {{ psep }}"{{ ns[0] }}.{{ f[0] }}": {"type": {{ f[1].type | json }}, "populated": {% if f[1].value != blank %}true{% else %}false{% endif %}}
+         {%- assign psep = "," -%}
+       {%- endfor -%}
+     {%- endfor -%}
+   }
+  }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
+{% endpaginate %}
+}
+</pre>

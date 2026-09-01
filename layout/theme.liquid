@@ -33,6 +33,8 @@
     {{ content_for_header }}
 
     {% render 'global-theme-styles' %}
+    {% render 'ha-tokens' %}
+    {% render 'ha-fonts' %}
     
     {{ 'base.css' | asset_url | stylesheet_tag }}
     <style>

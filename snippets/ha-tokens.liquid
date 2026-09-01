@@ -1,0 +1,52 @@
+{%- comment -%}
+  Hartwick Atelier — brand tokens.
+  Source: BRANDING/Colour/"HA Brand Book Colour Language.pdf" (Material Archive palette, p16-17).
+
+  Every Hartwick section reads these variables. Nothing else should contain a raw hex value,
+  so the palette can be finalised from Theme settings > Hartwick — Material Archive without
+  touching section code.
+
+  Rendered from layout/theme.liquid AFTER 'global-theme-styles' so it can override Luxe.
+{%- endcomment -%}
+
+{% style %}
+  :root {
+    /* --- the eight Material Archive colours --- */
+    --ha-soot-black:    {{ settings.ha_soot_black }};
+    --ha-cutch-resin:   {{ settings.ha_cutch_resin }};
+    --ha-inkstone:      {{ settings.ha_inkstone }};
+    --ha-peat-fibre:    {{ settings.ha_peat_fibre }};
+    --ha-loden-moss:    {{ settings.ha_loden_moss }};
+    --ha-bare-clay:     {{ settings.ha_bare_clay }};
+    --ha-mordant-amber: {{ settings.ha_mordant_amber }};
+    --ha-chalk-blue:    {{ settings.ha_chalk_blue }};
+
+    /* --- grounds --- */
+    --ha-page-ground:   {{ settings.ha_page_ground }};
+    --ha-field-dark:    {{ settings.ha_field_dark }};
+
+    /* --- tint system (brand book p17: 100 / 66 / 33 / 0 against white) ---
+       Fallback is the full-strength colour, so a browser without color-mix()
+       still renders something legible rather than nothing. */
+    --ha-soot-66: var(--ha-soot-black);
+    --ha-soot-66: color-mix(in srgb, var(--ha-soot-black) 66%, #ffffff);
+    --ha-soot-33: var(--ha-soot-black);
+    --ha-soot-33: color-mix(in srgb, var(--ha-soot-black) 33%, #ffffff);
+    --ha-peat-66: var(--ha-peat-fibre);
+    --ha-peat-66: color-mix(in srgb, var(--ha-peat-fibre) 66%, #ffffff);
+    --ha-peat-33: var(--ha-peat-fibre);
+    --ha-peat-33: color-mix(in srgb, var(--ha-peat-fibre) 33%, #ffffff);
+
+    /* --- semantic roles: sections use THESE, never a colour name --- */
+    --ha-text:        var(--ha-soot-black);
+    --ha-text-quiet:  var(--ha-soot-66);
+    --ha-rule:        var(--ha-soot-33);
+    --ha-text-invert: var(--ha-chalk-blue);
+
+    /* Accent colours fail WCAG AA as text (Mordant Amber 2.35:1, Loden Moss 2.36:1
+       against white). They are surfaces, rules and marks only — never body copy,
+       link text or button labels. */
+    --ha-accent-surface: var(--ha-mordant-amber);
+    --ha-botanical:      var(--ha-loden-moss);
+  }
+{% endstyle %}
