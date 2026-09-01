@@ -9,33 +9,43 @@
   Rendered from layout/theme.liquid AFTER 'global-theme-styles' so it can override Luxe.
 {%- endcomment -%}
 
+{%- liquid
+  assign soot  = settings.ha_soot_black | default: '#0B0603'
+  assign peat  = settings.ha_peat_fibre | default: '#332820'
+
+  # Brand book p17: tints are the colour mixed with WHITE at 66% / 33%.
+  # Computed here rather than with CSS color-mix() so the value is a plain
+  # rgb() every browser understands — a custom property holding an
+  # unsupported function resolves to nothing, it does not fall back.
+  assign soot_r = soot | color_extract: 'red'
+  assign soot_g = soot | color_extract: 'green'
+  assign soot_b = soot | color_extract: 'blue'
+  assign peat_r = peat | color_extract: 'red'
+  assign peat_g = peat | color_extract: 'green'
+  assign peat_b = peat | color_extract: 'blue'
+-%}
+
 {% style %}
   :root {
     /* --- the eight Material Archive colours --- */
-    --ha-soot-black:    {{ settings.ha_soot_black }};
-    --ha-cutch-resin:   {{ settings.ha_cutch_resin }};
-    --ha-inkstone:      {{ settings.ha_inkstone }};
-    --ha-peat-fibre:    {{ settings.ha_peat_fibre }};
-    --ha-loden-moss:    {{ settings.ha_loden_moss }};
-    --ha-bare-clay:     {{ settings.ha_bare_clay }};
-    --ha-mordant-amber: {{ settings.ha_mordant_amber }};
-    --ha-chalk-blue:    {{ settings.ha_chalk_blue }};
+    --ha-soot-black:    {{ soot }};
+    --ha-cutch-resin:   {{ settings.ha_cutch_resin   | default: '#541F00' }};
+    --ha-inkstone:      {{ settings.ha_inkstone      | default: '#2D2E38' }};
+    --ha-peat-fibre:    {{ peat }};
+    --ha-loden-moss:    {{ settings.ha_loden_moss    | default: '#B2AA72' }};
+    --ha-bare-clay:     {{ settings.ha_bare_clay     | default: '#DEB6BE' }};
+    --ha-mordant-amber: {{ settings.ha_mordant_amber | default: '#D5A040' }};
+    --ha-chalk-blue:    {{ settings.ha_chalk_blue    | default: '#E9F3FF' }};
 
     /* --- grounds --- */
-    --ha-page-ground:   {{ settings.ha_page_ground }};
-    --ha-field-dark:    {{ settings.ha_field_dark }};
+    --ha-page-ground:   {{ settings.ha_page_ground   | default: '#F2EFE9' }};
+    --ha-field-dark:    {{ settings.ha_field_dark    | default: '#332820' }};
 
-    /* --- tint system (brand book p17: 100 / 66 / 33 / 0 against white) ---
-       Fallback is the full-strength colour, so a browser without color-mix()
-       still renders something legible rather than nothing. */
-    --ha-soot-66: var(--ha-soot-black);
-    --ha-soot-66: color-mix(in srgb, var(--ha-soot-black) 66%, #ffffff);
-    --ha-soot-33: var(--ha-soot-black);
-    --ha-soot-33: color-mix(in srgb, var(--ha-soot-black) 33%, #ffffff);
-    --ha-peat-66: var(--ha-peat-fibre);
-    --ha-peat-66: color-mix(in srgb, var(--ha-peat-fibre) 66%, #ffffff);
-    --ha-peat-33: var(--ha-peat-fibre);
-    --ha-peat-33: color-mix(in srgb, var(--ha-peat-fibre) 33%, #ffffff);
+    /* --- tint system (100 / 66 / 33 / 0 against white) --- */
+    --ha-soot-66: rgb({{ soot_r | times: 0.66 | plus: 86.7 | round }}, {{ soot_g | times: 0.66 | plus: 86.7 | round }}, {{ soot_b | times: 0.66 | plus: 86.7 | round }});
+    --ha-soot-33: rgb({{ soot_r | times: 0.33 | plus: 170.85 | round }}, {{ soot_g | times: 0.33 | plus: 170.85 | round }}, {{ soot_b | times: 0.33 | plus: 170.85 | round }});
+    --ha-peat-66: rgb({{ peat_r | times: 0.66 | plus: 86.7 | round }}, {{ peat_g | times: 0.66 | plus: 86.7 | round }}, {{ peat_b | times: 0.66 | plus: 86.7 | round }});
+    --ha-peat-33: rgb({{ peat_r | times: 0.33 | plus: 170.85 | round }}, {{ peat_g | times: 0.33 | plus: 170.85 | round }}, {{ peat_b | times: 0.33 | plus: 170.85 | round }});
 
     /* --- semantic roles: sections use THESE, never a colour name --- */
     --ha-text:        var(--ha-soot-black);

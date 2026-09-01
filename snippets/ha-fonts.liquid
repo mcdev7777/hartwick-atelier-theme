@@ -19,14 +19,14 @@
 {% style %}
   @font-face {
     font-family: "Junicode";
-    src: url({{ 'ha-junicode.woff2' | asset_url }}) format("woff2-variations");
+    src: url({{ 'ha-junicode.woff2' | asset_url }}) format("woff2");
     font-weight: 300 700;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: "Junicode";
-    src: url({{ 'ha-junicode-italic.woff2' | asset_url }}) format("woff2-variations");
+    src: url({{ 'ha-junicode-italic.woff2' | asset_url }}) format("woff2");
     font-weight: 300 700;
     font-style: italic;
     font-display: swap;
@@ -57,6 +57,12 @@
     --font-heading-family: var(--ha-font-identify);
     --font-body-family:    var(--ha-font-narrate);
     --font-accent-family:  var(--ha-font-record);
+
+    /* Luxe derives these from the old Swiss 721 font picker (weight 400).
+       The brand book sets Junicode body copy and editorial display at Medium. */
+    --font-body-weight: 500;
+    --font-body-weight-bold: 700;
+    --font-body-style: normal;
   }
 
   /* IDENTIFY — brand book: uppercase only, tracking +20 to +80, line height 90-110% */
@@ -80,7 +86,6 @@
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
-    text-align: left;
   }
 
   /* Navigation is an IDENTIFY surface per the typography rules ("house identification,
