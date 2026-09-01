@@ -83,6 +83,17 @@
     text-align: left;
   }
 
+  /* Navigation is an IDENTIFY surface per the typography rules ("house identification,
+     principal headings, navigation, collection titles"). Luxe's base.css assigns
+     --font-accent-family to .header-bar-inner with !important, which would put the
+     nav in the RECORD voice; these selectors are more specific, so they win.
+     Buttons and other interface detail are left on RECORD, which the rules allow. */
+  .hdr-nav-primary-level-ul a,
+  .nav-ul--primary a,
+  .nav-ul--secondary a {
+    font-family: var(--ha-font-identify) !important;
+  }
+
   /* Wordmark. Colour comes from `color` because the SVG paints with currentColor:
      Inkstone on light grounds, Chalk Blue on dark. Logo rules give a 220px digital
      minimum width — below that the framed House Symbol must be used instead. */
