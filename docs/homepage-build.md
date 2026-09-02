@@ -81,6 +81,11 @@ for publication", and every section has a checkbox to remove that notice.
   then 5.87:1 (quiet text). Both above AA. The placeholder field was darkened to a
   72% peat tint to achieve this.
 - Accent colours are used as surfaces only, never as text.
+- Type scale follows the typography READ ME: editorial copy at 16px ("digital body
+  copy should normally begin at 16 px"), line height 145%, the record voice quieter
+  at 12-13px beneath it. Luxe's rem base is 10px, so 1.6rem = 16px.
+- Every tap target measures at least 44px (mobile brief §2), via invisible hit areas
+  on the small text links rather than padding that would break the composition.
 - `prefers-reduced-motion` honoured.
 - Theme Check: 0 errors.
 
