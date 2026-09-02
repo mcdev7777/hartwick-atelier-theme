@@ -502,3 +502,25 @@
 .ha-section--dark .ha-journal__excerpt,
 .ha-section--dark .ha-index__num,
 .ha-section--dark .ha-index__lot { color: inherit; }
+
+/* --- touch targets ------------------------------------------------------
+   The mobile brief §2 requires a minimum tap target of roughly 44 x 44 px.
+   These links are set small and airy by design, so rather than padding them
+   out and breaking the composition, each carries an invisible hit area that
+   extends to 44px. The underline still sits on the text. */
+
+.ha-link,
+.ha-record__link,
+.ha-register__submit { position: relative; }
+
+.ha-link::after,
+.ha-record__link::after,
+.ha-register__submit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
