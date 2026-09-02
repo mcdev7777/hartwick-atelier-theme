@@ -83,14 +83,15 @@
                 scope="row"
                 data-label="{{ 'customer.order.product' | t }}"
               >
-                <div>
-                <img src="{{ line_item.image | image_url: width: 300 }}"
-                            class="order_item_image"
-                            alt="{{ line_item.image.alt | escape }}"
-                            loading="lazy"
-                            width="150"
-                            height="{{ 150 | divided_by: line_item.image.aspect_ratio | ceil }}"
-                          >
+                <div class="order_item">
+                <div class="order_item__image ratio-{{ settings.card_img_aspect_ratio }}">
+                {% if line_item.image.aspect_ratio > 1 %}
+                  {{ line_item.image | image_url: height: 300 | image_tag: loading: 'lazy' }}
+                {% else %}
+                  {{ line_item.image | image_url: width: 300 | image_tag: loading: 'lazy' }}
+                {% endif %}
+                </div>
+                <div class="order_item__text">
                   {%- if line_item.url != blank -%}
                     <a href="{{ line_item.url }}">{{ line_item.title }}</a><br>
                     {{ line_item.sku }}
@@ -161,6 +162,7 @@
                       </span>
                     </div>
                   {%- endif -%}
+                  </div>
                 </div>
               </td>
               <td

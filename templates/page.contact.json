@@ -14,7 +14,6 @@
       "disabled": true,
       "settings": {
         "content_width": "page-width-narrow",
-        "hdr_alignment": "align-center",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -55,7 +54,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -107,7 +105,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     }

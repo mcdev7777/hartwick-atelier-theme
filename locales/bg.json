@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Северна Америка",
+      "central_america": "Централна Америка",
+      "south_america": "Южна Америка",
+      "europe": "Европа",
+      "middle_east": "Близък изток",
+      "africa": "Африка",
+      "asia": "Азия",
+      "oceania": "Океания"
+    },
     "password_page": {
       "login_form_heading": "Влезте в магазина с парола:",
       "login_password_button": "Въведете с парола",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Споделете във Facebook",
         "share_on_twitter": "Tweet в Twitter",
         "share_on_pinterest": "Закачете в Pinterest",
-        "share_on_linkedin": "Споделете в LinkedIn"
+        "share_on_linkedin": "Споделете в LinkedIn",
+        "share_on_whatsapp": "Споделете в WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Продължете да пазарувате",
     "pagination": {
       "label": "Пагинация",
+      "all": "Всички",
       "page": "Страница {{ number }}",
       "next": "Следваща страница",
       "previous": "Предишна страница"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "добавете",
       "add_to_cart": "Добавяне в количката",
+      "pre_order": "Предпоръчай",
       "color": "Цвят",
       "colors": "Цветове",
       "choose_options": "Изберете опции",
@@ -164,6 +178,7 @@
         "view_store_info": "Вижте информацията за магазина",
         "check_other_stores": "Проверете наличността в други магазини",
         "title": "Пикап",
+        "phone": "Тел:",
         "pick_up_available": "Възможност за вземане",
         "pick_up_unavailable": "Вземането не е налично",
         "pick_up_available_at_html": "Вземане на разположение на <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Споделете този продукт",
       "sold_out": "Разпродадени",
       "unavailable": "Недостъпен",
+      "reviews": "отзиви",
       "vendor": "Марка",
       "value_unavailable": "{{ option_value }} - Недостъпен",
       "variant_sold_out_or_unavailable": "Вариантът е продаден или не е наличен",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Начало"
+    },
     "404": {
       "title": "Страницата не е намерена",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Очаквано общо",
       "new_estimated_total": "Нова прогнозна обща сума",
       "note": "Добавете бележка за поръчка",
+      "note_placeholder": "Съобщение",
+      "note_save": "Запази",
+      "note_clear": "Изчисти",
       "checkout": "Проверете",
       "empty": "Чантата ви е празна",
       "empty_button_label": "Пазарувайте сега",

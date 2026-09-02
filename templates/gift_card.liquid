@@ -14,27 +14,37 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
-    {%- unless settings.type_header_font.system? -%}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-    {%- endunless -%}
-
     {%- assign formatted_balance = gift_card.balance | money_without_trailing_zeros | strip_html -%}
-
+    
     <title>{{ 'gift_cards.issued.title' | t: value: formatted_balance, shop: shop.name }}</title>
 
     <meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
 
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? and settings.type_accent_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+    
+    {% render 'global-theme-styles' %}
+
     {{ content_for_header }}
 
-    {% render 'global-theme-styles' %}
-    
     {%- unless settings.type_body_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
+    {%- unless settings.type_accent_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
+      <link rel="preload" as="font" href="{{ settings.type_accent_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
 
+    
     {{ 'template-giftcard.css' | asset_url | stylesheet_tag }}
 
     {% style %}
@@ -89,7 +99,6 @@
         </p>
       {% endif %}
 
-      
       {%- if gift_card.pass_url -%}
         <a href="{{ gift_card.pass_url }}" class="gift_card__apple-wallet no-print">
           <img
@@ -110,7 +119,7 @@
         <button class="button gift-card__copy-button">{{ 'gift_cards.issued.copy_code' | t }}</button>
         <a
           href="{{ shop.url }}"
-          class="button button--secondary"
+          class="button button--secondary button--shop-link"
           target="_blank"
           rel="noopener"
           aria-describedby="a11y-new-window-message"

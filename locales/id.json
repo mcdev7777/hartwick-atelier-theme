@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Amerika Utara",
+      "central_america": "Amerika Tengah",
+      "south_america": "Amerika Selatan",
+      "europe": "Eropa",
+      "middle_east": "Timur Tengah",
+      "africa": "Afrika",
+      "asia": "Asia",
+      "oceania": "Oceania"
+    },
     "password_page": {
       "login_form_heading": "Masuk ke toko menggunakan kata sandi:",
       "login_password_button": "Masuk menggunakan kata sandi",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Bagikan di Facebook",
         "share_on_twitter": "Tweet di Twitter",
         "share_on_pinterest": "Sematkan di Pinterest",
-        "share_on_linkedin": "Bagikan di LinkedIn"
+        "share_on_linkedin": "Bagikan di LinkedIn",
+        "share_on_whatsapp": "Bagikan di WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Lanjutkan berbelanja",
     "pagination": {
       "label": "Paginasi",
+      "all": "Semua",
       "page": "Halaman {{ number }}",
       "next": "Halaman berikutnya",
       "previous": "Halaman sebelumnya"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Tambah",
       "add_to_cart": "Tambahkan ke troli",
+      "pre_order": "Pesan di muka",
       "color": "Warna",
       "colors": "Warna",
       "choose_options": "Pilih opsi",
@@ -164,6 +178,7 @@
         "view_store_info": "Lihat informasi toko",
         "check_other_stores": "Periksa ketersediaan di toko lain",
         "title": "Menjemput",
+        "phone": "Telp:",
         "pick_up_available": "Penjemputan tersedia",
         "pick_up_unavailable": "Penjemputan tidak tersedia",
         "pick_up_available_at_html": "Penjemputan tersedia di <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Bagikan produk ini",
       "sold_out": "Terjual habis",
       "unavailable": "Tidak tersedia",
+      "reviews": "Ulasan",
       "vendor": "Merek",
       "value_unavailable": "{{ option_value }} - Tidak tersedia",
       "variant_sold_out_or_unavailable": "Varian terjual habis atau tidak tersedia",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Beranda"
+    },
     "404": {
       "title": "Halaman tidak ditemukan",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Perkiraan jumlah",
       "new_estimated_total": "Perkiraan total baru",
       "note": "Tambahkan catatan pesanan",
+      "note_placeholder": "Pesan",
+      "note_save": "Simpan",
+      "note_clear": "Hapus",
       "checkout": "Memeriksa",
       "empty": "Tasmu kosong",
       "empty_button_label": "Belanja sekarang",

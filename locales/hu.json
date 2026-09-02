@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Észak Amerika",
+      "central_america": "Közép-Amerika",
+      "south_america": "Dél-Amerika",
+      "europe": "Európa",
+      "middle_east": "Közel-Kelet",
+      "africa": "Afrika",
+      "asia": "Ázsia",
+      "oceania": "Óceánia"
+    },
     "password_page": {
       "login_form_heading": "Lépjen be az üzletbe jelszóval:",
       "login_password_button": "Lépjen be jelszóval",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Oszd meg a Facebook",
         "share_on_twitter": "Tweet a Twitter",
         "share_on_pinterest": "Pin a Pinterest",
-        "share_on_linkedin": "Oszd meg a LinkedIn"
+        "share_on_linkedin": "Oszd meg a LinkedIn",
+        "share_on_whatsapp": "Oszd meg a WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Folytassa a vásárlást",
     "pagination": {
       "label": "Lapszámozás",
+      "all": "Minden",
       "page": "oldal {{ number }}",
       "next": "Következő oldal",
       "previous": "Előző oldal"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Kosárba",
       "add_to_cart": "Kosárba",
+      "pre_order": "Előrendelés",
       "color": "Szín",
       "colors": "Színek",
       "choose_options": "Válasszon opciókat",
@@ -164,6 +178,7 @@
         "view_store_info": "Az üzlet információinak megtekintése",
         "check_other_stores": "Ellenőrizze a rendelkezésre állást más üzletekben",
         "title": "Felvétel",
+        "phone": "Tel:",
         "pick_up_available": "Átvétel lehetséges",
         "pick_up_unavailable": "Átvétel nem elérhető",
         "pick_up_available_at_html": "Átvétel elérhető a címen <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Oszd meg ezt a terméket",
       "sold_out": "Elfogyott",
       "unavailable": "Nem elérhető",
+      "reviews": "Vélemények",
       "vendor": "Márka",
       "value_unavailable": "{{ option_value }} - Nem elérhető",
       "variant_sold_out_or_unavailable": "A változat elkelt vagy nem elérhető",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Főoldal"
+    },
     "404": {
       "title": "Az oldal nem található",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Becsült összesen",
       "new_estimated_total": "Új becsült összeg",
       "note": "Rendelési megjegyzés hozzáadása",
+      "note_placeholder": "Üzenet",
+      "note_save": "Mentés",
+      "note_clear": "Törlés",
       "checkout": "Nézze meg",
       "empty": "Üres a táskád",
       "empty_button_label": "Vásároljon most",

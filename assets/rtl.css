@@ -1,0 +1,263 @@
+/* RTL SPECIFIC STYLES AND LAYOUT ADJUSTMENT */
+
+
+/* HEADER */
+
+
+/* FOOTER */
+
+.body-rtl .align-left .footer-block-heading {
+  text-align: right;
+}
+
+/* BANNERS*/
+
+.body-rtl .section-image-banner .align--left, 
+.body-rtl .section-video-banner .align--left {
+  text-align: right;
+}
+
+.body-rtl .video-banner--controls {
+  right: auto;
+  left: 5px;
+}
+
+/* PRODUCT CARD */
+
+.body-rtl .card-product-alignment--left .card-product--title, 
+.body-rtl .card-product-alignment--left .card-product--price, 
+.body-rtl .card-product-alignment--left .card-product--promo-text {
+  text-align: right;
+}
+
+.body-rtl .card-product--text-section--flex .card-product--title {
+  text-align: right;
+}
+
+.body-rtl .card-product--text-section--flex .card-product--price {
+  text-align: left !important;
+}
+
+.body-rtl .card-product--text-section--flex .card-product--color-count {
+  text-align: right !important;
+}
+
+.body-rtl .card-product:hover .product-card-pagination-arrow.faded {
+  opacity: 1; 
+}
+
+
+/* COLLECTION CARD */
+
+.body-rtl .card-collection--title.card-title-alignment--left {
+  text-align: right;
+}
+
+
+/* PAGINATION */
+
+.body-rtl .pagination__item .icon {
+  transform: rotate(90deg);
+}
+
+.body-rtl .pagination__item--prev .icon {
+  transform: rotate(-90deg);
+}
+
+/* CAROUSELS */
+
+.body-rtl .slider-custom-scrollbar-marker {
+  left: auto;
+  right: 0;
+}
+
+.body-rtl  .slider-arrow-left.disabled, 
+.body-rtl  .slider-arrow-right.disabled {
+  opacity: 1;
+}
+
+.body-rtl .related-products .slider-arrow-left {
+  left: auto;
+  right: calc(var(--page-margin-desktop) + var(--grid-desktop-horizontal-spacing));
+}
+
+.body-rtl .related-products .slider-arrow-right {
+  right: auto;
+  left: calc(var(--page-margin-desktop) + var(--grid-desktop-horizontal-spacing));
+}
+
+.body-rtl .related-products .slider-arrow-left .icon {
+  transform: rotate(-90deg);
+}
+
+.body-rtl .related-products .slider-arrow-right .icon {
+  transform: rotate(90deg);
+}
+
+.body-rtl .slider-arrows-position-top-right .slider-arrows .slider-arrow-left {
+  right: auto;
+  left: calc(var(--page-margin-desktop) + 0px);
+}
+
+.body-rtl .slider-arrows-position-top-right .slider-arrows .slider-arrow-right {
+  left: calc(var(--page-margin-desktop) + 56px);
+  right: auto;
+}
+
+.body-rtl .slider-arrows-position-top-right .slider-arrows.arrow-style-minimal .slider-arrow-left, 
+.body-rtl .slider-arrows-position-bottom .slider-arrows.arrow-style-minimal .slider-arrow-left {
+  right: auto;
+  left: calc(var(--page-margin-desktop) + 32px);
+}
+
+.body-rtl .slider-arrows-position-top-right .slider-arrows.arrow-style-minimal .slider-arrow-right, 
+.body-rtl .slider-arrows-position-bottom .slider-arrows.arrow-style-minimal .slider-arrow-right {
+  left: calc(var(--page-margin-desktop) - 16px);
+}
+
+.body-rtl .slider-arrows-position-bottom .slider-arrows .slider-arrow-left {
+  right: auto;
+  left: calc(var(--page-margin-desktop) + 0px);
+}
+
+.body-rtl .slider-arrows-position-bottom .slider-arrows .slider-arrow-right {
+  left: calc(var(--page-margin-desktop) + 56px);
+  right: auto;
+}
+
+/* FORMS */
+
+.body-rtl .form__label, .body-rtl .field label {
+  text-align: right;
+}
+
+.body-rtl .field__input, .body-rtl .field input {
+  text-align: right;
+}
+
+.body-rtl .newsletter-form__button.field__button .icon {
+  transform: rotate(-180deg);
+}
+
+.body-rtl .newsletter-form__field-wrapper .field {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.body-rtl .field__button {
+  position: relative;
+}
+
+.body-rtl .newsletter-form__field-wrapper .field__button {
+  justify-content: center;
+}
+
+.body-rtl .footer-block-newsletter-style-minimal .newsletter-form__field-wrapper .field__button {
+  justify-content: flex-end;
+}
+
+
+/* COLLECTION TEMPLATE */
+
+.body-rtl .select .icon-caret, .body-rtl .customer select + svg {
+  right: auto;
+  left: calc(var(--inputs-border-width) + 1.6rem);
+}
+
+.body-rtl .facet-filters__sort + .icon-caret {
+  right: auto;
+  left: 0.1rem;
+}
+
+/* PRODUCT TEMPLATE */
+
+.body-rtl .product-main-info-section.align-left, 
+.body-rtl .product-main-info-section .align-left, 
+.body-rtl .product-main-info-section .accordion-panel {
+  text-align: right;
+}
+
+.body-rtl .price--end {
+  text-align: left;
+}
+
+.body-rtl .slider-arrow-left.deactive, .body-rtl .slider-arrow-left.deactive:hover {
+  opacity: 1 !important;
+  cursor: pointer;
+}
+
+.body-rtl .gallery-slider-arrows .slider-arrow-left {
+  right: auto;
+  left: 2rem;
+}
+
+.body-rtl .gallery-slider-arrows .slider-arrow-right {
+  left: auto;
+  right: 2rem;
+}
+
+.body-rtl .pmc-thumbnail-position--adjacent-right-normal .gallery-slider-thumbnails, 
+.body-rtl .pmc-thumbnail-position--adjacent-right-large .gallery-slider-thumbnails {
+  right: 2rem;
+}
+
+.body-rtl .pmc-thumbnail-position--adjacent-right-normal .product-media--mobile-slider--desktop-slider {
+  width: calc(100% - 90px);
+  margin-right: auto;
+}
+
+.body-rtl .pmc-thumbnail-position--adjacent-right-large .product-media--mobile-slider--desktop-slider {
+  width: calc(100% - 105px);
+  margin-right: auto;
+}
+
+.body-rtl .pmc-thumbnail-position--adjacent-right-middle-normal .gallery-slider-thumbnails, 
+.body-rtl .pmc-thumbnail-position--adjacent-right-middle-large .gallery-slider-thumbnails {
+  right: 2rem;
+}
+
+.body-rtl .pmc-thumbnail-position--adjacent-right-middle-large .product-media--mobile-slider--desktop-slider {
+  width: calc(100% - 100px);
+  margin-right: auto;
+}
+
+.body-rtl .pmc-thumbnail-position--adjacent-right-middle-normal .product-media--mobile-slider--desktop-slider {
+  width: calc(100% - 80px);
+  margin-right: auto;
+}
+
+
+/* CART */
+
+.body-rtl .totals-column:first-child {
+  text-align: right;
+}
+
+.body-rtl .totals-column:last-child {
+  text-align: left;
+}
+
+.body-rtl .tax-note {
+  text-align: right;
+}
+
+.body-rtl .cart-items--recommendations--header {
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 100px;
+}
+
+.body-rtl .cart-items--recommendations--pagination {
+  right: auto;
+  left: -10px;
+}
+
+.body-rtl .cart-items--recommendations--pagination-left.disabled, 
+.body-rtl .cart-items--recommendations--pagination-right.disabled {
+  opacity: 1;
+}
+
+.body-rtl .cart-items--recommendations--pagination-left {
+  order: 1;
+}
+

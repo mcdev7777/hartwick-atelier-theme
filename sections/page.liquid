@@ -1,8 +1,4 @@
-<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'section-main-page.css' | asset_url }}" media="print" onload="this.media='all'">
-
-<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
-<noscript>{{ 'section-main-page.css' | asset_url | stylesheet_tag }}</noscript>
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
 .section-{{ section.id }}-padding {
@@ -71,22 +67,8 @@
       "label": "t:sections.all.margin"
     },
     {
-      "type": "select",
+      "type": "text_alignment",
       "id": "content_alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.all.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:sections.all.alignment.center"
-        },
-        {
-          "value": "right",
-          "label": "t:sections.all.alignment.right"
-        }
-      ],
       "default": "left",
       "label": "t:sections.all.alignment.alignment_header"
     },
@@ -137,6 +119,10 @@
         {
           "value": "fg-04",
           "label": "t:sections.all.colors.accent_4.label"
+        },
+        {
+          "value": "fg-05",
+          "label": "t:sections.all.colors.accent_4.label"
         }
       ],
       "default": "fg-body",
@@ -165,6 +151,10 @@
         {
           "value": "bg-04",
           "label": "t:sections.all.colors.background_4.label"
+        },
+        {
+          "value": "bg-05",
+          "label": "t:sections.all.colors.background_5.label"
         }
       ],
       "default": "bg-body",

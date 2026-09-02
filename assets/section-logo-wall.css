@@ -1,15 +1,17 @@
 .logo-placeholder {
   width: 100px;
   height: 60px;
-  background: #eeeeee;
-  color: #666666;   
-  font-size: 1.2rem;
+  background: rgba(var(--color-foreground-rgb),0.04);
+  color: rgba(var(--color-foreground-rgb),0.3);   
+  font-size: 0;
   font-family: "Helvetica", Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1.0
+  line-height: 1.0;
   text-align: center;
+  border: 1px dashed;
+  border-radius: 6px;
 }
 
 .logo-grid {
@@ -21,7 +23,7 @@
   justify-content: center;
   width: 100%;
   column-gap: 30px;
-  row-gap: 50px;
+  row-gap: 40px;
 }
 
 .align-left .logo-grid {
@@ -88,31 +90,26 @@
 
 .logo-wall-ticker-wrapper {
 	display: flex;
-	column-gap: 0px;
+	column-gap: 0;
 	overflow: hidden;
 }
 
 .logo-wall-ticker-container {
 	display: grid;
 	grid-template-columns: repeat(8,1fr);
-    grid-template-rows: auto;
-    grid-column-gap: 0px;
-    overflow: visible;
-    animation: logoscroll linear infinite;
-    animation-duration: 24s;
+  grid-template-rows: auto;
+  column-gap: 0;
+  overflow: visible;
+  animation: logoscroll linear infinite;
+  animation-duration: 24s;
 }
 
 .logo-wall-ticker-container .logo {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-    box-sizing: border-box;
-    padding: 0 20px;
-}
-
-.logo-wall-ticker-container .logo img {
-  width: auto;
-  height: auto;
+  box-sizing: border-box;
+  padding: 0 20px;
 }
 
 @keyframes logoscroll {

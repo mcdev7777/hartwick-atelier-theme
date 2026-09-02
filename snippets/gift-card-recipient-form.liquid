@@ -73,7 +73,6 @@
       role="status"
     ></p>
     <div class="recipient-fields">
-      <hr>
       <div class="recipient-fields__field">
         <div class="field">
           <label class="field__label" for="Recipient-email-{{ section.id }}">
@@ -165,9 +164,9 @@
           >{{ form.message }}</textarea>
         </div>
 
-        <label class="form__label recipient-form-field-label recipient-form-field-label--space-between">
+        <span class="form__label recipient-form-field-label recipient-form-field-label--space-between field-label--opacity">
           <span>{{ max_chars_message_rendered }}</span>
-        </label>
+        </span>
 
         <div
           id="RecipientForm-message-error-{{ section.id }}"

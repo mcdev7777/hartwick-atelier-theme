@@ -14,7 +14,6 @@
       "disabled": true,
       "settings": {
         "content_width": "page-width-narrow",
-        "hdr_alignment": "align-center",
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -35,13 +34,13 @@
         "secondary_image_animation": "none",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "middle",
         "txt_alignment": "center",
+        "txt_position": "middle",
         "content_width": 75,
-        "fade_in_text": true,
-        "scroll_fade_effect": false,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
         "text_color": "fg-white",
         "bg_color": "",
         "overlay_level": 0
@@ -83,17 +82,16 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
     "video_CyeLBR": {
       "type": "video",
       "settings": {
+        "header_alignment": "center",
         "section_label": "",
         "heading": "",
         "subheading": "",
-        "header_alignment": "center",
         "player_size": "page-width",
         "video_title": "",
         "autoplay": false,
@@ -139,9 +137,9 @@
         "button_GEPd6M": {
           "type": "button",
           "settings": {
+            "btn_color_scheme": "default",
             "btn_txt": "Button label",
             "btn_link": "",
-            "btn_color_scheme": "default",
             "btn_style": "solid"
           }
         }
@@ -154,12 +152,12 @@
       ],
       "settings": {
         "section_size": "flexible",
-        "image_ratio": "square",
-        "secondary_image_scale": "small",
+        "content_width": "page-width",
         "image_alignment": "right",
         "dt_image_width": 50,
         "card_spacing": 20,
-        "content_width": "page-width",
+        "image_ratio": "square",
+        "secondary_image_scale": "small",
         "txt_alignment": "left",
         "text_color": "fg-body",
         "bg_color": "bg-body",
@@ -196,9 +194,9 @@
         "button_MTLBip": {
           "type": "button",
           "settings": {
+            "btn_color_scheme": "default",
             "btn_txt": "Button label",
             "btn_link": "",
-            "btn_color_scheme": "default",
             "btn_style": "solid"
           }
         }
@@ -211,12 +209,12 @@
       ],
       "settings": {
         "section_size": "flexible",
-        "image_ratio": "square",
-        "secondary_image_scale": "small",
+        "content_width": "page-width",
         "image_alignment": "left",
         "dt_image_width": 50,
         "card_spacing": 20,
-        "content_width": "page-width",
+        "image_ratio": "square",
+        "secondary_image_scale": "small",
         "txt_alignment": "left",
         "text_color": "fg-body",
         "bg_color": "bg-body",

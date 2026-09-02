@@ -1,0 +1,23 @@
+{% if style == 0 %}
+<div class="luxe-product-placeholder-wrapper luxe-pp-fullbleed">
+<img class="luxe-product-placeholder" src="https://cdn.shopify.com/s/files/1/0700/0614/5254/files/luxe-placeholder-interior-01.jpg" width="1400" height="800" alt="Luxe Shopify theme lifestyle image placeholder">
+</div>
+{% endif %}
+
+{% if style == 1 or style == blank %}
+<div class="luxe-product-placeholder-wrapper luxe-pp-fullbleed">
+<img class="luxe-product-placeholder" src="https://cdn.shopify.com/s/files/1/0700/0614/5254/files/luxe-location-placeholder-03-800x.jpg" width="400" height="400" alt="Luxe Shopify theme lifestyle image placeholder">
+</div>
+{% endif %}
+
+{% if style == 2 or style == 4 %}
+<div class="luxe-product-placeholder-wrapper luxe-pp-fullbleed">
+<img class="luxe-product-placeholder" src="https://cdn.shopify.com/s/files/1/0700/0614/5254/files/luxe-location-placeholder-02-800x.jpg" width="400" height="400" alt="Luxe Shopify theme lifestyle image placeholder">
+</div>
+{% endif %}
+
+{% if style == 3 or style > 4 %}
+<div class="luxe-product-placeholder-wrapper luxe-pp-fullbleed">
+<img class="luxe-product-placeholder" src="https://cdn.shopify.com/s/files/1/0700/0614/5254/files/luxe-location-placeholder-01-800x.jpg" width="400" height="400" alt="Luxe Shopify theme lifestyle image placeholder">
+</div>
+{% endif %}

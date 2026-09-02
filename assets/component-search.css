@@ -38,17 +38,15 @@
   width: 1.2rem;
 }
 
-
-
 .search__button:focus-visible,
 .reset__button:focus-visible {
-  background-color: rgb(var(--color-background));
+  background-color: rgb(var(--color-background-rgb));
   z-index: 4;
 }
 
 .search__button:focus,
 .reset__button:focus {
-  background-color: rgb(var(--color-background));
+  background-color: rgb(var(--color-background-rgb));
   z-index: 4;
 }
 

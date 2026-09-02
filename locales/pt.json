@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "América do Norte",
+      "central_america": "América Central",
+      "south_america": "Ámérica do Sul",
+      "europe": "Europa",
+      "middle_east": "Médio Oriente",
+      "africa": "África",
+      "asia": "Ásia",
+      "oceania": "Oceânia"
+    },
     "password_page": {
       "login_form_heading": "Entre na loja usando a palavra-passe:",
       "login_password_button": "Entre usando a palavra-passe",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Partilhar no Facebook",
         "share_on_twitter": "Twittar no Twitter",
         "share_on_pinterest": "Marcar com um pin no Pinterest",
-        "share_on_linkedin": "Partilhar no LinkedIn"
+        "share_on_linkedin": "Partilhar no LinkedIn",
+        "share_on_whatsapp": "Partilhar no WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Continuar a comprar",
     "pagination": {
       "label": "Paginação",
+      "all": "Todos",
       "page": "Página {{ number }}",
       "next": "Página seguinte",
       "previous": "Página anterior"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Adicionar",
       "add_to_cart": "Adicionar ao carrinho",
+      "pre_order": "Pré-encomendar",
       "color": "Cor",
       "colors": "Cores",
       "description": "Descrição",
@@ -144,6 +158,7 @@
       "share": "Partilhar este produto",
       "sold_out": "Esgotado",
       "unavailable": "Indisponível",
+      "reviews": "Avaliações",
       "vendor": "Fornecedor",
       "video_exit_message": "{{ title }} abre um vídeo em ecrã completo na mesma janela.",
       "xr_button": "Ver no seu espaço",
@@ -152,6 +167,7 @@
         "view_store_info": "Ver informações da loja",
         "check_other_stores": "Verificar a disponibilidade noutras lojas",
         "title": "Recolha",
+        "phone": "Tel:",
         "pick_up_available": "Recolha disponível",
         "pick_up_unavailable": "Recolha não está disponível",
         "pick_up_available_at_html": "Recolha disponível em <span>{{ location_name }}</span>",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Início"
+    },
     "search": {
       "no_results": "Não foram encontrados resultados para \"{{ terms }}\". Verifique a ortografia ou utilize uma palavra ou frase diferente.",
       "results_with_count": {
@@ -301,6 +320,9 @@
       "caption": "Itens do carrinho",
       "remove_title": "Eliminar",
       "note": "Instruções especiais da encomenda",
+      "note_placeholder": "Mensagem",
+      "note_save": "Guardar",
+      "note_clear": "Limpar",
       "checkout": "Finalizar a compra",
       "empty": "O seu carrinho está vazio",
       "empty_button_label": "Shop now",

@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Pohjois-Amerikassa",
+      "central_america": "Keski-Amerikka",
+      "south_america": "Etelä-Amerikka",
+      "europe": "Euroopassa",
+      "middle_east": "Lähi-itä",
+      "africa": "Afrikka",
+      "asia": "Aasia",
+      "oceania": "Oseania"
+    },
     "password_page": {
       "login_form_heading": "Siirry kauppaan salasanalla:",
       "login_password_button": "Syötä salasanalla",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Jaa Facebookissa",
         "share_on_twitter": "Twiittaa Twitterissä",
         "share_on_pinterest": "Pin Pinterestissä",
-        "share_on_linkedin": "Jaa LinkedInissä"
+        "share_on_linkedin": "Jaa LinkedInissä",
+        "share_on_whatsapp": "Jaa WhatsAppissä"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Jatka ostoksia",
     "pagination": {
       "label": "Sivunumerointi",
+      "all": "Kaikki",
       "page": "Sivu {{ number }}",
       "next": "Seuraava sivu",
       "previous": "Edellinen sivu"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Lisätä",
       "add_to_cart": "Lisää ostoskoriin",
+      "pre_order": "Ennakkotilaa",
       "color": "Väri",
       "colors": "värit",
       "choose_options": "Valitse vaihtoehdot",
@@ -164,6 +178,7 @@
         "view_store_info": "Katso myymälän tiedot",
         "check_other_stores": "Tarkista saatavuus muista myymälöistä",
         "title": "Nouto",
+        "phone": "Puh:",
         "pick_up_available": "Nouto saatavilla",
         "pick_up_unavailable": "Nouto ei saatavilla",
         "pick_up_available_at_html": "Nouto saatavilla osoitteessa <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Jaa tämä tuote",
       "sold_out": "Loppuunmyyty",
       "unavailable": "Ei saatavilla",
+      "reviews": "Arvostelut",
       "vendor": "Merkki",
       "value_unavailable": "{{ option_value }} - Ei saatavilla",
       "variant_sold_out_or_unavailable": "Variantti loppuunmyyty tai ei saatavilla",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Etusivu"
+    },
     "404": {
       "title": "Sivua ei löydy",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Arvioitu kokonaismäärä",
       "new_estimated_total": "Uusi arvioitu yhteensä",
       "note": "Lisää tilausilmoitus",
+      "note_placeholder": "Viesti",
+      "note_save": "Tallenna",
+      "note_clear": "Tyhjennä",
       "checkout": "Tarkistaa",
       "empty": "Laukkusi on tyhjä",
       "empty_button_label": "Osta nyt",

@@ -2,6 +2,10 @@
   display: block;
 }
 
+.cart__footer .totals {
+  padding-bottom: 1rem;
+}
+
 .totals > * {
   margin: 0;
 }
@@ -39,8 +43,8 @@
   margin: 0.5rem 0;
 }
 
-.grand-total-row {
-  font-weight: bold;
+.font-weight-bold .grand-total-row {
+  font-weight: var(--font-body-weight-bold);
 }
 
 .grand-total-row-border-top {

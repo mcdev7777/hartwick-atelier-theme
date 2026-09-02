@@ -28,8 +28,8 @@ html {
 }
 
 body {
-  background-color: var(--color-base-background);
-  color: rgb(var(--color-foreground));
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-size: var(--font-body-base-size-mobile);
   letter-spacing: 0em;
   line-height: var(--base-line-height);
@@ -108,46 +108,62 @@ h2,
   font-size: 1.6rem;
   line-height: 1;
   text-decoration: underline;
-  color: rgb(var(--color-base-outline-button-labels));
 }
 
 .link:hover {
-  color: rgba(var(--color-base-outline-button-labels), 0.75);
+  opacity: 0.7;
 }
 
 .button {
+  -webkit-appearance: none;
+  appearance: none;
   font-family: inherit;
   cursor: pointer;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: none;
-  padding: 1.5rem 3rem;
+  padding: 0 var(--buttons-horizontal-padding);
+  height: calc(44px + var(--buttons-padding));  
+  border: var(--buttons-border-width) solid rgb(var(--color-button-background));
+  border-radius: var(--buttons-radius);
   text-decoration: none;
+  color: rgb(var(--color-button-foreground));
   background-color: rgb(var(--color-button-background));
   box-shadow: none;
-  color: rgb(var(--color-button-foreground));
   min-width: 12rem;
-  height: auto;
-  font-size: 1.5rem;
-  letter-spacing: 0.1rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  font-size: var(--buttons-font-size-mobile);
+  letter-spacing: var(--buttons-letter-spacing);
+  line-height: 1.0;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .button:hover {
   box-shadow: 0;
 }
 
+.gift-card__copy-button, .button--secondary {
+  font-family: var(--font-accent-family); 
+  font-size: var(--buttons-font-size-mobile);
+  text-transform: var(--buttons-text-case);
+  letter-spacing: var(--buttons-letter-spacing);
+}
+
 .button--secondary {
-  color: rgb(var(--color-outline-button-text));
   box-shadow: 0;
-  background-color: transparent;
+  color: rgb(var(--color-outline-button-text));
+  border: var(--buttons-border-width) solid rgb(var(--color-outline-button-border));
+  background: none;
 }
 
 .button--secondary:hover {
   box-shadow: 0;
+}
+
+@media only screen and (min-width: 1025px) {
+  .button, .gift-card__copy-button {
+    font-size: var(--buttons-font-size-desktop);
+  }  
 }
 
 .gift-card {
@@ -186,7 +202,6 @@ h2,
   }
 }
 
-
 .gift-card__heading {
   font-weight: 400;
   margin: 2.5rem 0 1rem;
@@ -211,12 +226,6 @@ h2,
   margin-bottom: 1rem;
 }
 
-@media only screen and (min-width: 750px) {
-  .gift-card__price {
-    font-size: 2rem;
-  }
-}
-
 .gift-card__label:not(.badge) {
   font-weight: 400;
   opacity: 0.7;
@@ -225,7 +234,7 @@ h2,
 .gift-card__number {
   background-color: transparent;
   border: none;
-  color: rgb(var(--color-foreground));
+  color: rgb(var(--color-foreground-rgb));
   font-size: 1.8rem;
   font-weight: 400;
   line-height: calc(1 + 0.6 / var(--font-body-scale));
@@ -235,6 +244,9 @@ h2,
 }
 
 @media only screen and (min-width: 750px) {
+  .gift-card__price {
+    font-size: 2rem;
+  }
   .gift-card__number {
     font-size: 1.8rem;
   }
@@ -331,24 +343,24 @@ h2,
 }
 
 *:focus-visible {
-  outline: 0.2rem solid rgba(var(--color-base-text), 0.5);
+  outline: 0.2rem solid rgba(var(--color-foreground-rgb), 0.5);
   outline-offset: 0.3rem;
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-base-background-1)),
-    0 0 0.5rem 0.4rem rgba(var(--color-base-text), 0.3);
+  box-shadow: 0 0 0 0.3rem rgb(var(--color-background-rgb)),
+    0 0 0.5rem 0.4rem rgba(var(--color-foreground-rgb), 0.3);
 }
 
 /* Fallback - for browsers that don't support :focus-visible, a fallback is set for :focus */
 .focused, .no-js *:focus {
-  outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+  outline: 0.2rem solid rgba(var(--color-foreground-rgb), 0.5);
   outline-offset: 0.3rem;
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
-    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 0.3rem rgb(var(--color-background-rgb)),
+    0 0 0.5rem 0.4rem rgba(var(--color-foreground-rgb), 0.3);
 }
 
 .button:focus-visible {
   box-shadow: 0 0 0 0.1rem rgb(var(--color-base-accent-1)),
-    0 0 0 0.3rem rgb(var(--color-base-background-1)),
-    0 0 0.5rem 0.4rem rgba(var(--color-base-text), 0.3);
+    0 0 0 0.3rem rgb(var(--color-background-rgb)),
+    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
 }
 
 /* Negate the fallback side-effect for browsers that support :focus-visible */
@@ -359,19 +371,19 @@ h2,
 
 .button:focus {
   box-shadow: 0 0 0 0.1rem rgb(var(--color-base-accent-1)),
-    0 0 0 0.3rem rgb(var(--color-base-background-1)),
+    0 0 0 0.3rem rgb(var(--color-background-rgb)),
     0 0 0.5rem 0.4rem rgba(var(--color-base-text), 0.3);
 }
 
 .button--secondary:focus-visible {
   box-shadow: 0 0 0 0.1rem rgb(var(--color-base-outline-button-labels)),
-    0 0 0 0.3rem rgb(var(--color-base-background-1)),
+    0 0 0 0.3rem rgb(var(--color-background-rgb)),
     0 0 0.5rem 0.4rem rgba(var(--color-base-text), 0.3);
 }
 
 .button--secondary:focus {
   box-shadow: 0 0 0 0.1rem rgb(var(--color-base-outline-button-labels)),
-    0 0 0 0.3rem rgb(var(--color-base-background-1)),
+    0 0 0 0.3rem rgb(var(--color-background-rgb)),
     0 0 0.5rem 0.4rem rgba(var(--color-base-text), 0.3);
 }
 
@@ -396,4 +408,3 @@ h2,
     display: none;
   }
 }
-

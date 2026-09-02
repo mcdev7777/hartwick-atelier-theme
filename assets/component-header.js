@@ -1,14 +1,12 @@
-
-// Dropdown and mega menu
+// Drawer menu system
 
 const ddButtons = document.getElementsByClassName("mob-parent-button");
 
 // Loop through each button
 for (const ddButton of ddButtons) {
-  // Add a click event listener to the button
   ddButton.addEventListener("click", function (event) {
-    // Prevent the default behavior of the button click
     event.preventDefault();
+    updateDrawerScrollPosition();
     // Find the next sibling element and add the "active" class to it
     const nextElement = ddButton.nextElementSibling;
     if (nextElement) {
@@ -18,9 +16,17 @@ for (const ddButton of ddButtons) {
   });
 } 
 
-const ddPanels = document.getElementsByClassName("mob-secondary-level-ul");
+// Function - reset scroll position of drawer
+function updateDrawerScrollPosition() {
+  const Drawer = document.getElementById("mobNavDrawer");
+  if (Drawer) {
+    Drawer.scrollTop = 0;
+  }
+}
 
-// Function to update the visibility of sl-hide divs
+const ddPanels = document.querySelectorAll(".mob-secondary-level-ul, .mob-third-level-ul");
+
+// Function - update the visibility of sl-hide divs
 function updateSlHideVisibility() {
   const isActivePanel = Array.from(ddPanels).some(panel => panel.classList.contains("active"));
   const slHideDivs = document.getElementsByClassName("sl-hide");
@@ -46,113 +52,197 @@ for (const ddPanel of ddPanels) {
     updateSlHideVisibility();
   });
 
-  // Create a MutationObserver for each panel
+  // MutationObserver for each panel
   const panelObserver = new MutationObserver(() => {
     updateSlHideVisibility();
   });
 
-  // Define what to observe within the panel for specific changes
   const observerConfig = { subtree: true, childList: true, attributes: true, characterData: true };
-
-  // Start observing the panel for changes
   panelObserver.observe(ddPanel, observerConfig);
 }
 
 
-const navDesktopButtons = document.querySelectorAll('.nav-desktop-dd-btn');
-const headerMegaFwLists = document.querySelectorAll('.header-nav-desktop-dd-panel');
-const gcHeader = document.querySelector('.header-bar-inner');
+// Accordion menu system
+
+document.addEventListener("DOMContentLoaded", function () {
+  var drawerAccordionButtons = document.querySelectorAll(".mob-parent-accordion-button");
+  drawerAccordionButtons.forEach(function (drawerAccordionButton) {
+    drawerAccordionButton.addEventListener("click", function () {
+      var panel = drawerAccordionButton.nextElementSibling;
+
+      // Toggle the "open" class for the accordion heading
+      if (drawerAccordionButton.classList.contains("active")) {
+        drawerAccordionButton.classList.remove("active");
+        drawerAccordionButton.setAttribute('aria-expanded', 'false');
+        panel.style.height = null;
+        setTimeout(function () {
+          panel.classList.remove("panel-open");
+          panel.setAttribute('aria-hidden', 'true');
+        }, 600);
+      } else {
+        drawerAccordionButton.classList.add("active");
+        drawerAccordionButton.setAttribute('aria-expanded', 'true');
+        panel.style.height = panel.scrollHeight + "px";
+        panel.setAttribute('aria-hidden', 'false');
+        panel.classList.add("panel-open");
+      }
+    });
+  });
+});
+
+
+// Dropdown menu interaction
+if (!document.querySelector('.nav-desktop-dd-btn-clickable')) {
+  const navDesktopButtons = document.querySelectorAll('.nav-desktop-dd-btn');
+  const headerMegaFwLists = document.querySelectorAll('.header-nav-desktop-dd-panel');
+  const gcHeader = document.querySelector('.header-bar-inner');
+    
+  function applyBackgroundColor() {
+    gcHeader.classList.add('hovered');
+  }
   
-function applyBackgroundColor() {
-  gcHeader.classList.add('hovered');
+  function removeBackgroundColor() {
+    gcHeader.classList.remove('hovered');
+  }
+  
+  navDesktopButtons.forEach((navDesktopButton) => {
+    navDesktopButton.addEventListener('mouseover', applyBackgroundColor);
+    navDesktopButton.addEventListener('mouseout', removeBackgroundColor);
+  });
+  
+  headerMegaFwLists.forEach((headerMegaFwList) => {
+    headerMegaFwList.addEventListener('mouseover', applyBackgroundColor);
+    headerMegaFwList.addEventListener('mouseout', removeBackgroundColor);
+  });
 }
-
-function removeBackgroundColor() {
-  gcHeader.classList.remove('hovered');
-}
-
-navDesktopButtons.forEach((navDesktopButton) => {
-  navDesktopButton.addEventListener('mouseover', applyBackgroundColor);
-  navDesktopButton.addEventListener('mouseout', removeBackgroundColor);
-});
-
-headerMegaFwLists.forEach((headerMegaFwList) => {
-  headerMegaFwList.addEventListener('mouseover', applyBackgroundColor);
-  headerMegaFwList.addEventListener('mouseout', removeBackgroundColor);
-});
-
 
 // Scrolling transition for transparent header option
 
 const headerDiv = document.getElementById('SiteHeader');
-let isScrolled = false;
+const hadHdrTransHpInitially = headerDiv.classList.contains('hdr-trans-hp');
+const hasScrollBehaviour = headerDiv.querySelector('.hb-scroll-behaviour--scroll');
 
+let isScrolled = false;
+if (!hasScrollBehaviour) {
 window.addEventListener('scroll', function() {
   const scrollPosition = window.pageYOffset;
 
-  if (scrollPosition > 250 && !isScrolled) {
+  if (scrollPosition > 300 && !isScrolled) {
     headerDiv.classList.remove('hdr-trans-hp');
     isScrolled = true;
-  } else if (scrollPosition <= 250 && isScrolled) {
-    headerDiv.classList.add('hdr-trans-hp');
+  } else if (scrollPosition <= 300 && isScrolled) {
+    if (hadHdrTransHpInitially) {
+      headerDiv.classList.add('hdr-trans-hp');
+    }
     isScrolled = false;
   }
 });
+}
 
-// Menu drawer
-  
+
+// Menu drawer opening and closing
 var navdrawermobile = document.getElementById('mobNavDrawer');
 var drawbg = document.getElementById('drawBg');
-var navbtn = document.getElementById('hdrMenuBtn');
+var navbtns = document.querySelectorAll('.hdr-menu-button');
 var navclose = document.getElementById('mobNavDrawerClose');
-
-//if (navbtn) {
-//  navbtn.addEventListener('click', function() {
-//    navdrawermobile.classList.toggle('open');
-//    navclose.focus();
-//    drawbg.classList.toggle('open');
-//    event.preventDefault();
-//  });
-//}
-
+var lastFocusedButton = null;
 
 // Function to open the menu drawer and set focus to the close button
 function openMenuDrawer(event) {
+  lastFocusedButton = event.currentTarget;
   navdrawermobile.classList.toggle('open');
   drawbg.classList.toggle('open');
+  document.body.classList.toggle('body-lock-scroll');
   if (navdrawermobile.classList.contains('open')) {
     setTimeout(() => {
       navclose.focus();
-    }, 200); // Adjust the delay time as needed to match the transition duration
+    }, 200);
   }
   event.preventDefault();
 }
 
-// Check if navbtn exists and is an element
-if (navbtn) {
-  // Click event listener
+// Event listeners to each menu button
+navbtns.forEach(navbtn => {
   navbtn.addEventListener('click', openMenuDrawer);
 
-  // Keydown event listener for 'Enter' key
   navbtn.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
       openMenuDrawer(event);
     }
   });
-}
+});
 
-if(navclose) { 
+if (navclose) { 
   navclose.addEventListener('click', function() {
     navdrawermobile.classList.remove('open');
     drawbg.classList.remove('open');
-    navbtn.focus();
+    document.body.classList.remove('body-lock-scroll');
+    lastFocusedButton?.focus();
   });
 }
 
-if(drawbg) { 
+if (drawbg) { 
   drawbg.addEventListener('click', function() {
     navdrawermobile.classList.remove('open');
     drawbg.classList.remove('open');
-    navbtn.focus();
+    document.body.classList.remove('body-lock-scroll');
+    lastFocusedButton?.focus();
   });
-}  
+}
+
+// Desktop dropdowns for click option
+var panelBg = document.querySelector('.dd-click-drawer-bg');
+var lastClickedButton = null;
+
+document.querySelectorAll('.nav-desktop-dd-btn-clickable').forEach(item => {
+  item.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const panel = item.nextElementSibling;
+    const isSameButton = lastClickedButton === item;
+    const gcHeader = document.querySelector('.header-bar-inner');
+
+    // Hide all other panels
+    document.querySelectorAll('.header-nav-desktop-dd-panel').forEach(p => {
+      if (p !== panel) {
+        p.classList.remove("dd-visible");
+      }
+    });
+
+    if (panel) {
+      if (isSameButton) {
+        // If clicking the same button, toggle the background visibility
+        panel.classList.toggle("dd-visible");
+        panelBg.classList.toggle("visible");
+        gcHeader.classList.add('hovered');        
+      } else {
+        // If clicking a different button, ensure background stays visible
+        panel.classList.add("dd-visible");
+        panelBg.classList.add("visible");
+        gcHeader.classList.add('hovered');
+      }
+    }
+
+    // Update last clicked button
+    lastClickedButton = isSameButton ? null : item;
+  });
+});
+
+// Close all dropdowns when clicking anywhere outside
+if (!document.querySelector('.nav-desktop-dd-btn-hover')) {
+  document.addEventListener('click', (event) => {
+    // Check if the clicked target is not inside a dropdown or clickable button
+    if (
+      !event.target.closest('.header-nav-desktop-dd-panel') &&
+      !event.target.closest('.nav-desktop-dd-btn-clickable') &&
+      !event.target.closest('.hdr-search-btn')
+    ) {
+      // Hide all dropdowns
+      document.querySelectorAll('.header-nav-desktop-dd-panel').forEach(panel => {
+        panel.classList.remove("dd-visible");
+        panelBg.classList.remove("visible");
+        document.querySelector('.header-bar-inner').classList.remove('hovered');
+      });
+    }
+  });
+}

@@ -42,8 +42,16 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute('name'));
+    // Ignore cart note edits
+    if (event.target.closest('cart-note')) return;
+
+    this.updateQuantity(
+      event.target.dataset.index,
+      event.target.value,
+      document.activeElement?.getAttribute('name')
+    );
   }
+
 
   onCartUpdate() {
     fetch('/cart?section_id=main-cart-items')
@@ -161,6 +169,12 @@ class CartItems extends HTMLElement {
     cartStatus.setAttribute('aria-hidden', false);
 
     setTimeout(() => {
+      if (typeof initCartRecommendationsArrows === 'function') {
+        initCartRecommendationsArrows();
+      }
+    }, 100);
+
+    setTimeout(() => {
       cartStatus.setAttribute('aria-hidden', true);
     }, 1000);
   }
@@ -199,14 +213,20 @@ class CartItems extends HTMLElement {
 customElements.define('cart-items', CartItems);
 
 if (!customElements.get('cart-note')) {
-  customElements.define('cart-note', class CartNote extends HTMLElement {
+  customElements.define(
+    'cart-note',
+    class CartNote extends HTMLElement {
       constructor() {
         super();
 
-      this.addEventListener('change', debounce((event) => {
+        this.addEventListener(
+          'input',
+          debounce((event) => {
             const body = JSON.stringify({ note: event.target.value });
             fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } });
-      }, ON_CHANGE_DEBOUNCE_TIMER))
+          }, ON_CHANGE_DEBOUNCE_TIMER)
+        );
       }
-  });
-};
+    }
+  );
+}

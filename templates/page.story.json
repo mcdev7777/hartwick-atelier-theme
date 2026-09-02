@@ -14,7 +14,6 @@
       "disabled": true,
       "settings": {
         "content_width": "page-width-narrow",
-        "hdr_alignment": "align-center",
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -35,13 +34,13 @@
         "secondary_image_animation": "none",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "middle",
         "txt_alignment": "center",
+        "txt_position": "middle",
         "content_width": 75,
-        "fade_in_text": true,
-        "scroll_fade_effect": true,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": true,
         "text_color": "fg-white",
         "bg_color": "",
         "overlay_level": 0
@@ -83,7 +82,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -102,14 +100,14 @@
       ],
       "settings": {
         "section_size": "flexible",
+        "content_width": "page-width",
+        "image_alignment": "left",
+        "dt_image_width": 50,
+        "card_spacing": 60,
         "image": "shopify://shop_images/HartwickAtelier-About-Angela2.jpg",
         "image_ratio": "fit",
         "secondary_image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg",
         "secondary_image_scale": "medium",
-        "image_alignment": "left",
-        "dt_image_width": 50,
-        "card_spacing": 60,
-        "content_width": "page-width",
         "txt_alignment": "center",
         "text_color": "fg-body",
         "bg_color": "bg-body",
@@ -128,7 +126,6 @@
           "type": "heading",
           "settings": {
             "heading": "A New Era of Limited Edition Slow Fashion",
-            "heading_tag": "h2",
             "heading_size": "hxl",
             "txt_alignment": "center"
           }
@@ -151,13 +148,13 @@
         "secondary_image_animation": "pan-up",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "middle",
         "txt_alignment": "center",
+        "txt_position": "middle",
         "content_width": 50,
-        "fade_in_text": true,
-        "scroll_fade_effect": false,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
         "text_color": "fg-white",
         "bg_color": "",
         "overlay_level": 10
@@ -199,7 +196,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },

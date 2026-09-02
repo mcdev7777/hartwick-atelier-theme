@@ -5,6 +5,8 @@
   - product: {Object} product object.
   - option: {Object} current product_option object.
   - block: {Object} block object.
+  - picker_type: {String} type of picker to dispay
+  - selector_order: The order of this selector (in reference to multiple variant selectors within the block)
 
 
   Usage:
@@ -12,71 +14,92 @@
     product: product,
     option: option,
     block: block
+    picker_type: picker_type
   %}
 {% endcomment %}
 {%- liquid
-  assign variants_available_arr = product.variants | map: 'available'
-  assign variants_option1_arr = product.variants | map: 'option1'
-  assign variants_option2_arr = product.variants | map: 'option2'
-  assign variants_option3_arr = product.variants | map: 'option3'
-
-  assign color_names = 'Color,Colors,Colour,Colours,Couleur,Couleurs,Cor,Cores,Colore,Colores,Farge,Farve,Färg,Färger,Barva,Barvy,Culoare,Culori,Warna,Kleur,Kleuren,Kolor,Zabarwienie,Szín' | split: ','
-   
   assign product_form_id = 'product-form-' | append: section.id
 -%}
-
-{%- if block.settings.picker_type == 'button' or block.settings.picker_type == 'minimal' -%}<div class="radio-options-wrapper">{%- endif -%}
+{%- liquid
+  assign longest_value = 0
+-%}
 {%- for value in option.values -%}
   {%- liquid
     assign option_disabled = true
-
-    for option1_name in variants_option1_arr
-      case option.position
-        when 1
-          if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-            assign option_disabled = false
-          endif
-        when 2
-          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-            assign option_disabled = false
-          endif
-        when 3
-          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-            assign option_disabled = false
-          endif
-      endcase
-    endfor
+    if value.available
+      assign option_disabled = false
+    endif
   -%}
 
-  {%- if block.settings.picker_type == 'button' or block.settings.picker_type == 'minimal' -%}
-    {% if color_names contains option.name and swatches == true %}<div class="option-color-picker-wrapper swatch-style-{{ swatch_style }}">{% endif %}
+  {%- capture input_id -%}
+    {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+  {%- endcapture -%}
+
+  {%- capture input_name -%}
+    {{ option.name }}-{{ option.position }}
+  {%- endcapture -%}
+
+  {%- capture input_dataset -%}
+    data-product-url="{{ value.product_url }}"
+    data-option-value-id="{{ value.id }}"
+  {%- endcapture -%}
+
+  {%- capture label_unavailable -%}
+    <span class="visually-hidden label-unavailable">
+      {{- 'products.product.unavailable' | t -}}
+    </span>
+  {%- endcapture -%}
+  {% if value.size > longest_value %}
+    {% assign longest_value = value.size %}
+  {% endif %}
+  {% if picker_type == 'button' or picker_type == 'minimal' %}
+  {% if thumbnail_variants contains option.name and show_variant_images and selector_order == 1 %}<div class="option-thumbnail-picker-wrapper">{% endif %}
+  {% if visual_variants contains option.name and swatches == true %}<div class="option-color-picker-wrapper swatch-style-{{ swatch_style }}">{% endif %}
     <input
       type="radio"
-      id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-      name="{{ option.name }}"
+      id="{{ input_id }}"
+      name="{{ input_name | escape }}"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
-      {% if option.selected_value == value %}
+      {% if value.selected %}
         checked
       {% endif %}
       {% if option_disabled %}
         class="disabled"
       {% endif %}
+      {{ input_dataset }}
     >
+    <label for="{{ input_id }}"{% if thumbnail_variants contains option.name and show_variant_images %} class="variant-picker-image"{% endif %}{% if visual_variants contains option.name and swatches == true %} class="variant-picker-colour-swatch picker-swatch-{{ value | handleize }}"{% endif %}>
+    {%- comment -%} VARIANT SWATCH {%- endcomment -%} 
+      {% if visual_variants contains option.name and swatches == true and show_variant_images == false %}{% render 'swatch', swatch: value.swatch, swatch_size: swatch_size %}{% endif %}
     
-      <label{% if color_names contains option.name and swatches == true %} class="variant-picker-colour-swatch picker-swatch-{{ value | handleize }}"{% endif %} for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-
-      {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+    {%- comment -%} VARIANT IMAGES {%- endcomment -%}
+      {% if thumbnail_variants contains option.name and show_variant_images and value.variant.featured_media %}
+        <div class="variant-featured-image ratio-{{ section.settings.gallery_aspect_ratio }}">
+          {{ value.variant.featured_media | image_url: width: 120 | image_tag: loading: 'lazy' }}
+        </div>
+      {% endif %}
+      <span class="variant-label--text">{{ value }}</span>
+      {{ label_unavailable }}
     </label>
-    {% if color_names contains option.name and swatches == true %}</div>{% endif %}
-    
-  {%- elsif block.settings.picker_type == 'dropdown' -%}
+    {% if thumbnail_variants contains option.name and show_variant_images and selector_order == 1 %}</div>{% endif %}
+    {% if visual_variants contains option.name and swatches == true %}</div>{% endif %}
+
+  {% endif %}
+  {% if picker_type == 'dropdown' %}   
     <option
+      id="{{ input_id }}"
       value="{{ value | escape }}"
-      {% if option.selected_value == value %}
+      {% if value.selected %}
         selected="selected"
       {% endif %}
+      {% if swatch_value and picker_type == 'swatch_dropdown' %}
+        data-option-swatch-value="{{ swatch_value }}"
+        {% if swatch_focal_point %}
+          data-option-swatch-focal-point="{{ swatch_focal_point }}"
+        {% endif %}
+      {% endif %}
+      {{ input_dataset }}
     >
       {% if option_disabled -%}
         {{- 'products.product.value_unavailable' | t: option_value: value -}}
@@ -84,10 +107,34 @@
         {{- value -}}
       {%- endif %}
     </option>
-        
-  {%- endif -%}
-{%- endfor -%}
-{%- if block.settings.picker_type == 'button' or block.settings.picker_type == 'minimal' -%}</div>{%- endif -%}
-  {% if color_names contains option.name and swatches == true %}
-  <div class="caption product-color-swatch-label" id="colorSwatchLabel">{{ option.selected_value }}</div>
   {% endif %}
+{%- endfor -%}
+
+
+
+{% if longest_value < 10 %}
+<style>
+  .variant-picker-button.pill-layout--flex-grow .pvp-row-{{ option.position }}.radio-options-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(calc(44px + {{ longest_value }}ch), 100%), 1fr));
+  }
+  .variant-picker-button.pill-layout--flex-grow .pvp-row-{{ option.position }}.radio-options-wrapper:has(.swatch), 
+  .variant-picker-button.pill-layout--flex-grow .pvp-row-{{ option.position }}.radio-options-wrapper:has(.variant-featured-image), 
+  .variant-picker-button.pill-layout--flex-grow .radio-options-wrapper.pvp-row-{{ option.position }}:has(.option-thumbnail-picker-wrapper) {
+    display: flex;
+  }
+</style>
+{% endif %}
+{% if longest_value >= 10 %}
+<style>
+  .variant-picker-button.pill-layout--flex-grow .pvp-row-{{ option.position }}.radio-options-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(calc(4px + {{ longest_value }}ch), 100%), 1fr));
+  }
+  .variant-picker-button.pill-layout--flex-grow .pvp-row-{{ option.position }}.radio-options-wrapper:has(.swatch), 
+  .variant-picker-button.pill-layout--flex-grow .pvp-row-{{ option.position }}.radio-options-wrapper:has(.variant-featured-image), 
+  .variant-picker-button.pill-layout--flex-grow .radio-options-wrapper.pvp-row-{{ option.position }}:has(.option-thumbnail-picker-wrapper) {
+    display: flex;
+  }
+</style>
+{% endif %}

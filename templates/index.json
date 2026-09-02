@@ -16,7 +16,6 @@
           "type": "heading",
           "settings": {
             "heading": "MADE BY MASTERS",
-            "heading_tag": "h1",
             "heading_size": "h2",
             "txt_alignment": "right"
           }
@@ -56,13 +55,13 @@
         "secondary_image_animation": "none",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "bottom_right",
         "txt_alignment": "right",
+        "txt_position": "bottom_right",
         "content_width": 100,
-        "fade_in_text": true,
-        "scroll_fade_effect": true,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": true,
         "text_color": "fg-white",
         "bg_color": "rgba(0,0,0,0)",
         "overlay_level": 10
@@ -105,7 +104,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -155,7 +153,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -166,7 +163,6 @@
           "type": "heading",
           "settings": {
             "heading": "",
-            "heading_tag": "h1",
             "heading_size": "h1",
             "txt_alignment": "center"
           }
@@ -213,13 +209,13 @@
         "secondary_image_animation": "none",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "middle",
         "txt_alignment": "center",
+        "txt_position": "middle",
         "content_width": 75,
-        "fade_in_text": true,
-        "scroll_fade_effect": false,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
         "text_color": "fg-white",
         "bg_color": "",
         "overlay_level": 0
@@ -265,14 +261,14 @@
       ],
       "settings": {
         "section_size": "flexible",
+        "card_spacing": 20,
+        "content_width": "page-width",
         "video_url": "shopify://files/videos/HA LOGO 02 TRIMMED.mov",
         "image_ratio": "portrait-4x6",
         "secondary_image_scale": "small",
         "dt_image_width": 50,
-        "card_spacing": 20,
-        "content_width": "page-width",
-        "txt_alignment": "left",
         "video_alignment": "right",
+        "txt_alignment": "left",
         "text_color": "fg-body",
         "bg_color": "bg-body",
         "top_padding": 80,
@@ -323,14 +319,14 @@
       ],
       "settings": {
         "section_size": "flexible",
+        "card_spacing": 20,
+        "content_width": "page-width",
         "video_url": "shopify://files/videos/IMG_9647_ea988c8f-d1f4-42d9-bb31-09a2e5cd8db0.mov",
         "image_ratio": "fit",
         "secondary_image_scale": "small",
         "dt_image_width": 50,
-        "card_spacing": 20,
-        "content_width": "page-width",
-        "txt_alignment": "left",
         "video_alignment": "right",
+        "txt_alignment": "left",
         "text_color": "fg-body",
         "bg_color": "bg-body",
         "top_padding": 80,
@@ -349,7 +345,6 @@
           "disabled": true,
           "settings": {
             "heading": "Natural Dye",
-            "heading_tag": "h1",
             "heading_size": "h1",
             "txt_alignment": "center"
           }
@@ -398,13 +393,13 @@
         "secondary_image_animation": "none",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "middle",
         "txt_alignment": "center",
+        "txt_position": "middle",
         "content_width": 75,
-        "fade_in_text": true,
-        "scroll_fade_effect": false,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
         "text_color": "fg-white",
         "bg_color": "#000000",
         "overlay_level": 0
@@ -435,9 +430,9 @@
         "button_fT4m7a": {
           "type": "button",
           "settings": {
+            "btn_color_scheme": "default",
             "btn_txt": "Button label",
             "btn_link": "",
-            "btn_color_scheme": "default",
             "btn_style": "solid"
           }
         }
@@ -450,13 +445,13 @@
       ],
       "settings": {
         "section_size": "flexible",
-        "image": "shopify://shop_images/012_HARTWICK_FINESILK_LARGESQUARE04_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-        "image_ratio": "portrait",
-        "secondary_image_scale": "small",
+        "content_width": "page-width",
         "image_alignment": "right",
         "dt_image_width": 50,
         "card_spacing": 20,
-        "content_width": "page-width",
+        "image": "shopify://shop_images/012_HARTWICK_FINESILK_LARGESQUARE04_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+        "image_ratio": "portrait",
+        "secondary_image_scale": "small",
         "txt_alignment": "left",
         "text_color": "fg-body",
         "bg_color": "bg-body",
@@ -475,7 +470,6 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/HartwickAtelier-About.jpg",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait",
             "image_padding": 20,
@@ -487,7 +481,6 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/HartwickAtelier-Process3.jpg",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait",
             "image_padding": 20,
@@ -499,7 +492,6 @@
           "type": "video",
           "settings": {
             "video_url": "shopify://files/videos/IMG_9647.mov",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait-4x6",
             "image_padding": 0,
@@ -511,7 +503,6 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/042_HARTWICK_TATLAYOKO_LAUNCH_INSTA_GRID.jpg",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait-4x6",
             "image_padding": 0,
@@ -558,6 +549,8 @@
           "type": "button",
           "settings": {
             "alignment": "right",
+            "btn_layout": "inline",
+            "btn_color_scheme": "default",
             "btn_one_show": true,
             "btn_one_txt": "Read our Story",
             "btn_one_link": "shopify://pages/story",
@@ -565,9 +558,7 @@
             "btn_two_show": false,
             "btn_two_txt": "Button text",
             "btn_two_link": "",
-            "btn_two_style": "button--solid",
-            "btn_color_scheme": "default",
-            "btn_layout": "inline"
+            "btn_two_style": "button--solid"
           }
         }
       },
@@ -587,7 +578,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "right",
         "border_color": "dark"
       }
     },
@@ -598,7 +588,6 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/HartwickAtelier-Collage-03.jpg",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait",
             "image_padding": 10,
@@ -610,7 +599,6 @@
           "type": "video",
           "settings": {
             "video_url": "shopify://files/videos/IMG_5624_HARTWICK_LIMINAL_HANDCRAFTED_SILVER_18K_GOLD_EARRINGS_efa4aa22-e7fa-4e95-85d6-f389d10c12a4.mov",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait",
             "image_padding": 0,
@@ -655,6 +643,8 @@
           "type": "button",
           "settings": {
             "alignment": "left",
+            "btn_layout": "inline",
+            "btn_color_scheme": "default",
             "btn_one_show": true,
             "btn_one_txt": "Read About Our Process",
             "btn_one_link": "shopify://pages/heritage-craft",
@@ -662,9 +652,7 @@
             "btn_two_show": false,
             "btn_two_txt": "Button text",
             "btn_two_link": "",
-            "btn_two_style": "button--solid",
-            "btn_color_scheme": "default",
-            "btn_layout": "inline"
+            "btn_two_style": "button--solid"
           }
         }
       },
@@ -684,7 +672,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "left",
         "border_color": "dark"
       }
     },
@@ -695,7 +682,6 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/HartwickAtelier-Collage-05.jpg",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait",
             "image_padding": 0,
@@ -707,7 +693,6 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/HartwickAtelier-Collage-06.jpg",
-            "url": "",
             "image_size": "half_width",
             "image_ratio": "portrait",
             "image_padding": 20,
@@ -735,7 +720,6 @@
           "type": "heading",
           "settings": {
             "heading": "FINE JEWELLERY",
-            "heading_tag": "h2",
             "heading_size": "h1",
             "txt_alignment": "center"
           }
@@ -769,10 +753,10 @@
         "buttons_bfXgEF"
       ],
       "settings": {
+        "banner_size": "banner-style-fullscreen",
         "video_url": "shopify://files/videos/HARTWICK_LIMINAL_HANDCRAFTED_EMERALD_RUBY_AQUAMARINE_IMG_5568_CROPPED.mov",
         "video_mob_url": "shopify://files/videos/HARTWICK_LIMINAL_HANDCRAFTED_EMERALD_RUBY_AQUAMARINE_IMG_5568_CROPPED.mov",
         "overlay_level": 0,
-        "banner_size": "banner-style-fullscreen",
         "video_size": "100",
         "video_position": "center",
         "video_margin_mobile": 0,
@@ -780,10 +764,10 @@
         "txt_position": "middle",
         "txt_alignment": "center",
         "content_width": 100,
-        "fade_in_text": true,
-        "scroll_fade_effect": false,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
         "text_color": "fg-white",
         "bg_color": "#000000"
       }
@@ -812,6 +796,8 @@
           "type": "button",
           "settings": {
             "alignment": "center",
+            "btn_layout": "inline",
+            "btn_color_scheme": "default",
             "btn_one_show": true,
             "btn_one_txt": "Shop Apparel",
             "btn_one_link": "shopify://collections/apparel",
@@ -819,9 +805,7 @@
             "btn_two_show": true,
             "btn_two_txt": "Shop Jewellery",
             "btn_two_link": "shopify://collections/fine-jewellery",
-            "btn_two_style": "button--outline",
-            "btn_color_scheme": "default",
-            "btn_layout": "inline"
+            "btn_two_style": "button--outline"
           }
         }
       },
@@ -841,7 +825,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },

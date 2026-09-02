@@ -21,7 +21,7 @@
 
 .price .price-item {
   display: inline-block;
-  margin: 0 0.5rem 0 0;
+  margin: 0 0.4rem 0 0;
 }
 
 .price__regular .price-item--regular {
@@ -30,6 +30,10 @@
 
 .price:not(.price--show-badge) .price-item--last:last-of-type {
   margin: 0;
+}
+
+.price__sale .price-item--sale-from {
+  margin-right: 0;
 }
 
 @media screen and (min-width: 750px) {
@@ -50,12 +54,19 @@
   letter-spacing: 0rem;
 }
 
+.quick-add-modal .price--large, .quick-add-modal .price--xl {
+  font-size: var(--font-body-base-size-mobile);
+}
+
 @media screen and (min-width: 750px) {
   .price--large {
     font-size: calc(var(--font-body-base-size-tablet) + 2px);
   }
   .price--xl {
     font-size: calc(var(--font-body-base-size-tablet) + 4px);
+  }
+  .quick-add-modal .price--large, .quick-add-modal .price--xl {
+    font-size: var(--font-body-base-size-tablet);
   }
 }
 
@@ -65,6 +76,9 @@
   }
   .price--xl {
     font-size: calc(var(--font-body-base-size-desktop) + 4px);
+  }
+  .quick-add-modal .price--large, .quick-add-modal .price--xl {
+    font-size: var(--font-body-base-size-desktop);
   }
 }
 
@@ -100,22 +114,28 @@
 
 .price--on-sale .price-item--regular {
   text-decoration: line-through;
+  text-decoration-thickness: 1px;
   opacity: 0.65;
 }
 
-.product__info-container .price-item--sale, .cart-item .price-item--sale, .cart-item__details .price-item--sale, .predictive-search-results .price-item--sale {
-  color: var(--color-price-sale);
+.product__info-container .price-item--sale, 
+.cart-item .price-item--sale, 
+.cart-item__details .price-item--sale, 
+.predictive-search-results .price-item--sale, 
+.featured-product--price .price-item--sale, 
+.featured-product--price .price-saving-badge, 
+.cart-items--recommendations-container .price-item--sale {
+  color: rgb(var(--color-price-sale));
 }
 
 .card-price-sale-highlighted .price-item--sale {
-  color: var(--color-price-sale);  
+  color: rgb(var(--color-price-sale));  
 }
 
 .unit-price {
   display: block;
   margin-top: 0.2rem;
-  text-transform: uppercase;
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 .card-product .price {

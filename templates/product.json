@@ -22,8 +22,8 @@
           "type": "price",
           "settings": {
             "price_size": "price--large",
-            "price_show_taxes": false,
             "show_discounts": true,
+            "price_show_taxes": false,
             "show_shoppay_banner": false
           }
         },
@@ -37,9 +37,7 @@
             "border_bottom": false,
             "use_color_swatches": false,
             "color_swatches_style": "round",
-            "color_swatches_array": "White - #f2f2f2\nBlack - #000000\nNavy - #233756\nRed - #912014\nDark Grey - #333333",
-            "popup_title": "Size Guide",
-            "popup_page": "size-guide"
+            "color_swatches_array": "White - #f2f2f2\nBlack - #000000\nNavy - #233756\nRed - #912014\nDark Grey - #333333"
           }
         },
         "870625ea-f97e-4cab-b3b3-04010a7854a5": {
@@ -131,8 +129,11 @@
         "media_bg_col": "rgba(0,0,0,0)",
         "gallery_aspect_ratio": "portrait",
         "gallery_media_scale": "default",
-        "media_section_width": "standard",
         "gallery_height_limit_desktop": false,
+        "media_section_width": "standard",
+        "product_section_width": "standard",
+        "media_mobile_width": "full-width",
+        "gallery_grid_spacing": 10,
         "mobile_media_nav": "bullets",
         "mobile_media_nav_position": "below-media",
         "gallery_layout": "grid",
@@ -141,9 +142,6 @@
         "desktop_media_thumbnail_position": "left",
         "desktop_media_thumbnail_placement": "adjacent",
         "arrow_style": "solid-inverted",
-        "product_section_width": "standard",
-        "media_mobile_width": "full-width",
-        "gallery_grid_spacing": 10,
         "balance_grid": true,
         "media_video_autoplay": true,
         "zoom_enable": true,
@@ -189,7 +187,6 @@
         "heading_size": "h2",
         "heading_alignment": "left",
         "section_heading_position": "normal",
-        "image_placement": "right",
         "btn_txt": "",
         "btn_link": "",
         "button_color": "primary-colour",
@@ -225,9 +222,7 @@
         "heading_size": "h2",
         "heading_alignment": "left",
         "products_to_show": 4,
-        "show_secondary_image": true,
         "show_price": true,
-        "price_highlight": true,
         "show_vendor": false,
         "text_color": "fg-body",
         "bg_color": "bg-body",
@@ -275,7 +270,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -327,7 +321,6 @@
         "columns_tablet": 4,
         "columns_desktop": 4,
         "arrow_style": "solid-inverted",
-        "show_secondary_image": false,
         "show_price": false,
         "show_vendor": false,
         "enable_quick_add": false,

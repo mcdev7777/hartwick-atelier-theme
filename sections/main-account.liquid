@@ -44,7 +44,9 @@
     <div>
       <h2>{{ 'customer.orders.title' | t }}</h2>
 
-{%- if customer.orders.size > 0 -%}
+
+{%- paginate customer.orders by 25 -%}      
+{% if customer.orders.size > 0 %}
 <div class="account-orders-table">
 
 {%- for order in customer.orders -%}
@@ -71,11 +73,16 @@
 {%- endfor -%}
 
 </div>
-{%- else -%}
+{% else %}
 
 <p>{{ 'customer.orders.none' | t }}</p>
-{%- endif -%}      
+{% endif %}  
 
+{%- if paginate.pages > 1 -%}
+  {% render 'pagination', paginate: paginate, anchor: '' %}
+{%- endif -%}
+  
+{%- endpaginate -%}
     </div>
 
   </div>

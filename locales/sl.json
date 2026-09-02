@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Severna Amerika",
+      "central_america": "Srednja America",
+      "south_america": "Južna Amerika",
+      "europe": "Evropi",
+      "middle_east": "Bližnji Vzhod",
+      "africa": "Afrika",
+      "asia": "Azija",
+      "oceania": "Oceanija"
+    },
     "password_page": {
       "login_form_heading": "V trgovino vstopite z geslom:",
       "login_password_button": "Vnesite z geslom",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Delite na Facebook",
         "share_on_twitter": "Tweet na Twitter",
         "share_on_pinterest": "Pripni na Pinterest",
-        "share_on_linkedin": "Delite na LinkedIn"
+        "share_on_linkedin": "Delite na LinkedIn",
+        "share_on_whatsapp": "Delite na WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Nadaljujte z nakupovanjem",
     "pagination": {
       "label": "Paginacija",
+      "all": "Vse",
       "page": "Stran {{ number }}",
       "next": "Naslednja stran",
       "previous": "Prejšnja stran"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Dodaj",
       "add_to_cart": "Dodaj v košarico",
+      "pre_order": "Prednaroči",
       "color": "barva",
       "colors": "Barve",
       "choose_options": "Izberite možnosti",
@@ -164,6 +178,7 @@
         "view_store_info": "Ogled informacij o trgovini",
         "check_other_stores": "Preverite razpoložljivost v drugih trgovinah",
         "title": "Prevzem",
+        "phone": "Tel:",
         "pick_up_available": "Možnost prevzema",
         "pick_up_unavailable": "Prevzem ni na voljo",
         "pick_up_available_at_html": "Možnost prevzema pri <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Delite ta izdelek",
       "sold_out": "Razprodano",
       "unavailable": "Ni na voljo",
+      "reviews": "Ocene",
       "vendor": "Znamka",
       "value_unavailable": "{{ option_value }} - Ni na voljo",
       "variant_sold_out_or_unavailable": "Različica je razprodana ali ni na voljo",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Domov"
+    },
     "404": {
       "title": "Stran ni najdena",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Ocenjeno skupno",
       "new_estimated_total": "Nova ocenjena vsota",
       "note": "Dodajte opombo k naročilu",
+      "note_placeholder": "Sporočilo",
+      "note_save": "Shrani",
+      "note_clear": "Počisti",
       "checkout": "Odjavite se",
       "empty": "Vaša torba je prazna",
       "empty_button_label": "Nakupujte zdaj",

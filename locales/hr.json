@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Sjeverna Amerika",
+      "central_america": "Sjeverna Amerika",
+      "south_america": "Južna Amerika",
+      "europe": "Europi",
+      "middle_east": "Bliski Istok",
+      "africa": "Afrika",
+      "asia": "Azija",
+      "oceania": "Oceanija"
+    },
     "password_page": {
       "login_form_heading": "Uđite u trgovinu koristeći lozinku:",
       "login_password_button": "Unesite pomoću lozinke",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Podijelite na Facebook",
         "share_on_twitter": "Tweet na Twitter",
         "share_on_pinterest": "Prikvači na Pinterest",
-        "share_on_linkedin": "Podijelite na LinkedIn"
+        "share_on_linkedin": "Podijelite na LinkedIn",
+        "share_on_whatsapp": "Podijelite na WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Nastavite kupovati",
     "pagination": {
       "label": "Paginacija",
+      "all": "Sve",
       "page": "Stranica {{ number }}",
       "next": "Sljedeća stranica",
       "previous": "Prethodna stranica"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Dodati",
       "add_to_cart": "Dodaj u košaricu",
+      "pre_order": "Prednaruči",
       "color": "Boja",
       "colors": "Boje",
       "choose_options": "Odaberite opcije",
@@ -164,6 +178,7 @@
         "view_store_info": "Pogledajte informacije o trgovini",
         "check_other_stores": "Provjerite dostupnost u drugim trgovinama",
         "title": "Kurva",
+        "phone": "Tel:",
         "pick_up_available": "Moguće preuzimanje",
         "pick_up_unavailable": "Preuzimanje nije dostupno",
         "pick_up_available_at_html": "Moguće preuzimanje u <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Podijelite ovaj proizvod",
       "sold_out": "Rasprodan",
       "unavailable": "Nedostupan",
+      "reviews": "Recenzije",
       "vendor": "Marka",
       "value_unavailable": "{{ option_value }} - Nedostupan",
       "variant_sold_out_or_unavailable": "Varijanta rasprodana ili nedostupna",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Početna"
+    },
     "404": {
       "title": "Stranica nije pronađena",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Procijenjeni ukupni iznos",
       "new_estimated_total": "Novi procijenjeni ukupni iznos",
       "note": "Dodajte napomenu o narudžbi",
+      "note_placeholder": "Poruka",
+      "note_save": "Spremi",
+      "note_clear": "Obriši",
       "checkout": "Provjeriti",
       "empty": "Torba ti je prazna",
       "empty_button_label": "Kupujte sada",

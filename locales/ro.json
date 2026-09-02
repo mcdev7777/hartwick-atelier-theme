@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "America de Nord",
+      "central_america": "America Centrală",
+      "south_america": "America de Sud",
+      "europe": "Europa",
+      "middle_east": "Orientul Mijlociu",
+      "africa": "Africa",
+      "asia": "Asia",
+      "oceania": "Oceania"
+    },
     "password_page": {
       "login_form_heading": "Intra in magazin folosind parola:",
       "login_password_button": "Introduceți folosind parola",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Distribuie pe Facebook",
         "share_on_twitter": "Tweet pe Twitter",
         "share_on_pinterest": "Pin pe Pinterest",
-        "share_on_linkedin": "Distribuie pe LinkedIn"
+        "share_on_linkedin": "Distribuie pe LinkedIn",
+        "share_on_whatsapp": "Distribuie pe WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Continuați cumpărăturile",
     "pagination": {
       "label": "Paginare",
+      "all": "Toate",
       "page": "Pagină {{ number }}",
       "next": "Pagina următoare",
       "previous": "Pagina anterioară"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Adaugă",
       "add_to_cart": "Adaugă in coş",
+      "pre_order": "Precomandă",
       "color": "Culoare",
       "colors": "Culori",
       "choose_options": "Alegeți opțiunile",
@@ -164,6 +178,7 @@
         "view_store_info": "Vizualizați informațiile despre magazin",
         "check_other_stores": "Verifica disponibilitatea in alte magazine",
         "title": "Ridicare",
+        "phone": "Tel:",
         "pick_up_available": "Ridicare disponibilă",
         "pick_up_unavailable": "Ridicare nu este disponibilă",
         "pick_up_available_at_html": "Ridicare disponibilă la <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Distribuie acest produs",
       "sold_out": "Epuizat",
       "unavailable": "Indisponibil",
+      "reviews": "Recenzii",
       "vendor": "Marca",
       "value_unavailable": "{{ option_value }} - Indisponibil",
       "variant_sold_out_or_unavailable": "Varianta epuizată sau indisponibilă",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Acasă"
+    },
     "404": {
       "title": "Pagina nu a fost găsită",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Total estimat",
       "new_estimated_total": "Nou total estimat",
       "note": "Adăugați o notă de comandă",
+      "note_placeholder": "Mesaj",
+      "note_save": "Salvează",
+      "note_clear": "Șterge",
       "checkout": "Verifică",
       "empty": "Geanta ta este goală",
       "empty_button_label": "Cumpărați acum",

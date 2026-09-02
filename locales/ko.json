@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "북아메리카",
+      "central_america": "중앙 아메리카",
+      "south_america": "남아메리카",
+      "europe": "유럽",
+      "middle_east": "중동",
+      "africa": "아프리카",
+      "asia": "아시아",
+      "oceania": "오세아니아"
+    },
     "password_page": {
       "login_form_heading": "비밀번호를 사용하여 매장에 입장하세요:",
       "login_password_button": "비밀번호를 사용하여 입력",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Facebook에서 공유",
         "share_on_twitter": "X에 공유",
         "share_on_pinterest": "Pinterest에 고정하기",
-        "share_on_linkedin": "LinkedIn에 공유"
+        "share_on_linkedin": "LinkedIn에 공유",
+        "share_on_whatsapp": "WhatsApp에 공유"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "계속 쇼핑하기",
     "pagination": {
       "label": "쪽수 매기기",
+      "all": "모두",
       "page": "페이지 {{ number }}",
       "next": "다음 페이지",
       "previous": "이전 페이지"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "장바구니에 추가",
       "add_to_cart": "장바구니에 추가",
+      "pre_order": "사전 주문",
       "color": "색상",
       "colors": "그림 물감",
       "choose_options": "옵션을 선택하세요",
@@ -164,6 +178,7 @@
         "view_store_info": "매장정보 보기",
         "check_other_stores": "다른 매장의 재고 확인",
         "title": "찾다",
+        "phone": "전화:",
         "pick_up_available": "픽업 가능",
         "pick_up_unavailable": "픽업 불가",
         "pick_up_available_at_html": "픽업 가능 장소: <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "이 제품을 공유하세요",
       "sold_out": "매진",
       "unavailable": "없는",
+      "reviews": "리뷰",
       "vendor": "상표",
       "value_unavailable": "{{ option_value }} - 이용 불가",
       "variant_sold_out_or_unavailable": "매진되었거나 사용할 수 없는 변형",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "홈"
+    },
     "404": {
       "title": "페이지를 찾을 수 없습니다",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "예상 총액",
       "new_estimated_total": "새로운 예상 총액",
       "note": "주문 메모 추가",
+      "note_placeholder": "메시지",
+      "note_save": "저장",
+      "note_clear": "지우기",
       "checkout": "확인해 보세요",
       "empty": "가방이 비어 있습니다",
       "empty_button_label": "지금 쇼핑하세요",

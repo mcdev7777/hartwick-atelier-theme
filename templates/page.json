@@ -13,7 +13,6 @@
       "type": "main-page",
       "settings": {
         "content_width": "page-width-narrow",
-        "hdr_alignment": "align-center",
         "padding_top": 100,
         "padding_bottom": 100
       }

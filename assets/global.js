@@ -6,6 +6,51 @@ function getFocusableElements(container) {
   );
 }
 
+
+class HTMLUpdateUtility {
+  /**
+   * Used to swap an HTML node with a new node.
+   * The new node is inserted as a previous sibling to the old node, the old node is hidden, and then the old node is removed.
+   *
+   * The function currently uses a double buffer approach, but this should be replaced by a view transition once it is more widely supported https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API
+   */
+  static viewTransition(oldNode, newContent, preProcessCallbacks = [], postProcessCallbacks = []) {
+    preProcessCallbacks?.forEach((callback) => callback(newContent));
+
+    const newNodeWrapper = document.createElement('div');
+    HTMLUpdateUtility.setInnerHTML(newNodeWrapper, newContent.outerHTML);
+    const newNode = newNodeWrapper.firstChild;
+
+    // dedupe IDs
+    const uniqueKey = Date.now();
+    oldNode.querySelectorAll('[id], [form]').forEach((element) => {
+      element.id && (element.id = `${element.id}-${uniqueKey}`);
+      element.form && element.setAttribute('form', `${element.form.getAttribute('id')}-${uniqueKey}`);
+    });
+
+    oldNode.parentNode.insertBefore(newNode, oldNode);
+    oldNode.style.display = 'none';
+
+    postProcessCallbacks?.forEach((callback) => callback(newNode));
+
+    setTimeout(() => oldNode.remove(), 500);
+  }
+
+  // Sets inner HTML and reinjects the script tags to allow execution. By default, scripts are disabled when using element.innerHTML.
+  static setInnerHTML(element, html) {
+    element.innerHTML = html;
+    element.querySelectorAll('script').forEach((oldScriptTag) => {
+      const newScriptTag = document.createElement('script');
+      Array.from(oldScriptTag.attributes).forEach((attribute) => {
+        newScriptTag.setAttribute(attribute.name, attribute.value);
+      });
+      newScriptTag.appendChild(document.createTextNode(oldScriptTag.innerHTML));
+      oldScriptTag.parentNode.replaceChild(newScriptTag, oldScriptTag);
+    });
+  }
+}
+
+
 document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
   summary.setAttribute('role', 'button');
   summary.setAttribute('aria-expanded', summary.parentNode.hasAttribute('open'));
@@ -116,7 +161,11 @@ function pauseAllMedia() {
   document.querySelectorAll('.js-vimeo').forEach((video) => {
     video.contentWindow.postMessage('{"method":"pause"}', '*');
   });
-  document.querySelectorAll('video').forEach((video) => video.pause());
+  document.querySelectorAll('video').forEach((video) => {
+    if (!video.closest('.autoplaying-video')) {
+      video.pause();
+    }
+  });
   document.querySelectorAll('product-model').forEach((model) => {
     if (model.modelViewerUI) model.modelViewerUI.pause();
   });
@@ -147,10 +196,9 @@ class QuantityInput extends HTMLElement {
     super();
     this.input = this.querySelector('input');
     this.changeEvent = new Event('change', { bubbles: true });
-
     this.input.addEventListener('change', this.onInputChange.bind(this));
-    this.querySelectorAll('button').forEach(
-      (button) => button.addEventListener('click', this.onButtonClick.bind(this))
+    this.querySelectorAll('button').forEach((button) =>
+      button.addEventListener('click', this.onButtonClick.bind(this))
     );
   }
 
@@ -175,22 +223,34 @@ class QuantityInput extends HTMLElement {
     event.preventDefault();
     const previousValue = this.input.value;
 
-    event.target.name === 'plus' ? this.input.stepUp() : this.input.stepDown();
+    if (event.target.name === 'plus') {
+      if (parseInt(this.input.dataset.min) > parseInt(this.input.step) && this.input.value == 0) {
+        this.input.value = this.input.dataset.min;
+      } else {
+        this.input.stepUp();
+      }
+    } else {
+      this.input.stepDown();
+    }
+
     if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
+
+    if (this.input.dataset.min === previousValue && event.target.name === 'minus') {
+      this.input.value = parseInt(this.input.min);
+    }
   }
 
   validateQtyRules() {
     const value = parseInt(this.input.value);
     if (this.input.min) {
-      const min = parseInt(this.input.min);
       const buttonMinus = this.querySelector(".quantity__button[name='minus']");
-      buttonMinus.classList.toggle('disabled', value <= min);
+      buttonMinus.classList.toggle('disabled', parseInt(value) <= parseInt(this.input.min));
     }
     if (this.input.max) {
       const max = parseInt(this.input.max);
       const buttonPlus = this.querySelector(".quantity__button[name='plus']");
       buttonPlus.classList.toggle('disabled', value >= max);
-    } 
+    }
   }
 }
 
@@ -544,283 +604,73 @@ class DeferredMedia extends HTMLElement {
 customElements.define('deferred-media', DeferredMedia);
 
 
+
+
 class VariantSelects extends HTMLElement {
   constructor() {
     super();
-    this.addEventListener('change', this.onVariantChange);
   }
 
-  onVariantChange() {
-    this.updateOptions();
-    this.updateMasterId();
-    this.toggleAddButton(true, '', false);
-    this.updatePickupAvailability();
-    this.updateLabel();
-    this.removeErrorMessage();
-    this.updateVariantStatuses();
+  connectedCallback() {
+    this.addEventListener('change', (event) => {
+      const target = this.getInputForEventTarget(event.target);
+      this.updateSelectionMetadata(event);
 
-    if (!this.currentVariant) {
-      this.toggleAddButton(true, '', true);
-      this.setUnavailable();
-    } else {
-      this.updateURL();
-      this.updateVariantInput();
-      this.renderProductInfo();
-      this.updateShareUrl();
-    }
-  }
- 
-  updateOptions() {
-    this.options = Array.from(this.querySelectorAll('select'), (select) => select.value);
-  }
-
-  updateMasterId() {
-    this.currentVariant = this.getVariantData().find((variant) => {
-      return !variant.options.map((option, index) => {
-        return this.options[index] === option;
-      }).includes(false);
-    });
-  }
-  
-  updateURL() {
-    if (!this.currentVariant || this.dataset.updateUrl === 'false') return;
-    window.history.replaceState({ }, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
-  }
-
-  updateShareUrl() {
-    const shareButton = document.getElementById(`Share-${this.dataset.section}`);
-    if (!shareButton || !shareButton.updateUrl) return;
-    shareButton.updateUrl(`${window.shopUrl}${this.dataset.url}?variant=${this.currentVariant.id}`);
-  }
-  
-  updateVariantInput() {
-    const productForms = document.querySelectorAll(`#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}`);
-    productForms.forEach((productForm) => {
-      const input = productForm.querySelector('input[name="id"]');
-      input.value = this.currentVariant.id;
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    });
-  }
-
-  updateVariantStatuses() {
-    const selectedOptionOneVariants = this.variantData.filter(variant => this.querySelector(':checked').value === variant.option1);
-    const inputWrappers = [...this.querySelectorAll('.product-form__input')];
-    inputWrappers.forEach((option, index) => {
-      if (index === 0) return;
-      const optionInputs = [...option.querySelectorAll('input[type="radio"], option')]
-      const previousOptionSelected = inputWrappers[index - 1].querySelector(':checked').value;
-      const availableOptionInputsValue = selectedOptionOneVariants.filter(variant => variant.available && variant[`option${ index }`] === previousOptionSelected).map(variantOption => variantOption[`option${ index + 1 }`]);
-      this.setInputAvailability(optionInputs, availableOptionInputsValue)
-    });
-  }
-
-  setInputAvailability(listOfOptions, listOfAvailableOptions) {
-    listOfOptions.forEach(input => {
-      if (listOfAvailableOptions.includes(input.getAttribute('value'))) {
-        input.innerText = input.getAttribute('value');
-      } else {
-        input.innerText = window.variantStrings.unavailable_with_option.replace('[value]', input.getAttribute('value'));
-      }
-    });
-  }
-
-  updatePickupAvailability() {
-    // Check if isQuickAddModal is true and return false to prevent execution
-    if (window.isQuickAddModal) {
-      return false;
-    }    
-    
-    const pickUpAvailability = document.querySelector('pickup-availability');
-    if (!pickUpAvailability) return;
-
-    if (this.currentVariant && this.currentVariant.available) {
-      pickUpAvailability.fetchAvailability(this.currentVariant.id);
-    } else {
-      pickUpAvailability.removeAttribute('available');
-      pickUpAvailability.innerHTML = '';
-    }
-  }
-
-  updateLabel() {
-      const label = document.getElementById('colorSwatchLabel');
-      let colorInput;
-  
-      // Array of possible option names
-      const optionNames = ['Color', 'Colour', 'Colours', 'Couleur', 'Couleurs'];
-  
-      // Find the checked input element among the possible option names
-      for (let i = 0; i < optionNames.length; i++) {
-          colorInput = document.querySelector(`input[name="${optionNames[i]}"]:checked`);
-          if (colorInput) {
-              break; // Found the checked input element, exit the loop
-          }
-      }
-  
-      if (!label || !colorInput) {
-          // Handle absence of colorSwatchLabel or Color input
-          return;
-      }
-  
-      const colorName = colorInput.value;
-      label.innerHTML = colorName;
-  }
- 
-  
-  removeErrorMessage() {
-    const section = this.closest('section');
-    if (!section) return;
-
-    const productForm = section.querySelector('product-form');
-    if (productForm) productForm.handleErrorMessage();
-  }
-
-  
-  renderProductInfo() {
-    const requestedVariantId = this.currentVariant.id;
-    const sectionId = this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section;
-
-    fetch(`${this.dataset.url}?variant=${requestedVariantId}&section_id=${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`)
-      .then((response) => response.text())
-      .then((responseText) => {
-        // prevent unnecessary ui changes from abandoned selections
-        if (this.currentVariant.id !== requestedVariantId) return;
-
-        const html = new DOMParser().parseFromString(responseText, 'text/html')
-        const destination = document.getElementById(`price-${this.dataset.section}`);
-        const source = html.getElementById(`price-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
-        const skuSource = html.getElementById(`Sku-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
-        const skuDestination = document.getElementById(`Sku-${this.dataset.section}`);
-        const inventorySource = html.getElementById(`Inventory-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
-        const inventoryDestination = document.getElementById(`Inventory-${this.dataset.section}`);
-        const galSource = html.getElementById(`pageGallery-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
-        const galDestination = document.getElementById(`pageGallery-${this.dataset.section}`);
-
-
-        if (galSource && galDestination && this.currentVariant.featured_media) {
-          galDestination.innerHTML = galSource.innerHTML;
-        }
-        
-        if (source && destination) destination.innerHTML = source.innerHTML;
-        if (inventorySource && inventoryDestination) inventoryDestination.innerHTML = inventorySource.innerHTML;
-        if (skuSource && skuDestination) {
-          skuDestination.innerHTML = skuSource.innerHTML;
-          skuDestination.classList.toggle('visibility-hidden', skuSource.classList.contains('visibility-hidden'));
-        }
-
-        // Re-initiate slider handleScroll function
-        const slidesContainer = document.getElementById('SlidesCon');
-        const leftArrow = document.querySelector('.gallery-slider-arrows .slider-arrow-left');
-        const rightArrow = document.querySelector('.gallery-slider-arrows .slider-arrow-right');
-        
-        if (slidesContainer) {
-          slidesContainer.addEventListener('scroll', function() {
-            handleScroll(); // Call handleScroll function
-          });
-        }
-
-        // Re-initiate sliderArrows function
-        if (leftArrow) {
-        leftArrow.addEventListener('click', () => {
-          slidesContainer.scrollBy({
-            left: -300,
-            behavior: 'smooth'
-          });
-        });
-        }
-        if (rightArrow) {
-        rightArrow.addEventListener('click', () => {
-          slidesContainer.scrollBy({
-            left: 300,
-            behavior: 'smooth'
-          });
-        });
-        }      
-        
-        const price = document.getElementById(`price-${this.dataset.section}`);
-
-        if (price) price.classList.remove('visibility-hidden');
-
-        if (inventoryDestination) inventoryDestination.classList.toggle('visibility-hidden', inventorySource.innerText === '');
-
-        const addButtonUpdated = html.getElementById(`ProductSubmitButton-${sectionId}`);
-        this.toggleAddButton(addButtonUpdated ? addButtonUpdated.hasAttribute('disabled') : true, window.variantStrings.soldOut);
-
-        publish(PUB_SUB_EVENTS.variantChange, {data: {
-          sectionId,
-          html,
-          variant: this.currentVariant
-        }});
+      publish(PUB_SUB_EVENTS.optionValueSelectionChange, {
+        data: {
+          event,
+          target,
+          selectedOptionValues: this.selectedOptionValues,
+        },
       });
-
-    
+    });
   }
 
-  toggleAddButton(disable = true, text, modifyClass = true) {
-    const productForm = document.getElementById(`product-form-${this.dataset.section}`);
-    if (!productForm) return;
-    const addButton = productForm.querySelector('[name="add"]');
-    const addButtonText = productForm.querySelector('[name="add"] > span');
-    if (!addButton) return;
+  updateSelectionMetadata({ target }) {
+    const { value, tagName } = target;
 
-    if (disable) {
-      addButton.setAttribute('disabled', 'disabled');
-      if (text) addButtonText.textContent = text;
-    } else {
-      addButton.removeAttribute('disabled');
-      addButtonText.textContent = window.variantStrings.addToCart;
+    if (tagName === 'SELECT' && target.selectedOptions.length) {
+      Array.from(target.options)
+        .find((option) => option.getAttribute('selected'))
+        .removeAttribute('selected');
+      target.selectedOptions[0].setAttribute('selected', 'selected');
+
+      const swatchValue = target.selectedOptions[0].dataset.optionSwatchValue;
+      const selectedDropdownSwatchValue = target
+        .closest('.product-form__input')
+        .querySelector('[data-selected-value] > .swatch');
+      if (!selectedDropdownSwatchValue) return;
+      if (swatchValue) {
+        selectedDropdownSwatchValue.style.setProperty('--swatch--background', swatchValue);
+        selectedDropdownSwatchValue.classList.remove('swatch--unavailable');
+      } else {
+        selectedDropdownSwatchValue.style.setProperty('--swatch--background', 'unset');
+        selectedDropdownSwatchValue.classList.add('swatch--unavailable');
+      }
+
+      selectedDropdownSwatchValue.style.setProperty(
+        '--swatch-focal-point',
+        target.selectedOptions[0].dataset.optionSwatchFocalPoint || 'unset'
+      );
+    } else if (tagName === 'INPUT' && target.type === 'radio') {
+      const selectedSwatchValue = target.closest(`.product-form__input`).querySelector('[data-selected-value]');
+      if (selectedSwatchValue) selectedSwatchValue.innerHTML = value;
     }
-
-    if (!modifyClass) return;
   }
 
-  setUnavailable() {
-    const button = document.getElementById(`product-form-${this.dataset.section}`);
-    const addButton = button.querySelector('[name="add"]');
-    const addButtonText = button.querySelector('[name="add"] > span');
-    const price = document.getElementById(`price-${this.dataset.section}`);
-    const inventory = document.getElementById(`Inventory-${this.dataset.section}`);
-    const sku = document.getElementById(`Sku-${this.dataset.section}`);
-
-    if (!addButton) return;
-    addButtonText.textContent = window.variantStrings.unavailable;
-    if (price) price.classList.add('visibility-hidden');
-    if (inventory) inventory.classList.add('visibility-hidden');
-    if (sku) sku.classList.add('visibility-hidden');
+  getInputForEventTarget(target) {
+    return target.tagName === 'SELECT' ? target.selectedOptions[0] : target;
   }
 
-  getVariantData() {
-    this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
-    return this.variantData;
+  get selectedOptionValues() {
+    return Array.from(this.querySelectorAll('select option[selected], fieldset input:checked')).map(
+      ({ dataset }) => dataset.optionValueId
+    );
   }
 }
-
 
 customElements.define('variant-selects', VariantSelects);
 
-class VariantRadios extends VariantSelects {
-  constructor() {
-    super();
-  }
-
-  setInputAvailability(listOfOptions, listOfAvailableOptions) {
-    listOfOptions.forEach(input => {
-      if (listOfAvailableOptions.includes(input.getAttribute('value'))) {
-        input.classList.remove('disabled');
-      } else {
-        input.classList.add('disabled');
-      }
-    });
-  }
-
-  updateOptions() {
-    const fieldsets = Array.from(this.querySelectorAll('fieldset'));
-    this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll('input')).find((radio) => radio.checked).value;
-    });
-  }
-}
-
-customElements.define('variant-radios', VariantRadios);
 
 class ProductRecommendations extends HTMLElement {
   constructor() {
@@ -863,38 +713,104 @@ class ProductRecommendations extends HTMLElement {
 customElements.define('product-recommendations', ProductRecommendations);
 
 
+
+// Variant Selector Drawer
+function initVariantDrawer() {
+  const toggles = document.querySelectorAll('.radio-drawer--opener');
+  const drawers = document.querySelectorAll('.radio-options-drawer');
+  const closeButtons = document.querySelectorAll('.rod--drawer-close');
+  const closeButtonsFooter = document.querySelectorAll('.rod--drawer-footer-button');
+  const backgrounds = document.querySelectorAll('.radio-options-drawer--background');
+
+  toggles.forEach(function (toggle, index) {
+    const drawer = drawers[index];
+    const closeButton = closeButtons[index];
+    const closeButtonFooter = closeButtonsFooter[index];
+    const drawerBg = backgrounds[index];
+
+    if (!drawer) return;
+
+    const isAccordion = drawer.classList.contains('ro-display-type--accordion');
+
+    // If accordion, set up localStorage key
+    let drawerKey;
+    if (isAccordion) {
+      const productId = document.querySelector('[data-product-id]')?.dataset.productId || 'unknown';
+      drawerKey = `drawerOpen-${productId}-${index}`;
+
+      // Restore open state from localStorage
+      if (window.location.search.includes('variant=') && localStorage.getItem(drawerKey) === 'true') {
+        drawer.classList.add('open');
+        if (drawerBg) drawerBg.classList.add('open');
+      }
+    }
+
+    const closeDrawer = () => {
+      drawer.classList.remove('open');
+      if (drawerBg) drawerBg.classList.remove('open');
+      if (isAccordion) localStorage.setItem(drawerKey, 'false');
+    };
+
+    if (drawerBg) drawerBg.addEventListener("click", closeDrawer);
+    if (closeButtonFooter) closeButtonFooter.addEventListener("click", closeDrawer);
+    if (closeButton) closeButton.addEventListener("click", closeDrawer);
+
+    toggle.addEventListener("click", function () {
+      const isOpen = drawer.classList.toggle('open');
+      if (drawerBg) drawerBg.classList.toggle('open', isOpen);
+      if (isAccordion) localStorage.setItem(drawerKey, isOpen.toString());
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initVariantDrawer);
+
+
 // Accordion Component
 document.addEventListener("DOMContentLoaded", function () {
   // Get all elements with class "accordion-title"
   var headings = document.querySelectorAll(".accordion-title");
 
-  // Loop through each element
+  // Loop through each heading element
   headings.forEach(function (heading) {
+    // Get the corresponding panel
+    var panel = heading.nextElementSibling;
+
+    // Temporarily disable transitions for initialization
+    panel.style.transition = "none";
+
+    // Check if the panel is open by default
+    if (panel.classList.contains("panel-open")) {
+      // Set height to match content for open panels
+      panel.style.height = panel.scrollHeight + "px";
+    }
+
+    // Re-enable transitions after initialization
+    setTimeout(() => {
+      panel.style.transition = ""; // Remove inline transition style
+    });
+
     // Add a click event listener to each accordion heading
     heading.addEventListener("click", function () {
-      // Toggle the open state for the next sibling
-      var panel = heading.nextElementSibling;
       if (panel.classList.contains("panel-open")) {
+        // Close the panel
         panel.style.height = null;
         panel.classList.remove("panel-open");
-        panel.setAttribute('aria-hidden', 'true');
-      } else {
-        panel.setAttribute('aria-hidden', 'false');
-        panel.classList.add("panel-open");
-        panel.style.height = panel.scrollHeight + "px"; 
-      }
-
-      // Toggle the "open" class and aria expanded attribute for the accordion heading
-      if (heading.classList.contains("active")) {
+        panel.setAttribute("aria-hidden", "true");
         heading.classList.remove("active");
-        heading.setAttribute('aria-expanded', 'false');
+        heading.setAttribute("aria-expanded", "false");
       } else {
+        // Open the panel
+        panel.style.height = panel.scrollHeight + "px";
+        panel.classList.add("panel-open");
+        panel.setAttribute("aria-hidden", "false");
         heading.classList.add("active");
-        heading.setAttribute('aria-expanded', 'true');
+        heading.setAttribute("aria-expanded", "true");
       }
     });
   });
 });
+
 
 
 // Slider Component
@@ -906,19 +822,40 @@ function LuxeSlider() {
     const sliderContainer = wrapper.querySelector('.slider-element');
     const leftArrow = wrapper.querySelector('.slider-arrows .slider-arrow-left');
     const rightArrow = wrapper.querySelector('.slider-arrows .slider-arrow-right');
-    
+
+    if (!sliderContainer) return;
+
+    let scrollAmount = 300; // Fallback
+
+    function calculateScrollAmount() {
+      let gridItems = sliderContainer.querySelectorAll('.grid-item');
+
+      // Fallback to .grid__item if .grid-item is not present
+      if (!gridItems.length) {
+        gridItems = sliderContainer.querySelectorAll('.grid__item');
+      }
+
+      if (gridItems.length >= 2) {
+        const rect1 = gridItems[0].getBoundingClientRect();
+        const rect2 = gridItems[1].getBoundingClientRect();
+        // Distance between items (includes gap/margins)
+        scrollAmount = Math.abs(rect2.left - rect1.left);
+      } else if (gridItems.length === 1) {
+        const rect = gridItems[0].getBoundingClientRect();
+        scrollAmount = rect.width;
+      } else {
+        scrollAmount = 300; // no items found, keep Fallback
+      }
+    }
+
     function setArrowState() {
       // Find the first image element within the slider-element
       const firstImage = sliderContainer.querySelector('img');
-      const placeholder = sliderContainer.querySelector('.global-image-placeholder');
     
       let imageHeight = 0;
       if (firstImage) {
         // Get the height of the first image
         imageHeight = firstImage.clientHeight;
-      } else if (placeholder) {
-        // If there is no image but a placeholder, get its height
-        imageHeight = placeholder.clientHeight;
       }
       
       const scrollPosition = sliderContainer.scrollLeft;
@@ -928,8 +865,8 @@ function LuxeSlider() {
       const scrollLimitWithOffset = scrollLimit - 1;
 
       // Apply top margin to arrows based on half of the image height
-      if (leftArrow && rightArrow && imageHeight !== 0 && !Shopify.designMode) {
-        const marginTop = (imageHeight * 0.5) - 40;
+      if (wrapper.classList.contains('slider-arrows-position-middle') && leftArrow && rightArrow && imageHeight !== 0 && !Shopify.designMode) {
+        const marginTop = (imageHeight * 0.5) - 24;
         leftArrow.style.marginTop = marginTop + 'px';
         rightArrow.style.marginTop = marginTop + 'px';
       }
@@ -949,31 +886,36 @@ function LuxeSlider() {
       }
     }
 
+    // Initial calculations
+    calculateScrollAmount();
+    setArrowState();
+
     sliderContainer.addEventListener('scroll', setArrowState);
 
-    // Set initial arrow state
-    setArrowState();
-    
     // Event listener for window resize
-    window.addEventListener('resize', setArrowState);
+    window.addEventListener('resize', () => {
+      calculateScrollAmount();
+      setArrowState();
+    });
 
     if (leftArrow) {
-    leftArrow.addEventListener('click', () => {
-      sliderContainer.scrollBy({
-        top: 0,
-        left: -280,
-        behavior: 'smooth'
+      leftArrow.addEventListener('click', () => {
+        sliderContainer.scrollBy({
+          top: 0,
+          left: -scrollAmount,
+          behavior: 'smooth'
+        });
       });
-    });
     }
+
     if (rightArrow) {
-    rightArrow.addEventListener('click', () => {
-      sliderContainer.scrollBy({
-        top: 0,
-        left: 280,
-        behavior: 'smooth'
+      rightArrow.addEventListener('click', () => {
+        sliderContainer.scrollBy({
+          top: 0,
+          left: scrollAmount,
+          behavior: 'smooth'
+        });
       });
-    });
     }
   });
 }
@@ -990,8 +932,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Function to pause all media except those within autoplaying-video div
   function pauseOtherMedia(except) {
   var mediaElements = document.querySelectorAll('video, audio');
-  mediaElements.forEach(function(media) {
-    if (media !== except && !media.closest('.autoplaying-video')) {
+  mediaElements.forEach(function (media) {
+    const hasAutoplay =
+      media.hasAttribute('autoplay') &&
+      media.getAttribute('autoplay') !== 'false';
+
+    if (media !== except && !hasAutoplay) {
       media.pause();
     }
   });
@@ -1039,6 +985,82 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Video banners play and pause controls
+
+const playbackButtons = document.querySelectorAll('.video-controls--pause-playback');
+
+if (playbackButtons.length > 0) {
+  playbackButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const section = button.closest('.section-inner');
+      if (!section) return;
+
+      const videos = section.querySelectorAll('video');
+
+      let anyPaused = false;
+
+      videos.forEach(video => {
+        if (video.paused) {
+          anyPaused = true;
+        }
+      });
+
+      videos.forEach(video => {
+        if (anyPaused) {
+          video.play();
+          button.classList.add('playing');
+        } else {
+          video.pause();
+          button.classList.remove('playing');
+        }
+      });
+    });
+  });
+}
+
+// Video banners audio controls
+
+const videoAudioButtons = document.querySelectorAll('.video-controls--audio');
+
+if (videoAudioButtons.length > 0) {
+  videoAudioButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const section = button.closest('.section-inner');
+      if (!section) return;
+
+      const videos = section.querySelectorAll('video');
+      if (!videos.length) return;
+
+      // Check if any video in this section is muted
+      const anyMuted = Array.from(videos).some(video => video.muted);
+
+      if (anyMuted) {
+        // Mute all other videos on the page first
+        document.querySelectorAll('video').forEach(video => {
+          video.muted = true;
+        });
+
+        // Unmute this section's videos
+        videos.forEach(video => {
+          video.muted = false;
+        });
+
+        button.classList.add('audio-on');
+      } else {
+        // Turn audio off for this section
+        videos.forEach(video => {
+          video.muted = true;
+        });
+
+        button.classList.remove('audio-on');
+      }
+    });
+  });
+}
+
+
+
+
 // Hotspots
 
 const hotspotButtons = document.querySelectorAll('.hotspot-button');
@@ -1074,62 +1096,151 @@ hotspotButtons.forEach(button => {
 });
 
 
-// Mobile slides layout
 
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.mobile-slides-grid').forEach(mobileSlidesGrid => {
-    const section = mobileSlidesGrid.closest('.section-inner');
-    if (!section) return;
+// Slider custom scrollbar
 
-    const paginationOuter = section.querySelector('.slider-mobile-pagination-container');
-    const paginationContainer = section.querySelector('.slider-mobile-pagination');
-    const paginationMarkers = section.querySelectorAll('.pagination-marker');
-    const gridItems = section.querySelectorAll('.mobile-slides-grid-item');
+document.querySelectorAll('.slider-outer-wrapper').forEach(wrapper => {
+  const slider = wrapper.querySelector('.slider-element');
+  const track = wrapper.querySelector('.slider-custom-scrollbar-track');
+  const trackwrapper = wrapper.querySelector('.slider-custom-scrollbar-track-wrapper');
+  const marker = wrapper.querySelector('.slider-custom-scrollbar-marker');
 
-    if (paginationMarkers.length > 0 && gridItems.length > 0) {
-      const totalItems = gridItems.length;
-      const totalPages = paginationMarkers.length;
-      const maxMarkersInView = 5;
-      const markerWidth = paginationMarkers[0].offsetWidth;
+  if (!slider || !track || !marker) return;
 
-      const computedStyle = window.getComputedStyle(paginationContainer);
-      const markerGap = parseInt(computedStyle.getPropertyValue('column-gap') || computedStyle.getPropertyValue('gap') || '0', 10);
+  function updateMarkerWidthAndVisibility() {
+    const visibleWidth = slider.clientWidth;
+    const scrollableWidth = slider.scrollWidth;
 
-      let timeoutId;
-
-      const updatePagination = () => {
-        const scrollLeft = mobileSlidesGrid.scrollLeft;
-        const scrollWidth = mobileSlidesGrid.scrollWidth;
-        const clientWidth = mobileSlidesGrid.clientWidth;
-        const maxScrollLeft = scrollWidth - clientWidth;
-
-        const scrollPercentage = scrollLeft / maxScrollLeft;
-        const currentPage = Math.round(scrollPercentage * (totalPages - 1));
-
-        paginationMarkers.forEach(marker => marker.classList.remove('active'));
-        if (paginationMarkers[currentPage]) {
-          paginationMarkers[currentPage].classList.add('active');
-        }
-
-        clearTimeout(timeoutId);
-
-        timeoutId = setTimeout(() => {
-          if (currentPage >= 2 && currentPage <= totalPages - 3) {
-            const offset = (currentPage - 2) * (markerWidth + markerGap);
-            paginationContainer.style.transform = `translateX(-${offset}px)`;
-          } else if (currentPage < 2) {
-            paginationContainer.style.transform = `translateX(0)`;
-          } else if (currentPage >= totalPages - 2) {
-            const offset = (totalPages - maxMarkersInView) * (markerWidth + markerGap);
-            paginationContainer.style.transform = `translateX(-${offset}px)`;
-          }
-        }, 15);
-      };
-
-      mobileSlidesGrid.addEventListener('scroll', updatePagination);
-      window.addEventListener('resize', updatePagination);
-      updatePagination();      
-            
+    if (scrollableWidth <= visibleWidth) {
+      trackwrapper.classList.add('hidden');
+    } else {
+      trackwrapper.classList.remove('hidden');
+      const trackWidth = track.clientWidth;
+      const markerWidth = (visibleWidth / scrollableWidth) * trackWidth;
+      marker.style.width = `${markerWidth}px`;
     }
+  }
+
+  function updateMarkerPosition() {
+    const scrollLeft = slider.scrollLeft;
+    const scrollableWidth = slider.scrollWidth - slider.clientWidth;
+    const trackWidth = track.clientWidth - marker.clientWidth;
+
+    const left = (scrollableWidth > 0) ? (scrollLeft / scrollableWidth) * trackWidth : 0;
+    marker.style.transform = `translateX(${left}px)`;
+  }
+
+  // Initial setup
+  updateMarkerWidthAndVisibility();
+  updateMarkerPosition();
+
+  // On scroll
+  slider.addEventListener('scroll', updateMarkerPosition);
+
+  // On window resize
+  window.addEventListener('resize', () => {
+    updateMarkerWidthAndVisibility();
+    updateMarkerPosition();
   });
 });
+
+
+
+// Swipable product cards
+
+function updateCardArrowState(arrowLeft, arrowRight, swipeTrack) {
+  const maxScrollLeft = swipeTrack.scrollWidth - swipeTrack.clientWidth;
+  const buffer = 2; // Small buffer to account for rounding
+
+  // Add 'faded' class if scroll is at the start or end
+  if (swipeTrack.scrollLeft <= 0) {
+    arrowLeft.classList.add('faded');
+  } else {
+    arrowLeft.classList.remove('faded');
+  }
+
+  if (swipeTrack.scrollLeft >= maxScrollLeft - buffer) {
+    arrowRight.classList.add('faded');
+  } else {
+    arrowRight.classList.remove('faded');
+  }
+}
+
+function initializeSwipeFunctionality(container = document) {
+
+  // Swipable product cards - card media pagination
+  document.querySelectorAll('.card-product--image-swipe-container').forEach(function (container) {
+    const swipeTrack = container.querySelector('.card-product--image-swipe-track');
+    const bullets = container.querySelectorAll('.product-card--pagination-bullet');
+    const slides = swipeTrack.querySelectorAll('.card-product--image-slide');
+  
+    if (swipeTrack && bullets.length && slides.length) {
+      const updatePagination = () => {
+        // Determine the active slide based on scroll position
+        const trackScrollLeft = swipeTrack.scrollLeft;
+        const trackWidth = swipeTrack.clientWidth;
+  
+        slides.forEach((slide, index) => {
+          const slideLeft = slide.offsetLeft;
+          const slideWidth = slide.offsetWidth;
+          const scrollAmount = Math.round(slideWidth / 2);
+  
+          if (
+            trackScrollLeft >= slideLeft - scrollAmount &&
+            trackScrollLeft < slideLeft + scrollAmount
+          ) {
+            // Update active class on bullets
+            bullets.forEach((bullet) => bullet.classList.remove('active'));
+            const bullet = container.querySelector(`.product-card--pagination-bullet[data-value="${index + 1}"]`);
+            if (bullet) bullet.classList.add('active');
+          }
+        });
+      };
+  
+      // Attach scroll event listener to update pagination
+      swipeTrack.addEventListener('scroll', updatePagination);
+  
+      // Initial update on page load
+      updatePagination();
+    }
+  });
+  
+  // Swipable product cards - Arrows
+  document.querySelectorAll('.card-product--image-swipe-container').forEach(function (container) {
+    const swipeTrack = container.querySelector('.card-product--image-swipe-track');
+    const arrowLeft = container.querySelector('.pcpa-left');
+    const arrowRight = container.querySelector('.pcpa-right');
+
+    if (swipeTrack && arrowLeft && arrowRight) {      
+      // Add click event listener for left arrow
+      arrowLeft.addEventListener('click', function (event) {
+        event.preventDefault();
+        const slide = swipeTrack.querySelector('.card-product--image-slide');
+        const slideWidth = slide ? slide.offsetWidth : 100;
+        const swipeAmount = Math.round(slideWidth / 1);
+        swipeTrack.scrollBy({ left: -swipeAmount, behavior: 'smooth' });
+      });
+
+      // Add click event listener for right arrow
+      arrowRight.addEventListener('click', function (event) {
+        event.preventDefault();
+        const slide = swipeTrack.querySelector('.card-product--image-slide');
+        const slideWidth = slide ? slide.offsetWidth : 100;
+        const swipeAmount = Math.round(slideWidth / 1);
+        swipeTrack.scrollBy({ left: swipeAmount, behavior: 'smooth' });
+      });
+
+      // Add scroll event listener to update arrow states dynamically
+      swipeTrack.addEventListener('scroll', function () {
+        updateCardArrowState(arrowLeft, arrowRight, swipeTrack);
+      });
+
+      // Initial arrow state update on page load
+      updateCardArrowState(arrowLeft, arrowRight, swipeTrack);
+    }
+  });  
+}
+
+// Call the function on page load
+initializeSwipeFunctionality();
+

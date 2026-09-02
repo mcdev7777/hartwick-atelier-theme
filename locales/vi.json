@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Bắc Mỹ",
+      "central_america": "Trung Mỹ",
+      "south_america": "Nam Mỹ",
+      "europe": "Châu Âu",
+      "middle_east": "Trung Đông",
+      "africa": "Châu phi",
+      "asia": "Châu Á",
+      "oceania": "Châu Đại Dương"
+    },
     "password_page": {
       "login_form_heading": "Vào cửa hàng bằng mật khẩu:",
       "login_password_button": "Nhập bằng mật khẩu",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Chia sẻ trên Facebook",
         "share_on_twitter": "Tweet trên Twitter",
         "share_on_pinterest": "Ghim trên Pinterest",
-        "share_on_linkedin": "Chia sẻ trên LinkedIn"
+        "share_on_linkedin": "Chia sẻ trên LinkedIn",
+        "share_on_whatsapp": "Chia sẻ trên WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Tiếp tục mua sắm",
     "pagination": {
       "label": "Phân trang",
+      "all": "Tất cả",
       "page": "Trang {{ number }}",
       "next": "Trang tiếp theo",
       "previous": "Trang trước"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Thêm vào giỏ hàng",
       "add_to_cart": "Thêm vào giỏ hàng",
+      "pre_order": "Đặt trước",
       "color": "Màu sắc",
       "colors": "Màu sắc",
       "choose_options": "Chọn tùy chọn",
@@ -164,6 +178,7 @@
         "view_store_info": "Xem thông tin cửa hàng",
         "check_other_stores": "Kiểm tra tình trạng còn hàng tại các cửa hàng khác",
         "title": "Nhặt lên",
+        "phone": "ĐT:",
         "pick_up_available": "Có sẵn xe đón",
         "pick_up_unavailable": "Không có xe đón",
         "pick_up_available_at_html": "Nhận hàng tại <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Chia sẻ sản phẩm này",
       "sold_out": "Bán hết",
       "unavailable": "Không có sẵn",
+      "reviews": "Đánh giá",
       "vendor": "Thương hiệu",
       "value_unavailable": "{{ option_value }} - Không có sẵn",
       "variant_sold_out_or_unavailable": "Đã bán hết hoặc không còn mẫu mã",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Trang chủ"
+    },
     "404": {
       "title": "Không tìm thấy trang",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Tổng số ước tính",
       "new_estimated_total": "Tổng số ước tính mới",
       "note": "Thêm ghi chú đặt hàng",
+      "note_placeholder": "Tin nhắn",
+      "note_save": "Lưu",
+      "note_clear": "Xóa",
       "checkout": "Kiểm tra",
       "empty": "Túi của bạn trống rỗng",
       "empty_button_label": "Mua sắm ngay bây giờ",

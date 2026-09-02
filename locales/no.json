@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Nord-Amerika",
+      "central_america": "Mellom-Amerika",
+      "south_america": "Sør-Amerika",
+      "europe": "Europa",
+      "middle_east": "Midtøsten",
+      "africa": "Afrika",
+      "asia": "Asia",
+      "oceania": "Oseania"
+    },
     "password_page": {
       "login_form_heading": "Gå inn i butikken med passord:",
       "login_password_button": "Skriv inn med passord",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Del på Facebook",
         "share_on_twitter": "Tweet på Twitter",
         "share_on_pinterest": "Fest på Pinterest",
-        "share_on_linkedin": "Del på LinkedIn"
+        "share_on_linkedin": "Del på LinkedIn",
+        "share_on_whatsapp": "Del på WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Fortsett å handle",
     "pagination": {
       "label": "Paginering",
+      "all": "Alle",
       "page": "Side {{ number }}",
       "next": "Neste side",
       "previous": "Forrige side"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Legge til",
       "add_to_cart": "Legg i handlekurven",
+      "pre_order": "Forhåndsbestill",
       "color": "Farge",
       "colors": "Farger",
       "choose_options": "Velg alternativer",
@@ -164,6 +178,7 @@
         "view_store_info": "Se butikkinformasjon",
         "check_other_stores": "Sjekk tilgjengelighet i andre butikker",
         "title": "Pickup",
+        "phone": "Tel:",
         "pick_up_available": "Henting tilgjengelig",
         "pick_up_unavailable": "Henting ikke tilgjengelig",
         "pick_up_available_at_html": "Henting tilgjengelig på <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Del dette produktet",
       "sold_out": "Utsolgt",
       "unavailable": "Ikke tilgjengelig",
+      "reviews": "Anmeldelser",
       "vendor": "Merkevare",
       "value_unavailable": "{{ option_value }} - Ikke tilgjengelig",
       "variant_sold_out_or_unavailable": "Varianten er utsolgt eller utilgjengelig",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Forside"
+    },
     "search": {
       "no_results": "Fant ingen resultater for «{{ terms }}». Kontroller stavemåten, eller bruk et annet ord.",
       "results_pages_with_count": {
@@ -303,6 +322,9 @@
       "estimated_total": "Anslått total",
       "new_estimated_total": "Ny estimert total",
       "note": "Legg til en ordrenotat",
+      "note_placeholder": "Melding",
+      "note_save": "Lagre",
+      "note_clear": "Tøm",
       "checkout": "Sjekk ut",
       "empty": "Vesken din er tom",
       "empty_button_label": "Handle nå",

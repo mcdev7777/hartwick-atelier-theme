@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Severní Amerika",
+      "central_america": "Střední Amerika",
+      "south_america": "Jižní Amerika",
+      "europe": "Evropa",
+      "middle_east": "Blízký východ",
+      "africa": "Afrika",
+      "asia": "Asie",
+      "oceania": "Oceánie"
+    },
     "password_page": {
       "login_form_heading": "Zadejte heslo, abyste mohli vstoupit do obchodu:",
       "login_password_button": "Zadejte pomocí hesla",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Sdílejte na Facebooku",
         "share_on_twitter": "Tweetujte na Twitteru",
         "share_on_pinterest": "Připnout na Pinterest",
-        "share_on_linkedin": "Sdílet na LinkedIn"
+        "share_on_linkedin": "Sdílet na LinkedIn",
+        "share_on_whatsapp": "Sdílet na WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Pokračujte v nákupu",
     "pagination": {
       "label": "Stránkování",
+      "all": "Vše",
       "page": "Strana {{ number }}",
       "next": "Další stránka",
       "previous": "Předchozí stránka"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Přidat",
       "add_to_cart": "Přidat do košíku",
+      "pre_order": "Předobjednat",
       "color": "Barva",
       "colors": "Barvy",
       "choose_options": "Vyberte možnosti",
@@ -164,6 +178,7 @@
         "view_store_info": "Zobrazit informace o prodejně",
         "check_other_stores": "Ověřte si dostupnost na jiných prodejnách",
         "title": "Vyzvednutí",
+        "phone": "Tel:",
         "pick_up_available": "Možnost vyzvednutí",
         "pick_up_unavailable": "Vyzvednutí není k dispozici",
         "pick_up_available_at_html": "Možnost vyzvednutí na <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Sdílejte tento produkt",
       "sold_out": "Vyprodáno",
       "unavailable": "Není k dispozici",
+      "reviews": "Recenze",
       "vendor": "Značka",
       "value_unavailable": "{{ option_value }} - Není k dispozici",
       "variant_sold_out_or_unavailable": "Varianta vyprodaná nebo nedostupná",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Domů"
+    },
     "404": {
       "title": "Stránka nenalezena",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Odhadovaný součet",
       "new_estimated_total": "Nový odhadovaný součet",
       "note": "Přidejte poznámku k objednávce",
+      "note_placeholder": "Zpráva",
+      "note_save": "Uložit",
+      "note_clear": "Vymazat",
       "checkout": "Podívejte se",
       "empty": "Vaše taška je prázdná",
       "empty_button_label": "Nakupujte nyní",

@@ -6,19 +6,49 @@
   margin-bottom: 3rem;
 }
 
-/*
-body:has(.header-bar--page-margins) .main-page-title {
-  margin-top: 6rem;
+body:has(.hbi-semi-transparent.header-bar--full) .section-index-1 .main-page-title, 
+body:has(.hbi-semi-transparent.header-bar--full) .theme-editor-section-1 .main-page-title {
+  margin-top: var(--site-header-height-mobile);
 }
-*/
+
+body:has(.header-bar--page-margins) .section-index-1 .main-page-title, 
+body:has(.header-bar--page-margins) .theme-editor-section-1 .main-page-title {
+  margin-top: calc(var(--site-header-height-mobile) + 10px);
+}
+
+body:has(.hbi-semi-transparent.header-bar--full) .section-index-1.collection-breadcrumb, 
+body:has(.hbi-semi-transparent.header-bar--full) .theme-editor-section-1 .collection-breadcrumb {
+  margin-top: var(--site-header-height-mobile);
+}
+
+body:has(.header-bar--page-margins) .section-index-1.collection-breadcrumb, 
+body:has(.header-bar--page-margins) .theme-editor-section-1 .collection-breadcrumb {
+  margin-top: calc(var(--site-header-height-mobile) + 10px);
+}
 
 @media screen and (min-width: 750px) {
   .main-page-title {
     margin-bottom: 4rem;
+  } 
+}
+
+@media screen and (min-width: 1025px) {
+  body:has(.hbi-semi-transparent.header-bar--full) .section-index-1 .main-page-title, 
+  body:has(.hbi-semi-transparent.header-bar--full) .theme-editor-section-1 .main-page-title {
+    margin-top: var(--site-header-height-desktop);
   }
-  body:has(.header-bar--page-margins) .main-page-title {
-    margin-top: 8rem;
-  }  
+  body:has(.header-bar--page-margins) .section-index-1 .main-page-title, 
+  body:has(.header-bar--page-margins) .theme-editor-section-1 .main-page-title {
+    margin-top: calc(var(--site-header-height-desktop) + 20px);
+  }
+  body:has(.hbi-semi-transparent.header-bar--full) .section-index-1.collection-breadcrumb, 
+  body:has(.hbi-semi-transparent.header-bar--full) .theme-editor-section-1 .collection-breadcrumb {
+    margin-top: var(--site-header-height-desktop);
+  } 
+  body:has(.header-bar--page-margins) .section-index-1.collection-breadcrumb, 
+  body:has(.header-bar--page-margins) .theme-editor-section-1 .collection-breadcrumb {
+    margin-top: calc(var(--site-header-height-desktop) + 20px);
+  }
 }
 
 .page-placeholder-wrapper {
@@ -31,23 +61,18 @@ body:has(.header-bar--page-margins) .main-page-title {
   height: 52.5rem;
 }
 
-
-.rte blockquote {
-  quotes: "“" "”" "‘" "’";  
-}
-
 .rte blockquote {
   margin: 0 auto;
   border: 0;
   font-size: 22px;
   text-align: center;
   padding: 20px 40px;
+  quotes: "“" "”" "‘" "’";
 }
 
 .rte blockquote p {
   margin-top: 0;
 }
-
 
 @media only screen and (min-width: 750px) { 
   .rte blockquote {

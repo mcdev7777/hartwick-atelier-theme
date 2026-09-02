@@ -1,9 +1,9 @@
 .ticker-outer-container, .ticker-section-outer-container {
-	overflow-x: hidden;
-	display: flex;
-	flex-direction: row;
-	position: relative;
-	width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 100%;
 }
 
 .ticker-outer-container:hover div {
@@ -11,20 +11,20 @@
 }
 
 .ticker-items-container {
-	flex: 0 0 auto;
-	display: flex;
-	animation: scroll linear infinite;
-    animation-duration: 14s;
-	min-width: 100%;
-	flex-direction: row;
+  flex: 0 0 auto;
+  display: flex;
+  animation: scroll linear infinite;
+  animation-duration: 14s;
+  min-width: 100%;
+  flex-direction: row;
 }
 
 .ticker-section-items-container {
-	flex: 0 0 auto;
-	display: flex;
-	animation: scroll linear infinite;
-    animation-duration: 14s;
-	flex-direction: row;  
+  flex: 0 0 auto;
+  display: flex;
+  animation: scroll linear infinite;
+  animation-duration: 14s;
+  flex-direction: row;  
 }
 
 .ticker-item {

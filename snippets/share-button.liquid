@@ -1,17 +1,8 @@
 {% comment %}
-  Renders share buttons.
-  Accepts:
-  - block: {Object} passes in the block information.
-  - share_link: {String} url to be shared.
-
-  Usage:
-  {% render 'share-button',
-    block: block,
-    share_link: share_url
-  %}
+  Renders share buttons for article page
 {% endcomment %}
 
-<div class="social-sharing-component page-width" {{ block.shopify_attributes }}>
+<div class="social-sharing-component">
   <a href="https://facebook.com/sharer.php?u={{ share_link }}" target="_blank" rel="noopener" aria-label="{{ 'general.social.alt_text.share_on_facebook' | t }}">{% render 'icon-facebook' %}</a>
   <a href="https://twitter.com/home?status={{ share_link }}" target="_blank" rel="noopener" aria-label="{{ 'general.social.alt_text.share_on_twitter' | t }}">{% render 'icon-twitter-x' %}</a>
   <a href="https://pinterest.com/pin/create/button/?url={{ share_link }}" target="_blank" rel="noopener" aria-label="{{ 'general.social.alt_text.share_on_pinterest' | t }}">{% render 'icon-pinterest' %}</a>

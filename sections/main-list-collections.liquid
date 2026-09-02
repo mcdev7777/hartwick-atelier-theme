@@ -32,6 +32,7 @@
     {% endif %}
   </div>
   <div class="main-list-collections page-width">
+
   {%- liquid
     case section.settings.sort
       when 'products_high', 'products_low'
@@ -44,15 +45,16 @@
       assign collections = collections | reverse
     endif
 
-    assign moduloResult = 28 | modulo: section.settings.columns_desktop
+    assign modulo_result = 28 | modulo: section.settings.columns_desktop
     assign paginate_by = 30
-    if moduloResult == 0
+    if modulo_result == 0
       assign paginate_by = 28
     endif
   -%}
+
   {%- paginate collections by paginate_by -%}
     <ul
-      class="collection-list grid-std grid-mobile-{{ section.settings.columns_mobile }}-column grid-desktop-{{ section.settings.columns_desktop }}-column{% if section.settings.media_radius_top_only %} media-radius-top-only{% endif %}"
+      class="collection-list grid-std grid-mobile-{{ section.settings.columns_mobile }}-column grid-tablet-{{ section.settings.columns_tablet }}-column grid-desktop-{{ section.settings.columns_desktop }}-column{% if section.settings.media_radius_top_only %} media-radius-top-only{% endif %}"
       role="list"
     >
       {%- for collection in collections -%}
@@ -89,19 +91,9 @@
       "label": "t:sections.all.sub_heading"
     },
     {
-      "type": "select",
+      "type": "text_alignment",
       "id": "title_alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.all.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:sections.all.alignment.center"
-        }
-      ],
-      "default": "left",
+      "default": "center",
       "label": "t:sections.all.alignment.alignment_header"
     },
     {
@@ -238,15 +230,24 @@
       "options": [
         {
           "value": "1",
-          "label": "t:sections.main-list-collections.settings.columns_mobile.options__1.label"
+          "label": "1"
         },
         {
           "value": "2",
-          "label": "t:sections.main-list-collections.settings.columns_mobile.options__2.label"
+          "label": "2"
         }
       ],
       "default": "1",
-      "label": "t:sections.main-list-collections.settings.columns_mobile.label"
+      "label": "t:sections.all.layouts.columns_mobile"
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.all.layouts.columns_tablet"
     },
     {
       "type": "range",
@@ -255,7 +256,7 @@
       "max": 4,
       "step": 1,
       "default": 4,
-      "label": "t:sections.main-list-collections.settings.columns_desktop.label"
+      "label": "t:sections.all.layouts.columns_desktop"
     },
     {
       "type": "range",

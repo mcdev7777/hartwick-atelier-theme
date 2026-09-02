@@ -6,13 +6,36 @@
   padding-bottom: {{ section.settings.bottom_padding | times: 0.8 }}px;  
 }
 
+.section-{{ section.id }} .hotspot-info {
+  padding: {{ section.settings.card_padding_mobile }}px;
+  border-radius: {{ section.settings.card_border_radius }}px;
+}
+
+.section-{{ section.id }} .hotspot-card--image img, .section-{{ section.id }} .hotspot-card--image video {
+  border-radius: {{ section.settings.card_border_radius | divided_by: 2 }}px;
+}
+
+{% if section.settings.card_border_opacity > 5 %}
+.section-{{ section.id }} .hotspot-info {
+  border: 1px solid rgba(var(--color-foreground-rgb),{{ section.settings.card_border_opacity | divided_by: 100.0 }});
+}
+{% endif %}
+
 @media only screen and (min-width: 750px) {
   .section-{{ section.id }} .section-inner {
     padding-top: {{ section.settings.top_padding }}px;
     padding-bottom: {{ section.settings.bottom_padding }}px;
-  }  
+  } 
+  .section-{{ section.id }} .hotspot-info {
+    padding: {{ section.settings.card_padding_desktop }}px;
+  } 
 }
 {%- endstyle -%}
+
+{% assign card_image_width = 240 %}
+{% if section.settings.card_layout == 'vertical' %}
+{% assign card_image_width = 800 %}
+{% endif %}
 
 <div class="section-{{ section.id }} section-image-hotspots color-scheme-{{ section.settings.text_color }} color-scheme-{{ section.settings.bg_color }}">
 
@@ -40,15 +63,46 @@
 }  
 @media only screen and (min-width: 950px) {
   .hsc-{{ block.id }} {
-    top: {{ block.settings.pos_y }}%;
-    left: {{ block.settings.pos_x }}%; 
-    transform: translateX(-50%) translateY(calc(-100% - 15px));
-    bottom: auto;
-    min-width: 300px;
+    top: {{ block.settings.pos_y }}% !important;
+    left: {{ block.settings.pos_x }}% !important; 
+    transform: translateX(-50%) translateY(calc(-100% - 20px));
+    bottom: auto !important;
   }
   .hotspot-interaction-hover .hsb-{{ block.id }}:hover + .hsc-{{ block.id }} {
     visibility: visible;
     opacity: 1;
+  }
+  .hotspot-info-position--left {
+    position: absolute;
+    top: {{ settings.page_margin_desktop | at_most: 80 }}px !important;
+    bottom: auto !important;
+    left: {{ settings.page_margin_desktop | at_most: 80 }}px !important;
+    right: auto !important;
+    max-height: calc(100% - {{ settings.page_margin_desktop | at_most: 80 }}px - {{ settings.page_margin_desktop | at_most: 80 }}px);
+    transform: none !important;
+    overflow-y: auto;
+    width: 400px;
+    min-width: 400px;
+  }
+  .hotspot-info-position--right {
+    position: absolute;
+    top: {{ settings.page_margin_desktop | at_most: 80 }}px !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: {{ settings.page_margin_desktop | at_most: 80 }}px !important;
+    max-height: calc(100% - {{ settings.page_margin_desktop | at_most: 80 }}px - {{ settings.page_margin_desktop | at_most: 80 }}px);
+    transform: none !important;
+    overflow-y: auto;
+  }
+  .hotspot-info-position--left:not(.hotspot--product.hotspot-info-layout--vertical), 
+  .hotspot-info-position--right:not(.hotspot--product.hotspot-info-layout--vertical) {
+    width: 400px;
+    min-width: 400px;
+  }
+  .hotspot-info-position--left.hotspot--product.hotspot-info-layout--vertical, 
+  .hotspot-info-position--right.hotspot--product.hotspot-info-layout--vertical {
+    width: 320px;
+    min-width: 320px;
   }
 }
 </style>
@@ -56,21 +110,23 @@
 {% case block.type %}
 
 {% when 'hotspot' %}
-
 <button class="hotspot-button hsb-{{ block.id }}" aria-label="{{ 'accessibility.open' | t }}">{% if section.settings.hotspot_style == 'icon' %}{% render 'icon-plus' %}{% endif %}</button>
-<div class="hotspot--product hotspot-info hsc-{{ block.id }}{% if block.settings.pos_x < 20 %} hotspot-info-offset-left{% endif %}{% if block.settings.pos_x > 70 %} hotspot-info-offset-right{% endif %}">
+<div class="hotspot--product hotspot-info hi-open--popup hotspot-info-position--{{ section.settings.card_position }} hotspot-info-layout--{{ section.settings.card_layout }} hsc-{{ block.id }}{% if block.settings.pos_x < 20 %} hotspot-info-offset-left{% endif %}{% if block.settings.pos_x > 70 %} hotspot-info-offset-right{% endif %}">
   <button class="hotspot-close-button" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
   {% if block.settings.product != blank %}
   <div class="hotspot-product-card">
     <a href="{{ block.settings.product.url }}">
-    <div class="hotspot-product-card--image card-image-ratio-{{ settings.card_img_aspect_ratio }}">
-      {{ block.settings.product.featured_image | image_url: width: 180 | image_tag: loading: 'lazy' }}
+    <div class="hotspot-card--image card-image-ratio-{{ settings.card_img_aspect_ratio }}">
+      {{ block.settings.product.featured_image | image_url: width: card_image_width | image_tag: loading: 'lazy' }}
     </div>
     <div class="hotspot-product-card--text">
       <h3>{{ block.settings.product.title }}</h3>
       <div class="hotspot-product-card--price{% if settings.card_price_sale_highlight %} card-price-sale-highlighted{% endif %}">
       {% render 'price', product: block.settings.product, price_class: '' %}
       </div>
+      {% if block.settings.description != blank %}
+      <div class="rte">{{ block.settings.description | truncate: 600 }}</div>
+      {% endif %}
     </div>
     </a>
   </div>
@@ -78,19 +134,33 @@
 </div>
   
 {% when 'info_hotspot' %}
-
 <button class="hotspot-button hsb-{{ block.id }}" aria-label="{{ 'accessibility.open' | t }}">{% if section.settings.hotspot_style == 'icon' %}{% render 'icon-plus' %}{% endif %}</button>
-<div class="hotspot--no-product hotspot-info hsc-{{ block.id }}{% if block.settings.pos_x < 20 %} hotspot-info-offset-left{% endif %}{% if block.settings.pos_x > 70 %} hotspot-info-offset-right{% endif %}">
+<div class="hotspot--no-product hotspot-info hotspot-info-position--{{ section.settings.card_position }} hotspot-info-layout--{{ section.settings.card_layout }} hsc-{{ block.id }}{% if block.settings.pos_x < 20 %} hotspot-info-offset-left{% endif %}{% if block.settings.pos_x > 70 %} hotspot-info-offset-right{% endif %}">
   <button class="hotspot-close-button" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
   <div class="hotspot-card--contents">
-    {% if block.settings.image %}
-    <div class="hotspot-card--image hotspot-info-card-image-ratio-{{ block.settings.image_ratio }}">
-    {{ block.settings.image | image_url: width: 360 | image_tag: loading: 'lazy' }}
+    {% if block.settings.video %}
+    <div class="hotspot-card--image card-image-ratio-{{ block.settings.image_ratio }}">
+      {% assign video_id = 'vid-hs-' | append: block.id %}
+        {{
+          block.settings.video
+          | video_tag:
+            id: video_id,
+            image_size: '800x',
+            autoplay: true,
+            loop: true,
+            controls: false,
+            muted: true
+        }}
+    </div>
+    {% endif %}
+    {% if block.settings.image and block.settings.video == blank %}
+    <div class="hotspot-card--image card-image-ratio-{{ block.settings.image_ratio }}">
+    {{ block.settings.image | image_url: width: card_image_width | image_tag: loading: 'lazy' }}
     </div>
     {% endif %}
     <div class="hotspot-card--text">
     <h3>{{ block.settings.heading }}</h3>
-    <div class="rte">{{ block.settings.description }}</div>
+    {% if block.settings.description != blank %}<div class="rte">{{ block.settings.description }}</div>{% endif %}
     {% if block.settings.hotspot_link_label != blank %}
     <div class="hotspot-card--link">
       <a class="link--underlined" href="{{ block.settings.hotspot_link }}">{{ block.settings.hotspot_link_label }}</a>
@@ -108,7 +178,7 @@
 {% if section.settings.image %}
 {{ section.settings.image | image_url: width: 2800 | image_tag: loading: 'lazy' }}
 {% else %}
-{% render 'icon-image-placeholder' %}
+{% render 'media-placeholder-scenic', style: 0 %}
 {% endif %}  
 </div>
 </div>  
@@ -159,6 +229,11 @@
           "unit": "%",
           "default": 50,
           "label": "t:sections.image_with_hotspots.blocks.product_hotspot.settings.hotspot_y_position.label"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "t:sections.all.description"
         }
       ]
     },
@@ -194,9 +269,15 @@
           "info": "t:sections.all.optional"
         },
         {
+          "type": "video",
+          "id": "video",
+          "label": "t:sections.all.video",
+          "info": "t:sections.all.optional"
+        },
+        {
           "type": "select",
           "id": "image_ratio",
-          "label": "t:sections.all.ratio.image_ratio",
+          "label": "t:sections.all.ratio.media_ratio",
           "options": [
             {
               "value": "portrait",
@@ -213,6 +294,10 @@
             {
               "value": "landscape-6x4",
               "label": "t:sections.all.ratio.landscape_6_4"
+            },
+            {
+              "value": "landscape-16x9",
+              "label": "t:sections.all.ratio.landscape_16_9"
             }
           ],
           "default": "portrait"
@@ -263,23 +348,9 @@
       "label": "t:sections.all.sub_heading"
     },
     {
-      "type": "select",
+      "type": "text_alignment",
       "id": "content_alignment",
       "label": "t:sections.all.alignment.alignment_header",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.all.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:sections.all.alignment.center"
-        },
-        {
-          "value": "right",
-          "label": "t:sections.all.alignment.right"
-        }
-        ],
       "default": "center"
     },
     {
@@ -400,7 +471,87 @@
       "id": "hotspot_animate",
       "default": true,
       "label": "t:sections.image_with_hotspots.settings.hotspots_animate.label"
-    },      
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.popup_content"
+    },
+    {
+      "type": "select",
+      "id": "card_position",
+      "label": "t:sections.all.layouts.position",
+      "options": [
+      {
+        "value": "inline",
+        "label": "t:sections.all.alignment.inline"
+      },
+      {
+        "value": "left",
+        "label": "t:sections.all.alignment.left"
+      },
+      {
+        "value": "right",
+        "label": "t:sections.all.alignment.right"
+      }          
+    ],
+    "default": "inline"
+    },
+    {
+      "type": "select",
+      "id": "card_layout",
+      "label": "t:sections.all.layout",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:sections.all.layouts.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.all.layouts.vertical"
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 10,
+      "label": "t:sections.all.padding.padding_mobile"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 20,
+      "label": "t:sections.all.padding.padding_desktop"
+    },
+    {
+      "type": "range",
+      "id": "card_border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 10,
+      "label": "t:sections.all.border_opacity"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "label": "t:sections.all.shape.corner_radius"
+    },
     {
       "type": "header",
       "content": "t:sections.all.colors.label"
@@ -428,6 +579,10 @@
         {
           "value": "fg-04",
           "label": "t:sections.all.colors.accent_4.label"
+        },
+        {
+          "value": "fg-05",
+          "label": "t:sections.all.colors.accent_5.label"
         }
       ],
       "default": "fg-body",
@@ -456,6 +611,10 @@
         {
           "value": "bg-04",
           "label": "t:sections.all.colors.background_4.label"
+        },
+        {
+          "value": "bg-05",
+          "label": "t:sections.all.colors.background_5.label"
         }
       ],
       "default": "bg-body",
@@ -539,7 +698,20 @@
       "name": "t:sections.image_with_hotspots.presets.name",
       "blocks": [
         {
-          "type": "hotspot"
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "pos_x": 40,
+            "pos_y": 30
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "pos_x": 85,
+            "pos_y": 55
+          }
         }
       ]
     }

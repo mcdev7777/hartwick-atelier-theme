@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Βόρεια Αμερική",
+      "central_america": "Κεντρική Αμερική",
+      "south_america": "Νότια Αμερική",
+      "europe": "Ευρώπη",
+      "middle_east": "Μέση Ανατολή",
+      "africa": "Αφρική",
+      "asia": "Ασία",
+      "oceania": "Ωκεανία"
+    },
     "password_page": {
       "login_form_heading": "Μπείτε στο κατάστημα χρησιμοποιώντας τον κωδικό πρόσβασης:",
       "login_password_button": "Εισαγάγετε χρησιμοποιώντας κωδικό πρόσβασης",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Μοιραστείτε το στο Facebook",
         "share_on_twitter": "Tweet στο Twitter",
         "share_on_pinterest": "Καρφιτσώστε στο Pinterest",
-        "share_on_linkedin": "Κοινή χρήση στο LinkedIn"
+        "share_on_linkedin": "Κοινή χρήση στο LinkedIn",
+        "share_on_whatsapp": "Κοινή χρήση στο WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Συνεχίστε τις αγορές",
     "pagination": {
       "label": "Σελιδοποίηση",
+      "all": "Ολοι",
       "page": "Σελίδα {{ number }}",
       "next": "Επόμενη σελίδα",
       "previous": "Προηγούμενη σελίδα"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "προσθέτω",
       "add_to_cart": "Προσθήκη στο καλάθι",
+      "pre_order": "Προπαραγγελία",
       "color": "Χρώμα",
       "colors": "Χρωματιστά",
       "choose_options": "Επιλέξτε επιλογές",
@@ -164,6 +178,7 @@
         "view_store_info": "Προβολή πληροφοριών καταστήματος",
         "check_other_stores": "Ελέγξτε τη διαθεσιμότητα σε άλλα καταστήματα",
         "title": "Βελτίωση",
+        "phone": "Τηλ:",
         "pick_up_available": "Διατίθεται παραλαβή",
         "pick_up_unavailable": "Η παραλαβή δεν είναι διαθέσιμη",
         "pick_up_available_at_html": "Διατίθεται παραλαβή στο <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Μοιραστείτε αυτό το προϊόν",
       "sold_out": "Εξαντλημένα",
       "unavailable": "Δυσεύρετος",
+      "reviews": "Κριτικές",
       "vendor": "Μάρκα",
       "value_unavailable": "{{ option_value }} - Μη διαθέσιμο",
       "variant_sold_out_or_unavailable": "Η παραλλαγή εξαντλήθηκε ή δεν είναι διαθέσιμη",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Αρχική"
+    },
     "404": {
       "title": "Η σελίδα δεν βρέθηκε",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Εκτιμώμενο σύνολο",
       "new_estimated_total": "Νέο εκτιμώμενο σύνολο",
       "note": "Προσθέστε μια σημείωση παραγγελίας",
+      "note_placeholder": "Μήνυμα",
+      "note_save": "Αποθήκευση",
+      "note_clear": "Εκκαθάριση",
       "checkout": "Αναχωρώ",
       "empty": "Η τσάντα σας είναι άδεια",
       "empty_button_label": "Αγορά τώρα",

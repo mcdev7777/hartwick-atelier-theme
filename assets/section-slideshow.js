@@ -53,6 +53,7 @@ class HeroSlideshow {
                 init: function () {
                     resetAnimations(true);
                     PlayPauseVideos(true);
+                    PlayPauseSlideshow(true);
                 }
             }          
         };
@@ -141,4 +142,30 @@ function PlayPauseVideos() {
             }
         }
     });
+}
+
+function PlayPauseSlideshow() {
+  const sliders = document.querySelectorAll('.swiper');
+
+  sliders.forEach(swiperEl => {
+    const toggleBtn = swiperEl.closest('.section')?.querySelector('.swiper-autoplay-toggle');
+    if (!toggleBtn || !swiperEl.swiper) return;
+
+    const swiper = swiperEl.swiper;
+
+    toggleBtn.addEventListener('click', () => {
+      if (swiper.autoplay.running) {
+        swiper.autoplay.stop();
+        toggleBtn.classList.remove('button-visual-status-pause');
+        toggleBtn.classList.add('button-visual-status-play');
+        //toggleBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        swiper.autoplay.start();
+        //toggleBtn.textContent = 'Pause';
+        toggleBtn.classList.add('button-visual-status-pause');
+        toggleBtn.classList.remove('button-visual-status-play');
+        //toggleBtn.setAttribute('aria-pressed', 'false');
+      }
+    });
+  });
 }

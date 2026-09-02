@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "North America",
+      "central_america": "Central America",
+      "south_america": "South America",
+      "europe": "Europe",
+      "middle_east": "Middle East",
+      "africa": "Africa",
+      "asia": "Asia",
+      "oceania": "Oceania"
+    },
     "password_page": {
       "login_form_heading": "Enter store using password:",
       "login_password_button": "Enter using password",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Share on Facebook",
         "share_on_twitter": "Tweet on Twitter",
         "share_on_pinterest": "Pin on Pinterest",
-        "share_on_linkedin": "Share on LinkedIn"
+        "share_on_linkedin": "Share on LinkedIn",
+        "share_on_whatsapp": "Share on WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Continue shopping",
     "pagination": {
       "label": "Pagination",
+      "all": "All",
       "page": "Page {{ number }}",
       "next": "Next page",
       "previous": "Previous page"
@@ -53,9 +65,9 @@
       "reset": "Clear search term"
     },
     "cart": {
-      "view": "View cart",
-      "view_empty_cart": "View cart",
-      "item_added": "Item added to your cart"
+      "view": "View bag",
+      "view_empty_cart": "View bag",
+      "item_added": "Item added to your bag"
     }
   },
   "newsletter": {
@@ -74,7 +86,7 @@
     "open": "Open",
     "close": "Close",
     "unit_price_separator": "per",
-    "vendor": "Vendor:",
+    "vendor": "Brand:",
     "error": "Error",
     "refresh_page": "Choosing a selection results in a full page refresh.",
     "link_messages": {
@@ -111,11 +123,13 @@
   },
   "onboarding": {
     "product_title": "Example product title",
-    "collection_title": "Your collection's name"
+    "collection_title": "Your collection title"
   },
   "products": {
     "product": {
-      "add_to_cart": "Add to cart",
+      "add": "Add",
+      "add_to_cart": "Add to bag",
+      "pre_order": "Pre-order",
       "color": "Color",
       "colors": "Colors",
       "choose_options": "Choose options",
@@ -150,7 +164,7 @@
         "minimum_of": "Minimum of {{ quantity }}",
         "maximum_of": "Maximum of {{ quantity }}",
         "multiples_of": "Increments of {{ quantity }}",
-        "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> in cart",
+        "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> in bag",
         "note": "View quantity rules"
       },
       "volume_pricing": {
@@ -161,14 +175,15 @@
         "price_range": "{{ minimum }} - {{ maximum }}"
       },
       "pickup_availability": {
-        "view_store_info": "View store information",
-        "check_other_stores": "Check availability at other stores",
-        "title": "Pickup",
-        "pick_up_available": "Pickup available",
-        "pick_up_unavailable": "Pickup not available",
-        "pick_up_available_at_html": "Pickup available at <span>{{ location_name }}</span>",
-        "pick_up_unavailable_at_html": "Pickup currently unavailable at <span>{{ location_name }}</span>",
-        "unavailable": "Couldn't load pickup availability",
+        "view_store_info": "View Store Information",
+        "check_other_stores": "Check availability at all stores",
+        "title": "Pick-up Availability",
+        "phone": "Tel:",
+        "pick_up_available": "Pick-up available",
+        "pick_up_unavailable": "Pick-up not available",
+        "pick_up_available_at_html": "Pick-up available at <span>{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Pick-up currently unavailable at <span>{{ location_name }}</span>",
+        "unavailable": "Couldn't load pick-up availability",
         "refresh": "Refresh"
       },
       "price": {
@@ -178,12 +193,13 @@
         "unit_price": "Unit price",
         "save": "Save"
       },
-      "share": "Share this product",
-      "sold_out": "Sold out",
+      "share": "Share",
+      "sold_out": "Out of stock",
       "unavailable": "Unavailable",
+      "reviews": "Reviews",
       "vendor": "Brand",
       "value_unavailable": "{{ option_value }} - Unavailable",
-      "variant_sold_out_or_unavailable": "Variant sold out or unavailable",
+      "variant_sold_out_or_unavailable": "Unavailable",
       "video_exit_message": "{{ title }} opens full screen video in same window.",
       "view_full_details": "View full details",
       "xr_button": "View in your space",
@@ -195,13 +211,13 @@
       "label": "Media gallery"
     },
     "facets": {
-      "filter_and_operator_subtitle": "Match all",
+      "filter_and_operator_subtitle": "Match All",
       "apply": "Apply",
       "clear": "Clear",
-      "clear_all": "Remove all",
+      "clear_all": "Clear All",
       "from": "From",
       "filter": "Filter",
-      "filter_and_sort": "Filter and sort",
+      "filter_and_sort": "Filter & Sort",
       "filter_by_label": "Filter:",
       "filter_button": "Filter",
       "filters_selected": {
@@ -209,20 +225,23 @@
         "other": "{{ count }} selected",
         "many": "{{ count }} selected"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
+      "show_more": "View More",
+      "show_less": "View Less",
       "filter_selected_accessibility": "{{ type }} ({{ count }} filters selected)",
       "max_price": "The highest price is {{ price }}",
       "product": "Product",
       "products": "Products",
       "reset": "Reset",
       "sort_button": "Sort",
-      "sort_by_label": "Sort by:",
+      "sort_by_label": "Sort By:",
       "to": "To",
-      "clear_filter": "Remove filter"
+      "clear_filter": "Remove Filter"
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Home"
+    },
     "search": {
       "no_results": "No results found for “{{ terms }}”. Check the spelling or use a different word or phrase.",
       "results_pages_with_count": {
@@ -262,7 +281,7 @@
       "pages": "Pages"
     },
     "cart": {
-      "cart": "Cart"
+      "cart": "Bag"
     },
     "contact": {
       "form": {
@@ -270,9 +289,9 @@
         "name": "Name",
         "email": "Email",
         "phone": "Phone number",
-        "comment": "Comment",
+        "comment": "Message",
         "send": "Send",
-        "post_success": "Thank you for contacting us. We'll get back to you as soon as possible.",
+        "post_success": "Thank you for contacting us. We'll respond to you as soon as possible.",
         "error_heading": "Please adjust the following:"
       }
     },
@@ -296,27 +315,30 @@
       }
     },
     "cart": {
-      "title": "Your bag",
-      "summary_title": "Order summary",
-      "caption": "Cart items",
+      "title": "Shopping Bag",
+      "summary_title": "Order Summary",
+      "caption": "Shopping bag items",
       "remove_title": "Remove",
       "estimated_total": "Estimated total",
       "new_estimated_total": "New estimated total",
       "note": "Add an order note",
-      "checkout": "Check out",
-      "empty": "Your bag is empty",
+      "note_placeholder": "Your message",
+      "note_save": "Save",
+      "note_clear": "Clear",
+      "checkout": "Checkout",
+      "empty": "Your shopping bag is empty",
       "empty_button_label": "Shop now",
       "cart_error": "There was an error while updating your bag. Please try again.",
       "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your bag.",
-      "taxes_and_shipping_policy_at_checkout_html": "Taxes, Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout",
-      "taxes_included_but_shipping_at_checkout": "Tax included and shipping and discounts calculated at checkout",
-      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping</a> and discounts calculated at checkout.",
+      "taxes_and_shipping_policy_at_checkout_html": "Taxes, Discounts and <a href=\"{{ link }}\">shipping</a> are calculated at checkout",
+      "taxes_included_but_shipping_at_checkout": "Tax included. Shipping and discounts are calculated at checkout.",
+      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping</a> and discounts are calculated at checkout.",
       "taxes_and_shipping_at_checkout": "Taxes, discounts and shipping calculated at checkout",
       "headings": {
         "product": "Product",
         "price": "Price",
         "total": "Total",
-        "subtotal": "Sub total",
+        "subtotal": "Subtotal",
         "discount": "Discount",
         "quantity": "Quantity",
         "image": "Product image"
@@ -364,7 +386,7 @@
     },
     "quick_order_list": {
       "product_total": "Product subtotal",
-      "view_cart": "View cart",
+      "view_cart": "View bag",
       "each": "{{ money }}/ea",
       "product": "Product",
       "variant": "Variant",
@@ -381,7 +403,7 @@
       },
       "product_variants": "Product variants",
       "total_items": "Total items",
-      "remove_all_items_confirmation": "Remove all {{ quantity }} items from your cart?",
+      "remove_all_items_confirmation": "Remove all {{ quantity }} items from your bag?",
       "remove_all": "Remove all",
       "cancel": "Cancel"
     }
@@ -389,8 +411,8 @@
   "localization": {
     "country_label": "Country/region",
     "language_label": "Language",
-    "update_language": "Update language",
-    "update_country": "Update country/region"
+    "update_language": "Update Language",
+    "update_country": "Update Country/Region"
   },
   "customer": {
     "account": {
@@ -506,7 +528,7 @@
   "gift_cards": {
     "issued": {
       "how_to_use_gift_card": "Use the gift card code online or QR code in-store",
-      "title": "Here's your {{ value }} gift card balance for {{ shop }}!",
+      "title": "Here is your {{ value }} gift card balance for {{ shop }}",
       "subtext": "Your gift card",
       "gift_card_code": "Gift card code",
       "shop_link": "Visit online store",
@@ -520,7 +542,7 @@
   },
   "recipient": {
     "form": {
-      "checkbox": "I want to send this as a gift",
+      "checkbox": "Send as a gift",
       "expanded": "Gift card recipient form expanded",
       "collapsed": "Gift card recipient form collapsed",
       "email_label": "Recipient email",

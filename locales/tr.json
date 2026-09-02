@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Kuzey Amerika",
+      "central_america": "Orta Amerika",
+      "south_america": "Güney Amerika",
+      "europe": "Avrupa",
+      "middle_east": "Orta Doğu",
+      "africa": "Afrika",
+      "asia": "Asya",
+      "oceania": "Okyanusya"
+    },
     "password_page": {
       "login_form_heading": "Şifreyi kullanarak mağazaya girin:",
       "login_password_button": "Şifre kullanarak girin",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Facebook'ta paylaş",
         "share_on_twitter": "Twitter'da tweet at",
         "share_on_pinterest": "Pinterest'teki Pin",
-        "share_on_linkedin": "LinkedIn'de paylaş"
+        "share_on_linkedin": "LinkedIn'de paylaş",
+        "share_on_whatsapp": "WhatsApp'de paylaş"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Alışverişe devam et",
     "pagination": {
       "label": "Sayfalandırma",
+      "all": "Tüm",
       "page": "Sayfa {{ number }}",
       "next": "Sonraki sayfa",
       "previous": "Önceki sayfa"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Sepete ekle",
       "add_to_cart": "Sepete ekle",
+      "pre_order": "Sipariş ver",
       "color": "Renk",
       "colors": "Renkler",
       "choose_options": "Seçenekleri seçin",
@@ -164,6 +178,7 @@
         "view_store_info": "Mağaza bilgilerini görüntüle",
         "check_other_stores": "Diğer mağazalardaki stok durumunu kontrol edin",
         "title": "Toplamak",
+        "phone": "Tel:",
         "pick_up_available": "Teslim alma mevcut",
         "pick_up_unavailable": "Teslim alma mevcut değil",
         "pick_up_available_at_html": "Teslim alma şu adreste mevcuttur: <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Bu ürünü paylaş",
       "sold_out": "Hepsi satıldı",
       "unavailable": "Kullanılamıyor",
+      "reviews": "Değerlendirmeler",
       "vendor": "Marka",
       "value_unavailable": "{{ option_value }} - Mevcut değil",
       "variant_sold_out_or_unavailable": "Varyant tükendi veya mevcut değil",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Ana"
+    },
     "404": {
       "title": "Sayfa bulunamadı",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Tahmini toplam",
       "new_estimated_total": "Yeni tahmini toplam",
       "note": "Sipariş notu ekleyin",
+      "note_placeholder": "Mesaj",
+      "note_save": "Kaydet",
+      "note_clear": "Temizle",
       "checkout": "Çıkış yapmak",
       "empty": "Çantan boş",
       "empty_button_label": "Şimdi alışveriş yap",

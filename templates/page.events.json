@@ -14,7 +14,6 @@
       "disabled": true,
       "settings": {
         "content_width": "page-width-narrow",
-        "hdr_alignment": "align-center",
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -127,21 +126,18 @@
       "settings": {
         "section_label": "",
         "heading": "",
-        "subheading": "",
         "hdr_alignment": "center",
+        "subheading": "",
         "btn_enable": false,
         "btn_txt": "",
         "btn_link": "",
         "btn_style": "solid",
-        "card_image_alignment": "center",
-        "image_ratio": "fit",
-        "text_alignment": "left",
-        "grid_mobile_layout": "stacked",
-        "mobile_pagination_show": true,
         "grid_columns": 3,
         "grid_column_gap": 60,
         "keylines_show": false,
-        "keyline_colour": "0",
+        "card_image_alignment": "center",
+        "image_ratio": "fit",
+        "text_alignment": "left",
         "text_color": "fg-body",
         "bg_color": "bg-body",
         "btn_color_scheme": "default",
@@ -178,9 +174,9 @@
         "button_cHJ3KT": {
           "type": "button",
           "settings": {
+            "btn_color_scheme": "default",
             "btn_txt": "Get Invite",
             "btn_link": "shopify://pages/contact-us",
-            "btn_color_scheme": "default",
             "btn_style": "outline"
           }
         }
@@ -193,13 +189,13 @@
       ],
       "settings": {
         "section_size": "flexible",
-        "image": "shopify://shop_images/HartwickAtelier-Event-London2.jpg",
-        "image_ratio": "fit",
-        "secondary_image_scale": "small",
+        "content_width": "page-width",
         "image_alignment": "left",
         "dt_image_width": 50,
         "card_spacing": 60,
-        "content_width": "page-width",
+        "image": "shopify://shop_images/HartwickAtelier-Event-London2.jpg",
+        "image_ratio": "fit",
+        "secondary_image_scale": "small",
         "txt_alignment": "left",
         "text_color": "fg-body",
         "bg_color": "bg-01",

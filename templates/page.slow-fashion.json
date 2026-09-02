@@ -14,7 +14,6 @@
       "disabled": true,
       "settings": {
         "content_width": "page-width-narrow",
-        "hdr_alignment": "align-center",
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -35,13 +34,13 @@
         "secondary_image_animation": "none",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "middle",
         "txt_alignment": "center",
+        "txt_position": "middle",
         "content_width": 75,
-        "fade_in_text": true,
-        "scroll_fade_effect": false,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
         "text_color": "fg-white",
         "bg_color": "",
         "overlay_level": 0
@@ -83,7 +82,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -142,11 +140,10 @@
         "card_link_style": "text",
         "card_link_color": "match",
         "image_ratio": "square",
-        "grid_layout": "asymmetrical",
         "grid_layout_mobile": "2",
         "grid_stacking_mobile": "vertical",
-        "pagination_show": false,
         "grid_columns": 3,
+        "grid_layout": "asymmetrical",
         "grid_spacing": "normal",
         "section_margins": "page-width",
         "btn_enable": false,
@@ -200,7 +197,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     }

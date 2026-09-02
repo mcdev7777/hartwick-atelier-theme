@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Nordamerika",
+      "central_america": "Centralamerika",
+      "south_america": "Sydamerika",
+      "europe": "Europa",
+      "middle_east": "Mellanöstern",
+      "africa": "Afrika",
+      "asia": "Asien",
+      "oceania": "Oceanien"
+    },
     "password_page": {
       "login_form_heading": "Ange lösenord för att komma i butiken:",
       "login_password_button": "Ange lösenord för att komma in",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Dela på Facebook",
         "share_on_twitter": "Tweet på Twitter",
         "share_on_pinterest": "Spara en pin på Pinterest",
-        "share_on_linkedin": "Dela på LinkedIn"
+        "share_on_linkedin": "Dela på LinkedIn",
+        "share_on_whatsapp": "Dela på WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Fortsätt shoppa",
     "pagination": {
       "label": "Paginering",
+      "all": "Alla",
       "page": "Sida {{ number }}",
       "next": "Nästa sida",
       "previous": "Föregående sida"
@@ -114,7 +126,9 @@
   },
   "products": {
     "product": {
+      "add": "Tillägga",
       "add_to_cart": "Lägg i varukorgen",
+      "pre_order": "Förbeställ",
       "color": "Färg",
       "colors": "Färger",
       "description": "Beskrivning",
@@ -142,12 +156,14 @@
       "share": "Dela den här produkten",
       "sold_out": "Slutsåld",
       "unavailable": "Ej tillgänglig",
+      "reviews": "Recensioner",
       "vendor": "Säljare",
       "video_exit_message": "{{ title }} öppnar helskärmsvideo i samma fönster.",
       "xr_button": "Visa i ditt utrymme",
       "xr_button_label": "Visa i ditt utrymme, laddar artiklar i fönster med förstärkt verklighet",
       "pickup_availability": {
         "title": "Hämtning",
+        "phone": "Tel:",
         "view_store_info": "Visa butiksinformation",
         "check_other_stores": "Kontrollerar tillgänglighet i andra butiker",
         "pick_up_available": "Hämtning tillgänglig",
@@ -229,6 +245,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Startsida"
+    },
     "search": {
       "no_results": "Inga resultat hittades för \"{{ terms }}\". Kontrollera stavningen eller använd ett annat ord eller fras.",
       "results_with_count": {
@@ -297,6 +316,9 @@
       "caption": "Varukorgsartiklar",
       "remove_title": "Ta bort",
       "note": "Beställ särskilda instruktioner",
+      "note_placeholder": "Meddelande",
+      "note_save": "Spara",
+      "note_clear": "Rensa",
       "checkout": "Gå till kassan",
       "empty": "Din varukorg är tom",
       "empty_button_label": "Shop now",

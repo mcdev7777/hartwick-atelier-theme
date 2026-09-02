@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Северная Америка",
+      "central_america": "Центральная Америка",
+      "south_america": "Южная Америка",
+      "europe": "Европа",
+      "middle_east": "Средний Восток",
+      "africa": "Африка",
+      "asia": "Азия",
+      "oceania": "Океания"
+    },
     "password_page": {
       "login_form_heading": "Войдите в магазин, используя пароль:",
       "login_password_button": "Войти, используя пароль",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Поделиться на Facebook",
         "share_on_twitter": "Твитнуть в Твиттере",
         "share_on_pinterest": "Закрепить на Pinterest",
-        "share_on_linkedin": "Поделиться в LinkedIn"
+        "share_on_linkedin": "Поделиться в LinkedIn",
+        "share_on_whatsapp": "Поделиться в WhatsApp"
       },
       "links": {
         "twitter": "Твиттер",
@@ -44,6 +55,7 @@
     "continue_shopping": "Продолжить покупки",
     "pagination": {
       "label": "Пагинация",
+      "all": "Все",
       "page": "Страница {{ number }}",
       "next": "Следующая страница",
       "previous": "Предыдущая страница"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Добавить в корзину",
       "add_to_cart": "Добавить в корзину",
+      "pre_order": "Предзаказать",
       "color": "Цвет",
       "colors": "Цвета",
       "choose_options": "Выберите варианты",
@@ -164,6 +178,7 @@
         "view_store_info": "Посмотреть информацию о магазине",
         "check_other_stores": "Проверить наличие в других магазинах",
         "title": "Подобрать",
+        "phone": "Тел:",
         "pick_up_available": "Возможен самовывоз",
         "pick_up_unavailable": "Самовывоз недоступен",
         "pick_up_available_at_html": "Самовывоз доступен по адресу <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Поделиться этим продуктом",
       "sold_out": "Распроданный",
       "unavailable": "Недоступно",
+      "reviews": "Отзывы",
       "vendor": "Бренд",
       "value_unavailable": "{{ option_value }} - Недоступно",
       "variant_sold_out_or_unavailable": "Вариант распродан или недоступен",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Главная"
+    },
     "404": {
       "title": "Страница не найдена",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Предполагаемая общая сумма",
       "new_estimated_total": "Новая расчетная сумма",
       "note": "Добавить примечание к заказу",
+      "note_placeholder": "Сообщение",
+      "note_save": "Сохранить",
+      "note_clear": "Очистить",
       "checkout": "Проверить",
       "empty": "Ваша сумка пуста",
       "empty_button_label": "Купить сейчас",

@@ -14,10 +14,10 @@
       "settings": {
         "pagination_value": 20,
         "layout_desktop": 3,
+        "grid_padding_top": 60,
         "show_image": true,
         "padding_top": 100,
-        "padding_bottom": 100,
-        "grid_padding_top": 60
+        "padding_bottom": 100
       }
     }
   },

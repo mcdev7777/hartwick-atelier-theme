@@ -14,7 +14,6 @@
       "disabled": true,
       "settings": {
         "content_width": "page-width-narrow",
-        "hdr_alignment": "align-center",
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -35,13 +34,13 @@
         "secondary_image_animation": "none",
         "secondary_image_blur": 0,
         "secondary_image_mobile_show": true,
-        "txt_position": "middle",
         "txt_alignment": "center",
+        "txt_position": "middle",
         "content_width": 75,
-        "fade_in_text": true,
-        "scroll_fade_effect": false,
         "top_padding": 0,
         "bottom_padding": 0,
+        "fade_in_text": true,
+        "scroll_fade_effect": false,
         "text_color": "fg-white",
         "bg_color": "",
         "overlay_level": 0
@@ -83,7 +82,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -94,6 +92,8 @@
           "type": "button",
           "settings": {
             "alignment": "center",
+            "btn_layout": "inline",
+            "btn_color_scheme": "default",
             "btn_one_show": true,
             "btn_one_txt": "2024/25 Lookbook",
             "btn_one_link": "https://cdn.shopify.com/s/files/1/0894/7492/4843/files/HARTWICK_ATELIER_LOOKBOOK_2024-25_sm.pdf?v=1733051076",
@@ -101,9 +101,7 @@
             "btn_two_show": true,
             "btn_two_txt": "Media Library",
             "btn_two_link": "shopify://pages/hartwick-atelier-autumn-2024-media-library",
-            "btn_two_style": "button--outline",
-            "btn_color_scheme": "default",
-            "btn_layout": "inline"
+            "btn_two_style": "button--outline"
           }
         }
       },
@@ -121,7 +119,6 @@
         "top_border": false,
         "bottom_border": false,
         "border_width": "normal",
-        "alignment": "center",
         "border_color": "dark"
       }
     },
@@ -190,21 +187,18 @@
       "settings": {
         "section_label": "",
         "heading": "",
-        "subheading": "",
         "hdr_alignment": "center",
+        "subheading": "",
         "btn_enable": false,
         "btn_txt": "",
         "btn_link": "",
         "btn_style": "solid",
-        "card_image_alignment": "center",
-        "image_ratio": "fit",
-        "text_alignment": "center",
-        "grid_mobile_layout": "stacked",
-        "mobile_pagination_show": true,
         "grid_columns": 2,
         "grid_column_gap": 20,
         "keylines_show": false,
-        "keyline_colour": "0",
+        "card_image_alignment": "center",
+        "image_ratio": "fit",
+        "text_alignment": "center",
         "text_color": "fg-body",
         "bg_color": "bg-body",
         "btn_color_scheme": "default",

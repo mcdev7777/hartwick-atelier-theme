@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Nordamerika",
+      "central_america": "Mittelamerika",
+      "south_america": "Südamerika",
+      "middle_east": "Naher Osten",
+      "europe": "Europa",
+      "africa": "Afrika",
+      "asia": "Asien",
+      "oceania": "Ozeanien"
+    },
     "password_page": {
       "login_form_heading": "Shop mit Passwort betreten:",
       "login_password_button": "Mit Passwort betreten",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Auf Facebook teilen",
         "share_on_twitter": "Auf Twitter twittern",
         "share_on_pinterest": "Auf Pinterest pinnen",
-        "share_on_linkedin": "Auf LinkedIn teilen"
+        "share_on_linkedin": "Auf LinkedIn teilen",
+        "share_on_whatsapp": "Auf WhatsApp teilen"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Weiter shoppen",
     "pagination": {
       "label": "Seitennummerierung",
+      "all": "Alle",
       "page": "Seite {{ number }}",
       "next": "Nächste Seite",
       "previous": "Vorherige Seite"
@@ -116,7 +128,9 @@
   },
   "products": {
     "product": {
+      "add": "Hinzufügen",
       "add_to_cart": "In den Warenkorb legen",
+      "pre_order": "Vorbestellen",
       "color": "Farbe",
       "colors": "Farben",
       "description": "Beschreibung",
@@ -139,17 +153,19 @@
         "regular_price": "Normaler Preis",
         "sale_price": "Verkaufspreis",
         "unit_price": "Stückpreis",
-        "save": "Save"
+        "save": "Spare"
       },
       "share": "Dieses Produkt teilen",
       "sold_out": "Ausverkauft",
       "unavailable": "Nicht verfügbar",
+      "reviews": "Rezensionen",
       "vendor": "Anbieter",
       "video_exit_message": "{{ title }} öffnet das Video auf derselben Seite im Vollbildmodus.",
       "xr_button": "In deinem Bereich ansehen",
-      "xr_button_label": "\"Ansicht in deinem Raum\" lädt den Artikel in ein Augmented-Reality-Fenster",
+      "xr_button_label": "In deinem Raum ansehen, lädt den Artikel in der Augmented-Reality-Ansicht",
       "pickup_availability": {
         "title": "Abholung",
+        "phone": "Tel:",
         "view_store_info": "Shop-Informationen anzeigen",
         "check_other_stores": "Verfügbarkeit in anderen Shops überprüfen",
         "pick_up_available": "Abholung verfügbar",
@@ -225,6 +241,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Startseite"
+    },
     "search": {
       "no_results": "Keine Ergebnisse gefunden für \"{{ terms }}\". Überprüfe die Schreibweise oder versuche es mit einer anderen Suchanfrage.",
       "results_with_count": {
@@ -294,6 +313,9 @@
       "caption": "Artikel im Warenkorb",
       "remove_title": "Entfernen",
       "note": "Spezielle Bestellanweisungen",
+      "note_placeholder": "Nachricht",
+      "note_save": "Speichern",
+      "note_clear": "Löschen",
       "checkout": "Auschecken",
       "empty": "Dein Warenkorb ist leer",
       "empty_button_label": "Jetzt einkaufen",

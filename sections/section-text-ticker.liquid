@@ -10,6 +10,10 @@
   animation-duration: {{ anim_speed }}s;
 }
 
+.section-{{ section.id }} .ticker-item {
+  padding: 0 {{ section.settings.horizontal_padding | divided_by: 2 | round: 1 }}px;
+}
+
 @media only screen and (min-width: 760px) {
   .section-{{ section.id }} .ticker-section-items-container {
     animation-duration: calc({{ anim_speed }}s * 1.25);
@@ -154,12 +158,22 @@
     {
     "type": "range",
     "id": "vertical_padding",
-    "min": 0,
+    "min": 5,
     "max": 120,
     "step": 5,
     "unit": "px",
     "default": 20,
     "label": "t:sections.all.layouts.vertical_padding"
+    },
+    {
+    "type": "range",
+    "id": "horizontal_padding",
+    "min": 10,
+    "max": 120,
+    "step": 5,
+    "unit": "px",
+    "default": 30,
+    "label": "t:sections.all.layouts.horizontal_spacing"
     },
     {
     "type": "range",
@@ -198,6 +212,10 @@
         {
           "value": "fg-04",
           "label": "t:sections.all.colors.accent_4.label"
+        },
+        {
+          "value": "fg-05",
+          "label": "t:sections.all.colors.accent_5.label"
         }
       ],
       "default": "fg-body",
@@ -226,6 +244,10 @@
         {
           "value": "bg-04",
           "label": "t:sections.all.colors.background_4.label"
+        },
+        {
+          "value": "bg-05",
+          "label": "t:sections.all.colors.background_5.label"
         }
       ],
       "default": "bg-body",

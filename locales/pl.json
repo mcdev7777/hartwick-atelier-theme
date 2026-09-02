@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Ameryka Północna",
+      "central_america": "Ameryka Środkowa",
+      "south_america": "Ameryka Południowa",
+      "europe": "Europa",
+      "middle_east": "Bliski Wschód",
+      "africa": "Afryka",
+      "asia": "Azja",
+      "oceania": "Oceania"
+    },
     "password_page": {
       "login_form_heading": "Wejdź do sklepu, wpisując hasło:",
       "login_password_button": "Wejdź, wpisując hasło",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Udostępnij na Facebooku",
         "share_on_twitter": "Tweetuj na Twitterze",
         "share_on_pinterest": "Przypnij do tablicy Pinterest",
-        "share_on_linkedin": "Udostępnij na Pinterest"
+        "share_on_linkedin": "Udostępnij na Pinterest",
+        "share_on_whatsapp": "Udostępnij na WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Kontynuuj zakupy",
     "pagination": {
       "label": "Paginacja",
+      "all": "Wszystko",
       "page": "Strona {{ number }}",
       "next": "Następna strona",
       "previous": "Poprzednia strona"
@@ -116,7 +128,9 @@
   },
   "products": {
     "product": {
+      "add": "Dodaj",
       "add_to_cart": "Dodaj do koszyka",
+      "pre_order": "Zamów w przedsprzedaży",
       "description": "Opis",
       "read_more": "Read more",
       "read_less": "Read less",
@@ -126,6 +140,7 @@
       "share": "Udostępnij ten produkt",
       "sold_out": "Wyprzedane",
       "unavailable": "Niedostępny",
+      "reviews": "Recenzje",
       "vendor": "Dostawca",
       "video_exit_message": "{{ title }} otwiera film w trybie pełnoekranowym w tym samym oknie.",
       "xr_button": "Zobacz w swojej przestrzeni",
@@ -150,6 +165,7 @@
       },
       "pickup_availability": {
         "title": "Odbiór",
+        "phone": "Tel:",
         "view_store_info": "Wyświetl informacje o sklepie",
         "check_other_stores": "Sprawdź dostępność w innych sklepach",
         "pick_up_available": "Odbiór jest możliwy",
@@ -225,6 +241,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Główna"
+    },
     "search": {
       "no_results": "Nie znaleziono wyników dla “{{ terms }}”. Sprawdź pisownię lub użyj innego słowa lub zwrotu.",
       "articles": "Artykuły",
@@ -309,6 +328,9 @@
       "caption": "Pozycje w koszyku",
       "remove_title": "Usuń",
       "note": "Specjalne instrukcje do zamówienia",
+      "note_placeholder": "Wiadomość",
+      "note_save": "Zapisz",
+      "note_clear": "Wyczyść",
       "checkout": "Realizuj zakup",
       "empty": "Twój koszyk jest pusty",
       "empty_button_label": "Kupuj teraz",

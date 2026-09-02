@@ -36,7 +36,6 @@
         "collapsible_tab_dm4e4k": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "{{ product.metafields.custom.process | metafield_text: field: 'title' }}",
             "content": "",
             "page": ""
           }
@@ -66,8 +65,11 @@
         "media_bg_col": "rgba(0,0,0,0)",
         "gallery_aspect_ratio": "portrait",
         "gallery_media_scale": "default",
-        "media_section_width": "standard",
         "gallery_height_limit_desktop": false,
+        "media_section_width": "standard",
+        "product_section_width": "standard",
+        "media_mobile_width": "full-width",
+        "gallery_grid_spacing": 10,
         "mobile_media_nav": "bullets",
         "mobile_media_nav_position": "below-media",
         "gallery_layout": "stack",
@@ -76,9 +78,6 @@
         "desktop_media_thumbnail_position": "left",
         "desktop_media_thumbnail_placement": "adjacent",
         "arrow_style": "solid-inverted",
-        "product_section_width": "standard",
-        "media_mobile_width": "full-width",
-        "gallery_grid_spacing": 10,
         "balance_grid": true,
         "media_video_autoplay": true,
         "zoom_enable": true,
@@ -105,9 +104,7 @@
         "heading_size": "h2",
         "heading_alignment": "left",
         "products_to_show": 4,
-        "show_secondary_image": true,
         "show_price": true,
-        "price_highlight": true,
         "show_vendor": false,
         "text_color": "fg-body",
         "bg_color": "bg-body",
@@ -129,7 +126,6 @@
         "columns_tablet": 4,
         "columns_desktop": 4,
         "arrow_style": "solid-inverted",
-        "show_secondary_image": false,
         "show_price": false,
         "show_vendor": false,
         "enable_quick_add": false,

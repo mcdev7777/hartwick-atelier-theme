@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "America del Nord",
+      "central_america": "Central Centrale",
+      "south_america": "Sud America",
+      "europe": "Europa",
+      "middle_east": "Medio Oriente",
+      "africa": "Africa",
+      "asia": "Asia",
+      "oceania": "Oceania"
+    },
     "password_page": {
       "login_form_heading": "Accedi al negozio utilizzando la password:",
       "login_password_button": "Accedi utilizzando la password",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Condividi su Facebook",
         "share_on_twitter": "Twitta su Twitter",
         "share_on_pinterest": "Aggiungi un pin su Pinterest",
-        "share_on_linkedin": "Condividi su LinkedIn"
+        "share_on_linkedin": "Condividi su LinkedIn",
+        "share_on_whatsapp": "Condividi su WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Continua lo shopping",
     "pagination": {
       "label": "Impaginazione",
+      "all": "Tutto",
       "page": "Pagina {{ number }}",
       "next": "Pagina successiva",
       "previous": "Pagina precedente"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Aggiungere",
       "add_to_cart": "Aggiungi al carrello",
+      "pre_order": "Preordina",
       "color": "Colore",
       "colors": "Colori",
       "description": "Descrizione",
@@ -143,12 +157,14 @@
       "share": "Condividi questo prodotto",
       "sold_out": "Esaurito",
       "unavailable": "Non disponibile",
+      "reviews": "Recensioni",
       "vendor": "Fornitore",
       "video_exit_message": "{{ title }} apre un video a schermo intero nella stessa finestra.",
       "xr_button": "Visualizza nel tuo spazio",
       "xr_button_label": "Visualizza nel tuo spazio, carica l'articolo nella finestra della realtà aumentata",
       "pickup_availability": {
         "title": "Ritiro",
+        "phone": "Tel:",
         "view_store_info": "Visualizza i dettagli del negozio",
         "check_other_stores": "Verifica la disponibilità in altri negozi",
         "pick_up_available": "Ritiro disponibile",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Home"
+    },
     "search": {
       "no_results": "Nessun risultato per \"{{ terms }}\". Controlla l'ortografia o usa una parola o una frase diversa.",
       "page": "Pagina",
@@ -301,9 +320,12 @@
       "caption": "Articoli nel carrello",
       "remove_title": "Rimuovi",
       "note": "Istruzioni speciali per l'ordine",
+      "note_placeholder": "Messaggio",
+      "note_save": "Salva",
+      "note_clear": "Cancella",
       "checkout": "Check-out",
       "empty": "Il tuo carrello è vuoto",
-      "empty_button_label": "Shop now",
+      "empty_button_label": "Acquista ora",
       "cart_error": "Si è verificato un errore durante l'aggiornamento del carrello. Riprova più tardi.",
       "cart_quantity_error_html": "Puoi aggiungere soltanto {{ quantity }} di questo articolo al tuo carrello.",
       "taxes_and_shipping_policy_at_checkout_html": "Imposte, sconti e <a href=\"{{ link }}\">spedizione</a> calcolati al check-out",

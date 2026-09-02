@@ -1,14 +1,13 @@
 {% style %}
-
-.section-{{ section.id }} {
-  padding-top: {{ section.settings.padding_top | times: 0.5 }}px;
-  padding-bottom: {{ section.settings.padding_bottom | times: 0.5 }}px;
+.section-{{ section.id }} .csn-inner {
+  margin-top: {{ section.settings.padding_top | times: 0.5 }}px;
+  margin-bottom: {{ section.settings.padding_bottom | times: 0.5 }}px;
 }
   
 @media only screen and (min-width: 750px) {
-  .section-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
+  .section-{{ section.id }} .csn-inner {
+    margin-top: {{ section.settings.padding_top }}px;
+    margin-bottom: {{ section.settings.padding_bottom }}px;
   }  
 }
 
@@ -22,22 +21,35 @@
 
 {% if section.settings.menu != blank %}
 <div class="collection-sub-navigation section-{{ section.id }}{% if section.settings.menu_style == 'images' %} csn-images{% else %} page-width{% endif %} align-{{ section.settings.alignment }} menu-style-{{ section.settings.menu_style }}">
+<div class="csn-inner">
 {% if section.settings.menu_style == 'images' and section.settings.menu.links.size > 6 %}
 <div class="csn-arrows">
-  <button class="csn-arrow csn-arrow-prev" aria-label="Left">{% render 'icon-caret' %}</button>
-  <button class="csn-arrow csn-arrow-next" aria-label="Right">{% render 'icon-caret' %}</button>
+  <button class="csn-arrow csn-arrow-prev" aria-label="{{ 'accessibility.left' | t }}">{% render 'icon-arrow-slider' %}</button>
+  <button class="csn-arrow csn-arrow-next" aria-label="{{ 'accessibility.right' | t }}">{% render 'icon-arrow-slider' %}</button>
 </div>
 {% endif %}
-  <ul class="csn-ul">
+  <ul class="csn-ul{% if section.settings.menu.links.size < 6 %} csn-ul-dtnoscroll{% endif %}">
     {% for link in section.settings.menu.links %}
       <li>
         <a href="{{ link.url }}"{% if collection.url == link.url %} class="current-link"{% endif %}>
           {% if link.url contains '/collections/' and section.settings.menu_style == 'images' %}
             {% assign collection_handle_no_child = link.url | split: '/' | last %}
             {% assign collection_no_child = collections[collection_handle_no_child] %}
+            {% assign render_width = 280 %}
+            {% assign render_height = 280 %}
+            {% if section.settings.image_ratio == 'portrait-4x5' %}
+              {% assign render_height = 360 %}
+            {% endif %}
+            {% if section.settings.image_ratio == 'portrait-4x6' %}
+              {% assign render_height = 420 %}
+            {% endif %}
             <div class="collection-sub-navigation-image csn-image-ratio-{{ section.settings.image_ratio }}">
             {% if collection_no_child.featured_image %}
-            {{ collection_no_child.featured_image | image_url: width: 280 | image_tag: loading: 'lazy' }}
+              {% if collection_no_child.featured_image.aspect_ratio > 1 %}
+                {{ collection_no_child.featured_image | image_url: height: render_height | image_tag: loading: 'lazy' }}
+              {% else %}
+                {{ collection_no_child.featured_image | image_url: width: render_width | image_tag: loading: 'lazy' }}
+              {% endif %}
             {% endif %}
             </div>
           {% endif %}
@@ -47,8 +59,10 @@
     {% endfor %}
   </ul>
 </div>
+</div>
 {% endif %}
 
+{% if section.settings.menu_style == 'images' and section.settings.menu.links.size > 6 %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   var csnsliders = document.querySelectorAll(".collection-sub-navigation");
@@ -106,8 +120,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 }); 
-</script>
 
+function positionArrows() {
+  const image = document.querySelector('.collection-sub-navigation-image img');
+  const arrows = document.querySelector('.csn-arrows');
+
+  if (image && arrows) {
+    const imageHeight = image.offsetHeight;
+    arrows.style.top = `${imageHeight / 2}px`;
+  }
+}
+
+// Run on load
+window.addEventListener('load', positionArrows);
+
+// Optional: Run on resize too, in case the UL height changes
+window.addEventListener('resize', positionArrows);
+</script>
+{% endif %}
+  
 {% schema %}
   {
     "name": "t:sections.main-collection-sub-navigation.name",
@@ -139,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "options": [
           {
             "value": "list",
-            "label": "t:sections.main-collection-sub-navigation.settings.menu_style.options__1.label"
+            "label": "t:sections.all.text"
           },
           {
             "value": "pills",
@@ -159,7 +190,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "options": [
           {
             "value": "landscape",
-            "label": "t:sections.all.ratio.landscape"
+            "label": "t:sections.all.ratio.landscape_6_4"
+          },
+          {
+            "value": "landscape-16x9",
+            "label": "t:sections.all.ratio.landscape_16_9"
           },
           {
             "value": "square",
@@ -202,5 +237,5 @@ document.addEventListener("DOMContentLoaded", function () {
       "label": "t:sections.all.padding.padding_bottom"
       }
     ]
-  }
+}
 {% endschema %}

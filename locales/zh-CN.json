@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "北美",
+      "central_america": "中美洲",
+      "south_america": "南美洲",
+      "europe": "欧洲",
+      "middle_east": "中东",
+      "africa": "非洲",
+      "asia": "亚洲",
+      "oceania": "大洋洲"
+    },
     "password_page": {
       "login_form_heading": "使用密码进入商店：",
       "login_password_button": "使用密码输入",
@@ -24,7 +34,8 @@
         "share_on_facebook": "在脸书上分享",
         "share_on_twitter": "在 Twitter 上发推文",
         "share_on_pinterest": "固定在 Pinterest 上",
-        "share_on_linkedin": "在领英上分享"
+        "share_on_linkedin": "在领英上分享",
+        "share_on_whatsapp": "在 WhatsApp 上分享"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "继续购物",
     "pagination": {
       "label": "分页",
+      "all": "所有标签",
       "page": "页 {{ number }}",
       "next": "下一页",
       "previous": "上一页"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "添加到购物车",
       "add_to_cart": "添加到购物车",
+      "pre_order": "预购",
       "color": "颜色",
       "colors": "颜色",
       "choose_options": "选择选项",
@@ -164,6 +178,7 @@
         "view_store_info": "查看店铺信息",
         "check_other_stores": "检查其他商店的库存情况",
         "title": "捡起",
+        "phone": "电话:",
         "pick_up_available": "提供接送服务",
         "pick_up_unavailable": "不提供接送服务",
         "pick_up_available_at_html": "取货地点： <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "分享该产品",
       "sold_out": "售罄",
       "unavailable": "不可用",
+      "reviews": "評論",
       "vendor": "品牌",
       "value_unavailable": "{{ option_value }} - 不可用",
       "variant_sold_out_or_unavailable": "版本已售完或不可用",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "首页"
+    },
     "404": {
       "title": "找不到页面",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "预计总数",
       "new_estimated_total": "新估计总数",
       "note": "添加订单备注",
+      "note_placeholder": "留言",
+      "note_save": "保存",
+      "note_clear": "清除",
       "checkout": "查看",
       "empty": "你的包是空的",
       "empty_button_label": "立即购买",

@@ -16,14 +16,14 @@
           "type": "header",
           "settings": {
             "header_style": "banner",
+            "txt_alignment": "center",
+            "blog_show_title": true,
+            "blog_show_excerpt": true,
+            "blog_show_author": true,
+            "blog_show_date": true,
             "header_img_ratio": "landscape-6x4",
             "image_top_padding": 40,
-            "image_bottom_padding": 40,
-            "blog_show_title": true,
-            "blog_show_date": true,
-            "blog_show_author": true,
-            "blog_show_excerpt": true,
-            "txt_alignment": "center"
+            "image_bottom_padding": 40
           }
         },
         "content": {
@@ -40,14 +40,10 @@
             "top_padding": 40,
             "bottom_padding": 40,
             "show_tags": true,
-            "show_author": true,
             "show_date": true,
+            "show_author": true,
             "enable_sharing": true,
-            "share_label": "Share",
-            "share_enable_facebook": true,
-            "share_enable_x": true,
-            "share_enable_pinterest": true,
-            "share_enable_linkedin": true
+            "share_label": "Share"
           }
         }
       },

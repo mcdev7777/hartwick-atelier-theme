@@ -14,7 +14,13 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
   }  
 }
+
 {%- endstyle -%}
+
+{% assign heading_html_tag = 'h2' %}
+{% if section.index == 1 %}
+{% assign heading_html_tag = 'h1' %}  
+{% endif %}
 
 {% assign thumbnail_size = 720 %}
 {% if section.settings.grid_layout_desktop < 4 %}
@@ -35,12 +41,12 @@
 {% unless section.settings.section_label == blank and section.settings.heading == blank and section.settings.sub_heading == blank %}
 <div class="section-header section-header-std-padding page-width text-align-{{ section.settings.content_alignment }}">  
 {% unless section.settings.section_label == blank %}<div class="section-label">{{ section.settings.section_label }}</div>{% endunless %}
-{% unless section.settings.heading == blank %}<h2>{{ section.settings.heading }}</h2>{% endunless %}
-{% unless section.settings.sub_heading == blank %}{{ section.settings.sub_heading }}{% endunless %}
+{% unless section.settings.heading == blank %}<{{ heading_html_tag }} class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</{{ heading_html_tag }}>{% endunless %}
+{% unless section.settings.sub_heading == blank %}<div class="section-header-paragraph">{{ section.settings.sub_heading }}</div>{% endunless %}
 </div>
 {% endunless %}
 
-<div class="aso-grid-wrapper{% if section.settings.thumbnails_layout == 'carousel' %} slider-outer-wrapper{% endif %}{% if section.blocks.size < section.settings.grid_layout_desktop and section.settings.content_alignment == 'center' %} layout-center-desktop{% endif %}{% if section.settings.thumbnails_layout == 'grid' %} page-width{% endif %}">
+<div class="aso-grid-wrapper{% if section.settings.thumbnails_layout == 'carousel' %} slider-outer-wrapper slider-arrows-position-{{ settings.carousel_arrow_position }}{% endif %}{% if section.blocks.size < section.settings.grid_layout_desktop and section.settings.content_alignment == 'center' %} layout-center-desktop{% endif %}{% if section.settings.thumbnails_layout == 'grid' %} page-width{% endif %}">
   
 <ul id="grid-{{ section.id }}"{% if section.settings.thumbnails_layout == 'grid' %} class="aso-static-grid static-grid--columns-mobile-{{ section.settings.grid_layout_mobile }} static-grid--columns-tablet-{{ section.settings.grid_layout_tablet }} static-grid--columns-desktop-{{ section.settings.grid_layout_desktop }}"{% else %} class="aso-slider grid slider-element slider-grid slider-grid--columns-mobile-{{ section.settings.grid_layout_mobile }} slider-grid--columns-tablet-{{ section.settings.grid_layout_tablet }} slider-grid--columns-desktop-{{ section.settings.grid_layout_desktop }}"{% endif %}>
 {% for block in section.blocks %}
@@ -82,7 +88,18 @@
   {% if block.settings.image %}
   {{ block.settings.image | image_url: width: thumbnail_size | image_tag: loading: 'lazy' }}
   {% else %}
-  {% render 'icon-image-placeholder-two' %}
+  {% assign remainder = forloop.index | modulo: 4 %}
+
+  {% case remainder %}
+    {% when 1 %}
+      {% render 'media-placeholder-lifestyle', style: 8 %}
+    {% when 2 %}
+      {% render 'media-placeholder-lifestyle', style: 1 %}
+    {% when 3 %}
+      {% render 'media-placeholder-lifestyle', style: 3 %}
+    {% else %}
+      {% render 'media-placeholder-lifestyle', style: 13 %}
+  {% endcase %}
   {% endif %}
   </div>
   </div>
@@ -94,55 +111,100 @@
 
 {% if section.blocks.size > section.settings.grid_layout_desktop and section.settings.thumbnails_layout == 'carousel' %}
 <div class="slider-arrows arrow-style-{{ section.settings.arrow_style }}">
-  <button class="slider-arrow-left" aria-label="{{ 'accessibility.left' | t }}">{% render 'icon-caret' %}</button>
-  <button class="slider-arrow-right" aria-label="{{ 'accessibility.right' | t }}">{% render 'icon-caret' %}</button>
+  <button class="slider-arrow-left" aria-label="{{ 'accessibility.left' | t }}">{% render 'icon-arrow-slider' %}</button>
+  <button class="slider-arrow-right" aria-label="{{ 'accessibility.right' | t }}">{% render 'icon-arrow-slider' %}</button>
 </div>
+{% endif %}
+
+{% if section.settings.thumbnails_layout == 'carousel' %}
+{% render 'scrolltrack' %}
 {% endif %}
   
 </div>
 
 {% for block in section.blocks %}
-<div class="aso-modal" id="{{ section.id }}-modal-{{ forloop.index }}" role="dialog" aria-modal="true" tabindex="-1">
-<div class="aso-modal-inner{% if settings.popup_corner_radius > 24 %} aso-modal-inner--large-corner-radius{% endif %}">
+
+{% assign image_render_size = 960 %}
+{% if section.settings.image_ratio == 'portrait-4x6' %}
+  {% assign image_render_size = 800 %}
+{% endif %}
+{% if section.settings.image_ratio == 'square' %}
+  {% assign image_render_size = 1100 %}
+{% endif %}
+
+<div class="aso-modal" id="{{ section.id }}-modal-{{ forloop.index }}" data-index="{{ forloop.index }}" role="dialog" aria-modal="true" tabindex="-1">
+<div class="aso-modal-inner aso-modal-margin-mobile--{{ section.settings.overlay_margin_mobile }} aso-modal-margin-desktop--{{ section.settings.overlay_margin_desktop }}{% if settings.popup_corner_radius > 24 %} aso-modal-inner--large-corner-radius{% endif %}">
+
+  <div class="aso-modal-header">
+  {% if section.settings.pagination_enable %}
+  <div class="aso-modal-pagination-wrapper">
+    <button class="aso-modal-pagination aso-modal-prev" type="button" aria-label="{{ 'accessibility.left' | t }}">
+      {% render 'icon-arrow-slider' %}
+    </button>
+    <button class="aso-modal-pagination aso-modal-next" type="button" aria-label="{{ 'accessibility.right' | t }}">
+      {% render 'icon-arrow-slider' %}
+    </button>
+  </div>
+  {% endif %}
   <button class="modal-close" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+  </div>
+
   <div class="modal-content">
   <div class="modal-image{% if block.settings.video != blank %} autoplaying-video{% endif %}">
+
+  {% if section.settings.enable_audio and block.settings.video != blank %}
+  <div class="video-component--controls">
+    <button class="video-controls--audio audio-off" aria-label="Play/Pause">{% render 'icon-video-audio' %}</button>
+  </div>
+  {% endif %}    
+
     {% if block.settings.video != blank %}
     {% assign video_id = 'vid-aso-' | append: block.id %}
     {{
       block.settings.video
       | video_tag:
         id: video_id,
-        image_size: '1200x',
-        autoplay: true,
+        image_size: '1080x',
+        autoplay: false,
         loop: true,
         controls: false,
         muted: true
     }}
     {% endif %}
     {% if block.settings.image != blank and block.settings.video == blank %}
-    {{ block.settings.image | image_url: width: 1024 | image_tag: loading: 'lazy' }}
+    {{ block.settings.image | image_url: width: image_render_size | image_tag: loading: 'lazy' }}
     {% endif %}
     {% if block.settings.image == blank and block.settings.video == blank %}
-    {% render 'icon-image-placeholder-two' %}
+    {% assign remainder = forloop.index | modulo: 4 %}
+
+    {% case remainder %}
+      {% when 1 %}
+        {% render 'media-placeholder-lifestyle', style: 8 %}
+      {% when 2 %}
+        {% render 'media-placeholder-lifestyle', style: 1 %}
+      {% when 3 %}
+        {% render 'media-placeholder-lifestyle', style: 3 %}
+      {% else %}
+        {% render 'media-placeholder-lifestyle', style: 13 %}
+    {% endcase %}
     {% endif %}
   </div>
   <div class="modal-text">
-  <h2>{{ block.settings.title }}</h2>
+  <h3 class="{{ section.settings.overlay_heading_size }}">{{ block.settings.title }}</h3>
   <div class="modal-text-subtitle">{{ block.settings.sub_title }}</div>
   <div class="rte">{{ block.settings.description }}</div>
   <a href="{{ block.settings.link }}" target="_blank" rel="noopener,nofollow">{{ block.settings.handle }}</a>
-       <div class="aso-product-links">
-      
-       {% if block.settings.product_one != blank %}
+       <div class="aso-product-links aso-product-card-ratio--{{ settings.card_img_aspect_ratio }}">
+       
+        {% if block.settings.product_one != blank %}
        <div class="aso-modal-product-card">
         <a href="{{ block.settings.product_one.url }}">
         <div class="aso-modal-product-card-image">
-          {{ block.settings.product_one.featured_media | image_url: width: 400 | image_tag: loading: 'lazy' }}
+          {{ block.settings.product_one.featured_media | image_url: width: 360 | image_tag: loading: 'lazy' }}
         </div>
         <div class="aso-modal-product-card-text">
-          <h3>{{ block.settings.product_one.title }}</h3>
-          {% if section.settings.show_vendor %}{{ block.settings.product_one.vendor }}{% endif %}
+          {% if section.settings.show_vendor %}<span class="aso-pt-vendor vendor--style-{{ settings.card_vendor_text_style }}">{{ block.settings.product_one.vendor }}</span>{% endif %}
+          <h4 class="h-body">{{ block.settings.product_one.title }}</h4>
           {% if section.settings.show_price %}
           {% render 'price', product: block.settings.product_one, price_class: '' %}
           {% endif %}
@@ -154,36 +216,37 @@
 
       {% if block.settings.product_two != blank %}
        <div class="aso-modal-product-card">
-       <a href="{{ block.settings.product_two.url }}">
+        <a href="{{ block.settings.product_two.url }}">
         <div class="aso-modal-product-card-image">
-          {{ block.settings.product_two.featured_media | image_url: width: 400 | image_tag: loading: 'lazy' }}
+          {{ block.settings.product_two.featured_media | image_url: width: 360 | image_tag: loading: 'lazy' }}
         </div>
         <div class="aso-modal-product-card-text">
-          <h3>{{ block.settings.product_two.title }}</h3>
-          {% if section.settings.show_vendor %}{{ block.settings.product_two.vendor }}{% endif %}
+          {% if section.settings.show_vendor %}<span class="aso-pt-vendor vendor--style-{{ settings.card_vendor_text_style }}">{{ block.settings.product_two.vendor }}</span>{% endif %}
+          <h4 class="h-body">{{ block.settings.product_two.title }}</h4>
           {% if section.settings.show_price %}
           {% render 'price', product: block.settings.product_two, price_class: '' %}
           {% endif %}
           {% if section.settings.show_links %}<div class="aso-modal-product-link-label">{{ section.settings.link_label }}</div>{% endif %}
         </div>         
-       </a>
+        </a>
        </div>
-       {% endif %}  
+       {% endif %}
+
        {% if block.settings.product_three != blank %}
         <div class="aso-modal-product-card">
-       <a href="{{ block.settings.product_three.url }}">
+        <a href="{{ block.settings.product_three.url }}">
         <div class="aso-modal-product-card-image">
-          {{ block.settings.product_three.featured_media | image_url: width: 400 | image_tag: loading: 'lazy' }}
+          {{ block.settings.product_three.featured_media | image_url: width: 360 | image_tag: loading: 'lazy' }}
         </div>
         <div class="aso-modal-product-card-text">
-          <h3>{{ block.settings.product_three.title }}</h3>
-          {% if section.settings.show_vendor %}{{ block.settings.product_three.vendor }}{% endif %}
+          {% if section.settings.show_vendor %}<span class="aso-pt-vendor vendor--style-{{ settings.card_vendor_text_style }}">{{ block.settings.product_three.vendor }}</span>{% endif %}
+          <h4 class="h-body">{{ block.settings.product_three.title }}</h4>
           {% if section.settings.show_price %}
           {% render 'price', product: block.settings.product_three, price_class: '' %}
           {% endif %}
           {% if section.settings.show_links %}<div class="aso-modal-product-link-label">{{ section.settings.link_label }}</div>{% endif %}
         </div>         
-       </a>
+        </a>
         </div>
        {% endif %}
      </div>  
@@ -205,57 +268,214 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-
   var sectionId = '{{ section.id }}';
-  var lastFocusedElement;
+  var sectionEl = document.querySelector('.section-' + sectionId);
+  if (!sectionEl) return;
 
-  // Get all modal buttons within the specified section
-  var modalLinks = document.querySelectorAll(`#grid-${sectionId} .modal-opener-link`);
+  var lastFocusedElement = null;
 
-  // Add click event listener to each bio button
+  var modalLinks = sectionEl.querySelectorAll('#grid-' + sectionId + ' .modal-opener-link');
+  var modals = sectionEl.querySelectorAll('.aso-modal');
+  var total = modals.length;
+
+  if (!total) return;
+
+  var paginationWrapper = sectionEl.querySelector('.aso-modal-pagination-wrapper');
+  if (paginationWrapper) {
+    var modalContents = sectionEl.querySelectorAll('.modal-content');
+    var tallestModalContent = 0;
+
+    modalContents.forEach(function(content) {
+      var contentHeight = content.getBoundingClientRect().height;
+      if (contentHeight > tallestModalContent) {
+        tallestModalContent = contentHeight;
+      }
+    });
+
+    if (tallestModalContent > 0) {
+      modalContents.forEach(function(content) {
+        content.style.minHeight = tallestModalContent + 'px';
+      });
+    }
+  }
+
+  function clampIndex(i) {
+    i = parseInt(i, 10);
+    if (isNaN(i)) i = 1;
+    if (i < 1) i = total;
+    if (i > total) i = 1;
+    return i;
+  }
+
+  function getModalByIndex(index) {
+    return document.getElementById(sectionId + '-modal-' + index);
+  }
+
+  function getOpenerByIndex(index) {
+    return sectionEl.querySelector('#grid-' + sectionId + ' .modal-opener-link[data-index="' + index + '"]');
+  }
+
+  function setNoTransitionTemporarily() {
+    document.documentElement.classList.add('aso-modal-no-transition');
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        document.documentElement.classList.remove('aso-modal-no-transition');
+      });
+    });
+  }
+
+  function stopAndResetVideos(scope) {
+    if (!scope) return;
+
+    var videos = scope.querySelectorAll('video');
+    if (!videos.length) return;
+
+    videos.forEach(function(video) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch (e) {}
+    });
+  }
+
+  function stopAllSectionVideos() {
+    var videos = sectionEl.querySelectorAll('video');
+    if (!videos.length) return;
+
+    videos.forEach(function(video) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch (e) {}
+    });
+  }
+
+  function playModalVideos(modal) {
+    if (!modal) return;
+
+    var videos = modal.querySelectorAll('video');
+    if (!videos.length) return;
+
+    videos.forEach(function(video) {
+      try {
+        video.currentTime = 0;
+      } catch (e) {}
+
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(function() {});
+      }
+    });
+  }
+
+  function openModal(index, focusTargetSelector) {
+    index = clampIndex(index);
+
+    var modal = getModalByIndex(index);
+    if (!modal) return;
+
+    // update focus return target to the opener for THIS modal
+    lastFocusedElement = getOpenerByIndex(index) || lastFocusedElement;
+
+    // stop/reset everything in this section first
+    stopAllSectionVideos();
+
+    modal.classList.add('open');
+    document.body.classList.add('body-lock-scroll');
+
+    // play only the opened modal's video(s)
+    playModalVideos(modal);
+
+    // Focus management
+    if (focusTargetSelector) {
+      var target = modal.querySelector(focusTargetSelector);
+      if (target) target.focus();
+    }
+  }
+
+  function closeModal(modal, restoreFocus) {
+    if (!modal) return;
+
+    stopAndResetVideos(modal);
+    modal.classList.remove('open');
+
+    if (restoreFocus && lastFocusedElement) {
+      lastFocusedElement.focus();
+    }
+  }
+
+  function getOpenModal() {
+    return sectionEl.querySelector('.aso-modal.open');
+  }
+
+  function switchModal(targetIndex, focusTargetSelector) {
+    var current = getOpenModal();
+
+    // Disable transitions so it feels instant (close + open)
+    setNoTransitionTemporarily();
+
+    if (current) {
+      stopAndResetVideos(current);
+      current.classList.remove('open');
+    }
+
+    // Open the next modal and keep focus on the equivalent control (prev/next)
+    openModal(targetIndex, focusTargetSelector);
+  }
+
+  // Open from thumbnails
   modalLinks.forEach(function(button) {
-    button.addEventListener('click', function(e) {
+    button.addEventListener('click', function() {
       var index = this.getAttribute('data-index');
       lastFocusedElement = this;
-      var modal = document.getElementById(`${sectionId}-modal-${index}`);
-      if (modal) {
-        modal.classList.add('open');
-        // Focus on the close button when the modal is opened
-        var closeButton = modal.querySelector('.modal-close');
-        if (closeButton) {
-          closeButton.focus();
-        }        
-      }
+      openModal(index, '.modal-close');
     });
   });
 
-  // Get all modal backgrounds
-  var modalBgs = document.querySelectorAll('.aso-modal-bg');
-  
-  // Add click event listener to each modal background
-  modalBgs.forEach(function(modalBg) {
-    modalBg.addEventListener('click', function() {
+  // Close on background click
+  sectionEl.querySelectorAll('.aso-modal-bg').forEach(function(bg) {
+    bg.addEventListener('click', function() {
       var modal = this.closest('.aso-modal');
-      modal.classList.remove('open');
-      // Return focus to the modal opener link
-      if (lastFocusedElement) {
-        lastFocusedElement.focus();
-      }
+      closeModal(modal, true);
+      document.body.classList.remove('body-lock-scroll');
     });
   });
-  
-  // Get all close buttons
-  var closeButtons = document.querySelectorAll('.modal-close');
 
-  // Add click event listener to each close button
-  closeButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-      var modal = this.parentElement.parentElement;
-      modal.classList.remove('open');
-      // Return focus to the modal opener link
-      if (lastFocusedElement) {
-        lastFocusedElement.focus();
-      }
+  // Close button
+  sectionEl.querySelectorAll('.modal-close').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var modal = this.closest('.aso-modal');
+      closeModal(modal, true);
+      document.body.classList.remove('body-lock-scroll');
+    });
+  });
+
+  // Prev/Next buttons
+  sectionEl.querySelectorAll('.aso-modal-prev').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var modal = this.closest('.aso-modal');
+      var currentIndex = modal ? modal.getAttribute('data-index') : 1;
+      var nextIndex = clampIndex(parseInt(currentIndex, 10) - 1);
+
+      // Keep focus on the prev button in the newly opened modal
+      switchModal(nextIndex, '.aso-modal-prev');
+    });
+  });
+
+  sectionEl.querySelectorAll('.aso-modal-next').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var modal = this.closest('.aso-modal');
+      var currentIndex = modal ? modal.getAttribute('data-index') : 1;
+      var nextIndex = clampIndex(parseInt(currentIndex, 10) + 1);
+
+      // Keep focus on the next button in the newly opened modal
+      switchModal(nextIndex, '.aso-modal-next');
     });
   });
 });
@@ -265,8 +485,8 @@ document.addEventListener("DOMContentLoaded", function() {
 {% schema %}
   {
     "name": "t:sections.featured_product_styles.name",
-  	"tag": "section",
-  	"class": "section",
+    "tag": "section",
+    "class": "section",
     "max_blocks": 24,
     "disabled_on": {
       "groups": ["header", "footer"],
@@ -278,42 +498,52 @@ document.addEventListener("DOMContentLoaded", function() {
       "content": "t:sections.all.text"
     },
     {
-    "type": "text",
-    "id": "section_label",
-    "label": "t:sections.all.caption"
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.all.caption"
     },
     {
-    "type": "text",
-    "id": "heading",
-    "default": "Featured Styles",
-    "label": "t:sections.all.heading"
+      "type": "text",
+      "id": "heading",
+      "default": "Featured Styles",
+      "label": "t:sections.all.heading"
     },
     {
-    "type": "richtext",
-    "id": "sub_heading",
-    "label": "t:sections.all.sub_heading"
+      "type": "richtext",
+      "id": "sub_heading",
+      "label": "t:sections.all.sub_heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.all.heading_size.label",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.small.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.normal.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.large.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.xl.label"
+        }
+    ],
+      "default": "h2"
     },
     {
       "type": "header",
       "content": "t:sections.all.layout"
     },
     {
-      "type": "select",
+      "type": "text_alignment",
       "id": "content_alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.all.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:sections.all.alignment.center"
-        },
-        {
-          "value": "right",
-          "label": "t:sections.all.alignment.right"
-        }
-      ],
       "default": "center",
       "label": "t:sections.all.alignment.alignment_header"
     },
@@ -353,6 +583,10 @@ document.addEventListener("DOMContentLoaded", function() {
         {
           "value": "outline-inverted",
           "label": "t:sections.all.buttons.button_style_outline_inverted"
+        },        
+        {
+          "value": "minimal",
+          "label": "t:sections.all.minimal"
         }        
         ],
       "default": "solid"
@@ -411,6 +645,10 @@ document.addEventListener("DOMContentLoaded", function() {
       "label": "t:sections.all.ratio.portrait_4_6"
     },
     {
+      "value": "portrait-9x16",
+      "label": "t:sections.all.ratio.portrait_9_16"
+    },
+    {
       "value": "square",
       "label": "t:sections.all.ratio.square"
     }
@@ -451,22 +689,26 @@ document.addEventListener("DOMContentLoaded", function() {
         {
           "value": "fg-04",
           "label": "t:sections.all.colors.accent_4.label"
+        },
+        {
+          "value": "fg-05",
+          "label": "t:sections.all.colors.accent_5.label"
         }
       ],
       "default": "white",
       "label": "t:sections.featured_product_styles.settings.hotspots_color.label"
     },      
     {
-	"type": "checkbox",
-	"id": "show_thumbnail_title",
-	"default": false,
-    "label": "t:sections.featured_product_styles.settings.show_preview_title.label"
-	},
+      "type": "checkbox",
+      "id": "show_thumbnail_title",
+      "default": false,
+      "label": "t:sections.featured_product_styles.settings.show_preview_title.label"
+    },
     {
-    "type": "select",
-    "id": "preview_title_position",
-    "label": "t:sections.featured_product_styles.settings.preview_title_position.label",
-    "options": [
+      "type": "select",
+      "id": "preview_title_position",
+      "label": "t:sections.featured_product_styles.settings.preview_title_position.label",
+      "options": [
     {
       "value": "default",
       "label": "t:sections.featured_product_styles.settings.preview_title_position.options__1.label"
@@ -487,30 +729,90 @@ document.addEventListener("DOMContentLoaded", function() {
       "content": "t:sections.featured_product_styles.settings.header_overlay_view.content"
     },
     {
-	"type": "checkbox",
-	"id": "show_price",
-	"default": true,
-    "label": "t:sections.featured_product_styles.settings.show_product_prices.label"
-	},
+      "type": "select",
+      "id": "overlay_margin_mobile",
+      "label": "t:sections.all.margin_mobile",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.all.default"
+        },
+        {
+          "value": "none",
+          "label": "t:sections.all.none"
+        }
+    ],
+      "default": "default"
+    },
     {
-	"type": "checkbox",
-	"id": "show_vendor",
-	"default": false,
-    "label": "t:sections.featured_product_styles.settings.show_vendor.label"
-	},
+      "type": "select",
+      "id": "overlay_margin_desktop",
+      "label": "t:sections.all.margin_desktop",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.all.default"
+        },
+        {
+          "value": "none",
+          "label": "t:sections.all.none"
+        }
+    ],
+      "default": "default"
+    },
     {
-	"type": "checkbox",
-	"id": "show_links",
-	"default": false,
-    "label": "t:sections.featured_product_styles.settings.show_links.label",
-    "info": "t:sections.featured_product_styles.settings.show_links.info"
-	},
+      "type": "select",
+      "id": "overlay_heading_size",
+      "label": "t:sections.all.heading_size.label",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.normal"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.size.large"
+        }
+    ],
+      "default": "h3"
+    },
     {
-	"type": "text",
-	"id": "link_label",
-	"default": "Shop now",
-    "label": "t:sections.featured_product_styles.settings.link_label.label"
-	},
+      "type": "checkbox",
+      "id": "pagination_enable",
+      "default": false,
+      "label": "t:sections.featured_product_styles.settings.pagination_enable.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_audio",
+      "default": false,
+      "label": "t:sections.video-banner.settings.enable_audio_button.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "default": true,
+      "label": "t:sections.featured_product_styles.settings.show_product_prices.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.featured_product_styles.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_links",
+      "default": false,
+      "label": "t:sections.featured_product_styles.settings.show_links.label",
+      "info": "t:sections.featured_product_styles.settings.show_links.info"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "default": "Shop now",
+      "label": "t:sections.featured_product_styles.settings.link_label.label"
+    },
     {
       "type": "header",
       "content": "t:sections.all.colors.label"
@@ -538,6 +840,10 @@ document.addEventListener("DOMContentLoaded", function() {
         {
           "value": "fg-04",
           "label": "t:sections.all.colors.accent_4.label"
+        },
+        {
+          "value": "fg-05",
+          "label": "t:sections.all.colors.accent_5.label"
         }
       ],
       "default": "fg-body",
@@ -566,6 +872,10 @@ document.addEventListener("DOMContentLoaded", function() {
         {
           "value": "bg-04",
           "label": "t:sections.all.colors.background_4.label"
+        },
+        {
+          "value": "bg-05",
+          "label": "t:sections.all.colors.background_5.label"
         }
       ],
       "default": "bg-body",
@@ -651,27 +961,27 @@ document.addEventListener("DOMContentLoaded", function() {
         "settings": [
         {
         "type": "text",
-    	"id": "preview_title",
-    	"label": "t:sections.featured_product_styles.blocks.image.settings.preview_title.label",
+      "id": "preview_title",
+      "label": "t:sections.featured_product_styles.blocks.image.settings.preview_title.label",
         "info": "t:sections.featured_product_styles.blocks.image.settings.preview_title.info"
         },
         {
         "type": "text",
-    	"id": "title",
-    	"default": "Shop this style",
+      "id": "title",
+      "default": "Shop this style",
         "label": "t:sections.featured_product_styles.blocks.image.settings.title.label",
         "info": "t:sections.featured_product_styles.blocks.image.settings.title.info"
         },
         {
         "type": "text",
-    	"id": "sub_title",
-    	"label": "t:sections.all.sub_heading",
+      "id": "sub_title",
+      "label": "t:sections.all.sub_heading",
         "info": "t:sections.featured_product_styles.blocks.image.settings.sub_title.info"
         },
         {
         "type": "richtext",
-    	"id": "description",
-    	"label": "t:sections.featured_product_styles.blocks.image.settings.description.label",
+      "id": "description",
+      "label": "t:sections.featured_product_styles.blocks.image.settings.description.label",
         "info": "t:sections.featured_product_styles.blocks.image.settings.description.info"
         },
         {
@@ -681,13 +991,13 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         {
         "type": "image_picker",
-    	"id": "image",
-    	"label": "t:sections.all.image"
+      "id": "image",
+      "label": "t:sections.all.image"
         },
         {
         "type": "video",
-    	"id": "video",
-    	"label": "t:sections.all.video"
+      "id": "video",
+      "label": "t:sections.all.video"
         },
         {
           "type": "header",

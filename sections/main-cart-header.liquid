@@ -11,10 +11,18 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 }
+
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding page-width align-{{ section.settings.text_alignment }}">
+<div class="section-{{ section.id }}-padding cart-page-header page-width align-{{ section.settings.text_alignment }}">
   <h1 class="{{ section.settings.heading_size }}">{{ 'sections.cart.title' | t }}</h1>
+  {% if settings.cart_show_message and cart != empty %}
+  <div class="cart-header-message{% if settings.cart_message_border_opacity > 0 %} cart-header-message-with-border{% endif %}">
+    {% if settings.cart_message_title != blank %}<span class="cart-header-message--title h3">{{ settings.cart_message_title }}</span>{% endif %}
+    {% if settings.cart_message_text != blank %}<span class="cart-header-message--text">{{ settings.cart_message_text }}</span>{% endif %}
+  </div>  
+  {% endif %}
+
 </div>
 
 {% schema %}
@@ -22,19 +30,9 @@
     "name": "t:sections.main-cart-header.name",
     "settings": [
     {
-      "type": "select",
+      "type": "text_alignment",
       "id": "text_alignment",
       "label": "t:sections.all.alignment.alignment_header",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.all.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:sections.all.alignment.center"
-        }
-		],
       "default": "center"
     },
     {
@@ -61,17 +59,17 @@
       "type": "range",
       "id": "padding_top",
       "min": 0,
-      "max": 180,
+      "max": 240,
       "step": 10,
       "unit": "px",
       "label": "t:sections.all.padding.padding_top",
-      "default": 60
+      "default": 80
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
-      "max": 180,
+      "max": 240,
       "step": 10,
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",

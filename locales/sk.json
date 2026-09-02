@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Severná Amerika",
+      "central_america": "Stredná Amerika",
+      "south_america": "Južná Amerika",
+      "europe": "Európe",
+      "middle_east": "Stredný Východ",
+      "africa": "Afriky",
+      "asia": "Ázie",
+      "oceania": "Oceánia"
+    },
     "password_page": {
       "login_form_heading": "Vstúpte do obchodu pomocou hesla:",
       "login_password_button": "Zadajte pomocou hesla",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Zdieľať na Facebook",
         "share_on_twitter": "Tweetujte na Twitter",
         "share_on_pinterest": "Pripnúť na Pinterest",
-        "share_on_linkedin": "Zdieľať na LinkedIn"
+        "share_on_linkedin": "Zdieľať na LinkedIn",
+        "share_on_whatsapp": "Zdieľať na WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Pokračovať v nákupe",
     "pagination": {
       "label": "Stránkovanie",
+      "all": "Všetky",
       "page": "Stránka {{ number }}",
       "next": "Ďalšia strana",
       "previous": "Predchádzajúca strana"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Pridať",
       "add_to_cart": "Pridať do košíka",
+      "pre_order": "Predobjednať",
       "color": "Farba",
       "colors": "Farby",
       "choose_options": "Vyberte možnosti",
@@ -164,6 +178,7 @@
         "view_store_info": "Zobraziť informácie o obchode",
         "check_other_stores": "Overte si dostupnosť v iných predajniach",
         "title": "Vyzdvihnutie",
+        "phone": "Tel:",
         "pick_up_available": "Odber možný",
         "pick_up_unavailable": "Vyzdvihnutie nie je k dispozícii",
         "pick_up_available_at_html": "Odber možný na <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Zdieľajte tento produkt",
       "sold_out": "Vypredané",
       "unavailable": "nedostupné",
+      "reviews": "Recenzie",
       "vendor": "Značka",
       "value_unavailable": "{{ option_value }} - Nedostupné",
       "variant_sold_out_or_unavailable": "Variant vypredaný alebo nedostupný",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Domov"
+    },
     "404": {
       "title": "Stránka sa nenašla",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Odhadovaný súčet",
       "new_estimated_total": "Nový odhadovaný súčet",
       "note": "Pridajte poznámku k objednávke",
+      "note_placeholder": "Správa",
+      "note_save": "Uložiť",
+      "note_clear": "Vymazať",
       "checkout": "Pozrite sa",
       "empty": "Vaša taška je prázdna",
       "empty_button_label": "Nakupujte teraz",

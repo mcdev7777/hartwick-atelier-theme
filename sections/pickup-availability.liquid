@@ -3,13 +3,12 @@
 
 {%- if pick_up_availabilities.size > 0 -%}
   <pickup-availability-preview class="pickup-availability-preview">
-    {%- liquid
-      assign closest_location = pick_up_availabilities.first
-    -%}
+    {% assign closest_location = pick_up_availabilities.first %}
+    
     <div class="pickup-availability-info text-small">
-      {%- if closest_location.available -%}
-        {% render 'icon-pin' %}
-        <p class="pickup-availability-heading text-body">
+      {% render 'icon-pin' %}
+      {%- if closest_location.available -%}    
+        <p class="pickup-availability-heading">
           {{
             'products.product.pickup_availability.pick_up_available_at_html'
             | t: location_name: closest_location.location.name
@@ -54,7 +53,7 @@
     aria-modal="true"
     aria-labelledby="PickupAvailabilityHeading"
   >
-  <div class="pickup-availability-drawer-inner">
+  <div class="pickup-availability-drawer-inner{% if settings.drawer_margin > 0 %} drawer_with_margin{% endif %}">
     <div class="pickup-availability-header">
       <span class="dialog-title" id="PickupAvailabilityHeading">
         {{ 'products.product.pickup_availability.title' | t }}
@@ -65,12 +64,19 @@
     </div>
 
   <div class="pickup-availability-product-info">
-    {% assign product = product.selected_or_first_available_variant %}
+    {% if product_variant.featured_image %}
     <div class="pickup-availability-product-image">
-      {% if product_variant.featured_image %}{{ product_variant.featured_image | image_url: width: 340 | image_tag: loading: 'lazy' }}{% endif %}
+        {{ product_variant.featured_image | image_url: width: 240 | image_tag: loading: 'lazy' }} 
     </div>
+    {% else %}
+    {% if product_variant.product.featured_image %}
+    <div class="pickup-availability-product-image">
+      {{ product_variant.product.featured_image | image_url: width: 240 | image_tag: loading: 'lazy' }}
+    </div>
+    {% endif %}
+    {% endif %}
     <div class="pickup-availability-product-text">
-    <h3>{{ product_variant.product.title | escape }}</h3>
+    <h3 class="h4">{{ product_variant.product.title | escape }}</h3>
     {%- unless product_variant.product.has_only_default_variant -%}
       <p class="pickup-availability-variant text-small">
         {%- for product_option in product_variant.product.options_with_values -%}
@@ -89,20 +95,22 @@
     <ul class="pickup-availability-list list-unstyled" role="list" data-store-availability-drawer-content>
       {%- for availability in pick_up_availabilities -%}
         <li class="pickup-availability-list__item">
-          <h3 class="h4">{{ availability.location.name | escape }}</h3>
+          <h4 class="h4">{{ availability.location.name | escape }}</h4>
           {%- assign address = availability.location.address -%}
           <address class="pickup-availability-address">
             {{ address | format_address }}
-            {%- if address.phone.size > 0 -%}
-              <p>{{ address.phone }}</p>
-            {%- endif -%}
           </address>
-          <p class="pickup-availability-preview">
+          {%- if address.phone.size > 0 -%}
+          <p class="pickup-availability-phone">
+            {{ 'products.product.pickup_availability.phone' | t }} {{ address.phone }}
+          </p>
+          {%- endif -%}
+          <p class="pickup-availability-status">
             {%- if availability.available -%}
               <span class="pick-up-available-highlight"><span class="pick-up-available-highlight-indicator"></span>{{ 'products.product.pickup_availability.pick_up_available' | t }}</span>
               <span class="pick-up-available-timeframe caption">{{ availability.pick_up_time }}</span>
               {%- else -%}
-              {{ 'products.product.pickup_availability.pick_up_unavailable' | t }}
+              <span class="pick-up-unavailable-highlight"><span class="pick-up-unavailable-highlight-indicator"></span>{{ 'products.product.pickup_availability.pick_up_unavailable' | t }}</span>
             {%- endif -%}
           </p>
         </li>

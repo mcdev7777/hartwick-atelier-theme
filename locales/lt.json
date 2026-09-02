@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Šiaurės Amerika",
+      "central_america": "Centrinė America",
+      "south_america": "Pietų Amerika",
+      "europe": "Europa",
+      "middle_east": "Artimieji Rytai",
+      "africa": "Afrika",
+      "asia": "Azija",
+      "oceania": "Okeanija"
+    },
     "password_page": {
       "login_form_heading": "Įeikite į parduotuvę naudodami slaptažodį:",
       "login_password_button": "Įveskite naudodami slaptažodį",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Dalintis Facebook",
         "share_on_twitter": "Twitter paskyroje Twitter",
         "share_on_pinterest": "Prisegti prie Pinterest",
-        "share_on_linkedin": "Bendrinkite LinkedIn."
+        "share_on_linkedin": "Bendrinkite LinkedIn",
+        "share_on_whatsapp": "Bendrinkite WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Tęskite apsipirkimą",
     "pagination": {
       "label": "Puslapių rašymas",
+      "all": "Visi",
       "page": "Puslapis {{ number }}",
       "next": "Kitas puslapis",
       "previous": "Ankstesnis puslapis"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Pridėti",
       "add_to_cart": "Pridėti į krepšelį",
+      "pre_order": "Ordine prestabilito",
       "color": "Spalva",
       "colors": "Spalvos",
       "choose_options": "Pasirinkite parinktis",
@@ -164,6 +178,7 @@
         "view_store_info": "Peržiūrėkite parduotuvės informaciją",
         "check_other_stores": "Patikrinkite prieinamumą kitose parduotuvėse",
         "title": "Paėmimas",
+        "phone": "Tel:",
         "pick_up_available": "Galimas paėmimas",
         "pick_up_unavailable": "Paėmimas nepasiekiamas",
         "pick_up_available_at_html": "Atsiimti galima adresu <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Pasidalinkite šiuo produktu",
       "sold_out": "Išparduota",
       "unavailable": "Nepasiekiamas",
+      "reviews": "Atsiliepimai",
       "vendor": "Prekės ženklas",
       "value_unavailable": "{{ option_value }} – Nepasiekiamas",
       "variant_sold_out_or_unavailable": "Variantas išparduotas arba jo nėra",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Pradžia"
+    },
     "404": {
       "title": "Puslapis nerastas",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Numatoma bendra suma",
       "new_estimated_total": "Naujas numatomas viso",
       "note": "Pridėkite užsakymo pastabą",
+      "note_placeholder": "Žinutė",
+      "note_save": "Išsaugoti",
+      "note_clear": "Išvalyti",
       "checkout": "Patikrinkite",
       "empty": "Tavo krepšys tuščias",
       "empty_button_label": "Apsipirkite dabar",

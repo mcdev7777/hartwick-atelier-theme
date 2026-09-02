@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Noord-Amerika",
+      "central_america": "Midden-Amerika",
+      "south_america": "Zuid-Amerika",
+      "europe": "Europa",
+      "middle_east": "Midden-Oosten",
+      "africa": "Afrika",
+      "asia": "Azië",
+      "oceania": "Oceanië"
+    },
     "password_page": {
       "login_form_heading": "Ga winkel binnen met wachtwoord:",
       "login_password_button": "Ga naar binnen met wachtwoord",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Delen op Facebook",
         "share_on_twitter": "Twitteren op Twitter",
         "share_on_pinterest": "Pinnen op Pinterest",
-        "share_on_linkedin": "Deel op LinkedIn"
+        "share_on_linkedin": "Deel op LinkedIn",
+        "share_on_whatsapp": "Deel op WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Terugkeren naar winkel",
     "pagination": {
       "label": "Paginering",
+      "all": "Alle",
       "page": "Pagina {{ number }}",
       "next": "Volgende pagina",
       "previous": "Vorige pagina"
@@ -114,7 +126,9 @@
   },
   "products": {
     "product": {
+      "add": "Toevoegen",
       "add_to_cart": "Aan winkelwagen toevoegen",
+      "pre_order": "Pre-orderen",
       "color": "Kleur",
       "colors": "Kleuren",
       "description": "Beschrijving",
@@ -142,12 +156,14 @@
       "share": "Dit product delen",
       "sold_out": "Uitverkocht",
       "unavailable": "Niet beschikbaar",
+      "reviews": "Recensies",
       "vendor": "Verkoper",
       "video_exit_message": "{{ title }} opent een video op volledig scherm in hetzelfde venster.",
       "xr_button": "Bekijk in je ruimte",
       "xr_button_label": "Bekijk in je ruimte, laadt artikel in augmented reality-venster",
       "pickup_availability": {
         "title": "Pickup",
+        "phone": "Tel:",
         "view_store_info": "Winkelgegevens bekijken",
         "check_other_stores": "Controleer de beschikbaarheid bij andere winkels",
         "pick_up_available": "Afhaling is beschikbaar",
@@ -229,6 +245,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Home"
+    },
     "search": {
       "no_results": "Geen resultaten gevonden voor “{{ terms }}”. Controleer de spelling of gebruik een ander woord of een andere zin.",
       "results_with_count": {
@@ -297,6 +316,9 @@
       "caption": "Artikelen in winkelwagen",
       "remove_title": "Verwijderen",
       "note": "Speciale instructies voor bestelling",
+      "note_placeholder": "Bericht",
+      "note_save": "Opslaan",
+      "note_clear": "Wissen",
       "checkout": "Afrekenen",
       "empty": "Je winkelwagen is leeg",
       "empty_button_label": "Nu winkelen",

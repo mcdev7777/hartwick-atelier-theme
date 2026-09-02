@@ -22,7 +22,9 @@ class PredictiveSearch extends HTMLElement {
   }
 
   getSearchResults(searchTerm) {
-    fetch(`/search/suggest?q=${searchTerm}&section_id=predictive-search`)
+    fetch(
+  `${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&resources[limit_scope]=each&resources[options][fields]=title,product_type,variants.sku,vendor&section_id=predictive-search`
+)
       .then((response) => {
         if (!response.ok) {
           var error = new Error(response.status);

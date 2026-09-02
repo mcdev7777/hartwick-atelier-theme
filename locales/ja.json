@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "北米",
+      "central_america": "中米",
+      "south_america": "南アメリカ",
+      "europe": "ヨーロッパ",
+      "middle_east": "中東",
+      "africa": "アフリカ",
+      "asia": "アジア",
+      "oceania": "オセアニア"
+    },
     "password_page": {
       "login_form_heading": "パスワードを使用してストアに入ります:",
       "login_password_button": "パスワードを使用して入力してください",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Facebookでシェアする",
         "share_on_twitter": "Twitterにツイートする",
         "share_on_pinterest": "Pinterestでピンする",
-        "share_on_linkedin": "LinkedIn で共有する"
+        "share_on_linkedin": "LinkedIn で共有する",
+        "share_on_whatsapp": "WhatsApp で共有する"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "買い物を続ける",
     "pagination": {
       "label": "ページネーション",
+      "all": "全て",
       "page": "ページ {{ number }}",
       "next": "次のページ",
       "previous": "前のページへ"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "カートに追加",
       "add_to_cart": "カートに追加",
+      "pre_order": "予約注文",
       "color": "色",
       "colors": "色",
       "choose_options": "オプションを選択してください",
@@ -164,6 +178,7 @@
         "view_store_info": "店舗情報を見る",
         "check_other_stores": "他店舗の在庫状況を確認する",
         "title": "選び出す",
+        "phone": "Tel:",
         "pick_up_available": "送迎可能",
         "pick_up_unavailable": "ピックアップは利用できません",
         "pick_up_available_at_html": "受け取り可能場所 <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "この商品をシェアする",
       "sold_out": "完売",
       "unavailable": "利用不可",
+      "reviews": "レビュー",
       "vendor": "ブランド",
       "value_unavailable": "{{ option_value }} - 利用不可",
       "variant_sold_out_or_unavailable": "バリエーションが売り切れまたは入手不可",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "ホーム"
+    },
     "404": {
       "title": "ページが見つかりません",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "推定合計額",
       "new_estimated_total": "新しい推定合計",
       "note": "注文メモを追加する",
+      "note_placeholder": "メッセージ",
+      "note_save": "保存",
+      "note_clear": "クリア",
       "checkout": "チェックアウト",
       "empty": "あなたのバッグは空です",
       "empty_button_label": "今すぐ購入",

@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Nordamerika",
+      "central_america": "Mellemamerika",
+      "south_america": "Sydamerika",
+      "europe": "Europa",
+      "middle_east": "Mellemøsten",
+      "africa": "Afrika",
+      "asia": "Asien",
+      "oceania": "Oceanien"
+    },
     "password_page": {
       "login_form_heading": "Brug adgangskode for at få adgang til butikken:",
       "login_password_button": "Brug adgangskode for at få adgang",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Del på Facebook",
         "share_on_twitter": "Tweet på Twitter",
         "share_on_pinterest": "Pin på Pinterest",
-        "share_on_linkedin": "Del på LinkedIn"
+        "share_on_linkedin": "Del på LinkedIn",
+        "share_on_whatsapp": "Del på WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Tilbage til butikken",
     "pagination": {
       "label": "Sideinddeling",
+      "all": "Alle",
       "page": "Side {{ number }}",
       "next": "Næste side",
       "previous": "Forrige side"
@@ -116,9 +128,13 @@
   },
   "products": {
     "product": {
+      "add": "Tilføje",
       "add_to_cart": "Læg i indkøbskurv",
+      "pre_order": "Forudbestil",
       "color": "Farve",
       "colors": "Farver",
+      "choose_options": "Vælg muligheder",
+      "choose_product_options": "Vælg muligheder for {{ product_name }}",
       "description": "Beskrivelse",
       "read_more": "Read more",
       "read_less": "Read less",
@@ -144,12 +160,14 @@
       "share": "Del dette produkt",
       "sold_out": "Udsolgt",
       "unavailable": "Ikke tilgængelig",
+      "reviews": "Anmeldelser",
       "vendor": "Forhandler",
       "video_exit_message": "{{ title }} åbner video i fuld skærm i samme vindue.",
       "xr_button": "Se den i dit område",
       "xr_button_label": "Se den i dine omgivelser – indlæser vare i et augmented reality-vindue",
       "pickup_availability": {
         "title": "Afhentning",
+        "phone": "Tlf:",
         "view_store_info": "Se butiksoplysninger",
         "check_other_stores": "Kontrollér tilgængelighed i andre butikker",
         "pick_up_available": "Afhentning er tilgængelig",
@@ -172,8 +190,6 @@
       "view_full_details": "Se komplette oplysninger",
       "include_taxes": "Inklusive skat.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Levering</a> beregnes ved betaling.",
-      "choose_options": "Vælg muligheder",
-      "choose_product_options": "Vælg muligheder for {{ product_name }}",
       "value_unavailable": "{{ option_value }} - Ikke tilgængelig",
       "variant_sold_out_or_unavailable": "Varianten er udsolgt eller utilgængelig",
       "inventory_in_stock": "På lager",
@@ -225,6 +241,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Forside"
+    },
     "search": {
       "no_results": "Der blev ikke fundet nogen resultater for “{{ terms }}”. Kontrollér stavemåden, eller brug et andet ord eller udtryk.",
       "results_with_count": {
@@ -308,6 +327,9 @@
       "caption": "Varer i indkøbskurv",
       "remove_title": "Fjern",
       "note": "Særlige instruktioner til ordre",
+      "note_placeholder": "Besked",
+      "note_save": "Gem",
+      "note_clear": "Ryd",
       "checkout": "Gå til betaling",
       "empty": "Din indkøbskurv er tom",
       "empty_button_label": "Shop nu",

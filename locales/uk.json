@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Північна Америка",
+      "central_america": "Центральна Америка",
+      "south_america": "Південна Америка",
+      "europe": "Європа",
+      "middle_east": "Близький Схід",
+      "africa": "Африка",
+      "asia": "Азії",
+      "oceania": "Океанія"
+    },
     "password_page": {
       "login_form_heading": "Увійти в магазин за допомогою пароля:",
       "login_password_button": "Введіть пароль",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Поділіться на Facebook",
         "share_on_twitter": "Твітнути в Twitter",
         "share_on_pinterest": "Закріпити на Pinterest",
-        "share_on_linkedin": "Поділіться на LinkedIn"
+        "share_on_linkedin": "Поділіться на LinkedIn",
+        "share_on_whatsapp": "Поділіться на WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Продовжуйте покупки",
     "pagination": {
       "label": "Пагінація",
+      "all": "всі",
       "page": "Сторінка {{ number }}",
       "next": "Наступна сторінка",
       "previous": "Попередня сторінка"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Додати в кошик",
       "add_to_cart": "Додати в кошик",
+      "pre_order": "Передзамовити",
       "color": "колір",
       "colors": "Кольори",
       "choose_options": "Виберіть варіанти",
@@ -164,6 +178,7 @@
         "view_store_info": "Переглянути інформацію про магазин",
         "check_other_stores": "Уточнюйте наявність в інших магазинах",
         "title": "Пікап",
+        "phone": "Тел:",
         "pick_up_available": "Можливий самовивіз",
         "pick_up_unavailable": "Самовивіз недоступний",
         "pick_up_available_at_html": "Самовивіз доступний за адресою <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Поділіться цим продуктом",
       "sold_out": "Розпродано",
       "unavailable": "Недоступний",
+      "reviews": "Відгуки",
       "vendor": "Бренд",
       "value_unavailable": "{{ option_value }} - Недоступний",
       "variant_sold_out_or_unavailable": "Варіант розпроданий або відсутній",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Головна"
+    },
     "404": {
       "title": "Сторінка не знайдена",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Розрахункова сума",
       "new_estimated_total": "Нова орієнтовна сума",
       "note": "Додайте примітку до замовлення",
+      "note_placeholder": "Повідомлення",
+      "note_save": "Зберегти",
+      "note_clear": "Очистити",
       "checkout": "Виїзд",
       "empty": "Ваша сумка порожня",
       "empty_button_label": "Купуйте зараз",

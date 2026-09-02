@@ -1,6 +1,5 @@
 {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
 {{ 'section-newsletter.css' | asset_url | stylesheet_tag }}
-{{ 'component-rte.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }} {
@@ -17,17 +16,37 @@
 {%- endstyle -%}
 
 <div class="section-{{ section.id }} newsletter-section align-{{ section.settings.alignment }} page-width color-scheme-{{ section.settings.text_color }} color-scheme-{{ section.settings.bg_color }}">
-  <div class="newsletter-section-inner">
+  <div class="newsletter-section-inner layout--{{ section.settings.section_layout }}">
+
+{% if section.settings.section_layout == 'columns' %}
+<div class="text-column">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
-        {%- when '@app' -%}
-          {% render block %}
         {%- when 'heading' -%}
           <h2 class="{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
             {{ block.settings.heading | escape }}
           </h2>
         {%- when 'paragraph' -%}
           <div class="newsletter__subheading rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+  {% endif %}
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          {% unless section.settings.section_layout == 'columns' %}
+          <h2 class="{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+            {{ block.settings.heading | escape }}
+          </h2>
+          {% endunless %}
+        {%- when 'paragraph' -%}
+          {% unless section.settings.section_layout == 'columns' %}
+          <div class="newsletter__subheading rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {% endunless %}
+        {%- when '@app' -%}
+          {% render block %}
         {%- when 'email_form' -%}
           <div class="newsletter-fields fields-style-{{ block.settings.form_style }} form-width-{{ block.settings.form_width }}" {{ block.shopify_attributes }}>
             {% form 'customer', class: 'newsletter-form' %}
@@ -60,12 +79,12 @@
                   
                   <button
                     type="submit"
-                    class="newsletter-form__button field__button"
+                    class="newsletter-form__button field__button newsletter-form__submit-style-{{ block.settings.newsletter_submit_style }}"
                     name="commit"
                     id="NewsletterSubscribe"
                     aria-label="{{ 'newsletter.button_label' | t }}"
                   >
-                    {% render 'icon-arrow' %}
+                    {% if block.settings.newsletter_submit_style == 'icon' %}{% render 'icon-arrow' %}{% else %}<span class="newsletter-button__submit-label">{{ 'newsletter.button_label' | t }}</span>{% endif %}
                   </button>
                 </div>
                 {%- if form.errors -%}
@@ -115,30 +134,32 @@
       "content": "t:sections.newsletter.settings.paragraph.content"
     },
     {
-      "type": "select",
+      "type": "text_alignment",
       "id": "alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.all.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:sections.all.alignment.center"
-        },
-        {
-          "value": "right",
-          "label": "t:sections.all.alignment.right"
-        }
-      ],
       "default": "left",
       "label": "t:sections.all.alignment.alignment_heading"
     },
     {
-	"type": "image_picker",
-	"id": "bg_image",
-	"label": "t:sections.newsletter.settings.background_image.label"
-	},
+      "type": "select",
+      "id": "section_layout",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "t:sections.all.layouts.stacked"
+        },
+        {
+          "value": "columns",
+          "label": "t:sections.all.layouts.horizontal"
+        }
+      ],
+      "default": "stacked",
+      "label": "t:sections.all.layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "t:sections.newsletter.settings.background_image.label"
+	  },
     {
       "type": "header",
       "content": "t:sections.all.colors.label"
@@ -166,6 +187,10 @@
         {
           "value": "fg-04",
           "label": "t:sections.all.colors.accent_4.label"
+        },
+        {
+          "value": "fg-05",
+          "label": "t:sections.all.colors.accent_5.label"
         }
       ],
       "default": "fg-body",
@@ -194,6 +219,10 @@
         {
           "value": "bg-04",
           "label": "t:sections.all.colors.background_4.label"
+        },
+        {
+          "value": "bg-05",
+          "label": "t:sections.all.colors.background_5.label"
         }
       ],
       "default": "bg-body",
@@ -278,6 +307,22 @@
       "settings": [
         {
           "type": "select",
+          "id": "form_width",
+          "options": [
+            {
+              "value": "fixed",
+              "label": "t:sections.all.size.medium"
+            },
+            {
+              "value": "full",
+              "label": "t:sections.all.size.full_width"
+            }
+          ],
+          "default": "fixed",
+          "label": "t:sections.newsletter.blocks.email_form.settings.form_width.label"
+        },
+        {
+          "type": "select",
           "id": "form_style",
           "options": [
             {
@@ -298,19 +343,23 @@
         },
         {
           "type": "select",
-          "id": "form_width",
+          "id": "newsletter_submit_style",
+          "label": "t:sections.all.buttons.button_style",
           "options": [
             {
-              "value": "full",
-              "label": "t:sections.newsletter.blocks.email_form.settings.form_width.options__1.label"
+              "value": "icon",
+              "label": "t:sections.all.shape.icon"
             },
             {
-              "value": "fixed",
-              "label": "t:sections.newsletter.blocks.email_form.settings.form_width.options__2.label"
+              "value": "solid-button",
+              "label": "t:sections.all.buttons.button_style_solid"
+            },
+            {
+              "value": "outline-button",
+              "label": "t:sections.all.buttons.button_style_outline"
             }
           ],
-          "default": "full",
-          "label": "t:sections.newsletter.blocks.email_form.settings.form_width.label"
+          "default": "icon"
         }
       ]
     },

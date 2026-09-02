@@ -39,6 +39,7 @@ if (!window.isQuickAddModal) {
     const thumbnails = document.querySelectorAll('.gallery-slider--thumbnail');
     const slidesContainer = document.getElementById('SlidesCon');
     const slides = document.getElementsByClassName('product-media-image');
+    const targetSlide = slidesContainer.querySelector(`.product-media-image[data-slide-index="${index}"]`);
     
     if (slidesContainer) {
       // Adjusting the index to handle slide boundaries
@@ -52,41 +53,54 @@ if (!window.isQuickAddModal) {
       thumbnails.forEach(item => {
         item.classList.remove('active');
       });
+
+      setTimeout(() => {
+        thumbnail.classList.add('active');
+      }, 50);
       
-      thumbnail.classList.add('active');
       pauseGalleryMedia();
       
-      const slideWidth = slidesContainer.offsetWidth;
-      slidesContainer.scrollLeft = (index - 1) * slideWidth;
-      //slidesContainer.scrollTo({
-      //  left:  (index - 1) * slideWidth,
-      //  behavior: 'smooth'
-      //});    
+      //const slideWidth = slidesContainer.offsetWidth;
+      //slidesContainer.scrollLeft = (index - 1) * slideWidth;
+      slidesContainer.scrollTo({left: targetSlide.offsetLeft});    
     }
   }
   
-  function handleScroll() {
-    const slidesContainer = document.getElementById('SlidesCon');
-    const slideWidth = slidesContainer.offsetWidth;
-    const scrollPosition = slidesContainer.scrollLeft;
-    const thumbnails = document.getElementsByClassName("gallery-slider--thumbnail");
-  
-    if (slidesContainer) {
-      // Calculate the index based on the scroll position
-      const index = Math.floor(scrollPosition / slideWidth) + 1;
-  
-      pauseGalleryMedia();
-    
-      for (var i = 0; i < thumbnails.length; i++) {
-        thumbnails[i].classList.remove("active");
-    
-        // Check if the thumbnail's data-slide-index matches the provided slideIndex
-        if (thumbnails[i].getAttribute('data-slide-index') == index) {
-            thumbnails[i].classList.add("active");
-        }
-      }    
-    }  
+function handleScroll() {
+  const slidesContainer = document.getElementById('SlidesCon');
+  if (!slidesContainer) return;
+
+  const scrollPosition = slidesContainer.scrollLeft;
+  const thumbnails = document.getElementsByClassName("gallery-slider--thumbnail");
+  const MediaSlides = document.getElementsByClassName("product-media-image");
+
+  let currentMediaIndex = null;
+
+  for (let i = 0; i < MediaSlides.length; i++) {
+    const slide = MediaSlides[i];
+    const slideLeft = slide.offsetLeft - slidesContainer.offsetLeft;
+
+    if (
+      slideLeft <= scrollPosition + 10 &&
+      slideLeft + slide.offsetWidth > scrollPosition + 10
+    ) {
+      currentMediaIndex = slide.getAttribute('data-slide-index');
+      break;
+    }
   }
+
+  pauseGalleryMedia();
+
+  for (let i = 0; i < thumbnails.length; i++) {
+    const thumbIndex = thumbnails[i].getAttribute('data-slide-index');
+
+    thumbnails[i].classList.remove("active");
+
+    if (thumbIndex == currentMediaIndex) {
+      thumbnails[i].classList.add("active");
+    }
+  }
+}
   
   // Add scroll event listener to slidesContainer
   const slidesContainer = document.getElementById('SlidesCon');
@@ -99,30 +113,60 @@ if (!window.isQuickAddModal) {
   // Initially trigger handleScroll to set the active state based on the initial scroll position
   handleScroll();
   
-  
   // Slider Arrows
   function sliderArrows() {
     const leftArrow = document.querySelector('.gallery-slider-arrows .slider-arrow-left');
     const rightArrow = document.querySelector('.gallery-slider-arrows .slider-arrow-right');
-    
-    if (leftArrow) {
+    const dtslidesContainer = document.getElementById('SlidesCon');
+  
+    // Check if the arrows and container are present
+    if (!leftArrow || !rightArrow || !dtslidesContainer) {
+      return; // Exit the function if elements are not present
+    }
+  
+    // Function to calculate the slide width
+    let slideWidth = Math.round(dtslidesContainer.offsetWidth);
+  
+    // Update slide width on window resize
+    window.addEventListener('resize', () => {
+      slideWidth = Math.round(dtslidesContainer.offsetWidth);
+    });
+  
+    function updateArrowStates() {
+      if (dtslidesContainer.scrollLeft <= 0) {
+        leftArrow.classList.add('deactive');
+      } else {
+        leftArrow.classList.remove('deactive');
+      }
+  
+      if (dtslidesContainer.scrollLeft + dtslidesContainer.clientWidth >= dtslidesContainer.scrollWidth) {
+        rightArrow.classList.add('deactive');
+      } else {
+        rightArrow.classList.remove('deactive');
+      }
+    }
+  
     leftArrow.addEventListener('click', () => {
-      slidesContainer.scrollBy({
-        left: -300,
+      dtslidesContainer.scrollBy({
+        left: -slideWidth,
         behavior: 'smooth'
       });
       pauseGalleryMedia();
+      setTimeout(updateArrowStates, 500); // Slight delay to ensure scroll completes
     });
-    }
-    if (rightArrow) {
+  
     rightArrow.addEventListener('click', () => {
-      slidesContainer.scrollBy({
-        left: 300,
+      dtslidesContainer.scrollBy({
+        left: slideWidth,
         behavior: 'smooth'
       });
       pauseGalleryMedia();
+      setTimeout(updateArrowStates, 500); // Slight delay to ensure scroll completes
     });
-    }
+  
+    // Initial check to set the faded state when the page loads
+    dtslidesContainer.addEventListener('scroll', updateArrowStates);
+    updateArrowStates();
   }
   
   document.addEventListener('DOMContentLoaded', sliderArrows);
@@ -132,11 +176,17 @@ if (!window.isQuickAddModal) {
   function openModal() {
     document.getElementById("galModal").classList.add("open");
     document.body.classList.add('body-lock-scroll');
+    setModalZoomToggle();
   }
-  
+
   function closeModal() {
-    document.getElementById("galModal").classList.remove("open");
-    document.body.classList.remove('body-lock-scroll');
+      document.getElementById("galModal").classList.remove("open");
+      document.body.classList.remove('body-lock-scroll');
+      
+      // Add a short delay before resetting the zoom level
+      setTimeout(() => {
+          removeZoomLevel();
+      }, 500);
   }
   
   function currentSlide(n) {
@@ -175,6 +225,173 @@ if (!window.isQuickAddModal) {
           }
       }
   }
+
+
+  // Thumbnails scroller
+  function thumbnailsScroll() {
+    const scroller = document.querySelector('.gst-scroller');
+    const thumbnails = document.querySelectorAll('.gallery-slider--thumbnail');
+  
+    if (!scroller || thumbnails.length === 0) return;
+  
+    const isHorizontal = scroller.classList.contains('pos-bottom');
+  
+    thumbnails.forEach((thumb, index) => {
+      thumb.addEventListener('click', () => {
+        const next = thumbnails[index + 1];
+        const prev = thumbnails[index - 1];
+  
+        if (isHorizontal) {
+          const buffer = 10; // match CSS gap
+          const thumbWidth = thumb.offsetWidth;
+          const scrollerLeft = scroller.scrollLeft;
+          const scrollerRight = scrollerLeft + scroller.clientWidth;
+  
+          if (next) {
+            const nextLeft = next.offsetLeft;
+            if (nextLeft >= scrollerRight - buffer) {
+              scroller.scrollBy({
+                left: thumbWidth + buffer,
+                behavior: 'smooth'
+              });
+              return;
+            }
+          }
+  
+          if (prev) {
+            const prevLeft = prev.offsetLeft;
+            if (prevLeft < scrollerLeft + buffer) {
+              scroller.scrollBy({
+                left: -(thumbWidth + buffer),
+                behavior: 'smooth'
+              });
+            }
+          }
+        } else {
+          const thumbHeight = thumb.offsetHeight;
+          const buffer = 8; // match CSS gap
+          const scrollerTop = scroller.scrollTop;
+          const scrollerBottom = scrollerTop + scroller.clientHeight;
+  
+          if (next) {
+            const nextTop = next.offsetTop;
+            if (nextTop >= scrollerBottom - buffer) {
+              scroller.scrollBy({
+                top: thumbHeight + buffer,
+                behavior: 'smooth'
+              });
+              return;
+            }
+          }
+  
+          if (prev) {
+            const prevTop = prev.offsetTop;
+            if (prevTop < scrollerTop + buffer) {
+              scroller.scrollBy({
+                top: -(thumbHeight + buffer),
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+      });
+    });
+  }
+
+  // Initialize the function
+  thumbnailsScroll();
+  
+  // Thumbnails scroller within modal
+  function modalThumbnailsScroll() {
+    const scroller = document.querySelector('.modal-thumbs-track-scroller');
+    const parentOfScroller = document.querySelector('.modal-thumbs-track-outer');
+    const thumbnails = document.querySelectorAll('.lightbox-thumbnail');
+    if (!scroller || thumbnails.length === 0) return;
+    const isHorizontal = parentOfScroller.classList.contains('zoom-thumbnails-position-desktop-bottom');
+
+    thumbnails.forEach((thumb, index) => {
+      thumb.addEventListener('click', () => {
+        const next = thumbnails[index + 1];
+        const prev = thumbnails[index - 1];
+  
+        if (isHorizontal) {
+          const buffer = 6; // match CSS gap
+          const thumbWidth = thumb.offsetWidth;
+          const scrollerLeft = scroller.scrollLeft;
+          const scrollerRight = scrollerLeft + scroller.clientWidth;
+  
+          if (next) {
+            const nextLeft = next.offsetLeft;
+            if (nextLeft >= scrollerRight - buffer) {
+              scroller.scrollBy({
+                left: thumbWidth + buffer,
+                behavior: 'smooth'
+              });
+              return;
+            }
+          }
+  
+          if (prev) {
+            const prevLeft = prev.offsetLeft;
+            if (prevLeft < scrollerLeft + buffer) {
+              scroller.scrollBy({
+                left: -(thumbWidth + buffer),
+                behavior: 'smooth'
+              });
+            }
+          }
+        } else {
+          const thumbHeight = thumb.offsetHeight;
+          const buffer = 6; // match CSS gap
+          const scrollerTop = scroller.scrollTop;
+          const scrollerBottom = scrollerTop + scroller.clientHeight;
+  
+          if (next) {
+            const nextTop = next.offsetTop;
+            if (nextTop >= scrollerBottom - buffer) {
+              scroller.scrollBy({
+                top: thumbHeight + buffer,
+                behavior: 'smooth'
+              });
+              return;
+            }
+          }
+  
+          if (prev) {
+            const prevTop = prev.offsetTop;
+            if (prevTop < scrollerTop + buffer) {
+              scroller.scrollBy({
+                top: -(thumbHeight + buffer),
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+      });
+    });    
+  }
+  
+  // Initialize the function
+  modalThumbnailsScroll();
+
+  // Function to reset zoom level on selection of thumbnail within the modal
+  function resetZoomLevel() {
+      const modalZoomed = document.querySelector('.pdp-gallery-modal');
+  
+      if (!modalZoomed || !modalZoomed.classList.contains('modal-zoom-toggle')) {
+          return false;
+      }
+  
+      modalZoomed.classList.remove('gallery-mega-zoom');
+  }
+
+  // Zoom toggle function remove
+  function removeZoomLevel() {
+      const zoomedElement = document.querySelector('.modal-zoom-toggle');
+      if (zoomedElement && zoomedElement.classList.contains('gallery-mega-zoom')) {
+          zoomedElement.classList.remove('gallery-mega-zoom');
+      }
+  }
   
   function changeModalSlide(thumb, index) {
       const thumbs = document.querySelectorAll('.lightbox-thumbnail');
@@ -196,6 +413,8 @@ if (!window.isQuickAddModal) {
       thumb.classList.add('lightbox-thumbnail-active');
       
       pauseGalleryMedia();
+      resetZoomLevel();
+      setImageToTop();
   
       // Set all slides to display: none
       for (let i = 0; i < slides.length; i++) {
@@ -205,5 +424,37 @@ if (!window.isQuickAddModal) {
       // Set the current slide to display: block
       slides[index - 1].style.display = 'block';
   }
+
+
+  // Toggle zoom function
+  function toggleZoom(event) {
+      const parentModal = event.target.closest('.modal-zoom-toggle');
+      if (parentModal) {
+          parentModal.classList.toggle('gallery-mega-zoom');
+      }
+  }
   
+  // Zoom toggle function
+  function setModalZoomToggle() {
+    const productMediaImages = document.querySelectorAll('.modal-zoom-toggle .modal-content .product-media--image');
+
+    productMediaImages.forEach(image => {
+        // Ensure no duplicate listeners
+        image.removeEventListener('click', toggleZoom);
+        image.addEventListener('click', toggleZoom);
+    });
+  }
+
+  // Reset image position to top on thumbnail select
+  function setImageToTop(event) {
+      const parentModal = document.querySelector('.modal-zoom-no-toggle');
+      if (parentModal) {
+          const modalContent = parentModal.querySelector('.modal-content');
+          if (modalContent) {
+              modalContent.scrollTop = 0; // Sets the scroll position of modal-content to the top
+          }
+      }
+  }
+
+
 }

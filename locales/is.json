@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Norður Ameríku",
+      "central_america": "Mið-America",
+      "south_america": "Suður Ameríku",
+      "europe": "Evrópu",
+      "middle_east": "Mið-Austurlönd",
+      "africa": "Afríku",
+      "asia": "Asíu",
+      "oceania": "Eyjaálfa"
+    },
     "password_page": {
       "login_form_heading": "Sláðu inn verslun með lykilorði:",
       "login_password_button": "Sláðu inn með því að nota lykilorð",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Deildu á Facebook",
         "share_on_twitter": "Tweet á Twitter",
         "share_on_pinterest": "Festu á Pinterest",
-        "share_on_linkedin": "Deildu á LinkedIn"
+        "share_on_linkedin": "Deildu á LinkedIn",
+        "share_on_whatsapp": "Deildu á WhatsApp"
       },
       "links": {
         "twitter": "Twitter",
@@ -44,6 +55,7 @@
     "continue_shopping": "Halda áfram að versla",
     "pagination": {
       "label": "Síðuskipting",
+      "all": "Allt",
       "page": "Bls {{ number }}",
       "next": "Næsta síða",
       "previous": "Fyrri síða"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Bæta við",
       "add_to_cart": "Bæta í körfu",
+      "pre_order": "Forpanta",
       "color": "Litur",
       "colors": "Litir",
       "choose_options": "Veldu valkosti",
@@ -164,6 +178,7 @@
         "view_store_info": "Skoða verslunarupplýsingar",
         "check_other_stores": "Athugaðu framboð í öðrum verslunum",
         "title": "Afhending",
+        "phone": "Sími:",
         "pick_up_available": "Afhending í boði",
         "pick_up_unavailable": "Afhending ekki í boði",
         "pick_up_available_at_html": "Afhending í boði kl <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Deildu þessari vöru",
       "sold_out": "Uppselt",
       "unavailable": "Ekki tiltækt",
+      "reviews": "Umsagnir",
       "vendor": "Vörumerki",
       "value_unavailable": "{{ option_value }} - Ekki tiltækt",
       "variant_sold_out_or_unavailable": "Afbrigði uppselt eða ófáanlegt",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Forsíða"
+    },
     "404": {
       "title": "Síða fannst ekki",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Áætlað samtals",
       "new_estimated_total": "Ný áætluð heildarfjöldi",
       "note": "Bættu við pöntunarnótu",
+      "note_placeholder": "Skilaboð",
+      "note_save": "Vista",
+      "note_clear": "Hreinsa",
       "checkout": "Skoðaðu",
       "empty": "Pokinn þinn er tómur",
       "empty_button_label": "Verslaðu núna",

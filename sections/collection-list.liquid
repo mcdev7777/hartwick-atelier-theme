@@ -15,6 +15,13 @@
   
 {%- endstyle -%}
 
+{% assign teaser_images = false %}
+{% if section.settings.images_enable %}
+{% unless section.settings.rollover_image_position contains 'inline' %}
+{% assign teaser_images = true %}
+{% endunless %}
+{% endif %}
+
 <div class="section-container collection-list-section section-{{ section.id }} color-scheme-{{ section.settings.text_color }} color-scheme-{{ section.settings.bg_color }}">
 
 {% if section.settings.top_border %}
@@ -23,35 +30,84 @@
   
 <div class="section-inner">
   
-{% unless section.settings.section_label == blank and section.settings.heading == blank and section.settings.sub_heading == blank %}
-<div class="section-header section-header-std-padding page-width text-align-{{ section.settings.header_alignment }}">  
-{% unless section.settings.section_label == blank %}<div class="section-label">{{ section.settings.section_label }}</div>{% endunless %}
-{% unless section.settings.heading == blank %}<h2>{{ section.settings.heading }}</h2>{% endunless %}
-{% unless section.settings.sub_heading == blank %}{{ section.settings.sub_heading }}{% endunless %}
-</div>
-{% endunless %}
+{% assign show_header = false %}
+{% if section.settings.section_label != blank or section.settings.heading != blank or section.settings.sub_heading != blank %}
+  {% assign show_header = true %}
+{% endif %}
 
-{% if section.settings.show_first_image_mobile and section.settings.mobile_image_position == 'first' %}
+{% if section.settings.btn_enable %}
+{% if section.settings.btn_position_desktop contains 'top' or section.settings.btn_position_mobile contains 'top' %}
+  {% assign show_header = true %}
+{% endif %}
+{% endif %}
+
+{% if show_header %}
+<div class="section-header section-header-std-padding page-width text-align-{{ section.settings.header_alignment }} sft-position-mobile--{{ section.settings.btn_position_mobile }} sft-position-desktop--{{ section.settings.btn_position_desktop }}"> 
+{% if section.settings.btn_enable %}<div class="section-header-grid--text">{% endif %} 
+{% unless section.settings.section_label == blank %}<div class="section-label">{{ section.settings.section_label }}</div>{% endunless %}
+{% unless section.settings.heading == blank %}<h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>{% endunless %}
+{% unless section.settings.sub_heading == blank %}<div class="section-header-paragraph">{{ section.settings.sub_heading }}</div>{% endunless %}
+{% if section.settings.btn_enable %}</div>{% endif %}
+
+{% if section.settings.btn_enable %}
+{% if section.settings.btn_position_desktop contains 'top' or section.settings.btn_position_mobile contains 'top' %}
+<div class="section-footer section-footer--within-header button-color-scheme--{{ section.settings.btn_color_scheme }}{% if section.settings.btn_txt.size > 10 %} button-sft-wide{% endif %}">
+    {% if section.settings.btn_style == 'solid' %}
+  <a href="{{ section.settings.btn_url }}" role="link" class="button button--solid">{{ section.settings.btn_txt }}</a>
+    {% endif %}
+    {% if section.settings.btn_style == 'outline' %}
+  <a href="{{ section.settings.btn_url }}" role="link" class="button button--outline">{{ section.settings.btn_txt }}</a>
+    {% endif %}
+    {% if section.settings.btn_style == 'link' %}
+  <a href="{{ section.settings.btn_url }}" role="link" class="link--underlined">{{ section.settings.btn_txt }}</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endif %}
+
+</div>
+{% endif %}
+
+{% if section.settings.show_first_image_mobile and section.settings.mobile_image_position == 'first' and section.settings.rollover_image_position != 'inline-justified' and section.settings.rollover_image_position != 'inline' and section.settings.rollover_image_position != 'inline-hover' and section.settings.rollover_image_position != 'inline-hover-justified' %}
 <div class="page-width">
 <div class="collection-list-teaser-image-mobile collection-list-teaser-image-mobile-first ctc-mobile-image-ratio-{{ section.settings.image_ratio }} ctc-mobile-image-size-{{ section.settings.image_size }}">
 {% for block in section.blocks %}
-{% if forloop.first and block.settings.image %}
-<div class="ctc-mobile-image">
-{{ block.settings.image | image_url: width: 1024 | image_tag: loading: 'lazy' }}
-</div>
-{% endif %}
+  {% if forloop.first and block.settings.image %}
+  <div class="ctc-mobile-image">
+  {{ block.settings.image | image_url: width: 1024 | image_tag: loading: 'lazy' }}
+  </div>
+  {% endif %}
+  {% if forloop.first and block.settings.image == blank and block.settings.collection == blank %}
+  <div class="ctc-mobile-image">
+  {% render 'media-placeholder-collection', sequence_number: forloop.index %}
+  </div>
+  {% endif %}
 {% endfor %}
 </div>
 </div>
 {% endif %}
 
-<div class="collection-typographic-list-wrapper collection-typographic-list--layout-{{ section.settings.section_layout }} collection-list--link-style-{{ section.settings.link_style }} collection-list--separator-style-{{ section.settings.list_separator }} {{ section.settings.list_font_size }} {{ section.settings.content_width }} align-{{ section.settings.content_alignment }} cl-list-width-{{ section.settings.list_width }}{% if section.settings.rollover_img_enable %} ctlw-grid ctl-ul-images-ratio-{{ section.settings.image_ratio }}--size-{{ section.settings.image_size }} ctl-images-position-{{ section.settings.rollover_image_position }}{% endif %}">
+<div class="collection-typographic-list-wrapper collection-typographic-list--layout-{{ section.settings.section_layout }} collection-list--link-style-{{ section.settings.link_style }} collection-list--separator-style-{{ section.settings.list_separator }} {{ section.settings.list_font_size }} {{ section.settings.content_width }} align-{{ section.settings.content_alignment }} cl-list-width-{{ section.settings.list_width }}{% if section.settings.images_enable and teaser_images %} ctlw-grid ctl-ul-images-ratio-{{ section.settings.image_ratio }}--size-{{ section.settings.image_size }} ctl-images-position-{{ section.settings.rollover_image_position }}{% endif %}">
 <div class="collection-list-teaser-list">
 <ul role="list" class="collection-typographic-list{% if section.settings.show_first_image %} collection-typographic-list-fiv{% endif %}{% if section.settings.list_borders %} cl-list-hoz-borders{% endif %}">
+{% assign inline_image_size = 160 %}
+{% if section.settings.image_size == 'large' %}
+{% assign inline_image_size = 240 %}  
+{% endif %}
 {% for block in section.blocks %}
 <li class="ctl-list-item" {{ block.shopify_attributes }}>
-  <a class="collection-teaser-link-{{ forloop.index }}" href="{{ block.settings.collection.url }}" onmouseover="showImage({{ forloop.index }}); return false;">
+  <a class="collection-teaser-link-{{ forloop.index }}" href="{{ block.settings.collection.url }}"{% if section.settings.images_enable and section.settings.rollover_image_position != 'inline-justified' and section.settings.rollover_image_position != 'inline' and section.settings.rollover_image_position != 'inline-hover' and section.settings.rollover_image_position != 'inline-hover-justified' %} onmouseover="showImage({{ forloop.index }}); return false;"{% endif %}>
       <div class="collection-typographic-card">
+        {% if block.settings.image and section.settings.section_layout == 'vertical' and section.settings.images_enable and section.settings.rollover_image_position contains 'inline' %}
+        <div class="collection-typographic-card-inline-image{% if section.settings.rollover_image_position contains 'inline-hover' %} tci-visibility-hover{% endif %} tci-position--{{ section.settings.rollover_image_position }} tci-image-ratio-{{ section.settings.image_ratio }} tci-image-size-{{ section.settings.image_size }}">
+          {{ block.settings.image | image_url: width: inline_image_size | image_tag: loading: 'lazy' }}
+        </div>
+        {% endif %}
+        {% if block.settings.image == blank and block.settings.collection == blank and section.settings.section_layout == 'vertical' and section.settings.images_enable and section.settings.rollover_image_position contains 'inline' %}
+          <div class="collection-typographic-card-inline-image{% if section.settings.rollover_image_position contains 'inline-hover' %} tci-visibility-hover{% endif %} tci-position--{{ section.settings.rollover_image_position }} tci-image-ratio-{{ section.settings.image_ratio }} tci-image-size-{{ section.settings.image_size }}">
+          {% render 'media-placeholder-collection', sequence_number: forloop.index %}
+          </div>
+        {% endif %}
         <div class="collection-typographic-card-title">
           {% if block.settings.collection.title != blank %}{{ block.settings.collection.title }}{% else %}{{ 'onboarding.collection_title' | t }}{% endif %}
         </div>
@@ -66,7 +122,7 @@
   
 </div>
 
-{% if section.settings.show_first_image_mobile and section.settings.mobile_image_position == 'last' %}
+{% if section.settings.show_first_image_mobile and section.settings.mobile_image_position == 'last' and section.settings.rollover_image_position != 'inline-justified' and section.settings.rollover_image_position != 'inline' and section.settings.rollover_image_position != 'inline-hover' and section.settings.rollover_image_position != 'inline-hover-justified' %}
 <div class="collection-list-teaser-image-mobile collection-list-teaser-image-mobile-last ctc-mobile-image-ratio-{{ section.settings.image_ratio }} ctc-mobile-image-size-{{ section.settings.image_size }}">
 {% for block in section.blocks %}
 {% if forloop.first and block.settings.image %}
@@ -74,11 +130,18 @@
 {{ block.settings.image | image_url: width: 1024 | image_tag: loading: 'lazy' }}
 </div>
 {% endif %}
+
+{% if forloop.first and block.settings.collection == blank and block.settings.image == blank %}
+<div class="ctc-mobile-image">
+{% render 'media-placeholder-collection', sequence_number: forloop.index %}
+</div>
+{% endif %}
+
 {% endfor %}
 </div>
 {% endif %}
 
-{% if section.settings.rollover_img_enable %}
+{% if section.settings.images_enable and section.settings.rollover_image_position != 'inline-justified' and section.settings.rollover_image_position != 'inline' and section.settings.rollover_image_position != 'inline-hover' and section.settings.rollover_image_position != 'inline-hover-justified' %}
 <div class="collection-list-teaser-image">
         {% assign rollover_image_size = 540 %}
         
@@ -90,11 +153,14 @@
         {% assign rollover_image_size = 900 %}
         {% endif %}          
           {% for block in section.blocks %}
-        <div class="collection-typographic-card-image{% unless forloop.index == 1 and section.settings.show_first_image %} ci-hidden{% endunless %} collection-teaser-image-{{ forloop.index }} ctc-image-ratio-{{ section.settings.image_ratio }}--size-{{ section.settings.image_size }}">
-          {% if block.settings.image %}
-          {{ block.settings.image | image_url: width: rollover_image_size | image_tag: loading: 'lazy' }}
-          {% endif %}
-        </div>
+            <div class="collection-typographic-card-image{% unless forloop.index == 1 and section.settings.show_first_image %} ci-hidden{% endunless %} collection-teaser-image-{{ forloop.index }} ctc-image-ratio-{{ section.settings.image_ratio }}--size-{{ section.settings.image_size }}">
+              {% if block.settings.image %}
+              {{ block.settings.image | image_url: width: rollover_image_size | image_tag: loading: 'lazy' }}
+              {% endif %}
+              {% if block.settings.collection == blank and block.settings.image == blank %}
+              {% render 'media-placeholder-collection', sequence_number: forloop.index %}
+              {% endif %}
+            </div>
         {% endfor %}
 </div>
 
@@ -120,7 +186,8 @@
   
 </div>
 {% if section.settings.btn_enable %}
-<div class="page-width text-align-{{ section.settings.header_alignment }} section-footer button-color-scheme--{{ section.settings.btn_color_scheme }}">
+{% unless section.settings.btn_position_desktop contains 'top' and section.settings.btn_position_mobile contains 'top' %}
+<div class="section-footer page-width sf-position-mobile--{{ section.settings.btn_position_mobile }} sf-position-desktop--{{ section.settings.btn_position_desktop }} text-align-{{ section.settings.header_alignment }} button-color-scheme--{{ section.settings.btn_color_scheme }}">
     {% if section.settings.btn_style == 'solid' %}
   <a href="{{ section.settings.btn_url }}" role="link" class="button button--solid">{{ section.settings.btn_txt }}</a>
     {% endif %}
@@ -131,6 +198,7 @@
   <a href="{{ section.settings.btn_url }}" role="link" class="link--underlined">{{ section.settings.btn_txt }}</a>
     {% endif %}
 </div>
+{% endunless %}
 {% endif %}
   
 </div>  
@@ -162,40 +230,50 @@
     "content": "t:sections.all.text"
   },
   {
-  "type": "text",
-  "id": "section_label",
-  "label": "t:sections.all.caption"
+    "type": "text_alignment",
+    "id": "header_alignment",
+    "default": "center",
+    "label": "t:sections.all.alignment.alignment_header"
   },
   {
-  "type": "text",
-  "id": "heading",
-  "default": "Collections",
-  "label": "t:sections.all.heading"
+    "type": "text",
+    "id": "section_label",
+    "label": "t:sections.all.caption"
   },
   {
-  "type": "richtext",
-  "id": "sub_heading",
-  "label": "t:sections.all.sub_heading"
+    "type": "text",
+    "id": "heading",
+    "default": "Collections",
+    "label": "t:sections.all.heading"
   },
   {
     "type": "select",
-    "id": "header_alignment",
+    "id": "heading_size",
+    "label": "t:sections.all.heading_size.label",
     "options": [
       {
-        "value": "left",
-        "label": "t:sections.all.alignment.left"
+        "value": "h3",
+        "label": "t:sections.all.heading_size.small.label"
       },
       {
-        "value": "center",
-        "label": "t:sections.all.alignment.center"
+        "value": "h2",
+        "label": "t:sections.all.heading_size.normal.label"
       },
       {
-        "value": "right",
-        "label": "t:sections.all.alignment.right"
+        "value": "h1",
+        "label": "t:sections.all.heading_size.large.label"
+      },
+      {
+        "value": "h0",
+        "label": "t:sections.all.heading_size.xl.label"
       }
-    ],
-    "default": "center",
-    "label": "t:sections.all.alignment.alignment_header"
+      ],
+    "default": "h2"
+  },
+  {
+    "type": "richtext",
+    "id": "sub_heading",
+    "label": "t:sections.all.sub_heading"
   },
   {
     "type": "header",
@@ -283,22 +361,8 @@
     "default": "horizontal"
   },
   {
-    "type": "select",
+    "type": "text_alignment",
     "id": "content_alignment",
-    "options": [
-      {
-        "value": "left",
-        "label": "t:sections.all.alignment.left"
-      },
-      {
-        "value": "center",
-        "label": "t:sections.all.alignment.center"
-      },
-      {
-        "value": "right",
-        "label": "t:sections.all.alignment.right"
-      }
-    ],
     "default": "center",
     "label": "t:sections.all.alignment.alignment_header"
   },
@@ -352,9 +416,46 @@
   },
   {
     "type": "checkbox",
-    "id": "rollover_img_enable",
+    "id": "images_enable",
     "default": true,
-    "label": "t:sections.collection-list.settings.rollover_images_enable.label"
+    "label": "t:sections.collection-list.settings.images_enable.label"
+  },
+  {
+    "type": "select",
+    "id": "rollover_image_position",
+    "label": "t:sections.collection-list.settings.image_display_style.label",
+    "info": "t:sections.collection-list.settings.image_display_style.info",
+    "options": [
+      {
+        "value": "left",
+        "label": "t:sections.collection-list.settings.image_display_style.options__1.label"
+      },
+      {
+        "value": "center",
+        "label": "t:sections.collection-list.settings.image_display_style.options__2.label"
+      },
+      {
+        "value": "right",
+        "label": "t:sections.collection-list.settings.image_display_style.options__3.label"
+      },
+      {
+        "value": "inline",
+        "label": "t:sections.collection-list.settings.image_display_style.options__4.label"
+      },
+      {
+        "value": "inline-justified",
+        "label": "t:sections.collection-list.settings.image_display_style.options__5.label"
+      },
+      {
+        "value": "inline-hover",
+        "label": "t:sections.collection-list.settings.image_display_style.options__6.label"
+      },
+      {
+        "value": "inline-hover-justified",
+        "label": "t:sections.collection-list.settings.image_display_style.options__7.label"
+      }
+    ],
+    "default": "center"
   },
   {
     "type": "checkbox",
@@ -426,29 +527,7 @@
       }
     ],
     "default": "medium",
-    "label": "t:sections.collection-list.settings.image_size.label",
-    "info": "t:sections.collection-list.settings.list_width.info"
-  },
-  {
-    "type": "select",
-    "id": "rollover_image_position",
-    "label": "t:sections.collection-list.settings.image_position.label",
-    "info": "t:sections.collection-list.settings.list_width.info",
-    "options": [
-      {
-        "value": "left",
-        "label": "t:sections.all.alignment.left"
-      },
-      {
-        "value": "center",
-        "label": "t:sections.all.alignment.center"
-      },
-      {
-        "value": "right",
-        "label": "t:sections.all.alignment.right"
-      }
-    ],
-    "default": "center"
+    "label": "t:sections.collection-list.settings.image_size.label"
   },
   {
     "type": "image_picker",
@@ -490,10 +569,50 @@
       },
       {
         "value": "link",
-        "label": "t:sections.all.buttons.button_style_link"
+        "label": "t:sections.all.buttons.button_style_underline"
       }
       ],
     "default": "solid"
+  },
+  {
+    "type": "select",
+    "id": "btn_position_mobile",
+    "label": "t:sections.all.buttons.button_position_mobile",
+    "options": [
+      {
+        "value": "bottom",
+        "label": "t:sections.all.alignment.bottom"
+      },
+      {
+        "value": "top",
+        "label": "t:sections.all.alignment.top"
+      },
+      {
+        "value": "top-right",
+        "label": "t:sections.all.alignment.top_right"
+      }
+  ],
+    "default": "bottom"
+  },
+  {
+    "type": "select",
+    "id": "btn_position_desktop",
+    "label": "t:sections.all.buttons.button_position_desktop",
+    "options": [
+      {
+        "value": "bottom",
+        "label": "t:sections.all.alignment.bottom"
+      },
+      {
+        "value": "top",
+        "label": "t:sections.all.alignment.top"
+      },
+      {
+        "value": "top-right",
+        "label": "t:sections.all.alignment.top_right"
+      }
+  ],
+    "default": "bottom"
   },
   {
       "type": "select",
@@ -538,6 +657,10 @@
       {
         "value": "fg-04",
         "label": "t:sections.all.colors.accent_4.label"
+      },
+      {
+        "value": "fg-05",
+        "label": "t:sections.all.colors.accent_5.label"
       }
     ],
     "default": "fg-body",
@@ -566,6 +689,10 @@
       {
         "value": "bg-04",
         "label": "t:sections.all.colors.background_4.label"
+      },
+      {
+        "value": "bg-05",
+        "label": "t:sections.all.colors.background_5.label"
       }
     ],
     "default": "bg-body",

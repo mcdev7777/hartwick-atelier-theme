@@ -9,6 +9,16 @@
  */
 {
   "general": {
+    "regions": {
+      "north_america": "Северна Америка",
+      "central_america": "Централна Америка",
+      "south_america": "Јужна Америка",
+      "europe": "Европа",
+      "middle_east": "Блиски исток",
+      "africa": "Африка",
+      "asia": "Азија",
+      "oceania": "Океанија"
+    },
     "password_page": {
       "login_form_heading": "Уђите у продавницу користећи лозинку:",
       "login_password_button": "Унесите користећи лозинку",
@@ -24,7 +34,8 @@
         "share_on_facebook": "Поделите на Фејсбуку",
         "share_on_twitter": "Твеет на Твитеру",
         "share_on_pinterest": "Пин он Пинтерест",
-        "share_on_linkedin": "Делите на ЛинкедИну"
+        "share_on_linkedin": "Делите на ЛинкедИну",
+        "share_on_whatsapp": "Делите на WhatsApp"
       },
       "links": {
         "twitter": "Твиттер",
@@ -44,6 +55,7 @@
     "continue_shopping": "Наставите са куповином",
     "pagination": {
       "label": "Пагинација",
+      "all": "Све",
       "page": "Страница {{ number }}",
       "next": "Следећа страница",
       "previous": "Претходна страница"
@@ -115,7 +127,9 @@
   },
   "products": {
     "product": {
+      "add": "Додај у корпу",
       "add_to_cart": "Додај у корпу",
+      "pre_order": "Пре-ордер",
       "color": "Боја",
       "colors": "Боје",
       "choose_options": "Изаберите опције",
@@ -164,6 +178,7 @@
         "view_store_info": "Погледајте информације о продавници",
         "check_other_stores": "Проверите доступност у другим продавницама",
         "title": "Пицкуп",
+        "phone": "Tel:",
         "pick_up_available": "Доступно за преузимање",
         "pick_up_unavailable": "Преузимање није доступно",
         "pick_up_available_at_html": "Преузимање доступно на <span>{{ location_name }}</span>",
@@ -181,6 +196,7 @@
       "share": "Поделите овај производ",
       "sold_out": "Распродано",
       "unavailable": "Недоступно",
+      "reviews": "Рецензије",
       "vendor": "Бранд",
       "value_unavailable": "{{ option_value }} - Недоступно",
       "variant_sold_out_or_unavailable": "Варијанта је распродата или недоступна",
@@ -223,6 +239,9 @@
     }
   },
   "templates": {
+    "home_page": {
+      "home_page": "Početna"
+    },
     "404": {
       "title": "Страница није пронађена",
       "subtext": "404"
@@ -303,6 +322,9 @@
       "estimated_total": "Процењено укупно",
       "new_estimated_total": "Ново процењено укупно",
       "note": "Додајте напомену о наруџбини",
+      "note_placeholder": "Порука",
+      "note_save": "Сачувај",
+      "note_clear": "Обриши",
       "checkout": "Цхецк оут",
       "empty": "Ваша торба је празна",
       "empty_button_label": "Купујте сада",

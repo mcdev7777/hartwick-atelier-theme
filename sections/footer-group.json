@@ -57,9 +57,9 @@
         "text_alignment": "center",
         "content_width": "page-width",
         "icon_size": "normal",
+        "grid_column_gap": 20,
         "top_border": true,
         "bottom_border": true,
-        "grid_column_gap": 20,
         "keylines_show": true,
         "keylines_to_edge": false,
         "keyline_colour": "0",
@@ -115,8 +115,8 @@
         "9aa550d7-fade-44ce-a34f-b46d43c27ead"
       ],
       "settings": {
-        "footer_font_size": "small",
         "footer_font_family": "body",
+        "footer_font_size": "small",
         "footer_padding_vertical": 40,
         "text_color": "fg-body",
         "bg_color": "bg-body",
