@@ -96,6 +96,8 @@ One Shopify **product = one Expression**. Sizes are **variants**.
 | `finishing` | single line | |
 | `availability_note` | single line | "THROUGH THE REGISTER" |
 | **The Garment** | | |
+| `garment_heading` | single line | Section headline, e.g. "A study in proportion and ease." Added during the product-page build so no editorial line is hard-coded in the section. |
+| `garment_intro` | rich text | The paragraph beneath it. Same reason. |
 | `silhouette` / `fit` / `movement` | single line | STRAIGHT, RELAXED · EASE THROUGH BODY AND SLEEVE |
 | `garment_length` | single line | |
 | `model_height` / `size_worn` | single line | |

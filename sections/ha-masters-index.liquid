@@ -1,68 +1,122 @@
 {%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
 
 {%- comment -%}
-  Hartwick Atelier — 04 THE MASTERS INDEX.
-  Wireframe (01) HOMEPAGE §04: dark field, editorial intro left, the index of
-  Masters centre, collection link right.
+  Hartwick Atelier — THE MASTERS. One section, two compositions.
+
+    layout: index    Wireframe (01) HOMEPAGE §04 — dark field, editorial intro
+                     left, the index of Masters centre, collection link right.
+
+    layout: feature  Wireframe (03) PRODUCT PAGE §09 / mobile brief §7 — the same
+                     dark field, but with a display heading, a numbered list of
+                     the roles behind THIS garment, and portrait + workshop
+                     images. "The Masters section remains a strong tonal shift,
+                     using the dark field to distinguish human knowledge from
+                     standard product information."
+
+  Shared, as the audit planned (audit-and-plan.md §C: Meet the Masters is one
+  component used on both pages). The data path, the placeholder path, the
+  terminology and the touch states are written once; only the grid differs, and
+  that difference lives in CSS.
 
   Terminology: The Masters. Never "The Makers" — the mobile brief is superseded
   on terminology by Framework v3 (CLAUDE.md).
 
-  Data: the `master` metaobject (docs/data-model.md §2). The moment those entries
-  exist in Shopify they render here with no further work. Until then the wireframe's
-  roles render as placeholders. Roles and regions only — no artisan name is ever
-  invented, and names publish only when Aloha supplies them.
+  Data: the `master` metaobject (docs/data-model.md §2). Source is either the
+  whole shop or, on a product page, this product's own hartwick.masters list.
+  The moment those entries exist in Shopify they render here with no further
+  work. Until then the wireframe's roles render as placeholders. Roles and
+  regions only — no artisan name is ever invented, and names publish only when
+  Aloha supplies them.
+
+  ⚠️ COUNT CONFLICT — flagged to Aloha. The wireframe lists five roles; the
+  mobile brief §7 records that "Angela would like us to feature three Masters
+  initially". Built with five placeholder roles and a "Masters shown" limit, so
+  either answer is a setting, not a rebuild.
+
+  Accessibility (brief §7): there is no hover state on mobile, so every role is a
+  visible link with a focus state and a 44px touch target. Portraits and workshop
+  images take meaningful alt text; nothing here depends on hovering.
 {%- endcomment -%}
 
 {%- liquid
-  assign masters = shop.metaobjects.master.values
+  assign is_feature = false
+  if section.settings.layout == 'feature'
+    assign is_feature = true
+  endif
+
+  # On a product page the Masters shown are the ones who made THIS garment.
+  assign masters = nil
+  if section.settings.source == 'product'
+    assign masters = product.metafields.hartwick.masters.value
+  else
+    assign masters = shop.metaobjects.master.values
+  endif
+
   assign limit = section.settings.item_limit
   assign use_placeholders = true
-  if masters.size > 0
+  if masters != blank and masters.size > 0
     assign use_placeholders = false
   endif
 -%}
 
-<section class="ha-section ha-section--dark ha-masters">
+<section class="ha-section ha-section--dark ha-masters ha-masters--{{ section.settings.layout }}">
   <div class="ha-wrap">
     <div class="ha-masters__grid">
-      <div>
+      <div class="ha-masters__lead">
         {%- if section.settings.eyebrow != blank -%}
           <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
+
+        {%- if is_feature and section.settings.heading != blank -%}
+          <h2 class="ha-display ha-narrate ha-masters__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
         {%- if section.settings.intro != blank -%}
           <div class="ha-masters__intro ha-narrate">{{ section.settings.intro }}</div>
         {%- endif -%}
+
         {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
       </div>
 
-      <div>
-        {%- if section.settings.list_label != blank -%}
+      <div class="ha-masters__body">
+        {%- if section.settings.list_label != blank and is_feature == false -%}
           <p class="ha-eyebrow ha-record ha-masters__label">{{ section.settings.list_label }}</p>
         {%- endif -%}
 
         <ul class="ha-masters__list">
           {%- if use_placeholders -%}
-            {%- for block in section.blocks -%}
+            {%- for block in section.blocks limit: limit -%}
               <li class="ha-masters__item ha-narrate" {{ block.shopify_attributes }}>
-                {{ block.settings.role }}
-                {%- if block.settings.region != blank -%}
-                  &nbsp;·&nbsp;<span class="ha-masters__region">{{ block.settings.region }}</span>
+                {%- if is_feature -%}
+                  <span class="ha-masters__num ha-record" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
                 {%- endif -%}
+                <span class="ha-masters__role">
+                  {{- block.settings.role -}}
+                  {%- if block.settings.region != blank -%}
+                    &nbsp;·&nbsp;<span class="ha-masters__region">{{ block.settings.region }}</span>
+                  {%- endif -%}
+                </span>
               </li>
             {%- endfor -%}
           {%- else -%}
             {%- for master in masters limit: limit -%}
               <li class="ha-masters__item ha-narrate">
-                {%- if master.handle != blank and section.settings.link_masters -%}
-                  <a href="{{ section.settings.masters_page_url }}#{{ master.handle }}">
+                {%- if is_feature -%}
+                  <span class="ha-masters__num ha-record" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
                 {%- endif -%}
-                {{ master.role }}
+                {%- if master.handle != blank and section.settings.link_masters -%}
+                  <a class="ha-masters__role" href="{{ section.settings.masters_page_url }}#{{ master.handle }}">
+                {%- else -%}
+                  <span class="ha-masters__role">
+                {%- endif -%}
+                {{- master.role -}}
                 {%- if master.region.value.place != blank -%}
                   &nbsp;·&nbsp;<span class="ha-masters__region">{{ master.region.value.place }}</span>
                 {%- endif -%}
                 {%- if master.handle != blank and section.settings.link_masters -%}
                   </a>
+                {%- else -%}
+                  </span>
                 {%- endif -%}
               </li>
             {%- endfor -%}
@@ -73,15 +127,50 @@
         </ul>
       </div>
 
+      {%- if is_feature -%}
+        <div class="ha-masters__media">
+          {%- liquid
+            assign portrait = section.settings.portrait_image
+            assign workshop = section.settings.workshop_image
+            unless use_placeholders
+              assign first = masters.first
+              assign portrait = portrait | default: first.portrait.value
+              assign workshop = workshop | default: first.workshop_images.value.first
+            endunless
+          -%}
+          {%- render 'ha-figure',
+            image: portrait,
+            label: section.settings.portrait_label,
+            class: 'ha-masters__figure',
+            sizes: '(min-width: 990px) 20vw, 50vw',
+            alt: section.settings.portrait_alt
+          -%}
+          {%- render 'ha-figure',
+            image: workshop,
+            label: section.settings.workshop_label,
+            class: 'ha-masters__figure',
+            sizes: '(min-width: 990px) 20vw, 50vw',
+            alt: section.settings.workshop_alt
+          -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%}
+        Last in the DOM so the mobile stack reads intro → roles → images → link,
+        exactly as the mobile wireframe does. Desktop lifts it back into the
+        first column with explicit grid placement.
+      {%- endcomment -%}
       <div class="ha-masters__cta">
         {%- if section.settings.cta_text != blank -%}
           {%- liquid
             assign cta = section.settings.cta_text
-            if section.settings.cta_collection != blank
-              assign cta = cta | append: ' [' | append: section.settings.cta_collection.products_count | append: '] pieces'
-            elsif section.settings.cta_suffix != blank
-              assign cta = cta | append: ' ' | append: section.settings.cta_suffix
-            endif
+            unless is_feature
+              if section.settings.cta_collection != blank
+                assign cta = cta | append: ' [' | append: section.settings.cta_collection.products_count | append: '] pieces'
+              elsif section.settings.cta_suffix != blank
+                assign cta = cta | append: ' ' | append: section.settings.cta_suffix
+              endif
+            endunless
           -%}
           <a class="ha-link ha-identify" href="{{ section.settings.cta_collection.url | default: section.settings.cta_link | default: '#' }}">{{ cta }}</a>
         {%- endif -%}
@@ -92,20 +181,49 @@
 
 {% schema %}
 {
-  "name": "HA — Masters Index",
+  "name": "HA — Masters",
   "tag": "section",
   "class": "ha-section-wrapper",
   "max_blocks": 12,
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "index", "label": "Index (homepage)" },
+        { "value": "feature", "label": "Feature (product page)" }
+      ],
+      "default": "index"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Masters shown",
+      "options": [
+        { "value": "shop", "label": "All Masters" },
+        { "value": "product", "label": "This product's Masters" }
+      ],
+      "default": "shop",
+      "info": "'This product's Masters' reads hartwick.masters and only works on a product page."
+    },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Masters Index" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Knowledge held in human hands.", "info": "Feature layout only." },
     { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>The practices, works and stories behind each collection. The people who hold the knowledge are never background.</p>" },
-    { "type": "text", "id": "list_label", "label": "List label", "default": "Featured Masters" },
-    { "type": "range", "id": "item_limit", "min": 4, "max": 16, "step": 1, "label": "Masters shown", "default": 9 },
+    { "type": "text", "id": "list_label", "label": "List label", "default": "Featured Masters", "info": "Index layout only." },
+    { "type": "range", "id": "item_limit", "min": 3, "max": 16, "step": 1, "label": "Masters shown", "default": 9 },
     { "type": "checkbox", "id": "link_masters", "label": "Link each Master to The Masters page", "default": true },
     { "type": "url", "id": "masters_page_url", "label": "The Masters page" },
-    { "type": "header", "content": "Collection link" },
+    { "type": "header", "content": "Images", "info": "Feature layout only. Falls back to the first Master's portrait and workshop image." },
+    { "type": "image_picker", "id": "portrait_image", "label": "Portrait" },
+    { "type": "text", "id": "portrait_alt", "label": "Portrait alt text" },
+    { "type": "text", "id": "portrait_label", "label": "Portrait placeholder label", "default": "01 / Portrait" },
+    { "type": "image_picker", "id": "workshop_image", "label": "Workshop" },
+    { "type": "text", "id": "workshop_alt", "label": "Workshop alt text" },
+    { "type": "text", "id": "workshop_label", "label": "Workshop placeholder label", "default": "02 / Workshop" },
+    { "type": "header", "content": "Link" },
     { "type": "text", "id": "cta_text", "label": "Link text", "default": "View the collection" },
-    { "type": "collection", "id": "cta_collection", "label": "Collection", "info": "The piece count is read from this collection." },
+    { "type": "collection", "id": "cta_collection", "label": "Collection", "info": "The piece count is read from this collection. Index layout only." },
     { "type": "url", "id": "cta_link", "label": "Link (if no collection)" },
     { "type": "text", "id": "cta_suffix", "label": "Placeholder count", "default": "[14] pieces", "info": "Used only while no collection is set." },
     { "type": "header", "content": "Provisional content" },

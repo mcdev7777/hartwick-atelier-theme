@@ -46,6 +46,13 @@
     {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Hartwick sections + native restyles. Loaded after base.css so it wins. {%- endcomment -%}
     {{ 'ha-sections.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      Product gallery position counter (mobile brief §2). Additive to Luxe's own
+      gallery, so it is only carried on the template that has one.
+    {%- endcomment -%}
+    {%- if template.name == 'product' -%}
+      <script src="{{ 'ha-product.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
     {%- if settings.predictive_search_enabled -%}
       <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>

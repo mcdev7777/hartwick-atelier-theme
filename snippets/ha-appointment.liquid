@@ -1,0 +1,44 @@
+{%- comment -%}
+  Hartwick Atelier — Request Private Appointment (Wireframe 03 §05).
+
+  The wireframe and the mobile brief both place this directly beneath Add to Bag,
+  but neither defines what it does. Until Aloha decides (a modal enquiry form, a
+  dedicated page, or an email route) this links to whichever page exists, in
+  order of preference, and says plainly when none is bound.
+
+  Reuses `custom.inquire_to_order` rather than inventing a parallel flag
+  (docs/data-model.md §1). When the flag is set on a product the label is
+  unchanged — the flag is carried here so the Phase 2 enquiry route can switch
+  on it without touching this markup.
+
+  Usage (inside a main-product custom_liquid block):
+    {% render 'ha-appointment', text: 'Request Private Appointment',
+         handle: 'private-appointment' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign label = text | default: 'Request Private Appointment'
+
+  assign appt_page = nil
+  if handle != blank
+    assign appt_page = pages[handle]
+  endif
+  if appt_page == blank
+    assign appt_page = pages['private-appointment']
+  endif
+  if appt_page == blank
+    assign appt_page = pages['contact']
+  endif
+-%}
+
+<div class="ha-pdp__appointment">
+  {%- if appt_page != blank -%}
+    <a class="ha-link ha-identify" href="{{ appt_page.url }}">{{ label }}</a>
+  {%- else -%}
+    <span class="ha-link ha-link--inert ha-identify">{{ label }}</span>
+    {%- render 'ha-placeholder-note',
+      show: true,
+      text: 'Placeholder — no appointment page bound yet; route pending Aloha'
+    -%}
+  {%- endif -%}
+</div>

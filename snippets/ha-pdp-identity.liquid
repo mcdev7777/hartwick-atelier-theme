@@ -1,0 +1,83 @@
+{%- comment -%}
+  Hartwick Atelier — product identity (Wireframe 03 §02).
+
+  The eyebrow, the Style name and the Expression, rendered at the top of the buy
+  column. This replaces Luxe's native `title` block, which can only print
+  product.title as a single line — the wireframe needs two, and they are two
+  different things:
+
+      LOT I · EDITION 07 / 25      <- hartwick.lot / edition_number / edition_size
+      SKIRT 001                    <- hartwick.style -> display_name   (the h1)
+      HANDSPUN KHADI               <- hartwick.expression
+
+  Terminology (CLAUDE.md): the Style is the permanent silhouette identity and the
+  Expression is its fabric/dye realisation. The wireframe prints "TIDE", which is
+  a legacy name — internal SKU mapping only, never customer-facing. Bound to real
+  data this reads "Skirt 001 · Handspun Fresh Pink Cotton Khadi". Flagged to Aloha.
+
+  The Lot is customer-facing as a Roman numeral (Lot I), per Framework v3. The
+  wireframe's "LOT 001" is superseded.
+
+  This is the page's only <h1>. The native title block must stay disabled.
+
+  Placeholder values are passed in from templates/product.json so the wireframe
+  copy lives in content, not in code, and Aloha can edit it in the theme editor.
+
+  Usage (inside a main-product custom_liquid block):
+    {% render 'ha-pdp-identity', ph_lot: 'Lot I', ph_edition: 'Edition 07 / 25',
+         ph_expression: 'Handspun Khadi' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+
+  assign lot_label = ''
+  if mf.lot.value.number_roman != blank
+    assign lot_label = 'Lot ' | append: mf.lot.value.number_roman
+  else
+    assign lot_label = ph_lot
+  endif
+
+  assign edition_label = ph_edition
+  if mf.edition_number != blank and mf.edition_size != blank
+    assign edition_label = 'Edition ' | append: mf.edition_number | append: ' / ' | append: mf.edition_size
+  endif
+
+  # The Style's display name is the heading. With no Style bound we fall back to
+  # the product's own title rather than to wireframe copy — a real product title
+  # is always better than a placeholder.
+  assign style_name = product.title
+  if mf.style.value.display_name != blank
+    assign style_name = mf.style.value.display_name
+  endif
+
+  assign expression = mf.expression | default: ph_expression
+
+  assign is_placeholder = false
+  if mf.style.value.display_name == blank or mf.expression == blank or mf.lot.value.number_roman == blank
+    assign is_placeholder = true
+  endif
+-%}
+
+<div class="ha-pdp__identity">
+  {%- if lot_label != blank or edition_label != blank -%}
+    <p class="ha-pdp__eyebrow ha-record">
+      {{- lot_label -}}
+      {%- if lot_label != blank and edition_label != blank %} &middot; {% endif -%}
+      {{- edition_label -}}
+    </p>
+  {%- endif -%}
+
+  <h1 class="ha-pdp__title ha-identify">{{ style_name }}</h1>
+
+  {%- if expression != blank -%}
+    <p class="ha-pdp__expression ha-identify">{{ expression }}</p>
+  {%- endif -%}
+
+  {%- if is_placeholder -%}
+    {%- render 'ha-placeholder-note',
+      show: true,
+      text: 'Placeholder — Style, Expression and Lot publish from hartwick.* metafields'
+    -%}
+  {%- endif -%}
+</div>

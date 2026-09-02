@@ -1,0 +1,154 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 06 THE GARMENT.
+  Wireframe (03) PRODUCT PAGE §06; mobile brief §4.
+
+  "The Garment section provides the practical information needed to understand
+  fit. I separate this from the deeper provenance narrative because our visitor
+  first needs to know how the piece relates to a body." — mobile brief §4.
+
+  Editorial copy left, one strong wearer image right (stacked on mobile). The
+  spec rows use the same table component as the Material Record so fit
+  information and material information read as one system.
+
+  Data: hartwick.* metafields (docs/data-model.md §3). Heading and intro prefer
+  per-product metafields so no editorial copy is hard-coded; the section settings
+  carry the wireframe placeholder until those fields exist. Every row renders
+  only when its field is present — an empty field collapses with no orphaned
+  label and no gap (mobile brief §5).
+
+  The brief allows longer fit information to open in "a concise accordion".
+  construction_details does exactly that, using <details> so it works with touch,
+  keyboard and no JavaScript.
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+
+  assign heading = mf.garment_heading | default: section.settings.heading
+  assign intro = mf.garment_intro | default: section.settings.intro
+
+  assign r_silhouette = mf.silhouette | default: section.settings.ph_silhouette
+  assign r_fit = mf.fit | default: section.settings.ph_fit
+  assign r_movement = mf.movement
+  assign r_length = mf.garment_length
+  assign r_model_height = mf.model_height
+  assign r_size_worn = mf.size_worn
+
+  assign has_real_data = false
+  if mf.silhouette != blank or mf.fit != blank or mf.movement != blank
+    assign has_real_data = true
+  endif
+
+  assign wearer_image = section.settings.image
+  if wearer_image == blank and section.settings.use_product_media
+    assign wearer_image = product.media[section.settings.media_index].preview_image
+  endif
+-%}
+
+<section class="ha-section ha-garment">
+  <div class="ha-wrap">
+    <div class="ha-garment__grid">
+      <div class="ha-garment__text">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        {%- if heading != blank -%}
+          <h2 class="ha-display ha-narrate ha-garment__heading">{{ heading }}</h2>
+        {%- endif -%}
+
+        {%- if intro != blank -%}
+          <div class="ha-garment__intro ha-body ha-narrate">{{ intro }}</div>
+        {%- endif -%}
+
+        {%- unless has_real_data -%}
+          {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+        {%- endunless -%}
+
+        <table class="ha-record__table ha-record ha-garment__table">
+          <caption class="visually-hidden">{{ section.settings.eyebrow | default: 'The garment' }}</caption>
+          <tbody>
+            {%- if r_silhouette != blank -%}
+              <tr><th scope="row">Silhouette</th><td>{{ r_silhouette }}</td></tr>
+            {%- endif -%}
+            {%- if r_fit != blank -%}
+              <tr><th scope="row">Fit</th><td>{{ r_fit }}</td></tr>
+            {%- endif -%}
+            {%- if r_movement != blank -%}
+              <tr><th scope="row">Movement</th><td>{{ r_movement }}</td></tr>
+            {%- endif -%}
+            {%- if r_length != blank -%}
+              <tr><th scope="row">Length</th><td>{{ r_length }}</td></tr>
+            {%- endif -%}
+            {%- if r_model_height != blank -%}
+              <tr><th scope="row">Model height</th><td>{{ r_model_height }}</td></tr>
+            {%- endif -%}
+            {%- if r_size_worn != blank -%}
+              <tr><th scope="row">Size worn</th><td>{{ r_size_worn }}</td></tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+
+        {%- if mf.construction_details != blank -%}
+          <details class="ha-details">
+            <summary class="ha-details__summary ha-record">
+              <span>{{ section.settings.details_label }}</span>
+              <span class="ha-details__mark" aria-hidden="true"></span>
+            </summary>
+            <div class="ha-details__body ha-body ha-narrate">{{ mf.construction_details }}</div>
+          </details>
+        {%- endif -%}
+      </div>
+
+      <div class="ha-garment__media">
+        {%- render 'ha-figure',
+          image: wearer_image,
+          label: section.settings.image_label,
+          class: 'ha-garment__figure',
+          sizes: '(min-width: 990px) 55vw, 100vw',
+          alt: section.settings.image_alt
+        -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — The Garment",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Garment" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A study in proportion and ease.",
+      "info": "Used only while the product has no hartwick.garment_heading."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro",
+      "default": "<p>Cut for quiet movement and lived-in presence. A straight line and dropped shoulder create balance without excess. Made to be worn, not noticed.</p>",
+      "info": "Used only while the product has no hartwick.garment_intro."
+    },
+    { "type": "text", "id": "details_label", "label": "Accordion label", "default": "Construction details" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Wearer image" },
+    { "type": "checkbox", "id": "use_product_media", "label": "Fall back to a product image", "default": true },
+    { "type": "range", "id": "media_index", "min": 0, "max": 9, "step": 1, "label": "Product image position", "default": 5, "info": "Counts from 0. The wireframe uses image 06, the wearer." },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "text", "id": "image_label", "label": "Placeholder label", "default": "01 / Wearer" },
+    { "type": "header", "content": "Placeholder record", "info": "Used only while the product carries no fit metafields. Wireframe copy — not approved facts." },
+    { "type": "text", "id": "ph_silhouette", "label": "Silhouette", "default": "Straight, relaxed" },
+    { "type": "text", "id": "ph_fit", "label": "Fit", "default": "Ease through body and sleeve" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — The Garment" }]
+}
+{% endschema %}

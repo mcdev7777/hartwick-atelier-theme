@@ -1,0 +1,126 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 07 THE MATERIAL RECORD (product page).
+  Wireframe (03) PRODUCT PAGE §07; mobile brief §5.
+
+  THE SHARED COMPONENT. The record itself is snippets/ha-material-record.liquid —
+  the same one the homepage renders through ha-featured-lot (audit-and-plan.md
+  §C.05, "build once, use in both places"). This section only supplies the
+  product context and the composition around it.
+
+  Luxe's native `product_specifications` block cannot do this: it splits
+  product.description on a literal keyword (sections/main-product.liquid) and
+  never reads a metafield.
+
+  Composition differs by breakpoint, deliberately, per mobile brief §5:
+    mobile  — cloth-detail image FIRST, then the list. "This gives the eye a
+              pause before the structured information begins."
+    desktop — record left, image right (wireframe §07).
+  One source order, reordered in CSS, so the DOM order stays the reading order.
+
+  The record runs in `full` mode here: all thirteen fields from brief §5, against
+  the homepage's five. Rows with no data collapse silently.
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+
+  assign detail_image = section.settings.image
+  if detail_image == blank and section.settings.use_product_media
+    assign detail_image = product.media[section.settings.media_index].preview_image
+  endif
+
+  assign has_real_data = false
+  if mf.fibre != blank or mf.weave != blank or mf.colour_name != blank
+    assign has_real_data = true
+  endif
+-%}
+
+<section class="ha-section ha-precord">
+  <div class="ha-wrap">
+    <div class="ha-precord__grid">
+      <div class="ha-precord__panel">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        {%- unless has_real_data -%}
+          {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+        {%- endunless -%}
+
+        {%- render 'ha-material-record',
+          product: product,
+          full: true,
+          hide_eyebrow: true,
+          hide_title: true,
+          hide_intro: true,
+          ph_lot: section.settings.ph_lot,
+          ph_edition_label: section.settings.ph_edition_label,
+          ph_fibre: section.settings.ph_fibre,
+          ph_yarn: section.settings.ph_yarn,
+          ph_weave: section.settings.ph_weave,
+          ph_weight: section.settings.ph_weight,
+          ph_colour: section.settings.ph_colour,
+          ph_dye: section.settings.ph_dye,
+          ph_woven: section.settings.ph_woven,
+          ph_dyed: section.settings.ph_dyed,
+          ph_made_by: section.settings.ph_made_by,
+          ph_finishing: section.settings.ph_finishing,
+          ph_edition: section.settings.ph_edition,
+          ph_availability: section.settings.ph_availability,
+          link_text: section.settings.link_text,
+          link_url: section.settings.link_url
+        -%}
+      </div>
+
+      <div class="ha-precord__media">
+        {%- render 'ha-figure',
+          image: detail_image,
+          label: section.settings.image_label,
+          class: 'ha-precord__figure',
+          sizes: '(min-width: 990px) 55vw, 100vw',
+          alt: section.settings.image_alt
+        -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Material Record",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Material Record" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Textile detail image" },
+    { "type": "checkbox", "id": "use_product_media", "label": "Fall back to a product image", "default": true },
+    { "type": "range", "id": "media_index", "min": 0, "max": 9, "step": 1, "label": "Product image position", "default": 2, "info": "Counts from 0. The wireframe uses image 03, the cloth detail." },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "text", "id": "image_label", "label": "Placeholder label", "default": "01 / Textile detail" },
+    { "type": "header", "content": "Record link" },
+    { "type": "text", "id": "link_text", "label": "Link text" },
+    { "type": "url", "id": "link_url", "label": "Link" },
+    { "type": "header", "content": "Placeholder record", "info": "Used per row, only where the product has no value. Wireframe copy — provenance is unverified and must not go live as fact (risk R7)." },
+    { "type": "text", "id": "ph_lot", "label": "Lot", "default": "Lot I" },
+    { "type": "text", "id": "ph_edition_label", "label": "Edition label", "default": "Edition 07 / 25" },
+    { "type": "text", "id": "ph_fibre", "label": "Fibre", "default": "Handspun khadi cotton" },
+    { "type": "text", "id": "ph_yarn", "label": "Yarn", "default": "Hand-spun, uneven count" },
+    { "type": "text", "id": "ph_weave", "label": "Weave", "default": "Handloom" },
+    { "type": "text", "id": "ph_weight", "label": "Weight", "default": "180 gsm" },
+    { "type": "text", "id": "ph_colour", "label": "Colour", "default": "Natural indigo" },
+    { "type": "text", "id": "ph_dye", "label": "Dye", "default": "Natural indigo" },
+    { "type": "text", "id": "ph_woven", "label": "Woven in", "default": "Rajasthan, India" },
+    { "type": "text", "id": "ph_dyed", "label": "Dyed in", "default": "Rajasthan, India" },
+    { "type": "text", "id": "ph_made_by", "label": "Made by", "default": "The Masters, Rajasthan" },
+    { "type": "text", "id": "ph_finishing", "label": "Finishing", "default": "Hand-finished" },
+    { "type": "text", "id": "ph_edition", "label": "Edition", "default": "25 per size" },
+    { "type": "text", "id": "ph_availability", "label": "Availability", "default": "Through The Register" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — Material Record" }]
+}
+{% endschema %}

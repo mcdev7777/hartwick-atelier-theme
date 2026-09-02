@@ -529,3 +529,687 @@
   height: 44px;
   transform: translateY(-50%);
 }
+
+/* ==========================================================================
+   WIREFRAME (03) PRODUCT PAGE
+   Desktop and mobile, built on Luxe's native product section. The buy column
+   below is a restyle of Shopify's own product form, not a replacement, so
+   variants, inventory, analytics and checkout behaviour stay intact.
+
+   Geometry measured off the wireframe rather than estimated. On its 1501px
+   canvas:
+     page gutter ........ 67      (the HOMEPAGE wireframe uses 42 — the two
+                                   pages genuinely differ, so this is scoped
+                                   to the product template and the homepage
+                                   keeps --ha-gutter)
+     two-column split ... 418 | gap 99 | 850
+     Masters split ...... 363 | 365 | 529
+     gallery / panel .... 61.1% / 38.9%
+     buy column content . x 967 -> 1385.5  (418.5 wide, 49.5 in from the panel)
+     display heading .... 40px / 120%      (smaller than the homepage's 56px)
+     Style title ........ 54px
+     Expression ......... 29px
+     price .............. 22px
+     body ............... 16px / 140%
+     record voice ....... 12-13px
+   Values below are those numbers scaled to a 1440 viewport (x0.959).
+
+   Everything is scoped to .lx-template--product so no restyle can reach the
+   quick-add modal, the cart drawer or another template.
+   ========================================================================== */
+
+.lx-template--product {
+  --ha-pdp-gutter: 20px;
+  --ha-pdp-section-y: 32px;
+  --ha-pdp-col-gap: 3.2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .lx-template--product { --ha-pdp-gutter: 40px; --ha-pdp-section-y: 40px; }
+}
+
+@media screen and (min-width: 990px) {
+  .lx-template--product {
+    --ha-pdp-gutter: 64px;      /* 67 on the wireframe canvas */
+    --ha-pdp-section-y: 48px;   /* wireframe runs 22-54; 48 is the working mean */
+    --ha-pdp-col-gap: clamp(3.2rem, 6.6vw, 9.5rem);  /* 95px at 1440 */
+  }
+}
+
+/* The product page's own gutter and vertical rhythm. */
+.lx-template--product .ha-wrap {
+  padding: var(--ha-pdp-section-y) var(--ha-pdp-gutter);
+}
+
+/* Section headings on this page are 40px, not the homepage's 56px. */
+.lx-template--product .ha-display {
+  font-size: clamp(2.6rem, 2.8vw, 4rem);
+  line-height: 1.2;
+}
+
+/* --- 02  Identity: Lot · Edition / Style / Expression -------------------- */
+
+.ha-pdp__identity { margin: 0; }
+
+.ha-pdp__eyebrow {
+  font-size: 1.2rem;
+  letter-spacing: 0.14em;
+  color: var(--ha-text);
+  margin: 0 0 2.8rem;          /* 43px ink gap to the title */
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.ha-pdp__title {
+  font-size: clamp(3.2rem, 3.8vw, 5.4rem);
+  letter-spacing: 0.02em;
+  line-height: 1.04;
+  margin: 0 0 1.6rem;          /* 27.5px ink gap to the Expression */
+  font-variant-numeric: lining-nums tabular-nums;
+  text-wrap: balance;          /* a long fallback title breaks evenly */
+  overflow-wrap: normal;       /* never split a word — "HANDSP / UN" */
+  hyphens: none;
+}
+
+.ha-pdp__expression {
+  font-size: clamp(1.8rem, 2vw, 2.9rem);
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* In the buy column the provisional notice must not out-weigh the product
+   name, so it drops the box it carries in the editorial sections. */
+.ha-pdp__identity .ha-placeholder-note,
+.ha-pdp__appointment .ha-placeholder-note {
+  border: 0;
+  padding: 0;
+  margin: 1.6rem 0 0;
+  opacity: 0.8;
+}
+
+/* --- 03/04/05  The buy column ------------------------------------------- */
+
+/* The gallery / buy-panel split, stated explicitly.
+   Luxe's own `extra-wide` preset does not resolve to its nominal 60/40 here,
+   and its full-width margin rule pads the panel by --page-margin-desktop
+   (100px) on BOTH sides, which crushed the column to 285px and broke the
+   Style name mid-word. These four rules set the wireframe's geometry
+   directly: gallery 61.1%, panel 38.9%, content 48px in from the panel edge
+   and 402px wide (967 -> 1385.5 on the 1501px canvas). */
+@media screen and (min-width: 950px) {
+  /* `body.` is load-bearing, not decoration. Luxe declares
+     `.product-main-section-layout-extra-wide .product-main-media-section
+      { width: 66% }` later in section-main-product.css, which loads after this
+     file — at equal specificity that rule wins. The element+class selector
+     below outranks it without resorting to !important. */
+  body.lx-template--product .product-main-media-section { width: 61.1%; }
+
+  body.lx-template--product .product-main-info-section {
+    width: 38.9%;
+    padding-left: 48px;
+    padding-right: 0;
+  }
+
+  body.lx-template--product .product__info-container {
+    max-width: 402px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.lx-template--product .product-info-hoz-rule {
+  border-top: 1px solid var(--ha-rule);
+}
+
+/* Size selector. Brief §3 asks for individual touch controls with an obviously
+   different selected state and unavailable sizes that stay understandable but
+   clearly inactive. Luxe's `button` picker already renders a radio + label per
+   value; this restyles it into the wireframe's squares without touching the
+   form.
+
+   The label is positioned rather than laid out as a flex item: `legend` is
+   rendered specially inside a `fieldset` and does not reliably become a flex
+   or grid item across browsers, which is why it was dropping onto its own row. */
+.lx-template--product .product-form__input--pill {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
+  border: 0;
+  margin: 0;
+  padding: 0 0 0 9rem;
+  min-height: 46px;
+}
+
+.lx-template--product .product-form__input--pill > .form__label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 9rem;
+  margin: 0;
+  padding: 0;
+  font-family: var(--ha-font-record);
+  font-size: 1.2rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lx-template--product .product-form__input--pill label {
+  align-items: center;
+  border: 1px solid var(--ha-rule);
+  color: var(--ha-text);
+  display: inline-flex;
+  font-family: var(--ha-font-record);
+  font-size: 1.3rem;
+  justify-content: center;
+  letter-spacing: 0.08em;
+  margin: 0;
+  min-height: 46px;
+  min-width: 46px;
+  padding: 0 1rem;
+  transition: border-color 0.15s ease;
+}
+
+.lx-template--product .product-form__input--pill input[type='radio']:checked + label {
+  border-color: var(--ha-text);
+  box-shadow: inset 0 0 0 1px var(--ha-text);
+}
+
+.lx-template--product .product-form__input--pill input[type='radio']:focus-visible + label {
+  outline: 2px solid var(--ha-text);
+  outline-offset: 2px;
+}
+
+.lx-template--product .product-form__input--pill input[type='radio'].disabled + label,
+.lx-template--product .product-form__input--pill input[type='radio']:disabled + label {
+  color: var(--ha-text-quiet);
+  border-style: dashed;
+}
+
+/* Size & Fit / Delivery sit as a quiet pair, 69.5px below the size row. */
+.lx-template--product .product-popup-modal__opener {
+  display: inline-block;
+  margin: 0 4rem 0 0;
+  vertical-align: top;
+}
+
+.lx-template--product .product-popup-modal__button {
+  font-family: var(--ha-font-record);
+  font-size: 1.2rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.lx-template--product .product-popup-modal__button:hover,
+.lx-template--product .product-popup-modal__button:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
+/* Price: 22px on the wireframe, against Luxe's UI default. */
+.lx-template--product .product__info-container .price {
+  font-family: var(--ha-font-narrate);
+  font-size: clamp(1.8rem, 1.55vw, 2.2rem);
+  letter-spacing: 0.01em;
+}
+
+/* Add to Bag — full width, 57.5px tall on the wireframe. */
+.lx-template--product .product-form__submit {
+  border-radius: 0;
+  font-family: var(--ha-font-identify);
+  font-size: 1.3rem;
+  letter-spacing: 0.16em;
+  min-height: 58px;
+  text-transform: uppercase;
+}
+
+.ha-pdp__appointment { margin-top: 2.4rem; }
+
+.ha-link--inert { color: var(--ha-text-quiet); cursor: default; }
+
+/* --- 01  Gallery position counter --------------------------------------- */
+
+.ha-gallery-count {
+  font-size: 1.2rem;
+  letter-spacing: 0.14em;
+  color: var(--ha-text-quiet);
+  font-variant-numeric: lining-nums tabular-nums;
+  margin: 1.6rem 0 0.8rem;
+  text-align: center;
+}
+
+/* The desktop wireframe shows the whole gallery as a grid — there is no
+   position to report, so the counter is a mobile affordance only. */
+@media screen and (min-width: 990px) {
+  .ha-gallery-count { display: none; }
+}
+
+/* --- shared: a quiet accordion ------------------------------------------ */
+
+.ha-details { border-top: 1px solid var(--ha-rule); margin-top: 2.4rem; }
+
+.ha-details__summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.3rem;
+  justify-content: space-between;
+  letter-spacing: 0.1em;
+  list-style: none;
+  min-height: 44px;
+  padding: 1.2rem 0;
+  text-transform: uppercase;
+}
+
+.ha-details__summary::-webkit-details-marker { display: none; }
+.ha-details__summary:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.ha-details__mark { position: relative; width: 1.2rem; height: 1.2rem; flex: none; }
+
+.ha-details__mark::before,
+.ha-details__mark::after {
+  background: currentColor;
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1px;
+}
+
+.ha-details__mark::after { transform: rotate(90deg); }
+.ha-details[open] .ha-details__mark::after { transform: rotate(0deg); }
+.ha-details__body { padding-bottom: 2rem; }
+
+/* --- the page's two-column module ---------------------------------------
+   418 | 99 | 850 on the wireframe canvas — the same split carries The Garment,
+   the Material Record and The Origin, so they are declared once. The left
+   column is also exactly the width of the buy column's content. */
+
+.ha-garment__grid,
+.ha-precord__grid,
+.ha-origin__grid { display: grid; gap: 3.2rem; }
+
+@media screen and (min-width: 990px) {
+  .ha-garment__grid,
+  .ha-precord__grid,
+  .ha-origin__grid {
+    grid-template-columns: 418fr 850fr;
+    column-gap: var(--ha-pdp-col-gap);
+    align-items: start;
+  }
+}
+
+/* --- 06  The Garment ----------------------------------------------------- */
+
+.ha-garment__heading { margin-bottom: 2.2rem; }   /* 33.5px on the wireframe */
+.ha-garment__intro { margin-bottom: 3.2rem; }     /* 41.5px */
+.ha-garment__figure { aspect-ratio: 16 / 10; }
+
+/* Record rows: 36.5px pitch on the wireframe. */
+.lx-template--product .ha-record__table th,
+.lx-template--product .ha-record__table td { padding: 0.9rem 0; }
+
+/* --- 07  Material Record (product page) ---------------------------------
+   Mobile brief §5 puts the cloth image first "to give the eye a pause before
+   the structured information begins"; the desktop wireframe puts the record
+   first. The DOM keeps the desktop reading order and mobile reorders in the
+   grid, so the heading still precedes its own table for a screen reader. */
+
+.ha-precord__media { order: -1; }
+.ha-precord__figure { aspect-ratio: 4 / 3; }
+
+@media screen and (min-width: 990px) {
+  .ha-precord__media { order: 0; }
+}
+
+/* --- 08  The Origin ------------------------------------------------------
+   One larger raw-fibre image beside two smaller ones (mobile brief §6). The
+   composition holds at every width, so Shopify crops through the theme image
+   container rather than needing a hand-cut file per breakpoint. */
+
+.ha-origin__heading { margin-bottom: 2.2rem; }
+.ha-origin__place { font-size: 1.2rem; letter-spacing: 0.14em; margin: 0 0 2rem; }
+.ha-origin__body { margin-bottom: 1.6rem; }
+.ha-origin__foot { margin: 2.4rem 0 0; }
+
+.ha-origin__media {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.85fr 1.15fr;
+}
+
+.ha-origin__figure--fibre { grid-column: 1; grid-row: 1 / span 2; }
+.ha-origin__figure--dye   { grid-column: 2; grid-row: 1; }
+.ha-origin__figure--loom  { grid-column: 2; grid-row: 2; }
+
+@media screen and (min-width: 990px) {
+  .ha-origin__media { min-height: 42rem; }
+}
+
+/* --- 09  Meet the Masters (feature layout) ------------------------------- */
+
+.ha-masters__heading { margin-bottom: 2.2rem; }
+
+.ha-masters--feature .ha-masters__list { margin-top: 1.6rem; }
+
+.ha-masters--feature .ha-masters__item {
+  align-items: baseline;
+  border-bottom: 1px solid currentColor;
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: 2.4rem 1fr;
+  padding: 1.1rem 0;
+}
+
+.ha-masters--feature .ha-masters__num {
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.ha-masters--feature .ha-masters__role {
+  display: block;
+  font-size: clamp(1.5rem, 1.4vw, 1.8rem);
+  letter-spacing: 0.08em;
+  min-height: 30px;
+  text-transform: uppercase;
+}
+
+.ha-masters--feature a.ha-masters__role { text-decoration: none; color: inherit; }
+
+.ha-masters--feature a.ha-masters__role:hover,
+.ha-masters--feature a.ha-masters__role:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
+.ha-masters__media {
+  display: grid;
+  gap: 1.4rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.ha-masters__figure { aspect-ratio: 3 / 4; }
+
+.ha-masters__cta { margin-top: 2.4rem; }
+
+@media screen and (min-width: 990px) {
+  /* 363 | 365 | 529 on the wireframe canvas. */
+  .ha-masters--feature .ha-masters__grid {
+    grid-template-columns: 363fr 365fr 529fr;
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(3.2rem, 3.8vw, 5.6rem);
+    row-gap: 0;
+  }
+  .ha-masters--feature .ha-masters__lead  { grid-column: 1; grid-row: 1; }
+  .ha-masters--feature .ha-masters__cta   { grid-column: 1; grid-row: 2; justify-self: start; align-self: start; text-align: left; margin-top: 3.2rem; }
+  .ha-masters--feature .ha-masters__body  { grid-column: 2; grid-row: 1 / span 2; }
+  .ha-masters--feature .ha-masters__media { grid-column: 3; grid-row: 1 / span 2; }
+}
+
+/* --- 10  Fibre to Finished Garment ---------------------------------------
+   Mobile brief §8: "My preference is two rows because it allows the visitor to
+   understand the complete sequence at a glance and avoids introducing another
+   carousel." Four across on mobile — eight steps become two rows of four —
+   and the whole sequence in one row from 990px. */
+
+.ha-process__list {
+  display: grid;
+  gap: 2.4rem 1.6rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ha-process__step {
+  align-items: baseline;
+  display: grid;
+  gap: 0.8rem;
+  grid-template-areas: 'num' 'label' 'desc';
+}
+
+.ha-process__num {
+  font-size: 1.2rem;
+  color: var(--ha-text-quiet);
+  grid-area: num;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.ha-process__label {
+  font-size: 1.3rem;
+  grid-area: label;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ha-process__desc { font-size: 1.4rem; grid-area: desc; color: var(--ha-text-quiet); }
+
+/* The connecting rule is a desktop device — at four across it would collide
+   with the labels. */
+.ha-process__rule { display: none; }
+
+@media screen and (min-width: 990px) {
+  /* One row, one equal column per step, however many steps there are.
+     `auto-fit` is wrong here: with a zero minimum it generates a track for
+     every possible column, leaving dozens of empty 0px tracks behind. */
+  .ha-process__list {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+
+  .ha-process__step { grid-template-areas: 'num rule' 'label label' 'desc desc'; grid-template-columns: auto 1fr; }
+
+  .ha-process__rule {
+    background: var(--ha-rule);
+    display: block;
+    grid-area: rule;
+    height: 1px;
+    margin-left: 1.6rem;
+    align-self: center;
+  }
+
+  .ha-process__step:last-child .ha-process__rule { display: none; }
+}
+
+/* --- native sections: hold the page's own gutter -------------------------
+   `collapsible-content` and `related-products` wrap their content in Luxe's
+   .page-width, which pads by --page-margin-desktop (100px). That left them
+   36px inboard of every Hartwick section on the page. These two rules bring
+   them back onto the product page's 64px gutter. */
+
+@media screen and (min-width: 990px) {
+  body.lx-template--product .page-width.accordions-column-layout--1,
+  body.lx-template--product .page-width.accordions-column-layout--2,
+  body.lx-template--product .related-products .page-width,
+  body.lx-template--product .related-products-grid-wrapper {
+    padding-left: var(--ha-pdp-gutter);
+    padding-right: var(--ha-pdp-gutter);
+    max-width: none;
+  }
+
+  /* The card grid carries a second page margin of its own inside the wrapper,
+     which pushed the cards 100px inboard of their own heading. */
+  body.lx-template--product .related-products-grid-wrapper > .slider-grid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* --- 11  Care & Ageing / Delivery & Returns ------------------------------
+   Native `collapsible-content`, two columns with group headings. Restyle only:
+   no section file is forked, so Luxe stays upgradeable.
+   The markup is .accordion-group-heading > h3 and .accordion-title > span —
+   not the `.collapsible-content` / `summary` an earlier pass assumed, which is
+   why the group headings were still rendering in the editorial serif. */
+
+.lx-template--product .accordion-group-heading h3 {
+  font-family: var(--ha-font-record);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 1.2rem;
+}
+
+.lx-template--product .accordion-title {
+  min-height: 44px;
+}
+
+/* Two grouped columns, not rows flowing across two columns.
+   Luxe's `column_layout: 2` builds a 2-column grid in DOM order and spans the
+   group headings across both, so Care and Delivery interleaved:
+   "Care instructions | Ageing & patina" on one line, "Repairs" alone beneath.
+   The wireframe puts Care & Ageing wholly in the left column and Delivery &
+   Returns wholly in the right. Column flow over a fixed row count does that.
+
+   The row count is the size of one group (heading + its rows). Both groups
+   have three rows in the wireframe; if Aloha adds a fourth, change
+   --ha-accordion-rows to 5. */
+@media screen and (min-width: 990px) {
+  /* Multi-column, not grid. A two-column CSS *grid* makes the two groups share
+     row tracks, so opening "Care instructions" resizes the row and drags
+     "Delivery" beside it — the two columns move as one. Multi-column gives each
+     column its own independent flow: opening an accordion on the left grows the
+     left column only. Luxe's accordion JS already animates each panel on its
+     own (`panel.style.height = panel.scrollHeight`), so the coupling was purely
+     a layout artefact. */
+  body.lx-template--product .accordions-column-layout--2 {
+    position: relative;
+    display: block;
+    column-count: 2;
+    column-gap: var(--ha-pdp-col-gap);
+  }
+
+  /* never split a heading or an accordion across the column boundary */
+  body.lx-template--product .accordions-column-layout--2 > * {
+    break-inside: avoid;
+  }
+
+  /* the second group starts the second column */
+  body.lx-template--product .accordions-column-layout--2 > .accordion-group-heading ~ .accordion-group-heading {
+    break-before: column;
+  }
+
+  body.lx-template--product .accordions-column-layout--2 .accordion-group-heading {
+    /* Luxe spaces a second group 40px down from the one above it, which is
+       right when the groups stack and wrong when they sit side by side. */
+    margin-top: 0;
+  }
+
+  /* the wireframe's vertical rule between the two groups */
+  body.lx-template--product .accordions-column-layout--2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: var(--ha-rule);
+  }
+}
+
+.lx-template--product .accordion-title span {
+  font-family: var(--ha-font-record);
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* --- 13  You may also consider ------------------------------------------
+   Native `related-products`. Shopify's own recommendation logic, analytics and
+   inventory are untouched — the wireframe treatment is CSS only. */
+
+/* Luxe names the card title .card-product-title-h3, not .card__heading. */
+.lx-template--product .related-products .card-product-title-h3,
+.lx-template--product .related-products .card-product-title-h3 a {
+  font-family: var(--ha-font-identify);
+  font-size: clamp(1.8rem, 1.6vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.lx-template--product .related-products .price,
+.lx-template--product .related-products .price-item {
+  font-family: var(--ha-font-record);
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+}
+
+
+/* ==========================================================================
+   Images: shown whole, and openable
+   ========================================================================== */
+
+/* A real image is never cropped. The figure takes the image's own proportions;
+   the reserved aspect-ratio applies to the placeholder field only, so the page
+   still holds its shape before Angela's assets land and stops reserving a crop
+   once they do. */
+body.lx-template--product .ha-figure:not(.ha-figure--empty) {
+  aspect-ratio: auto;
+  height: auto;
+  min-height: 0;
+  align-self: start;   /* don't stretch to a grid row and re-introduce a crop */
+  background: transparent;  /* the placeholder field must not show as a border */
+}
+
+body.lx-template--product .ha-figure:not(.ha-figure--empty) img {
+  height: auto;
+  object-fit: contain;
+}
+
+/* Layout stability is kept, not traded away: `image_tag` writes width and
+   height attributes, so the browser reserves the image's own ratio before the
+   file loads (mobile brief §12, STABLE LAYOUT). Verified — the box is correct
+   while `img.complete` is still false. */
+
+/* A tall portrait in a wide column would otherwise run to ~1200px and dwarf the
+   record beside it. Scaling the image down keeps the section in proportion
+   without cropping a pixel — the image simply gets smaller, and centres. */
+@media screen and (min-width: 990px) {
+  body.lx-template--product .ha-figure:not(.ha-figure--empty) {
+    max-height: 64rem;
+    text-align: center;
+  }
+
+  body.lx-template--product .ha-figure:not(.ha-figure--empty) img {
+    width: auto;
+    max-width: 100%;
+    max-height: 64rem;
+    margin-inline: auto;
+  }
+}
+
+/* The gallery and its zoom modal are Luxe's own; `gallery_media_scale:
+   scale-down` in the template settings puts object-fit: scale-down on both, so
+   a landscape photograph is no longer cropped to the portrait frame. */
+
+/* Tap or click the image to open the larger view (mobile brief §2). The button
+   Luxe renders already covers the whole image, but it gives no sign of it: the
+   cursor stays default and the icon is faded out precisely when the visitor
+   hovers. Both inverted here — the affordance now appears on hover, and the
+   pointer says what the click does. */
+body.lx-template--product .magnify-icon {
+  cursor: zoom-in;
+  padding: 1.2rem;
+}
+
+@media screen and (min-width: 950px) {
+  body.lx-template--product .product-media-image .magnify-icon { opacity: 0.55; }
+  body.lx-template--product .product-media-image:hover .magnify-icon { opacity: 1; }
+}
+
+body.lx-template--product .magnify-icon:focus-visible {
+  outline: 2px solid var(--ha-text);
+  outline-offset: -4px;
+}

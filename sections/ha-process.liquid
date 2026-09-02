@@ -1,0 +1,110 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 10 FIBRE TO FINISHED GARMENT.
+  Wireframe (03) PRODUCT PAGE §10; mobile brief §8.
+
+  "On narrow screens, the steps may wrap into two rows or use a controlled
+  horizontal scroll. My preference is two rows because it allows the visitor to
+  understand the complete sequence at a glance and avoids introducing another
+  carousel." — mobile brief §8.
+
+  Built to that preference: a wrapping grid, four across on mobile (two rows of
+  four for eight steps), the full sequence in one row on desktop. No carousel,
+  no horizontal scroll, no hover dependency, nothing to swipe past.
+
+  ⚠️ STEP COUNT CONFLICT — flagged to Aloha.
+  The desktop wireframe prints seven steps (Fibre, Spinning, Weaving, Dyeing,
+  Cutting, Finishing, Wear). Both the mobile brief §8 and docs/data-model.md
+  list eight — the same sequence plus CONSTRUCTION between Cutting and
+  Finishing. Two sources agree against one, so this is built to eight. Deleting
+  a block returns it to the wireframe's seven with no code change.
+
+  Data: hartwick.process_steps, a list of `process_step` metaobjects ordered by
+  their `order` field. With none bound, the section's blocks render instead.
+{%- endcomment -%}
+
+{%- liquid
+  assign steps = product.metafields.hartwick.process_steps.value
+  assign use_placeholders = true
+  if steps != blank and steps.size > 0
+    assign use_placeholders = false
+  endif
+-%}
+
+<section class="ha-section ha-process">
+  <div class="ha-wrap">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <ol class="ha-process__list">
+      {%- if use_placeholders -%}
+        {%- for block in section.blocks -%}
+          <li class="ha-process__step" {{ block.shopify_attributes }}>
+            <span class="ha-process__num ha-record">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="ha-process__rule" aria-hidden="true"></span>
+            <span class="ha-process__label ha-record">{{ block.settings.label }}</span>
+            {%- if block.settings.description != blank -%}
+              <span class="ha-process__desc ha-narrate">{{ block.settings.description }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for step in steps -%}
+          <li class="ha-process__step">
+            <span class="ha-process__num ha-record">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="ha-process__rule" aria-hidden="true"></span>
+            <span class="ha-process__label ha-record">{{ step.label }}</span>
+            {%- if step.description != blank -%}
+              <span class="ha-process__desc ha-narrate">{{ step.description }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ol>
+
+    {%- if use_placeholders -%}
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Fibre to Garment",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Fibre to Finished Garment" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "description", "label": "Description", "info": "Optional. Kept short — the brief asks for an index, not paragraphs." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hartwick — Fibre to Garment",
+      "blocks": [
+        { "type": "step", "settings": { "label": "Fibre" } },
+        { "type": "step", "settings": { "label": "Spinning" } },
+        { "type": "step", "settings": { "label": "Weaving" } },
+        { "type": "step", "settings": { "label": "Dyeing" } },
+        { "type": "step", "settings": { "label": "Cutting" } },
+        { "type": "step", "settings": { "label": "Construction" } },
+        { "type": "step", "settings": { "label": "Finishing" } },
+        { "type": "step", "settings": { "label": "Wear" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

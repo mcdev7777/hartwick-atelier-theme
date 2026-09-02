@@ -22,6 +22,11 @@
     {% render 'ha-material-record', product: product, full: true %}
     {% render 'ha-material-record', product: section.settings.product,
          ph_title: section.settings.title, ph_fibre: ... %}
+
+  On the product page the Lot, Style and Expression are already stated at the top
+  of the buy column, so the record renders the table alone:
+    {% render 'ha-material-record', product: product, full: true,
+         hide_eyebrow: true, hide_title: true, hide_intro: true %}
 {%- endcomment -%}
 
 {%- liquid
@@ -74,34 +79,43 @@
 
   assign r_availability = mf.availability_note | default: ph_availability
 
-  assign r_yarn = mf.yarn
-  assign r_weave = mf.weave
-  assign r_weight = ''
+  # --- the deeper rows, shown only when full: true (mobile brief §5) --------
+  assign r_yarn = mf.yarn | default: ph_yarn
+  assign r_weave = mf.weave | default: ph_weave
+
+  assign r_weight = ph_weight
   if mf.weight_gsm != blank
     assign r_weight = mf.weight_gsm | append: ' gsm'
   endif
-  assign r_dye = mf.dye.value.name
-  assign r_woven = mf.place_of_weaving.value.place
-  assign r_dyed = mf.place_of_dyeing.value.place
-  assign r_finishing = mf.finishing
+
+  assign r_dye = mf.dye.value.name | default: ph_dye
+  assign r_woven = mf.place_of_weaving.value.place | default: ph_woven
+  assign r_dyed = mf.place_of_dyeing.value.place | default: ph_dyed
+  assign r_finishing = mf.finishing | default: ph_finishing
 -%}
 
 <div class="ha-record-block">
-  {%- if lot_label != blank or edition_label != blank -%}
-    <p class="ha-record__eyebrow ha-record">
-      {{- lot_label -}}
-      {%- if lot_label != blank and edition_label != blank %} &middot; {% endif -%}
-      {{- edition_label -}}
-    </p>
-  {%- endif -%}
+  {%- unless hide_eyebrow -%}
+    {%- if lot_label != blank or edition_label != blank -%}
+      <p class="ha-record__eyebrow ha-record">
+        {{- lot_label -}}
+        {%- if lot_label != blank and edition_label != blank %} &middot; {% endif -%}
+        {{- edition_label -}}
+      </p>
+    {%- endif -%}
+  {%- endunless -%}
 
-  {%- if record_title != blank -%}
-    <h2 class="ha-record__title ha-identify">{{ record_title }}</h2>
-  {%- endif -%}
+  {%- unless hide_title -%}
+    {%- if record_title != blank -%}
+      <h2 class="ha-record__title ha-identify">{{ record_title }}</h2>
+    {%- endif -%}
+  {%- endunless -%}
 
-  {%- if record_intro != blank -%}
-    <div class="ha-record__intro ha-body ha-narrate">{{ record_intro }}</div>
-  {%- endif -%}
+  {%- unless hide_intro -%}
+    {%- if record_intro != blank -%}
+      <div class="ha-record__intro ha-body ha-narrate">{{ record_intro }}</div>
+    {%- endif -%}
+  {%- endunless -%}
 
   <table class="ha-record__table ha-record">
     <caption class="visually-hidden">The material record</caption>
