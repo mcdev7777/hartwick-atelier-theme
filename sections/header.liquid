@@ -220,7 +220,15 @@
 
 {% assign half_nb_base_height_dt = nb_base_height_dt | divided_by: 2 %}
 
-{% assign cart_label = 'shopify.checkout.general.cart' | t %}
+{%- comment -%}
+  Hartwick: the bag is a Bag, never a Cart. 'shopify.checkout.general.cart' is a
+  Shopify system string that always renders "Cart" and cannot be overridden from
+  a theme locale file, so the header reads templates.cart.cart from
+  locales/en.default.json, where the rest of the theme's bag wording already lives.
+  Shopify's own checkout pages still say Cart until the system translation is
+  edited in Admin > Settings > Languages.
+{%- endcomment -%}
+{% assign cart_label = 'templates.cart.cart' | t %}
 {% assign cart_label_length = cart_label | size %}
 
 {%- style -%}
@@ -930,7 +938,7 @@
   <div class="hdr-st-item hdr-st-item-cart cart-ui-{{ section.settings.cart_ui }} cart-qty-iu--{{ section.settings.cart_ui_quantity }}">
     {% assign cart_icon = section.settings.cart_ui %}
     <a class="cart-icon--bubble{% if template == 'cart' %} cart-icon--bubble-cart-page{% endif %}" id="cart-link" href="{{ routes.cart_url }}">
-    <span class="cart-bubble-label{% if cart_label_length > 7 %} cart-bubble-label-long{% endif %}">{{ 'shopify.checkout.general.cart' | t }}</span>
+    <span class="cart-bubble-label{% if cart_label_length > 7 %} cart-bubble-label-long{% endif %}">{{ cart_label }}</span>
     {% render 'icon-header-cart',
     icon: cart_icon
     %}
