@@ -1,0 +1,151 @@
+{%- comment -%}
+  Hartwick Atelier — THE MATERIAL RECORD (shared component).
+
+  Used twice:
+    · homepage  — sections/ha-featured-lot.liquid (the short record: five rows)
+    · product   — sections/main-product.liquid, Phase 1 Day 4 (full: true, all rows)
+
+  Luxe's native `product_specifications` block cannot do this. It splits
+  product.description on the literal string SPECIFICATIONS
+  (sections/main-product.liquid) and never reads a metafield, so a structured
+  record has to be its own component. See docs/audit-and-plan.md §C.
+
+  Data comes from hartwick.* metafields (docs/data-model.md §3). Every row renders
+  only when its field is present — an empty field collapses with no orphaned label
+  and no gap (mobile brief §5). With no product bound, the wireframe's own
+  placeholder strings render instead and the section shows the placeholder notice.
+
+  Terminology: the Lot is customer-facing as a Roman numeral (LOT I), per
+  Framework v3. The wireframe's "LOT 001" is superseded — flagged to Aloha.
+
+  Usage:
+    {% render 'ha-material-record', product: product, full: true %}
+    {% render 'ha-material-record', product: section.settings.product,
+         ph_title: section.settings.title, ph_fibre: ... %}
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = nil
+  if product != blank
+    assign mf = product.metafields.hartwick
+  endif
+
+  # --- eyebrow: LOT I · EDITION 07 / 25 ---------------------------------
+  assign lot_label = ''
+  if mf.lot.value.number_roman != blank
+    assign lot_label = 'Lot ' | append: mf.lot.value.number_roman
+  elsif ph_lot != blank
+    assign lot_label = ph_lot
+  endif
+
+  assign edition_label = ''
+  if mf.edition_number != blank and mf.edition_size != blank
+    assign edition_label = 'Edition ' | append: mf.edition_number | append: ' / ' | append: mf.edition_size
+  elsif ph_edition_label != blank
+    assign edition_label = ph_edition_label
+  endif
+
+  # --- title: the Style's display name, never a legacy name --------------
+  assign record_title = ph_title
+  if mf.style.value.display_name != blank
+    assign record_title = mf.style.value.display_name
+  elsif product != blank
+    assign record_title = product.title
+  endif
+
+  assign record_intro = ph_intro
+  if mf.expression != blank
+    assign record_intro = mf.expression
+  endif
+
+  # --- rows ---------------------------------------------------------------
+  assign r_fibre = mf.fibre | default: ph_fibre
+  assign r_colour = mf.colour_name | default: ph_colour
+
+  assign r_made_by = ph_made_by
+  if mf.place_of_construction.value.place != blank
+    assign r_made_by = 'The Masters, ' | append: mf.place_of_construction.value.place
+  endif
+
+  assign r_edition = ph_edition
+  if mf.edition_size != blank
+    assign r_edition = mf.edition_size | append: ' per size'
+  endif
+
+  assign r_availability = mf.availability_note | default: ph_availability
+
+  assign r_yarn = mf.yarn
+  assign r_weave = mf.weave
+  assign r_weight = ''
+  if mf.weight_gsm != blank
+    assign r_weight = mf.weight_gsm | append: ' gsm'
+  endif
+  assign r_dye = mf.dye.value.name
+  assign r_woven = mf.place_of_weaving.value.place
+  assign r_dyed = mf.place_of_dyeing.value.place
+  assign r_finishing = mf.finishing
+-%}
+
+<div class="ha-record-block">
+  {%- if lot_label != blank or edition_label != blank -%}
+    <p class="ha-record__eyebrow ha-record">
+      {{- lot_label -}}
+      {%- if lot_label != blank and edition_label != blank %} &middot; {% endif -%}
+      {{- edition_label -}}
+    </p>
+  {%- endif -%}
+
+  {%- if record_title != blank -%}
+    <h2 class="ha-record__title ha-identify">{{ record_title }}</h2>
+  {%- endif -%}
+
+  {%- if record_intro != blank -%}
+    <div class="ha-record__intro ha-body ha-narrate">{{ record_intro }}</div>
+  {%- endif -%}
+
+  <table class="ha-record__table ha-record">
+    <caption class="visually-hidden">The material record</caption>
+    <tbody>
+      {%- if r_fibre != blank -%}
+        <tr><th scope="row">Fibre</th><td>{{ r_fibre }}</td></tr>
+      {%- endif -%}
+      {%- if full and r_yarn != blank -%}
+        <tr><th scope="row">Yarn</th><td>{{ r_yarn }}</td></tr>
+      {%- endif -%}
+      {%- if full and r_weave != blank -%}
+        <tr><th scope="row">Weave</th><td>{{ r_weave }}</td></tr>
+      {%- endif -%}
+      {%- if full and r_weight != blank -%}
+        <tr><th scope="row">Weight</th><td>{{ r_weight }}</td></tr>
+      {%- endif -%}
+      {%- if r_colour != blank -%}
+        <tr><th scope="row">Colour</th><td>{{ r_colour }}</td></tr>
+      {%- endif -%}
+      {%- if full and r_dye != blank -%}
+        <tr><th scope="row">Dye</th><td>{{ r_dye }}</td></tr>
+      {%- endif -%}
+      {%- if full and r_woven != blank -%}
+        <tr><th scope="row">Woven in</th><td>{{ r_woven }}</td></tr>
+      {%- endif -%}
+      {%- if full and r_dyed != blank -%}
+        <tr><th scope="row">Dyed in</th><td>{{ r_dyed }}</td></tr>
+      {%- endif -%}
+      {%- if r_made_by != blank -%}
+        <tr><th scope="row">Made by</th><td>{{ r_made_by }}</td></tr>
+      {%- endif -%}
+      {%- if full and r_finishing != blank -%}
+        <tr><th scope="row">Finishing</th><td>{{ r_finishing }}</td></tr>
+      {%- endif -%}
+      {%- if r_edition != blank -%}
+        <tr><th scope="row">Edition</th><td>{{ r_edition }}</td></tr>
+      {%- endif -%}
+      {%- if r_availability != blank -%}
+        <tr><th scope="row">Availability</th><td>{{ r_availability }}</td></tr>
+      {%- endif -%}
+    </tbody>
+  </table>
+
+  {%- if link_text != blank -%}
+    <a class="ha-record__link ha-identify" href="{{ link_url | default: '#' }}">{{ link_text }}</a>
+  {%- endif -%}
+</div>

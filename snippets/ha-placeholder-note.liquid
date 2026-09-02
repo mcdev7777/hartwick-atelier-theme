@@ -1,0 +1,13 @@
+{%- comment -%}
+  Hartwick Atelier — provisional content marker.
+
+  CLAUDE.md: anything unverified ships as a clearly labelled placeholder in the
+  unpublished theme. This renders that label. Every section that can carry
+  placeholder copy has a checkbox to switch it off once real content is in.
+{%- endcomment -%}
+
+{%- if show -%}
+  <p class="ha-placeholder-note ha-record">
+    {{ text | default: 'Placeholder content — wireframe copy, not approved for publication' }}
+  </p>
+{%- endif -%}

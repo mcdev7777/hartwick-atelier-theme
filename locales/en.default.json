@@ -71,9 +71,9 @@
     }
   },
   "newsletter": {
-    "label": "Email",
-    "success": "Thank you for subscribing",
-    "button_label": "Subscribe"
+    "label": "Email address",
+    "success": "You are on The Register",
+    "button_label": "Join The Register"
   },
   "accessibility": {
     "skip_to_text": "Skip to content",

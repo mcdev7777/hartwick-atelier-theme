@@ -1,0 +1,89 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 02 THE HOUSE.
+  Wireframe (01) HOMEPAGE §02: one lead landscape image with two tiles beneath,
+  editorial column to the right. On mobile the text leads and the images follow,
+  per the mobile wireframe.
+{%- endcomment -%}
+
+<section class="ha-section ha-house">
+  <div class="ha-wrap">
+    <div class="ha-house__grid">
+      <div class="ha-house__media">
+        {%- render 'ha-figure',
+          image: section.settings.lead_image,
+          label: section.settings.lead_image_label,
+          class: 'ha-house__figure--lead',
+          sizes: '(min-width: 990px) 52vw, 100vw',
+          alt: section.settings.lead_image_alt
+        -%}
+        {%- render 'ha-figure',
+          image: section.settings.tile_one_image,
+          label: section.settings.tile_one_label,
+          class: 'ha-house__figure--tile',
+          sizes: '(min-width: 990px) 26vw, 50vw',
+          alt: section.settings.tile_one_alt
+        -%}
+        {%- render 'ha-figure',
+          image: section.settings.tile_two_image,
+          label: section.settings.tile_two_label,
+          class: 'ha-house__figure--tile',
+          sizes: '(min-width: 990px) 26vw, 50vw',
+          alt: section.settings.tile_two_alt
+        -%}
+      </div>
+
+      <div class="ha-house__text">
+        {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ha-display ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.body != blank -%}
+          <div class="ha-body ha-narrate">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.cta_text != blank -%}
+          <p><a class="ha-link ha-identify" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a></p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — The House",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The House" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A slower way of making." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Hartwick Atelier follows the complete life of a garment, from fibre and dye plant to loom, hand-finishing and wearer. The story is not added after the piece is made. The story is the piece.</p>" },
+    { "type": "text", "id": "cta_text", "label": "Link text" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "header", "content": "Lead image" },
+    { "type": "image_picker", "id": "lead_image", "label": "Image" },
+    { "type": "text", "id": "lead_image_alt", "label": "Alt text" },
+    { "type": "text", "id": "lead_image_label", "label": "Placeholder label", "default": "Archive image / landscape / cloth detail" },
+    { "type": "header", "content": "Tile 01" },
+    { "type": "image_picker", "id": "tile_one_image", "label": "Image" },
+    { "type": "text", "id": "tile_one_alt", "label": "Alt text" },
+    { "type": "text", "id": "tile_one_label", "label": "Placeholder label", "default": "01 / Raw cloth" },
+    { "type": "header", "content": "Tile 02" },
+    { "type": "image_picker", "id": "tile_two_image", "label": "Image" },
+    { "type": "text", "id": "tile_two_alt", "label": "Alt text" },
+    { "type": "text", "id": "tile_two_label", "label": "Placeholder label", "default": "02 / Archive image" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — The House" }]
+}
+{% endschema %}

@@ -1,0 +1,108 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 07 THE REGISTER.
+  Wireframe (01) HOMEPAGE §07: dark field, headline left, invitation and form right.
+
+  Terminology (CLAUDE.md, non-negotiable): this is The Register — public and free to
+  join. The Circle is invitation-only and has no public form, so nothing here may
+  offer one. The Dispatch is the newsletter The Register receives.
+
+  Why this is not Luxe's native `newsletter`: that section has no eyebrow, and it
+  places the invitation copy in the heading column rather than above the form. The
+  form itself is still Shopify's own customer form — same submission,
+  same success and error states, same customer record.
+
+  Klaviyo (Thursday 3 Sep, risk R5): this section accepts @app blocks, so the
+  Klaviyo form block drops in beside or in place of the native form with no rebuild.
+  Consent and source properties get wired then.
+{%- endcomment -%}
+
+<section class="ha-section ha-section--dark ha-register">
+  <div class="ha-wrap">
+    <div class="ha-register__grid">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ha-display ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+
+      <div class="ha-register__aside">
+        {%- if section.settings.body != blank -%}
+          <div class="ha-body ha-narrate ha-register__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- if section.settings.show_native_form -%}
+          {%- form 'customer', class: 'ha-register__form newsletter-form' -%}
+            <input type="hidden" name="contact[tags]" value="{{ section.settings.contact_tag }}">
+            <div class="ha-register__field">
+              <label class="ha-register__label ha-record" for="HaRegister--{{ section.id }}">
+                {{ 'newsletter.label' | t }}
+              </label>
+              <input
+                id="HaRegister--{{ section.id }}"
+                type="email"
+                name="contact[email]"
+                class="ha-register__input ha-narrate"
+                value="{{ form.email }}"
+                aria-required="true"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                {% if form.errors %}
+                  aria-invalid="true"
+                  aria-describedby="HaRegister-error--{{ section.id }}"
+                {% elsif form.posted_successfully? %}
+                  aria-describedby="HaRegister-success--{{ section.id }}"
+                {% endif %}
+                required
+              >
+              <button type="submit" class="ha-register__submit ha-identify" name="commit">
+                {{ 'newsletter.button_label' | t }}
+              </button>
+            </div>
+
+            {%- if form.errors -%}
+              <p class="ha-register__message ha-record" id="HaRegister-error--{{ section.id }}" role="alert">
+                {{- form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email -}}
+              </p>
+            {%- endif -%}
+
+            {%- if form.posted_successfully? -%}
+              <p class="ha-register__message ha-record" id="HaRegister-success--{{ section.id }}" tabindex="-1" role="status">
+                {{- 'newsletter.success' | t -}}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — The Register",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Register" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Be first to receive what comes next." },
+    { "type": "richtext", "id": "body", "label": "Invitation", "default": "<p>Private access to new Lots, The Dispatch, and stories from the workshops before they reach the wider world.</p>" },
+    { "type": "checkbox", "id": "show_native_form", "label": "Show the Shopify form", "default": true, "info": "Switch off once the Klaviyo block is added." },
+    { "type": "text", "id": "contact_tag", "label": "Customer tag", "default": "the-register" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Hartwick — The Register" }]
+}
+{% endschema %}

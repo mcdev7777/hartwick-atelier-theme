@@ -1,0 +1,129 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 06 JOURNAL / THE DISPATCH.
+  Wireframe (01) HOMEPAGE §06: three cards, image over title over one line of copy.
+
+  Bind a blog and the three most recent articles render, using the article's
+  hartwick category and standfirst metafields (docs/data-model.md §4) when they
+  exist. The store's only blog is currently empty, so the wireframe's three
+  Dispatch categories render as labelled placeholders instead.
+
+  Mobile: stacked, per the recommendation to Aloha (audit-and-plan.md §D). A swipe
+  row would add a carousel we don't need and that costs us on accessibility.
+  Switch "Cards on mobile" to Row if she prefers the mobile wireframe's version.
+{%- endcomment -%}
+
+{%- liquid
+  assign articles = section.settings.blog.articles
+  assign use_placeholders = true
+  if articles.size > 0
+    assign use_placeholders = false
+  endif
+-%}
+
+<section class="ha-section ha-journal">
+  <div class="ha-wrap">
+    {%- if use_placeholders -%}
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+    {%- endif -%}
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <div class="ha-journal__grid ha-journal__grid--mobile-{{ section.settings.mobile_layout }}">
+      {%- if use_placeholders -%}
+        {%- for block in section.blocks -%}
+          <article class="ha-journal__card" {{ block.shopify_attributes }}>
+            {%- render 'ha-figure',
+              image: block.settings.image,
+              label: block.settings.image_label,
+              class: 'ha-journal__figure',
+              sizes: '(min-width: 990px) 31vw, 100vw'
+            -%}
+            <h3 class="ha-journal__title ha-identify">{{ block.settings.title }}</h3>
+            {%- if block.settings.excerpt != blank -%}
+              <p class="ha-journal__excerpt ha-narrate">{{ block.settings.excerpt }}</p>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for article in articles limit: section.settings.post_limit -%}
+          {%- liquid
+            assign card_title = article.title
+            if article.metafields.hartwick.category != blank
+              assign card_title = article.metafields.hartwick.category
+            endif
+            assign card_excerpt = article.metafields.hartwick.standfirst | default: article.excerpt
+          -%}
+          <article class="ha-journal__card">
+            <a class="ha-journal__link" href="{{ article.url }}">
+              {%- render 'ha-figure',
+                image: article.image,
+                label: 'Editorial image',
+                class: 'ha-journal__figure',
+                sizes: '(min-width: 990px) 31vw, 100vw',
+                alt: article.image.alt
+              -%}
+              <h3 class="ha-journal__title ha-identify">{{ card_title }}</h3>
+            </a>
+            {%- if card_excerpt != blank -%}
+              <p class="ha-journal__excerpt ha-narrate">{{ card_excerpt | strip_html | truncatewords: 18 }}</p>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <p class="ha-journal__foot">
+        <a class="ha-link ha-identify" href="{{ section.settings.blog.url | default: section.settings.cta_link | default: '#' }}">
+          {{ section.settings.cta_text }}
+        </a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Journal",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Journal / Dispatch" },
+    { "type": "blog", "id": "blog", "label": "Blog", "info": "When it has articles, they replace the placeholder cards." },
+    { "type": "range", "id": "post_limit", "min": 2, "max": 4, "step": 1, "label": "Cards", "default": 3 },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Cards on mobile",
+      "default": "stack",
+      "options": [
+        { "value": "stack", "label": "Stack" },
+        { "value": "row", "label": "Row" }
+      ],
+      "info": "Stacked is the recommendation: a swipe row adds a carousel and costs accessibility."
+    },
+    { "type": "text", "id": "cta_text", "label": "Link text" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Placeholder card",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "excerpt", "label": "One line" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_label", "label": "Placeholder label" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "HA — Journal" }]
+}
+{% endschema %}

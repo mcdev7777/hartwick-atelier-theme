@@ -1,0 +1,169 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+<script src="{{ 'ha-collection-index.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  Hartwick Atelier — 03 COLLECTION INDEX.
+  Wireframe (01) HOMEPAGE §03: a numbered index on the left, a four-image panel
+  on the right that changes with the selected row.
+
+  Data: the chosen collection's products. Row label is the Style's display name
+  and the Expression (docs/data-model.md §3) with the product title as fallback;
+  the Lot renders as a Roman numeral per Framework v3. With no collection bound
+  the wireframe's placeholder rows render instead, marked as provisional.
+
+  Selection is by click/tap/keyboard, never hover — see ha-collection-index.js.
+{%- endcomment -%}
+
+{%- liquid
+  assign products = section.settings.collection.products
+  assign row_limit = section.settings.row_limit
+  assign use_placeholders = true
+  if products.size > 0
+    assign use_placeholders = false
+  endif
+-%}
+
+<section class="ha-section ha-index">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <ha-collection-index class="ha-index__grid">
+      <div>
+        <ul class="ha-index__list" role="tablist" aria-label="{{ section.settings.eyebrow | escape }}">
+          {%- if use_placeholders -%}
+            {%- for block in section.blocks -%}
+              <li class="ha-index__row" role="presentation" {{ block.shopify_attributes }}>
+                <button
+                  class="ha-index__btn"
+                  role="tab"
+                  id="{{ section.id }}-tab-{{ forloop.index }}"
+                  aria-controls="{{ section.id }}-panel-{{ forloop.index }}"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+                  type="button"
+                >
+                  <span class="ha-index__num ha-record">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                  <span class="ha-index__name ha-narrate">{{ block.settings.name }}</span>
+                  <span class="ha-index__lot ha-record">{{ block.settings.lot }}</span>
+                </button>
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for product in products limit: row_limit -%}
+              {%- liquid
+                assign mf = product.metafields.hartwick
+                assign row_name = product.title
+                if mf.style.value.display_name != blank
+                  assign row_name = mf.style.value.display_name
+                  if mf.expression != blank
+                    assign row_name = row_name | append: ' · ' | append: mf.expression
+                  endif
+                endif
+                assign row_lot = ''
+                if mf.lot.value.number_roman != blank
+                  assign row_lot = 'Lot ' | append: mf.lot.value.number_roman
+                endif
+              -%}
+              <li class="ha-index__row" role="presentation">
+                <button
+                  class="ha-index__btn"
+                  role="tab"
+                  id="{{ section.id }}-tab-{{ forloop.index }}"
+                  aria-controls="{{ section.id }}-panel-{{ forloop.index }}"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+                  type="button"
+                >
+                  <span class="ha-index__num ha-record">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                  <span class="ha-index__name ha-narrate">{{ row_name }}</span>
+                  <span class="ha-index__lot ha-record">{{ row_lot }}</span>
+                </button>
+              </li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+
+        {%- if section.settings.cta_text != blank -%}
+          <p class="ha-index__foot">
+            <a class="ha-link ha-identify" href="{{ section.settings.cta_link | default: section.settings.collection.url | default: '#' }}">
+              {{ section.settings.cta_text }}
+            </a>
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div>
+        {%- if use_placeholders -%}
+          {%- for block in section.blocks -%}
+            <div
+              class="ha-index__preview ha-index__panel"
+              role="tabpanel"
+              id="{{ section.id }}-panel-{{ forloop.index }}"
+              aria-labelledby="{{ section.id }}-tab-{{ forloop.index }}"
+              tabindex="0"
+              {% unless forloop.first %}hidden{% endunless %}
+            >
+              {%- render 'ha-figure', image: block.settings.image_primary, label: '01 / Selected garment image', class: 'ha-index__figure--primary', sizes: '(min-width: 990px) 30vw, 100vw' -%}
+              {%- render 'ha-figure', image: block.settings.image_detail_one, label: '02 / Detail', class: 'ha-index__figure--detail', sizes: '(min-width: 990px) 20vw, 50vw' -%}
+              {%- render 'ha-figure', image: block.settings.image_detail_two, label: '03 / Detail', class: 'ha-index__figure--detail', sizes: '(min-width: 990px) 20vw, 50vw' -%}
+              {%- render 'ha-figure', image: block.settings.image_wearer, label: '04 / Detail or wearer image', class: 'ha-index__figure--wide', sizes: '(min-width: 990px) 40vw, 100vw' -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for product in products limit: row_limit -%}
+            <div
+              class="ha-index__preview ha-index__panel"
+              role="tabpanel"
+              id="{{ section.id }}-panel-{{ forloop.index }}"
+              aria-labelledby="{{ section.id }}-tab-{{ forloop.index }}"
+              tabindex="0"
+              {% unless forloop.first %}hidden{% endunless %}
+            >
+              {%- render 'ha-figure', image: product.images[0], label: '01 / Selected garment image', class: 'ha-index__figure--primary', sizes: '(min-width: 990px) 30vw, 100vw', alt: product.images[0].alt -%}
+              {%- render 'ha-figure', image: product.images[1], label: '02 / Detail', class: 'ha-index__figure--detail', sizes: '(min-width: 990px) 20vw, 50vw', alt: product.images[1].alt -%}
+              {%- render 'ha-figure', image: product.images[2], label: '03 / Detail', class: 'ha-index__figure--detail', sizes: '(min-width: 990px) 20vw, 50vw', alt: product.images[2].alt -%}
+              {%- render 'ha-figure', image: product.images[3], label: '04 / Detail or wearer image', class: 'ha-index__figure--wide', sizes: '(min-width: 990px) 40vw, 100vw', alt: product.images[3].alt -%}
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </ha-collection-index>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Collection Index",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collection index" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "When set, rows come from the collection's products and the placeholder rows below are ignored." },
+    { "type": "range", "id": "row_limit", "min": 3, "max": 12, "step": 1, "label": "Rows", "default": 7 },
+    { "type": "text", "id": "cta_text", "label": "Link text", "default": "View full catalogue" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Placeholder row",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "lot", "label": "Lot" },
+        { "type": "image_picker", "id": "image_primary", "label": "01 / Garment image" },
+        { "type": "image_picker", "id": "image_detail_one", "label": "02 / Detail" },
+        { "type": "image_picker", "id": "image_detail_two", "label": "03 / Detail" },
+        { "type": "image_picker", "id": "image_wearer", "label": "04 / Detail or wearer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hartwick — Collection Index" }]
+}
+{% endschema %}

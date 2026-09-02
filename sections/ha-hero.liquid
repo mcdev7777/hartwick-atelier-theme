@@ -1,0 +1,86 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 01 HERO.
+  Wireframe (01) HOMEPAGE, desktop and mobile.
+
+  Mobile order follows the mobile wireframe: image first, then the eyebrow
+  (NATURE · MASTERS · WEARER), headline, record line, rule, body, link.
+  The eyebrow is mobile-only in the wireframe; the checkbox restores it on desktop.
+{%- endcomment -%}
+
+<section
+  class="ha-section ha-hero"
+  style="--ha-hero-media-width: {{ section.settings.media_width }}%;"
+>
+  <div class="ha-hero__grid">
+    <div class="ha-hero__media">
+      {%- render 'ha-figure',
+        image: section.settings.image,
+        label: section.settings.image_label,
+        class: 'ha-hero__figure',
+        sizes: '(min-width: 990px) 58vw, 100vw',
+        loading: 'eager',
+        alt: section.settings.image_alt
+      -%}
+    </div>
+
+    <div class="ha-hero__text">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-record ha-hero__eyebrow{% unless section.settings.show_eyebrow_desktop %} ha-hero__eyebrow--desktop-hidden{% endunless %}">
+          {{ section.settings.eyebrow }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h1 class="ha-display ha-display--lg ha-narrate">
+          {{ section.settings.heading | newline_to_br }}
+        </h1>
+      {%- endif -%}
+
+      {%- if section.settings.subhead != blank -%}
+        <p class="ha-hero__subhead ha-record">{{ section.settings.subhead }}</p>
+      {%- endif -%}
+
+      <hr class="ha-rule">
+
+      {%- if section.settings.body != blank -%}
+        <div class="ha-body ha-narrate ha-hero__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.cta_text != blank -%}
+        <a class="ha-link ha-identify ha-hero__cta" href="{{ section.settings.cta_link | default: '#' }}">
+          {{ section.settings.cta_text }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Hero",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Campaign image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "info": "Describe the image for screen readers. Required before launch." },
+    { "type": "text", "id": "image_label", "label": "Placeholder label", "default": "Campaign image / cloth in motion", "info": "Shown only while there is no image. Clear it once the real image is in." },
+    { "type": "range", "id": "media_width", "min": 40, "max": 70, "step": 1, "unit": "%", "label": "Image width (desktop)", "default": 58 },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Nature · Masters · Wearer" },
+    { "type": "checkbox", "id": "show_eyebrow_desktop", "label": "Show eyebrow on desktop", "default": false, "info": "The wireframe shows it on mobile only." },
+    { "type": "textarea", "id": "heading", "label": "Headline", "default": "Woven from the earth.\nWorn by those who know." },
+    { "type": "textarea", "id": "subhead", "label": "Record line", "default": "Cloth as a record of material, place and human knowledge" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>A digital house where the making is never separated from the garment. Every interaction should reveal origin before transaction.</p>" },
+    { "type": "text", "id": "cta_text", "label": "Link text", "default": "Enter the collection" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — Hero" }]
+}
+{% endschema %}

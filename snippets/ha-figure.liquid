@@ -1,0 +1,40 @@
+{%- comment -%}
+  Hartwick Atelier — image or labelled placeholder.
+
+  Every homepage image is a placeholder until Angela's asset folder arrives (risk R4).
+  The label is drawn from the wireframe's own slot names, so a placeholder is never
+  mistaken for finished art, and the aspect ratio is reserved by the caller's class
+  so the layout does not shift when the real image lands.
+
+  Usage:
+    {% render 'ha-figure',
+         image: section.settings.image,
+         label: section.settings.image_label,
+         class: 'ha-hero__figure',
+         sizes: '(min-width: 990px) 58vw, 100vw',
+         loading: 'eager' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign fig_class = class | default: ''
+  assign fig_sizes = sizes | default: '100vw'
+  assign fig_loading = loading | default: 'lazy'
+  assign fig_alt = alt | default: ''
+-%}
+
+<figure class="ha-figure {{ fig_class }}{% unless image %} ha-figure--empty{% endunless %}">
+  {%- if image -%}
+    {{
+      image
+      | image_url: width: 2400
+      | image_tag:
+        loading: fig_loading,
+        sizes: fig_sizes,
+        widths: '400, 600, 800, 1000, 1200, 1600, 2000, 2400',
+        alt: fig_alt
+    }}
+  {%- endif -%}
+  {%- if label != blank -%}
+    <figcaption class="ha-figure__label ha-record">{{ label }}</figcaption>
+  {%- endif -%}
+</figure>

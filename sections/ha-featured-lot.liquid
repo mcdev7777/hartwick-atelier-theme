@@ -1,0 +1,82 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 05 FEATURED LOT.
+  Wireframe (01) HOMEPAGE §05: full-bleed garment image with the material record
+  beside it.
+
+  The record itself is snippets/ha-material-record.liquid — the same component the
+  product page uses (audit-and-plan.md §C.05, "build once, use in both places").
+  Bind a product and every row comes from its hartwick.* metafields; leave it empty
+  and the wireframe's placeholder record renders, marked provisional.
+{%- endcomment -%}
+
+<section class="ha-section ha-lot">
+  <div class="ha-lot__grid">
+    <div class="ha-lot__media">
+      {%- liquid
+        assign lot_image = section.settings.image
+        if lot_image == blank and section.settings.product != blank
+          assign lot_image = section.settings.product.featured_image
+        endif
+      -%}
+      {%- render 'ha-figure',
+        image: lot_image,
+        label: section.settings.image_label,
+        class: 'ha-lot__figure',
+        sizes: '(min-width: 990px) 57vw, 100vw',
+        alt: section.settings.image_alt
+      -%}
+    </div>
+
+    <div class="ha-lot__panel">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+
+      {%- render 'ha-material-record',
+        product: section.settings.product,
+        ph_lot: section.settings.ph_lot,
+        ph_edition_label: section.settings.ph_edition_label,
+        ph_title: section.settings.ph_title,
+        ph_intro: section.settings.ph_intro,
+        ph_fibre: section.settings.ph_fibre,
+        ph_colour: section.settings.ph_colour,
+        ph_made_by: section.settings.ph_made_by,
+        ph_edition: section.settings.ph_edition,
+        ph_availability: section.settings.ph_availability,
+        link_text: section.settings.link_text,
+        link_url: section.settings.link_url
+      -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Featured Lot",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product", "info": "When set, the record is read from the product's hartwick.* metafields." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Falls back to the product's featured image." },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "text", "id": "image_label", "label": "Placeholder label", "default": "Full garment / wearer image" },
+    { "type": "header", "content": "Record link" },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "The Origin" },
+    { "type": "url", "id": "link_url", "label": "Link" },
+    { "type": "header", "content": "Placeholder record", "info": "Used only while no product is bound. Wireframe copy — not approved facts." },
+    { "type": "text", "id": "ph_lot", "label": "Lot", "default": "Lot I" },
+    { "type": "text", "id": "ph_edition_label", "label": "Edition", "default": "Edition 07 / 25" },
+    { "type": "text", "id": "ph_title", "label": "Title", "default": "Style 001" },
+    { "type": "richtext", "id": "ph_intro", "label": "Intro", "default": "<p>Natural indigo on handspun khadi. Made slowly in Rajasthan, in a limited edition defined by the capacity of the loom and the season of the dye.</p>" },
+    { "type": "text", "id": "ph_fibre", "label": "Fibre", "default": "Handspun khadi cotton" },
+    { "type": "text", "id": "ph_colour", "label": "Colour", "default": "Natural indigo" },
+    { "type": "text", "id": "ph_made_by", "label": "Made by", "default": "The Masters, Rajasthan" },
+    { "type": "text", "id": "ph_edition", "label": "Edition size", "default": "25 per size" },
+    { "type": "text", "id": "ph_availability", "label": "Availability", "default": "Through The Register" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — Featured Lot" }]
+}
+{% endschema %}

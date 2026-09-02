@@ -1,0 +1,126 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 04 THE MASTERS INDEX.
+  Wireframe (01) HOMEPAGE §04: dark field, editorial intro left, the index of
+  Masters centre, collection link right.
+
+  Terminology: The Masters. Never "The Makers" — the mobile brief is superseded
+  on terminology by Framework v3 (CLAUDE.md).
+
+  Data: the `master` metaobject (docs/data-model.md §2). The moment those entries
+  exist in Shopify they render here with no further work. Until then the wireframe's
+  roles render as placeholders. Roles and regions only — no artisan name is ever
+  invented, and names publish only when Aloha supplies them.
+{%- endcomment -%}
+
+{%- liquid
+  assign masters = shop.metaobjects.master.values
+  assign limit = section.settings.item_limit
+  assign use_placeholders = true
+  if masters.size > 0
+    assign use_placeholders = false
+  endif
+-%}
+
+<section class="ha-section ha-section--dark ha-masters">
+  <div class="ha-wrap">
+    <div class="ha-masters__grid">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="ha-masters__intro ha-narrate">{{ section.settings.intro }}</div>
+        {%- endif -%}
+        {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+      </div>
+
+      <div>
+        {%- if section.settings.list_label != blank -%}
+          <p class="ha-eyebrow ha-record ha-masters__label">{{ section.settings.list_label }}</p>
+        {%- endif -%}
+
+        <ul class="ha-masters__list">
+          {%- if use_placeholders -%}
+            {%- for block in section.blocks -%}
+              <li class="ha-masters__item ha-narrate" {{ block.shopify_attributes }}>
+                {{ block.settings.role }}
+                {%- if block.settings.region != blank -%}
+                  &nbsp;·&nbsp;<span class="ha-masters__region">{{ block.settings.region }}</span>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for master in masters limit: limit -%}
+              <li class="ha-masters__item ha-narrate">
+                {%- if master.handle != blank and section.settings.link_masters -%}
+                  <a href="{{ section.settings.masters_page_url }}#{{ master.handle }}">
+                {%- endif -%}
+                {{ master.role }}
+                {%- if master.region.value.place != blank -%}
+                  &nbsp;·&nbsp;<span class="ha-masters__region">{{ master.region.value.place }}</span>
+                {%- endif -%}
+                {%- if master.handle != blank and section.settings.link_masters -%}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+            {%- if masters.size > limit -%}
+              <li class="ha-masters__more ha-narrate" aria-hidden="true">[…]</li>
+            {%- endif -%}
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <div class="ha-masters__cta">
+        {%- if section.settings.cta_text != blank -%}
+          {%- liquid
+            assign cta = section.settings.cta_text
+            if section.settings.cta_collection != blank
+              assign cta = cta | append: ' [' | append: section.settings.cta_collection.products_count | append: '] pieces'
+            elsif section.settings.cta_suffix != blank
+              assign cta = cta | append: ' ' | append: section.settings.cta_suffix
+            endif
+          -%}
+          <a class="ha-link ha-identify" href="{{ section.settings.cta_collection.url | default: section.settings.cta_link | default: '#' }}">{{ cta }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Masters Index",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Masters Index" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>The practices, works and stories behind each collection. The people who hold the knowledge are never background.</p>" },
+    { "type": "text", "id": "list_label", "label": "List label", "default": "Featured Masters" },
+    { "type": "range", "id": "item_limit", "min": 4, "max": 16, "step": 1, "label": "Masters shown", "default": 9 },
+    { "type": "checkbox", "id": "link_masters", "label": "Link each Master to The Masters page", "default": true },
+    { "type": "url", "id": "masters_page_url", "label": "The Masters page" },
+    { "type": "header", "content": "Collection link" },
+    { "type": "text", "id": "cta_text", "label": "Link text", "default": "View the collection" },
+    { "type": "collection", "id": "cta_collection", "label": "Collection", "info": "The piece count is read from this collection." },
+    { "type": "url", "id": "cta_link", "label": "Link (if no collection)" },
+    { "type": "text", "id": "cta_suffix", "label": "Placeholder count", "default": "[14] pieces", "info": "Used only while no collection is set." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "master",
+      "name": "Placeholder Master",
+      "settings": [
+        { "type": "text", "id": "role", "label": "Role" },
+        { "type": "text", "id": "region", "label": "Region" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hartwick — The Masters Index" }]
+}
+{% endschema %}

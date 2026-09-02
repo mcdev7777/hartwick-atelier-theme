@@ -1,0 +1,504 @@
+/* ==========================================================================
+   Hartwick Atelier — homepage + shared section styles
+   Wireframe (01) HOMEPAGE, desktop and mobile.
+
+   Rules this file obeys:
+   - No raw hex. Every colour is a --ha-* token from snippets/ha-tokens.liquid,
+     so the Brand Book can be finalised from theme settings without touching CSS.
+   - The three voices come from .ha-identify / .ha-narrate / .ha-record
+     (snippets/ha-fonts.liquid). Nothing here sets a font-family directly.
+   - Accent colours are surfaces and rules only, never text (they fail AA).
+   - Mobile first. Desktop layout starts at 990px, matching Luxe's own breakpoint.
+   ========================================================================== */
+
+:root {
+  --ha-gutter: 20px;
+  --ha-section-y: 40px;
+}
+
+@media screen and (min-width: 750px) {
+  :root { --ha-gutter: 32px; --ha-section-y: 56px; }
+}
+
+@media screen and (min-width: 990px) {
+  :root { --ha-gutter: 40px; --ha-section-y: 64px; }
+}
+
+/* --- shared ------------------------------------------------------------- */
+
+.ha-section {
+  background: var(--ha-page-ground);
+  color: var(--ha-text);
+  border-bottom: 1px solid var(--ha-rule);
+}
+
+.ha-section--dark {
+  background: var(--ha-field-dark);
+  color: var(--ha-text-invert);
+  border-bottom: 0;
+}
+
+.ha-section--dark .ha-eyebrow,
+.ha-section--dark .ha-record { color: var(--ha-text-invert); }
+
+.ha-wrap {
+  padding: var(--ha-section-y) var(--ha-gutter);
+}
+
+.ha-eyebrow {
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  color: var(--ha-text);
+  margin: 0 0 2.4rem;
+}
+
+.ha-display {
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: 0;
+  margin: 0;
+  font-size: clamp(3.2rem, 6.2vw, 5.6rem);
+}
+
+.ha-display--lg { font-size: clamp(3.6rem, 7vw, 6.4rem); }
+
+.ha-body {
+  font-size: 1.4rem;
+  max-width: 46ch;
+  margin: 0;
+  color: var(--ha-text);
+}
+
+.ha-body p { margin: 0 0 1.2rem; }
+.ha-body p:last-child { margin-bottom: 0; }
+
+.ha-rule {
+  border: 0;
+  border-top: 1px solid var(--ha-rule);
+  margin: 2.4rem 0;
+}
+
+/* Text links carry the identify voice, underlined on interaction only. */
+.ha-link {
+  display: inline-block;
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.3rem;
+}
+
+.ha-link:hover,
+.ha-link:focus-visible { border-bottom-color: currentColor; }
+
+.ha-section :focus-visible,
+.ha-section--dark :focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* --- placeholder figures ------------------------------------------------
+   Every image on this page is a placeholder until Angela's assets land.
+   The label is deliberately visible: an unlabelled grey box reads as a bug,
+   and the brief requires unverified content to be obviously provisional.
+   Aspect ratios are reserved now so nothing shifts when real images arrive. */
+
+.ha-figure {
+  position: relative;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ha-placeholder-field);
+}
+
+.ha-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ha-figure__label {
+  position: absolute;
+  left: 1.6rem;
+  bottom: 1.4rem;
+  right: 1.6rem;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  color: var(--ha-text-invert);
+}
+
+.ha-figure--empty { background: var(--ha-placeholder-field); }
+
+/* Provisional-content notice. One toggle per section turns it off. */
+.ha-placeholder-note {
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--ha-text-quiet);
+  border: 1px solid var(--ha-rule);
+  padding: 0.6rem 1rem;
+  margin: 0 0 2.4rem;
+}
+
+.ha-section--dark .ha-placeholder-note {
+  color: var(--ha-text-invert);
+  border-color: currentColor;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   01 — Hero
+   ========================================================================== */
+
+.ha-hero__grid { display: grid; }
+
+.ha-hero__media { position: relative; }
+.ha-hero__figure { aspect-ratio: 3 / 4; }
+
+.ha-hero__text {
+  padding: 3.2rem var(--ha-gutter) 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ha-hero__eyebrow { margin-bottom: 2rem; }
+
+.ha-hero__subhead {
+  font-size: 1.3rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  margin: 2.4rem 0 0;
+  max-width: 34ch;
+}
+
+.ha-hero__body { margin-top: 0; font-size: 1.3rem; }
+.ha-hero__cta { margin-top: 2.4rem; }
+
+@media screen and (min-width: 990px) {
+  .ha-hero__grid { grid-template-columns: var(--ha-hero-media-width, 58%) 1fr; }
+  .ha-hero__figure { aspect-ratio: auto; height: 100%; min-height: 72rem; }
+  .ha-hero__text { padding: 6.4rem clamp(3.2rem, 4vw, 5.6rem); }
+  .ha-hero__eyebrow--desktop-hidden { display: none; }
+}
+
+/* ==========================================================================
+   02 — The House
+   ========================================================================== */
+
+.ha-house__grid { display: grid; gap: 3.2rem; }
+
+.ha-house__media { display: grid; gap: 1.2rem; grid-template-columns: 1fr 1fr; }
+.ha-house__figure--lead { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
+.ha-house__figure--tile { aspect-ratio: 4 / 3; }
+
+.ha-house__text .ha-display { margin-bottom: 2rem; }
+
+@media screen and (min-width: 990px) {
+  .ha-house__grid { grid-template-columns: 1.15fr 1fr; gap: clamp(3.2rem, 6vw, 9.6rem); align-items: start; }
+  .ha-house__text { padding-top: 6.4rem; }
+}
+
+/* ==========================================================================
+   03 — Collection Index
+   ========================================================================== */
+
+.ha-index__grid { display: grid; gap: 3.2rem; }
+
+.ha-index__list { list-style: none; margin: 0; padding: 0; }
+
+.ha-index__row { border-bottom: 1px solid var(--ha-rule); }
+
+/* A button, not a hover target: the index has to work on touch and by keyboard.
+   Mobile brief §4 and the accessibility requirement both rule out hover-only. */
+.ha-index__btn {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr auto;
+  gap: 1.2rem;
+  align-items: baseline;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 1.4rem 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.ha-index__num { font-size: 1rem; color: var(--ha-text-quiet); }
+
+.ha-index__name {
+  font-size: 1.5rem;
+  letter-spacing: 0.01em;
+}
+
+.ha-index__lot { font-size: 1rem; color: var(--ha-text-quiet); }
+
+.ha-index__btn[aria-selected='true'] .ha-index__name { text-decoration: underline; text-underline-offset: 0.4rem; }
+.ha-index__btn[aria-selected='true'] .ha-index__num { color: var(--ha-text); }
+
+.ha-index__preview { display: grid; gap: 1.2rem; grid-template-columns: 1fr 1fr; }
+.ha-index__figure--primary { grid-column: 1 / -1; aspect-ratio: 4 / 5; }
+.ha-index__figure--detail { aspect-ratio: 1 / 1; }
+.ha-index__figure--wide { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
+
+.ha-index__panel[hidden] { display: none; }
+
+.ha-index__foot { margin-top: 2.4rem; }
+
+@media screen and (min-width: 990px) {
+  .ha-index__grid { grid-template-columns: 1fr 1.6fr; gap: clamp(3.2rem, 6vw, 8rem); align-items: start; }
+  .ha-index__preview { grid-template-columns: 1.35fr 1fr 1fr; grid-template-rows: auto auto; }
+  .ha-index__figure--primary { grid-column: 1; grid-row: 1 / 3; aspect-ratio: 3 / 4; }
+  .ha-index__figure--detail { grid-row: 1; aspect-ratio: 1 / 1; }
+  .ha-index__figure--wide { grid-column: 2 / 4; grid-row: 2; aspect-ratio: 16 / 9; }
+}
+
+/* ==========================================================================
+   04 — The Masters Index (dark field)
+   ========================================================================== */
+
+.ha-masters__grid { display: grid; gap: 3.2rem; }
+
+.ha-masters__intro { font-size: 1.3rem; max-width: 42ch; }
+
+.ha-masters__label { margin-bottom: 2rem; }
+
+.ha-masters__list { list-style: none; margin: 0; padding: 0; }
+
+.ha-masters__item { font-size: clamp(1.8rem, 2.6vw, 2.4rem); line-height: 1.5; }
+
+.ha-masters__item a { color: inherit; text-decoration: none; }
+.ha-masters__item a:hover,
+.ha-masters__item a:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
+
+.ha-masters__region { font-style: italic; }
+
+.ha-masters__more { font-size: clamp(1.8rem, 2.6vw, 2.4rem); }
+
+@media screen and (min-width: 990px) {
+  .ha-masters__grid { grid-template-columns: 1fr 1.3fr 1fr; gap: clamp(3.2rem, 5vw, 6.4rem); align-items: start; }
+  .ha-masters__cta { justify-self: end; text-align: right; }
+}
+
+/* ==========================================================================
+   05 — Featured Lot / Material Record (shared with the product page)
+   ========================================================================== */
+
+.ha-lot__grid { display: grid; }
+.ha-lot__figure { aspect-ratio: 3 / 4; }
+
+.ha-lot__panel { padding: 3.2rem var(--ha-gutter) 4rem; }
+
+.ha-record__eyebrow { margin-bottom: 1.6rem; }
+
+.ha-record__title {
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  letter-spacing: 0.02em;
+  margin: 0 0 2rem;
+}
+
+.ha-record__intro { margin-bottom: 3.2rem; font-size: 1.3rem; }
+
+.ha-record__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.1rem;
+}
+
+.ha-record__table th,
+.ha-record__table td {
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--ha-rule);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  vertical-align: baseline;
+}
+
+.ha-record__table th { text-align: left; white-space: nowrap; padding-right: 1.6rem; }
+.ha-record__table td { text-align: right; }
+
+.ha-record__link { margin-top: 2.4rem; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: 0.04em; }
+
+@media screen and (min-width: 990px) {
+  .ha-lot__grid { grid-template-columns: 57% 1fr; }
+  .ha-lot__figure { height: 100%; aspect-ratio: auto; min-height: 68rem; }
+  .ha-lot__panel { padding: 6.4rem clamp(3.2rem, 4vw, 5.6rem); }
+}
+
+/* ==========================================================================
+   06 — Journal / The Dispatch  (native featured-blog, restyled)
+   07 — The Register           (native newsletter, restyled)
+   Restyle only: no native section file is forked, so Luxe stays upgradeable.
+   ========================================================================== */
+
+/* Restyle only — no native section file is forked, so Luxe stays upgradeable.
+   These rules are deliberately global: the Journal cards and the Register form
+   appear on other templates too and must carry the same voice everywhere. */
+
+.article-card__title,
+.article-card .card__heading {
+  font-family: var(--ha-font-identify);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+  font-weight: 500;
+}
+
+.article-card__excerpt,
+.article-card .card__excerpt {
+  font-size: 1.2rem;
+  color: var(--ha-text-quiet);
+}
+
+.section-label {
+  font-family: var(--ha-font-record);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 1.1rem;
+}
+
+.newsletter-form__field-wrapper .field__input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  color: inherit;
+}
+
+.newsletter-form__field-wrapper .field__label { color: inherit; }
+
+.newsletter-form__button {
+  font-family: var(--ha-font-identify);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.newsletter-form__submit-style-outline-button {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  color: inherit;
+  padding-inline: 0;
+}
+
+/* --- motion ------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-section *,
+  .ha-section *::before,
+  .ha-section *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================================
+   07 — The Register (dark field)
+   ========================================================================== */
+
+.ha-register__grid { display: grid; gap: 3.2rem; }
+
+.ha-register__body { margin-bottom: 3.2rem; font-size: 1.3rem; }
+
+.ha-register__field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 1.6rem;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.8rem;
+}
+
+.ha-register__label {
+  grid-column: 1 / -1;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  opacity: 0.75;
+  margin-bottom: 0.4rem;
+}
+
+.ha-register__input {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-size: 1.4rem;
+  padding: 0.4rem 0;
+  width: 100%;
+}
+
+.ha-register__input:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+.ha-register__submit {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  padding: 0 0 0.4rem;
+  white-space: nowrap;
+}
+
+.ha-register__submit:hover { text-decoration: underline; text-underline-offset: 0.4rem; }
+
+.ha-register__message { margin-top: 1.2rem; font-size: 1.1rem; }
+
+@media screen and (min-width: 990px) {
+  .ha-register__grid { grid-template-columns: 1.1fr 1fr; gap: clamp(3.2rem, 6vw, 8rem); align-items: start; }
+}
+
+/* ==========================================================================
+   06 — Journal / The Dispatch
+   ========================================================================== */
+
+.ha-journal__grid { display: grid; gap: 2.4rem; }
+
+.ha-journal__grid--mobile-row {
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.ha-journal__figure { aspect-ratio: 4 / 3; margin-bottom: 1.6rem; }
+
+.ha-journal__link { color: inherit; text-decoration: none; display: block; }
+
+.ha-journal__title {
+  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+  font-weight: 500;
+  margin: 0 0 0.8rem;
+}
+
+.ha-journal__link:hover .ha-journal__title,
+.ha-journal__link:focus-visible .ha-journal__title {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
+.ha-journal__excerpt { font-size: 1.2rem; color: var(--ha-text-quiet); margin: 0; }
+
+.ha-journal__foot { margin-top: 2.4rem; }
+
+@media screen and (min-width: 750px) {
+  .ha-journal__grid { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 2.4rem; }
+}
+
+/* --- corrections applied after the first render pass -------------------- */
+
+/* The record's wrapper must not inherit the RECORD voice: only the eyebrow and
+   the specification table are mono uppercase. The intro is editorial copy. */
+.ha-record-block { display: block; }
+
+/* Style numbers are lining figures. Junicode defaults to old-style, which
+   renders "001" with a descending 1. */
+.ha-record__title { font-variant-numeric: lining-nums tabular-nums; }
+
+/* On the dark field, body copy inherits the inverted text colour. */
+.ha-section--dark .ha-body,
+.ha-section--dark .ha-journal__excerpt,
+.ha-section--dark .ha-index__num,
+.ha-section--dark .ha-index__lot { color: inherit; }

@@ -47,6 +47,10 @@
     --ha-peat-66: rgb({{ peat_r | times: 0.66 | plus: 86.7 | round }}, {{ peat_g | times: 0.66 | plus: 86.7 | round }}, {{ peat_b | times: 0.66 | plus: 86.7 | round }});
     --ha-peat-33: rgb({{ peat_r | times: 0.33 | plus: 170.85 | round }}, {{ peat_g | times: 0.33 | plus: 170.85 | round }}, {{ peat_b | times: 0.33 | plus: 170.85 | round }});
 
+    /* Placeholder field. 72% peat is the lightest tint that still carries
+       Chalk Blue label text at AA (5.1:1); the 66% tint measures 4.3:1. */
+    --ha-peat-72: rgb({{ peat_r | times: 0.72 | plus: 71.4 | round }}, {{ peat_g | times: 0.72 | plus: 71.4 | round }}, {{ peat_b | times: 0.72 | plus: 71.4 | round }});
+
     /* --- semantic roles: sections use THESE, never a colour name --- */
     --ha-text:        var(--ha-soot-black);
     --ha-text-quiet:  var(--ha-soot-66);
@@ -58,5 +62,8 @@
        link text or button labels. */
     --ha-accent-surface: var(--ha-mordant-amber);
     --ha-botanical:      var(--ha-loden-moss);
+
+    /* Provisional imagery, until Angela's assets land. */
+    --ha-placeholder-field: var(--ha-peat-72);
   }
 {% endstyle %}
