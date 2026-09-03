@@ -1213,3 +1213,76 @@ body.lx-template--product .magnify-icon:focus-visible {
   outline: 2px solid var(--ha-text);
   outline-offset: -4px;
 }
+
+/* ==========================================================================
+   08 — Footer
+   The wireframe's restrained close: wordmark and three links, with the shop
+   policies kept quietly beneath so legal information stays easy to find.
+   ========================================================================== */
+
+.ha-footer { border-bottom: 0; border-top: 1px solid var(--ha-rule); }
+
+.ha-footer__bar {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding-block: 3.2rem 2rem;
+}
+
+.ha-footer__mark { display: inline-block; color: inherit; }
+.ha-footer__mark .ha-wordmark { width: 180px; }
+
+.ha-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 2.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ha-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.2rem 2.4rem;
+  padding-block: 0 3.2rem;
+}
+
+.ha-footer__policies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ha-footer__policies a {
+  color: var(--ha-text-quiet);
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.ha-footer__policies a:hover,
+.ha-footer__policies a:focus-visible {
+  color: var(--ha-text);
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
+.ha-footer__copy { margin: 0; font-size: 1.2rem; color: var(--ha-text-quiet); }
+
+@media screen and (min-width: 750px) {
+  .ha-footer__bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 4rem 2.4rem;
+  }
+}
+
+/* Anchor target for footer and menu links into The Register. The offset clears
+   the sticky header so the eyebrow is not hidden behind it on arrival. */
+#the-register { scroll-margin-top: 8rem; }

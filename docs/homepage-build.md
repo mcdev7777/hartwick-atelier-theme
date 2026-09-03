@@ -18,7 +18,7 @@ Live theme untouched. Nothing published.
 | 05 | Featured Lot | custom, shared | **custom** `ha-featured-lot` + `snippets/ha-material-record.liquid` | As planned. The record snippet is the component the product page will render. |
 | 06 | Journal / Dispatch | native `featured-blog` | **custom** `ha-journal` | The store's only blog (`news`) is empty, so the native section falls back to Luxe's own demo cards. The custom one shows the three Dispatch categories as labelled placeholders and switches to real articles the moment they exist. |
 | 07 | The Register | native `newsletter` | **custom** `ha-register` | Native has no eyebrow and puts the invitation in the heading column. The form inside is still Shopify's own customer form, and the section accepts `@app` blocks so Klaviyo drops in without a rebuild. |
-| 08 | Footer | native `footer` | **unchanged** | See open questions. |
+| 08 | Footer | native `footer` | **custom** `ha-footer` | Rebuilt to the wireframe on Ivan's instruction: wordmark, Instagram, Contact, The Register. Shop policies render beneath from `shop.policies`. |
 
 No native Luxe section file was forked. Journal cards and the newsletter elsewhere
 on the site are restyled from `assets/ha-sections.css`, which is loaded after
@@ -91,11 +91,14 @@ for publication", and every section has a checkbox to remove that notice.
 
 ## Open questions for Aloha
 
-1. **Footer.** The wireframe shows a single minimal bar (wordmark · Instagram ·
-   Contact · The Register). The site's current footer carries real content and
-   navigation — four feature columns, Company and Information link lists, a
-   newsletter. Reducing it is a site-wide change and a content decision. Left as is
-   pending her answer.
+1. **Footer — decided, and it diverges from the brief.** Ivan chose the wireframe's
+   restrained close: wordmark, Instagram, Contact, The Register, with the shop
+   policies beneath. The mobile brief §10 asks for a fuller practical footer
+   (Delivery, Returns, Care & Repair, latest Dispatch, secondary registration).
+   The wireframe outranks the brief, so that is what is built — but the four
+   feature columns and the Company / Information link lists are now gone from
+   every page, and About, Slow Fashion, Heritage Craft, Press and Events have no
+   footer route. Aloha should confirm she is content with that.
 2. **Announcement bar** reads "Release September 15 2026" while launch is 10
    September. Terminology was corrected there ("Lot 001" → "Lot I"); the date is
    hers to confirm.
@@ -105,3 +108,8 @@ for publication", and every section has a checkbox to remove that notice.
    wireframe shows a three-across row; one setting switches it.
 5. **Collection Index rows** need a collection to point at. Which collection is
    Lot I?
+6. **The main menu points at the wrong pages.** THE MASTERS resolves to
+   `/pages/the-makers` — superseded terminology, visible in the URL — and JOURNAL
+   resolves to `/pages/press`. THE REGISTER goes to `/` with no anchor. These are
+   Shopify navigation entries, not theme code: they need fixing in Admin, and the
+   Masters page needs its handle renamed with a URL redirect.

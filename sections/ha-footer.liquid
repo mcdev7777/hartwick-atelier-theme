@@ -1,0 +1,99 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — 08 FOOTER.
+  Wireframe (01) HOMEPAGE §08: a single restrained bar — the wordmark, and
+  Instagram · Contact · The Register.
+
+  This replaces Luxe's four-column footer at Ivan's instruction. Note for Aloha:
+  the mobile developer brief §10 asks for a fuller practical close (Delivery,
+  Returns, Care & Repair, latest Dispatch). The wireframe outranks the brief and
+  the decision was taken deliberately — recorded in docs/homepage-build.md.
+
+  Shop policies still render beneath, because those links have to remain easy to
+  find: they come from shop.policies, so whatever is configured in Admin appears
+  here automatically and nothing legal depends on someone remembering to add it.
+
+  The wordmark is the supplied artwork, never live type (LOGO READ ME).
+{%- endcomment -%}
+
+<footer class="ha-section ha-footer" role="contentinfo">
+  <div class="ha-wrap ha-footer__bar">
+    <a class="ha-footer__mark" href="{{ routes.root_url }}" aria-label="{{ shop.name }} — home">
+      {%- render 'ha-wordmark' -%}
+    </a>
+
+    {%- if section.blocks.size > 0 -%}
+      <nav class="ha-footer__nav" aria-label="{{ section.settings.nav_label | escape }}">
+        <ul class="ha-footer__links" role="list">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign href = block.settings.url
+              if href == blank and block.settings.use_instagram_setting
+                assign href = settings.social_instagram_link
+              endif
+            -%}
+            {%- if block.settings.label != blank -%}
+              <li {{ block.shopify_attributes }}>
+                <a class="ha-link ha-identify" href="{{ href | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>
+                  {{- block.settings.label -}}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+  </div>
+
+  <div class="ha-wrap ha-footer__legal">
+    {%- if section.settings.show_policies -%}
+      <ul class="ha-footer__policies ha-record" role="list">
+        {%- for policy in shop.policies -%}
+          {%- if policy != blank -%}
+            <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <p class="ha-footer__copy ha-record">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}
+    </p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "HA — Footer",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "nav_label", "label": "Navigation label (screen readers)", "default": "Footer" },
+    { "type": "checkbox", "id": "show_policies", "label": "Show shop policies", "default": true, "info": "Privacy, Terms, Refund and Shipping policies, taken from Settings > Policies." }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "checkbox", "id": "use_instagram_setting", "label": "Use the Instagram address from theme settings", "default": false },
+        { "type": "checkbox", "id": "new_tab", "label": "Open in a new tab", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Footer",
+      "blocks": [
+        { "type": "link", "settings": { "label": "Instagram", "use_instagram_setting": true, "new_tab": true } },
+        { "type": "link", "settings": { "label": "Contact" } },
+        { "type": "link", "settings": { "label": "The Register" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
