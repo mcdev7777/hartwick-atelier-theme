@@ -33,14 +33,14 @@ Luxe's existing `custom.*` fields.
 | `name` | single line | ⚠️ Real names only, supplied by Aloha. Never invented. |
 | `role` | single line | Master Weaver, Khadi Spinner, Natural Indigo Master, Pattern Cutter, Hand Finisher |
 | `region` | ref → `origin` | |
-| `technique` | list of ref → `technique` | |
+| `techniques` | list of ref → `technique` | |
 | `portrait` / `workshop_images` | file / file list | |
-| `story` | rich text | Editorial field report — the Masters page grows into a living archive |
+| `stories` | rich text | Editorial field report — the Masters page grows into a living archive. Single rich-text field despite the plural name; rich text has no list type. |
 | `handle` | — | Drives `/pages/the-masters` index + individual routes |
 
 ### `technique` — craft techniques
 `name` (Khadi, Ajrakh, Ikat, Jamdani, Gota Patti, Mashru, Banaras Brocade, Gota) ·
-`description` (rich text) · `origin` (ref) · `images` · `unesco_listed` (boolean, Jamdani)
+`description` (rich text) · `origin` (ref) · `image` · `unesco_listed` (boolean, Jamdani)
 
 ### `origin` — place records
 `place` · `region` · `country` · `landscape_image` · `why_here` (rich text) ·
