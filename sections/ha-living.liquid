@@ -1,0 +1,83 @@
+{%- comment -%}
+  Hartwick Atelier — LIVING WITH THE PIECE (Wireframe 04, revised).
+
+  A section heading on the left, restrained accordion rows on the right:
+  Fit & garment measurements, Care & longevity, Delivery & returns, Edition /
+  lot. The rows are Luxe's own accordion markup (snippets/ha-panel-row.liquid),
+  so global.js drives them — same open/close, keyboard and ARIA as every other
+  accordion, no second accordion style and no forked section.
+
+  The first row is open by default, as the wireframe draws it. Content is
+  editable per row; a row with a page set takes the page's content instead.
+  Placeholder copy is marked and carries no invented care, delivery or edition
+  fact (CLAUDE.md).
+{%- endcomment -%}
+
+<section class="ha-section ha-living{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-wrap ha-living__grid">
+    <div class="ha-living__lead">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ha-display ha-narrate ha-living__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="ha-living__rows">
+      {%- for block in section.blocks -%}
+        {%- capture row_body -%}
+          {%- if block.settings.content != blank -%}
+            <div class="ha-living__body ha-body ha-narrate">{{ block.settings.content }}</div>
+          {%- endif -%}
+          {%- if block.settings.page != blank -%}
+            <div class="ha-living__body ha-body ha-narrate">{{ block.settings.page.content }}</div>
+          {%- endif -%}
+        {%- endcapture -%}
+        {%- render 'ha-panel-row',
+          id: block.id,
+          title: block.settings.heading,
+          content: row_body,
+          open: block.settings.open_by_default -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Living",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" }, { "value": "clay", "label": "Clay" },
+      { "value": "botanical", "label": "Botanical" }, { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Living with the piece" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Fit, care and delivery, kept clear." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Accordion row",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Row title" },
+        { "type": "richtext", "id": "content", "label": "Content" },
+        { "type": "page", "id": "page", "label": "Or take content from a page" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Hartwick — Living With the Piece",
+    "blocks": [
+      { "type": "row", "settings": { "heading": "Fit & garment measurements", "open_by_default": true, "content": "<p><em>Placeholder — actual garment measurements, model information and advice when choosing between sizes, pending Angela's approval.</em></p>" } },
+      { "type": "row", "settings": { "heading": "Care & longevity", "content": "<p><em>Placeholder — care, washing and ageing guidance pending Angela's approval.</em></p>" } },
+      { "type": "row", "settings": { "heading": "Delivery & returns", "content": "<p><em>Placeholder — dispatch, duties, returns and exchange terms pending confirmation.</em></p>" } },
+      { "type": "row", "settings": { "heading": "Edition / lot", "content": "<p><em>Placeholder — Lot and, where a garment is individually numbered, its edition. Published only when confirmed.</em></p>" } }
+    ]
+  }]
+}
+{% endschema %}

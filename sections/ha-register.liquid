@@ -28,12 +28,16 @@
         {%- if section.settings.heading != blank -%}
           <h2 class="ha-display ha-narrate">{{ section.settings.heading }}</h2>
         {%- endif -%}
-      </div>
-
-      <div class="ha-register__aside">
+        {%- comment -%}
+          The invitation copy belongs under the heading it explains, not stacked
+          above the form in the opposite column.
+        {%- endcomment -%}
         {%- if section.settings.body != blank -%}
           <div class="ha-body ha-narrate ha-register__body">{{ section.settings.body }}</div>
         {%- endif -%}
+      </div>
+
+      <div class="ha-register__aside">
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
@@ -59,6 +63,7 @@
                 autocorrect="off"
                 autocapitalize="off"
                 autocomplete="email"
+                placeholder="{{ section.settings.email_placeholder | escape }}"
                 {% if form.errors %}
                   aria-invalid="true"
                   aria-describedby="HaRegister-error--{{ section.id }}"
@@ -67,10 +72,17 @@
                 {% endif %}
                 required
               >
-              <button type="submit" class="ha-register__submit ha-identify" name="commit">
-                {{ 'newsletter.button_label' | t }}
-              </button>
             </div>
+
+            {%- comment -%}
+              The button sits OUTSIDE the field. Nested inside it, the field's
+              underline ran beneath the button too and the two read as one
+              control; the design has a single rule under the input, then space,
+              then the solid button.
+            {%- endcomment -%}
+            <button type="submit" class="ha-register__submit ha-identify" name="commit">
+              {{ 'newsletter.button_label' | t }}
+            </button>
 
             {%- if form.errors -%}
               <p class="ha-register__message ha-record" id="HaRegister-error--{{ section.id }}" role="alert">
@@ -96,6 +108,7 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "you@example.com" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Register" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Be first to receive what comes next." },
     { "type": "richtext", "id": "body", "label": "Invitation", "default": "<p>Private access to new Lots, The Dispatch, and stories from the workshops before they reach the wider world.</p>" },

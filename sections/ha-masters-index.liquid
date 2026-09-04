@@ -59,7 +59,7 @@
   endif
 -%}
 
-<section class="ha-section ha-section--dark ha-masters ha-masters--{{ section.settings.layout }}">
+<section class="ha-section ha-masters ha-masters--{{ section.settings.layout }}{% if section.settings.field == 'peat' or section.settings.field == blank %} ha-section--field-peat{% elsif section.settings.field != 'page' %} ha-section--field-{{ section.settings.field }}{% endif %}">
   <div class="ha-wrap">
     <div class="ha-masters__grid">
       <div class="ha-masters__lead">
@@ -186,6 +186,14 @@
   "class": "ha-section-wrapper",
   "max_blocks": 12,
   "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "peat", "options": [
+      { "value": "page", "label": "Page ground" },
+      { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" },
+      { "value": "clay", "label": "Clay" },
+      { "value": "botanical", "label": "Botanical" },
+      { "value": "slate", "label": "Slate (dark)" }
+    ] },
     {
       "type": "select",
       "id": "layout",

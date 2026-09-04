@@ -33,50 +33,50 @@
         "row_1": {
           "type": "row",
           "settings": {
-            "name": "Tide · Handspun Khadi",
-            "lot": "Lot I"
+            "name": "",
+            "lot": ""
           }
         },
         "row_2": {
           "type": "row",
           "settings": {
-            "name": "Mesa · Structured Jacket",
-            "lot": "Lot I"
+            "name": "",
+            "lot": ""
           }
         },
         "row_3": {
           "type": "row",
           "settings": {
-            "name": "Stone · Undyed Khadi",
-            "lot": "Lot I"
+            "name": "",
+            "lot": ""
           }
         },
         "row_4": {
           "type": "row",
           "settings": {
-            "name": "Flint · Iron Dyed Khadi",
-            "lot": "Lot I"
+            "name": "",
+            "lot": ""
           }
         },
         "row_5": {
           "type": "row",
           "settings": {
-            "name": "Drift · Wide Leg Trouser",
-            "lot": "Lot I"
+            "name": "",
+            "lot": ""
           }
         },
         "row_6": {
           "type": "row",
           "settings": {
-            "name": "Fell · Undyed Top",
-            "lot": "Lot I"
+            "name": "",
+            "lot": ""
           }
         },
         "row_7": {
           "type": "row",
           "settings": {
-            "name": "Ember · Madder Root",
-            "lot": "Lot I"
+            "name": "",
+            "lot": ""
           }
         }
       },
@@ -94,7 +94,8 @@
         "row_limit": 7,
         "cta_text": "View full catalogue",
         "cta_link": "/collections/all",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "lot_confirmed": false
       }
     },
     "masters_index": {
@@ -194,13 +195,11 @@
         "image_label": "Full garment / wearer image",
         "link_text": "The Origin",
         "ph_lot": "Lot I",
-        "ph_edition_label": "Edition 07 / 25",
         "ph_title": "Style 001",
-        "ph_intro": "<p>Natural indigo on handspun khadi. Made slowly in Rajasthan, in a limited edition defined by the capacity of the loom and the season of the dye.</p>",
+        "ph_intro": "<p>Natural indigo on handspun khadi. Made slowly in Rajasthan, at the pace the loom and the dye season allow.</p>",
         "ph_fibre": "Handspun khadi cotton",
         "ph_colour": "Natural indigo",
         "ph_made_by": "The Masters, Rajasthan",
-        "ph_edition": "25 per size",
         "ph_availability": "Through The Register",
         "show_placeholder_note": true
       }

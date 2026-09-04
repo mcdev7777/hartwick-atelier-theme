@@ -17,49 +17,63 @@
   The wordmark is the supplied artwork, never live type (LOGO READ ME).
 {%- endcomment -%}
 
-<footer class="ha-section ha-footer" role="contentinfo">
-  <div class="ha-wrap ha-footer__bar">
-    <a class="ha-footer__mark" href="{{ routes.root_url }}" aria-label="{{ shop.name }} — home">
-      {%- render 'ha-wordmark' -%}
-    </a>
+<footer class="ha-section ha-footer{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" role="contentinfo">
+  <div class="ha-wrap ha-footer__inner">
+    <div class="ha-footer__left">
+      {%- if section.blocks.size > 0 -%}
+        <nav class="ha-footer__nav" aria-label="{{ section.settings.nav_label | escape }}">
+          <ul class="ha-footer__links ha-identify" role="list">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign href = block.settings.url
+                if href == blank and block.settings.use_instagram_setting
+                  assign href = settings.social_instagram_link
+                endif
+              -%}
+              {%- if block.settings.label != blank -%}
+                <li {{ block.shopify_attributes }}>
+                  <a href="{{ href | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ block.settings.label }}</a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <nav class="ha-footer__nav" aria-label="{{ section.settings.nav_label | escape }}">
-        <ul class="ha-footer__links" role="list">
-          {%- for block in section.blocks -%}
-            {%- liquid
-              assign href = block.settings.url
-              if href == blank and block.settings.use_instagram_setting
-                assign href = settings.social_instagram_link
-              endif
-            -%}
-            {%- if block.settings.label != blank -%}
-              <li {{ block.shopify_attributes }}>
-                <a class="ha-link ha-identify" href="{{ href | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>
-                  {{- block.settings.label -}}
-                </a>
-              </li>
+      {%- if section.settings.show_policies -%}
+        <ul class="ha-footer__policies ha-record" role="list">
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
-      </nav>
-    {%- endif -%}
-  </div>
+      {%- endif -%}
+    </div>
 
-  <div class="ha-wrap ha-footer__legal">
-    {%- if section.settings.show_policies -%}
-      <ul class="ha-footer__policies ha-record" role="list">
-        {%- for policy in shop.policies -%}
-          {%- if policy != blank -%}
-            <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
-          {%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-
-    <p class="ha-footer__copy ha-record">
-      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}
-    </p>
+    <div class="ha-footer__right">
+      {%- comment -%}
+        The house symbol, supplied artwork, never live type (LOGO READ ME).
+        Two variants ship: the white ink reads on a dark field, the black on a
+        light one. `logo_variant` picks; the default pairs with this section's
+        own field so the mark is never invisible.
+      {%- endcomment -%}
+      {%- liquid
+        assign logo_file = 'ha-house-symbol-black.png'
+        if section.settings.logo_variant == 'white'
+          assign logo_file = 'ha-house-symbol-white.png'
+        endif
+      -%}
+      <a class="ha-footer__mark" href="{{ routes.root_url }}" aria-label="{{ shop.name }} — home">
+        <img
+          src="{{ logo_file | asset_url }}"
+          alt="{{ shop.name }}"
+          width="160" height="160"
+          loading="lazy"
+        >
+      </a>
+      <p class="ha-footer__copy ha-record">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+    </div>
   </div>
 </footer>
 
@@ -70,6 +84,15 @@
   "class": "ha-section-wrapper",
   "max_blocks": 6,
   "settings": [
+    { "type": "select", "id": "logo_variant", "label": "House symbol", "default": "black", "options": [
+      { "value": "black", "label": "Black ink (for a light footer)" },
+      { "value": "white", "label": "White ink (for a dark footer)" }
+    ], "info": "Supplied artwork: Hartwick_logo_PlainFrame_Square. Pick the ink that reads on the footer's ground." },
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" },
+      { "value": "peat", "label": "Peat (dark)" },
+      { "value": "slate", "label": "Slate (dark)" }
+    ] },
     { "type": "text", "id": "nav_label", "label": "Navigation label (screen readers)", "default": "Footer" },
     { "type": "checkbox", "id": "show_policies", "label": "Show shop policies", "default": true, "info": "Privacy, Terms, Refund and Shipping policies, taken from Settings > Policies." }
   ],

@@ -72,17 +72,7 @@
           <div class="predictive-search-card-image ps-card-ratio-{{ product_card_ratio }}">
           {% unless settings.card_badge_position == 'text-top' or settings.card_badge_position == 'text-bottom' %}
           <div class="card-product--badges pc-badges-{{ settings.card_badge_position }}">  
-          {% for tag in product.tags %}  
-            {% if tag contains 'Badge:' %}<span>{{ tag | remove: 'Badge: '}}</span>
-          {% endif %}
-          {% endfor %}
-
-          {% assign badges = product.metafields.custom.badges %}
-          {% if badges != blank %}
-            {% for badge in badges.value %}
-              <span>{{ badge }}</span>
-            {% endfor %}
-          {% endif %}
+          {%- render 'ha-badges', product: product -%}
 
           {% if settings.badges_show_sale %}
             {% if product.compare_at_price %}<span>{{ 'products.product.on_sale' | t }}</span>{% endif %}  
@@ -95,17 +85,7 @@
 
           {% if settings.card_badge_position == 'text-top' %}
           <div class="card-product--badges card-badges--within-text-top">  
-          {% for tag in product.tags %}  
-            {% if tag contains 'Badge:' %}<span>{{ tag | remove: 'Badge: '}}</span>
-          {% endif %}
-          {% endfor %}
-
-          {% assign badges = product.metafields.custom.badges %}
-          {% if badges != blank %}
-            {% for badge in badges.value %}
-              <span>{{ badge }}</span>
-            {% endfor %}
-          {% endif %}
+          {%- render 'ha-badges', product: product -%}
 
           {% if settings.badges_show_sale %}
             {% if product.compare_at_price %}<span>{{ 'products.product.on_sale' | t }}</span>{% endif %}  
@@ -123,17 +103,7 @@
 
           {% if settings.card_badge_position == 'text-bottom' %}
           <div class="card-product--badges card-badges--within-text-bottom">  
-          {% for tag in product.tags %}  
-            {% if tag contains 'Badge:' %}<span>{{ tag | remove: 'Badge: '}}</span>
-          {% endif %}
-          {% endfor %}
-
-          {% assign badges = product.metafields.custom.badges %}
-          {% if badges != blank %}
-            {% for badge in badges.value %}
-              <span>{{ badge }}</span>
-            {% endfor %}
-          {% endif %}
+          {%- render 'ha-badges', product: product -%}
 
           {% if settings.badges_show_sale %}
             {% if product.compare_at_price %}<span>{{ 'products.product.on_sale' | t }}</span>{% endif %}  

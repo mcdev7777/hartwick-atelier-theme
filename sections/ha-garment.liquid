@@ -47,7 +47,7 @@
   endif
 -%}
 
-<section class="ha-section ha-garment">
+<section class="ha-section ha-garment{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
   <div class="ha-wrap">
     <div class="ha-garment__grid">
       <div class="ha-garment__text">
@@ -67,6 +67,7 @@
           {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
         {%- endunless -%}
 
+        {%- if section.settings.show_spec_table -%}
         <table class="ha-record__table ha-record ha-garment__table">
           <caption class="visually-hidden">{{ section.settings.eyebrow | default: 'The garment' }}</caption>
           <tbody>
@@ -90,8 +91,9 @@
             {%- endif -%}
           </tbody>
         </table>
+        {%- endif -%}
 
-        {%- if mf.construction_details != blank -%}
+        {%- if section.settings.show_spec_table and mf.construction_details != blank -%}
           <details class="ha-details">
             <summary class="ha-details__summary ha-record">
               <span>{{ section.settings.details_label }}</span>
@@ -121,6 +123,14 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "white", "options": [
+      { "value": "page", "label": "Page ground" },
+      { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" },
+      { "value": "clay", "label": "Clay" },
+      { "value": "botanical", "label": "Botanical" },
+      { "value": "slate", "label": "Slate (dark)" }
+    ] },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Garment" },
     {
       "type": "text",
@@ -137,6 +147,7 @@
       "info": "Used only while the product has no hartwick.garment_intro."
     },
     { "type": "text", "id": "details_label", "label": "Accordion label", "default": "Construction details" },
+    { "type": "checkbox", "id": "show_spec_table", "label": "Show the fit/spec table", "default": false, "info": "Off for the revised design — The Piece is editorial only; fit lives in the buy rail and Living With the Piece." },
     { "type": "header", "content": "Image" },
     { "type": "image_picker", "id": "image", "label": "Wearer image" },
     { "type": "checkbox", "id": "use_product_media", "label": "Fall back to a product image", "default": true },

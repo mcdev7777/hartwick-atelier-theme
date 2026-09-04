@@ -1,44 +1,215 @@
 {%- comment -%}
   Hartwick Atelier — Request Private Appointment (Wireframe 03 §05).
 
-  The wireframe and the mobile brief both place this directly beneath Add to Bag,
-  but neither defines what it does. Until Aloha decides (a modal enquiry form, a
-  dedicated page, or an email route) this links to whichever page exists, in
-  order of preference, and says plainly when none is bound.
+  Aloha, 3 September 2026, answering the open question from the last build:
+    "Please make this a modal enquiry form rather than taking the customer away
+     from the product page. It should automatically record the product or Style
+     being viewed and request: Name, Email address, Telephone number, Preferred
+     appointment date or general availability, Message."
 
-  Reuses `custom.inquire_to_order` rather than inventing a parallel flag
-  (docs/data-model.md §1). When the flag is set on a product the label is
-  unchanged — the flag is carried here so the Phase 2 enquiry route can switch
-  on it without touching this markup.
+  So this is now a modal, and the visitor never leaves the page.
+
+  WHAT IT RECORDS AUTOMATICALLY
+  Everything identifying the garment is filled in before the visitor sees the
+  form, from the same metafields the rest of the page reads:
+
+      Style          hartwick.style -> display_name   (falls back to product.title)
+      Expression     hartwick.expression
+      Lot            hartwick.lot -> number_roman, as a Roman numeral
+      Product        product.title
+      Product URL    the canonical URL, so the reply can link straight back
+      Selected size  read from the live product form when the modal opens
+                     (assets/ha-appointment.js) — it changes as the visitor
+                     changes it, so it cannot be baked in here
+
+  WHY A NATIVE <dialog>
+  `showModal()` gives the focus trap, the Escape key, the inert background and
+  the backdrop from the browser, correctly, with no library. Luxe's own
+  `contact-drawer` snippet was the other candidate and was rejected: it is a
+  side drawer rather than a modal, it is hard-wired to a single `#contact-drawer-link`
+  in the header, and it throws if that link is absent — it is orphaned in this
+  theme and nothing renders it.
+
+  WHY THE NATIVE CONTACT FORM
+  `{% form 'contact' %}` is Shopify's own. It carries the spam protection, the
+  server-side validation and the delivery, and it needs no app and no third-party
+  endpoint. Every extra field is sent as a labelled line in the notification.
+
+  WHERE IT LANDS — one thing the theme genuinely cannot set. Shopify delivers
+  every contact-form submission to the store's sender email
+  (Settings > Notifications). It is not a theme value, so it is not settable
+  here. Aloha has said she will confirm the Hartwick address; whoever sets it
+  sets it there. Until then, `ha_appointment_recipient` in theme settings adds a
+  "Route to" line to the body of the email so a forwarding rule can pick these
+  out, and every submission is already tagged `Enquiry type: Private appointment`.
+
+  The behaviour lives in assets/ha-appointment.js, loaded once from
+  layout/theme.liquid on the product template — not from here, so the modal
+  cannot ship the same script twice if it is ever rendered more than once.
 
   Usage (inside a main-product custom_liquid block):
-    {% render 'ha-appointment', text: 'Request Private Appointment',
-         handle: 'private-appointment' %}
+    {% render 'ha-appointment', text: 'Request Private Appointment' %}
 {%- endcomment -%}
 
 {%- liquid
   assign label = text | default: 'Request Private Appointment'
+  assign mf = product.metafields.hartwick
 
-  assign appt_page = nil
-  if handle != blank
-    assign appt_page = pages[handle]
+  assign style_name = product.title
+  if mf.style.value.display_name != blank
+    assign style_name = mf.style.value.display_name
   endif
-  if appt_page == blank
-    assign appt_page = pages['private-appointment']
+
+  assign lot_label = ''
+  if mf.lot.value.number_roman != blank
+    assign lot_label = 'Lot ' | append: mf.lot.value.number_roman
   endif
-  if appt_page == blank
-    assign appt_page = pages['contact']
-  endif
+
+  assign form_id = 'HaAppointmentForm'
+  assign dialog_id = 'HaAppointmentDialog'
 -%}
 
 <div class="ha-pdp__appointment">
-  {%- if appt_page != blank -%}
-    <a class="ha-link ha-identify" href="{{ appt_page.url }}">{{ label }}</a>
-  {%- else -%}
-    <span class="ha-link ha-link--inert ha-identify">{{ label }}</span>
-    {%- render 'ha-placeholder-note',
-      show: true,
-      text: 'Placeholder — no appointment page bound yet; route pending Aloha'
-    -%}
-  {%- endif -%}
+  <button
+    class="ha-link ha-identify ha-appointment__open"
+    type="button"
+    data-ha-appointment-open
+    aria-haspopup="dialog"
+    aria-controls="{{ dialog_id }}"
+  >{{ label }}</button>
 </div>
+
+<dialog class="ha-appointment" id="{{ dialog_id }}" aria-labelledby="{{ dialog_id }}-title">
+  <div class="ha-appointment__inner">
+    <div class="ha-appointment__head">
+      <div>
+        {%- if lot_label != blank -%}
+          <p class="ha-appointment__eyebrow ha-record">{{ lot_label }}</p>
+        {%- endif -%}
+        <h2 class="ha-appointment__title ha-identify" id="{{ dialog_id }}-title">{{ label }}</h2>
+        <p class="ha-appointment__subject ha-record">
+          {{ style_name }}{% if mf.expression != blank %} &middot; {{ mf.expression }}{% endif %}
+        </p>
+      </div>
+
+      <button
+        class="ha-appointment__close"
+        type="button"
+        data-ha-appointment-close
+        aria-label="{{ 'accessibility.close' | t }}"
+      >{% render 'icon-close' %}</button>
+    </div>
+
+    {%- form 'contact', id: form_id, class: 'ha-appointment__form' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="ha-appointment__status ha-narrate" role="status" tabindex="-1" data-ha-appointment-status>
+          Thank you. Your request has reached the atelier and someone will write to you
+          to arrange a time.
+        </p>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="ha-appointment__status ha-appointment__status--error" role="alert" tabindex="-1" data-ha-appointment-status>
+            <p class="ha-narrate">{{ 'templates.contact.form.error_heading' | t }}</p>
+            <ul class="ha-appointment__errors ha-record" role="list">
+              {%- for field in form.errors -%}
+                <li>{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%}
+          The garment is recorded whether or not the visitor mentions it. These
+          are the page's own values, not anything the visitor can mistype.
+        {%- endcomment -%}
+        <input type="hidden" name="contact[Enquiry type]" value="Private appointment">
+        <input type="hidden" name="contact[Style]" value="{{ style_name | escape }}">
+        {%- if mf.expression != blank -%}
+          <input type="hidden" name="contact[Expression]" value="{{ mf.expression | escape }}">
+        {%- endif -%}
+        {%- if lot_label != blank -%}
+          <input type="hidden" name="contact[Lot]" value="{{ lot_label | escape }}">
+        {%- endif -%}
+        <input type="hidden" name="contact[Product]" value="{{ product.title | escape }}">
+        <input type="hidden" name="contact[Product URL]" value="{{ shop.url }}{{ product.url }}">
+        {%- comment -%} Filled by ha-appointment.js from the live product form. {%- endcomment -%}
+        <input type="hidden" name="contact[Selected size]" value="" data-ha-appointment-size>
+        {%- if settings.ha_appointment_recipient != blank -%}
+          <input type="hidden" name="contact[Route to]" value="{{ settings.ha_appointment_recipient | escape }}">
+        {%- endif -%}
+
+        <div class="ha-appointment__fields">
+          <p class="ha-appointment__field">
+            <label class="ha-appointment__label ha-record" for="{{ form_id }}-name">Name</label>
+            <input
+              class="ha-appointment__input"
+              id="{{ form_id }}-name"
+              type="text"
+              name="contact[name]"
+              autocomplete="name"
+              required
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            >
+          </p>
+
+          <p class="ha-appointment__field">
+            <label class="ha-appointment__label ha-record" for="{{ form_id }}-email">Email address</label>
+            <input
+              class="ha-appointment__input"
+              id="{{ form_id }}-email"
+              type="email"
+              name="contact[email]"
+              autocomplete="email"
+              autocapitalize="off"
+              spellcheck="false"
+              required
+              aria-required="true"
+              {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            >
+          </p>
+
+          <p class="ha-appointment__field">
+            <label class="ha-appointment__label ha-record" for="{{ form_id }}-phone">Telephone number</label>
+            <input
+              class="ha-appointment__input"
+              id="{{ form_id }}-phone"
+              type="tel"
+              name="contact[Telephone]"
+              autocomplete="tel"
+              value="{% if customer %}{{ customer.phone }}{% endif %}"
+            >
+          </p>
+
+          <p class="ha-appointment__field">
+            <label class="ha-appointment__label ha-record" for="{{ form_id }}-when">Preferred date or general availability</label>
+            {%- comment -%}
+              Deliberately free text, not a date picker. Aloha asked for "preferred
+              appointment date OR general availability" — "weekday mornings, from
+              late September" is a valid answer and a date input cannot hold it.
+            {%- endcomment -%}
+            <input
+              class="ha-appointment__input"
+              id="{{ form_id }}-when"
+              type="text"
+              name="contact[Preferred date or availability]"
+              placeholder="A date, or the days and times that suit you"
+            >
+          </p>
+
+          <p class="ha-appointment__field">
+            <label class="ha-appointment__label ha-record" for="{{ form_id }}-message">Message</label>
+            <textarea
+              class="ha-appointment__input ha-appointment__textarea"
+              id="{{ form_id }}-message"
+              name="contact[body]"
+              rows="4"
+            >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </p>
+        </div>
+
+        <button class="ha-appointment__submit ha-identify" type="submit">Send request</button>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</dialog>

@@ -1,0 +1,64 @@
+{%- comment -%}
+  Hartwick Atelier — one accordion row inside the product panel.
+
+  Aloha, 3 September 2026: "Longer information organised through restrained
+  accordion rows […] Less copy visible within the first screen."
+
+  Luxe's native `collapsible_tab` block already gives an accordion row, but it
+  can only hold richtext or a page — it cannot hold a metafield-driven component
+  such as the Material Record. This snippet closes that gap WITHOUT introducing a
+  second accordion style beside Luxe's, which is precisely the visual busyness
+  Aloha is asking us to remove.
+
+  It emits Luxe's own accordion markup, exactly:
+
+      <div class="accordion"><button class="accordion-title">…</button>
+                             <div class="accordion-panel">…</div></div>
+
+  assets/global.js binds every `.accordion-title` on the page at DOMContentLoaded
+  and animates `heading.nextElementSibling`, so a row built here behaves like a
+  native one — same open/close, same height animation, same ARIA — with no
+  JavaScript of our own and no fork of the section.
+
+  `content` is already-rendered HTML, so capture it at the call site:
+
+    {%- capture record -%}{%- render 'ha-material-record', product: product, full: true,
+         hide_eyebrow: true, hide_title: true, hide_intro: true -%}{%- endcapture -%}
+    {%- render 'ha-panel-row', id: 'record', title: 'Material Record', content: record -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign row_id = id | default: 'row'
+  assign panel_id = 'ha-panel-' | append: row_id
+  assign button_id = panel_id | append: '-button'
+  assign is_open = false
+  if open
+    assign is_open = true
+  endif
+-%}
+
+{%- if content != blank -%}
+  <div class="accordion ha-panel-row">
+    <button
+      class="accordion-title{% if is_open %} active{% endif %}"
+      type="button"
+      aria-expanded="{{ is_open }}"
+      aria-controls="{{ panel_id }}"
+      id="{{ button_id }}"
+    >
+      <span>{{ title }}</span>
+      <div class="accordion-icons-wrapper">
+        <div class="accordion-icon-open">{% if settings.accordion_icon == 'plus' %}{% render 'icon-plus' %}{% else %}{% render 'icon-caret' %}{% endif %}</div>
+        <div class="accordion-icon-close">{% if settings.accordion_icon == 'plus' %}{% render 'icon-minus' %}{% else %}{% render 'icon-caret' %}{% endif %}</div>
+      </div>
+    </button>
+    <div
+      class="accordion-panel{% if is_open %} panel-open{% endif %}"
+      id="{{ panel_id }}"
+      aria-hidden="{% if is_open %}false{% else %}true{% endif %}"
+      aria-labelledby="{{ button_id }}"
+    >
+      {{ content }}
+    </div>
+  </div>
+{%- endif -%}

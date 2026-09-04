@@ -1,0 +1,41 @@
+{%- comment -%}
+  Hartwick Atelier — availability, stated as a fact.
+
+  Aloha, 3 September 2026, lists availability among the things that stay inside
+  the product panel — and, in the same letter, removes scarcity language from
+  the site: "We do not want to turn that reality into scarcity language that
+  pressures customers into buying quickly."
+
+  So this line is deliberately narrow. It says whether the piece can be bought
+  and, where Hartwick has written one, how. It never counts remaining stock,
+  never says "only 2 left", "selling fast" or "almost gone", and never runs a
+  countdown. Luxe's own `inventory` block does exactly those things, which is
+  why this is not that block.
+
+    hartwick.availability_note   "Through The Register"   — Hartwick's own words
+    otherwise                     derived from Shopify's real stock state
+
+  Terminology (CLAUDE.md): Reserve is Phase 2 and is not offered here.
+
+  Usage (inside a main-product custom_liquid block):
+    {% render 'ha-availability', label: 'Availability' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign note = product.metafields.hartwick.availability_note
+
+  if note == blank
+    if product.available
+      assign note = 'Available now'
+    else
+      assign note = 'Not currently available'
+    endif
+  endif
+
+  assign row_label = label | default: 'Availability'
+-%}
+
+<div class="ha-pdp__availability ha-record">
+  <span class="ha-pdp__availability-label">{{ row_label }}</span>
+  <span class="ha-pdp__availability-value">{{ note }}</span>
+</div>

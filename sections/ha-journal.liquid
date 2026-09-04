@@ -22,7 +22,7 @@
   endif
 -%}
 
-<section class="ha-section ha-journal">
+<section class="ha-section ha-journal{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
   <div class="ha-wrap">
     {%- if use_placeholders -%}
       {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
@@ -93,6 +93,14 @@
   "class": "ha-section-wrapper",
   "max_blocks": 4,
   "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" },
+      { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" },
+      { "value": "clay", "label": "Clay" },
+      { "value": "botanical", "label": "Botanical" },
+      { "value": "slate", "label": "Slate (dark)" }
+    ] },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Journal / Dispatch" },
     { "type": "blog", "id": "blog", "label": "Blog", "info": "When it has articles, they replace the placeholder cards." },
     { "type": "range", "id": "post_limit", "min": 2, "max": 4, "step": 1, "label": "Cards", "default": 3 },

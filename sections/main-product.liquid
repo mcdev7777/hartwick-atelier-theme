@@ -513,17 +513,9 @@
             
             {%- when 'tags' -%}
             {% unless block.settings.badge_position == 'media' %}
-            {% assign metafield_badges = product.metafields.custom.badges %}
+            {%- capture ha_badge_spans -%}{%- render 'ha-badges', product: product -%}{%- endcapture -%}
             {% assign hascustombadges = false %}
-            {% for tag in product.tags %}
-            {% if tag contains 'Badge:' %}
-              {% assign hascustombadges = true %}
-            {% endif %}
-            {% endfor %}
-            
-            {% if metafield_badges != blank %}
-              {% assign hascustombadges = true %}
-            {% endif %}
+            {% if ha_badge_spans != blank %}{% assign hascustombadges = true %}{% endif %}
 
             {% if hascustombadges %}
 
@@ -534,16 +526,7 @@
             {% endstyle %}
 
             <div class="main-product--badge" {{ block.shopify_attributes }}>
-            {% for tag in product.tags %}
-            {% if tag contains 'Badge:' %}
-              <span>{{ tag | remove: 'Badge: ' }}</span>
-            {% endif %}
-            {% endfor %}
-            {% if metafield_badges != blank %}
-            {% for badge in metafield_badges.value %}
-              <span>{{ badge }}</span>
-            {% endfor %}
-            {% endif %}
+            {{ ha_badge_spans }}
             </div>
             {% endif %}
             {% endunless %}

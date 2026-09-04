@@ -1,0 +1,71 @@
+{%- comment -%}
+  Hartwick Atelier — product badge filter.
+
+  Aloha, 3 September 2026: "Please remove every Limited Edition label or badge
+  from the product cards, product recommendations and any other part of the
+  website. […] We do not want to turn that reality into scarcity language that
+  pressures customers into buying quickly."
+
+  Luxe draws card and product badges from two store-side sources:
+    · product tags prefixed `Badge:`      e.g. "Badge: Limited Edition"
+    · the `custom.badges` metafield       a list of strings
+
+  Both are product DATA, not theme code, so deleting the theme markup would not
+  remove the words — and re-adding one tag in the admin would put them straight
+  back. This snippet is the gate instead: every place Luxe prints a badge now
+  prints them through here, and any label on the suppression list is dropped
+  before it reaches the page. A tag left behind in the admin is harmless.
+
+  The list is a theme setting (Hartwick — Material Archive > Badges), so Aloha
+  can add a phrase without a developer. Matching is case-insensitive and matches
+  on containment, so "Limited Edition", "LIMITED EDITION" and "Limited Edition —
+  25 pieces" are all suppressed by the single entry "limited edition".
+
+  This suppresses promotional scarcity language only. A verified production
+  quantity still belongs on the page — as a factual row in the Material Record
+  ("Production quantity: 25 pieces"), never as a badge.
+
+  Usage — capture, so the caller can tell whether anything survived the filter
+  and skip the wrapper element entirely when nothing did:
+
+    {%- capture ha_badges -%}{%- render 'ha-badges', product: card_product -%}{%- endcapture -%}
+    {%- if ha_badges != blank -%}<div class="…">{{ ha_badges }}</div>{%- endif -%}
+
+  `class:` puts a class on each span, for the one caller (featured-product) whose
+  badges are not inside a wrapper of their own.
+{%- endcomment -%}
+
+{%- liquid
+  assign suppressed = settings.ha_suppressed_badges | default: 'limited edition, limited-edition, limited run, exclusive, last chance, selling fast, almost gone, only a few left, hurry, final pieces' | downcase | split: ','
+
+  assign labels = ''
+
+  for tag in product.tags
+    if tag contains 'Badge:'
+      assign label = tag | remove_first: 'Badge:' | strip
+      assign labels = labels | append: '|@|' | append: label
+    endif
+  endfor
+
+  for badge in product.metafields.custom.badges.value
+    assign label = badge | strip
+    assign labels = labels | append: '|@|' | append: label
+  endfor
+
+  assign labels = labels | remove_first: '|@|' | split: '|@|'
+-%}
+
+{%- for label in labels -%}
+  {%- liquid
+    assign haystack = label | downcase
+    assign blocked = false
+    for phrase in suppressed
+      assign needle = phrase | strip
+      if needle != blank and haystack contains needle
+        assign blocked = true
+        break
+      endif
+    endfor
+  -%}
+  {%- unless blocked -%}<span{% if class != blank %} class="{{ class }}"{% endif %}>{{ label }}</span>{%- endunless -%}
+{%- endfor -%}

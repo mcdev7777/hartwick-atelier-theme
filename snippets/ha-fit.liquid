@@ -1,0 +1,77 @@
+{%- comment -%}
+  Hartwick Atelier — Size & Fit, for the panel's accordion row.
+
+  Aloha, 3 September 2026, asks for the longer information in the panel to be
+  "organised through restrained accordion rows". Size and fit is one of those
+  rows, and it is the one that cannot be a block of typed rich text: the facts
+  belong to the garment, not to the theme.
+
+    hartwick.silhouette      Straight, relaxed
+    hartwick.fit             Ease through body and sleeve
+    hartwick.movement
+    hartwick.garment_length
+    hartwick.model_height    } the two that make a photograph legible
+    hartwick.size_worn       }
+
+  Same rules as every other Hartwick component: a row renders only when its
+  field is present, an empty field collapses with no orphaned label, and no
+  measurement is invented. `guidance` carries the editable prose that sits
+  beneath the rows — Aloha's words, from the theme editor.
+
+  This snippet renders the whole accordion row, not just its contents: the
+  `capture` that hands the body to snippets/ha-panel-row.liquid lives here rather
+  than in the template, so the `custom_liquid` block that calls it stays a single
+  `render` with no control flow in it.
+
+  Usage (inside a main-product custom_liquid block):
+    {% render 'ha-fit', title: 'Size & Fit', guidance: '<p>…</p>' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+  assign has_rows = false
+  if mf.silhouette != blank or mf.fit != blank or mf.movement != blank or mf.garment_length != blank or mf.model_height != blank or mf.size_worn != blank
+    assign has_rows = true
+  endif
+-%}
+
+{%- capture ha_fit_body -%}
+  {%- if has_rows -%}
+    <table class="ha-record__table ha-record">
+      <caption class="visually-hidden">Size and fit</caption>
+      <tbody>
+        {%- if mf.silhouette != blank -%}
+          <tr><th scope="row">Silhouette</th><td>{{ mf.silhouette }}</td></tr>
+        {%- endif -%}
+        {%- if mf.fit != blank -%}
+          <tr><th scope="row">Fit</th><td>{{ mf.fit }}</td></tr>
+        {%- endif -%}
+        {%- if mf.movement != blank -%}
+          <tr><th scope="row">Movement</th><td>{{ mf.movement }}</td></tr>
+        {%- endif -%}
+        {%- if mf.garment_length != blank -%}
+          <tr><th scope="row">Length</th><td>{{ mf.garment_length }}</td></tr>
+        {%- endif -%}
+        {%- if mf.model_height != blank -%}
+          <tr><th scope="row">Model height</th><td>{{ mf.model_height }}</td></tr>
+        {%- endif -%}
+        {%- if mf.size_worn != blank -%}
+          <tr><th scope="row">Size worn</th><td>{{ mf.size_worn }}</td></tr>
+        {%- endif -%}
+      </tbody>
+    </table>
+  {%- endif -%}
+
+  {%- if guidance != blank -%}
+    <div class="ha-panel-row__prose ha-narrate">{{ guidance }}</div>
+  {%- endif -%}
+
+  {%- unless has_rows -%}
+    {%- render 'ha-placeholder-note',
+      show: true,
+      text: 'Placeholder — measurements publish from hartwick.silhouette, fit, movement, garment_length, model_height and size_worn'
+    -%}
+  {%- endunless -%}
+{%- endcapture -%}
+
+{%- render 'ha-panel-row', id: 'fit', title: title, content: ha_fit_body -%}

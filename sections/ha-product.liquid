@@ -1,0 +1,443 @@
+{%- comment -%}
+  Hartwick Atelier — 01 PRODUCT (three columns).
+  Built to `04_HA_Product_Desktop_REVISED_EDITABLE.pdf`, Aloha's revised
+  wireframe, on a 1440 x 6102 canvas measured at 1:1. Geometry below is that
+  drawing, not an estimate:
+
+      left rail   58 -> 380   (322)   sticky
+      gap                      42
+      media rail  422 -> 1066 (644)   scrolls
+      gap                      57
+      buy rail   1123 -> 1390 (267)   sticky
+
+  WHY THIS IS A CUSTOM SECTION, when the rest of the build is native.
+  Luxe's `main-product` renders `.product-main-top-section` as a flex box with
+  exactly TWO children — a media section and an info section. The revised design
+  needs THREE columns with two independently sticky rails on either side of a
+  scrolling one. No arrangement of CSS gets a flex item's children to straddle a
+  sibling, and `display: contents` on the info section would break the very
+  stickiness the design is built around. So this is the case CLAUDE.md reserves
+  for custom work: "custom sections only where they don't [meet the requirement]".
+
+  WHAT IS STILL SHOPIFY'S OWN. The parts that carry money and inventory are not
+  reimplemented — they are Luxe's own snippets, called with the same arguments
+  `main-product` uses:
+
+      snippets/product-variant-picker.liquid   variants, availability, swatches
+      snippets/buy-buttons.liquid              the product form, cart JS, errors
+
+  Between them they read four settings from their calling section
+  (`gallery_aspect_ratio`, `color_scheme`, and two sticky-button flags) and two
+  from `block` (`picker_type`, `show_puncuation`, `show_dynamic_checkout`,
+  `show_gift_card_recipient`). All six are declared in the schema below and
+  `block: section` passes them through, so the snippets behave exactly as they
+  do on the native template. Variants, inventory, analytics and checkout are
+  untouched.
+
+  TERMINOLOGY (CLAUDE.md). The heading is the permanent numbered Style; the line
+  beneath it is the material; the Expression is a labelled row in the buy rail.
+  The Lot is customer-facing as a Roman numeral. No Edition number renders
+  unless the garment is individually numbered — see snippets/ha-pdp-identity.
+{%- endcomment -%}
+
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign mf = product.metafields.hartwick
+
+  assign style_name = product.title
+  if mf.style.value.display_name != blank
+    assign style_name = mf.style.value.display_name
+  endif
+
+  # The line under the Style name is the cloth, not the colourway: the design
+  # prints "HANDSPUN SILK & LINEN" there and puts "Natural / Undyed" — the
+  # Expression — in the buy rail as a labelled row.
+  assign cloth = mf.fibre | default: section.settings.ph_cloth
+
+  # The Lot, customer-facing as a Roman numeral (Framework v3). With the Edition
+  # gone, this is the opening label Aloha asked for: "If the garments are not
+  # individually numbered, the opening label should simply show the confirmed Lot
+  # information." It renders only when a real Lot exists — never a placeholder.
+  assign lot_label = ''
+  if mf.lot.value.number_roman != blank
+    assign lot_label = 'Lot ' | append: mf.lot.value.number_roman
+  endif
+
+  # Key facts. Each renders only when present; an absent field leaves no
+  # orphaned label and no gap.
+  assign fact_fibre = mf.fibre | default: section.settings.ph_fibre
+  assign fact_weave = mf.weave | default: section.settings.ph_weave
+  assign fact_colour = mf.colour_name | default: section.settings.ph_colour
+  assign fact_made = ''
+  if mf.place_of_construction.value.place != blank
+    assign fact_made = mf.place_of_construction.value.place
+  else
+    assign fact_made = section.settings.ph_made_in
+  endif
+
+  assign expression = mf.expression | default: section.settings.ph_expression
+
+  # Availability is a fact, never a countdown. Aloha, 3 Sep 2026: "We do not
+  # want to turn that reality into scarcity language."
+  assign availability = mf.availability_note | default: section.settings.ph_availability
+  assign ship_date = mf.expected_ship_date | default: section.settings.ph_ship_date
+
+  assign fit_a = mf.fit | default: section.settings.ph_fit_line_one
+  assign fit_b = ''
+  if mf.model_height != blank and mf.size_worn != blank
+    assign fit_b = 'Model is ' | append: mf.model_height | append: ' and wears ' | append: mf.size_worn | append: '.'
+  else
+    assign fit_b = section.settings.ph_fit_line_two
+  endif
+
+  assign is_placeholder = false
+  if mf.style.value.display_name == blank or mf.fibre == blank or mf.expression == blank
+    assign is_placeholder = true
+  endif
+
+  # The rail shows an excerpt; the full description becomes an accordion row when
+  # it is longer than the excerpt, so nothing is lost and nothing is buried.
+  assign full_description = product.description
+  if full_description == blank
+    assign full_description = section.settings.ph_intro
+  endif
+  assign plain_description = full_description | strip_html | strip
+  assign intro_excerpt = plain_description | truncatewords: section.settings.intro_words
+  assign description_is_long = false
+  if plain_description.size > intro_excerpt.size
+    assign description_is_long = true
+  endif
+-%}
+
+{%- comment -%}
+  Luxe's product form is a set of custom elements — <product-info>, <variant-selects>,
+  <product-form> — driven by product-info.js and product-form.js, and styled by
+  section-main-product.css / component-price.css. main-product.liquid loads all of
+  these itself. This section reuses the same snippets, so it loads the same assets
+  and wraps the rail in the same <product-info> the snippets expect as an ancestor
+  (variant changes, availability, price and the cart all resolve through it).
+{%- endcomment -%}
+<script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
+
+<product-info
+  id="MainProduct-{{ section.id }}"
+  class="ha-section ha-pdp"
+  data-section="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-update-url="true"
+  data-url="{{ product.url }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="ha-pdp__grid">
+
+    {%- comment -%} ---------- LEFT RAIL (sticky) ---------- {%- endcomment -%}
+    <div class="ha-pdp__rail ha-pdp__rail--left">
+      <div class="ha-pdp__rail-inner">
+
+        {%- if section.settings.show_breadcrumb -%}
+          <nav class="ha-pdp__crumbs ha-record" aria-label="Breadcrumb">
+            <a href="{{ routes.collections_url }}">{{ section.settings.crumb_root }}</a>
+            {%- if collection.title != blank -%}
+              <span aria-hidden="true"> / </span>
+              <a href="{{ collection.url }}">{{ collection.title }}</a>
+            {%- elsif section.settings.crumb_leaf != blank -%}
+              <span aria-hidden="true"> / </span>{{ section.settings.crumb_leaf }}
+            {%- endif -%}
+            {%- if lot_label != blank -%}
+              <span aria-hidden="true"> / </span><span class="ha-pdp__lot">{{ lot_label }}</span>
+            {%- endif -%}
+          </nav>
+        {%- elsif lot_label != blank -%}
+          <p class="ha-pdp__crumbs ha-record"><span class="ha-pdp__lot">{{ lot_label }}</span></p>
+        {%- endif -%}
+
+        <h1 class="ha-pdp__title ha-identify">{{ style_name }}</h1>
+
+        {%- if cloth != blank -%}
+          <p class="ha-pdp__cloth ha-record">{{ cloth }}</p>
+        {%- endif -%}
+
+        {%- comment -%}
+          A SHORT opening only. Aloha: when the purchase information runs long the
+          visitor can only finish reading it after scrolling past every image, so
+          the long copy moves into the accordion rows below. The excerpt is the
+          first sentences; the whole description is the "Description" row.
+        {%- endcomment -%}
+        {%- if intro_excerpt != blank -%}
+          <div class="ha-pdp__intro ha-body ha-narrate">{{ intro_excerpt }}</div>
+        {%- endif -%}
+
+        {%- if fact_fibre != blank or fact_weave != blank or fact_colour != blank or fact_made != blank -%}
+          <dl class="ha-pdp__facts ha-record">
+            {%- if fact_fibre != blank -%}<div><dt>Fibre</dt><dd>{{ fact_fibre }}</dd></div>{%- endif -%}
+            {%- if fact_weave != blank -%}<div><dt>Weave</dt><dd>{{ fact_weave }}</dd></div>{%- endif -%}
+            {%- if fact_colour != blank -%}<div><dt>Colour</dt><dd>{{ fact_colour }}</dd></div>{%- endif -%}
+            {%- if fact_made != blank -%}<div><dt>Made in</dt><dd>{{ fact_made }}</dd></div>{%- endif -%}
+          </dl>
+        {%- endif -%}
+
+        {%- if section.settings.record_anchor != blank -%}
+          <a class="ha-pdp__record-link ha-record" href="{{ section.settings.record_anchor }}">
+            {{ section.settings.record_link_text }}
+            <span class="ha-pdp__arrow" aria-hidden="true"></span>
+          </a>
+        {%- endif -%}
+
+        {%- if fit_a != blank or fit_b != blank -%}
+          <div class="ha-pdp__fit">
+            <h2 class="ha-pdp__fit-title ha-narrate">{{ section.settings.fit_heading }}</h2>
+            {%- if fit_a != blank -%}<p class="ha-record">{{ fit_a }}</p>{%- endif -%}
+            {%- if fit_b != blank -%}<p class="ha-record">{{ fit_b }}</p>{%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%}
+          Two quiet rows close the left rail. Luxe's own accordion markup and its
+          global.js behaviour — see snippets/ha-panel-row.liquid for why this is
+          the theme's accordion rather than a second one.
+        {%- endcomment -%}
+        {%- if description_is_long -%}
+          {%- capture description_body -%}
+            <div class="ha-pdp__row-body ha-body ha-narrate">{{ full_description }}</div>
+          {%- endcapture -%}
+          {%- render 'ha-panel-row', id: 'description', title: section.settings.description_row_title, content: description_body -%}
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'left_row' -%}
+            {%- capture row_body -%}
+              {%- if block.settings.content != blank -%}
+                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.content }}</div>
+              {%- endif -%}
+              {%- if block.settings.page != blank -%}
+                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.page.content }}</div>
+              {%- endif -%}
+            {%- endcapture -%}
+            {%- render 'ha-panel-row', id: block.id, title: block.settings.heading, content: row_body -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if is_placeholder -%}
+          {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+            text: 'Placeholder — Style, cloth and Expression publish from hartwick.* metafields' -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ---------- MEDIA RAIL (scrolls) ---------- {%- endcomment -%}
+    <div class="ha-pdp__media">
+      {%- if product.media.size > 0 -%}
+        <ha-media-rail class="ha-pdp__rail-media" data-count="{{ product.media.size }}">
+          <div class="ha-pdp__frames">
+            {%- for media in product.media -%}
+              <figure class="ha-pdp__frame" id="{{ section.id }}-frame-{{ forloop.index }}">
+                {%- if media.media_type == 'image' -%}
+                  {%- assign frame_loading = 'lazy' -%}
+                  {%- if forloop.first -%}{%- assign frame_loading = 'eager' -%}{%- endif -%}
+                  {%- assign frame_alt = media.alt | default: style_name -%}
+                  {{ media
+                    | image_url: width: 1400
+                    | image_tag:
+                      loading: frame_loading,
+                      sizes: '(min-width: 990px) 45vw, 100vw',
+                      widths: '480, 720, 960, 1200, 1400',
+                      alt: frame_alt,
+                      class: 'ha-pdp__img' }}
+                {%- else -%}
+                  {{ media | media_tag: image_size: '1400x' }}
+                {%- endif -%}
+              </figure>
+            {%- endfor -%}
+          </div>
+
+          {%- comment -%}
+            Position markers, one per frame. The design draws them over the
+            image's right edge. They are real buttons, not decoration: the rail
+            is a scroller and this is the only way to jump within it without a
+            mouse wheel.
+          {%- endcomment -%}
+          {%- if product.media.size > 1 -%}
+            <ol class="ha-pdp__dots" aria-label="Product images">
+              {%- for media in product.media -%}
+                <li>
+                  <button
+                    type="button"
+                    class="ha-pdp__dot"
+                    data-frame="{{ section.id }}-frame-{{ forloop.index }}"
+                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                  ><span class="visually-hidden">{{ 'products.product.media.load_image' | t: index: forloop.index }}</span></button>
+                </li>
+              {%- endfor -%}
+            </ol>
+          {%- endif -%}
+        </ha-media-rail>
+      {%- else -%}
+        {%- render 'ha-figure', label: section.settings.ph_media_label, class: 'ha-pdp__frame ha-pdp__frame--empty' -%}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ---------- BUY RAIL (sticky) ---------- {%- endcomment -%}
+    <div class="ha-pdp__rail ha-pdp__rail--buy{% if section.settings.enable_sticky_buttons %} sticky-buy-buttons sticky-buy-buttons--border-{{ section.settings.sticky_buttons_border }}{% endif %}">
+      <div class="ha-pdp__rail-inner">
+
+        <div class="ha-pdp__price">
+          {%- render 'price', product: product, use_variant: true, show_badges: false, price_class: '' -%}
+        </div>
+        {%- if section.settings.tax_note != blank -%}
+          <p class="ha-pdp__tax ha-record">{{ section.settings.tax_note }}</p>
+        {%- endif -%}
+
+        {%- if expression != blank -%}
+          <div class="ha-pdp__field">
+            <p class="ha-pdp__field-label ha-record">Expression</p>
+            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-narrate">{{ expression }}</p>
+          </div>
+        {%- endif -%}
+
+        <div class="ha-pdp__size">
+          {%- if section.settings.size_guide_page != blank -%}
+            <a class="ha-pdp__size-guide ha-record" href="{{ section.settings.size_guide_page.url }}">Size guide</a>
+          {%- endif -%}
+          {%- render 'product-variant-picker',
+            product: product,
+            block: section,
+            product_form_id: product_form_id,
+            labels: true,
+            pill_threshold: 12,
+            pill_options_display: 'all',
+            show_variant_images: false,
+            swatches: false -%}
+        </div>
+
+        {%- if availability != blank -%}
+          <div class="ha-pdp__field">
+            <p class="ha-pdp__field-label ha-record">Availability</p>
+            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-record">{{ availability }}</p>
+          </div>
+        {%- endif -%}
+
+        {%- if ship_date != blank -%}
+          <div class="ha-pdp__field">
+            <p class="ha-pdp__field-label ha-record">Expected to ship</p>
+            <p class="ha-pdp__field-value ha-record">{{ ship_date }}</p>
+          </div>
+        {%- endif -%}
+
+        {%- render 'buy-buttons',
+          block: section,
+          product: product,
+          product_form_id: product_form_id,
+          section_id: section.id,
+          style: 'solid',
+          show_payment_methods: false,
+          show_pickup_availability: false -%}
+
+        {%- render 'ha-appointment', text: section.settings.appointment_text -%}
+
+        {%- comment -%}
+          The longer purchase terms are a row, not a paragraph, so the buy rail
+          stays short enough to read without scrolling the media.
+        {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'buy_row' -%}
+            {%- capture buy_body -%}
+              {%- if block.settings.content != blank -%}
+                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.content }}</div>
+              {%- endif -%}
+              {%- if block.settings.page != blank -%}
+                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.page.content }}</div>
+              {%- endif -%}
+            {%- endcapture -%}
+            {%- render 'ha-panel-row', id: block.id, title: block.settings.heading, content: buy_body -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.settings.payment_note != blank -%}
+          <p class="ha-pdp__payment ha-record">{{ section.settings.payment_note }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</product-info>
+
+{% schema %}
+{
+  "name": "HA — Product",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "Three columns: a sticky left rail, a scrolling media rail and a sticky buy rail. Built to Wireframe 04 (revised)." },
+
+    { "type": "header", "content": "Breadcrumb" },
+    { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
+    { "type": "text", "id": "crumb_root", "label": "Root label", "default": "Collection" },
+    { "type": "text", "id": "crumb_leaf", "label": "Fallback leaf", "default": "Apparel", "info": "Used when the visitor did not arrive from a collection." },
+
+    { "type": "header", "content": "Left rail" },
+    { "type": "richtext", "id": "ph_intro", "label": "Description fallback", "info": "Used only when the product has no description.", "default": "<p><em>Placeholder — the product description publishes from Shopify.</em></p>" },
+    { "type": "text", "id": "fit_heading", "label": "Fit heading", "default": "Fit" },
+    { "type": "text", "id": "record_link_text", "label": "Record link text", "default": "View the material record" },
+    { "type": "text", "id": "record_anchor", "label": "Record link target", "default": "#the-material-record" },
+    { "type": "range", "id": "intro_words", "label": "Description excerpt length", "min": 12, "max": 80, "step": 2, "unit": "wd", "default": 32, "info": "The rail shows this many words; the full description opens in a row beneath." },
+    { "type": "text", "id": "description_row_title", "label": "Description row title", "default": "Description" },
+
+    { "type": "header", "content": "Buy rail" },
+    { "type": "text", "id": "tax_note", "label": "Tax note", "default": "Duties and taxes shown at checkout" },
+    { "type": "page", "id": "size_guide_page", "label": "Size guide page" },
+    { "type": "text", "id": "appointment_text", "label": "Appointment link", "default": "Request Private Appointment" },
+    { "type": "textarea", "id": "payment_note", "label": "Payment note", "default": "Full payment is taken when the order is placed. Delivery timing is shown before checkout." },
+
+    { "type": "header", "content": "Media" },
+    { "type": "text", "id": "ph_media_label", "label": "Placeholder label", "default": "Product image / centre media rail" },
+
+    { "type": "header", "content": "Placeholder content", "info": "Used per field, only where the product has no value. Wireframe copy — provenance is unverified and must not go live as fact (risk R7)." },
+    { "type": "text", "id": "ph_cloth", "label": "Cloth line", "default": "Handspun silk & linen" },
+    { "type": "text", "id": "ph_fibre", "label": "Fibre", "default": "Silk / linen" },
+    { "type": "text", "id": "ph_weave", "label": "Weave", "default": "Handwoven" },
+    { "type": "text", "id": "ph_colour", "label": "Colour", "default": "Natural / undyed" },
+    { "type": "text", "id": "ph_made_in", "label": "Made in", "default": "India" },
+    { "type": "text", "id": "ph_expression", "label": "Expression", "default": "Natural / Undyed" },
+    { "type": "text", "id": "ph_availability", "label": "Availability", "default": "Made in small quantities" },
+    { "type": "text", "id": "ph_ship_date", "label": "Expected to ship" },
+    { "type": "text", "id": "ph_fit_line_one", "label": "Fit line 1", "default": "Relaxed through the body." },
+    { "type": "text", "id": "ph_fit_line_two", "label": "Fit line 2" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true },
+
+    { "type": "header", "content": "Shopify form (read by Luxe's own snippets)", "info": "These are the settings snippets/product-variant-picker.liquid and snippets/buy-buttons.liquid read from their calling section. Leave them alone unless the form misbehaves." },
+    { "type": "select", "id": "picker_type", "label": "Size picker", "options": [{ "value": "button", "label": "Buttons" }, { "value": "dropdown", "label": "Dropdown" }], "default": "button" },
+    { "type": "checkbox", "id": "show_puncuation", "label": "Punctuation after labels", "default": false },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Dynamic checkout buttons", "default": false },
+    { "type": "checkbox", "id": "show_gift_card_recipient", "label": "Gift card recipient form", "default": false },
+    { "type": "checkbox", "id": "enable_sticky_buttons", "label": "Sticky Add to Bag (mobile)", "default": true, "info": "Required by the mobile brief. Pins the buy form to the bottom of the viewport below 990px." },
+    { "type": "checkbox", "id": "sticky_buttons_border", "label": "Hairline above the sticky bar", "default": true },
+    { "type": "checkbox", "id": "enable_sticky_buttons_desktop", "label": "Sticky Add to Bag (desktop)", "default": false },
+    { "type": "select", "id": "gallery_aspect_ratio", "label": "Variant image ratio", "options": [{ "value": "portrait-4x6", "label": "Portrait 2:3" }, { "value": "portrait", "label": "Portrait 4:5" }, { "value": "square", "label": "Square" }], "default": "portrait-4x6" }
+  ],
+  "blocks": [
+    {
+      "type": "buy_row",
+      "name": "Buy rail row",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Delivery" },
+        { "type": "richtext", "id": "content", "label": "Content" },
+        { "type": "page", "id": "page", "label": "Or take the content from a page" }
+      ]
+    },
+    {
+      "type": "left_row",
+      "name": "Left rail row",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Sizing information" },
+        { "type": "richtext", "id": "content", "label": "Content" },
+        { "type": "page", "id": "page", "label": "Or take the content from a page" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hartwick — Product" }]
+}
+{% endschema %}

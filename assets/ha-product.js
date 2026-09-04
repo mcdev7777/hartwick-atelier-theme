@@ -16,6 +16,14 @@
  * Accessibility: the count is decorative. The native thumbnail buttons already
  * carry "Load image N" labels and remain the accessible control, so the counter
  * is hidden from assistive technology rather than duplicating that as noise.
+ *
+ * 3 September 2026 — Aloha asked whether a Studio Standard style gallery is
+ * possible: "one main image with manual navigation, an image counter and swipe
+ * functionality on mobile". It is, and it is a Luxe setting rather than code
+ * (gallery_layout: "slider"). The one part Luxe has never had is the counter,
+ * which is this file — so it now reports on desktop too, but only in that
+ * arrangement. In the vertical stack every image is on screen at once and there
+ * is no single position to report, so the readout stays a mobile affordance.
  */
 (function () {
   'use strict';
@@ -38,6 +46,12 @@
     var readout = document.createElement('p');
     readout.className = 'ha-gallery-count ha-record';
     readout.setAttribute('aria-hidden', 'true');
+
+    // One image at a time on desktop — the Studio Standard arrangement — is the
+    // only desktop layout where a position means anything.
+    if (container.classList.contains('product-media--mobile-slider--desktop-slider')) {
+      readout.classList.add('ha-gallery-count--desktop');
+    }
 
     var total = PAD(slides.length);
     var current = 1;

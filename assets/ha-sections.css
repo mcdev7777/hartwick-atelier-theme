@@ -11,31 +11,89 @@
    - Mobile first. Desktop layout starts at 990px, matching Luxe's own breakpoint.
    ========================================================================== */
 
-/* Type scale. The typography READ ME sets the rule this follows: "Digital body
-   copy should normally begin at 16 px", body line height 140-155%, and technical
-   information kept visually quieter than editorial copy. Luxe's rem base is 10px,
-   so 1.6rem = 16px. Editorial copy is 16px, the record voice sits at 12-13px
-   beneath it, and display sizes clamp against the viewport. */
+/* Type scale. Sizes are NOT written here — they are the --ha-t-* tokens declared
+   in snippets/ha-tokens.liquid and driven from Theme settings > Hartwick —
+   Material Archive > Type scale.
+
+   Aloha, 3 September 2026: "The typography currently feels too large and visually
+   dense […] Too many elements have similar visual weight." Her revised hierarchy
+   is deliberately held in ONE place, because she also asked us to treat the
+   numbers as starting points — "the main objective is to establish clearer
+   differences between the product name, supporting information and body copy".
+   Sizes scattered through a stylesheet cannot be tested against that objective;
+   nine tokens can.
+
+   The tokens carry the four levels her letter distinguishes:
+     --ha-t-style / --ha-t-editorial   the name, and editorial headings
+     --ha-t-expression                 the supporting line under the name
+     --ha-t-body (+ --ha-t-body-lh)    reading copy
+     --ha-t-label / --ha-t-meta        labels, then technical metadata
+     --ha-t-ui                         buttons and navigation
+     --ha-t-price                      price
+
+   This file's job is to say WHICH element is WHICH level, and nothing else.
+   The typography READ ME still governs: body copy begins at 16px, and technical
+   information stays visually quieter than editorial copy. */
 :root {
   --ha-gutter: 20px;
   --ha-section-y: 40px;
+  /* Declared at :root as well as on the product template so that any rule using
+     it resolves on every page. An unresolved var() does not fall back to the
+     cascade — it resets the property — which is how the Register lost its
+     padding on the homepage. */
+  --ha-pdp-section-y: var(--ha-section-y);
 }
 
 @media screen and (min-width: 750px) {
-  :root { --ha-gutter: 32px; --ha-section-y: 56px; }
+  :root { --ha-gutter: 48px; --ha-section-y: 60px; }
 }
 
+/* Desktop gutters are more than doubled (40 -> 88). The sections were running
+   too close to the page edge; the extra air is what lets the type breathe at
+   the larger sizes. */
 @media screen and (min-width: 990px) {
-  :root { --ha-gutter: 40px; --ha-section-y: 64px; }
+  :root { --ha-gutter: 88px; --ha-section-y: 88px; }
+}
+
+@media screen and (min-width: 1400px) {
+  :root { --ha-gutter: 104px; }
 }
 
 /* --- shared ------------------------------------------------------------- */
 
+/* A hairline closes each section. Removed once, restored on request — it is what
+   tells the eye where one section ends and the next begins when both sit on the
+   same ground. Sections on a coloured or dark field don't need it: the field
+   change already does that job, so those variants keep `border-bottom: 0`. */
 .ha-section {
   background: var(--ha-page-ground);
   color: var(--ha-text);
   border-bottom: 1px solid var(--ha-rule);
 }
+
+/* --- field colours (Wireframe 04) --------------------------------------
+   The revised design runs the page as alternating full-bleed bands rather than
+   one ground throughout. A section chooses its field with `ha_field`; the class
+   below paints it and sets the text colour that stays legible on it. `--dark`
+   is kept as an alias of the peat field so the homepage's Masters and Register,
+   which name it directly, are unaffected. Accent-coloured fields (clay,
+   botanical) keep dark ink — those colours fail AA as text but are fine as
+   grounds under near-black type. */
+.ha-section--field-white     { background: var(--ha-field-white); color: var(--ha-text); border-bottom: 0; }
+.ha-section--field-peat      { background: var(--ha-field-dark);  color: var(--ha-text-invert); border-bottom: 0; }
+.ha-section--field-clay      { background: var(--ha-field-blush); color: var(--ha-text); border-bottom: 0; }
+.ha-section--field-botanical { background: var(--ha-field-botanical); color: var(--ha-text); border-bottom: 0; }
+.ha-section--field-slate     { background: var(--ha-field-slate); color: var(--ha-text-invert); border-bottom: 0; }
+
+/* Sections on an inverted field carry the record/eyebrow voice in Chalk Blue and
+   flip the hairline to a light alpha, exactly as .ha-section--dark does. */
+.ha-section--field-peat .ha-eyebrow,
+.ha-section--field-peat .ha-record,
+.ha-section--field-slate .ha-eyebrow,
+.ha-section--field-slate .ha-record { color: var(--ha-text-invert); }
+
+.ha-section--field-peat,
+.ha-section--field-slate { --ha-rule: rgba(233, 243, 255, 0.16); }
 
 .ha-section--dark {
   background: var(--ha-field-dark);
@@ -51,8 +109,8 @@
 }
 
 .ha-eyebrow {
-  font-size: 1.2rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
   color: var(--ha-text);
   margin: 0 0 2.4rem;
 }
@@ -62,13 +120,17 @@
   line-height: 1.12;
   letter-spacing: 0;
   margin: 0;
-  font-size: clamp(3.2rem, 6.2vw, 5.6rem);
+  font-size: var(--ha-t-editorial);
 }
 
-.ha-display--lg { font-size: clamp(3.6rem, 7vw, 6.4rem); }
+/* The homepage hero is the one heading that is deliberately larger than the
+   editorial scale. It moves WITH the scale rather than ignoring it, so lowering
+   the editorial token still calms the hero. */
+.ha-display--lg { font-size: calc(var(--ha-t-editorial) * 1.5); }
 
 .ha-body {
-  font-size: 1.6rem;
+  font-size: var(--ha-t-body);
+  line-height: calc(var(--ha-t-body-lh) / var(--ha-t-body));
   max-width: 46ch;
   margin: 0;
   color: var(--ha-text);
@@ -86,8 +148,8 @@
 /* Text links carry the identify voice, underlined on interaction only. */
 .ha-link {
   display: inline-block;
-  font-size: 1.3rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-ui);
+  letter-spacing: var(--ha-track-ui);
   color: inherit;
   text-decoration: none;
   border-bottom: 1px solid transparent;
@@ -129,8 +191,8 @@
   left: 1.6rem;
   bottom: 1.4rem;
   right: 1.6rem;
-  font-size: 1.2rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
   color: var(--ha-text-invert);
 }
 
@@ -139,12 +201,13 @@
 /* Provisional-content notice. One toggle per section turns it off. */
 .ha-placeholder-note {
   display: block;
-  font-size: 1.2rem;
-  letter-spacing: 0.12em;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  line-height: 1.5;
   color: var(--ha-text-quiet);
   border: 1px solid var(--ha-rule);
-  padding: 0.6rem 1rem;
-  margin: 0 0 2.4rem;
+  padding: 1.2rem 1.6rem;
+  margin: 2.4rem 0 3.2rem;
 }
 
 .ha-section--dark .ha-placeholder-note {
@@ -172,7 +235,7 @@
 .ha-hero__eyebrow { margin-bottom: 2rem; }
 
 .ha-hero__subhead {
-  font-size: 1.6rem;
+  font-size: var(--ha-t-body);
   line-height: 1.4;
   letter-spacing: 0.04em;
   margin: 2.4rem 0 0;
@@ -233,14 +296,14 @@
   font: inherit;
 }
 
-.ha-index__num { font-size: 1.2rem; color: var(--ha-text-quiet); }
+.ha-index__num { font-size: var(--ha-t-meta); color: var(--ha-text-quiet); }
 
 .ha-index__name {
-  font-size: 1.8rem;
+  font-size: var(--ha-t-expression);
   letter-spacing: 0.01em;
 }
 
-.ha-index__lot { font-size: 1.2rem; color: var(--ha-text-quiet); }
+.ha-index__lot { font-size: var(--ha-t-meta); color: var(--ha-text-quiet); }
 
 .ha-index__btn[aria-selected='true'] .ha-index__name { text-decoration: underline; text-underline-offset: 0.4rem; }
 .ha-index__btn[aria-selected='true'] .ha-index__num { color: var(--ha-text); }
@@ -268,13 +331,13 @@
 
 .ha-masters__grid { display: grid; gap: 3.2rem; }
 
-.ha-masters__intro { font-size: 1.6rem; max-width: 42ch; }
+.ha-masters__intro { font-size: var(--ha-t-body); max-width: 42ch; }
 
 .ha-masters__label { margin-bottom: 2rem; }
 
 .ha-masters__list { list-style: none; margin: 0; padding: 0; }
 
-.ha-masters__item { font-size: clamp(1.8rem, 2.6vw, 2.4rem); line-height: 1.5; }
+.ha-masters__item { font-size: clamp(var(--ha-t-expression), 2.6vw, calc(var(--ha-t-editorial) * 0.6)); line-height: 1.5; }
 
 .ha-masters__item a { color: inherit; text-decoration: none; }
 .ha-masters__item a:hover,
@@ -282,7 +345,7 @@
 
 .ha-masters__region { font-style: italic; }
 
-.ha-masters__more { font-size: clamp(1.8rem, 2.6vw, 2.4rem); }
+.ha-masters__more { font-size: clamp(var(--ha-t-expression), 2.6vw, calc(var(--ha-t-editorial) * 0.6)); }
 
 @media screen and (min-width: 990px) {
   .ha-masters__grid { grid-template-columns: 1fr 1.3fr 1fr; gap: clamp(3.2rem, 5vw, 6.4rem); align-items: start; }
@@ -301,17 +364,19 @@
 .ha-record__eyebrow { margin-bottom: 1.6rem; }
 
 .ha-record__title {
-  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-size: var(--ha-t-editorial);
   letter-spacing: 0.02em;
   margin: 0 0 2rem;
 }
 
 .ha-record__intro { margin-bottom: 3.2rem; }
 
+/* The record is technical information: Aloha keeps it at the quiet end of the
+   scale, and never below 12px on mobile. */
 .ha-record__table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1.3rem;
+  font-size: var(--ha-t-meta);
 }
 
 .ha-record__table th,
@@ -319,14 +384,16 @@
   padding: 1.1rem 0;
   border-bottom: 1px solid var(--ha-rule);
   font-weight: 400;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--ha-track-label);
   vertical-align: baseline;
 }
 
 .ha-record__table th { text-align: left; white-space: nowrap; padding-right: 1.6rem; }
 .ha-record__table td { text-align: right; }
 
-.ha-record__link { margin-top: 2.4rem; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: 0.04em; }
+/* The link closes the record, so it needs to sit clear of the last row rather
+   than reading as another line of the table. */
+.ha-record__link { margin-top: 4.8rem; font-size: var(--ha-t-expression); letter-spacing: 0.04em; display: inline-block; }
 
 @media screen and (min-width: 990px) {
   .ha-lot__grid { grid-template-columns: 57% 1fr; }
@@ -349,21 +416,21 @@
   font-family: var(--ha-font-identify);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+  font-size: var(--ha-t-expression);
   font-weight: 500;
 }
 
 .article-card__excerpt,
 .article-card .card__excerpt {
-  font-size: 1.6rem;
+  font-size: var(--ha-t-body);
   color: var(--ha-text-quiet);
 }
 
 .section-label {
   font-family: var(--ha-font-record);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 1.2rem;
+  letter-spacing: var(--ha-track-meta);
+  font-size: var(--ha-t-meta);
 }
 
 .newsletter-form__field-wrapper .field__input {
@@ -421,8 +488,8 @@
 
 .ha-register__label {
   grid-column: 1 / -1;
-  font-size: 1.2rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
   opacity: 0.75;
   margin-bottom: 0.4rem;
 }
@@ -431,7 +498,7 @@
   background: transparent;
   border: 0;
   color: inherit;
-  font-size: 1.6rem;
+  font-size: var(--ha-t-body);
   padding: 0.4rem 0;
   width: 100%;
 }
@@ -443,18 +510,18 @@
   border: 0;
   color: inherit;
   cursor: pointer;
-  font-size: 1.3rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-ui);
+  letter-spacing: var(--ha-track-ui);
   padding: 0 0 0.4rem;
   white-space: nowrap;
 }
 
 .ha-register__submit:hover { text-decoration: underline; text-underline-offset: 0.4rem; }
 
-.ha-register__message { margin-top: 1.2rem; font-size: 1.3rem; }
+.ha-register__message { margin-top: 1.2rem; font-size: var(--ha-t-label); }
 
 @media screen and (min-width: 990px) {
-  .ha-register__grid { grid-template-columns: 1.1fr 1fr; gap: clamp(3.2rem, 6vw, 8rem); align-items: start; }
+  .ha-register__grid { grid-template-columns: 1fr 1fr; gap: clamp(3.2rem, 5vw, 6.4rem); align-items: start; }
 }
 
 /* ==========================================================================
@@ -473,7 +540,7 @@
 .ha-journal__link { color: inherit; text-decoration: none; display: block; }
 
 .ha-journal__title {
-  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+  font-size: var(--ha-t-expression);
   font-weight: 500;
   margin: 0 0 0.8rem;
 }
@@ -484,7 +551,7 @@
   text-underline-offset: 0.4rem;
 }
 
-.ha-journal__excerpt { font-size: 1.6rem; color: var(--ha-text-quiet); margin: 0; }
+.ha-journal__excerpt { font-size: var(--ha-t-body); color: var(--ha-text-quiet); margin: 0; }
 
 .ha-journal__foot { margin-top: 2.4rem; }
 
@@ -558,32 +625,45 @@
    quick-add modal, the cart drawer or another template.
    ========================================================================== */
 
+/* ONE gutter for the whole page.
+
+   The product template used to carry its own `--ha-pdp-gutter` (64px), which
+   quietly overrode `--ha-gutter` on every `.ha-wrap` below the hero — so the
+   hero sat at the wide margin and every section under it sat 40px narrower.
+   That is the misalignment Ivan saw. The page gutter is now the site gutter,
+   full stop, and the alias is kept only so any remaining reference resolves to
+   the same number rather than to a second one.
+
+   Vertical rhythm is set generously: sections need to read as separate things,
+   and at these type sizes a tight band makes two sections look like one. */
 .lx-template--product {
-  --ha-pdp-gutter: 20px;
-  --ha-pdp-section-y: 32px;
-  --ha-pdp-col-gap: 3.2rem;
+  --ha-pdp-gutter: var(--ha-gutter);
+  --ha-pdp-section-y: 40px;
+  --ha-pdp-col-gap: 2.8rem;
 }
 
 @media screen and (min-width: 750px) {
-  .lx-template--product { --ha-pdp-gutter: 40px; --ha-pdp-section-y: 40px; }
+  .lx-template--product { --ha-pdp-section-y: 60px; }
 }
 
 @media screen and (min-width: 990px) {
   .lx-template--product {
-    --ha-pdp-gutter: 64px;      /* 67 on the wireframe canvas */
-    --ha-pdp-section-y: 48px;   /* wireframe runs 22-54; 48 is the working mean */
-    --ha-pdp-col-gap: clamp(3.2rem, 6.6vw, 9.5rem);  /* 95px at 1440 */
+    --ha-pdp-section-y: 88px;
+    --ha-pdp-col-gap: clamp(3.2rem, 5vw, 7.2rem);
   }
 }
 
-/* The product page's own gutter and vertical rhythm. */
+/* Every wrap on the page — hero and every section below it — uses the same
+   horizontal gutter and the same vertical band. */
 .lx-template--product .ha-wrap {
   padding: var(--ha-pdp-section-y) var(--ha-pdp-gutter);
 }
 
-/* Section headings on this page are 40px, not the homepage's 56px. */
+/* Editorial headings further down the product page. Aloha asks for roughly
+   38-44px on desktop and 30-34px on mobile — which is now simply the shared
+   editorial token, so this page no longer needs a heading size of its own. */
 .lx-template--product .ha-display {
-  font-size: clamp(2.6rem, 2.8vw, 4rem);
+  font-size: var(--ha-t-editorial);
   line-height: 1.2;
 }
 
@@ -591,31 +671,43 @@
 
 .ha-pdp__identity { margin: 0; }
 
+/* Lot line, Style name, Expression.
+
+   Aloha: "Too many elements have similar visual weight." The three lines are
+   now three clearly different weights rather than three sizes of the same
+   thing — 12px tracked metadata, a 40px name, a 20px supporting line — and the
+   gaps between them shrank with the type. The old 43px eyebrow gap was drawn
+   for a 54px title; against 40px it read as a hole. */
+
 .ha-pdp__eyebrow {
-  font-size: 1.2rem;
-  letter-spacing: 0.14em;
-  color: var(--ha-text);
-  margin: 0 0 2.8rem;          /* 43px ink gap to the title */
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text-quiet);
+  margin: 0 0 1.4rem;
   font-variant-numeric: lining-nums tabular-nums;
 }
 
 .ha-pdp__title {
-  font-size: clamp(3.2rem, 3.8vw, 5.4rem);
-  letter-spacing: 0.02em;
-  line-height: 1.04;
-  margin: 0 0 1.6rem;          /* 27.5px ink gap to the Expression */
+  font-size: var(--ha-t-style);
+  letter-spacing: 0.01em;
+  line-height: 1.08;
+  margin: 0 0 0.8rem;
   font-variant-numeric: lining-nums tabular-nums;
   text-wrap: balance;          /* a long fallback title breaks evenly */
   overflow-wrap: normal;       /* never split a word — "HANDSP / UN" */
   hyphens: none;
 }
 
+/* The Expression is prose, not an identifier: "Handspun Silk-Linen, Natural
+   Pearl Shimmer" is how Aloha writes it, so it is set in the narrate voice and
+   sentence case. Uppercasing it was part of what made the block feel heavy —
+   it gave a supporting line the same visual authority as the name above it. */
 .ha-pdp__expression {
-  font-size: clamp(1.8rem, 2vw, 2.9rem);
-  letter-spacing: 0.06em;
-  line-height: 1.15;
-  text-transform: uppercase;
+  font-size: var(--ha-t-expression);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
   margin: 0;
+  color: var(--ha-text);
 }
 
 /* In the buy column the provisional notice must not out-weigh the product
@@ -630,31 +722,80 @@
 
 /* --- 03/04/05  The buy column ------------------------------------------- */
 
-/* The gallery / buy-panel split, stated explicitly.
-   Luxe's own `extra-wide` preset does not resolve to its nominal 60/40 here,
-   and its full-width margin rule pads the panel by --page-margin-desktop
-   (100px) on BOTH sides, which crushed the column to 285px and broke the
-   Style name mid-word. These four rules set the wireframe's geometry
-   directly: gallery 61.1%, panel 38.9%, content 48px in from the panel edge
-   and 402px wide (967 -> 1385.5 on the 1501px canvas). */
+/* The gallery / panel split.
+
+   Aloha, 3 September 2026, having seen the wireframe built with real content:
+     "One product image underneath another in a single vertical column on the
+      left · A narrower product information panel on the right · The right panel
+      remaining sticky while the customer scrolls through the images."
+
+   The vertical stack itself is a Luxe SETTING, not code: `gallery_layout:
+   "stack"` renders `grid-template-columns: repeat(1, 1fr)` on desktop. The
+   wireframe's 2-up grid was `gallery_layout: "grid"`. So the change Aloha is
+   asking for is a template value, and the geometry below is the only CSS it
+   needs. Nothing is forked; the alternative Studio Standard arrangement is the
+   same setting switched to "slider" (see docs/product-page-build.md).
+
+   The split moves from the wireframe's 61.1 / 38.9 to 64 / 36, and the panel's
+   content from 402px to 360px — "narrower", and about 48 characters per line at
+   16px, which is the comfortable reading measure Aloha asks to preserve. */
 @media screen and (min-width: 950px) {
   /* `body.` is load-bearing, not decoration. Luxe declares
      `.product-main-section-layout-extra-wide .product-main-media-section
       { width: 66% }` later in section-main-product.css, which loads after this
      file — at equal specificity that rule wins. The element+class selector
      below outranks it without resorting to !important. */
-  body.lx-template--product .product-main-media-section { width: 61.1%; }
+  body.lx-template--product .product-main-media-section { width: 64%; }
 
   body.lx-template--product .product-main-info-section {
-    width: 38.9%;
-    padding-left: 48px;
+    width: 36%;
+    padding-left: clamp(4rem, 4.4vw, 6.4rem);
     padding-right: 0;
   }
 
+  /* 360px, not the section's own `text_section_max_width`: that setting's
+     schema minimum is 400px, so the narrower measure Aloha asked for cannot be
+     expressed in the theme editor. The setting is left at its 400px floor and
+     this rule — one class more specific than the section's inline style —
+     carries the real value. */
   body.lx-template--product .product__info-container {
-    max-width: 402px;
+    max-width: 360px;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  /* The sticky panel.
+
+     Luxe's own `enable_sticky_info` supplies `position: sticky`; these two
+     rules make it survive a gallery that is now several screens tall.
+
+     `top` clears the sticky header. The max-height is the part that matters: a
+     sticky element taller than the viewport pins its TOP and leaves its bottom
+     permanently below the fold — the visitor scrolls the images and can never
+     reach Add to Bag. Capping the height and letting the panel scroll inside
+     itself keeps every control reachable at any window size and with any number
+     of accordion rows open. `overscroll-behavior` stops that inner scroll from
+     stealing the page's once it bottoms out. */
+  body.lx-template--product .product__info-container.product__column-sticky {
+    top: calc(var(--site-header-height-desktop, 8rem) + 2.4rem);
+    max-height: calc(100vh - var(--site-header-height-desktop, 8rem) - 4.8rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  body.lx-template--product .product__info-container.product__column-sticky::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* --- the stack ----------------------------------------------------------
+   One image under another, at the gallery column's full width. A generous but
+   finite gap: the images are the page, and a hairline between them would read
+   as a printing error rather than a rhythm. */
+@media screen and (min-width: 950px) {
+  body.lx-template--product .product-media--mobile-slider--desktop-stack {
+    row-gap: 1.2rem;
   }
 }
 
@@ -672,29 +813,38 @@
    rendered specially inside a `fieldset` and does not reliably become a flex
    or grid item across browsers, which is why it was dropping onto its own row. */
 .lx-template--product .product-form__input--pill {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1.2rem;
   border: 0;
   margin: 0;
-  padding: 0 0 0 9rem;
+  padding: 0;
   min-height: 46px;
 }
 
+/* The label sits ABOVE the row, not beside it.
+
+   The wireframe put "SIZE" to the left of the boxes, and that worked at the
+   402px panel it was drawn for. In Aloha's narrower 360px panel the same
+   arrangement reserves 90px for one word and leaves 270px for the sizes, so a
+   fifth size wraps onto a second row — which reads as a mistake rather than a
+   design. Above the row, every size fits on one line and the label is quieter,
+   which is the direction of the whole revision.
+
+   `legend` is rendered specially inside a `fieldset` and does not reliably
+   become a flex or grid item across browsers, which is why it is taken out of
+   flow with `float` rather than ordered as a flex child. */
 .lx-template--product .product-form__input--pill > .form__label {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 9rem;
-  margin: 0;
+  float: left;
+  width: 100%;
+  margin: 0 0 1rem;
   padding: 0;
   font-family: var(--ha-font-record);
-  font-size: 1.2rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
   text-transform: uppercase;
+  color: var(--ha-text-quiet);
 }
 
 .lx-template--product .product-form__input--pill label {
@@ -703,7 +853,7 @@
   color: var(--ha-text);
   display: inline-flex;
   font-family: var(--ha-font-record);
-  font-size: 1.3rem;
+  font-size: var(--ha-t-ui);
   justify-content: center;
   letter-spacing: 0.08em;
   margin: 0;
@@ -738,8 +888,8 @@
 
 .lx-template--product .product-popup-modal__button {
   font-family: var(--ha-font-record);
-  font-size: 1.2rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-label);
+  letter-spacing: var(--ha-track-label);
   text-transform: uppercase;
   text-decoration: none;
   min-height: 44px;
@@ -751,42 +901,354 @@
   text-underline-offset: 0.4rem;
 }
 
-/* Price: 22px on the wireframe, against Luxe's UI default. */
+/* Price. The wireframe drew 22px; Aloha's revised scale asks for 18-20, which
+   is what separates it from the Style name above it. */
 .lx-template--product .product__info-container .price {
   font-family: var(--ha-font-narrate);
-  font-size: clamp(1.8rem, 1.55vw, 2.2rem);
+  font-size: var(--ha-t-price);
   letter-spacing: 0.01em;
+  line-height: 1.2;
 }
 
-/* Add to Bag — full width, 57.5px tall on the wireframe. */
+/* Add to Bag. Still the panel's one solid mark, but no longer 58px tall: with
+   the type calmed around it, the old height made the button the loudest thing
+   on the page by a distance. */
 .lx-template--product .product-form__submit {
   border-radius: 0;
   font-family: var(--ha-font-identify);
-  font-size: 1.3rem;
+  font-size: var(--ha-t-ui);
   letter-spacing: 0.16em;
-  min-height: 58px;
+  min-height: 52px;
   text-transform: uppercase;
 }
 
-.ha-pdp__appointment { margin-top: 2.4rem; }
+/* --- availability -------------------------------------------------------
+   A fact, on one line. See snippets/ha-availability.liquid for why this is not
+   Luxe's `inventory` block. */
+
+.ha-pdp__availability {
+  display: flex;
+  gap: 1.6rem;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--ha-rule);
+  border-bottom: 1px solid var(--ha-rule);
+}
+
+.ha-pdp__availability-label { color: var(--ha-text-quiet); text-transform: uppercase; }
+.ha-pdp__availability-value { text-align: right; }
+
+.ha-pdp__appointment { margin-top: 2rem; }
 
 .ha-link--inert { color: var(--ha-text-quiet); cursor: default; }
+
+/* The appointment opener is a <button> now that it opens a modal, so it has to
+   be told not to look like one. */
+.ha-appointment__open {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  min-height: 44px;
+  text-align: left;
+}
+
+/* --- accordion rows inside the panel ------------------------------------
+   Aloha: "Longer information organised through restrained accordion rows."
+
+   Restrained means: a hairline, a label at 13px, no fill, no shadow, no
+   rounding, and the same row height whether the row came from Luxe's own
+   `description` / `collapsible_tab` block or from snippets/ha-panel-row.liquid.
+   Only the LAST row carries a bottom rule, so a run of rows reads as one ledger
+   rather than as a stack of separate boxes. */
+
+.lx-template--product .product__info-container .accordion {
+  border-top: 1px solid var(--ha-rule);
+  border-bottom: 0;
+}
+
+/* Luxe wraps every `custom_liquid` block in a `.product-custom-liquid-block`
+   div, so a Hartwick row (Size & Fit) sits one level deeper in the DOM than a
+   native one (Description, Delivery, Care) even though they read as one list.
+   Two consequences, both corrected here.
+
+   One: that wrapper carries the section's block spacing — 20px — which would
+   push the row away from its neighbours and break the run into separate boxes.
+
+   Two: inside its own wrapper the row is the only div, so it also matches
+   Luxe's own closing rule, `.product-main-info-section .accordion:last-of-type`
+   in component-accordion.css. That drew a bottom border immediately above the
+   next row's top border: a 2px hairline in the middle of the list. Measured. */
+.lx-template--product .product__info-container .product-custom-liquid-block:has(> .accordion) {
+  margin-bottom: 0;
+}
+
+.lx-template--product .product__info-container .product-custom-liquid-block > .accordion {
+  border-bottom: 0;
+}
+
+/* The run's closing rule, on the last row whether or not Luxe has wrapped it. */
+.lx-template--product .product__info-container > .accordion:last-child,
+.lx-template--product .product__info-container > .product-custom-liquid-block:last-child > .accordion:last-child {
+  border-bottom: 1px solid var(--ha-rule);
+}
+
+.lx-template--product .product__info-container .accordion-title {
+  align-items: center;
+  background: none;
+  display: flex;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 1.2rem 0;
+  text-align: left;
+  width: 100%;
+}
+
+.lx-template--product .product__info-container .accordion-panel {
+  font-size: var(--ha-t-body);
+  line-height: calc(var(--ha-t-body-lh) / var(--ha-t-body));
+}
+
+.lx-template--product .product__info-container .accordion-panel > *:first-child {
+  margin-top: 0;
+}
+
+/* The gap under an open row is a real element, not padding.
+
+   Luxe opens a row with `panel.style.height = panel.scrollHeight + 'px'` and
+   only THEN adds `.panel-open`. Anything that appears with that class — padding
+   included — is therefore not in the measurement, and the row ends up short by
+   exactly that amount: the last line of the panel is clipped. Measured here at
+   150px against a 166px scrollHeight before this was changed.
+
+   A zero-content block inside the panel is part of scrollHeight when Luxe
+   measures it, so the row opens to the right height and the animation still
+   runs on a single value. */
+.lx-template--product .product__info-container .accordion-panel::after {
+  content: '';
+  display: block;
+  height: 1.6rem;
+}
+
+.ha-panel-row__prose {
+  font-size: var(--ha-t-body);
+  line-height: calc(var(--ha-t-body-lh) / var(--ha-t-body));
+  margin-top: 1.6rem;
+}
+
+.ha-panel-row__prose p { margin: 0 0 1.2rem; }
+.ha-panel-row__prose p:last-child { margin-bottom: 0; }
+
+/* The Material Record inside a panel row is the same component as the one in
+   the page section below, at panel width: label left, value right, hairlines
+   between. It only needs its outer rules removed, so the row's own hairline is
+   not doubled. */
+.lx-template--product .product__info-container .ha-record__table tr:last-child th,
+.lx-template--product .product__info-container .ha-record__table tr:last-child td {
+  border-bottom: 0;
+}
+
+.lx-template--product .product__info-container .ha-record__table th,
+.lx-template--product .product__info-container .ha-record__table td {
+  padding: 0.7rem 0;
+}
+
+/* ==========================================================================
+   Request Private Appointment — modal
+   Aloha, 3 September 2026: "Please make this a modal enquiry form rather than
+   taking the customer away from the product page."
+
+   Scoped to the element, not the template, because the dialog is moved to the
+   browser's top layer when it opens and is therefore no longer inside
+   .lx-template--product's box — though it is still its descendant, so the
+   type tokens and voices still reach it.
+   ========================================================================== */
+
+/* The dialog is the full viewport and the backdrop; .ha-appointment__inner is
+   the panel. `margin: 0` is not cosmetic — the UA stylesheet gives a dialog
+   `margin: auto`, which against an explicit height resolves to an asymmetric
+   pair (measured: 22px top, -22px bottom) and hangs the element off the bottom
+   of the screen. `dvh` rather than `vh` so mobile browser chrome cannot push
+   the panel out of reach. */
+.ha-appointment {
+  background: transparent;
+  border: 0;
+  color: var(--ha-text);
+  height: 100dvh;
+  inset: 0;
+  margin: 0;
+  max-height: 100dvh;
+  max-width: 100vw;
+  padding: 0;
+  width: 100vw;
+}
+
+.ha-appointment::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.ha-appointment__inner {
+  background: var(--ha-page-ground);
+  border: 1px solid var(--ha-rule);
+  margin: auto;
+  max-height: calc(100dvh - 4rem);
+  max-width: 52rem;
+  overflow-y: auto;
+  padding: var(--ha-gutter);
+  width: 100%;
+}
+
+/* The dialog fills the viewport and centres its panel, so a click anywhere
+   outside the panel lands on the dialog itself — which is what
+   ha-appointment.js tests for when it closes on a backdrop click. */
+.ha-appointment[open] {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.ha-appointment__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.6rem;
+  justify-content: space-between;
+  margin-bottom: 2.4rem;
+}
+
+.ha-appointment__eyebrow {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text-quiet);
+  margin: 0 0 0.8rem;
+}
+
+.ha-appointment__title {
+  font-size: var(--ha-t-expression);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ha-appointment__subject {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  color: var(--ha-text-quiet);
+  margin: 0.8rem 0 0;
+}
+
+.ha-appointment__close {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: grid;
+  flex: none;
+  min-height: 44px;
+  min-width: 44px;
+  place-items: center;
+}
+
+.ha-appointment__close svg { width: 1.4rem; height: 1.4rem; }
+
+.ha-appointment__fields {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.ha-appointment__field { margin: 0; }
+
+.ha-appointment__label {
+  display: block;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  color: var(--ha-text-quiet);
+}
+
+/* Inputs are 16px on purpose. Below 16px iOS Safari zooms the page on focus,
+   which throws the modal off-centre and cannot be dismissed by the visitor. */
+.ha-appointment__input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ha-rule);
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  font-size: max(var(--ha-t-body), 1.6rem);
+  min-height: 44px;
+  padding: 0.4rem 0;
+  width: 100%;
+}
+
+.ha-appointment__input:focus-visible {
+  border-bottom-color: var(--ha-text);
+  outline: 2px solid var(--ha-text);
+  outline-offset: 4px;
+}
+
+.ha-appointment__textarea { min-height: 9rem; resize: vertical; }
+
+.ha-appointment__submit {
+  background: var(--ha-text);
+  border: 1px solid var(--ha-text);
+  color: var(--ha-page-ground);
+  cursor: pointer;
+  font-size: var(--ha-t-ui);
+  letter-spacing: 0.16em;
+  margin-top: 2.4rem;
+  min-height: 52px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.ha-appointment__submit:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 3px; }
+
+.ha-appointment__status {
+  font-size: var(--ha-t-body);
+  line-height: calc(var(--ha-t-body-lh) / var(--ha-t-body));
+  margin: 0;
+}
+
+.ha-appointment__status:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 4px; }
+
+.ha-appointment__status--error { border-left: 2px solid var(--ha-text); padding-left: 1.6rem; }
+
+.ha-appointment__errors {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  list-style: none;
+  margin: 0.8rem 0 0;
+  padding: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .ha-appointment__inner { padding: 4rem; }
+}
 
 /* --- 01  Gallery position counter --------------------------------------- */
 
 .ha-gallery-count {
-  font-size: 1.2rem;
-  letter-spacing: 0.14em;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
   color: var(--ha-text-quiet);
   font-variant-numeric: lining-nums tabular-nums;
   margin: 1.6rem 0 0.8rem;
   text-align: center;
 }
 
-/* The desktop wireframe shows the whole gallery as a grid — there is no
-   position to report, so the counter is a mobile affordance only. */
+/* In the vertical stack every image is on screen at once, so there is no
+   position to report and the counter is a mobile affordance only. In the
+   single-image "slider" arrangement it is the whole point, and
+   assets/ha-product.js adds the modifier below for exactly that case. */
 @media screen and (min-width: 990px) {
   .ha-gallery-count { display: none; }
+  .ha-gallery-count--desktop { display: block; text-align: left; }
 }
 
 /* --- shared: a quiet accordion ------------------------------------------ */
@@ -797,7 +1259,7 @@
   align-items: center;
   cursor: pointer;
   display: flex;
-  font-size: 1.3rem;
+  font-size: var(--ha-t-label);
   justify-content: space-between;
   letter-spacing: 0.1em;
   list-style: none;
@@ -845,13 +1307,13 @@
 
 /* --- 06  The Garment ----------------------------------------------------- */
 
-.ha-garment__heading { margin-bottom: 2.2rem; }   /* 33.5px on the wireframe */
-.ha-garment__intro { margin-bottom: 3.2rem; }     /* 41.5px */
+.ha-garment__heading { margin-bottom: 1.6rem; }
+.ha-garment__intro { margin-bottom: 2.4rem; }
 .ha-garment__figure { aspect-ratio: 16 / 10; }
 
-/* Record rows: 36.5px pitch on the wireframe. */
+/* Record rows. 36.5px pitch on the wireframe; tightened with the type. */
 .lx-template--product .ha-record__table th,
-.lx-template--product .ha-record__table td { padding: 0.9rem 0; }
+.lx-template--product .ha-record__table td { padding: 0.8rem 0; }
 
 /* --- 07  Material Record (product page) ---------------------------------
    Mobile brief §5 puts the cloth image first "to give the eye a pause before
@@ -871,8 +1333,8 @@
    composition holds at every width, so Shopify crops through the theme image
    container rather than needing a hand-cut file per breakpoint. */
 
-.ha-origin__heading { margin-bottom: 2.2rem; }
-.ha-origin__place { font-size: 1.2rem; letter-spacing: 0.14em; margin: 0 0 2rem; }
+.ha-origin__heading { margin-bottom: 1.6rem; }
+.ha-origin__place { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); margin: 0 0 2rem; }
 .ha-origin__body { margin-bottom: 1.6rem; }
 .ha-origin__foot { margin: 2.4rem 0 0; }
 
@@ -888,12 +1350,12 @@
 .ha-origin__figure--loom  { grid-column: 2; grid-row: 2; }
 
 @media screen and (min-width: 990px) {
-  .ha-origin__media { min-height: 42rem; }
+  .ha-origin__media { min-height: 34rem; }
 }
 
 /* --- 09  Meet the Masters (feature layout) ------------------------------- */
 
-.ha-masters__heading { margin-bottom: 2.2rem; }
+.ha-masters__heading { margin-bottom: 1.6rem; }
 
 .ha-masters--feature .ha-masters__list { margin-top: 1.6rem; }
 
@@ -907,7 +1369,7 @@
 }
 
 .ha-masters--feature .ha-masters__num {
-  font-size: 1.2rem;
+  font-size: var(--ha-t-meta);
   letter-spacing: 0.08em;
   opacity: 0.8;
   font-variant-numeric: lining-nums tabular-nums;
@@ -915,7 +1377,7 @@
 
 .ha-masters--feature .ha-masters__role {
   display: block;
-  font-size: clamp(1.5rem, 1.4vw, 1.8rem);
+  font-size: var(--ha-t-body);
   letter-spacing: 0.08em;
   min-height: 30px;
   text-transform: uppercase;
@@ -958,67 +1420,11 @@
    understand the complete sequence at a glance and avoids introducing another
    carousel." Four across on mobile — eight steps become two rows of four —
    and the whole sequence in one row from 990px. */
-
-.ha-process__list {
-  display: grid;
-  gap: 2.4rem 1.6rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.ha-process__step {
-  align-items: baseline;
-  display: grid;
-  gap: 0.8rem;
-  grid-template-areas: 'num' 'label' 'desc';
-}
-
-.ha-process__num {
-  font-size: 1.2rem;
-  color: var(--ha-text-quiet);
-  grid-area: num;
-  font-variant-numeric: lining-nums tabular-nums;
-}
-
-.ha-process__label {
-  font-size: 1.3rem;
-  grid-area: label;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.ha-process__desc { font-size: 1.4rem; grid-area: desc; color: var(--ha-text-quiet); }
-
-/* The connecting rule is a desktop device — at four across it would collide
-   with the labels. */
-.ha-process__rule { display: none; }
-
-@media screen and (min-width: 990px) {
-  /* One row, one equal column per step, however many steps there are.
-     `auto-fit` is wrong here: with a zero minimum it generates a track for
-     every possible column, leaving dozens of empty 0px tracks behind. */
-  .ha-process__list {
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
-    gap: 1.6rem;
-  }
-
-  .ha-process__step { grid-template-areas: 'num rule' 'label label' 'desc desc'; grid-template-columns: auto 1fr; }
-
-  .ha-process__rule {
-    background: var(--ha-rule);
-    display: block;
-    grid-area: rule;
-    height: 1px;
-    margin-left: 1.6rem;
-    align-self: center;
-  }
-
-  .ha-process__step:last-child .ha-process__rule { display: none; }
-}
+/* The earlier Process composition (a numbered sequence with grid-areas and a
+   connecting rule) was replaced by the circled marks below. Its rules are
+   removed rather than left dormant: `grid-area: num` on .ha-process__num was
+   still applying inside the new disc and pushing the numeral 16px off centre
+   in both axes — measured. Dead CSS is not inert when the class names survive. */
 
 /* --- native sections: hold the page's own gutter -------------------------
    `collapsible-content` and `related-products` wrap their content in Luxe's
@@ -1053,9 +1459,9 @@
 
 .lx-template--product .accordion-group-heading h3 {
   font-family: var(--ha-font-record);
-  font-size: 1.2rem;
+  font-size: var(--ha-t-meta);
   font-weight: 400;
-  letter-spacing: 0.14em;
+  letter-spacing: var(--ha-track-meta);
   text-transform: uppercase;
   margin: 0 0 1.2rem;
 }
@@ -1117,10 +1523,15 @@
   }
 }
 
+/* Accordion labels, wherever they appear on this page — Luxe's own rows, the
+   description row, and the Hartwick rows from snippets/ha-panel-row.liquid.
+   Luxe writes the label as a bare text node in some blocks and inside a <span>
+   in others, so both forms are covered. */
+.lx-template--product .accordion-title,
 .lx-template--product .accordion-title span {
   font-family: var(--ha-font-record);
-  font-size: 1.3rem;
-  letter-spacing: 0.1em;
+  font-size: var(--ha-t-label);
+  letter-spacing: var(--ha-track-label);
   text-transform: uppercase;
 }
 
@@ -1128,11 +1539,13 @@
    Native `related-products`. Shopify's own recommendation logic, analytics and
    inventory are untouched — the wireframe treatment is CSS only. */
 
-/* Luxe names the card title .card-product-title-h3, not .card__heading. */
+/* Luxe names the card title .card-product-title-h3, not .card__heading.
+   22px was competing with the Style name itself; a recommendation is supporting
+   information, so it sits at body size with its price quieter beneath. */
 .lx-template--product .related-products .card-product-title-h3,
 .lx-template--product .related-products .card-product-title-h3 a {
   font-family: var(--ha-font-identify);
-  font-size: clamp(1.8rem, 1.6vw, 2.2rem);
+  font-size: var(--ha-t-body);
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -1142,8 +1555,8 @@
 .lx-template--product .related-products .price,
 .lx-template--product .related-products .price-item {
   font-family: var(--ha-font-record);
-  font-size: 1.2rem;
-  letter-spacing: 0.1em;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
 }
 
 
@@ -1259,10 +1672,15 @@ body.lx-template--product .magnify-icon:focus-visible {
   padding: 0;
 }
 
+/* One weight and one colour for every policy link — no synthetic bold. */
+.ha-footer__policies,
+.ha-footer__policies a {
+  font-weight: 400;
+}
 .ha-footer__policies a {
   color: var(--ha-text-quiet);
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: var(--ha-t-meta);
 }
 
 .ha-footer__policies a:hover,
@@ -1272,7 +1690,7 @@ body.lx-template--product .magnify-icon:focus-visible {
   text-underline-offset: 0.4rem;
 }
 
-.ha-footer__copy { margin: 0; font-size: 1.2rem; color: var(--ha-text-quiet); }
+.ha-footer__copy { margin: 0; font-size: var(--ha-t-meta); color: var(--ha-text-quiet); }
 
 @media screen and (min-width: 750px) {
   .ha-footer__bar {
@@ -1286,3 +1704,1036 @@ body.lx-template--product .magnify-icon:focus-visible {
 /* Anchor target for footer and menu links into The Register. The offset clears
    the sticky header so the eyebrow is not hidden behind it on arrival. */
 #the-register { scroll-margin-top: 8rem; }
+
+/* ==========================================================================
+   WIREFRAME 04 (REVISED) — PRODUCT PAGE
+   Aloha's revised desktop design, 3 September 2026. A three-column hero built
+   as a custom section (sections/ha-product.liquid), then alternating field
+   bands down the page. Geometry is measured off the 1440-wide canvas at 1:1.
+
+   Scope is `.ha-pdp` for the hero and the field modifiers below; nothing here
+   reaches the quick-add modal or another template.
+   ========================================================================== */
+
+.ha-pdp {
+  background: var(--ha-page-ground);
+  color: var(--ha-text);
+  display: block;
+}
+
+/* Mobile: one column, in reading order — identity, media, buy. The buy rail is
+   moved above the media on small screens so a visitor can reach the size and
+   Add to Bag without scrolling the whole gallery (Wireframe 03 mobile brief). */
+.ha-pdp__grid {
+  display: grid;
+  gap: 3.2rem;
+  padding: var(--ha-pdp-section-y) var(--ha-gutter);
+}
+
+.ha-pdp__rail-inner { display: block; }
+
+/* --- the three columns, from 990px ------------------------------------- */
+@media screen and (min-width: 990px) {
+  .ha-pdp__grid {
+    /* Three columns with ONE consistent gap. The buy rail is no longer capped
+       to 267px: a fixed cap left a slab of dead space between the media and the
+       purchase information. The rail now fills its column, and the column is
+       sized by the same gap as the left rail so both sides sit evenly against
+       the media. */
+    grid-template-columns: 1fr 1.8fr 1fr;
+    column-gap: clamp(3.2rem, 3.6vw, 5.2rem);
+    row-gap: 0;
+    padding: var(--ha-pdp-section-y) var(--ha-gutter);
+    align-items: start;
+  }
+
+  .ha-pdp__rail--left  { grid-column: 1; padding-right: 0; }
+  .ha-pdp__media       { grid-column: 2; }
+  .ha-pdp__rail--buy   { grid-column: 3; padding-left: 0; }
+
+  /* Both side rails are sticky; the centre scrolls between them.
+
+     Sticky sits on the grid ITEM, not on its inner wrapper. A grid item is only
+     as tall as its content (the row keeps `align-items: start`), so a sticky
+     child inside it has a content-height containing block and no room to move —
+     which is why an inner-wrapper sticky scrolled straight off. On the item
+     itself it sticks within the grid row, whose height is the tall media column.
+     `align-self: start` keeps the item content-height so it can travel. */
+  .ha-pdp__rail {
+    position: sticky;
+    top: calc(var(--site-header-height-desktop, 8rem) + 3.2rem);
+    align-self: start;
+  }
+}
+
+/* --- left rail --------------------------------------------------------- */
+.ha-pdp__crumbs {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  text-transform: uppercase;
+  color: var(--ha-text-quiet);
+  margin: 0 0 3.2rem;
+}
+.ha-pdp__crumbs a { color: inherit; text-decoration: none; }
+.ha-pdp__crumbs a:hover { text-decoration: underline; text-underline-offset: 0.3rem; }
+
+.ha-pdp__title {
+  font-size: var(--ha-t-style);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  margin: 0 0 1.4rem;
+  font-variant-numeric: oldstyle-nums;
+  text-transform: uppercase;
+}
+
+.ha-pdp__cloth {
+  font-size: var(--ha-t-label);
+  letter-spacing: var(--ha-track-label);
+  text-transform: uppercase;
+  color: var(--ha-text);
+  margin: 0 0 3.2rem;
+}
+
+/* No width cap: a description narrower than its own heading reads as a mistake,
+   and the rail is already a column. */
+.ha-pdp__intro {
+  font-size: var(--ha-t-body);
+  line-height: calc(var(--ha-t-body-lh) / var(--ha-t-body));
+  margin: 0 0 3.2rem;
+}
+.ha-pdp__intro p { margin: 0 0 1.2rem; }
+.ha-pdp__intro p:last-child { margin-bottom: 0; }
+
+/* Key facts — a quiet list, one per line, label then value. */
+.ha-pdp__facts {
+  margin: 0 0 3.2rem;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  text-transform: uppercase;
+}
+.ha-pdp__facts > div { display: flex; gap: 0.8rem; padding: 0.55rem 0; }
+.ha-pdp__facts dt { margin: 0; color: var(--ha-text-quiet); min-width: 8.5rem; }
+.ha-pdp__facts dd { margin: 0; }
+
+.ha-pdp__record-link {
+  align-items: center;
+  color: var(--ha-text);
+  display: inline-flex;
+  font-size: var(--ha-t-meta);
+  gap: 1.2rem;
+  letter-spacing: var(--ha-track-label);
+  text-decoration: none;
+  text-transform: uppercase;
+  min-height: 44px;
+}
+.ha-pdp__arrow {
+  display: inline-block;
+  width: 3.2rem;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+}
+.ha-pdp__arrow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+}
+.ha-pdp__record-link:hover .ha-pdp__arrow { width: 4rem; }
+
+.ha-pdp__fit { margin-top: 4rem; }
+.ha-pdp__fit-title {
+  font-size: var(--ha-t-expression);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 1.2rem;
+}
+.ha-pdp__fit p {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  text-transform: uppercase;
+  color: var(--ha-text-quiet);
+  margin: 0 0 0.4rem;
+}
+
+.ha-pdp__rail--left .ha-panel-row { margin-top: 0; }
+.ha-pdp__rail--left .accordion:first-of-type { margin-top: 4rem; }
+
+/* --- media rail -------------------------------------------------------- */
+.ha-pdp__rail-media { position: relative; display: block; }
+
+.ha-pdp__frames { display: grid; gap: 1.2rem; }
+
+/* A real image keeps its own proportions — nothing is cropped into a fixed
+   ratio (Wireframe 03 feedback, carried forward). The placeholder field holds a
+   3:2 shape so the page keeps its rhythm before Angela's assets land. */
+.ha-pdp__frame { margin: 0; position: relative; display: block; background: var(--ha-placeholder-field); }
+.ha-pdp__frame--empty { aspect-ratio: 3 / 2; }
+.ha-pdp__img { display: block; width: 100%; height: auto; }
+
+/* Position markers, over the right edge of the rail. */
+.ha-pdp__dots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 2.4rem;
+  right: 2rem;
+  display: grid;
+  gap: 1.4rem;
+}
+.ha-pdp__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--ha-text-invert);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+/* a 44px hit area around a 10px mark */
+.ha-pdp__dot::before {
+  content: '';
+  position: absolute;
+  inset: -17px;
+}
+.ha-pdp__dot[aria-current='true'] { background: var(--ha-text-invert); }
+.ha-pdp__dot:focus-visible { outline: 2px solid var(--ha-text-invert); outline-offset: 3px; }
+
+@media screen and (min-width: 990px) {
+  .ha-pdp__dots { top: 3.2rem; right: 2.4rem; }
+}
+
+/* --- buy rail ---------------------------------------------------------- */
+.ha-pdp__price .price {
+  font-family: var(--ha-font-narrate);
+  font-size: var(--ha-t-price);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+.ha-pdp__price .price__container { display: block; }
+
+.ha-pdp__tax {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  color: var(--ha-text-quiet);
+  margin: 1rem 0 0;
+}
+
+.ha-pdp__field { margin-top: 3.2rem; }
+.ha-pdp__field-label {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  text-transform: uppercase;
+  color: var(--ha-text-quiet);
+  margin: 0 0 0.8rem;
+}
+.ha-pdp__field-value {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  text-transform: uppercase;
+  margin: 0;
+}
+.ha-pdp__field-value--lead {
+  font-family: var(--ha-font-narrate);
+  font-size: var(--ha-t-expression);
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+/* Size row: Luxe's own variant picker, restyled into the design's squares.
+   Same treatment as Wireframe 03, so it is scoped to reach the picker whether
+   it renders here or on the native template. */
+.ha-pdp__size { margin-top: 3.2rem; position: relative; }
+.ha-pdp__size-guide {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  text-transform: uppercase;
+  color: var(--ha-text-quiet);
+  text-decoration: none;
+}
+.ha-pdp__size-guide:hover { color: var(--ha-text); text-decoration: underline; text-underline-offset: 0.3rem; }
+
+.ha-pdp .product-variant-picker-block { margin: 0; }
+.ha-pdp .product-form__input--pill,
+.ha-pdp .product-form__input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.ha-pdp .product-form__input .form__label {
+  width: 100%;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  font-family: var(--ha-font-record);
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  text-transform: uppercase;
+  color: var(--ha-text-quiet);
+}
+.ha-pdp .product-form__input input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+/* Four sizes fill the row equally rather than wrapping: at 64px each plus gaps
+   they overrun the 267px buy rail. `flex: 1` divides the width between however
+   many sizes a garment has, and each stays well above the 44px touch minimum. */
+.ha-pdp .product-form__input input[type='radio'] + label {
+  align-items: center;
+  border: 1px solid var(--ha-border);
+  color: var(--ha-text);
+  display: inline-flex;
+  flex: 1 1 0;
+  font-family: var(--ha-font-record);
+  font-size: var(--ha-t-ui);
+  justify-content: center;
+  letter-spacing: 0.04em;
+  margin: 0;
+  min-height: 54px;
+  min-width: 4.4rem;
+  padding: 0 1rem;
+  text-transform: uppercase;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.ha-pdp .product-form__input input[type='radio']:checked + label {
+  background: var(--ha-text);
+  border-color: var(--ha-text);
+  color: var(--ha-page-ground);
+}
+.ha-pdp .product-form__input input[type='radio']:focus-visible + label {
+  outline: 2px solid var(--ha-text);
+  outline-offset: 2px;
+}
+.ha-pdp .product-form__input input[type='radio'].disabled + label,
+.ha-pdp .product-form__input input[type='radio']:disabled + label {
+  color: var(--ha-text-quiet);
+  border-color: var(--ha-rule);
+  text-decoration: line-through;
+}
+
+/* Add to Bag — the rail's one solid mark; 267 wide, 58 tall on the canvas. */
+.ha-pdp .product-buy-buttons-wrapper { margin-top: 3.2rem; }
+.ha-pdp .product-form__submit {
+  border-radius: 0;
+  font-family: var(--ha-font-identify);
+  font-size: var(--ha-t-ui);
+  letter-spacing: 0.16em;
+  min-height: 58px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.ha-pdp .ha-pdp__appointment { margin-top: 2.4rem; }
+.ha-pdp .ha-appointment__open {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  min-height: 44px;
+  text-align: left;
+  font-size: var(--ha-t-ui);
+  letter-spacing: var(--ha-track-ui);
+  color: var(--ha-text);
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+}
+.ha-pdp .ha-appointment__open:hover { border-bottom-color: currentColor; }
+
+.ha-pdp__payment {
+  font-size: var(--ha-t-meta);
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: var(--ha-text-quiet);
+  margin: 2.4rem 0 0;
+}
+
+/* Mobile order: identity, then buy (size + Add to Bag), then media, then the
+   left rail's remaining rows sit with identity. Simplest correct approach: the
+   grid is a single column and source order already reads identity -> media ->
+   buy; on mobile move the buy rail up so it follows the title block. */
+@media screen and (max-width: 989px) {
+  .ha-pdp__rail--buy { order: -1; margin-top: 1.6rem; }
+  .ha-pdp__rail--left { order: -2; }
+}
+
+/* Sticky Add to Bag on mobile (mobile brief, Wireframe 03).
+
+   The class `sticky-buy-buttons` is Luxe's own — set on the buy rail by
+   ha-product.liquid exactly as `main-product` sets it on its info container, so
+   the fixed-position rules in assets/section-main-product.css do the work and
+   we inherit any future Luxe fix for free.
+
+   Two things that file cannot know about this section:
+
+   1. Luxe stops its sticky rules at 949px because that is where ITS desktop
+      layout begins. Our three-column grid starts at 990px, so 950-989px is
+      single-column with no sticky bar. This bridges that band.
+   2. A fixed bar sits over whatever is at the foot of the page. Native pads the
+      page for the DESKTOP sticky variant only; mobile got nothing. The padding
+      below keeps the last row of the buy rail clear of the bar.
+
+   No `transform`, `filter` or `contain` sits on .ha-pdp__rail, so `position:
+   fixed` inside it resolves against the viewport, not the rail. The sticky
+   positioning on .ha-pdp__rail only exists from 990px, where this is inactive. */
+@media screen and (min-width: 950px) and (max-width: 989px) {
+  .ha-pdp__rail--buy.sticky-buy-buttons .product-form {
+    margin-bottom: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+    background: var(--color-background);
+    padding: var(--page-margin-mobile) var(--page-margin-mobile) 0 var(--page-margin-mobile);
+  }
+  .ha-pdp__rail--buy.sticky-buy-buttons .product-form__buttons { margin-top: 0; }
+  .ha-pdp__rail--buy.sticky-buy-buttons--border-true .product-form {
+    border-top: 1px solid rgba(var(--color-foreground-rgb), 0.15);
+  }
+  .ha-pdp__rail--buy.sticky-buy-buttons .product-form-payment-cards { display: none; }
+}
+
+@media screen and (max-width: 989px) {
+  /* Clears the fixed bar. 44px is the brief's minimum touch target; the rest is
+     the bar's own vertical padding plus a resting gap. */
+  .ha-pdp__rail--buy.sticky-buy-buttons { padding-bottom: calc(44px + (var(--page-margin-mobile) * 2)); }
+}
+
+/* --- A wearer's note (Wireframe 04) ------------------------------------- */
+.ha-wearer__grid { display: grid; gap: 3.2rem; }
+.ha-wearer__quote {
+  font-size: var(--ha-t-editorial);
+  line-height: 1.2;
+  margin: 2.4rem 0 0;
+}
+.ha-wearer__cite {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  text-transform: uppercase;
+  color: var(--ha-text-quiet);
+  margin: 3.2rem 0 0;
+}
+.ha-wearer__figure { aspect-ratio: 1 / 1; }
+
+@media screen and (min-width: 990px) {
+  /* The image is 30% of the section and the text takes the rest — the previous
+     fixed 34rem left a gulf between them. */
+  .ha-wearer__grid {
+    grid-template-columns: 1fr 30%;
+    align-items: center;
+    column-gap: clamp(3.2rem, 4vw, 5.6rem);
+  }
+  .ha-wearer__quote { max-width: none; margin-top: 3.2rem; }
+  .ha-wearer__body { max-width: none; }
+  .ha-wearer__media { width: 100%; }
+}
+/* Mobile: the image runs full width. */
+.ha-wearer__media { width: 100%; }
+.ha-wearer__figure { width: 100%; }
+
+/* The left-rail "View the material record" link jumps here; clear the header. */
+#the-material-record { scroll-margin-top: 9rem; }
+
+/* ==========================================================================
+   WIREFRAME 04 (REVISED) — lower sections, built to structure and position
+   Colours are the brand's, not the wireframe's placeholder bands (Aloha).
+   Gutter and column splits measured off the 1440 canvas.
+   ========================================================================== */
+
+/* Shared: the lower editorial sections use the product page's 64px gutter. */
+.ha-originroute .ha-wrap,
+.ha-process .ha-wrap,
+.ha-living .ha-wrap,
+.ha-continue .ha-wrap { padding-left: var(--ha-gutter); padding-right: var(--ha-gutter); }
+
+/* --- The Piece (ha-garment, editorial only) ---------------------------- */
+@media screen and (min-width: 990px) {
+  /* text left, image right. A wider gutter and gap than the first pass: the
+     section was reading tight against the page edge. */
+  .ha-garment__grid { grid-template-columns: 42fr 55fr; column-gap: clamp(4rem, 7vw, 10rem); align-items: start; }
+  /* No extra inset here — every section sits on the one page gutter. */
+}
+/* The description is never narrower than the heading above it. */
+.ha-garment__intro { max-width: none; }
+.ha-garment__figure { aspect-ratio: 16 / 11; }
+
+/* --- Material Record: heading + intro above the table ------------------ */
+/* Header at full width, like the record beneath it. */
+.ha-precord__heading { margin: 0 0 1.6rem; max-width: none; }
+.ha-precord__intro { margin: 0 0 3.2rem; max-width: none; }
+
+/* On a dark field the supporting copy has to invert with everything else.
+   `.ha-body` sets an explicit `color: var(--ha-text)` — near-black — which on
+   peat left the intro unreadable. Inheriting the section's colour fixes it for
+   every dark field at once rather than per section. */
+.ha-section--field-peat .ha-body,
+.ha-section--field-peat .ha-precord__intro,
+.ha-section--field-slate .ha-body,
+.ha-section--field-slate .ha-precord__intro,
+.ha-section--dark .ha-precord__intro { color: inherit; }
+
+/* The record column and the image column are the same height and top-aligned. */
+@media screen and (min-width: 990px) {
+  .ha-precord__grid { align-items: stretch; }
+  .ha-precord__media { display: flex; }
+  .ha-precord__figure { width: 100%; height: 100%; aspect-ratio: auto; min-height: 100%; }
+  .ha-precord__figure img { height: 100%; object-fit: cover; }
+}
+
+/* --- The Origin: a connected route ------------------------------------- */
+.ha-originroute__grid { display: grid; gap: 3.2rem; }
+.ha-originroute__heading { margin: 0 0 1.6rem; }
+.ha-originroute__intro { max-width: 34ch; }
+
+.ha-originroute__steps {
+  list-style: none; margin: 3.2rem 0 0; padding: 0;
+  display: grid; gap: 2.4rem;
+}
+.ha-originroute__step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'marker label' 'marker sub';
+  align-items: center;
+  column-gap: 1.6rem;
+  position: relative;
+}
+.ha-originroute__marker { grid-area: marker; }
+.ha-originroute__num {
+  display: grid; place-items: center;
+  width: 4.4rem; height: 4.4rem; border-radius: 50%;
+  border: 1px solid var(--ha-border);
+  font-size: var(--ha-t-meta); letter-spacing: 0.06em;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.ha-originroute__label { grid-area: label; font-size: var(--ha-t-label); letter-spacing: var(--ha-track-label); text-transform: uppercase; align-self: end; }
+.ha-originroute__sub { grid-area: sub; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: var(--ha-text-quiet); align-self: start; margin-top: 0.4rem; }
+
+/* vertical connector on mobile */
+.ha-originroute__step:not(:last-child) .ha-originroute__marker::after {
+  content: ''; position: absolute; left: 2.2rem; top: 4.4rem; bottom: -2.4rem;
+  width: 1px; background: var(--ha-rule);
+}
+
+@media screen and (min-width: 990px) {
+  /* heading left ~x72-380, route right x520-1258 */
+  .ha-originroute__grid { grid-template-columns: 34fr 62fr; column-gap: clamp(3.2rem, 5vw, 7rem); align-items: start; }
+  .ha-originroute__steps {
+    grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; margin-top: 0.8rem;
+  }
+  .ha-originroute__step {
+    grid-template-columns: 1fr; grid-template-areas: 'marker' 'label' 'sub';
+    justify-items: start; row-gap: 1.2rem; text-align: left;
+  }
+  /* horizontal connector between circles */
+  .ha-originroute__step:not(:last-child) .ha-originroute__marker::after {
+    content: ''; position: absolute; left: 4.4rem; right: auto; top: 2.2rem; bottom: auto;
+    width: calc(100% - 4.4rem); height: 1px; background: var(--ha-rule);
+  }
+  .ha-originroute__label { align-self: start; margin-top: 0.4rem; }
+}
+
+/* --- Process: circle marks, heading below ------------------------------ */
+.ha-process__eyebrow { margin-bottom: 0; }
+.ha-process__marks {
+  list-style: none; margin: 3.2rem 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 3.2rem 1.6rem; justify-items: center;
+}
+.ha-process__mark { display: grid; justify-items: center; gap: 1.6rem; }
+/* The numeral is optically centred: `place-items: center` centres the box, but
+   the tracked mono numeral carries a trailing letter-space that pulls it left,
+   so the tracking is removed inside the disc and the line-height is neutralised.
+   Without both, "01" sits low and left of the circle's centre. */
+.ha-process__disc {
+  display: grid; place-items: center;
+  width: 8rem; height: 8rem; border-radius: 50%;
+  border: 1px solid var(--ha-border);
+  line-height: 1;
+}
+.ha-process__num {
+  font-size: var(--ha-t-label);
+  letter-spacing: 0;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+  display: block;
+  text-align: center;
+}
+.ha-process__label {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  text-transform: uppercase;
+  text-align: center;
+  /* the label is centred under its own disc, and every label sits on one
+     baseline whatever its length */
+  align-self: start;
+}
+/* The heading is the section's statement: full width, left aligned, never
+   centred with the marks. */
+.ha-process__heading { margin: 1.6rem 0 0; max-width: none; text-align: left; }
+
+@media screen and (min-width: 990px) {
+  /* The marks are a centred group beneath the eyebrow; the heading below runs
+     the full width, left aligned. */
+  .ha-process__marks {
+    /* `repeat(auto-fit, minmax(0, …))` generated a track for every possible
+       column and left three empty 0px tracks behind — measured. One auto column
+       per mark, centred as a group. */
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 16rem);
+    justify-content: center;
+    gap: 3.2rem;
+    margin: 0 0 5.6rem;
+  }
+}
+
+/* --- Living With the Piece: heading left, accordions right -------------- */
+.ha-living__grid { display: grid; gap: 3.2rem; }
+.ha-living__heading { margin: 0; max-width: none; }
+.ha-living__body p { margin: 0 0 1.2rem; }
+.ha-living__body p:last-child { margin-bottom: 0; }
+
+/* the rows reuse the panel-row accordion; give them the design's open rule set */
+.ha-living__rows .accordion { border-top: 1px solid var(--ha-rule); border-bottom: 0; }
+.ha-living__rows .accordion:last-of-type { border-bottom: 1px solid var(--ha-rule); }
+.ha-living__rows .accordion-title { display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: 1.6rem 0; width: 100%; background: none; text-align: left; }
+.ha-living__rows .accordion-panel { font-size: var(--ha-t-body); line-height: calc(var(--ha-t-body-lh) / var(--ha-t-body)); }
+.ha-living__rows .accordion-panel::after { content: ''; display: block; height: 1.6rem; }
+
+@media screen and (min-width: 990px) {
+  /* heading left, rows right — the two tops align. */
+  .ha-living__grid { grid-template-columns: 40fr 55fr; column-gap: clamp(3.2rem, 5vw, 7rem); align-items: start; }
+}
+/* Mobile: both parts full width, stacked. */
+@media screen and (max-width: 989px) {
+  .ha-living__grid { grid-template-columns: 1fr; }
+  .ha-living__lead, .ha-living__rows { width: 100%; }
+}
+
+/* --- Continue the record: story card + related pieces ------------------ */
+.ha-continue__heading { margin: 0 0 3.2rem; }
+.ha-continue__grid { display: grid; gap: 3.2rem; }
+.ha-continue__figure--story { aspect-ratio: 4 / 3; margin-bottom: 1.6rem; }
+.ha-continue__figure--piece { aspect-ratio: 4 / 5; margin-bottom: 1.2rem; }
+.ha-continue__story-link, .ha-continue__piece-link { display: block; }
+.ha-continue__kicker { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: var(--ha-text-quiet); margin: 0 0 1.6rem; }
+.ha-continue__more { display: inline-flex; align-items: center; gap: 1.2rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: var(--ha-text); text-decoration: none; min-height: 44px; }
+.ha-continue__more:hover .ha-pdp__arrow { width: 4rem; }
+.ha-continue__pieces { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 3.2rem; align-content: start; }
+.ha-continue__piece-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1.2rem; border-top: 1px solid var(--ha-rule); padding-top: 1rem; }
+.ha-continue__piece-name { font-size: var(--ha-t-label); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: inherit; text-decoration: none; }
+a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-offset: 0.3rem; }
+.ha-continue__piece-price { font-size: var(--ha-t-meta); font-variant-numeric: lining-nums tabular-nums; }
+.ha-continue__piece-expr { font-size: var(--ha-t-meta); color: var(--ha-text-quiet); margin: 0.6rem 0 0; }
+
+@media screen and (min-width: 990px) {
+  /* story ~x90-655 (40%), pieces x598-1382 split into two */
+  .ha-continue__grid { grid-template-columns: 40fr 55fr; column-gap: clamp(3.2rem, 5vw, 7rem); align-items: start; }
+}
+
+/* --- Authorship: images left, labelled text right ---------------------- */
+.ha-authorship__grid { display: grid; gap: 3.2rem; }
+.ha-authorship__figure:first-child { aspect-ratio: 3 / 4; }
+.ha-authorship__figure + .ha-authorship__figure { aspect-ratio: 3 / 4; margin-top: 1.2rem; }
+.ha-authorship__heading { margin: 0 0 1.6rem; max-width: none; }
+.ha-authorship__intro { margin-bottom: 3.2rem; max-width: none; }
+.ha-authorship__record { margin: 0 0 2.4rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; }
+.ha-authorship__record > div { display: flex; justify-content: space-between; gap: 1.6rem; padding: 0.9rem 0; border-top: 1px solid var(--ha-rule); }
+.ha-authorship__record > div:last-child { border-bottom: 1px solid var(--ha-rule); }
+.ha-authorship__record dt { margin: 0; color: var(--ha-text-quiet); }
+.ha-authorship__record dd { margin: 0; text-align: right; }
+.ha-authorship__foot { display: flex; justify-content: space-between; align-items: baseline; gap: 1.6rem; flex-wrap: wrap; }
+.ha-authorship__link { display: inline-flex; align-items: center; gap: 1.2rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: var(--ha-text); text-decoration: none; min-height: 44px; }
+.ha-authorship__link:hover .ha-pdp__arrow { width: 4rem; }
+.ha-authorship__time { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: var(--ha-text-quiet); margin: 0; }
+.ha-authorship__time span { color: var(--ha-text-quiet); }
+
+@media screen and (min-width: 990px) {
+  /* images left x0-890 (full bleed to page edge), text right x960-1382 */
+  .ha-authorship__grid { grid-template-columns: 62fr 38fr; column-gap: 0; align-items: stretch; }
+  .ha-authorship__media { display: grid; grid-template-columns: 4fr 3fr; gap: 0; }
+  .ha-authorship__figure, .ha-authorship__figure + .ha-authorship__figure { margin: 0; aspect-ratio: auto; height: 100%; min-height: 52rem; }
+  .ha-authorship__text { align-self: center; }
+}
+
+/* On the dark field the record hairlines flip with the field system already. */
+
+
+/* --- Footer (Wireframe 04) --------------------------------------------- */
+/* The ground is NOT hard-coded here. `.ha-footer` declared later in the file
+   than `.ha-section--field-*`, so an explicit background would win at equal
+   specificity and the field setting would silently do nothing. The footer takes
+   the page ground only when it has no field of its own. */
+.ha-footer:not([class*="ha-section--field-"]) { background: var(--ha-page-ground); }
+.ha-footer { border-top: 1px solid var(--ha-rule); }
+.ha-footer__inner {
+  display: grid; gap: 4rem;
+  padding-top: 4rem; padding-bottom: 3.2rem;
+  align-items: end;
+}
+.ha-footer__left { display: grid; gap: 2rem; align-content: end; }
+.ha-footer__nav .ha-footer__links,
+.ha-footer__policies {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.6rem 2.4rem;
+  font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase;
+}
+.ha-footer__nav a { color: var(--ha-text); text-decoration: none; }
+.ha-footer__policies a { color: var(--ha-text-quiet); text-decoration: none; }
+.ha-footer__nav a:hover,
+.ha-footer__policies a:hover { text-decoration: underline; text-underline-offset: 0.3rem; color: var(--ha-text); }
+.ha-footer__right { display: grid; gap: 3.2rem; justify-items: start; }
+.ha-footer__mark { display: inline-block; width: 9.6rem; color: var(--ha-text); }
+.ha-footer__mark svg,
+.ha-footer__mark img { display: block; width: 100%; height: auto; }
+.ha-footer__copy { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: var(--ha-text-quiet); }
+
+@media screen and (min-width: 750px) {
+  .ha-footer__inner { grid-template-columns: 1fr auto; }
+  .ha-footer__right { justify-items: end; text-align: right; }
+}
+
+
+/* --- The Register: 50/50, and a filled Join button ---------------------
+   Aloha's design puts the title block and the form side by side at half the
+   width each, with Join The Register as a solid block rather than a text link.
+   On the dark field the button inverts — Chalk Blue ground, peat ink — so it is
+   the one bright mark in the section. */
+.ha-register__grid { align-items: start; }
+.ha-register__aside { width: 100%; }
+.ha-register__body { max-width: none; }
+
+.ha-register__field {
+  display: block;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.8rem;
+  margin-bottom: 2.4rem;
+}
+.ha-register__input { width: 100%; font-size: max(var(--ha-t-body), 1.6rem); }
+
+.ha-register__submit {
+  background: var(--ha-text-invert);
+  color: var(--ha-field-dark);
+  border: 1px solid var(--ha-text-invert);
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  min-height: 56px;
+  font-family: var(--ha-font-identify);
+  font-size: var(--ha-t-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0 2rem;
+}
+.ha-register__submit:hover { text-decoration: none; opacity: 0.88; }
+.ha-register__submit::after { content: none; }
+.ha-register__submit:focus-visible { outline: 2px solid var(--ha-text-invert); outline-offset: 3px; }
+
+/* On a light field the button flips back to ink on ground. */
+.ha-register:not(.ha-section--dark):not(.ha-section--field-peat):not(.ha-section--field-slate) .ha-register__submit {
+  background: var(--ha-text);
+  color: var(--ha-page-ground);
+  border-color: var(--ha-text);
+}
+
+/* --- No width caps on any supporting copy ------------------------------
+   Aloha: a description must never be narrower than the heading it sits under.
+   These are every remaining cap on Hartwick body copy. */
+.ha-body,
+.ha-garment__intro,
+.ha-precord__intro,
+.ha-originroute__intro,
+.ha-authorship__intro,
+.ha-living__body,
+.ha-masters__intro,
+.ha-register__body,
+.ha-wearer__quote,
+.ha-process__heading,
+.ha-pdp__intro { max-width: none; }
+
+/* Headers run the full width of the information beneath them. */
+.ha-precord__heading, .ha-precord__intro,
+.ha-authorship__heading, .ha-authorship__intro { max-width: none; }
+
+
+/* ==========================================================================
+   Register + footer corrections (Ivan, 3 September)
+   ========================================================================== */
+
+/* The email field was a bare underline and read as decoration rather than an
+   input. It now has a real box: a visible border, its own ground, and space
+   between it and the Join button. */
+.ha-register__field {
+  display: block;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  padding: 0;
+  margin: 0 0 1.6rem;
+  background: transparent;
+}
+.ha-register__label {
+  display: block;
+  padding: 1.2rem 1.6rem 0;
+  opacity: 0.75;
+}
+.ha-register__input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  /* 16px minimum or iOS Safari zooms the page on focus */
+  font-size: max(var(--ha-t-body), 1.6rem);
+  padding: 0.4rem 1.6rem 1.4rem;
+}
+.ha-register__input::placeholder { color: currentColor; opacity: 0.5; }
+.ha-register__field:focus-within { outline: 2px solid currentColor; outline-offset: 2px; }
+.ha-register__input:focus-visible { outline: none; }
+
+/* Nothing under the Join button — the old underline/arrow decoration is gone. */
+.ha-register__submit { margin-top: 0.8rem; border-bottom: 0 !important; text-decoration: none !important; }
+.ha-register__submit::after,
+.ha-register__submit::before { content: none !important; display: none !important; }
+.ha-register__submit:hover { text-decoration: none !important; }
+
+/* The left column now carries the invitation copy under its heading. */
+.ha-register__body { margin: 2.4rem 0 0; max-width: none; }
+.ha-register__aside { align-self: start; }
+
+/* Footer: the house symbol at 1.5x. */
+.ha-footer__mark { width: 14.4rem; }
+
+/* Footer nav in the identify voice (Porter). Porter is uppercase-only by brand
+   rule and by subset, so the label is uppercased here rather than relying on the
+   copy being typed in caps. */
+.ha-footer__nav .ha-footer__links {
+  font-size: var(--ha-t-ui);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  gap: 0.6rem 3.2rem;
+}
+
+
+/* --- Material Record: the two columns are one block -----------------------
+   The record and its image must read as a single band of equal height. The
+   general product-page figure rule ("never crop, scale the image down instead")
+   is right everywhere else, but here it capped the photograph at 64rem and left
+   it letterboxed in an 853px column with the record beside it — measured 640 vs
+   853. For THIS figure only, the image fills the column and crops, because the
+   alignment is the point of the composition.
+
+   Specificity is body + four classes so it wins against the `body.lx-template
+   --product .ha-figure:not(.ha-figure--empty)` rule above without !important. */
+@media screen and (min-width: 990px) {
+  body.lx-template--product .ha-precord__grid .ha-precord__media { align-self: stretch; }
+
+  body.lx-template--product .ha-precord__grid .ha-precord__figure,
+  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) {
+    align-self: stretch;
+    height: 100%;
+    max-height: none;
+    min-height: 100%;
+    aspect-ratio: auto;
+    overflow: hidden;
+  }
+
+  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) img {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    /* `max-height: 64rem` from the scale-down rule was still capping the image
+       at 640px inside an 853px figure. Clearing it on the IMAGE as well as the
+       figure is what actually makes the two columns the same height. */
+    max-height: none;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+
+/* --- Authorship: full-bleed images, text on the page gutter --------------
+   `.ha-authorship__text` carries `.ha-wrap`, which would give it the page's
+   132/88 padding on all four sides inside its own grid column. It only needs the
+   gutter on the outer edge; the grid supplies the inner gap. */
+.ha-authorship__text.ha-wrap {
+  padding-left: var(--ha-gutter);
+  padding-right: var(--ha-gutter);
+}
+@media screen and (min-width: 990px) {
+  .ha-authorship__text.ha-wrap {
+    padding-left: clamp(3.2rem, 4vw, 6.4rem);
+    padding-right: var(--ha-gutter);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  /* the band still applies to the section as a whole */
+  .ha-authorship { padding-block: var(--ha-pdp-section-y); }
+  .ha-authorship__figure,
+  .ha-authorship__figure + .ha-authorship__figure { min-height: 60rem; }
+}
+
+/* --- The Register: the design's single-line field -----------------------
+   Ivan prefers the underline field over a boxed input, which is also what the
+   wireframe draws: a label, one rule, then the solid Join button beneath it at
+   the same width. The section also needed real padding — it was the tightest
+   band on the page. */
+/* The section band comes from the SITE token, not the product template's.
+   `--ha-pdp-section-y` is only declared inside `.lx-template--product`, so on the
+   homepage this var() was invalid — and an invalid var() does not fall back to
+   the cascade, it resets the property to its initial value. That is why the
+   Register had no vertical padding on the homepage at all while looking correct
+   on the product page. `--ha-section-y` is defined at :root and works on both. */
+.ha-register .ha-wrap { padding-block: var(--ha-section-y); }
+
+.ha-register__field {
+  display: block;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  padding: 0;
+  margin: 0 0 3.2rem;
+  background: transparent;
+}
+.ha-register__label {
+  display: block;
+  padding: 0 0 1.2rem;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.ha-register__input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-size: max(var(--ha-t-body), 1.6rem);
+  padding: 0 0 1.2rem;
+}
+.ha-register__input::placeholder { color: currentColor; opacity: 0.45; }
+.ha-register__field:focus-within { outline: none; border-bottom-color: currentColor; border-bottom-width: 2px; }
+.ha-register__input:focus-visible { outline: none; }
+
+/* The Join button: solid, full width of the field above it. */
+.ha-register__submit {
+  margin-top: 0;
+  width: 100%;
+  min-height: 60px;
+}
+
+
+/* The single-line field needs enough height to read as somewhere you type, and
+   a placeholder so it is not an empty gap above a rule. */
+.ha-register__input {
+  min-height: 4.4rem;
+  padding: 0.4rem 0 1.6rem;
+}
+.ha-register__field { padding-top: 0.4rem; }
+.ha-register__label { padding-bottom: 0.8rem; }
+
+
+/* ==========================================================================
+   Band corrections (Ivan, 3 September)
+   ========================================================================== */
+
+/* The first three sections open flush — no top band. The hero sits directly
+   under the header, and The Piece and Made by Masters run on from the section
+   above rather than restating the gap it already closed with. */
+.lx-template--product .ha-pdp__grid { padding-top: 0; }
+.lx-template--product .ha-garment .ha-wrap { padding-top: 0; }
+.lx-template--product .ha-authorship { padding-top: 0; }
+@media screen and (min-width: 990px) {
+  .ha-authorship { padding-block: 0 var(--ha-pdp-section-y); }
+}
+
+/* The footer keeps its own compact rhythm — the design closes the page tightly,
+   not on the same band as an editorial section. `.ha-footer__inner` carries
+   `.ha-wrap`, so without this it inherited the full page band. */
+.lx-template--product .ha-footer .ha-wrap,
+.ha-footer .ha-wrap,
+.ha-footer__inner {
+  padding-top: 4rem;
+  padding-bottom: 3.2rem;
+}
+@media screen and (min-width: 750px) {
+  .lx-template--product .ha-footer .ha-wrap,
+  .ha-footer .ha-wrap,
+  .ha-footer__inner { padding-top: 5.6rem; padding-bottom: 4rem; }
+}
+
+/* --- The Origin: the route is centred under its own column ---------------
+   Each step centres its circle, label and sub-label on one axis; left-aligning
+   them left the numerals and the words on different centres. */
+@media screen and (min-width: 990px) {
+  .ha-originroute__step {
+    justify-items: center;
+    text-align: center;
+  }
+  .ha-originroute__label,
+  .ha-originroute__sub { text-align: center; }
+  /* the connector runs from the centre of one circle to the centre of the next */
+  .ha-originroute__step:not(:last-child) .ha-originroute__marker::after {
+    left: 50%;
+    width: 100%;
+    margin-left: 2.2rem;
+  }
+}
+
+
+/* Luxe's `button, .button, … { font-family: var(--font-accent-family) !important }`
+   also catches the two primary controls that are Luxe's own markup rather than
+   ours, so they need the same weapon. These are IDENTIFY surfaces: they are the
+   page's principal actions, not interface detail. */
+.lx-template--product .product-form__submit,
+.ha-pdp .product-form__submit,
+.ha-appointment__submit {
+  font-family: var(--ha-font-identify) !important;
+}
+
+
+/* The Lot in the opening label reads as the confirmed fact it is, not as another
+   breadcrumb step. */
+.ha-pdp__lot { color: var(--ha-text); }
+
+
+/* --- Footer on a dark field ---------------------------------------------
+   The footer's link colours are near-black by default, which is right on the
+   page ground and unreadable on peat. On a dark field everything inherits the
+   section's inverted colour, the top rule lightens, and the white house symbol
+   reads as it is meant to. */
+.ha-footer.ha-section--field-peat,
+.ha-footer.ha-section--field-slate {
+  border-top: 0;
+}
+
+.ha-footer.ha-section--field-peat .ha-footer__nav a,
+.ha-footer.ha-section--field-peat .ha-footer__copy,
+.ha-footer.ha-section--field-peat .ha-footer__mark,
+.ha-footer.ha-section--field-slate .ha-footer__nav a,
+.ha-footer.ha-section--field-slate .ha-footer__copy,
+.ha-footer.ha-section--field-slate .ha-footer__mark {
+  color: var(--ha-text-invert);
+}
+
+/* Policy links stay the quieter of the two, but on the light ink not the dark. */
+.ha-footer.ha-section--field-peat .ha-footer__policies a,
+.ha-footer.ha-section--field-slate .ha-footer__policies a {
+  color: var(--ha-text-invert);
+  opacity: 0.7;
+}
+.ha-footer.ha-section--field-peat .ha-footer__policies a:hover,
+.ha-footer.ha-section--field-slate .ha-footer__policies a:hover {
+  opacity: 1;
+}

@@ -11,34 +11,6 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "fae0db8d-7080-48c7-b779-9ec074b0c8df": {
-      "type": "announcement-bar",
-      "blocks": {
-        "sections--16000923631783__fae0db8d-7080-48c7-b779-9ec074b0c8df-announcement-1": {
-          "type": "announcement",
-          "settings": {
-            "text": "Lot I Release September 15 2026 — join The Register for first access",
-            "link": "shopify://collections/hartwick-atelier-drop-one"
-          }
-        }
-      },
-      "block_order": [
-        "sections--16000923631783__fae0db8d-7080-48c7-b779-9ec074b0c8df-announcement-1"
-      ],
-      "settings": {
-        "bar_type": "full-width",
-        "corner_radius": 0,
-        "border_opacity": 0,
-        "font_family": "body",
-        "font_style": "normal",
-        "font_size_mobile": 11,
-        "font_size_desktop": 12,
-        "link_style": "none",
-        "close_btn_enable": false,
-        "anim_style": "fade",
-        "anim_delay": 6
-      }
-    },
     "header": {
       "type": "header",
       "settings": {
@@ -100,16 +72,16 @@
         "dropdown_font_case": "caps",
         "additional_menu_font_case": "none",
         "category_heading_font_style": "bold",
-        "nav_font_size_menu_bar_mobile": 10,
-        "nav_font_size_mobile": 12,
+        "nav_font_size_menu_bar_mobile": 11,
+        "nav_font_size_mobile": 13,
         "font_size_drawer_sub_list_mobile": 14,
         "nav_font_size_mobile_secondary_menu": 13,
-        "nav_font_size_desktop": 12,
+        "nav_font_size_desktop": 13,
         "font_size_dropdown_category_heading": 14,
-        "font_size_dropdown": 11,
+        "font_size_dropdown": 13,
         "font_size_drawer_desktop_primary": 16,
         "font_size_drawer_sub_list_desktop": 16,
-        "nav_font_size_desktop_secondary_menu": 14,
+        "nav_font_size_desktop_secondary_menu": 13,
         "menu_highlight_list": "",
         "menu_highlight_color": "#af2424",
         "feature_card_font": "navigation",
@@ -132,7 +104,7 @@
         "account_enable": true,
         "account_ui": "icon",
         "cart_ui": "word",
-        "cart_ui_font_size": 10,
+        "cart_ui_font_size": 11,
         "cart_ui_quantity": "text",
         "cart_bubble_color_text": "#ffffff",
         "cart_bubble_color_bg": "#000000",
@@ -150,7 +122,6 @@
     }
   },
   "order": [
-    "fae0db8d-7080-48c7-b779-9ec074b0c8df",
     "header"
   ]
 }

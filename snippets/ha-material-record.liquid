@@ -18,6 +18,20 @@
   Terminology: the Lot is customer-facing as a Roman numeral (LOT I), per
   Framework v3. The wireframe's "LOT 001" is superseded — flagged to Aloha.
 
+  PRODUCTION QUANTITY, not "Edition". Aloha, 3 September 2026: "Where a
+  production quantity is useful, it can appear factually within the Material
+  Record, for example: Production quantity: 25 pieces. This should only be used
+  when the number has been verified."
+
+  So the old "Edition — 25 per size" row is gone, and its replacement is gated
+  on `hartwick.production_quantity_verified`. An unverified number does not
+  render at all: a quantity nobody has confirmed is exactly the kind of claim
+  CLAUDE.md forbids inventing, and it is one small step from the scarcity
+  language Aloha has just removed from the site.
+
+  The Edition row only ever appears for a genuinely individually numbered
+  garment — same test as snippets/ha-pdp-identity.liquid.
+
   Usage:
     {% render 'ha-material-record', product: product, full: true %}
     {% render 'ha-material-record', product: section.settings.product,
@@ -44,10 +58,8 @@
   endif
 
   assign edition_label = ''
-  if mf.edition_number != blank and mf.edition_size != blank
+  if mf.individually_numbered == true and mf.edition_number != blank and mf.edition_size != blank
     assign edition_label = 'Edition ' | append: mf.edition_number | append: ' / ' | append: mf.edition_size
-  elsif ph_edition_label != blank
-    assign edition_label = ph_edition_label
   endif
 
   # --- title: the Style's display name, never a legacy name --------------
@@ -72,9 +84,18 @@
     assign r_made_by = 'The Masters, ' | append: mf.place_of_construction.value.place
   endif
 
-  assign r_edition = ph_edition
-  if mf.edition_size != blank
-    assign r_edition = mf.edition_size | append: ' per size'
+  # A run size is a production fact and prints as one, once someone has checked
+  # it. `ph_edition` is no longer a fallback — a placeholder quantity is a
+  # number the visitor would read as verified.
+  assign r_quantity = ''
+  if mf.production_quantity_verified == true and mf.production_quantity != blank
+    assign r_quantity = mf.production_quantity | append: ' pieces'
+  endif
+
+  # Shown only where each garment is individually numbered.
+  assign r_edition = ''
+  if mf.individually_numbered == true and mf.edition_number != blank and mf.edition_size != blank
+    assign r_edition = mf.edition_number | append: ' of ' | append: mf.edition_size
   endif
 
   assign r_availability = mf.availability_note | default: ph_availability
@@ -149,6 +170,18 @@
       {%- endif -%}
       {%- if full and r_finishing != blank -%}
         <tr><th scope="row">Finishing</th><td>{{ r_finishing }}</td></tr>
+      {%- endif -%}
+      {%- comment -%}
+        The Lot. Aloha, 3 Sep 2026: with the Edition removed, "the opening label
+        should simply show the confirmed Lot information" — so the Lot has to be
+        stated somewhere, and Wireframe 04 puts it here as the closing row of the
+        record. Customer-facing as a Roman numeral (Framework v3).
+      {%- endcomment -%}
+      {%- if lot_label != blank -%}
+        <tr><th scope="row">Lot</th><td>{{ lot_label }}</td></tr>
+      {%- endif -%}
+      {%- if r_quantity != blank -%}
+        <tr><th scope="row">Production quantity</th><td>{{ r_quantity }}</td></tr>
       {%- endif -%}
       {%- if r_edition != blank -%}
         <tr><th scope="row">Edition</th><td>{{ r_edition }}</td></tr>

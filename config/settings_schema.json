@@ -125,6 +125,254 @@
         "id": "ha_porter_licensed",
         "label": "Porter webfont licence confirmed",
         "default": false
+      },
+      {
+        "type": "header",
+        "content": "Private appointment"
+      },
+      {
+        "type": "paragraph",
+        "content": "Shopify delivers every contact-form submission to the store's sender address (Settings > Notifications) — that is not a theme value and cannot be set here. The address below is added to the body of each appointment enquiry as a \"Route to\" line, so a mail rule can forward them on, and every submission is already tagged \"Enquiry type: Private appointment\". Aloha is confirming the Hartwick address."
+      },
+      {
+        "type": "text",
+        "id": "ha_appointment_recipient",
+        "label": "Route appointment enquiries to",
+        "info": "Optional. Appears inside the enquiry email; it does not change where Shopify sends it."
+      },
+      {
+        "type": "header",
+        "content": "Badges"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha, 3 September 2026: scarcity language is removed from the whole site. Any badge whose text contains one of these phrases is dropped before it renders — on product cards, recommendations, search results and the product page — even if the tag or metafield is still set on the product in the admin. Comma separated, case-insensitive, matched on containment. A verified production quantity belongs in the Material Record as a fact, never as a badge."
+      },
+      {
+        "type": "textarea",
+        "id": "ha_suppressed_badges",
+        "label": "Suppressed badge phrases",
+        "default": "limited edition, limited-edition, limited run, exclusive, last chance, selling fast, almost gone, only a few left, hurry, final pieces"
+      },
+      {
+        "type": "header",
+        "content": "Type scale"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha, 3 September 2026: \"The main objective is to establish clearer differences between the product name, supporting information and body copy, while maintaining comfortable line lengths inside the narrower sidebar.\" These are her stated starting points and are meant to be tested. Every Hartwick section and the whole product page read these — nothing is hard-coded in CSS."
+      },
+      {
+        "type": "header",
+        "content": "Type scale — desktop"
+      },
+      {
+        "type": "range",
+        "id": "ha_t_style_d",
+        "label": "Style name",
+        "min": 30,
+        "max": 56,
+        "step": 1,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "ha_t_expression_d",
+        "label": "Expression",
+        "min": 14,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "default": 22
+      },
+      {
+        "type": "range",
+        "id": "ha_t_body_d",
+        "label": "Body copy",
+        "min": 14,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 17
+      },
+      {
+        "type": "range",
+        "id": "ha_t_body_lh_d",
+        "label": "Body line height",
+        "min": 20,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "ha_t_price_d",
+        "label": "Price",
+        "min": 14,
+        "max": 28,
+        "step": 1,
+        "unit": "px",
+        "default": 22
+      },
+      {
+        "type": "range",
+        "id": "ha_t_label_d",
+        "label": "Section and accordion labels",
+        "min": 11,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "ha_t_meta_d",
+        "label": "Lot and technical metadata",
+        "min": 10,
+        "max": 16,
+        "step": 1,
+        "unit": "px",
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "ha_t_ui_d",
+        "label": "Buttons and navigation",
+        "min": 11,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "ha_t_editorial_d",
+        "label": "Editorial headings",
+        "min": 28,
+        "max": 64,
+        "step": 1,
+        "unit": "px",
+        "default": 52
+      },
+      {
+        "type": "range",
+        "id": "ha_t_statement_d",
+        "label": "Statement line",
+        "min": 18,
+        "max": 48,
+        "step": 1,
+        "unit": "px",
+        "default": 38
+      },
+      {
+        "type": "header",
+        "content": "Type scale — mobile"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha: labels and technical information no smaller than 12px on mobile. The minimum is enforced in code, so lowering this slider cannot take a label below 12px."
+      },
+      {
+        "type": "range",
+        "id": "ha_t_style_m",
+        "label": "Style name",
+        "min": 24,
+        "max": 44,
+        "step": 1,
+        "unit": "px",
+        "default": 34
+      },
+      {
+        "type": "range",
+        "id": "ha_t_expression_m",
+        "label": "Expression",
+        "min": 14,
+        "max": 26,
+        "step": 1,
+        "unit": "px",
+        "default": 19
+      },
+      {
+        "type": "range",
+        "id": "ha_t_body_m",
+        "label": "Body copy",
+        "min": 14,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "ha_t_body_lh_m",
+        "label": "Body line height",
+        "min": 18,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "default": 25
+      },
+      {
+        "type": "range",
+        "id": "ha_t_price_m",
+        "label": "Price",
+        "min": 14,
+        "max": 26,
+        "step": 1,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "ha_t_label_m",
+        "label": "Section and accordion labels",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "ha_t_meta_m",
+        "label": "Lot and technical metadata",
+        "min": 12,
+        "max": 16,
+        "step": 1,
+        "unit": "px",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "ha_t_ui_m",
+        "label": "Buttons and navigation",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "ha_t_editorial_m",
+        "label": "Editorial headings",
+        "min": 24,
+        "max": 44,
+        "step": 1,
+        "unit": "px",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "ha_t_statement_m",
+        "label": "Statement line",
+        "min": 16,
+        "max": 36,
+        "step": 1,
+        "unit": "px",
+        "default": 26
       }
     ]
   },

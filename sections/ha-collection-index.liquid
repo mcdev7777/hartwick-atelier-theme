@@ -12,11 +12,41 @@
   the wireframe's placeholder rows render instead, marked as provisional.
 
   Selection is by click/tap/keyboard, never hover — see ha-collection-index.js.
+
+  --- THE LOT I GATE ------------------------------------------------------
+  Aloha, 3 September 2026: "The final products belonging to Lot I still need to
+  be confirmed internally. Please do not connect the seven homepage rows to
+  assumed products. Keep that section unpublished or clearly marked as
+  placeholder content until I provide the approved Lot I product list."
+
+  `lot_confirmed` is that instruction made structural rather than editorial.
+  While it is off — which is the default, and the state it ships in — the
+  section IGNORES any bound collection entirely, so no product can reach the
+  homepage by someone picking a collection in the theme editor and not
+  realising what the rows imply. It renders unnamed rows and says on its face
+  that the list is not confirmed.
+
+  The rows still render because the arrangement is what Aloha is reviewing; it
+  is the product names that were the problem. They also no longer carry the
+  legacy names (Tide, Mesa, Stone…), which CLAUDE.md makes internal SKU mapping
+  only and Aloha's letter confirms: "TIDE, VALE and STONE were visual
+  placeholders from the original wireframe. They should not appear as customer
+  facing product names."
+
+  Ticking the box once the approved list arrives restores normal behaviour.
 {%- endcomment -%}
 
 {%- liquid
-  assign products = section.settings.collection.products
   assign row_limit = section.settings.row_limit
+
+  # Until the Lot is confirmed the collection is not read at all — not merely
+  # overridden. A guard that only changes what is displayed is one careless
+  # edit away from publishing assumed products.
+  assign products = empty
+  if section.settings.lot_confirmed
+    assign products = section.settings.collection.products
+  endif
+
   assign use_placeholders = true
   if products.size > 0
     assign use_placeholders = false
@@ -25,7 +55,14 @@
 
 <section class="ha-section ha-index">
   <div class="ha-wrap">
-    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+    {%- unless section.settings.lot_confirmed -%}
+      {%- render 'ha-placeholder-note',
+        show: true,
+        text: 'Placeholder — the Lot I product list is not confirmed. These rows are layout only and are not connected to any product.'
+      -%}
+    {%- else -%}
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+    {%- endunless -%}
 
     {%- if section.settings.eyebrow != blank -%}
       <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
@@ -46,9 +83,16 @@
                   tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
                   type="button"
                 >
+                  {%- comment -%}
+                    Until the list is confirmed the row shows its position and
+                    nothing else. Aloha's approved names drop into the block
+                    fields below and appear the moment the box is ticked — and
+                    until then no name can be published by accident, including
+                    the legacy ones the wireframe used.
+                  {%- endcomment -%}
                   <span class="ha-index__num ha-record">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
-                  <span class="ha-index__name ha-narrate">{{ block.settings.name }}</span>
-                  <span class="ha-index__lot ha-record">{{ block.settings.lot }}</span>
+                  <span class="ha-index__name ha-narrate">{% if section.settings.lot_confirmed %}{{ block.settings.name }}{% else %}&mdash;{% endif %}</span>
+                  <span class="ha-index__lot ha-record">{% if section.settings.lot_confirmed %}{{ block.settings.lot }}{% endif %}</span>
                 </button>
               </li>
             {%- endfor -%}
@@ -87,7 +131,7 @@
           {%- endif -%}
         </ul>
 
-        {%- if section.settings.cta_text != blank -%}
+        {%- if section.settings.cta_text != blank and section.settings.lot_confirmed -%}
           <p class="ha-index__foot">
             <a class="ha-link ha-identify" href="{{ section.settings.cta_link | default: section.settings.collection.url | default: '#' }}">
               {{ section.settings.cta_text }}
@@ -143,7 +187,8 @@
   "max_blocks": 12,
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collection index" },
-    { "type": "collection", "id": "collection", "label": "Collection", "info": "When set, rows come from the collection's products and the placeholder rows below are ignored." },
+    { "type": "checkbox", "id": "lot_confirmed", "label": "Lot I product list confirmed", "default": false, "info": "Off until Aloha supplies the approved Lot I list. While off, the collection below is ignored, the rows are unnamed and the section states that it is placeholder content." },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Read only once the Lot I list is confirmed above. When set, rows come from the collection's products and the placeholder rows below are ignored." },
     { "type": "range", "id": "row_limit", "min": 3, "max": 12, "step": 1, "label": "Rows", "default": 7 },
     { "type": "text", "id": "cta_text", "label": "Link text", "default": "View full catalogue" },
     { "type": "url", "id": "cta_link", "label": "Link" },

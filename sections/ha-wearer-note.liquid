@@ -1,0 +1,76 @@
+{%- comment -%}
+  Hartwick Atelier — A WEARER'S NOTE (Wireframe 04, revised).
+
+  A single approved quotation on a clay field, with an optional image to its
+  right. New in the revised design.
+
+  CLAUDE.md: no Circle-member or customer quotation is invented. The default is
+  wireframe copy, clearly marked, and the section carries the standard
+  placeholder notice until Aloha supplies a real, permission-confirmed note.
+  The `attribution` line deliberately reads "NAME / CONTEXT / PERMISSION
+  CONFIRMED" until then, so an unverified quotation cannot read as verified.
+{%- endcomment -%}
+
+{%- liquid
+  assign quote = section.settings.quote
+  assign has_real = false
+  if section.settings.attribution_confirmed and section.settings.attribution != blank
+    assign has_real = true
+  endif
+-%}
+
+<section class="ha-section ha-wearer{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-wrap ha-wearer__grid">
+    <div class="ha-wearer__body">
+      <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+      {%- if quote != blank -%}
+        <blockquote class="ha-wearer__quote ha-narrate">{{ quote }}</blockquote>
+      {%- endif -%}
+      {%- if section.settings.attribution != blank -%}
+        <p class="ha-wearer__cite ha-record">{{ section.settings.attribution }}</p>
+      {%- endif -%}
+      {%- unless has_real -%}
+        {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+          text: 'Placeholder — quotation and attribution pending a permission-confirmed wearer note' -%}
+      {%- endunless -%}
+    </div>
+
+    <div class="ha-wearer__media">
+      {%- render 'ha-figure',
+        image: section.settings.image,
+        label: section.settings.image_label,
+        class: 'ha-wearer__figure',
+        sizes: '(min-width: 990px) 30vw, 100vw',
+        alt: section.settings.image_alt -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Wearer's Note",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" },
+      { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" },
+      { "value": "clay", "label": "Clay" },
+      { "value": "botanical", "label": "Botanical" },
+      { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A wearer's note" },
+    { "type": "richtext", "id": "quote", "label": "Quotation", "default": "<p>“The cloth became softer without losing its shape, and it breathes beautifully in heat.”</p>" },
+    { "type": "text", "id": "attribution", "label": "Attribution", "default": "Name / context / permission confirmed" },
+    { "type": "checkbox", "id": "attribution_confirmed", "label": "Attribution is real and permission-confirmed", "default": false, "info": "Leave off until the note is a real, approved quotation. While off, the section shows the placeholder notice." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "text", "id": "image_label", "label": "Placeholder label", "default": "Wearer image / optional / approved" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — Wearer's Note" }]
+}
+{% endschema %}

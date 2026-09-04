@@ -1,34 +1,22 @@
 /*
  * Hartwick Atelier — PRODUCT PAGE (celestial)
- * SUFFIX TEMPLATE. Identical to templates/product.json.
  *
- * The Hartwick apparel products are assigned to Luxe's suffix templates
- * (celestial / liminal / terrene / upaya), which still carried the Luxe demo
- * arrangement. There is one approved product page design, so all of them are
- * built to it — otherwise the garments the wireframe was drawn for would be the
- * only products not showing it.
+ * Built to `04_HA_Product_Desktop_REVISED_EDITABLE.pdf` (Aloha's revised
+ * desktop wireframe), 3 September 2026.
  *
- * These four are duplicates of one layout. The tidy end state is a single
- * product template with the suffixes removed from the products, but that is a
- * product-data change and needs admin access. Flagged to Aloha.
+ * The opening section is the three-column hero — sticky left rail, scrolling
+ * media rail, sticky buy rail — rendered by the custom `ha-product` section.
+ * See sections/ha-product.liquid for why that one section is custom while the
+ * form inside it is still Luxe's own snippets.
  *
- * Built to Wireframe (03) PRODUCT PAGE (desktop + mobile) and the mobile
- * developer brief "HA_ Wireframe 03_ Mobile Product Page".
+ * Below it, the sections follow the wireframe's ORDER and STRUCTURE. Aloha
+ * asked that only the structure and positions be taken from that file, not its
+ * colours, so the decorative bands are dropped: every section sits on the brand
+ * page ground, with the Masters and Register on the established dark field.
  *
- * Section order is the brief's hierarchy and is the same at both breakpoints:
- *   garment image -> purchase -> the garment -> material record -> origin ->
- *   masters -> process -> care/delivery -> journal -> related -> The Register.
- * "I do not want a visitor to travel through the Masters, provenance and
- * Journal content before they can select a size or add the garment to the
- * bag." (brief §3)
- *
- * Native wherever Luxe can carry the design: the gallery, the whole product
- * form, the popups, the accordions and the recommendations are all Shopify's
- * own. Custom only where a metafield-driven record is required.
- *
- * All placeholder copy below is wireframe copy, clearly marked on screen, and
- * switches to real data the moment the hartwick.* definitions and content exist.
- * Nothing here asserts an unverified fact as fact (CLAUDE.md, risk R7).
+ * Field colours are section settings (`field`), so the alternation can be
+ * retuned from the theme editor. All placeholder copy is marked on screen and
+ * switches to real data the moment the hartwick.* content exists.
  *
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
@@ -37,187 +25,76 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
+      "type": "ha-product",
       "blocks": {
-        "identity": {
-          "type": "custom_liquid",
+        "row_sizing": {
+          "type": "left_row",
           "settings": {
-            "custom_liquid": "{% render 'ha-pdp-identity', ph_lot: 'Lot I', ph_edition: 'Edition 07 / 25', ph_expression: 'Handspun Khadi' %}"
+            "heading": "Sizing information",
+            "content": "<p><em>Placeholder — measurements and fit guidance pending Angela's approval.</em></p>"
           }
         },
-        "rule_top": {
-          "type": "horizontal_rule",
+        "row_care": {
+          "type": "left_row",
           "settings": {
-            "width": "full",
-            "opacity": 40,
-            "padding_top": 10,
-            "padding_bottom": 10
+            "heading": "Customer care",
+            "content": "<p><em>Placeholder — care, delivery and returns terms pending confirmation.</em></p>"
           }
         },
-        "description": {
-          "type": "description",
+        "buy_delivery": {
+          "type": "buy_row",
           "settings": {
-            "display_type": "normal",
-            "show_border": false,
-            "text_indent": false
-          }
-        },
-        "price": {
-          "type": "price",
-          "settings": {
-            "price_size": "price--large",
-            "show_discounts": false,
-            "price_show_taxes": false,
-            "show_shoppay_banner": false
-          }
-        },
-        "rule_price": {
-          "type": "horizontal_rule",
-          "settings": {
-            "width": "full",
-            "opacity": 40,
-            "padding_top": 10,
-            "padding_bottom": 10
-          }
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "pill_selected_state": "outline",
-            "pill_layout": "auto",
-            "pill_threshold": 12,
-            "show_labels": true,
-            "show_puncuation": false,
-            "border_top": false,
-            "border_bottom": false,
-            "use_variant_images": false,
-            "use_color_swatches": false
-          }
-        },
-        "popup_fit": {
-          "type": "popup",
-          "settings": {
-            "text": "Size & Fit",
-            "text_alignment": "left",
-            "link_style": "text",
-            "text_size": "small",
-            "link_icon": "none",
-            "popup_display_type": "modal",
-            "content_source": "block",
-            "popup_content_heading": "Size & Fit",
-            "popup_content_text": "<p><em>Placeholder — measurements and fit guidance pending Angela's approval.</em></p><p>Each Style is cut to a permanent silhouette. Sizes are given as body measurements, not garment measurements. Where a piece is designed to be worn with ease, the intended relationship to the body is described rather than implied.</p>",
-            "page": ""
-          }
-        },
-        "popup_delivery": {
-          "type": "popup",
-          "settings": {
-            "text": "Delivery",
-            "text_alignment": "left",
-            "link_style": "text",
-            "text_size": "small",
-            "link_icon": "none",
-            "popup_display_type": "modal",
-            "content_source": "block",
-            "popup_content_heading": "Delivery",
-            "popup_content_text": "<p><em>Placeholder — dispatch, duties and returns terms pending confirmation.</em></p><p>Pieces are made in Lots. Dispatch time depends on where the Lot stands in production, and is stated at checkout.</p>",
-            "page": ""
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "button_style": "outline",
-            "show_dynamic_checkout": false,
-            "show_payment_methods": false,
-            "show_pickup": false,
-            "show_gift_card_recipient": false
-          }
-        },
-        "appointment": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'ha-appointment', text: 'Request Private Appointment', handle: 'private-appointment' %}"
+            "heading": "Delivery & returns",
+            "content": "<p><em>Placeholder — dispatch, duties, returns and exchange terms pending confirmation.</em></p>"
           }
         }
       },
       "block_order": [
-        "identity",
-        "rule_top",
-        "description",
-        "price",
-        "rule_price",
-        "variant_picker",
-        "popup_fit",
-        "popup_delivery",
-        "buy_buttons",
-        "appointment"
+        "buy_delivery",
+        "row_sizing",
+        "row_care"
       ],
       "settings": {
-        "enable_sticky_info": true,
-        "enable_sticky_buttons": true,
-        "sticky_buttons_padding": 10,
-        "sticky_buttons_border": true,
-        "sticky_buttons_shadow": 0,
-        "media_bg_col": "rgba(0,0,0,0)",
+        "show_breadcrumb": true,
+        "crumb_root": "Collection",
+        "crumb_leaf": "Apparel",
+        "fit_heading": "Fit",
+        "record_link_text": "View the material record",
+        "record_anchor": "#the-material-record",
+        "tax_note": "Duties and taxes shown at checkout",
+        "appointment_text": "Request Private Appointment",
+        "payment_note": "Full payment is taken when the order is placed. Delivery timing is shown before checkout.",
+        "picker_type": "button",
         "gallery_aspect_ratio": "portrait-4x6",
-        "gallery_media_scale": "scale-down",
-        "gallery_height_limit_desktop": false,
-        "media_section_width": "extra-wide",
-        "product_section_width": "full-width",
-        "media_mobile_width": "full-width",
-        "gallery_grid_spacing": 5,
-        "mobile_media_nav": "track",
-        "mobile_media_nav_position": "below-media",
-        "gallery_layout": "grid",
-        "desktop_media_nav": "thumbnails",
-        "desktop_media_thumbnail_size": "normal",
-        "desktop_media_thumbnail_position": "left",
-        "desktop_media_thumbnail_placement": "adjacent",
-        "arrow_style": "solid-inverted",
-        "balance_grid": false,
-        "media_video_autoplay": false,
-        "zoom_enable": true,
-        "gallery_mega_zoom": "normal",
-        "info_txt_alignment": "left",
-        "text_section_position": "left",
-        "text_section_vertical_position": "top",
-        "text_section_max_width": 400,
-        "text_section_padding": 65,
-        "blocks_vertical_spacing": 30,
-        "description_split_keyword": "",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "bottom_border": true,
-        "border_width": "full",
-        "border_color": "dark"
+        "intro_words": 32,
+        "description_row_title": "Description"
       }
     },
     "ha_garment": {
       "type": "ha-garment",
       "settings": {
-        "eyebrow": "The Garment",
-        "heading": "A study in proportion and ease.",
-        "intro": "<p>Cut for quiet movement and lived-in presence. A straight line and dropped shoulder create balance without excess. Made to be worn, not noticed.</p>",
+        "eyebrow": "The Piece",
+        "heading": "A study in proportion, movement and ease.",
+        "intro": "<p>Describe the actual cut, silhouette, construction and movement. Replace vague praise with useful observation about the object.</p>",
         "details_label": "Construction details",
         "use_product_media": true,
         "media_index": 5,
-        "image_label": "01 / Wearer",
+        "image_label": "Garment in motion / side / back / movement",
         "ph_silhouette": "Straight, relaxed",
         "ph_fit": "Ease through body and sleeve",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "field": "page",
+        "show_spec_table": false
       }
     },
     "ha_record": {
       "type": "ha-product-record",
       "settings": {
-        "eyebrow": "Material Record",
+        "eyebrow": "The Cloth / Material Record",
         "use_product_media": true,
         "media_index": 2,
         "image_label": "01 / Textile detail",
         "ph_lot": "Lot I",
-        "ph_edition_label": "Edition 07 / 25",
         "ph_fibre": "Handspun khadi cotton",
         "ph_yarn": "Hand-spun, uneven count",
         "ph_weave": "Handloom",
@@ -228,211 +105,230 @@
         "ph_dyed": "Rajasthan, India",
         "ph_made_by": "The Masters, Rajasthan",
         "ph_finishing": "Hand-finished",
-        "ph_edition": "25 per size",
         "ph_availability": "Through The Register",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "field": "peat",
+        "heading": "What the hand leaves inside the material.",
+        "intro": "<p>Explain fibre, yarn, weave, weight, dye, surface and behaviour. Natural variation is described precisely, never as an excuse.</p>"
       }
     },
     "ha_origin": {
       "type": "ha-origin",
       "settings": {
+        "field": "page",
         "eyebrow": "The Origin",
-        "heading": "Rooted in place, made by hand.",
-        "intro": "<p>From seed to garment, each step is held by human hands and local knowledge. The materials are few, the processes patient, and the results never identical.</p>",
-        "ph_place": "Rajasthan, India",
-        "label_fibre": "01 / Raw fibre",
-        "label_dye": "02 / Natural dye",
-        "label_loom": "03 / The loom",
-        "show_placeholder_note": true
-      }
-    },
-    "ha_masters": {
-      "type": "ha-masters-index",
-      "blocks": {
-        "m1": { "type": "master", "settings": { "role": "Master Weaver" } },
-        "m2": { "type": "master", "settings": { "role": "Khadi Spinner" } },
-        "m3": { "type": "master", "settings": { "role": "Natural Indigo Master" } },
-        "m4": { "type": "master", "settings": { "role": "Pattern Cutter" } },
-        "m5": { "type": "master", "settings": { "role": "Hand Finisher" } }
+        "heading": "A route through material and place.",
+        "intro": "<p>Show the journey without pretending one garment comes from one simple place. Publish only verified information.</p>"
       },
-      "block_order": ["m1", "m2", "m3", "m4", "m5"],
-      "settings": {
-        "layout": "feature",
-        "source": "product",
-        "eyebrow": "Meet the Masters",
-        "heading": "Knowledge held in human hands.",
-        "intro": "<p>Each Master holds a part of the whole. Their knowledge is held in practice, memory and touch.</p>",
-        "item_limit": 5,
-        "link_masters": true,
-        "portrait_label": "01 / Portrait",
-        "workshop_label": "02 / Workshop",
-        "cta_text": "View the Master Index",
-        "show_placeholder_note": true
-      }
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "label": "Fibre",
+            "sublabel": "Origin / region"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "label": "Spinning",
+            "sublabel": "Workshop / place"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "label": "Weaving",
+            "sublabel": "Master / place"
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "label": "Dyeing",
+            "sublabel": "Method / place"
+          }
+        },
+        "s5": {
+          "type": "step",
+          "settings": {
+            "label": "Construction",
+            "sublabel": "Atelier / place"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
     },
     "ha_process": {
       "type": "ha-process",
-      "blocks": {
-        "s1": { "type": "step", "settings": { "label": "Fibre" } },
-        "s2": { "type": "step", "settings": { "label": "Spinning" } },
-        "s3": { "type": "step", "settings": { "label": "Weaving" } },
-        "s4": { "type": "step", "settings": { "label": "Dyeing" } },
-        "s5": { "type": "step", "settings": { "label": "Cutting" } },
-        "s6": { "type": "step", "settings": { "label": "Construction" } },
-        "s7": { "type": "step", "settings": { "label": "Finishing" } },
-        "s8": { "type": "step", "settings": { "label": "Wear" } }
-      },
-      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"],
       "settings": {
-        "eyebrow": "Fibre to Finished Garment",
+        "field": "page",
+        "eyebrow": "Process",
+        "heading": "Only the processes that genuinely apply to this piece.",
         "show_placeholder_note": true
-      }
-    },
-    "care_delivery": {
-      "type": "collapsible-content",
+      },
       "blocks": {
-        "g_care": { "type": "heading", "settings": { "group_heading": "Care & Ageing" } },
-        "care_1": {
-          "type": "collapsible_row",
+        "p1": {
+          "type": "step",
           "settings": {
-            "title": "Care instructions",
-            "content": "<p><em>Placeholder — care guidance pending Angela's approval.</em></p><p>Washing, drying and storage guidance for naturally dyed handloom cloth is written per Expression and published here once verified.</p>"
+            "label": "Handspun"
           }
         },
-        "care_2": {
-          "type": "collapsible_row",
+        "p2": {
+          "type": "step",
           "settings": {
-            "title": "Ageing & patina",
-            "content": "<p><em>Placeholder — expected fading and natural-dye transfer pending Angela's approval.</em></p>"
+            "label": "Handwoven"
           }
         },
-        "care_3": {
-          "type": "collapsible_row",
+        "p3": {
+          "type": "step",
           "settings": {
-            "title": "Repairs",
-            "content": "<p><em>Placeholder — long-term care and repair route pending confirmation.</em></p>"
+            "label": "Natural dye"
           }
         },
-        "g_delivery": { "type": "heading", "settings": { "group_heading": "Delivery & Returns" } },
-        "del_1": {
-          "type": "collapsible_row",
+        "p4": {
+          "type": "step",
           "settings": {
-            "title": "Delivery",
-            "content": "<p><em>Placeholder — dispatch and production time, shipping, duties and taxes pending confirmation.</em></p>"
-          }
-        },
-        "del_2": {
-          "type": "collapsible_row",
-          "settings": {
-            "title": "Returns",
-            "content": "<p><em>Placeholder — returns terms, made-to-order and final-sale conditions pending confirmation.</em></p>"
-          }
-        },
-        "del_3": {
-          "type": "collapsible_row",
-          "settings": {
-            "title": "Exchanges",
-            "content": "<p><em>Placeholder — exchange terms and customer assistance route pending confirmation.</em></p>"
+            "label": "Hand finished"
           }
         }
       },
-      "block_order": ["g_care", "care_1", "care_2", "care_3", "g_delivery", "del_1", "del_2", "del_3"],
-      "settings": {
-        "heading": "",
-        "subheading": "",
-        "btn_enable": false,
-        "content_alignment": "left",
-        "content_width": "standard",
-        "column_layout": "2",
-        "text_color": "fg-body",
-        "bg_color": "bg-body",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "top_border": false,
-        "bottom_border": true,
-        "border_width": "full",
-        "border_color": "dark"
-      }
-    },
-    "ha_journal": {
-      "type": "ha-journal",
-      "blocks": {
-        "j1": {
-          "type": "card",
-          "settings": {
-            "title": "The Loom",
-            "excerpt": "A story from the workshop.",
-            "image_label": "01 / Journal image"
-          }
-        },
-        "j2": {
-          "type": "card",
-          "settings": {
-            "title": "The Colour",
-            "excerpt": "The plant, mineral and season behind the cloth.",
-            "image_label": "02 / Journal image"
-          }
-        },
-        "j3": {
-          "type": "card",
-          "settings": {
-            "title": "The Wearer",
-            "excerpt": "The garment once it enters someone's life.",
-            "image_label": "03 / Journal image"
-          }
-        }
-      },
-      "block_order": ["j1", "j2", "j3"],
-      "settings": {
-        "eyebrow": "From the Journal",
-        "post_limit": 3,
-        "mobile_layout": "stack",
-        "show_placeholder_note": true
-      }
-    },
-    "related-products": {
-      "type": "related-products",
-      "settings": {
-        "heading": "You may also consider",
-        "heading_size": "h3",
-        "heading_alignment": "left",
-        "products_to_show": 3,
-        "columns_tablet": 3,
-        "columns_desktop": 3,
-        "arrow_style": "solid-inverted",
-        "show_price": true,
-        "show_vendor": false,
-        "enable_quick_add": false,
-        "text_color": "fg-body",
-        "bg_color": "bg-body",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "top_border": false,
-        "border_width": "full",
-        "border_color": "dark"
-      }
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
     },
     "ha_register": {
       "type": "ha-register",
       "settings": {
         "eyebrow": "The Register",
-        "heading": "Be first to receive what comes next.",
-        "body": "<p>Private access to new Lots, The Dispatch, and stories from the workshops before they reach the world.</p>",
+        "heading": "Occasional correspondence from the Atelier.",
+        "body": "<p>New pieces, the people who make them, and useful notes on materials, care and provenance.</p>",
         "show_native_form": true,
         "contact_tag": "the-register"
       }
+    },
+    "ha_wearer": {
+      "type": "ha-wearer-note",
+      "settings": {
+        "eyebrow": "A wearer's note",
+        "attribution": "Name / context / permission confirmed",
+        "attribution_confirmed": false,
+        "image_label": "Wearer image / optional / approved",
+        "show_placeholder_note": true,
+        "field": "page"
+      }
+    },
+    "ha_authorship": {
+      "type": "ha-authorship",
+      "settings": {
+        "field": "page",
+        "eyebrow": "Made by Masters",
+        "heading": "Authorship made visible.",
+        "intro": "<p>Name the Master or workshop, identify the place, state the craft and explain the contribution to this piece.</p>",
+        "cta_text": "Meet the Master",
+        "portrait_label": "Master portrait / name and permission required",
+        "workshop_label": "Workshop image / place / process / contribution",
+        "show_placeholder_note": true
+      }
+    },
+    "ha_living": {
+      "type": "ha-living",
+      "settings": {
+        "field": "page",
+        "eyebrow": "Living with the piece",
+        "heading": "Fit, care and delivery, kept clear."
+      },
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "heading": "Fit & garment measurements",
+            "open_by_default": true,
+            "content": "<p><em>Placeholder — actual garment measurements, model information and advice when choosing between sizes, pending Angela's approval.</em></p>"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "heading": "Care & longevity",
+            "content": "<p><em>Placeholder — care, washing and ageing guidance pending Angela's approval.</em></p>"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "heading": "Delivery & returns",
+            "content": "<p><em>Placeholder — dispatch, duties, returns and exchange terms pending confirmation.</em></p>"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "heading": "Edition / lot",
+            "content": "<p><em>Placeholder — Lot and, where a garment is individually numbered, its edition. Published only when confirmed.</em></p>"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ]
+    },
+    "ha_continue": {
+      "type": "ha-continue",
+      "settings": {
+        "field": "page",
+        "eyebrow": "Continue the record",
+        "heading": "Related stories and pieces.",
+        "story_label": "Journal image / the cloth / the master",
+        "story_kicker": "The cloth / the master",
+        "story_cta": "Read the related story"
+      },
+      "blocks": {
+        "b1": {
+          "type": "piece",
+          "settings": {
+            "ph_name": "Skirt 001",
+            "ph_expression": "Tiny Pinstripe Cotton Khadi",
+            "ph_image_label": "Product / on body"
+          }
+        },
+        "b2": {
+          "type": "piece",
+          "settings": {
+            "ph_name": "Trouser 001",
+            "ph_expression": "Celeste Handwoven Ikat",
+            "ph_image_label": "Product / on body"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2"
+      ]
     }
   },
   "order": [
     "main",
     "ha_garment",
     "ha_record",
+    "ha_authorship",
     "ha_origin",
-    "ha_masters",
     "ha_process",
-    "care_delivery",
-    "ha_journal",
-    "related-products",
+    "ha_living",
+    "ha_wearer",
+    "ha_continue",
     "ha_register"
   ]
 }

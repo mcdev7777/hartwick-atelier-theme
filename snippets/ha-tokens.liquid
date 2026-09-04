@@ -37,9 +37,22 @@
     --ha-mordant-amber: {{ settings.ha_mordant_amber | default: '#D5A040' }};
     --ha-chalk-blue:    {{ settings.ha_chalk_blue    | default: '#E9F3FF' }};
 
-    /* --- grounds --- */
+    /* --- grounds ---
+       The page runs on ONE ground, not the alternating colour bands the revised
+       wireframe drew — those fills were placeholder, and Aloha asked that only
+       the structure and positions be taken from that file, not its colours.
+       #F2EFE9 stays the placeholder ground pending her confirmation (the logo
+       rules name Chalk Blue instead). Changing this one field restyles the site.
+
+       The --ha-field-* tokens remain as an available capability — a section can
+       still opt into a field with its `field` setting — but nothing on the
+       product page reaches for one; every section sits on the page ground. */
     --ha-page-ground:   {{ settings.ha_page_ground   | default: '#F2EFE9' }};
     --ha-field-dark:    {{ settings.ha_field_dark    | default: '#332820' }};
+    --ha-field-white:   {{ settings.ha_page_ground   | default: '#F2EFE9' }};
+    --ha-field-botanical: var(--ha-loden-moss);
+    --ha-field-blush:   var(--ha-bare-clay);
+    --ha-field-slate:   var(--ha-inkstone);
 
     /* --- tint system (100 / 66 / 33 / 0 against white) --- */
     --ha-soot-66: rgb({{ soot_r | times: 0.66 | plus: 86.7 | round }}, {{ soot_g | times: 0.66 | plus: 86.7 | round }}, {{ soot_b | times: 0.66 | plus: 86.7 | round }});
@@ -54,8 +67,22 @@
     /* --- semantic roles: sections use THESE, never a colour name --- */
     --ha-text:        var(--ha-soot-black);
     --ha-text-quiet:  var(--ha-soot-66);
-    --ha-rule:        var(--ha-soot-33);
     --ha-text-invert: var(--ha-chalk-blue);
+
+    /* Two rule weights, measured off Wireframe 04.
+
+       The quiet hairline that carries the record tables, the accordion rows and
+       the header measures #E0DEDC on the page ground and #453B33 on the peat
+       field — the same 14% of the ink in both cases. So it is declared as an
+       ALPHA rather than as a tint: one value that stays correct on five
+       different fields, where a fixed tint would go muddy on four of them.
+       .ha-section--dark re-declares it against Chalk Blue.
+
+       The structural border — the size buttons — is near-solid ink and is a
+       separate token, because the two are not interchangeable: the size a
+       visitor is choosing must not be drawn in table-rule grey. */
+    --ha-rule:   rgba({{ soot_r }}, {{ soot_g }}, {{ soot_b }}, 0.14);
+    --ha-border: rgba({{ soot_r }}, {{ soot_g }}, {{ soot_b }}, 0.85);
 
     /* Accent colours fail WCAG AA as text (Mordant Amber 2.35:1, Loden Moss 2.36:1
        against white). They are surfaces, rules and marks only — never body copy,
@@ -65,5 +92,60 @@
 
     /* Provisional imagery, until Angela's assets land. */
     --ha-placeholder-field: var(--ha-peat-72);
+
+    /* ==================================================================
+       TYPE SCALE  —  Aloha, 3 September 2026
+       "The typography currently feels too large and visually dense […]
+        Too many elements have similar visual weight."
+
+       Her stated hierarchy, held as tokens rather than as numbers scattered
+       through CSS, so the whole site can be re-tuned from
+       Theme settings > Hartwick — Material Archive > Type scale. She asked for
+       these to be treated as starting points, so they have to be adjustable
+       without a developer.
+
+       Mobile first; the desktop values take over at 990px, Luxe's own
+       breakpoint. Sizes are rem against Luxe's 10px root (1.6rem = 16px) so a
+       visitor who has raised their browser's default text size still gets it.
+
+       Aloha's floor: labels and technical information never below 12px on
+       mobile. `at_least: 12` enforces it here, so the slider cannot break it.
+       ================================================================== */
+    --ha-t-style:      {{ settings.ha_t_style_m      | default: 34 | divided_by: 10.0 }}rem;
+    --ha-t-expression: {{ settings.ha_t_expression_m | default: 19 | divided_by: 10.0 }}rem;
+    --ha-t-body:       {{ settings.ha_t_body_m       | default: 16 | divided_by: 10.0 }}rem;
+    --ha-t-body-lh:    {{ settings.ha_t_body_lh_m    | default: 25 | divided_by: 10.0 }}rem;
+    --ha-t-price:      {{ settings.ha_t_price_m      | default: 20 | divided_by: 10.0 }}rem;
+    --ha-t-label:      {{ settings.ha_t_label_m      | default: 13 | at_least: 12 | divided_by: 10.0 }}rem;
+    --ha-t-meta:       {{ settings.ha_t_meta_m       | default: 12 | at_least: 12 | divided_by: 10.0 }}rem;
+    --ha-t-ui:         {{ settings.ha_t_ui_m         | default: 13 | at_least: 12 | divided_by: 10.0 }}rem;
+    --ha-t-editorial:  {{ settings.ha_t_editorial_m  | default: 36 | divided_by: 10.0 }}rem;
+
+    /* One size between the editorial heading and body copy, for the two places
+       the revised design sets a single sentence as a statement in its own right:
+       the process line and the wearer's quotation. Wireframe 04 measures both
+       at 32px on desktop. */
+    --ha-t-statement:  {{ settings.ha_t_statement_m  | default: 26 | divided_by: 10.0 }}rem;
+
+    /* Tracking travels with size: the record voice needs it, a 40px display
+       heading does not. Declared here so a section never invents its own. */
+    --ha-track-meta:  0.14em;
+    --ha-track-label: 0.12em;
+    --ha-track-ui:    0.14em;
+  }
+
+  @media screen and (min-width: 990px) {
+    :root {
+      --ha-t-style:      {{ settings.ha_t_style_d      | default: 48 | divided_by: 10.0 }}rem;
+      --ha-t-expression: {{ settings.ha_t_expression_d | default: 22 | divided_by: 10.0 }}rem;
+      --ha-t-body:       {{ settings.ha_t_body_d       | default: 17 | divided_by: 10.0 }}rem;
+      --ha-t-body-lh:    {{ settings.ha_t_body_lh_d    | default: 28 | divided_by: 10.0 }}rem;
+      --ha-t-price:      {{ settings.ha_t_price_d      | default: 22 | divided_by: 10.0 }}rem;
+      --ha-t-label:      {{ settings.ha_t_label_d      | default: 14 | divided_by: 10.0 }}rem;
+      --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 13 | divided_by: 10.0 }}rem;
+      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 14 | divided_by: 10.0 }}rem;
+      --ha-t-editorial:  {{ settings.ha_t_editorial_d  | default: 52 | divided_by: 10.0 }}rem;
+      --ha-t-statement:  {{ settings.ha_t_statement_d  | default: 38 | divided_by: 10.0 }}rem;
+    }
   }
 {% endstyle %}

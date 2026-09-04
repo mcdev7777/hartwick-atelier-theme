@@ -1,0 +1,132 @@
+{%- comment -%}
+  Hartwick Atelier — CONTINUE THE RECORD (Wireframe 04, revised).
+
+  One curated row under a heading: an editorial "story" card and the related
+  pieces beside it. The revised wireframe draws a journal card on the left and
+  two product cards on the right.
+
+  Curated, not Shopify's async recommendation slider: the wireframe places
+  specific pieces in specific positions, so these are explicit picks (a chosen
+  article, chosen products) that Aloha controls per garment. That keeps the
+  layout stable and avoids a second recommendation surface. Each card renders
+  only when its source exists; an empty block collapses.
+
+  Story image and product image both fall back to a labelled placeholder field
+  until real assets and the approved related pieces exist.
+{%- endcomment -%}
+
+{%- liquid
+  assign story = section.settings.article
+  assign story_img = section.settings.story_image | default: story.image
+  assign story_alt = story.title | escape
+-%}
+
+<section class="ha-section ha-continue{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-wrap">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ha-display ha-narrate ha-continue__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="ha-continue__grid">
+      {%- comment -%} The story card {%- endcomment -%}
+      <div class="ha-continue__story">
+        {%- if story != blank -%}
+          <a class="ha-continue__story-link" href="{{ story.url }}">
+            {%- render 'ha-figure', image: story_img, label: section.settings.story_label, class: 'ha-continue__figure ha-continue__figure--story', sizes: '(min-width: 990px) 40vw, 100vw', alt: story_alt -%}
+          </a>
+          <p class="ha-continue__kicker ha-record">{{ section.settings.story_kicker }}</p>
+          <a class="ha-continue__more ha-record" href="{{ story.url }}">{{ section.settings.story_cta }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+        {%- else -%}
+          {%- render 'ha-figure', label: section.settings.story_label, class: 'ha-continue__figure ha-continue__figure--story' -%}
+          <p class="ha-continue__kicker ha-record">{{ section.settings.story_kicker }}</p>
+          <span class="ha-continue__more ha-record ha-link--inert">{{ section.settings.story_cta }}<span class="ha-pdp__arrow" aria-hidden="true"></span></span>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} The related pieces {%- endcomment -%}
+      <div class="ha-continue__pieces">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign piece = block.settings.product
+            assign p_style = piece.title
+            assign p_expr = ''
+            if piece != blank
+              assign pmf = piece.metafields.hartwick
+              if pmf.style.value.display_name != blank
+                assign p_style = pmf.style.value.display_name
+              endif
+              assign p_expr = pmf.expression | default: block.settings.ph_expression
+            endif
+            assign p_alt = p_style | escape
+          -%}
+          <div class="ha-continue__piece" {{ block.shopify_attributes }}>
+            {%- if piece != blank -%}
+              <a class="ha-continue__piece-link" href="{{ piece.url }}">
+                {%- render 'ha-figure', image: piece.featured_media.preview_image, label: block.settings.ph_image_label, class: 'ha-continue__figure ha-continue__figure--piece', sizes: '(min-width: 990px) 20vw, 50vw', alt: p_alt -%}
+              </a>
+              <div class="ha-continue__piece-row">
+                <a class="ha-continue__piece-name ha-record" href="{{ piece.url }}">{{ p_style }}</a>
+                {%- if piece.price != blank -%}<span class="ha-continue__piece-price ha-record">{{ piece.price | money }}</span>{%- endif -%}
+              </div>
+              {%- if p_expr != blank -%}<p class="ha-continue__piece-expr ha-narrate">{{ p_expr }}</p>{%- endif -%}
+            {%- else -%}
+              {%- render 'ha-figure', label: block.settings.ph_image_label, class: 'ha-continue__figure ha-continue__figure--piece' -%}
+              <div class="ha-continue__piece-row">
+                <span class="ha-continue__piece-name ha-record">{{ block.settings.ph_name }}</span>
+                {%- if block.settings.ph_price != blank -%}<span class="ha-continue__piece-price ha-record">{{ block.settings.ph_price }}</span>{%- endif -%}
+              </div>
+              {%- if block.settings.ph_expression != blank -%}<p class="ha-continue__piece-expr ha-narrate">{{ block.settings.ph_expression }}</p>{%- endif -%}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Continue",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 2,
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" }, { "value": "clay", "label": "Clay" },
+      { "value": "botanical", "label": "Botanical" }, { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Continue the record" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Related stories and pieces." },
+    { "type": "header", "content": "Story" },
+    { "type": "article", "id": "article", "label": "Journal article" },
+    { "type": "image_picker", "id": "story_image", "label": "Story image", "info": "Falls back to the article image." },
+    { "type": "text", "id": "story_label", "label": "Placeholder label", "default": "Journal image / the cloth / the master" },
+    { "type": "text", "id": "story_kicker", "label": "Kicker", "default": "The cloth / the master" },
+    { "type": "text", "id": "story_cta", "label": "Link text", "default": "Read the related story" }
+  ],
+  "blocks": [
+    {
+      "type": "piece",
+      "name": "Related piece",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "ph_image_label", "label": "Placeholder image label", "default": "Product / on body" },
+        { "type": "text", "id": "ph_name", "label": "Placeholder name", "default": "Skirt 001" },
+        { "type": "text", "id": "ph_expression", "label": "Placeholder expression", "default": "Tiny Pinstripe Cotton Khadi" },
+        { "type": "text", "id": "ph_price", "label": "Placeholder price" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Hartwick — Continue",
+    "blocks": [
+      { "type": "piece", "settings": { "ph_name": "Skirt 001", "ph_expression": "Tiny Pinstripe Cotton Khadi", "ph_image_label": "Product / on body" } },
+      { "type": "piece", "settings": { "ph_name": "Trouser 001", "ph_expression": "Celeste Handwoven Ikat", "ph_image_label": "Product / on body" } }
+    ]
+  }]
+}
+{% endschema %}

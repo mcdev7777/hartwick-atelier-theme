@@ -1,31 +1,45 @@
 {%- comment -%}
   Hartwick Atelier — product identity (Wireframe 03 §02).
 
-  The eyebrow, the Style name and the Expression, rendered at the top of the buy
-  column. This replaces Luxe's native `title` block, which can only print
-  product.title as a single line — the wireframe needs two, and they are two
-  different things:
+  The eyebrow, the Style name and the Expression, at the top of the buy panel.
+  This replaces Luxe's native `title` block, which can only print product.title
+  as a single line — the wireframe needs two, and they are two different things:
 
-      LOT I · EDITION 07 / 25      <- hartwick.lot / edition_number / edition_size
-      SKIRT 001                    <- hartwick.style -> display_name   (the h1)
-      HANDSPUN KHADI               <- hartwick.expression
+      LOT I                        <- hartwick.lot -> number_roman
+      SHIRT 001                    <- hartwick.style -> display_name   (the h1)
+      Handspun Silk-Linen,         <- hartwick.expression
+      Natural Pearl Shimmer
 
   Terminology (CLAUDE.md): the Style is the permanent silhouette identity and the
   Expression is its fabric/dye realisation. The wireframe prints "TIDE", which is
-  a legacy name — internal SKU mapping only, never customer-facing. Bound to real
-  data this reads "Skirt 001 · Handspun Fresh Pink Cotton Khadi". Flagged to Aloha.
+  a legacy name — internal SKU mapping only, never customer-facing. Aloha
+  confirmed this structure on 3 September 2026: "Your current naming structure is
+  correct. Please use the permanent numbered Style as the heading, with the
+  Expression beneath it."
 
-  The Lot is customer-facing as a Roman numeral (Lot I), per Framework v3. The
-  wireframe's "LOT 001" is superseded.
+  The Lot is customer-facing as a Roman numeral (Lot I), per Framework v3.
+
+  --- EDITION -------------------------------------------------------------
+  Aloha, 3 September 2026: "Please also remove Edition 07 / 25 unless this
+  refers to an actual individually numbered garment. If the garments are not
+  individually numbered, the opening label should simply show the confirmed Lot
+  information."
+
+  So the Edition no longer renders from a placeholder, and no longer renders
+  just because a run size exists. It needs BOTH:
+
+    hartwick.individually_numbered = true   — this Style really is numbered
+                                              piece by piece, confirmed
+    hartwick.edition_number        = 7      — THIS garment's own number
+
+  Absent either, the eyebrow is the Lot alone. A run size on its own is a
+  production quantity, not an edition number, and belongs in the Material
+  Record as a fact — never in the opening label, and never as a badge.
 
   This is the page's only <h1>. The native title block must stay disabled.
 
-  Placeholder values are passed in from templates/product.json so the wireframe
-  copy lives in content, not in code, and Aloha can edit it in the theme editor.
-
   Usage (inside a main-product custom_liquid block):
-    {% render 'ha-pdp-identity', ph_lot: 'Lot I', ph_edition: 'Edition 07 / 25',
-         ph_expression: 'Handspun Khadi' %}
+    {% render 'ha-pdp-identity', ph_lot: 'Lot I', ph_expression: 'Handspun Khadi' %}
 {%- endcomment -%}
 
 {%- liquid
@@ -38,9 +52,14 @@
     assign lot_label = ph_lot
   endif
 
-  assign edition_label = ph_edition
-  if mf.edition_number != blank and mf.edition_size != blank
-    assign edition_label = 'Edition ' | append: mf.edition_number | append: ' / ' | append: mf.edition_size
+  # An edition number is a property of an individually numbered garment. Both
+  # facts have to be present and confirmed before the label can claim it.
+  assign edition_label = ''
+  if mf.individually_numbered == true and mf.edition_number != blank
+    assign edition_label = 'Edition ' | append: mf.edition_number
+    if mf.edition_size != blank
+      assign edition_label = edition_label | append: ' / ' | append: mf.edition_size
+    endif
   endif
 
   # The Style's display name is the heading. With no Style bound we fall back to
@@ -71,7 +90,7 @@
   <h1 class="ha-pdp__title ha-identify">{{ style_name }}</h1>
 
   {%- if expression != blank -%}
-    <p class="ha-pdp__expression ha-identify">{{ expression }}</p>
+    <p class="ha-pdp__expression ha-narrate">{{ expression }}</p>
   {%- endif -%}
 
   {%- if is_placeholder -%}

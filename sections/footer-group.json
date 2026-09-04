@@ -35,7 +35,9 @@
       ],
       "settings": {
         "nav_label": "Footer",
-        "show_policies": true
+        "show_policies": true,
+        "logo_variant": "black",
+        "field": "page"
       }
     }
   },

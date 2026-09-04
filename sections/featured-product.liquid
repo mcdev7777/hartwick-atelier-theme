@@ -139,18 +139,7 @@
 
 {% if section.settings.show_tag %}
 
-{% for tag in section.settings.product.tags %}
-{% if tag contains 'Badge:' %}
-<span class="fp-tag">{{ tag | remove: 'Badge: '}}</span>
-{% endif %}
-{% endfor %}
-
-{% assign badges = section.settings.product.metafields.custom.badges %}
-{% if badges != blank %}
-  {% for badge in badges.value %}
-    <span class="fp-tag">{{ badge }}</span>
-  {% endfor %}
-{% endif %}
+{%- render 'ha-badges', class: "fp-tag", product: section.settings.product -%}
 
 {% endif %}  
   

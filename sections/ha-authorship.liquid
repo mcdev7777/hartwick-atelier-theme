@@ -1,0 +1,112 @@
+{%- comment -%}
+  Hartwick Atelier — MADE BY MASTERS / Authorship (Wireframe 04, revised).
+
+  A product-page section: two images on the left (master portrait, workshop),
+  and on the right the eyebrow, heading, a short statement and a labelled record
+  of authorship — Master name, Workshop / collective, Place, Technique — then a
+  link to the Master and the time involved.
+
+  Purpose-built for the product page so the homepage's Masters index (a
+  different composition, `ha-masters-index`) is untouched.
+
+  Data: the first `master` metaobject in hartwick.masters
+  (docs/data-model.md §2). Roles and regions only — NO artisan name is invented;
+  the labelled rows stay as their field labels until Aloha supplies real,
+  permission-confirmed master data. "Name and permission required" is on the
+  portrait until then (CLAUDE.md).
+{%- endcomment -%}
+
+{%- liquid
+  assign masters = product.metafields.hartwick.masters.value
+  assign m = masters.first
+
+  assign r_name = m.name | default: m.role
+  assign r_workshop = m.workshop | default: m.collective
+  assign r_place = m.region.value.place
+  assign r_technique = m.technique
+  assign r_time = m.time_involved
+
+  assign has_real = false
+  if m != blank
+    assign has_real = true
+  endif
+
+  assign portrait = section.settings.portrait_image | default: m.portrait.value
+  assign workshop = section.settings.workshop_image | default: m.workshop_images.value.first
+
+  assign master_href = '#'
+  if m.handle != blank
+    assign master_href = section.settings.masters_page_url | default: '#'
+    assign master_href = master_href | append: '#' | append: m.handle
+  endif
+-%}
+
+<section class="ha-section ha-authorship{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-authorship__grid">
+    <div class="ha-authorship__media">
+      {%- render 'ha-figure', image: portrait, label: section.settings.portrait_label, class: 'ha-authorship__figure', sizes: '(min-width: 990px) 34vw, 50vw', alt: section.settings.portrait_alt -%}
+      {%- render 'ha-figure', image: workshop, label: section.settings.workshop_label, class: 'ha-authorship__figure', sizes: '(min-width: 990px) 26vw, 50vw', alt: section.settings.workshop_alt -%}
+    </div>
+
+    <div class="ha-authorship__text ha-wrap">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ha-display ha-narrate ha-authorship__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="ha-authorship__intro ha-body ha-narrate">{{ section.settings.intro }}</div>
+      {%- endif -%}
+
+      <dl class="ha-authorship__record ha-record">
+        <div><dt>Master name</dt><dd>{{ r_name | default: '&mdash;' }}</dd></div>
+        <div><dt>Workshop / collective</dt><dd>{{ r_workshop | default: '&mdash;' }}</dd></div>
+        <div><dt>Place</dt><dd>{{ r_place | default: '&mdash;' }}</dd></div>
+        <div><dt>Technique</dt><dd>{{ r_technique | default: '&mdash;' }}</dd></div>
+      </dl>
+
+      <div class="ha-authorship__foot">
+        <a class="ha-authorship__link ha-record" href="{{ master_href }}">{{ section.settings.cta_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+        {%- if r_time != blank -%}
+          <p class="ha-authorship__time ha-record"><span>Time involved</span> {{ r_time }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- unless has_real -%}
+        {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+          text: 'Placeholder — authorship publishes from the product\'s hartwick.masters metaobject; no name is shown until permission is confirmed' -%}
+      {%- endunless -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Authorship",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" }, { "value": "clay", "label": "Clay" },
+      { "value": "botanical", "label": "Botanical" }, { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Made by Masters" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Authorship made visible." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Name the Master or workshop, identify the place, state the craft and explain the contribution to this piece.</p>" },
+    { "type": "text", "id": "cta_text", "label": "Link text", "default": "Meet the Master" },
+    { "type": "url", "id": "masters_page_url", "label": "Master index page" },
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "portrait_image", "label": "Master portrait" },
+    { "type": "text", "id": "portrait_alt", "label": "Portrait alt text" },
+    { "type": "text", "id": "portrait_label", "label": "Portrait placeholder label", "default": "Master portrait / name and permission required" },
+    { "type": "image_picker", "id": "workshop_image", "label": "Workshop image" },
+    { "type": "text", "id": "workshop_alt", "label": "Workshop alt text" },
+    { "type": "text", "id": "workshop_label", "label": "Workshop placeholder label", "default": "Workshop image / place / process / contribution" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — Authorship" }]
+}
+{% endschema %}
