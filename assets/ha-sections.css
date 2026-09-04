@@ -247,7 +247,7 @@
 
 @media screen and (min-width: 990px) {
   .ha-hero__grid { grid-template-columns: var(--ha-hero-media-width, 58%) 1fr; }
-  .ha-hero__figure { aspect-ratio: auto; height: 100%; min-height: 72rem; }
+  .ha-hero__figure { aspect-ratio: auto; height: 100%; min-height: 56rem; max-height: 84vh; }
   .ha-hero__text { padding: 6.4rem clamp(3.2rem, 4vw, 5.6rem); }
   .ha-hero__eyebrow--desktop-hidden { display: none; }
 }
@@ -352,6 +352,90 @@
   .ha-masters__cta { justify-self: end; text-align: right; }
 }
 
+/* --- the background photograph ------------------------------------------
+   Aloha, 4 September 2026: the Handcrafted Modern reference puts the text over
+   a full-width photograph, and without one the section "feels quite heavy and
+   flat, and the maker names appear slightly disconnected from the people and
+   practices they represent."
+
+   Three-column structure unchanged: this adds a layer BEHIND the existing grid
+   and touches none of its geometry.
+
+   NO LAYOUT MOVEMENT, two ways at once. The image is absolutely positioned, so
+   it is out of flow and cannot shift anything as it decodes; and the section
+   reserves its proportion up front with min-height, so the shape is right from
+   first paint. --ha-masters-ratio is a plain number (16/9 = 1.7778) rather than
+   a `16 / 9` string because it is divided into the viewport width here, and
+   aspect-ratio is not usable: the section's real height is set by its text,
+   which must always win when the text is the taller of the two. */
+
+.ha-masters--photo {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100vw / var(--ha-masters-ratio-m, 0.8));
+  padding-block: clamp(6.4rem, 12vw, 10rem);
+  display: flex;
+  align-items: center;
+}
+
+.ha-masters--photo > .ha-wrap { width: 100%; }
+
+.ha-masters__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.ha-masters__bg picture { display: block; height: 100%; }
+
+.ha-masters__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--ha-masters-focal-m, center center);
+  display: block;
+}
+
+/* The restraint Aloha asked for. Peat rather than neutral black: a black wash
+   greys a photograph, where the brand's own dark tints keep its warmth and
+   still carry Chalk Blue text. The gradient is very slightly heavier at the
+   foot, where the link and the longest list sit. */
+.ha-masters__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 6, 3, calc(var(--ha-masters-scrim, 0.6) * 0.86)),
+    rgba(11, 6, 3, var(--ha-masters-scrim, 0.6))
+  );
+}
+
+/* On a photograph the type needs a shadow the flat field never did: a scrim
+   set light enough to keep the picture alive will always leave some patch of
+   sky behind a word. This is a hairline of depth, not a glow. */
+.ha-masters--photo .ha-masters__lead,
+.ha-masters--photo .ha-masters__body,
+.ha-masters--photo .ha-masters__cta {
+  text-shadow: 0 1px 14px rgba(11, 6, 3, 0.45);
+}
+
+@media screen and (min-width: 750px) {
+  .ha-masters--photo { min-height: calc(100vw / var(--ha-masters-ratio, 1.7778)); }
+  .ha-masters__bg-img { object-position: var(--ha-masters-focal, center center); }
+}
+
+/* A photograph must never grow the section past a screenful — at 21:9 on a
+   wide monitor the reserved height would otherwise run to 900px of picture
+   before a word appears. */
+@media screen and (min-width: 990px) {
+  .ha-masters--photo { min-height: min(calc(100vw / var(--ha-masters-ratio, 1.7778)), 88vh); }
+}
+
+@media (prefers-contrast: more) {
+  .ha-masters__scrim { background: rgba(11, 6, 3, 0.88); }
+}
+
 /* ==========================================================================
    05 — Featured Lot / Material Record (shared with the product page)
    ========================================================================== */
@@ -397,7 +481,7 @@
 
 @media screen and (min-width: 990px) {
   .ha-lot__grid { grid-template-columns: 57% 1fr; }
-  .ha-lot__figure { height: 100%; aspect-ratio: auto; min-height: 68rem; }
+  .ha-lot__figure { height: 100%; aspect-ratio: auto; min-height: 48rem; max-height: var(--ha-media-cap); }
   .ha-lot__panel { padding: 6.4rem clamp(3.2rem, 4vw, 5.6rem); }
 }
 
@@ -1353,7 +1437,7 @@
 .ha-origin__figure--loom  { grid-column: 2; grid-row: 2; }
 
 @media screen and (min-width: 990px) {
-  .ha-origin__media { min-height: 34rem; }
+  .ha-origin__media { min-height: 30rem; max-height: var(--ha-media-cap); }
 }
 
 /* --- 09  Meet the Masters (feature layout) ------------------------------- */
@@ -1743,7 +1827,13 @@ body.lx-template--product .magnify-icon:focus-visible {
        purchase information. The rail now fills its column, and the column is
        sized by the same gap as the left rail so both sides sit evenly against
        the media. */
-    grid-template-columns: 1fr 1.8fr 1fr;
+    /* 1.5fr, not 1.8fr. Aloha, 4 September 2026: the pictures "feel oversized
+       for the space". The centre column was carrying nearly half the page
+       width, which on a wide monitor put a single garment photograph at over
+       700px across — the images stopped supporting the layout and became it.
+       Narrowing the centre gives the two information rails room at the same
+       time, which is the other half of what she asked for. */
+    grid-template-columns: 1fr 1.5fr 1fr;
     column-gap: clamp(3.2rem, 3.6vw, 5.2rem);
     row-gap: 0;
     padding: var(--ha-pdp-section-y) var(--ha-gutter);
@@ -1761,12 +1851,65 @@ body.lx-template--product .magnify-icon:focus-visible {
      child inside it has a content-height containing block and no room to move —
      which is why an inner-wrapper sticky scrolled straight off. On the item
      itself it sticks within the grid row, whose height is the tall media column.
-     `align-self: start` keeps the item content-height so it can travel. */
+     `align-self: start` keeps the item content-height so it can travel.
+
+     --- WHY THE PANEL WAS STILL SCROLLING AWAY -------------------------------
+     Aloha, 4 September 2026: "the left column with the garment details scrolls
+     away after the images […] Could we switch that to a fixed information
+     panel instead, so the garment details stay visible while the user scrolls
+     through the images".
+
+     Sticky alone was not enough, for a reason that is easy to miss. A sticky
+     element only travels while there is room BELOW it inside its containing
+     block. The left rail's content — name, cloth, description, key facts, fit,
+     and three accordion rows — is taller than most laptop viewports, so its
+     own height consumed the whole travel: it pinned once, its lower half sat
+     off-screen where it could not be read or scrolled to, and it left with the
+     page as soon as the media column ran out.
+
+     Capping the rail at the height of the viewport is what makes it behave
+     like the fixed panel Aloha is describing. Now the panel is always exactly
+     as tall as the screen it is on, always fully readable, and it stays put for
+     the entire length of the image rail rather than for as long as its own
+     content happens to allow.
+
+     `overflow-y: auto` only produces a scrollbar when the panel genuinely
+     overflows, so a short garment record never gets one. `overscroll-behavior`
+     stops a flick inside the panel from carrying on into the page, which is
+     what makes the two scroll areas feel deliberate rather than fighting. */
   .ha-pdp__rail {
     position: sticky;
-    top: calc(var(--site-header-height-desktop, 8rem) + 3.2rem);
+    top: var(--ha-pdp-rail-top);
     align-self: start;
+    max-height: calc(100vh - var(--ha-pdp-rail-top) - 2.4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* room for the scrollbar so text never sits under it */
+    padding-right: 0.8rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ha-rule) transparent;
   }
+
+  .ha-pdp__rail--left { padding-right: 1.6rem; }
+
+  .ha-pdp__rail::-webkit-scrollbar { width: 3px; }
+  .ha-pdp__rail::-webkit-scrollbar-track { background: transparent; }
+  .ha-pdp__rail::-webkit-scrollbar-thumb { background: var(--ha-rule); border-radius: 3px; }
+
+  /* A pinned panel that can scroll internally must not clip the focus ring of
+     whatever is at its edge. */
+  .ha-pdp__rail :focus-visible { scroll-margin: 1.6rem; }
+}
+
+/* Held outside the media query so the mobile stack and the desktop panel read
+   the same number, and so it can be retuned in one place. */
+:root { --ha-pdp-rail-top: calc(var(--site-header-height-desktop, 8rem) + 3.2rem); }
+
+/* A visitor who has asked for reduced motion is often also the visitor for whom
+   an independently scrolling region is a problem. Let the panel run at natural
+   height for them and simply scroll with the page. */
+@media screen and (min-width: 990px) and (prefers-reduced-motion: reduce) {
+  .ha-pdp__rail { max-height: none; overflow-y: visible; }
 }
 
 /* --- left rail --------------------------------------------------------- */
@@ -1891,6 +2034,33 @@ body.lx-template--product .magnify-icon:focus-visible {
 .ha-pdp__frame { margin: 0; position: relative; display: block; background: var(--ha-placeholder-field); }
 .ha-pdp__frame--empty { aspect-ratio: 3 / 2; }
 .ha-pdp__img { display: block; width: 100%; height: auto; }
+
+/* THE RESTRAINT — Aloha, 4 September 2026. One ceiling, read from
+   --ha-media-cap (Theme settings > Hartwick — Material Archive > Image
+   restraint), so the whole page is retuned from one slider once the final
+   photographs land after her meeting with Angela.
+
+   `object-fit: cover` on .ha-figure img means capping the height crops rather
+   than squashes, and every one of these figures already reserves its own
+   proportion, so nothing here reintroduces layout movement.
+
+   Mobile is deliberately untouched: a picture on a phone is already the width
+   of the screen and reads as a picture, not as a takeover. */
+@media screen and (min-width: 990px) {
+  .ha-pdp__frame,
+  .ha-garment__figure,
+  .ha-precord__figure,
+  .ha-wearer__figure,
+  .ha-masters__figure,
+  .ha-continue__figure--story,
+  .ha-continue__figure--piece {
+    max-height: var(--ha-media-cap);
+  }
+
+  /* The record's picture is the one that fills its own grid cell rather than
+     sizing itself, so it needs the ceiling on the cell as well. */
+  .ha-precord__media { max-height: var(--ha-media-cap); }
+}
 
 /* Position markers, over the right edge of the rail. */
 .ha-pdp__dots {
@@ -2381,7 +2551,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   /* images left x0-890 (full bleed to page edge), text right x960-1382 */
   .ha-authorship__grid { grid-template-columns: 62fr 38fr; column-gap: 0; align-items: stretch; }
   .ha-authorship__media { display: grid; grid-template-columns: 4fr 3fr; gap: 0; }
-  .ha-authorship__figure, .ha-authorship__figure + .ha-authorship__figure { margin: 0; aspect-ratio: auto; height: 100%; min-height: 52rem; }
+  .ha-authorship__figure, .ha-authorship__figure + .ha-authorship__figure { margin: 0; aspect-ratio: auto; height: 100%; min-height: 38rem; max-height: var(--ha-media-cap); }
   .ha-authorship__text { align-self: center; }
 }
 
@@ -2596,8 +2766,11 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   }
   /* the band still applies to the section as a whole */
   .ha-authorship { padding-block: var(--ha-pdp-section-y); }
+  /* Was 60rem — a 600px floor that put the pair of portraits well past the
+     restraint Aloha asked for on 4 September. See the coda at the foot of this
+     file for the single ceiling they now share. */
   .ha-authorship__figure,
-  .ha-authorship__figure + .ha-authorship__figure { min-height: 60rem; }
+  .ha-authorship__figure + .ha-authorship__figure { min-height: 38rem; }
 }
 
 /* --- The Register: the design's single-line field -----------------------
@@ -2752,4 +2925,55 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-footer.ha-section--field-peat .ha-footer__policies a:hover,
 .ha-footer.ha-section--field-slate .ha-footer__policies a:hover {
   opacity: 1;
+}
+
+
+/* ==========================================================================
+   CODA — IMAGE RESTRAINT
+   Aloha, 4 September 2026: "In a few sections, the images feel oversized for
+   the space, which makes them dominate the layout. Images are important for
+   us, but they shouldn't overwhelm the page. […] The Handcrafted Modern site
+   is a good reference for proportion and how imagery supports the page
+   without taking over."
+
+   This block is LAST on purpose. Two earlier rules deliberately opt out of
+   every general figure ceiling — the Material Record ties its picture to the
+   height of the record beside it, and Authorship sets a 380px floor — and both
+   were written before the restraint existed. Rather than unpick two
+   compositions that are otherwise right, the ceiling is reasserted here where
+   it cannot be overridden by accident, with a comment saying why.
+
+   Everything reads --ha-media-cap (Theme settings > Hartwick — Material
+   Archive > Image restraint). One slider retunes the whole page, which matters
+   because Aloha is re-editing the photographs after Monday's meeting with
+   Angela and these are all still test crops.
+   ========================================================================== */
+@media screen and (min-width: 990px) {
+  /* The Material Record. The picture no longer stretches to the full height of
+     the record table beside it: on a long record that made a single photograph
+     900px tall. It now holds the ceiling and sits at the top of its column,
+     with the record continuing beneath it — which is the proportion the
+     Handcrafted Modern reference actually uses. */
+  body.lx-template--product .ha-precord__grid .ha-precord__media {
+    align-self: start;
+    max-height: var(--ha-media-cap);
+  }
+
+  body.lx-template--product .ha-precord__grid .ha-precord__figure,
+  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) {
+    align-self: start;
+    max-height: var(--ha-media-cap);
+    min-height: 0;
+    height: var(--ha-media-cap);
+  }
+
+  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) img {
+    max-height: var(--ha-media-cap);
+  }
+
+  /* Authorship's pair of portraits. */
+  .ha-authorship__figure,
+  .ha-authorship__figure + .ha-authorship__figure {
+    max-height: var(--ha-media-cap);
+  }
 }

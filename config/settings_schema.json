@@ -156,11 +156,30 @@
       },
       {
         "type": "header",
+        "content": "Image restraint"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha, 4 September 2026: \"the images feel oversized for the space, which makes them dominate the layout […] they shouldn't overwhelm the page.\" This is the ceiling every large picture on the product page obeys, measured against the height of the visitor's screen rather than in pixels so it holds on a laptop and on a large monitor alike. 56% means no single photograph can take more than a bit over half the screen."
+      },
+      {
+        "type": "range",
+        "id": "ha_media_cap",
+        "label": "Largest image height",
+        "min": 30,
+        "max": 100,
+        "step": 2,
+        "unit": "%",
+        "default": 56,
+        "info": "Percentage of the screen height. 100% removes the restraint."
+      },
+      {
+        "type": "header",
         "content": "Type scale"
       },
       {
         "type": "paragraph",
-        "content": "Aloha, 3 September 2026: \"The main objective is to establish clearer differences between the product name, supporting information and body copy, while maintaining comfortable line lengths inside the narrower sidebar.\" These are her stated starting points and are meant to be tested. Every Hartwick section and the whole product page read these — nothing is hard-coded in CSS."
+        "content": "Aloha, 4 September 2026: \"Their text sizing is much easier to read and scan […] I want all the text on the website to have the same size text as Bode's.\" Bode sets almost every word on their product page at 12px in Neue Haas Unica. Matching that PIXEL number would not match what the eye sees, because Junicode is an old-style serif with a much smaller x-height (0.415em against Unica's 0.508em, both measured from the actual font files). 12px of Junicode reads about a fifth smaller than 12px of Unica. So these defaults match Bode's APPARENT size instead: 15px for Junicode body copy, 12px for the Noto mono record voice, whose x-height is already close to Unica's. Every slider now reaches 12px if a literal match is wanted — see the Style name and Editorial headings notes below."
       },
       {
         "type": "header",
@@ -170,61 +189,62 @@
         "type": "range",
         "id": "ha_t_style_d",
         "label": "Style name",
-        "min": 30,
+        "min": 12,
         "max": 56,
         "step": 1,
         "unit": "px",
-        "default": 48
+        "default": 26,
+        "info": "Bode set their product name at 12px — the same size as their body copy, with hierarchy carried by weight and position rather than size. 26px keeps the Style name as a heading. Drag to 12 for a literal match to Bode."
       },
       {
         "type": "range",
         "id": "ha_t_expression_d",
         "label": "Expression",
-        "min": 14,
+        "min": 11,
         "max": 30,
         "step": 1,
         "unit": "px",
-        "default": 22
+        "default": 15
       },
       {
         "type": "range",
         "id": "ha_t_body_d",
         "label": "Body copy",
-        "min": 14,
+        "min": 11,
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 17
+        "default": 15
       },
       {
         "type": "range",
         "id": "ha_t_body_lh_d",
         "label": "Body line height",
-        "min": 20,
+        "min": 16,
         "max": 32,
         "step": 1,
         "unit": "px",
-        "default": 28
+        "default": 24
       },
       {
         "type": "range",
         "id": "ha_t_price_d",
         "label": "Price",
-        "min": 14,
+        "min": 11,
         "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 22
+        "default": 15
       },
       {
         "type": "range",
         "id": "ha_t_label_d",
         "label": "Section and accordion labels",
-        "min": 11,
+        "min": 10,
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 14
+        "default": 12
       },
       {
         "type": "range",
@@ -234,37 +254,38 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 12
       },
       {
         "type": "range",
         "id": "ha_t_ui_d",
         "label": "Buttons and navigation",
-        "min": 11,
+        "min": 10,
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 14
+        "default": 12
       },
       {
         "type": "range",
         "id": "ha_t_editorial_d",
         "label": "Editorial headings",
-        "min": 28,
+        "min": 12,
         "max": 64,
         "step": 1,
         "unit": "px",
-        "default": 52
+        "default": 32,
+        "info": "Bode's page has no display typography at all; its largest text is 16px. 32px keeps Hartwick's editorial voice from the brand book. Drag down freely — the floor is 12px."
       },
       {
         "type": "range",
         "id": "ha_t_statement_d",
         "label": "Statement line",
-        "min": 18,
+        "min": 12,
         "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 38
+        "default": 21
       },
       {
         "type": "header",
@@ -278,67 +299,67 @@
         "type": "range",
         "id": "ha_t_style_m",
         "label": "Style name",
-        "min": 24,
+        "min": 12,
         "max": 44,
         "step": 1,
         "unit": "px",
-        "default": 34
+        "default": 22
       },
       {
         "type": "range",
         "id": "ha_t_expression_m",
         "label": "Expression",
-        "min": 14,
+        "min": 11,
         "max": 26,
         "step": 1,
         "unit": "px",
-        "default": 19
+        "default": 15
       },
       {
         "type": "range",
         "id": "ha_t_body_m",
         "label": "Body copy",
-        "min": 14,
+        "min": 11,
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 16
+        "default": 15
       },
       {
         "type": "range",
         "id": "ha_t_body_lh_m",
         "label": "Body line height",
-        "min": 18,
+        "min": 16,
         "max": 30,
         "step": 1,
         "unit": "px",
-        "default": 25
+        "default": 24
       },
       {
         "type": "range",
         "id": "ha_t_price_m",
         "label": "Price",
-        "min": 14,
+        "min": 11,
         "max": 26,
         "step": 1,
         "unit": "px",
-        "default": 20
+        "default": 15
       },
       {
         "type": "range",
         "id": "ha_t_label_m",
         "label": "Section and accordion labels",
-        "min": 12,
+        "min": 10,
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 12
       },
       {
         "type": "range",
         "id": "ha_t_meta_m",
         "label": "Lot and technical metadata",
-        "min": 12,
+        "min": 10,
         "max": 16,
         "step": 1,
         "unit": "px",
@@ -348,31 +369,31 @@
         "type": "range",
         "id": "ha_t_ui_m",
         "label": "Buttons and navigation",
-        "min": 12,
+        "min": 10,
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 12
       },
       {
         "type": "range",
         "id": "ha_t_editorial_m",
         "label": "Editorial headings",
-        "min": 24,
+        "min": 12,
         "max": 44,
         "step": 1,
         "unit": "px",
-        "default": 36
+        "default": 24
       },
       {
         "type": "range",
         "id": "ha_t_statement_m",
         "label": "Statement line",
-        "min": 16,
+        "min": 12,
         "max": 36,
         "step": 1,
         "unit": "px",
-        "default": 26
+        "default": 18
       }
     ]
   },

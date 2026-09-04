@@ -57,9 +57,100 @@
   if masters != blank and masters.size > 0
     assign use_placeholders = false
   endif
+
+  # --- background photograph (Aloha, 4 September 2026) ---------------------
+  # The mobile crop falls back to the desktop file, so one upload is enough to
+  # see the section working and a second is an improvement, not a requirement.
+  assign bg_d = section.settings.bg_image
+  assign bg_m = section.settings.bg_image_mobile | default: bg_d
+  assign has_bg = false
+  if bg_d != blank
+    assign has_bg = true
+  endif
+
+  # Focal point. Shopify's own image picker lets an editor drag the focus on the
+  # file itself, and that is the control Aloha asked for — it travels with the
+  # image rather than living in a section setting that has to be reset every
+  # time the photograph is replaced. `presentation.focal_point` renders as
+  # "50.0% 50.0%", exactly the shape object-position wants. The two selects
+  # below only override it when an editor deliberately picks something else.
+  assign focal_d = bg_d.presentation.focal_point | default: 'center center'
+  if section.settings.bg_position != 'focal'
+    assign focal_d = section.settings.bg_position
+  endif
+  assign focal_m = bg_m.presentation.focal_point | default: 'center center'
+  if section.settings.bg_position_mobile != 'focal'
+    assign focal_m = section.settings.bg_position_mobile
+  endif
 -%}
 
-<section class="ha-section ha-masters ha-masters--{{ section.settings.layout }}{% if section.settings.field == 'peat' or section.settings.field == blank %} ha-section--field-peat{% elsif section.settings.field != 'page' %} ha-section--field-{{ section.settings.field }}{% endif %}">
+<section
+  class="ha-section ha-masters ha-masters--{{ section.settings.layout }}{% if has_bg %} ha-masters--photo{% endif %}{% if section.settings.field == 'peat' or section.settings.field == blank %} ha-section--field-peat{% elsif section.settings.field != 'page' %} ha-section--field-{{ section.settings.field }}{% endif %}"
+  {% if has_bg %}style="
+    --ha-masters-scrim: {{ section.settings.bg_overlay | divided_by: 100.0 }};
+    --ha-masters-focal: {{ focal_d }};
+    --ha-masters-focal-m: {{ focal_m }};
+    --ha-masters-ratio: {{ section.settings.bg_ratio }};
+    --ha-masters-ratio-m: {{ section.settings.bg_ratio_mobile }};
+  "{% endif %}
+>
+  {%- if has_bg -%}
+    {%- comment -%}
+      THE BACKGROUND PHOTOGRAPH — Aloha, 4 September 2026:
+      "In the Handcrafted Modern reference, the full-width photograph is an
+      important part of the section's structure. The text sits over the image
+      rather than appearing on a plain colour block."
+
+      Three things this markup is careful about:
+
+      1. NO LAYOUT MOVEMENT. The image is absolutely positioned and fills the
+         section, so it is out of normal flow and contributes exactly zero to
+         the section's height — it cannot shift anything as it decodes. The
+         reserved proportion Aloha asked for is held separately, by a
+         min-height on the section computed from --ha-masters-ratio, so the
+         composition holds its shape from first paint whether the file has
+         arrived or not. Belt and braces: the shape is reserved AND the image
+         cannot move it.
+
+      2. EVERY WORD STAYS LIVE. Nothing here is text-in-an-image. The
+         photograph is a <picture> behind the grid; the roles, the intro and
+         the link are the same real, selectable, translatable, screen-reader
+         -readable elements they were on the flat field.
+
+      3. THE FLAT FIELD IS STILL THERE. It sits underneath as the loading and
+         failure state, so a slow connection sees the section it saw before
+         rather than unreadable text on white.
+
+      Decorative by default: the section's meaning is carried by the live text,
+      so an empty alt keeps a screen reader from announcing atmosphere as
+      content. Filling in "Background alt text" opts back in when the chosen
+      photograph is doing real editorial work.
+    {%- endcomment -%}
+    <div class="ha-masters__bg" {% if section.settings.bg_alt == blank %}aria-hidden="true"{% endif %}>
+      <picture>
+        {%- if bg_m != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ bg_m | image_url: width: 750 }} 750w, {{ bg_m | image_url: width: 1100 }} 1100w, {{ bg_m | image_url: width: 1500 }} 1500w"
+            sizes="100vw"
+          >
+        {%- endif -%}
+        <img
+          src="{{ bg_d | image_url: width: 1600 }}"
+          srcset="{{ bg_d | image_url: width: 800 }} 800w, {{ bg_d | image_url: width: 1200 }} 1200w, {{ bg_d | image_url: width: 1600 }} 1600w, {{ bg_d | image_url: width: 2000 }} 2000w, {{ bg_d | image_url: width: 2600 }} 2600w"
+          sizes="100vw"
+          width="{{ bg_d.width }}"
+          height="{{ bg_d.height }}"
+          alt="{{ section.settings.bg_alt | escape }}"
+          loading="lazy"
+          decoding="async"
+          class="ha-masters__bg-img"
+        >
+      </picture>
+      <span class="ha-masters__scrim"></span>
+    </div>
+  {%- endif -%}
+
   <div class="ha-wrap">
     <div class="ha-masters__grid">
       <div class="ha-masters__lead">
@@ -164,15 +255,28 @@
         {%- if section.settings.cta_text != blank -%}
           {%- liquid
             assign cta = section.settings.cta_text
-            unless is_feature
+
+            # The count is opt-in now. "Meet the Masters [14] pieces" reads as a
+            # collection link wearing the wrong label — a piece count answers a
+            # question about the shop, not about the people.
+            if section.settings.cta_show_count and is_feature == false
               if section.settings.cta_collection != blank
                 assign cta = cta | append: ' [' | append: section.settings.cta_collection.products_count | append: '] pieces'
               elsif section.settings.cta_suffix != blank
                 assign cta = cta | append: ' ' | append: section.settings.cta_suffix
               endif
-            endunless
+            endif
+
+            # An explicit link wins over the collection: the collection is only
+            # bound to read a count from, and binding one must not silently
+            # redirect a link that says "Meet the Masters". Falls back to the
+            # same Masters page the roles above already link into.
+            assign cta_href = section.settings.cta_link
+            assign cta_href = cta_href | default: section.settings.cta_collection.url
+            assign cta_href = cta_href | default: section.settings.masters_page_url
+            assign cta_href = cta_href | default: '#'
           -%}
-          <a class="ha-link ha-identify" href="{{ section.settings.cta_collection.url | default: section.settings.cta_link | default: '#' }}">{{ cta }}</a>
+          <a class="ha-link ha-identify" href="{{ cta_href }}">{{ cta }}</a>
         {%- endif -%}
       </div>
     </div>
@@ -222,6 +326,61 @@
     { "type": "range", "id": "item_limit", "min": 3, "max": 16, "step": 1, "label": "Masters shown", "default": 9 },
     { "type": "checkbox", "id": "link_masters", "label": "Link each Master to The Masters page", "default": true },
     { "type": "url", "id": "masters_page_url", "label": "The Masters page" },
+    {
+      "type": "header",
+      "content": "Background photograph",
+      "info": "A full-width workshop, process or Master photograph behind the whole section. The three-column structure and every word of text stay live on top of it. Leave empty for the flat field."
+    },
+    { "type": "image_picker", "id": "bg_image", "label": "Background — desktop", "info": "Drag the focal point on the image itself in the picker; the section follows it." },
+    { "type": "image_picker", "id": "bg_image_mobile", "label": "Background — mobile crop", "info": "Optional. Falls back to the desktop photograph." },
+    { "type": "text", "id": "bg_alt", "label": "Background alt text", "info": "Leave empty to treat the photograph as decorative — correct while every word of the section is live text." },
+    {
+      "type": "range", "id": "bg_overlay", "min": 0, "max": 90, "step": 5, "unit": "%",
+      "label": "Dark overlay", "default": 60,
+      "info": "Restrains the photograph so the text stays readable. Below about 45% check the palest part of the picture before approving."
+    },
+    {
+      "type": "select", "id": "bg_position", "label": "Focus — desktop", "default": "focal",
+      "info": "'Follow the image' uses the focal point set on the file itself.",
+      "options": [
+        { "value": "focal", "label": "Follow the image" },
+        { "value": "center center", "label": "Centre" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select", "id": "bg_position_mobile", "label": "Focus — mobile", "default": "focal",
+      "options": [
+        { "value": "focal", "label": "Follow the image" },
+        { "value": "center center", "label": "Centre" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select", "id": "bg_ratio", "label": "Reserved proportion — desktop", "default": "1.7778",
+      "info": "The shape the section holds from first paint, so nothing moves while the photograph loads.",
+      "options": [
+        { "value": "2.3333", "label": "21:9 — cinematic" },
+        { "value": "1.7778", "label": "16:9 — wide" },
+        { "value": "1.5",    "label": "3:2" },
+        { "value": "1.3333", "label": "4:3" }
+      ]
+    },
+    {
+      "type": "select", "id": "bg_ratio_mobile", "label": "Reserved proportion — mobile", "default": "0.8",
+      "options": [
+        { "value": "1.3333", "label": "4:3" },
+        { "value": "1",      "label": "1:1" },
+        { "value": "0.8",    "label": "4:5 — upright" },
+        { "value": "0.75",   "label": "3:4 — upright" }
+      ]
+    },
     { "type": "header", "content": "Images", "info": "Feature layout only. Falls back to the first Master's portrait and workshop image." },
     { "type": "image_picker", "id": "portrait_image", "label": "Portrait" },
     { "type": "text", "id": "portrait_alt", "label": "Portrait alt text" },
@@ -230,10 +389,17 @@
     { "type": "text", "id": "workshop_alt", "label": "Workshop alt text" },
     { "type": "text", "id": "workshop_label", "label": "Workshop placeholder label", "default": "02 / Workshop" },
     { "type": "header", "content": "Link" },
-    { "type": "text", "id": "cta_text", "label": "Link text", "default": "View the collection" },
-    { "type": "collection", "id": "cta_collection", "label": "Collection", "info": "The piece count is read from this collection. Index layout only." },
+    {
+      "type": "text", "id": "cta_text", "label": "Link text", "default": "Meet the Masters",
+      "info": "Aloha, 4 September 2026: point this at the Masters, not the collection, unless the collection genuinely shows only pieces made by the Masters listed here."
+    },
+    {
+      "type": "checkbox", "id": "cta_show_count", "label": "Append the piece count", "default": false,
+      "info": "A count belongs on a collection link. Leave off for 'Meet the Masters'."
+    },
+    { "type": "collection", "id": "cta_collection", "label": "Collection", "info": "Only used when the link points at a collection. The piece count is read from here." },
     { "type": "url", "id": "cta_link", "label": "Link (if no collection)" },
-    { "type": "text", "id": "cta_suffix", "label": "Placeholder count", "default": "[14] pieces", "info": "Used only while no collection is set." },
+    { "type": "text", "id": "cta_suffix", "label": "Placeholder count", "default": "[14] pieces", "info": "Used only while no collection is set, and only when the count is switched on." },
     { "type": "header", "content": "Provisional content" },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
   ],

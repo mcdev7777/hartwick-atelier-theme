@@ -94,9 +94,55 @@
     --ha-placeholder-field: var(--ha-peat-72);
 
     /* ==================================================================
+       IMAGE RESTRAINT  —  Aloha, 4 September 2026
+       "In a few sections, the images feel oversized for the space, which
+        makes them dominate the layout. Images are important for us, but they
+        shouldn't overwhelm the page. […] The Handcrafted Modern site is a
+        good reference for proportion and how imagery supports the page
+        without taking over."
+
+       One ceiling, expressed against the viewport rather than in pixels, so
+       the restraint holds on a 13" laptop and on a 27" monitor alike. A
+       picture that cannot exceed roughly half the screen can support a page;
+       one that fills the screen becomes the page.
+
+       Every large figure on the product page reads this. Held as a setting
+       because Aloha is re-editing the photographs after Monday's meeting with
+       Angela and will want to retune once the real crops land.
+       ================================================================== */
+    --ha-media-cap: {{ settings.ha_media_cap | default: 56 }}vh;
+
+    /* ==================================================================
        TYPE SCALE  —  Aloha, 3 September 2026
        "The typography currently feels too large and visually dense […]
         Too many elements have similar visual weight."
+
+       --- RETUNED 4 SEPTEMBER 2026, AGAINST BODE ---------------------------
+       Aloha: "Their text sizing is much easier to read and scan […] I want all
+       the text on the website to have the same size text as Bode's."
+
+       Bode set essentially their whole product page at 12px — product name,
+       price, description, sizes, Add to bag, navigation. The largest text
+       anywhere on that page is 16px, and the <h1> is visually hidden. Copying
+       that PIXEL value would not copy what the eye sees. Measured off the font
+       files themselves rather than guessed:
+
+           Neue Haas Unica (Bode)      x-height 0.508 em
+           Junicode        (narrate)   x-height 0.415 em
+           Noto Mono Cond  (record)    x-height 0.536 em
+           Porter          (identify)  cap-height 0.700 em
+
+       Junicode is an old-style serif and reads about a fifth smaller than
+       Unica at the same nominal size. Apparent parity with Bode's 12px is
+       therefore 15px of Junicode and 12px of Noto, and that is what these
+       defaults now are — the record voice matches at Bode's own number because
+       it is already a sans of similar proportion.
+
+       The display sizes are cut hard but not all the way to 12px. Bode carry
+       hierarchy with weight and position and have no display typography at
+       all; Hartwick's brand book has an editorial voice that would be deleted,
+       not reduced, by a literal match. Both display sliders now reach 12px, so
+       that decision stays Aloha's and needs no developer to reverse.
 
        Her stated hierarchy, held as tokens rather than as numbers scattered
        through CSS, so the whole site can be re-tuned from
@@ -111,21 +157,21 @@
        Aloha's floor: labels and technical information never below 12px on
        mobile. `at_least: 12` enforces it here, so the slider cannot break it.
        ================================================================== */
-    --ha-t-style:      {{ settings.ha_t_style_m      | default: 34 | divided_by: 10.0 }}rem;
-    --ha-t-expression: {{ settings.ha_t_expression_m | default: 19 | divided_by: 10.0 }}rem;
-    --ha-t-body:       {{ settings.ha_t_body_m       | default: 16 | divided_by: 10.0 }}rem;
-    --ha-t-body-lh:    {{ settings.ha_t_body_lh_m    | default: 25 | divided_by: 10.0 }}rem;
-    --ha-t-price:      {{ settings.ha_t_price_m      | default: 20 | divided_by: 10.0 }}rem;
-    --ha-t-label:      {{ settings.ha_t_label_m      | default: 13 | at_least: 12 | divided_by: 10.0 }}rem;
+    --ha-t-style:      {{ settings.ha_t_style_m      | default: 22 | divided_by: 10.0 }}rem;
+    --ha-t-expression: {{ settings.ha_t_expression_m | default: 15 | divided_by: 10.0 }}rem;
+    --ha-t-body:       {{ settings.ha_t_body_m       | default: 15 | divided_by: 10.0 }}rem;
+    --ha-t-body-lh:    {{ settings.ha_t_body_lh_m    | default: 24 | divided_by: 10.0 }}rem;
+    --ha-t-price:      {{ settings.ha_t_price_m      | default: 15 | divided_by: 10.0 }}rem;
+    --ha-t-label:      {{ settings.ha_t_label_m      | default: 12 | at_least: 12 | divided_by: 10.0 }}rem;
     --ha-t-meta:       {{ settings.ha_t_meta_m       | default: 12 | at_least: 12 | divided_by: 10.0 }}rem;
-    --ha-t-ui:         {{ settings.ha_t_ui_m         | default: 13 | at_least: 12 | divided_by: 10.0 }}rem;
-    --ha-t-editorial:  {{ settings.ha_t_editorial_m  | default: 36 | divided_by: 10.0 }}rem;
+    --ha-t-ui:         {{ settings.ha_t_ui_m         | default: 12 | at_least: 12 | divided_by: 10.0 }}rem;
+    --ha-t-editorial:  {{ settings.ha_t_editorial_m  | default: 24 | divided_by: 10.0 }}rem;
 
     /* One size between the editorial heading and body copy, for the two places
        the revised design sets a single sentence as a statement in its own right:
        the process line and the wearer's quotation. Wireframe 04 measures both
        at 32px on desktop. */
-    --ha-t-statement:  {{ settings.ha_t_statement_m  | default: 26 | divided_by: 10.0 }}rem;
+    --ha-t-statement:  {{ settings.ha_t_statement_m  | default: 18 | divided_by: 10.0 }}rem;
 
     /* Tracking travels with size: the record voice needs it, a 40px display
        heading does not. Declared here so a section never invents its own. */
@@ -136,16 +182,16 @@
 
   @media screen and (min-width: 990px) {
     :root {
-      --ha-t-style:      {{ settings.ha_t_style_d      | default: 48 | divided_by: 10.0 }}rem;
-      --ha-t-expression: {{ settings.ha_t_expression_d | default: 22 | divided_by: 10.0 }}rem;
-      --ha-t-body:       {{ settings.ha_t_body_d       | default: 17 | divided_by: 10.0 }}rem;
-      --ha-t-body-lh:    {{ settings.ha_t_body_lh_d    | default: 28 | divided_by: 10.0 }}rem;
-      --ha-t-price:      {{ settings.ha_t_price_d      | default: 22 | divided_by: 10.0 }}rem;
-      --ha-t-label:      {{ settings.ha_t_label_d      | default: 14 | divided_by: 10.0 }}rem;
-      --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 13 | divided_by: 10.0 }}rem;
-      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 14 | divided_by: 10.0 }}rem;
-      --ha-t-editorial:  {{ settings.ha_t_editorial_d  | default: 52 | divided_by: 10.0 }}rem;
-      --ha-t-statement:  {{ settings.ha_t_statement_d  | default: 38 | divided_by: 10.0 }}rem;
+      --ha-t-style:      {{ settings.ha_t_style_d      | default: 26 | divided_by: 10.0 }}rem;
+      --ha-t-expression: {{ settings.ha_t_expression_d | default: 15 | divided_by: 10.0 }}rem;
+      --ha-t-body:       {{ settings.ha_t_body_d       | default: 15 | divided_by: 10.0 }}rem;
+      --ha-t-body-lh:    {{ settings.ha_t_body_lh_d    | default: 24 | divided_by: 10.0 }}rem;
+      --ha-t-price:      {{ settings.ha_t_price_d      | default: 15 | divided_by: 10.0 }}rem;
+      --ha-t-label:      {{ settings.ha_t_label_d      | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-editorial:  {{ settings.ha_t_editorial_d  | default: 32 | divided_by: 10.0 }}rem;
+      --ha-t-statement:  {{ settings.ha_t_statement_d  | default: 21 | divided_by: 10.0 }}rem;
     }
   }
 {% endstyle %}
