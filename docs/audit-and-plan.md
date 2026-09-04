@@ -168,12 +168,45 @@ I populate anything), **end of Fri 4 Sep** (product page), **end of Mon 7 Sep** 
 
 ## F. Risks to the 10 September date
 
-**R1 — Porter is a licensed commercial font (HIGH).** The Brand Assets folder supplies
-Porter as desktop `.otf` files. Desktop licences almost never permit web embedding, and
-`@font-face` exposes the file publicly. **We need a webfont licence from Displaay before
-Porter can go on the site.** Junicode and Noto are open-licensed and fine. Please check
-what licence Angela holds. If it isn't resolved, I will ship with Junicode carrying the
-Porter roles and swap it centrally later — one settings change, not a rebuild.
+**R1 — Porter cannot go on the site on the evidence we hold (HIGH).**
+*Corrected 1 Sep after reading the font files themselves — an earlier draft of this note
+wrongly named Displaay as the foundry.*
+
+The Brand Assets folder supplies Porter as **six desktop `.otf` files only** (Light /
+Medium / Bold, roman + italic; `HARTWICK_ATELIER_FONT_PORTER.zip` contains those same six
+and nothing else). There is **no licence document, EULA, receipt or purchase certificate
+anywhere in the folder.**
+
+What the font files declare internally:
+
+| Field | Value |
+|---|---|
+| Designer / trademark holder | **Frank Hemmekam** |
+| Copyright | © 2015 Frank Hemmekam, all rights reserved |
+| Licence description | **"Envato - GraphicRiver, commercial license."** |
+| Version | 1.000 (2015) |
+| `OS/2` fsType | **`0x0004` — Preview & Print embedding only** |
+
+`fsType 0x0004` is the designer's machine-readable statement that installable/editable
+embedding is **not** granted. Browsers do not enforce it, but it is the first thing cited
+in a licensing dispute, and converting the `.otf` to WOFF2 and serving it would be
+creating and publishing a derivative of a font we cannot show a web licence for.
+
+**What is needed to resolve it:** the **Envato purchase code / licence certificate** for
+Porter. Every Envato Market purchase has a downloadable PDF certificate naming the
+licensee and the licence tier. That document is definitive. Please ask Angela which
+Envato account bought it. If the tier does not cover webfont embedding, the fallback is a
+webfont licence direct from Frank Hemmekam.
+
+**Note this does not block the wordmark.** The logo is already supplied as raster
+(`HartwickAtelier-Logo-Black.png`), so the most Porter-critical brand element renders
+correctly today with no web licence at all.
+
+Junicode (SIL OFL, `fsType 0x0000`, ships with WOFF2) and Noto Sans Mono (SIL OFL) are
+open-licensed and clean. Until the certificate arrives, Junicode carries the identify
+voice. `snippets/ha-fonts.liquid` is already built for the swap: upload
+`ha-porter-medium.woff2`, restore the documented `@font-face` block, tick the theme
+setting. No section code changes, no rebuild.
 
 **R2 — Product population does not fit in the remaining hours (HIGH).** Build + population
 + imagery for 85 products exceeds 36 hrs. My recommendation: **launch with the two

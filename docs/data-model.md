@@ -84,6 +84,9 @@ One Shopify **product = one Expression**. Sizes are **variants**.
 | `lot` | ref → `lot` | `LOT 001 · EDITION 07 / 25` eyebrow |
 | `edition_size` | integer | The `25` |
 | `edition_number` | integer | The `07` — per-piece where stock is 1 |
+| `individually_numbered` | boolean | **Gate.** `Edition 07 / 25` appears only where this is true AND `edition_number` is set. Aloha, 3 Sep 2026: "remove Edition 07 / 25 unless this refers to an actual individually numbered garment". |
+| `production_quantity` | integer | The run size as a count of pieces |
+| `production_quantity_verified` | boolean | **Gate.** The Material Record prints `Production quantity — 25 pieces` only when this is true. An unchecked number does not render. |
 | `release` | ref → `release` | Availability logic |
 | **Material Record** | | |
 | `fibre` | single line | HANDSPUN KHADI COTTON |
@@ -94,7 +97,7 @@ One Shopify **product = one Expression**. Sizes are **variants**.
 | `dye` | ref → `dye` | |
 | `place_of_weaving` / `place_of_dyeing` / `place_of_construction` | ref → `origin` | RAJASTHAN, INDIA |
 | `finishing` | single line | |
-| `availability_note` | single line | "THROUGH THE REGISTER" |
+| `availability_note` | single line | "THROUGH THE REGISTER" — also the product panel's Availability line |
 | **The Garment** | | |
 | `garment_heading` | single line | Section headline, e.g. "A study in proportion and ease." Added during the product-page build so no editorial line is hard-coded in the section. |
 | `garment_intro` | rich text | The paragraph beneath it. Same reason. |

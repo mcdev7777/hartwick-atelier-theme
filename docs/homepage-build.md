@@ -99,15 +99,23 @@ for publication", and every section has a checkbox to remove that notice.
    feature columns and the Company / Information link lists are now gone from
    every page, and About, Slow Fashion, Heritage Craft, Press and Events have no
    footer route. Aloha should confirm she is content with that.
-2. **Announcement bar** reads "Release September 15 2026" while launch is 10
-   September. Terminology was corrected there ("Lot 001" → "Lot I"); the date is
-   hers to confirm.
+2. ~~**Announcement bar** reads "Release September 15 2026" while launch is 10
+   September.~~ **Closed 3 September 2026.** Aloha: "We do not want a persistent
+   promotional banner or countdown style message across the website." The
+   announcement bar is removed from `sections/header-group.json` entirely. The
+   Register keeps its place in the main navigation and the footer, and gets a
+   considered homepage section and its own page.
 3. **Lot numbering.** The wireframe prints "LOT 001". Framework v3 makes the
    customer-facing form Roman — Lot I. Built to Framework v3.
 4. **Journal on mobile.** Built stacked, per the recommendation. The mobile
    wireframe shows a three-across row; one setting switches it.
-5. **Collection Index rows** need a collection to point at. Which collection is
-   Lot I?
+5. ~~**Collection Index rows** need a collection to point at.~~ **Answered
+   3 September 2026:** the Lot I list is not confirmed internally yet, so the
+   section must not be connected to assumed products. `ha-collection-index` now
+   has a "Lot I product list confirmed" switch, off by default; while it is off
+   the section ignores any bound collection outright, renders unnamed rows and
+   says on the page that the content is placeholder. Tick it when the approved
+   list arrives.
 6. **The main menu points at the wrong pages.** THE MASTERS resolves to
    `/pages/the-makers` — superseded terminology, visible in the URL — and JOURNAL
    resolves to `/pages/press`. THE REGISTER goes to `/` with no anchor. These are

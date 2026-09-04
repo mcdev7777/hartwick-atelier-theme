@@ -102,3 +102,31 @@ from a different base. That mismatch is what caused Finding 2 and will cause mor
 Once the base theme is settled, the repo should be re-baselined onto it so that
 local and remote are the same codebase, and file transfer should be done with
 `shopify theme pull` / `push` rather than copy-paste.
+
+---
+
+## Luxe files touched — badge filtering, 3 September 2026
+
+Aloha's letter removes scarcity language from the whole site. Badges are product
+DATA in Luxe — `Badge:` tags and the `custom.badges` metafield — so removing the
+markup would not remove the words, and one tag re-added in the admin would put
+them straight back. The theme filters instead.
+
+Five Luxe files now route their badge output through `snippets/ha-badges.liquid`.
+Each change is the same shape: two hard-coded loops replaced by one `render`.
+No file is forked, and every one still upgrades cleanly by re-applying a
+one-line edit.
+
+| File | Call sites |
+|---|---|
+| `snippets/card-product.liquid` | 3 (badge positions: media, text-top, text-bottom) |
+| `sections/predictive-search.liquid` | 3 (same three positions) |
+| `snippets/product-media-gallery.liquid` | 1 |
+| `sections/main-product.liquid` | 1 |
+| `sections/featured-product.liquid` | 1 |
+
+In the two files that guard the wrapper with `hascustombadges`, the guard is now
+computed from the **filtered** output — so a product whose only badge is
+suppressed renders no empty wrapper.
+
+Carry this list forward on any Luxe upgrade.

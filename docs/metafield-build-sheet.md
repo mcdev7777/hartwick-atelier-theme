@@ -477,7 +477,7 @@ Remember rule 1: click the pencil beside the auto-generated key and set the name
 
 No File fields here — every image in this build lives on a metaobject.
 
-### The 27 the theme reads today
+### The 30 the theme reads today
 
 **Identity** — `snippets/ha-pdp-identity.liquid`
 
@@ -488,6 +488,16 @@ No File fields here — every image in this build lives on a metaobject.
 | `lot` ◆ | One | Metaobject | **Target → `lot`** |
 | `edition_size` ◆ | One | Integer | — |
 | `edition_number` ◆ | One | Integer | — |
+
+**Three added 3 September 2026**, after Aloha's letter removing scarcity
+language. Two of them are gates: they exist so a number cannot reach the page
+until someone has confirmed it.
+
+| Key | One / List | Type | Validation |
+|---|---|---|---|
+| `individually_numbered` ◆ | One | True/false | Tick ONLY where each garment carries its own number. `Edition 07 / 25` renders nowhere unless this is true **and** `edition_number` is set. |
+| `production_quantity` ◆ | One | Integer | The run size, as a count of pieces. |
+| `production_quantity_verified` ◆ | One | True/false | Tick once the number has actually been checked. Until then the Material Record shows no quantity at all — an unverified figure reads to a customer as a verified one. |
 
 **Material Record** — `snippets/ha-material-record.liquid`
 
