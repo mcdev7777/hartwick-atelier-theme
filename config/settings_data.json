@@ -67,8 +67,8 @@
     "section_footer_spacing": 40,
     "buttons_case": "uppercase",
     "buttons_font_weight": "normal",
-    "buttons_font_size": 10,
-    "buttons_font_size_desktop": 10,
+    "buttons_font_size": 13,
+    "buttons_font_size_desktop": 13,
     "buttons_letter_spacing": 0,
     "buttons_border_thickness": 1,
     "buttons_padding": 2,
@@ -223,7 +223,8 @@
         "disabled": false,
         "settings": {}
       }
-    }
+    },
+    "ha_porter_licensed": true
   },
   "presets": {
     "Luxe": {

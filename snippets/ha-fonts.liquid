@@ -39,6 +39,42 @@
 {%- endcomment -%}
 
 {% style %}
+  {%- comment -%}
+    PORTER — the identify voice, now served as a webfont at Ivan's instruction.
+
+    ⚠️ LICENCE (risk R1, docs/audit-and-plan.md). The supplied files are DESKTOP
+    .otf only and the fonts declare "Envato - GraphicRiver, commercial license"
+    (designer Frank Hemmekam). No webfont licence document exists in the Brand
+    Assets folder. Desktop licences normally do NOT permit web embedding, and a
+    webfont is publicly downloadable by design. This is served because Ivan
+    instructed it after being told; the licence still needs resolving with the
+    foundry before launch. Turning `ha_porter_licensed` off removes it in one
+    click and the stack falls back to Junicode with no other change.
+
+    The files are subset to UPPERCASE A-Z AND SPACE ONLY — the brand rule
+    (Typography READ ME) is that Porter carries no numbers, punctuation or
+    symbols. Subsetting enforces that mechanically: any other character has no
+    glyph in Porter and falls through to Junicode automatically, so the rule
+    cannot be broken by an author who has not read it. 22 KB of OTF becomes
+    1.7 KB of WOFF2 as a result.
+  {%- endcomment -%}
+  {%- if settings.ha_porter_licensed -%}
+  @font-face {
+    font-family: "Porter";
+    src: url({{ 'ha-porter-medium.woff2' | asset_url }}) format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Porter";
+    src: url({{ 'ha-porter-light.woff2' | asset_url }}) format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  {%- endif -%}
+
   @font-face {
     font-family: "Junicode";
     src: url({{ 'ha-junicode.woff2' | asset_url }}) format("woff2");
@@ -77,9 +113,23 @@
     --font-body-style: normal;
   }
 
-  /* IDENTIFY — brand book: uppercase only, tracking +20 to +80, line height 90-110% */
+  /* IDENTIFY — brand book: uppercase only, tracking +20 to +80, line height 90-110%
+
+     `!important` on the family is deliberate and is the only one of the three
+     voices that needs it. Luxe's base.css carries
+
+         button, .button, .link--underlined, .product-form__input,
+         div[role="button"], .shopify-challenge__button, .account-sub-navigation
+         { font-family: var(--font-accent-family) !important; }
+
+     which put every primary control — Add to Bag, Join The Register, the
+     appointment submit — into the RECORD voice no matter what class we gave it.
+     A voice class that any theme rule can silently overrule is not a voice
+     class. `.ha-identify` is our own opt-in marker, applied only where Porter is
+     wanted, so making it authoritative is safe and fixes every current and
+     future case at once rather than one button at a time. */
   .ha-identify {
-    font-family: var(--ha-font-identify);
+    font-family: var(--ha-font-identify) !important;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     line-height: 1;
@@ -92,9 +142,17 @@
     letter-spacing: 0.005em;
   }
 
-  /* RECORD — brand book: uppercase labels, tabular numerals, left aligned */
+  /* RECORD — brand book: uppercase labels, tabular numerals, left aligned.
+
+     `font-weight: 400` is explicit because Noto Sans Mono Condensed ships in
+     ONE weight here and Luxe's `--font-body-weight` asks for 500. Asking a
+     400-only face for 500 makes the browser synthesise bold, which it does
+     unevenly from run to run — that is why the footer policy links looked like
+     a mix of bold and regular. Requesting the weight the file actually has
+     removes the synthesis entirely. */
   .ha-record {
     font-family: var(--ha-font-record);
+    font-weight: 400;
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
@@ -107,8 +165,33 @@
      Buttons and other interface detail are left on RECORD, which the rules allow. */
   .hdr-nav-primary-level-ul a,
   .nav-ul--primary a,
-  .nav-ul--secondary a {
+  .nav-ul--secondary a,
+  /* the utility side of the bar is navigation as well — Bag, Account, Search */
+  .header-bar .cart-icon--bubble,
+  .header-bar a[href*="/cart"],
+  .header-bar a[href*="/account"],
+  /* the shopping-tools labels — Search, Account, Bag. Search renders as
+     `.hdr-st-item-label` inside a <button>, so it was still being caught by
+     Luxe's `button { … !important }` rule and sitting in the RECORD voice while
+     the links either side of it were in Porter. */
+  .header-bar--shopping-tools .hdr-st-item,
+  .header-bar--shopping-tools .hdr-st-item-label,
+  .hdr-search-btn .hdr-st-item-label,
+  .cart-count-bubble {
     font-family: var(--ha-font-identify) !important;
+    /* UPPERCASE IS NOT DECORATION HERE — it is required.
+
+       Porter is subset to A-Z and space (the brand rule: no numbers,
+       punctuation or symbols). A label typed in sentence case therefore renders
+       its capital in Porter and every lowercase letter in Junicode, because the
+       glyphs simply are not in the file. "Account" — which comes from a
+       translation string, not from the menu — was rendering as "A" in Porter
+       and "ccount" in Junicode, which is what made it look like a different
+       font and size from the menu items above it.
+
+       Uppercasing every Porter surface guarantees a single face. Any label an
+       editor types in mixed case is covered automatically. */
+    text-transform: uppercase;
   }
 
   /* Wordmark. Colour comes from `color` because the SVG paints with currentColor:
