@@ -1883,24 +1883,38 @@ body.lx-template--product .magnify-icon:focus-visible {
     position: sticky;
     top: var(--ha-pdp-rail-top);
     align-self: start;
+  }
+
+  /* THE CAP IS ON THE LEFT RAIL ONLY.
+
+     It was on `.ha-pdp__rail`, which is both of them, and that put a height
+     ceiling and a scroll container around the BUY column — the price, the size
+     picker and Add to Bag. It happened to fit at the moment it was written, so
+     it looked fine; one opened accordion or one more variant row and the
+     purchase controls would have been clipped inside a box the visitor had no
+     reason to expect could scroll. Aloha asked for the information panel to
+     stay put, not the buy column, and the buy column is the last thing on the
+     page that should ever be hidden.
+
+     The buy rail keeps plain sticky, which is what it had before and what it
+     needs: it is short, so it never eats its own travel. */
+  .ha-pdp__rail--left {
     max-height: calc(100vh - var(--ha-pdp-rail-top) - 2.4rem);
     overflow-y: auto;
     overscroll-behavior: contain;
     /* room for the scrollbar so text never sits under it */
-    padding-right: 0.8rem;
+    padding-right: 1.6rem;
     scrollbar-width: thin;
     scrollbar-color: var(--ha-rule) transparent;
   }
 
-  .ha-pdp__rail--left { padding-right: 1.6rem; }
-
-  .ha-pdp__rail::-webkit-scrollbar { width: 3px; }
-  .ha-pdp__rail::-webkit-scrollbar-track { background: transparent; }
-  .ha-pdp__rail::-webkit-scrollbar-thumb { background: var(--ha-rule); border-radius: 3px; }
+  .ha-pdp__rail--left::-webkit-scrollbar { width: 3px; }
+  .ha-pdp__rail--left::-webkit-scrollbar-track { background: transparent; }
+  .ha-pdp__rail--left::-webkit-scrollbar-thumb { background: var(--ha-rule); border-radius: 3px; }
 
   /* A pinned panel that can scroll internally must not clip the focus ring of
      whatever is at its edge. */
-  .ha-pdp__rail :focus-visible { scroll-margin: 1.6rem; }
+  .ha-pdp__rail--left :focus-visible { scroll-margin: 1.6rem; }
 }
 
 /* Held outside the media query so the mobile stack and the desktop panel read
@@ -1911,7 +1925,7 @@ body.lx-template--product .magnify-icon:focus-visible {
    an independently scrolling region is a problem. Let the panel run at natural
    height for them and simply scroll with the page. */
 @media screen and (min-width: 990px) and (prefers-reduced-motion: reduce) {
-  .ha-pdp__rail { max-height: none; overflow-y: visible; }
+  .ha-pdp__rail--left { max-height: none; overflow-y: visible; }
 }
 
 /* --- left rail --------------------------------------------------------- */
@@ -2049,9 +2063,22 @@ body.lx-template--product .magnify-icon:focus-visible {
    Mobile is deliberately untouched: a picture on a phone is already the width
    of the screen and reads as a picture, not as a takeover. */
 @media screen and (min-width: 990px) {
-  .ha-pdp__frame,
+  /* .ha-pdp__frame is deliberately NOT in this list. Two reasons, and the first
+     one broke the page:
+
+     1. It is not a .ha-figure. It has no `overflow: hidden`, and .ha-pdp__img
+        is `height: auto`, so capping the frame shortened the BOX without
+        touching the picture inside it — every image spilled 200px over the
+        frame below and the whole media rail overlapped itself.
+     2. Even done correctly it would be wrong here. Cropping the product media
+        was rejected on Wireframe 03 and the rule still stands a few lines
+        below: "A real image keeps its own proportions — nothing is cropped
+        into a fixed ratio."
+
+     The restraint Aloha asked for is delivered on this rail by the column
+     itself, which came down from 1.8fr to 1.5fr. That makes the pictures
+     smaller without cropping them, which is the outcome she wanted. */
   .ha-garment__figure,
-  .ha-precord__figure,
   .ha-wearer__figure,
   .ha-masters__figure,
   .ha-continue__figure--story,
@@ -2059,9 +2086,6 @@ body.lx-template--product .magnify-icon:focus-visible {
     max-height: var(--ha-media-cap);
   }
 
-  /* The record's picture is the one that fills its own grid cell rather than
-     sizing itself, so it needs the ceiling on the cell as well. */
-  .ha-precord__media { max-height: var(--ha-media-cap); }
 }
 
 /* Position markers, over the right edge of the rail. */
@@ -2951,27 +2975,19 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    Angela and these are all still test crops.
    ========================================================================== */
 @media screen and (min-width: 990px) {
-  /* The Material Record. The picture no longer stretches to the full height of
-     the record table beside it: on a long record that made a single photograph
-     900px tall. It now holds the ceiling and sits at the top of its column,
-     with the record continuing beneath it — which is the proportion the
-     Handcrafted Modern reference actually uses. */
-  body.lx-template--product .ha-precord__grid .ha-precord__media {
-    align-self: start;
-    max-height: var(--ha-media-cap);
-  }
+  /* THE MATERIAL RECORD IS EXEMPT FROM THE CEILING, and this is a reversal.
 
-  body.lx-template--product .ha-precord__grid .ha-precord__figure,
-  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) {
-    align-self: start;
-    max-height: var(--ha-media-cap);
-    min-height: 0;
-    height: var(--ha-media-cap);
-  }
+     Capping it here top-aligned the photograph at 504px beside a 744px record
+     and left 240px of empty ground under the picture. The band is built as two
+     columns of equal height reading as one block — the comment above this one
+     says so, and it was right — so the restraint did not make it quieter, it
+     made it look unfinished. The same conclusion Ivan reached on the Circle
+     page's request panel, for the same reason: in a two-column band, level is
+     the composition.
 
-  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) img {
-    max-height: var(--ha-media-cap);
-  }
+     The ceiling still governs every picture that shares a page with running
+     text, which is what Aloha actually asked for. It does not govern the two
+     places where a picture IS one half of a two-part band. */
 
   /* Authorship's pair of portraits. */
   .ha-authorship__figure,
