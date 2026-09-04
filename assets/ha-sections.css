@@ -3234,14 +3234,39 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 @media screen and (min-width: 990px) {
   .ha-crequest__grid { grid-template-columns: 1fr 1.15fr; align-items: stretch; }
-  .ha-crequest__media { grid-column: 1; }
   .ha-crequest__panel { grid-column: 2; padding-inline: clamp(4rem, 5vw, 8rem); }
-  /* The picture fills its half of the band, and obeys the same ceiling as
-     every other image on the site. */
+
+  /* THE PICTURE RUNS THE FULL HEIGHT OF THE FORM, as the design draws it: two
+     columns of equal height reading as one band, not a picture floating beside
+     a taller panel.
+
+     It is deliberately exempt from --ha-media-cap. The ceiling exists because
+     Aloha asked that photographs stop dominating the product page, and it is
+     right for a picture that has to share a page with running text. This one
+     is not that: it is one half of a two-column band whose whole composition
+     is the two halves being level. Capped at 56vh it stopped level with the
+     email field and left a slab of empty ground under it — the restraint made
+     the layout worse rather than quieter. The same argument, and the same
+     exemption, as the Material Record on the product page.
+
+     Flex rather than `height: 100%` on the figure alone: the media column is a
+     stretched grid item, so it has a definite height, and a flex child of it
+     fills that height without depending on percentage resolution against a
+     stretched box — which is the thing that silently fails in some browsers.
+
+     `object-fit: cover` on .ha-figure img means the picture crops to the band
+     rather than distorting. The 48rem floor keeps it from collapsing if the
+     form is ever short. */
+  .ha-crequest__media { grid-column: 1; align-self: stretch; display: flex; }
+
   .ha-crequest__figure {
     aspect-ratio: auto;
-    height: 100%;
+    flex: 1;
+    width: 100%;
+    height: auto;
     min-height: 48rem;
-    max-height: var(--ha-media-cap);
+    max-height: none;
   }
+
+  .ha-crequest__figure img { height: 100%; width: 100%; object-fit: cover; }
 }
