@@ -688,6 +688,9 @@
 }
 
 .ha-pdp__title {
+  /* Junicode, stated rather than inherited. See the left-rail rule below for
+     why the Style name is a NARRATE surface and not an IDENTIFY one. */
+  font-family: var(--ha-font-narrate);
   font-size: var(--ha-t-style);
   letter-spacing: 0.01em;
   line-height: 1.08;
@@ -1777,12 +1780,25 @@ body.lx-template--product .magnify-icon:focus-visible {
 .ha-pdp__crumbs a { color: inherit; text-decoration: none; }
 .ha-pdp__crumbs a:hover { text-decoration: underline; text-underline-offset: 0.3rem; }
 
+/* The Style name is the one heading Porter cannot set. Porter is subset to A-Z
+   and space by the brand rule — no numerals — so "SHIRT 001" was drawing its
+   letters in Porter and falling through to Junicode for its digits, which read
+   as two fonts in one line. Aloha asked for the product name in Junicode, so
+   the whole string is now set in the NARRATE face.
+
+   The heading keeps everything else it had: same size, same uppercase, same
+   position. Only the face changes.
+
+   Figures go lining and tabular for the same reason .ha-record__title does:
+   Junicode's default old-style figures render "001" with a descending 1, which
+   is wrong for a Style number — it is an identifier, not prose. */
 .ha-pdp__title {
+  font-family: var(--ha-font-narrate);
   font-size: var(--ha-t-style);
   line-height: 1.05;
   letter-spacing: 0.01em;
   margin: 0 0 1.4rem;
-  font-variant-numeric: oldstyle-nums;
+  font-variant-numeric: lining-nums tabular-nums;
   text-transform: uppercase;
 }
 

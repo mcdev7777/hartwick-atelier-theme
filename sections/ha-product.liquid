@@ -156,7 +156,16 @@
           <p class="ha-pdp__crumbs ha-record"><span class="ha-pdp__lot">{{ lot_label }}</span></p>
         {%- endif -%}
 
-        <h1 class="ha-pdp__title ha-identify">{{ style_name }}</h1>
+        {%- comment -%}
+          The Style name is set in NARRATE (Junicode), not IDENTIFY (Porter), on
+          Aloha's feedback. Porter is subset to A-Z and space, so a Style name is
+          the one heading it cannot set: "SHIRT 001" was rendering its letters in
+          Porter and its digits in Junicode, which is what made the name look
+          like two fonts spliced together. Junicode carries the whole string in
+          one face. The heading keeps its uppercase and its size from
+          .ha-pdp__title — only the voice changes.
+        {%- endcomment -%}
+        <h1 class="ha-pdp__title ha-narrate">{{ style_name }}</h1>
 
         {%- if cloth != blank -%}
           <p class="ha-pdp__cloth ha-record">{{ cloth }}</p>

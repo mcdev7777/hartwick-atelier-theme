@@ -87,7 +87,8 @@
     </p>
   {%- endif -%}
 
-  <h1 class="ha-pdp__title ha-identify">{{ style_name }}</h1>
+  {%- comment -%} NARRATE, not IDENTIFY — see sections/ha-product.liquid {%- endcomment -%}
+  <h1 class="ha-pdp__title ha-narrate">{{ style_name }}</h1>
 
   {%- if expression != blank -%}
     <p class="ha-pdp__expression ha-narrate">{{ expression }}</p>
