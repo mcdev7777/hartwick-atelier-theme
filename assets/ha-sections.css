@@ -373,7 +373,9 @@
   position: relative;
   isolation: isolate;
   min-height: calc(100vw / var(--ha-masters-ratio-m, 0.8));
-  padding-block: clamp(6.4rem, 12vw, 10rem);
+  /* No padding here: .ha-wrap already carries the section's vertical rhythm,
+     and adding a second band would double it. The min-height above is what
+     gives a photographic section its extra air. */
   display: flex;
   align-items: center;
 }
