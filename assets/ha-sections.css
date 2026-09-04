@@ -2977,3 +2977,219 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
     max-height: var(--ha-media-cap);
   }
 }
+
+
+/* ==========================================================================
+   THE CIRCLE
+   Added 4 September 2026 on Aloha's instruction. See the header of
+   sections/ha-circle-request.liquid for the Framework v3 conflict this page
+   raises and why the form is built behind a single switch.
+   ========================================================================== */
+
+/* --- a row of numbered columns ------------------------------------------
+   Used twice on the page: "What the Circle holds" and "How it works". */
+
+.ha-ccols__head { display: grid; gap: 2.4rem; margin-bottom: clamp(4rem, 7vw, 6.4rem); }
+.ha-ccols__heading { margin: 0; }
+.ha-ccols__aside { max-width: 46ch; }
+
+.ha-ccols__row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--ha-rule);
+}
+
+.ha-ccols__col {
+  padding: 2.8rem 0;
+  border-bottom: 1px solid var(--ha-rule);
+}
+
+.ha-ccols__mark {
+  display: flex;
+  gap: 1.6rem;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text-quiet);
+  margin: 0 0 1.6rem;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.ha-ccols__col-heading {
+  font-size: var(--ha-t-expression);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  margin: 0 0 1.2rem;
+  font-weight: 500;
+}
+
+.ha-ccols__body {
+  font-size: var(--ha-t-body);
+  line-height: calc(var(--ha-t-body-lh) / var(--ha-t-body));
+  color: var(--ha-text-quiet);
+  max-width: 40ch;
+}
+.ha-ccols__body p { margin: 0 0 1.2rem; }
+.ha-ccols__body p:last-child { margin-bottom: 0; }
+
+/* On the dark field the quiet greys go muddy — inherit the inverted ink and
+   let opacity carry the step down instead. */
+.ha-section--field-peat .ha-ccols__mark,
+.ha-section--field-slate .ha-ccols__mark,
+.ha-section--field-peat .ha-ccols__body,
+.ha-section--field-slate .ha-ccols__body { color: inherit; opacity: 0.82; }
+
+@media screen and (min-width: 750px) {
+  .ha-ccols__head { grid-template-columns: 1.1fr 1fr; gap: clamp(3.2rem, 6vw, 8rem); align-items: start; }
+}
+
+@media screen and (min-width: 990px) {
+  /* The columns are separated by rules, so the row needs the vertical hairlines
+     the design draws between them. `border-inline-start` on every column but
+     the first is what gives an even set of dividers at any block count. */
+  .ha-ccols__row { grid-auto-flow: column; grid-auto-columns: 1fr; }
+  .ha-ccols__col { padding: 3.2rem clamp(2rem, 2.6vw, 3.6rem); }
+  .ha-ccols__col + .ha-ccols__col { border-inline-start: 1px solid var(--ha-rule); }
+  .ha-ccols__col:first-child { padding-inline-start: 0; }
+  .ha-ccols__col:last-child { padding-inline-end: 0; }
+}
+
+/* --- request access ------------------------------------------------------ */
+
+.ha-crequest { padding: 0; }
+.ha-crequest__grid { display: grid; }
+.ha-crequest__figure { aspect-ratio: 4 / 5; }
+
+.ha-crequest__panel {
+  padding: clamp(4rem, 8vw, 8rem) var(--ha-gutter);
+}
+
+.ha-crequest__heading { margin: 0 0 2rem; }
+.ha-crequest__body { margin-bottom: 3.2rem; max-width: 46ch; }
+.ha-crequest__closed { margin: 0; max-width: 46ch; }
+
+.ha-crequest__form { max-width: 52rem; }
+
+.ha-crequest__field { margin-bottom: 2.8rem; border: 0; padding: 0; min-width: 0; }
+
+.ha-crequest__label {
+  display: block;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text-quiet);
+  margin-bottom: 0.8rem;
+  padding: 0;
+}
+
+/* The underline field, as on The Register — Ivan's preference and the
+   wireframe's own drawing. */
+.ha-crequest__input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ha-rule);
+  border-radius: 0;
+  color: inherit;
+  font-size: var(--ha-t-body);
+  padding: 0.6rem 0;
+  width: 100%;
+}
+
+.ha-crequest__input:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-bottom-color: currentColor;
+}
+
+.ha-crequest__textarea { resize: vertical; min-height: 8rem; }
+
+.ha-crequest__pair { display: grid; gap: 2.8rem; }
+
+.ha-crequest__checks { display: grid; gap: 1.2rem; margin-top: 0.4rem; }
+
+/* 44px touch target from the mobile brief §2, held by the row itself rather
+   than by padding the box, so the label stays on its own baseline. */
+.ha-crequest__check {
+  display: grid;
+  grid-template-columns: 1.4rem 1fr;
+  gap: 1.2rem;
+  align-items: start;
+  min-height: 44px;
+  align-content: center;
+  font-size: var(--ha-t-body);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.ha-crequest__check input {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0.2rem 0 0;
+  accent-color: var(--ha-text);
+  flex: none;
+}
+
+.ha-crequest__consent {
+  margin: 3.2rem 0;
+  padding-top: 2.4rem;
+  border-top: 1px solid var(--ha-rule);
+  color: var(--ha-text-quiet);
+}
+.ha-crequest__consent p { margin: 0; }
+
+.ha-crequest__submit {
+  width: 100%;
+  background: var(--ha-text);
+  color: var(--ha-page-ground);
+  border: 1px solid var(--ha-text);
+  cursor: pointer;
+  font-size: var(--ha-t-ui);
+  letter-spacing: var(--ha-track-ui);
+  min-height: 48px;
+  padding: 1.2rem 2rem;
+}
+
+.ha-crequest__submit:hover { background: transparent; color: var(--ha-text); }
+.ha-crequest__submit:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* On a dark field the solid button has to invert or it disappears into it. */
+.ha-section--field-peat .ha-crequest__submit,
+.ha-section--field-slate .ha-crequest__submit {
+  background: var(--ha-text-invert);
+  color: var(--ha-field-dark);
+  border-color: var(--ha-text-invert);
+}
+.ha-section--field-peat .ha-crequest__submit:hover,
+.ha-section--field-slate .ha-crequest__submit:hover {
+  background: transparent;
+  color: var(--ha-text-invert);
+}
+
+.ha-crequest__note {
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-label);
+  line-height: 1.5;
+  border: 1px solid currentColor;
+  padding: 1.2rem 1.6rem;
+  margin: 0 0 3.2rem;
+}
+.ha-crequest__note--error { color: var(--ha-cutch-resin); }
+
+@media screen and (min-width: 750px) {
+  .ha-crequest__pair { grid-template-columns: 1fr 1fr; }
+}
+
+@media screen and (min-width: 990px) {
+  .ha-crequest__grid { grid-template-columns: 1fr 1.15fr; align-items: stretch; }
+  .ha-crequest__media { grid-column: 1; }
+  .ha-crequest__panel { grid-column: 2; padding-inline: clamp(4rem, 5vw, 8rem); }
+  /* The picture fills its half of the band, and obeys the same ceiling as
+     every other image on the site. */
+  .ha-crequest__figure {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 48rem;
+    max-height: var(--ha-media-cap);
+  }
+}

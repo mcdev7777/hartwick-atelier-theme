@@ -1,0 +1,292 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE CIRCLE, request access.
+
+  ══════════════════════════════════════════════════════════════════════════
+  ⚠️  TERMINOLOGY CONFLICT — RAISED WITH ALOHA, BUILT ON HER WRITTEN
+      INSTRUCTION OF 4 SEPTEMBER 2026.
+
+      CLAUDE.md records Framework v3, which is the top of the source-of-truth
+      hierarchy and says of The Circle:
+
+          "Invitation-only group of founding friends.
+           No public form. No application route."
+
+      Aloha's email asks for the opposite — a public page carrying a Circle
+      access form. Her instruction is second in the hierarchy, below
+      Christina's Framework v3, so this is a conflict the build cannot resolve
+      on its own and Christina has to settle it.
+
+      It is built because Aloha asked for it in writing and because it is on an
+      unpublished development theme where nothing is public. It is built to be
+      switched off in one click: `show_form` off leaves the page, the wording
+      and the layout intact and removes the application route entirely. No
+      other section depends on it.
+  ══════════════════════════════════════════════════════════════════════════
+
+  --- WHAT REACHES THE CRM ------------------------------------------------
+  Aloha: "Anyone submitting the Circle access form should be added to the
+  CRM/Register with the tag 'Circle: Requested Access.' Joining The Register
+  alone should not automatically give someone access to The Circle."
+
+  This uses Shopify's own customer form, the same one The Register uses, so a
+  submission creates a real customer record rather than an email someone has to
+  re-key. `contact[tags]` is Shopify's supported way to tag that record from the
+  storefront — the pattern is already in this theme in five places, including
+  ha-register.liquid.
+
+  The two directions Aloha asked to keep separate are kept separate BY THE TAG,
+  which is the only thing that can keep them separate in one customer list:
+
+      The Register  ->  tag  "register"                (ha-register.liquid)
+      The Circle    ->  tag  "Circle: Requested Access"  (here)
+
+  A Register member is not tagged for the Circle and never becomes one by
+  joining. A Circle applicant IS added to the Register — which is what Aloha
+  asked for — and carries the extra tag that marks the request. Nothing in the
+  theme grants Circle access; the tag records that access was requested, and a
+  human decides. That is the whole mechanism, and it is deliberately not
+  automatic.
+
+  Stated interests are appended as their own tags, from the fixed list of
+  checkboxes below, so they arrive as CRM segments rather than as prose. The
+  vocabulary is controlled — a visitor cannot invent a tag — which is what keeps
+  the customer list clean. See assets/ha-circle-request.js.
+
+  --- WHAT DOES NOT REACH THE CRM ------------------------------------------
+  The storefront customer form accepts email, first name, last name and tags.
+  It does not accept free text. So a city and a personal note CANNOT be stored
+  on the customer record by any theme-only code — that needs Klaviyo (already
+  being wired, risk R5), Shopify Flow, or a private app.
+
+  Rather than ask a visitor for information the store would silently discard,
+  `show_extra_fields` is OFF by default. Turn it on once Klaviyo is carrying the
+  form and the fields become real. This is flagged to Aloha, not decided for
+  her.
+{%- endcomment -%}
+
+{%- liquid
+  assign base_tag = section.settings.contact_tag | default: 'Circle: Requested Access'
+-%}
+
+<section
+  id="{{ section.settings.anchor | default: 'request-access' }}"
+  class="ha-section ha-crequest{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}"
+>
+  <div class="ha-crequest__grid">
+
+    {%- comment -%}
+      The image is the full-bleed half of the composition, so it sits outside
+      .ha-wrap and reserves its proportion like every other Hartwick figure.
+    {%- endcomment -%}
+    <div class="ha-crequest__media">
+      {%- render 'ha-figure',
+        image: section.settings.image,
+        label: section.settings.image_label,
+        class: 'ha-crequest__figure',
+        sizes: '(min-width: 990px) 45vw, 100vw',
+        alt: section.settings.image_alt
+      -%}
+    </div>
+
+    <div class="ha-crequest__panel">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ha-display ha-narrate ha-crequest__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="ha-body ha-narrate ha-crequest__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.show_form -%}
+        {%- form 'customer', class: 'ha-crequest__form', id: 'CircleRequest' -%}
+
+          {%- comment -%}
+            The tag that does the work. JS rewrites this value to append the
+            checked interests; with JS off it still submits exactly as written,
+            so the requirement Aloha stated — the record carries
+            "Circle: Requested Access" — is never dependent on a script.
+          {%- endcomment -%}
+          <input
+            type="hidden"
+            name="contact[tags]"
+            value="{{ base_tag | escape }}"
+            data-circle-base-tag="{{ base_tag | escape }}"
+          >
+
+          {%- if form.posted_successfully? -%}
+            <p class="ha-crequest__note ha-crequest__note--ok ha-record" tabindex="-1" autofocus>
+              {{ section.settings.success_text | default: 'Thank you. Your request has been received.' }}
+            </p>
+          {%- elsif form.errors -%}
+            <p class="ha-crequest__note ha-crequest__note--error ha-record" tabindex="-1" autofocus>
+              {{ form.errors | default_errors }}
+            </p>
+          {%- endif -%}
+
+          <div class="ha-crequest__pair">
+            <div class="ha-crequest__field">
+              <label class="ha-crequest__label ha-record" for="CircleFirst">{{ section.settings.label_first }}</label>
+              <input class="ha-crequest__input ha-narrate" id="CircleFirst" type="text" name="contact[first_name]" autocomplete="given-name" value="{{ form.first_name }}">
+            </div>
+            <div class="ha-crequest__field">
+              <label class="ha-crequest__label ha-record" for="CircleLast">{{ section.settings.label_last }}</label>
+              <input class="ha-crequest__input ha-narrate" id="CircleLast" type="text" name="contact[last_name]" autocomplete="family-name" value="{{ form.last_name }}">
+            </div>
+          </div>
+
+          <div class="ha-crequest__field">
+            <label class="ha-crequest__label ha-record" for="CircleEmail">{{ section.settings.label_email }}</label>
+            <input
+              class="ha-crequest__input ha-narrate"
+              id="CircleEmail"
+              type="email"
+              name="contact[email]"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              value="{{ form.email }}"
+              aria-required="true"
+              required
+            >
+          </div>
+
+          {%- if section.settings.show_extra_fields -%}
+            {%- comment -%}
+              Off by default. See the header of this file: the storefront
+              customer form cannot store free text, so these are only honest
+              once Klaviyo or Flow is carrying the submission.
+            {%- endcomment -%}
+            <div class="ha-crequest__field">
+              <label class="ha-crequest__label ha-record" for="CircleCity">{{ section.settings.label_city }}</label>
+              <input class="ha-crequest__input ha-narrate" id="CircleCity" type="text" name="contact[city_country]" autocomplete="address-level2">
+            </div>
+          {%- endif -%}
+
+          {%- assign interest_blocks = section.blocks | where: 'type', 'interest' -%}
+          {%- if interest_blocks.size > 0 -%}
+            <fieldset class="ha-crequest__field ha-crequest__interests">
+              <legend class="ha-crequest__label ha-record">{{ section.settings.label_interests }}</legend>
+              <div class="ha-crequest__checks">
+                {%- for block in interest_blocks -%}
+                  <label class="ha-crequest__check ha-narrate" {{ block.shopify_attributes }}>
+                    {%- comment -%}
+                      Not a form field in its own right: the value is folded
+                      into contact[tags] on submit, because Shopify would drop a
+                      name it does not recognise. `data-circle-interest` is what
+                      the script reads.
+                    {%- endcomment -%}
+                    <input
+                      type="checkbox"
+                      data-circle-interest="{{ block.settings.tag | default: block.settings.label | escape }}"
+                    >
+                    <span>{{ block.settings.label }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endif -%}
+
+          {%- if section.settings.show_extra_fields -%}
+            <div class="ha-crequest__field">
+              <label class="ha-crequest__label ha-record" for="CircleNote">{{ section.settings.label_note }}</label>
+              <textarea class="ha-crequest__input ha-crequest__textarea ha-narrate" id="CircleNote" name="contact[note]" rows="3"></textarea>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.consent_text != blank -%}
+            <label class="ha-crequest__check ha-crequest__consent ha-narrate">
+              <input type="checkbox" required aria-required="true">
+              <span>{{ section.settings.consent_text }}</span>
+            </label>
+          {%- endif -%}
+
+          <button class="ha-crequest__submit ha-identify" type="submit">
+            {{ section.settings.submit_text }}
+          </button>
+        {%- endform -%}
+
+        <script src="{{ 'ha-circle-request.js' | asset_url }}" defer></script>
+      {%- else -%}
+        {%- comment -%}
+          The switch that honours Framework v3. With the form off the section is
+          still a section — heading, copy, picture — and simply does not offer
+          an application route.
+        {%- endcomment -%}
+        {%- if section.settings.closed_text != blank -%}
+          <p class="ha-crequest__closed ha-narrate">{{ section.settings.closed_text }}</p>
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Circle request",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" },
+      { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" },
+      { "value": "clay", "label": "Clay" },
+      { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "request-access", "info": "Links elsewhere on the page point at #this." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Request access" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Tell us what you would like to follow." },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "header", "content": "Picture" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "text", "id": "image_label", "label": "Placeholder label", "default": "01 / Portrait" },
+    {
+      "type": "header",
+      "content": "The form",
+      "info": "⚠ Framework v3 records The Circle as invitation-only, with no public form and no application route. This form exists on Aloha's written instruction of 4 September 2026 and the conflict is with Christina to settle. Switching it off removes the application route and leaves everything else on the page intact."
+    },
+    { "type": "checkbox", "id": "show_form", "label": "Show the access form", "default": true },
+    {
+      "type": "text", "id": "contact_tag", "label": "CRM tag", "default": "Circle: Requested Access",
+      "info": "Applied to the customer record created by every submission. The Register uses its own separate tag, so joining one never joins the other."
+    },
+    {
+      "type": "checkbox", "id": "show_extra_fields", "label": "Ask for city and a note", "default": false,
+      "info": "OFF because Shopify's storefront customer form cannot store free text — a city and a note would be collected and silently discarded. Turn on once Klaviyo or Shopify Flow is carrying this form."
+    },
+    { "type": "text", "id": "label_first", "label": "First name label", "default": "First name" },
+    { "type": "text", "id": "label_last", "label": "Last name label", "default": "Last name" },
+    { "type": "text", "id": "label_email", "label": "Email label", "default": "Email address" },
+    { "type": "text", "id": "label_city", "label": "City label", "default": "City / country" },
+    { "type": "text", "id": "label_interests", "label": "Interests label", "default": "I would like to hear about" },
+    { "type": "text", "id": "label_note", "label": "Note label", "default": "A note, if you would like to add one" },
+    { "type": "richtext", "id": "consent_text", "label": "Consent line", "info": "Required to submit. The wording is a legal matter — Aloha to confirm with Christina." },
+    { "type": "text", "id": "submit_text", "label": "Submit button", "default": "Send request" },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "Thank you. Your request has been received." },
+    { "type": "richtext", "id": "closed_text", "label": "Text shown when the form is off", "info": "Used instead of the form when the access form is switched off." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "interest",
+      "name": "Interest",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "tag", "label": "CRM tag", "info": "Added to the customer record when ticked. Defaults to the label." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hartwick — Circle request" }]
+}
+{% endschema %}

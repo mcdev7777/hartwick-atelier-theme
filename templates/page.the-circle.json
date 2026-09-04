@@ -1,0 +1,277 @@
+/*
+ * Hartwick Atelier — THE CIRCLE
+ *
+ * Aloha, 4 September 2026: "please add The Circle as a public page at
+ * /the-circle and include it in the main navigation. The Circle and The
+ * Register should remain separate."
+ *
+ * ⚠️ TWO THINGS THIS FILE CANNOT DO ON ITS OWN — both are Shopify Admin, not
+ *    theme code, and both are listed in the handover note:
+ *
+ *      1. THE PAGE ITSELF. A theme can hold a page template; it cannot create
+ *         the page record. Someone with Admin access must add a page titled
+ *         "The Circle" (handle: the-circle) and set its Theme template to
+ *         "the-circle". Until then this file is inert.
+ *
+ *      2. THE URL. Shopify serves pages at /pages/<handle> and does not allow
+ *         a page at the site root. /the-circle therefore needs a URL redirect
+ *         (Admin > Content > Menus > URL redirects) from /the-circle to
+ *         /pages/the-circle. The redirect is the only way to honour the
+ *         address Aloha asked for.
+ *
+ *      3. THE NAVIGATION. Menus live in Admin > Content > Menus, not in the
+ *         theme. "The Circle" has to be added to the main menu there.
+ *
+ * ⚠️ TERMINOLOGY. Framework v3 — the top of the source-of-truth hierarchy —
+ *    records The Circle as invitation-only, with no public form and no
+ *    application route. This page is the opposite of that, and exists on
+ *    Aloha's written instruction. The conflict is flagged for Christina.
+ *    sections/ha-circle-request.liquid carries the detail and a single switch
+ *    that removes the application route without touching the page.
+ *
+ * ⚠️ ALL COPY IS PROVISIONAL. The headings are transcribed from Aloha's own
+ *    design; every body paragraph is an explicit placeholder, because nothing
+ *    about what The Circle offers, how someone is considered, or what a member
+ *    receives may be written by the build (CLAUDE.md, Content rules). Every
+ *    section shows its provisional notice on screen.
+ *
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ha-hero",
+      "settings": {
+        "media_width": 50,
+        "eyebrow": "The Circle / Private client access",
+        "show_eyebrow_desktop": true,
+        "heading": "A closer relationship with the work.",
+        "body": "<p><em>Placeholder — the invitation copy is pending Aloha. Nothing about what The Circle offers may be written by the build.</em></p>",
+        "cta_text": "Request access",
+        "cta_link": "/pages/the-circle#request-access",
+        "image_label": "01 / Gathering · Conversation · Cloth",
+        "show_placeholder_note": true
+      }
+    },
+    "holds": {
+      "type": "ha-circle-columns",
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "label": "Early viewing",
+            "heading": "Early viewing",
+            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "label": "Private appointments",
+            "heading": "Private appointments",
+            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "label": "Atelier notes",
+            "heading": "Atelier notes",
+            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "c4": {
+          "type": "column",
+          "settings": {
+            "label": "Care and repair",
+            "heading": "Care and repair",
+            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {
+        "field": "page",
+        "eyebrow": "What the Circle holds",
+        "heading": "Access built around knowledge, not urgency.",
+        "aside": "<p><em>Placeholder — pending Aloha.</em></p>",
+        "show_placeholder_note": true
+      }
+    },
+    "gatherings": {
+      "type": "ha-authorship",
+      "settings": {
+        "field": "peat",
+        "eyebrow": "Gatherings",
+        "heading": "Time to look closely. Time to ask questions.",
+        "intro": "<p><em>Placeholder — pending Aloha.</em></p>",
+        "cta_text": "Register interest in a gathering",
+        "masters_page_url": "/pages/the-circle#request-access",
+        "portrait_label": "01 / Table · Cloth · Conversation",
+        "workshop_label": "02 / The Atelier",
+        "show_placeholder_note": true
+      }
+    },
+    "how": {
+      "type": "ha-circle-columns",
+      "blocks": {
+        "s1": {
+          "type": "column",
+          "settings": {
+            "label": "Request",
+            "heading": "Tell us what interests you.",
+            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "s2": {
+          "type": "column",
+          "settings": {
+            "label": "Reply",
+            "heading": "We answer personally.",
+            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "s3": {
+          "type": "column",
+          "settings": {
+            "label": "Access",
+            "heading": "Stay close to the work.",
+            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "field": "page",
+        "eyebrow": "How it works",
+        "heading": "A personal exchange.",
+        "show_placeholder_note": true
+      }
+    },
+    "notes": {
+      "type": "ha-journal",
+      "blocks": {
+        "n1": {
+          "type": "card",
+          "settings": {
+            "title": "The people behind the work",
+            "excerpt": "Placeholder — pending Aloha.",
+            "image_label": "01 / Workshop"
+          }
+        },
+        "n2": {
+          "type": "card",
+          "settings": {
+            "title": "Why this material",
+            "excerpt": "Placeholder — pending Aloha.",
+            "image_label": "02 / Material"
+          }
+        },
+        "n3": {
+          "type": "card",
+          "settings": {
+            "title": "Keeping a piece in use",
+            "excerpt": "Placeholder — pending Aloha.",
+            "image_label": "03 / Care"
+          }
+        }
+      },
+      "block_order": ["n1", "n2", "n3"],
+      "settings": {
+        "field": "page",
+        "eyebrow": "From the atelier",
+        "post_limit": 3,
+        "cta_text": "Read the note",
+        "show_placeholder_note": true
+      }
+    },
+    "request": {
+      "type": "ha-circle-request",
+      "blocks": {
+        "i1": { "type": "interest", "settings": { "label": "New collections", "tag": "Circle interest: New collections" } },
+        "i2": { "type": "interest", "settings": { "label": "Masters & materials", "tag": "Circle interest: Masters and materials" } },
+        "i3": { "type": "interest", "settings": { "label": "Private appointments", "tag": "Circle interest: Private appointments" } },
+        "i4": { "type": "interest", "settings": { "label": "Gatherings", "tag": "Circle interest: Gatherings" } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "field": "page",
+        "anchor": "request-access",
+        "eyebrow": "Request access",
+        "heading": "Tell us what you would like to follow.",
+        "body": "<p><em>Placeholder — the wording that sets expectations about how a request is handled is pending Aloha.</em></p>",
+        "show_form": true,
+        "contact_tag": "Circle: Requested Access",
+        "show_extra_fields": false,
+        "label_interests": "I would like to hear about",
+        "consent_text": "<p><em>Placeholder consent line — wording to be confirmed with Christina before this page is published.</em></p>",
+        "submit_text": "Send request",
+        "success_text": "Thank you. Your request has been received.",
+        "closed_text": "<p><em>The Circle is invitation-only. Placeholder — wording pending Aloha.</em></p>",
+        "image_label": "01 / Portrait · Object · Place",
+        "show_placeholder_note": true
+      }
+    },
+    "details": {
+      "type": "ha-living",
+      "blocks": {
+        "q1": {
+          "type": "row",
+          "settings": {
+            "heading": "Is there a fee to join?",
+            "content": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "q2": {
+          "type": "row",
+          "settings": {
+            "heading": "Is The Circle a loyalty programme?",
+            "content": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "q3": {
+          "type": "row",
+          "settings": {
+            "heading": "Where can private appointments take place?",
+            "content": "<p><em>Placeholder — pending Aloha.</em></p>"
+          }
+        },
+        "q4": {
+          "type": "row",
+          "settings": {
+            "heading": "How will my information be used?",
+            "content": "<p><em>Placeholder — pending Aloha and Christina.</em></p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {
+        "field": "page",
+        "eyebrow": "The details",
+        "heading": "Questions, answered plainly."
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "For those who prefer simply to receive the notes.",
+        "body": "<p><em>Placeholder — pending Aloha. The Register is separate from The Circle: joining it does not request Circle access.</em></p>",
+        "show_native_form": true,
+        "contact_tag": "the-register"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "holds",
+    "gatherings",
+    "how",
+    "notes",
+    "request",
+    "details",
+    "register"
+  ]
+}
