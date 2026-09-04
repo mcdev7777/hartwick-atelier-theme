@@ -29,15 +29,27 @@
           <h2 class="ha-display ha-narrate">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- comment -%}
-          The invitation copy belongs under the heading it explains, not stacked
-          above the form in the opposite column.
+          WHERE THE INVITATION COPY SITS.
+
+          On the homepage it belongs under the heading it explains, rather than
+          stacked above the form in the opposite column — that was the call on
+          3 September and it stands.
+
+          Aloha's Circle design places it the other way: heading alone on the
+          left, the paragraph directly above the email field on the right. Both
+          readings are right for their own page, so this is a setting rather
+          than a rewrite. The default keeps the homepage exactly as approved.
         {%- endcomment -%}
-        {%- if section.settings.body != blank -%}
+        {%- if section.settings.body != blank and section.settings.body_position != 'form' -%}
           <div class="ha-body ha-narrate ha-register__body">{{ section.settings.body }}</div>
         {%- endif -%}
       </div>
 
       <div class="ha-register__aside">
+
+        {%- if section.settings.body != blank and section.settings.body_position == 'form' -%}
+          <div class="ha-body ha-narrate ha-register__body">{{ section.settings.body }}</div>
+        {%- endif -%}
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
@@ -112,6 +124,14 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Register" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Be first to receive what comes next." },
     { "type": "richtext", "id": "body", "label": "Invitation", "default": "<p>Private access to new Lots, The Dispatch, and stories from the workshops before they reach the wider world.</p>" },
+    {
+      "type": "select", "id": "body_position", "label": "Invitation sits", "default": "heading",
+      "info": "The homepage keeps it under the heading. The Circle page places it above the email field, as Aloha's design draws it.",
+      "options": [
+        { "value": "heading", "label": "Under the heading (left)" },
+        { "value": "form", "label": "Above the email field (right)" }
+      ]
+    },
     { "type": "checkbox", "id": "show_native_form", "label": "Show the Shopify form", "default": true, "info": "Switch off once the Klaviyo block is added." },
     { "type": "text", "id": "contact_tag", "label": "Customer tag", "default": "the-register" }
   ],

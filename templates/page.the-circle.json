@@ -37,6 +37,15 @@
  *
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
+ *
+ * GOTCHA, learned the hard way on 4 September 2026: Shopify validates a JSON
+ * template against each section's schema AS IT EXISTS ON THE THEME at the
+ * moment the template is uploaded, and silently drops any setting the schema
+ * does not yet declare. So if you add a setting to a section AND set it here in
+ * the same change, upload order decides whether it survives — and the CLI skips
+ * files whose contents have not changed, so `touch` will not re-send it. If a
+ * setting here mysteriously reads as its schema default, edit this file for
+ * real (a byte is enough) so it is re-uploaded after the section.
  * ------------------------------------------------------------
  */
 {
@@ -44,7 +53,8 @@
     "hero": {
       "type": "ha-hero",
       "settings": {
-        "media_width": 50,
+        "media_width": 55,
+        "subhead": "",
         "eyebrow": "The Circle / Private client access",
         "show_eyebrow_desktop": true,
         "heading": "A closer relationship with the work.",
@@ -61,7 +71,7 @@
         "c1": {
           "type": "column",
           "settings": {
-            "label": "Early viewing",
+            "label": "",
             "heading": "Early viewing",
             "body": "<p><em>Placeholder — pending Aloha.</em></p>"
           }
@@ -69,7 +79,7 @@
         "c2": {
           "type": "column",
           "settings": {
-            "label": "Private appointments",
+            "label": "",
             "heading": "Private appointments",
             "body": "<p><em>Placeholder — pending Aloha.</em></p>"
           }
@@ -77,7 +87,7 @@
         "c3": {
           "type": "column",
           "settings": {
-            "label": "Atelier notes",
+            "label": "",
             "heading": "Atelier notes",
             "body": "<p><em>Placeholder — pending Aloha.</em></p>"
           }
@@ -85,7 +95,7 @@
         "c4": {
           "type": "column",
           "settings": {
-            "label": "Care and repair",
+            "label": "",
             "heading": "Care and repair",
             "body": "<p><em>Placeholder — pending Aloha.</em></p>"
           }
@@ -101,16 +111,17 @@
       }
     },
     "gatherings": {
-      "type": "ha-authorship",
+      "type": "ha-circle-feature",
       "settings": {
         "field": "peat",
         "eyebrow": "Gatherings",
         "heading": "Time to look closely. Time to ask questions.",
-        "intro": "<p><em>Placeholder — pending Aloha.</em></p>",
+        "body": "<p><em>Placeholder — pending Aloha.</em></p>",
         "cta_text": "Register interest in a gathering",
-        "masters_page_url": "/pages/the-circle#request-access",
-        "portrait_label": "01 / Table · Cloth · Conversation",
-        "workshop_label": "02 / The Atelier",
+        "cta_link": "/pages/the-circle#request-access",
+        "label_one": "01 / Table \u00b7 Cloth \u00b7 Conversation",
+        "label_two": "02 / Artisan",
+        "label_three": "03 / The Atelier",
         "show_placeholder_note": true
       }
     },
@@ -204,7 +215,7 @@
         "body": "<p><em>Placeholder — the wording that sets expectations about how a request is handled is pending Aloha.</em></p>",
         "show_form": true,
         "contact_tag": "Circle: Requested Access",
-        "show_extra_fields": false,
+        "show_extra_fields": true,
         "label_interests": "I would like to hear about",
         "consent_text": "<p><em>Placeholder consent line — wording to be confirmed with Christina before this page is published.</em></p>",
         "submit_text": "Send request",
@@ -259,6 +270,7 @@
         "eyebrow": "The Register",
         "heading": "For those who prefer simply to receive the notes.",
         "body": "<p><em>Placeholder — pending Aloha. The Register is separate from The Circle: joining it does not request Circle access.</em></p>",
+        "body_position": "form",
         "show_native_form": true,
         "contact_tag": "the-register"
       }

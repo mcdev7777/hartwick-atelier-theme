@@ -59,7 +59,16 @@
             {%- endcomment -%}
             <p class="ha-ccols__mark ha-record">
               <span aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              {%- comment -%}
+                The design writes this rank as "01 / REQUEST". The slash is
+                punctuation between two things a sighted reader takes in at
+                once; read aloud it is noise, so it is hidden along with the
+                number while the word itself stays announced. Where a column
+                has no word — the four on "What the Circle holds" — neither the
+                slash nor the empty span is printed at all.
+              {%- endcomment -%}
               {%- if block.settings.label != blank -%}
+                <span class="ha-ccols__slash" aria-hidden="true">/</span>
                 <span class="ha-ccols__label">{{ block.settings.label }}</span>
               {%- endif -%}
             </p>
@@ -109,7 +118,7 @@
       "type": "column",
       "name": "Column",
       "settings": [
-        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "label", "label": "Label", "info": "Printed after the rank as \"01 / REQUEST\". Leave empty for a bare number." },
         { "type": "text", "id": "heading", "label": "Heading" },
         { "type": "richtext", "id": "body", "label": "Body" }
       ]

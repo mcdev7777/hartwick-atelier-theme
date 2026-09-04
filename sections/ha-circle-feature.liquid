@@ -1,0 +1,125 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE CIRCLE, Gatherings.
+
+  A dark band: the writing held in a narrow column on the left with its link
+  anchored to the foot, and three photographs on the right in the design's own
+  arrangement — one tall frame beside two stacked ones.
+
+      ┌──────────┬─────────┐
+      │          │   02    │
+      │    01    ├─────────┤
+      │          │   03    │
+      └──────────┴─────────┘
+
+  Built rather than borrowed. `ha-authorship` was standing in here and carries
+  only two images, so the third frame in Aloha's design had nowhere to go, and
+  its composition is a different one — full-bleed portraits with the text on the
+  page gutter, not a text column beside a picture group. Stretching it to cover
+  both would have made one section worse at two jobs.
+
+  The 1-tall-plus-2-stacked grid is deliberately the same shape The Origin uses
+  on the product page, so the two read as the same house habit rather than as
+  two unrelated picture arrangements.
+
+  ⚠️ ALL COPY IS PLACEHOLDER. Nothing about what a Gathering is, who attends one
+  or how one is arranged may be written by the build (CLAUDE.md, Content rules).
+{%- endcomment -%}
+
+<section class="ha-section ha-cfeature{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-wrap">
+    <div class="ha-cfeature__grid">
+
+      <div class="ha-cfeature__lead">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ha-display ha-narrate ha-cfeature__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.body != blank -%}
+          <div class="ha-cfeature__body ha-body ha-narrate">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+      </div>
+
+      {%- comment -%}
+        The link is a grid child in its own right, not the last thing inside the
+        text column. That is what lets it sit against the FOOT of the band on
+        desktop, level with the bottom of the pictures, the way the design draws
+        it — inside the text column it would simply follow the paragraph and
+        float in the middle of the band. On mobile it falls back into reading
+        order directly after the copy.
+      {%- endcomment -%}
+      {%- if section.settings.cta_text != blank -%}
+        <div class="ha-cfeature__cta">
+          <a class="ha-link ha-identify" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a>
+        </div>
+      {%- endif -%}
+
+      <div class="ha-cfeature__media">
+        {%- render 'ha-figure',
+          image: section.settings.image_one,
+          label: section.settings.label_one,
+          class: 'ha-cfeature__figure ha-cfeature__figure--tall',
+          sizes: '(min-width: 990px) 32vw, 100vw',
+          alt: section.settings.alt_one
+        -%}
+        {%- render 'ha-figure',
+          image: section.settings.image_two,
+          label: section.settings.label_two,
+          class: 'ha-cfeature__figure ha-cfeature__figure--upper',
+          sizes: '(min-width: 990px) 22vw, 50vw',
+          alt: section.settings.alt_two
+        -%}
+        {%- render 'ha-figure',
+          image: section.settings.image_three,
+          label: section.settings.label_three,
+          class: 'ha-cfeature__figure ha-cfeature__figure--lower',
+          sizes: '(min-width: 990px) 22vw, 50vw',
+          alt: section.settings.alt_three
+        -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Circle feature",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "peat", "options": [
+      { "value": "page", "label": "Page ground" },
+      { "value": "white", "label": "White" },
+      { "value": "peat", "label": "Peat (dark)" },
+      { "value": "clay", "label": "Clay" },
+      { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Gatherings" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "header", "content": "Link", "info": "Sits at the foot of the band, level with the pictures." },
+    { "type": "text", "id": "cta_text", "label": "Link text" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "header", "content": "Pictures", "info": "One tall frame beside two stacked, as the design draws it." },
+    { "type": "image_picker", "id": "image_one", "label": "Tall frame" },
+    { "type": "text", "id": "alt_one", "label": "Tall frame alt text" },
+    { "type": "text", "id": "label_one", "label": "Tall frame placeholder label", "default": "01 / Table · Cloth · Conversation" },
+    { "type": "image_picker", "id": "image_two", "label": "Upper frame" },
+    { "type": "text", "id": "alt_two", "label": "Upper frame alt text" },
+    { "type": "text", "id": "label_two", "label": "Upper frame placeholder label", "default": "02 / Artisan" },
+    { "type": "image_picker", "id": "image_three", "label": "Lower frame" },
+    { "type": "text", "id": "alt_three", "label": "Lower frame alt text" },
+    { "type": "text", "id": "label_three", "label": "Lower frame placeholder label", "default": "03 / The Atelier" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "Hartwick — Circle feature" }]
+}
+{% endschema %}

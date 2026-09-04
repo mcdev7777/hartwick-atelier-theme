@@ -3011,13 +3011,15 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 .ha-ccols__mark {
   display: flex;
-  gap: 1.6rem;
+  gap: 0.8rem;
   font-size: var(--ha-t-meta);
   letter-spacing: var(--ha-track-meta);
   color: var(--ha-text-quiet);
   margin: 0 0 1.6rem;
   font-variant-numeric: lining-nums tabular-nums;
 }
+
+.ha-ccols__slash { opacity: 0.5; }
 
 .ha-ccols__col-heading {
   font-size: var(--ha-t-expression);
@@ -3056,6 +3058,46 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   .ha-ccols__col + .ha-ccols__col { border-inline-start: 1px solid var(--ha-rule); }
   .ha-ccols__col:first-child { padding-inline-start: 0; }
   .ha-ccols__col:last-child { padding-inline-end: 0; }
+}
+
+/* --- Gatherings: a text column and three pictures ------------------------
+   The design's arrangement: one tall frame beside two stacked ones, with the
+   link anchored to the foot of the band level with the bottom of the group. */
+
+.ha-cfeature__grid { display: grid; gap: 3.2rem; }
+.ha-cfeature__heading { margin: 0 0 2rem; }
+.ha-cfeature__body { max-width: 42ch; }
+
+.ha-cfeature__media {
+  display: grid;
+  gap: 1.4rem;
+  grid-template-columns: 1.15fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.ha-cfeature__figure--tall  { grid-column: 1; grid-row: 1 / span 2; }
+.ha-cfeature__figure--upper { grid-column: 2; grid-row: 1; }
+.ha-cfeature__figure--lower { grid-column: 2; grid-row: 2; }
+
+/* Mobile: the group keeps its shape but needs a floor, or two stacked frames
+   sharing one row collapse to the height of their labels. */
+.ha-cfeature__media { min-height: 42rem; }
+
+.ha-cfeature__cta { margin-top: 0.8rem; }
+
+@media screen and (min-width: 990px) {
+  /* Text column, then the picture group. The link takes the second row of the
+     first column so it sits at the foot rather than under the paragraph. */
+  .ha-cfeature__grid {
+    grid-template-columns: 1fr 1.75fr;
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(3.2rem, 5vw, 7.2rem);
+    row-gap: 0;
+  }
+  .ha-cfeature__lead  { grid-column: 1; grid-row: 1; }
+  .ha-cfeature__cta   { grid-column: 1; grid-row: 2; align-self: end; margin-top: 3.2rem; }
+  .ha-cfeature__media { grid-column: 2; grid-row: 1 / span 2; min-height: 0; height: 100%; }
+  .ha-cfeature__media { max-height: var(--ha-media-cap); }
 }
 
 /* --- request access ------------------------------------------------------ */
@@ -3108,7 +3150,15 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 .ha-crequest__pair { display: grid; gap: 2.8rem; }
 
-.ha-crequest__checks { display: grid; gap: 1.2rem; margin-top: 0.4rem; }
+/* Two across, as the design lays them out:
+       NEW COLLECTIONS      MASTERS & MATERIALS
+       PRIVATE APPOINTMENTS GATHERINGS
+   One column on a phone, where two would put a long label on three lines. */
+.ha-crequest__checks { display: grid; gap: 1.2rem 2.4rem; margin-top: 0.4rem; }
+
+@media screen and (min-width: 560px) {
+  .ha-crequest__checks { grid-template-columns: 1fr 1fr; }
+}
 
 /* 44px touch target from the mobile brief §2, held by the row itself rather
    than by padding the box, so the label stays on its own baseline. */
