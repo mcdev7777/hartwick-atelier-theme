@@ -12,7 +12,8 @@
         "body": "<p>A digital house where the making is never separated from the garment. Every interaction should reveal origin before transaction.</p>",
         "cta_text": "Enter the collection",
         "cta_link": "/collections/all",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "image": "shopify://shop_images/HartwickAtelier-About-Hero.jpg"
       }
     },
     "house": {
@@ -24,7 +25,10 @@
         "lead_image_label": "Archive image / landscape / cloth detail",
         "tile_one_label": "01 / Raw cloth",
         "tile_two_label": "02 / Archive image",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "lead_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg",
+        "tile_one_image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg",
+        "tile_two_image": "shopify://shop_images/HartwickAtelier-About-Collage-02.jpg"
       }
     },
     "collection_index": {
@@ -34,49 +38,77 @@
           "type": "row",
           "settings": {
             "name": "",
-            "lot": ""
+            "lot": "",
+            "image_primary": "shopify://shop_images/HartwickAtelier-AmmanShirtNatural-01.jpg",
+            "image_detail_one": "shopify://shop_images/HartwickAtelier-AmmanShirtNatural-02.jpg",
+            "image_detail_two": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg",
+            "image_wearer": "shopify://shop_images/HartwickAtelier-About-Hero.jpg"
           }
         },
         "row_2": {
           "type": "row",
           "settings": {
             "name": "",
-            "lot": ""
+            "lot": "",
+            "image_primary": "shopify://shop_images/HartwickAtelier-PalmaSkirtNavy-01.jpg",
+            "image_detail_one": "shopify://shop_images/HartwickAtelier-PalmaSkirtNavy-02.jpg",
+            "image_detail_two": "shopify://shop_images/HartwickAtelier-Dupatta1-01.jpg",
+            "image_wearer": "shopify://shop_images/HartwickAtelier-About-Hero-02.jpg"
           }
         },
         "row_3": {
           "type": "row",
           "settings": {
             "name": "",
-            "lot": ""
+            "lot": "",
+            "image_primary": "shopify://shop_images/HartwickAtelier-BombayPants-Navy-01.jpg",
+            "image_detail_one": "shopify://shop_images/HartwickAtelier-BombayPants-Navy-02.jpg",
+            "image_detail_two": "shopify://shop_images/HartwickAtelier-Stole1-02.jpg",
+            "image_wearer": "shopify://shop_images/HartwickAtelier-About-Collage-01.jpg"
           }
         },
         "row_4": {
           "type": "row",
           "settings": {
             "name": "",
-            "lot": ""
+            "lot": "",
+            "image_primary": "shopify://shop_images/HartwickAtelier-TribecaSkirtEmerald-01.jpg",
+            "image_detail_one": "shopify://shop_images/HartwickAtelier-TribecaSkirtEmerald-05.jpg",
+            "image_detail_two": "shopify://shop_images/HartwickAtelier-SantaFeIkat-01.jpg",
+            "image_wearer": "shopify://shop_images/HartwickAtelier-About-Collage-02.jpg"
           }
         },
         "row_5": {
           "type": "row",
           "settings": {
             "name": "",
-            "lot": ""
+            "lot": "",
+            "image_primary": "shopify://shop_images/HartwickAtelier-AlexandriaPendant-01.jpg",
+            "image_detail_one": "shopify://shop_images/HartwickAtelier-BallastPendant-01.jpg",
+            "image_detail_two": "shopify://shop_images/HartwickAtelier-DropEarrings-02.jpg",
+            "image_wearer": "shopify://shop_images/HartwickAtelier-About-Collage-03.jpg"
           }
         },
         "row_6": {
           "type": "row",
           "settings": {
             "name": "",
-            "lot": ""
+            "lot": "",
+            "image_primary": "shopify://shop_images/HartwickAtelier-JaipurScarf-01.jpg",
+            "image_detail_one": "shopify://shop_images/HartwickAtelier-JaipurScarf-02.jpg",
+            "image_detail_two": "shopify://shop_images/HartwickAtelier-Stole2-01.jpg",
+            "image_wearer": "shopify://shop_images/HartwickAtelier-Event-London.jpg"
           }
         },
         "row_7": {
           "type": "row",
           "settings": {
             "name": "",
-            "lot": ""
+            "lot": "",
+            "image_primary": "shopify://shop_images/HartwickAtelier-OkanaganLongSummer-01.jpg",
+            "image_detail_one": "shopify://shop_images/HartwickAtelier-OkanaganLongSummer-02.jpg",
+            "image_detail_two": "shopify://shop_images/HartwickAtelier-Dupatta2-01.jpg",
+            "image_wearer": "shopify://shop_images/HartwickAtelier-Event-Paris.jpg"
           }
         }
       },
@@ -194,7 +226,10 @@
         "cta_show_count": false,
         "cta_suffix": "[14] pieces",
         "cta_link": "/pages/the-masters",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "bg_image_mobile": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
+        "portrait_image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg",
+        "workshop_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg"
       }
     },
     "featured_lot": {
@@ -209,7 +244,8 @@
         "ph_colour": "Natural indigo",
         "ph_made_by": "The Masters, Rajasthan",
         "ph_availability": "Through The Register",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "image": "shopify://shop_images/HartwickAtelier-SamarkandNavy-01.jpg"
       }
     },
     "journal": {
@@ -220,7 +256,8 @@
           "settings": {
             "title": "The Loom",
             "excerpt": "A story from the workshop.",
-            "image_label": "01 / Editorial image"
+            "image_label": "01 / Editorial image",
+            "image": "shopify://shop_images/042HARTWICK_HANDWOVEN_KHADI_PARIS_TROUSERS_PINK4R1A2705.jpg"
           }
         },
         "c2": {
@@ -228,7 +265,8 @@
           "settings": {
             "title": "The Colour",
             "excerpt": "The plant, mineral and season behind the cloth.",
-            "image_label": "02 / Editorial image"
+            "image_label": "02 / Editorial image",
+            "image": "shopify://shop_images/001_HARTWICK_OKANAGAN_ROBE_KALAMALKA_BLOCKPRINT_d3e29d4c-3571-40a3-9e7e-6e3b38dbbacc.jpg"
           }
         },
         "c3": {
@@ -236,7 +274,8 @@
           "settings": {
             "title": "The Wearer",
             "excerpt": "The garment once it enters someone's life.",
-            "image_label": "03 / Editorial image"
+            "image_label": "03 / Editorial image",
+            "image": "shopify://shop_images/HartwickAtelier-About-Hero-02.jpg"
           }
         }
       },

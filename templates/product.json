@@ -85,7 +85,7 @@
         "show_placeholder_note": true,
         "field": "page",
         "show_spec_table": false,
-        "image": "shopify://shop_images/HartwickAtelier-About-Collage-01.jpg"
+        "image": "shopify://shop_images/005_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_SILK_AMMAN_SHIRT_LINEN_SILK_bc14587d-9c57-4bb5-b00e-5fdc7f9c7f8a.jpg"
       }
     },
     "ha_record": {
@@ -111,7 +111,7 @@
         "field": "peat",
         "heading": "What the hand leaves inside the material.",
         "intro": "<p>Explain fibre, yarn, weave, weight, dye, surface and behaviour. Natural variation is described precisely, never as an excuse.</p>",
-        "image": "shopify://shop_images/007_HARTWICK_ATELIER_LANDSCAPES132_L1050394.jpg"
+        "image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg"
       }
     },
     "ha_origin": {
@@ -227,7 +227,7 @@
         "image_label": "Wearer image / optional / approved",
         "show_placeholder_note": true,
         "field": "page",
-        "image": "shopify://shop_images/HartwickAtelier-About-Hero.jpg"
+        "image": "shopify://shop_images/HartwickAtelier-About-Hero-02.jpg"
       }
     },
     "ha_authorship": {
@@ -241,7 +241,7 @@
         "portrait_label": "Master portrait / name and permission required",
         "workshop_label": "Workshop image / place / process / contribution",
         "show_placeholder_note": true,
-        "portrait_image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg",
+        "portrait_image": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
         "workshop_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg"
       }
     },
@@ -299,7 +299,7 @@
         "story_label": "Journal image / the cloth / the master",
         "story_kicker": "The cloth / the master",
         "story_cta": "Read the related story",
-        "story_image": "shopify://shop_images/004_HARTWICK_ATELIER_LANDSCAPES166_L1050442.jpg"
+        "story_image": "shopify://shop_images/007_HARTWICK_ATELIER_LANDSCAPES132_L1050394.jpg"
       },
       "blocks": {
         "b1": {
@@ -307,7 +307,8 @@
           "settings": {
             "ph_name": "Skirt 001",
             "ph_expression": "Tiny Pinstripe Cotton Khadi",
-            "ph_image_label": "Product / on body"
+            "ph_image_label": "Product / on body",
+            "product": "calcutta-skirt-and-top-set-handwoven-blue-stripe-border"
           }
         },
         "b2": {
@@ -315,7 +316,8 @@
           "settings": {
             "ph_name": "Trouser 001",
             "ph_expression": "Celeste Handwoven Ikat",
-            "ph_image_label": "Product / on body"
+            "ph_image_label": "Product / on body",
+            "product": "bombay-trousers-handwoven-ikat"
           }
         }
       },

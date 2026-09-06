@@ -11,7 +11,7 @@
 
 <section
   class="ha-section ha-hero"
-  style="--ha-hero-media-width: {{ section.settings.media_width }}%;"
+  style="--ha-hero-media-width: {{ section.settings.media_width }}%; --ha-hero-height: {{ section.settings.height | default: 84 }}vh;"
 >
   <div class="ha-hero__grid">
     <div class="ha-hero__media">
@@ -65,22 +65,110 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
-    { "type": "header", "content": "Image" },
-    { "type": "image_picker", "id": "image", "label": "Campaign image" },
-    { "type": "text", "id": "image_alt", "label": "Image alt text", "info": "Describe the image for screen readers. Required before launch." },
-    { "type": "text", "id": "image_label", "label": "Placeholder label", "default": "Campaign image / cloth in motion", "info": "Shown only while there is no image. Clear it once the real image is in." },
-    { "type": "range", "id": "media_width", "min": 40, "max": 70, "step": 1, "unit": "%", "label": "Image width (desktop)", "default": 58 },
-    { "type": "header", "content": "Text" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Nature · Masters · Wearer" },
-    { "type": "checkbox", "id": "show_eyebrow_desktop", "label": "Show eyebrow on desktop", "default": false, "info": "The wireframe shows it on mobile only." },
-    { "type": "textarea", "id": "heading", "label": "Headline", "default": "Woven from the earth.\nWorn by those who know." },
-    { "type": "textarea", "id": "subhead", "label": "Record line", "default": "Cloth as a record of material, place and human knowledge" },
-    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>A digital house where the making is never separated from the garment. Every interaction should reveal origin before transaction.</p>" },
-    { "type": "text", "id": "cta_text", "label": "Link text", "default": "Enter the collection" },
-    { "type": "url", "id": "cta_link", "label": "Link" },
-    { "type": "header", "content": "Provisional content" },
-    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Campaign image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "info": "Describe the image for screen readers. Required before launch."
+    },
+    {
+      "type": "text",
+      "id": "image_label",
+      "label": "Placeholder label",
+      "default": "Campaign image / cloth in motion",
+      "info": "Shown only while there is no image. Clear it once the real image is in."
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "min": 40,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "label": "Image width (desktop)",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Section height",
+      "min": 50,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "default": 84,
+      "info": "Share of the screen height the hero fills on desktop. The Circle page runs taller than the homepage."
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Nature · Masters · Wearer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow_desktop",
+      "label": "Show eyebrow on desktop",
+      "default": false,
+      "info": "The wireframe shows it on mobile only."
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Headline",
+      "default": "Woven from the earth.\nWorn by those who know."
+    },
+    {
+      "type": "textarea",
+      "id": "subhead",
+      "label": "Record line",
+      "default": "Cloth as a record of material, place and human knowledge"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>A digital house where the making is never separated from the garment. Every interaction should reveal origin before transaction.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Link text",
+      "default": "Enter the collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Provisional content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_placeholder_note",
+      "label": "Show placeholder notice",
+      "default": true
+    }
   ],
-  "presets": [{ "name": "Hartwick — Hero" }]
+  "presets": [
+    {
+      "name": "Hartwick — Hero"
+    }
+  ]
 }
 {% endschema %}

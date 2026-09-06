@@ -247,7 +247,18 @@
 
 @media screen and (min-width: 990px) {
   .ha-hero__grid { grid-template-columns: var(--ha-hero-media-width, 58%) 1fr; }
-  .ha-hero__figure { aspect-ratio: auto; height: 100%; min-height: 56rem; max-height: 84vh; }
+  /* Height is a per-section setting now. Ivan, 5 September: the Circle hero
+     "must have a bigger height than now. it looks too small." The homepage hero
+     is right as it is, so this is a variable rather than a new global number —
+     the Circle page asks for 92%, the homepage keeps 84%. The min-height floor
+     stops a short viewport collapsing the picture altogether. */
+  .ha-hero__figure {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: min(56rem, var(--ha-hero-height, 84vh));
+    max-height: var(--ha-hero-height, 84vh);
+  }
+  .ha-hero__grid { min-height: var(--ha-hero-height, 84vh); }
   .ha-hero__text { padding: 6.4rem clamp(3.2rem, 4vw, 5.6rem); }
   .ha-hero__eyebrow--desktop-hidden { display: none; }
 }
@@ -3217,7 +3228,17 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-crequest__body { margin-bottom: 3.2rem; max-width: 46ch; }
 .ha-crequest__closed { margin: 0; max-width: 46ch; }
 
-.ha-crequest__form { max-width: 52rem; }
+/* NO CAP ON THE FORM. Ivan, 5 September: "the right panel seems to be too
+   narrow […] there is a too big space right next to the info section."
+
+   The panel was the right width all along; the FORM inside it was capped at
+   520px, so on a 677px panel roughly a sixth of the column was dead ground to
+   the right of every field. A measure cap is the correct instinct for a
+   paragraph and the wrong one for a form: an input is not read left-to-right
+   across its full width, so nothing is gained by shortening it, and the ragged
+   right edge reads as a mistake. The panel's own padding already sets the
+   margin. */
+.ha-crequest__form { max-width: none; }
 
 .ha-crequest__field { margin-bottom: 2.8rem; border: 0; padding: 0; min-width: 0; }
 
@@ -3336,7 +3357,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 
 @media screen and (min-width: 990px) {
-  .ha-crequest__grid { grid-template-columns: 1fr 1.15fr; align-items: stretch; }
+  .ha-crequest__grid { grid-template-columns: 1fr 1.35fr; align-items: stretch; }
   .ha-crequest__panel { grid-column: 2; padding-inline: clamp(4rem, 5vw, 8rem); }
 
   /* THE PICTURE RUNS THE FULL HEIGHT OF THE FORM, as the design draws it: two
@@ -3398,6 +3419,20 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-pdp__zoom:focus-visible { outline: 2px solid var(--ha-text-invert); outline-offset: -4px; }
 
 .ha-zoom-open { overflow: hidden; }
+
+/* THE ATTRIBUTE NEEDS HELP FROM AN AUTHOR RULE.
+
+   `hidden` only hides an element because the browser's own stylesheet says
+   `[hidden] { display: none }` — and ANY author rule setting display beats it.
+   `.ha-zoom { display: grid }` is exactly such a rule, so `dialog.hidden = true`
+   set the attribute, changed nothing, and left the panel covering the screen.
+   Every close route was firing correctly; none of them could take effect.
+
+   Worth recording how this got through: the test asserted `dialog.hidden`, which
+   is the property, not `getComputedStyle(dialog).display`, which is the fact. It
+   passed while the bug was fully present. Check the computed value, not the flag
+   you just set. */
+.ha-zoom[hidden] { display: none !important; }
 
 .ha-zoom {
   position: fixed;

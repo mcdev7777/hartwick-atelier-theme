@@ -58,11 +58,13 @@
         "eyebrow": "The Circle / Private client access",
         "show_eyebrow_desktop": true,
         "heading": "A closer relationship with the work.",
-        "body": "<p><em>Placeholder — the invitation copy is pending Aloha. Nothing about what The Circle offers may be written by the build.</em></p>",
+        "body": "<p>The Circle brings together those who want to understand how a piece is made, who made it, and how it can be kept in use for years.</p><p>Members receive early viewing of new Lots, invitations to private appointments and gatherings, and occasional notes from the atelier.</p>",
         "cta_text": "Request access",
         "cta_link": "/pages/the-circle#request-access",
         "image_label": "01 / Gathering · Conversation · Cloth",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "image": "shopify://shop_images/HartwickAtelier-Event-London.jpg",
+        "height": 92
       }
     },
     "holds": {
@@ -73,7 +75,7 @@
           "settings": {
             "label": "",
             "heading": "Early viewing",
-            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+            "body": "<p>See new Lots before their public release, with the material and making records available alongside them.</p>"
           }
         },
         "c2": {
@@ -81,7 +83,7 @@
           "settings": {
             "label": "",
             "heading": "Private appointments",
-            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+            "body": "<p>Book a considered viewing, online or in person, to discuss fit, provenance and the pieces that suit you.</p>"
           }
         },
         "c3": {
@@ -89,7 +91,7 @@
           "settings": {
             "label": "",
             "heading": "Atelier notes",
-            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+            "body": "<p>Receive periodic notes on materials, dyeing, techniques, care and the development of future collections.</p>"
           }
         },
         "c4": {
@@ -97,16 +99,21 @@
           "settings": {
             "label": "",
             "heading": "Care and repair",
-            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+            "body": "<p>Access practical guidance that helps each piece stay well, with repair support where it is available.</p>"
           }
         }
       },
-      "block_order": ["c1", "c2", "c3", "c4"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
       "settings": {
         "field": "page",
         "eyebrow": "What the Circle holds",
         "heading": "Access built around knowledge, not urgency.",
-        "aside": "<p><em>Placeholder — pending Aloha.</em></p>",
+        "aside": "<p>This is not a points programme or a route to constant promotion. It is a quieter way to stay close to the collection, the Masters and the practical life of each garment.</p>",
         "show_placeholder_note": true
       }
     },
@@ -116,13 +123,16 @@
         "field": "peat",
         "eyebrow": "Gatherings",
         "heading": "Time to look closely. Time to ask questions.",
-        "body": "<p><em>Placeholder — pending Aloha.</em></p>",
+        "body": "<p>Small gatherings around cloth, jewellery and the people who made them. Details are shared with The Circle when dates are confirmed.</p>",
         "cta_text": "Register interest in a gathering",
         "cta_link": "/pages/the-circle#request-access",
-        "label_one": "01 / Table \u00b7 Cloth \u00b7 Conversation",
+        "label_one": "01 / Table · Cloth · Conversation",
         "label_two": "02 / Artisan",
         "label_three": "03 / The Atelier",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "image_one": "shopify://shop_images/HartwickAtelier-Event-Paris.jpg",
+        "image_two": "shopify://shop_images/002_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
+        "image_three": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg"
       }
     },
     "how": {
@@ -133,7 +143,7 @@
           "settings": {
             "label": "Request",
             "heading": "Tell us what interests you.",
-            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+            "body": "<p>Share your location and the parts of Hartwick Atelier you would like to follow.</p>"
           }
         },
         "s2": {
@@ -141,7 +151,7 @@
           "settings": {
             "label": "Reply",
             "heading": "We answer personally.",
-            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+            "body": "<p>Every request is read by the team. We reply with a note so the correspondence remains relevant.</p>"
           }
         },
         "s3": {
@@ -149,11 +159,15 @@
           "settings": {
             "label": "Access",
             "heading": "Stay close to the work.",
-            "body": "<p><em>Placeholder — pending Aloha.</em></p>"
+            "body": "<p>Receive the notes, viewings and invitations that match your interests. Leave at any time.</p>"
           }
         }
       },
-      "block_order": ["s1", "s2", "s3"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
       "settings": {
         "field": "page",
         "eyebrow": "How it works",
@@ -168,28 +182,35 @@
           "type": "card",
           "settings": {
             "title": "The people behind the work",
-            "excerpt": "Placeholder — pending Aloha.",
-            "image_label": "01 / Workshop"
+            "excerpt": "A visit to the hands and workshops behind each piece.",
+            "image_label": "01 / Workshop",
+            "image": "shopify://shop_images/HartwickAtelier-About-Angela2.jpg"
           }
         },
         "n2": {
           "type": "card",
           "settings": {
             "title": "Why this material",
-            "excerpt": "Placeholder — pending Aloha.",
-            "image_label": "02 / Material"
+            "excerpt": "The origin, behaviour and practical value of the cloth.",
+            "image_label": "02 / Material",
+            "image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg"
           }
         },
         "n3": {
           "type": "card",
           "settings": {
             "title": "Keeping a piece in use",
-            "excerpt": "Placeholder — pending Aloha.",
-            "image_label": "03 / Care"
+            "excerpt": "Care, repair and the changes that come with wear.",
+            "image_label": "03 / Care",
+            "image": "shopify://shop_images/HartwickAtelier-About-Collage-03.jpg"
           }
         }
       },
-      "block_order": ["n1", "n2", "n3"],
+      "block_order": [
+        "n1",
+        "n2",
+        "n3"
+      ],
       "settings": {
         "field": "page",
         "eyebrow": "From the atelier",
@@ -201,18 +222,47 @@
     "request": {
       "type": "ha-circle-request",
       "blocks": {
-        "i1": { "type": "interest", "settings": { "label": "New collections", "tag": "Circle interest: New collections" } },
-        "i2": { "type": "interest", "settings": { "label": "Masters & materials", "tag": "Circle interest: Masters and materials" } },
-        "i3": { "type": "interest", "settings": { "label": "Private appointments", "tag": "Circle interest: Private appointments" } },
-        "i4": { "type": "interest", "settings": { "label": "Gatherings", "tag": "Circle interest: Gatherings" } }
+        "i1": {
+          "type": "interest",
+          "settings": {
+            "label": "New collections",
+            "tag": "Circle interest: New collections"
+          }
+        },
+        "i2": {
+          "type": "interest",
+          "settings": {
+            "label": "Masters & materials",
+            "tag": "Circle interest: Masters and materials"
+          }
+        },
+        "i3": {
+          "type": "interest",
+          "settings": {
+            "label": "Private appointments",
+            "tag": "Circle interest: Private appointments"
+          }
+        },
+        "i4": {
+          "type": "interest",
+          "settings": {
+            "label": "Gatherings",
+            "tag": "Circle interest: Gatherings"
+          }
+        }
       },
-      "block_order": ["i1", "i2", "i3", "i4"],
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4"
+      ],
       "settings": {
         "field": "page",
         "anchor": "request-access",
         "eyebrow": "Request access",
         "heading": "Tell us what you would like to follow.",
-        "body": "<p><em>Placeholder — the wording that sets expectations about how a request is handled is pending Aloha.</em></p>",
+        "body": "<p>Applications are read personally. The information below helps us send fewer, more relevant communications.</p>",
         "show_form": true,
         "contact_tag": "Circle: Requested Access",
         "show_extra_fields": true,
@@ -222,7 +272,8 @@
         "success_text": "Thank you. Your request has been received.",
         "closed_text": "<p><em>The Circle is invitation-only. Placeholder — wording pending Aloha.</em></p>",
         "image_label": "01 / Portrait · Object · Place",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg"
       }
     },
     "details": {
@@ -257,7 +308,12 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4"],
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
       "settings": {
         "field": "page",
         "eyebrow": "The details",
@@ -269,7 +325,7 @@
       "settings": {
         "eyebrow": "The Register",
         "heading": "For those who prefer simply to receive the notes.",
-        "body": "<p><em>Placeholder — pending Aloha. The Register is separate from The Circle: joining it does not request Circle access.</em></p>",
+        "body": "<p>The Register shares new Lots, The Dispatch and notes from the workshops. No application is required.</p>",
         "body_position": "form",
         "show_native_form": true,
         "contact_tag": "the-register"

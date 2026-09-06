@@ -40,7 +40,14 @@
           <p class="ha-continue__kicker ha-record">{{ section.settings.story_kicker }}</p>
           <a class="ha-continue__more ha-record" href="{{ story.url }}">{{ section.settings.story_cta }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
         {%- else -%}
-          {%- render 'ha-figure', label: section.settings.story_label, class: 'ha-continue__figure ha-continue__figure--story' -%}
+          {%- comment -%}
+            The chosen picture is used here too. Previously this branch rendered
+            a figure with no image at all, so a "Story image" set in the theme
+            editor was silently dropped whenever no article was linked — which
+            is exactly the state the page is in before the Journal is populated,
+            and is why this frame was the last grey box on the product page.
+          {%- endcomment -%}
+          {%- render 'ha-figure', image: story_img, label: section.settings.story_label, class: 'ha-continue__figure ha-continue__figure--story', sizes: '(min-width: 990px) 40vw, 100vw' -%}
           <p class="ha-continue__kicker ha-record">{{ section.settings.story_kicker }}</p>
           <span class="ha-continue__more ha-record ha-link--inert">{{ section.settings.story_cta }}<span class="ha-pdp__arrow" aria-hidden="true"></span></span>
         {%- endif -%}
