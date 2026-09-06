@@ -493,9 +493,54 @@
 .ha-record__link { margin-top: 4.8rem; font-size: var(--ha-t-expression); letter-spacing: 0.04em; display: inline-block; }
 
 @media screen and (min-width: 990px) {
-  .ha-lot__grid { grid-template-columns: 57% 1fr; }
-  .ha-lot__figure { height: 100%; aspect-ratio: auto; min-height: 48rem; max-height: var(--ha-media-cap); }
+  .ha-lot__grid { grid-template-columns: 57% 1fr; align-items: stretch; }
   .ha-lot__panel { padding: 6.4rem clamp(3.2rem, 4vw, 5.6rem); }
+
+  /* THE PICTURE MATCHES THE RECORD BESIDE IT, LINK INCLUDED.
+
+     Ivan, 5 September: "the left image must have the same height as the right
+     section including the 'the origin' link."
+
+     It was capped at --ha-media-cap, so on a tall record it stopped level with
+     the middle of the table and left a strip of ground under it — and
+     .ha-record__link, which closes the record with a 48px space above it, sat
+     well below the bottom of the photograph.
+
+     The ceiling is right for a picture sharing a page with running text and
+     wrong for one that IS half of a two-column band. Third place this
+     distinction has been drawn now: the Circle's request panel, Made by
+     Masters, and here.
+
+     Flex on the media cell rather than `height: 100%` on the figure: the cell is
+     a stretched grid item with a definite height, so a flex child fills it
+     without relying on percentage resolution against a stretched box. The panel
+     decides the height; the photograph fills whatever that is. */
+  /* The figure is taken OUT OF FLOW so the panel decides the height.
+
+     Flex alone was not enough and looked as though it was: both columns
+     measured 1270px, but the panel's own content ended 642px above the bottom
+     of the photograph. The picture was stretching the row — a portrait file at
+     57% of the page is intrinsically about 1270px tall — and the panel was
+     being dragged along with it. Equal heights, set by the wrong one.
+
+     Absolute inside a relative cell removes the picture from the row's
+     calculation entirely, so the row is exactly as tall as the record and its
+     closing link need, and the photograph fills that. The min-height sits on
+     the CELL, not the figure, so it still guards a short record without
+     handing the picture any say. */
+  .ha-lot__media { position: relative; align-self: stretch; min-height: 48rem; }
+
+  .ha-lot__figure {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .ha-lot__figure img { width: 100%; height: 100%; object-fit: cover; }
 }
 
 /* ==========================================================================
