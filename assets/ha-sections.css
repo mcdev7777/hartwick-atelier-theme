@@ -1403,6 +1403,27 @@
     column-gap: var(--ha-pdp-col-gap);
     align-items: start;
   }
+
+  /* THE MATERIAL RECORD IS NOT ON THE SHARED 418|850 SPLIT ANY MORE.
+
+     Measured off 04_HA_Product_Desktop_REVISED_EDITABLE.pdf at 150dpi. On the
+     design's 1500-unit page width the band reads:
+
+         gutter 73 | record 575 | gap 143 | picture 636 | gutter 73
+
+     The shared module gave the picture 62% of the content box; the revised
+     design gives it 47%. That difference is the whole of Aloha's "the right
+     image is too big" — the split was inherited from the older wireframe and
+     was never re-measured against this file.
+
+     The gap is expressed in vw because the design's 143 is 9.5% of its page
+     width, so it holds its proportion at any viewport rather than pinning to
+     one screen. */
+  .ha-precord__grid {
+    grid-template-columns: 575fr 636fr;
+    column-gap: clamp(3.2rem, 9.5vw, 14.3rem);
+    align-items: start;
+  }
 }
 
 /* --- 06  The Garment ----------------------------------------------------- */
@@ -2627,9 +2648,14 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 @media screen and (min-width: 990px) {
   /* images left x0-890 (full bleed to page edge), text right x960-1382 */
-  .ha-authorship__grid { grid-template-columns: 62fr 38fr; column-gap: 0; align-items: stretch; }
-  .ha-authorship__media { display: grid; grid-template-columns: 4fr 3fr; gap: 0; }
-  .ha-authorship__figure, .ha-authorship__figure + .ha-authorship__figure { margin: 0; aspect-ratio: auto; height: 100%; min-height: 38rem; max-height: var(--ha-media-cap); }
+  /* MADE BY MASTERS, measured off the same PDF:
+         picture block 927 | gap 72 | text 428 | gutter 73   (of 1500)
+     The 62/38 split was already right. The two pictures sit flush against each
+     other with no gap, 519 and 408 wide, and they run the FULL height of the
+     band and bleed to the left page edge — no inset on three sides. */
+  .ha-authorship__grid { grid-template-columns: 927fr 573fr; column-gap: 0; align-items: stretch; }
+  .ha-authorship__media { display: grid; grid-template-columns: 519fr 408fr; gap: 0; }
+  .ha-authorship__figure, .ha-authorship__figure + .ha-authorship__figure { margin: 0; aspect-ratio: auto; height: 100%; min-height: 38rem; }
   .ha-authorship__text { align-self: center; }
 }
 
@@ -2837,13 +2863,24 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 @media screen and (min-width: 990px) {
   .ha-authorship__text.ha-wrap {
-    padding-left: clamp(3.2rem, 4vw, 6.4rem);
+    /* 72 of 1500 in the design = 4.8vw */
+    padding-left: clamp(3.2rem, 4.8vw, 7.2rem);
     padding-right: var(--ha-gutter);
-    padding-top: 0;
-    padding-bottom: 0;
   }
-  /* the band still applies to the section as a whole */
-  .ha-authorship { padding-block: var(--ha-pdp-section-y); }
+  /* THE PICTURES BLEED TOP AND BOTTOM; THE TEXT KEEPS ITS BAND.
+
+     In the design the two photographs run to the very top and bottom edges of
+     the band and hard against the left page edge — three-sided bleed — while
+     the writing beside them sits in a generous band of its own.
+
+     This is the resolution of an apparent conflict. Aloha asked on 5 September
+     for top padding on Made by Masters; the design file she has since sent has
+     no gap above the photographs at all. Both are satisfied by moving the band
+     off the SECTION and onto the TEXT COLUMN: the writing gets the air she was
+     missing, and the pictures bleed exactly as drawn. Padding on the section
+     would have letterboxed them in their own band. */
+  .lx-template--product .ha-authorship { padding-block: 0; }
+  .lx-template--product .ha-authorship__text.ha-wrap { padding-block: var(--ha-pdp-section-y); }
   /* Was 60rem — a 600px floor that put the pair of portraits well past the
      restraint Aloha asked for on 4 September. See the coda at the foot of this
      file for the single ceiling they now share. */
@@ -2934,7 +2971,12 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    page in one column, the breadcrumb was starting hard against the header with
    nothing to separate them. */
 .lx-template--product .ha-garment .ha-wrap { padding-top: var(--ha-pdp-section-y); }
-.lx-template--product .ha-authorship { padding-top: var(--ha-pdp-section-y); }
+
+/* Made by Masters carries its band on the TEXT column, not on the section —
+   the design bleeds the photographs to the top and bottom edges. Aloha's
+   request for top padding here is met by the text's own band; see the note by
+   `.ha-authorship__text.ha-wrap` below. */
+.lx-template--product .ha-authorship { padding-top: 0; }
 
 @media screen and (min-width: 990px) {
   .lx-template--product .ha-pdp__grid { padding-top: 0; }
@@ -3069,28 +3111,74 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
      This also means the section can never again be made taller by swapping in a
      taller photograph, which is the failure mode that produced the complaint. */
+  /* The picture is a SHAPE, not a panel stretched to the record beside it.
+
+     In the revised design it measures 636 x 585 — very nearly square — and sits
+     vertically centred in the band with the record running taller than it on
+     the left. Both of my previous attempts were wrong in opposite directions:
+     first the photograph's own height drove the row (1368px), then the record
+     drove it (744px). The design has neither driving the other. The picture
+     holds its own proportion and centres; the record is simply as tall as it
+     needs to be. */
   body.lx-template--product .ha-precord__grid .ha-precord__media {
-    position: relative;
+    position: static;
     display: block;
-    align-self: stretch;
+    align-self: center;
     min-height: 0;
+    max-height: none;
   }
 
   body.lx-template--product .ha-precord__grid .ha-precord__figure,
   body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
     width: 100%;
-    height: 100%;
+    height: auto;
     min-height: 0;
     max-height: none;
-    aspect-ratio: auto;
+    aspect-ratio: 636 / 585;
   }
 
-  /* Authorship's pair of portraits. */
-  .ha-authorship__figure,
-  .ha-authorship__figure + .ha-authorship__figure {
-    max-height: var(--ha-media-cap);
+  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) img {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+  }
+
+  /* MADE BY MASTERS — the two pictures run the FULL height of the band.
+
+     They are not capped, and they must beat the general product-page figure
+     rule above, which sets `height: auto; min-height: 0; align-self: start` so
+     that a lone photograph beside running text scales down instead of cropping.
+     That rule is right for The Piece and wrong here, and it only started
+     applying to this section when the figures were given real images — it is
+     scoped to `:not(.ha-figure--empty)`, so while these were grey placeholders
+     they were exempt and the layout looked correct. Filling the images is what
+     exposed it: the figures collapsed to 0px.
+
+     Same reasoning as the Circle's request panel. A picture that IS one half of
+     the composition fills its half; a picture sharing a page with running text
+     scales down. Specificity is body + three classes, matching the pattern used
+     for the Material Record, so it wins without !important. */
+  body.lx-template--product .ha-authorship__grid .ha-figure.ha-authorship__figure,
+  body.lx-template--product .ha-authorship__grid .ha-figure.ha-authorship__figure:not(.ha-figure--empty) {
+    align-self: stretch;
+    height: 100%;
+    min-height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+    text-align: initial;
+    overflow: hidden;
+  }
+
+  body.lx-template--product .ha-authorship__grid .ha-figure.ha-authorship__figure:not(.ha-figure--empty) img {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin-inline: 0;
+    object-fit: cover;
   }
 }
 
