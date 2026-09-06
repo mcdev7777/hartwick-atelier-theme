@@ -9,23 +9,12 @@
 # execute` refuses mutations unless --allow-mutations is passed; it never is here.
 set -euo pipefail
 
-STORE="${SHOPIFY_STORE:-9c8a52-dc.myshopify.com}"
 OUT="$(cd "$(dirname "$0")/.." && pwd)/store-snapshot"
 mkdir -p "$OUT"
 
-command -v shopify >/dev/null || { echo "Shopify CLI not found."; exit 1; }
 command -v jq >/dev/null || { echo "jq not found (brew install jq)."; exit 1; }
-
-# gql <query> [variables-json] -> prints the .data object
-gql() {
-  local raw
-  if ! raw=$(shopify store execute -s "$STORE" -q "$1" -v "${2:-\{\}}" -j --no-color 2>&1); then
-    echo "  ! CLI error: $(echo "$raw" | tail -3)" >&2
-    echo '{}'; return 0
-  fi
-  # CLI may or may not wrap the payload in .data — normalise both shapes.
-  echo "$raw" | jq 'if has("data") then .data else . end' 2>/dev/null || echo '{}'
-}
+source "$(dirname "$0")/lib-token.sh"
+gql() { ha_gql "$@"; }
 
 # paginate <name> <query> <connection-field>
 paginate() {
@@ -40,7 +29,7 @@ paginate() {
   echo "$all" > "$OUT/$name.json"
 }
 
-echo "Store: $STORE"
+echo "Store: $SHOPIFY_STORE  (API $HA_API_VERSION)"
 echo "== shop =="
 gql 'query { shop { name myshopifyDomain primaryDomain { url } currencyCode
   ianaTimezone weightUnit plan { displayName } } }' | jq '.shop' > "$OUT/shop.json"

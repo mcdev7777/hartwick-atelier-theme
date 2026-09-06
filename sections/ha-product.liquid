@@ -257,6 +257,29 @@
                       widths: '480, 720, 960, 1200, 1400',
                       alt: frame_alt,
                       class: 'ha-pdp__img' }}
+                  {%- comment -%}
+                    CLICK TO ZOOM — Aloha, 5 September 2026.
+
+                    A real <button> layered over the frame rather than a click
+                    handler on the <figure>. A figure is not focusable and is
+                    not announced as anything you can activate, so a keyboard or
+                    screen-reader visitor would have had no way in at all. The
+                    button carries the accessible name; the picture stays
+                    decorative to it.
+
+                    `hidden` until the script wires it, so a visitor without
+                    JavaScript is never shown a control that cannot do anything.
+                    `data-zoom-src` is the full-resolution source, requested only
+                    when the dialog actually opens — the rail keeps loading its
+                    own modest 1400px version.
+                  {%- endcomment -%}
+                  <button
+                    type="button"
+                    class="ha-pdp__zoom"
+                    data-zoom-src="{{ media | image_url: width: 2400 }}"
+                    aria-label="{{ 'products.product.media.open_media' | t: index: forloop.index | default: 'Zoom image' }}"
+                    hidden
+                  ></button>
                 {%- else -%}
                   {{ media | media_tag: image_size: '1400x' }}
                 {%- endif -%}
@@ -285,6 +308,7 @@
             </ol>
           {%- endif -%}
         </ha-media-rail>
+        <script src="{{ 'ha-pdp-zoom.js' | asset_url }}" defer></script>
       {%- else -%}
         {%- render 'ha-figure', label: section.settings.ph_media_label, class: 'ha-pdp__frame ha-pdp__frame--empty' -%}
       {%- endif -%}

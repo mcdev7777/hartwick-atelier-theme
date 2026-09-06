@@ -84,7 +84,8 @@
         "ph_fit": "Ease through body and sleeve",
         "show_placeholder_note": true,
         "field": "page",
-        "show_spec_table": false
+        "show_spec_table": false,
+        "image": "shopify://shop_images/HartwickAtelier-About-Collage-01.jpg"
       }
     },
     "ha_record": {
@@ -109,7 +110,8 @@
         "show_placeholder_note": true,
         "field": "peat",
         "heading": "What the hand leaves inside the material.",
-        "intro": "<p>Explain fibre, yarn, weave, weight, dye, surface and behaviour. Natural variation is described precisely, never as an excuse.</p>"
+        "intro": "<p>Explain fibre, yarn, weave, weight, dye, surface and behaviour. Natural variation is described precisely, never as an excuse.</p>",
+        "image": "shopify://shop_images/007_HARTWICK_ATELIER_LANDSCAPES132_L1050394.jpg"
       }
     },
     "ha_origin": {
@@ -224,7 +226,8 @@
         "attribution_confirmed": false,
         "image_label": "Wearer image / optional / approved",
         "show_placeholder_note": true,
-        "field": "page"
+        "field": "page",
+        "image": "shopify://shop_images/HartwickAtelier-About-Hero.jpg"
       }
     },
     "ha_authorship": {
@@ -237,7 +240,9 @@
         "cta_text": "Meet the Master",
         "portrait_label": "Master portrait / name and permission required",
         "workshop_label": "Workshop image / place / process / contribution",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "portrait_image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg",
+        "workshop_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg"
       }
     },
     "ha_living": {
@@ -293,7 +298,8 @@
         "heading": "Related stories and pieces.",
         "story_label": "Journal image / the cloth / the master",
         "story_kicker": "The cloth / the master",
-        "story_cta": "Read the related story"
+        "story_cta": "Read the related story",
+        "story_image": "shopify://shop_images/004_HARTWICK_ATELIER_LANDSCAPES166_L1050442.jpg"
       },
       "blocks": {
         "b1": {

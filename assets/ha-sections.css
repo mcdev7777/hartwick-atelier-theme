@@ -2042,7 +2042,48 @@ body.lx-template--product .magnify-icon:focus-visible {
 /* --- media rail -------------------------------------------------------- */
 .ha-pdp__rail-media { position: relative; display: block; }
 
-.ha-pdp__frames { display: grid; gap: 1.2rem; }
+/* GRID BLOWOUT — found 5 September 2026 while checking the mobile band.
+
+   The product page scrolled sideways on a phone: 424px of content in a 375px
+   viewport. A grid item's default `min-width: auto` means it cannot be squeezed
+   below its own min-content, and for a frame that is the intrinsic width of the
+   photograph inside it. So the frames refused to shrink, the single mobile
+   column grew to fit them, and every section on the page inherited the extra
+   49px — which is why the whole page scrolled, not just the media.
+
+   `minmax(0, 1fr)` and an explicit `min-width: 0` are the standard release
+   valve: they let the track shrink and hand the constraint back to the image,
+   which already has `width: 100%` and scales happily.
+
+   Pre-dates today's work — nothing in the spacing or zoom changes affects
+   horizontal sizing — but it is fixed here because this is where it lives. */
+.ha-pdp__frames {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.2rem;
+}
+
+.ha-pdp__frame { min-width: 0; }
+
+/* EVERY media type, not just images. The rail renders video, external video and
+   3D models through `media_tag`, and those come out as <video>, <iframe> and
+   <model-viewer> with their own intrinsic width and no class of ours on them.
+   A product whose third image was a video was still pushing the page 49px wide
+   on a phone after the frames themselves had been fixed — the constraint was
+   written for `.ha-pdp__img` and the video simply was not one. */
+.ha-pdp__frame > img,
+.ha-pdp__frame > video,
+.ha-pdp__frame > iframe,
+.ha-pdp__frame > model-viewer,
+.ha-pdp__frame .ha-pdp__img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* The same valve on the three columns of the page grid, so no rail can be
+   forced open by something inside it either. */
+.ha-pdp__grid > * { min-width: 0; }
 
 /* A real image keeps its own proportions — nothing is cropped into a fixed
    ratio (Wireframe 03 feedback, carried forward). The placeholder field holds a
@@ -2863,14 +2904,34 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    Band corrections (Ivan, 3 September)
    ========================================================================== */
 
-/* The first three sections open flush — no top band. The hero sits directly
-   under the header, and The Piece and Made by Masters run on from the section
-   above rather than restating the gap it already closed with. */
-.lx-template--product .ha-pdp__grid { padding-top: 0; }
-.lx-template--product .ha-garment .ha-wrap { padding-top: 0; }
-.lx-template--product .ha-authorship { padding-top: 0; }
+/* REVERSED FOR TWO OF THE THREE — Aloha, 5 September 2026: "give top
+   margin/padding to 'The Piece', 'Made by Masters' section."
+
+   Ivan's call on 3 September was that the first three sections open flush, so
+   The Piece and Made by Masters ran on from the section above rather than
+   restating a gap it had already closed. Aloha reads the result as those two
+   sections crowding what precedes them, and hers is the later instruction, so
+   they get their band back.
+
+   THE HERO KEEPS ITS FLUSH TOP ON DESKTOP. That part of the 3 September call
+   still holds and Aloha has not asked to change it: the hero sits directly
+   under the header, and a band there would push the product below the fold for
+   no gain.
+
+   On MOBILE it does need one — Aloha, same note: "on mobile mode, give top
+   margin to the first section." With the header out of the way and the whole
+   page in one column, the breadcrumb was starting hard against the header with
+   nothing to separate them. */
+.lx-template--product .ha-garment .ha-wrap { padding-top: var(--ha-pdp-section-y); }
+.lx-template--product .ha-authorship { padding-top: var(--ha-pdp-section-y); }
+
 @media screen and (min-width: 990px) {
-  .ha-authorship { padding-block: 0 var(--ha-pdp-section-y); }
+  .lx-template--product .ha-pdp__grid { padding-top: 0; }
+  .ha-authorship { padding-block: var(--ha-pdp-section-y); }
+}
+
+@media screen and (max-width: 989px) {
+  .lx-template--product .ha-pdp__grid { padding-top: var(--ha-pdp-section-y); }
 }
 
 /* The footer keeps its own compact rhythm — the design closes the page tightly,
@@ -2975,19 +3036,45 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    Angela and these are all still test crops.
    ========================================================================== */
 @media screen and (min-width: 990px) {
-  /* THE MATERIAL RECORD IS EXEMPT FROM THE CEILING, and this is a reversal.
+  /* THE MATERIAL RECORD: THE RECORD SETS THE HEIGHT, NOT THE PHOTOGRAPH.
 
-     Capping it here top-aligned the photograph at 504px beside a 744px record
-     and left 240px of empty ground under the picture. The band is built as two
-     columns of equal height reading as one block — the comment above this one
-     says so, and it was right — so the restraint did not make it quieter, it
-     made it look unfinished. The same conclusion Ivan reached on the Circle
-     page's request panel, for the same reason: in a two-column band, level is
-     the composition.
+     Aloha, 5 September 2026: "the right image is too big, especially has a very
+     big height. make the height smaller as same as the left info panel. the big
+     image is too overwhelming."
 
-     The ceiling still governs every picture that shares a page with running
-     text, which is what Aloha actually asked for. It does not govern the two
-     places where a picture IS one half of a two-part band. */
+     The two columns were already the same height — but the wrong one was
+     deciding what that height was. The figure sat in normal flow, so the
+     picture's own natural height set the grid row and the record column
+     stretched to match it: a tall photograph at 768px wide measured 1368px, and
+     the record was dragged out to 1368px with it. Level, but level at the
+     photograph's size.
+
+     Taking the figure out of flow — absolute inside a relative media cell —
+     inverts that. The cell now contributes nothing to the row, so the row is
+     exactly as tall as the record needs, and the picture fills whatever that
+     turns out to be. The columns stay level, which is the composition, and the
+     record is what decides. `object-fit: cover` on .ha-figure img crops to the
+     cell rather than distorting.
+
+     This also means the section can never again be made taller by swapping in a
+     taller photograph, which is the failure mode that produced the complaint. */
+  body.lx-template--product .ha-precord__grid .ha-precord__media {
+    position: relative;
+    display: block;
+    align-self: stretch;
+    min-height: 0;
+  }
+
+  body.lx-template--product .ha-precord__grid .ha-precord__figure,
+  body.lx-template--product .ha-precord__grid .ha-figure.ha-precord__figure:not(.ha-figure--empty) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
+  }
 
   /* Authorship's pair of portraits. */
   .ha-authorship__figure,
@@ -3285,4 +3372,116 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   }
 
   .ha-crequest__figure img { height: 100%; width: 100%; object-fit: cover; }
+}
+
+
+/* ==========================================================================
+   PRODUCT MEDIA — CLICK TO ZOOM
+   Aloha, 5 September 2026. See assets/ha-pdp-zoom.js for why this is ours
+   rather than Luxe's lightbox.
+   ========================================================================== */
+
+/* The trigger covers the frame but carries no ink of its own: the picture is
+   the affordance, the button is the mechanism. A visible focus ring is the one
+   thing it must draw, because a keyboard visitor has nothing else to go on. */
+.ha-pdp__zoom {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+  z-index: 1;
+}
+.ha-pdp__zoom:focus-visible { outline: 2px solid var(--ha-text-invert); outline-offset: -4px; }
+
+.ha-zoom-open { overflow: hidden; }
+
+.ha-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(11, 6, 3, 0.94);
+  display: grid;
+  place-items: center;
+  padding: clamp(1.6rem, 4vw, 4.8rem);
+}
+
+.ha-zoom__stage {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.ha-zoom__img {
+  max-width: 100%;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  display: block;
+  cursor: zoom-in;
+  transition: transform 0.25s ease;
+}
+
+.ha-zoom__img.is-magnified { transform: scale(2); cursor: zoom-out; }
+
+.ha-zoom__close,
+.ha-zoom__nav {
+  position: absolute;
+  background: transparent;
+  border: 0;
+  color: var(--ha-text-invert);
+  cursor: pointer;
+  /* the mobile brief's 44px minimum, on every control */
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+}
+
+.ha-zoom__close {
+  top: clamp(1.2rem, 2vw, 2.4rem);
+  right: clamp(1.2rem, 2vw, 2.4rem);
+  font-size: 3.2rem;
+  line-height: 1;
+}
+
+.ha-zoom__nav { top: 50%; transform: translateY(-50%); width: 44px; }
+.ha-zoom__nav--prev { left: clamp(0.8rem, 2vw, 2.4rem); }
+.ha-zoom__nav--next { right: clamp(0.8rem, 2vw, 2.4rem); }
+
+/* Chevrons drawn in CSS — two more SVGs in the page for an arrow is not worth
+   the bytes when a rotated border does the same job at any size. */
+.ha-zoom__nav::before {
+  content: '';
+  display: block;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0 auto;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+}
+.ha-zoom__nav--prev::before { transform: rotate(-135deg); }
+.ha-zoom__nav--next::before { transform: rotate(45deg); }
+
+.ha-zoom__close:focus-visible,
+.ha-zoom__nav:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.ha-zoom__count {
+  position: absolute;
+  bottom: clamp(1.2rem, 2vw, 2.4rem);
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin: 0;
+  color: var(--ha-text-invert);
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-zoom__img { transition: none; }
 }
