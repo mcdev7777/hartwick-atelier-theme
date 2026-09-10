@@ -1,0 +1,553 @@
+{%- comment -%}
+  HA — Landing
+  ---------------------------------------------------------------------------
+  The holding page for the rebuild.
+
+  Built 10 September 2026 from Aloha's mockup and her written type/colour spec.
+  Rebuilt the same day against her second mockup, which changed four things:
+
+    1. The headline copy — "...just like everything else here."
+    2. The Porter statement line is gone. The setting stays (empty) so it can
+       come back without code.
+    3. The Junicode paragraph now sits beside the last line of the headline,
+       right-aligned, instead of below it.
+    4. The House Symbol and the contact line moved out of a full-width band at
+       the foot of the page and into the text column, centred under the rule.
+       The film now runs the full height of the page.
+
+  Type, unchanged from her first spec:
+
+    JUNICODE Bold    the headline           (700, uppercase, justified)
+    PORTER Light     the statement          (300, uppercase — off by default)
+    JUNICODE Light   the editorial paragraph (300, justified, last line right)
+    NOTO SANS MONO CONDENSED Medium   the contact line (500)
+
+    ink    #332820   (Peat Fibre — already in the palette)
+    ground #F3F0E7   (Aloha's value; two points warmer and lighter than the
+                      --ha-page-ground the rest of the site runs on, #F2EFE9.
+                      Kept as her exact number and left as a section setting so
+                      the two can be reconciled in one place later.)
+
+  HOW THE PARAGRAPH SITS BESIDE THE HEADLINE. It is an ordinary block in normal
+  flow, pulled up by a fraction of one headline line so it lands in the empty
+  space to the right of the short last line. It is NOT floated: a float would
+  have to come before the headline in the markup, which would hand a screen
+  reader the paragraph before the h1 on a page that has only three elements on
+  it. The lift is applied only from 1100px up, where the headline reliably
+  breaks with a short last line; below that the paragraph simply sits under the
+  headline, which is what it does on a phone anyway. `copy_lift` turns it off.
+
+  PORTER AND PUNCTUATION. Porter is subset to uppercase A-Z and space only —
+  the brand rule is that it carries no numbers, punctuation or symbols. Any
+  punctuation in the statement line renders in Junicode. That is the type
+  system behaving as designed, not a fallback failure.
+
+  THE FILM. `Scrapbook LANDING03.mp4` — 1080x1920, 8.2s, 8.0 MB — is served
+  from theme assets. Portrait is the right shape for this column, which is why
+  it survives the crop here where the 16:9 homepage hero did not. It is muted,
+  looping and inert: no controls, no sound, nothing to click. Under
+  prefers-reduced-motion the video is not rendered at all and the poster image
+  stands in its place, so the page still reads for anyone who has asked their
+  system for stillness.
+
+  Everything is a setting. No copy, colour or asset is hard-coded, so Aloha can
+  change any of it in the theme editor without coming back to me.
+{%- endcomment -%}
+
+{%- liquid
+  assign ink = section.settings.ink
+  assign ground = section.settings.ground
+  assign rule = ink | color_modify: 'alpha', 0.22
+  assign lift = section.settings.copy_lift | divided_by: 100.0
+  assign has_video = false
+  if section.settings.video_shopify != blank or section.settings.video_asset != blank
+    assign has_video = true
+  endif
+-%}
+
+{% style %}
+  .ha-landing {
+    --ha-landing-ink: {{ ink }};
+    --ha-landing-ground: {{ ground }};
+    --ha-landing-rule: {{ rule }};
+
+    /* The headline metrics are variables because the paragraph's lift is
+       measured in headline lines — the two have to stay tied together. */
+    --ha-landing-display: clamp(1.75rem, 3.3vw, 3.35rem);
+    --ha-landing-display-lh: 1.16;
+
+    /* One rhythm unit. The mockup spaces rule, symbol and contact line at an
+       even ~54px at 1450px wide; this is that measure, made fluid. */
+    --ha-landing-gap: clamp(1.75rem, 3.7vw, 3.4rem);
+
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin: 0;
+    background: var(--ha-landing-ground);
+    color: var(--ha-landing-ink);
+  }
+  .ha-landing *,
+  .ha-landing *::before,
+  .ha-landing *::after { box-sizing: inherit; }
+
+  .ha-landing__body {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  /* --- the film ---------------------------------------------------------- */
+  .ha-landing__media {
+    position: relative;
+    overflow: hidden;
+    background: var(--ha-landing-ground);
+    /* Mobile: the 9:16 clip at full bleed would push the headline off the
+       first screen, so it is capped and cropped rather than left to run. */
+    aspect-ratio: 4 / 5;
+  }
+  .ha-landing__media-fill {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center {{ section.settings.media_focus }}%;
+    display: block;
+  }
+  .ha-landing__media video.ha-landing__media-fill { z-index: 1; }
+  .ha-landing__media--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ha-landing-rule);
+  }
+  .ha-landing__media-note {
+    font-family: var(--ha-font-record);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  /* --- the text column --------------------------------------------------- */
+  .ha-landing__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: {{ section.settings.text_position }};
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 6vw, 4rem) clamp(2.25rem, 4vw, 3.5rem);
+  }
+  .ha-landing__column {
+    width: 100%;
+    max-width: 44rem;
+    margin: 0 auto;
+  }
+
+  .ha-landing__heading {
+    font-family: var(--ha-font-narrate);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: var(--ha-landing-display);
+    line-height: var(--ha-landing-display-lh);
+    letter-spacing: 0.005em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .ha-landing__body-copy {
+    font-family: var(--ha-font-narrate);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.15vw, 1.15rem);
+    line-height: 1.7;
+    letter-spacing: 0.005em;
+    margin: var(--ha-landing-gap) 0 0;
+  }
+
+  .ha-landing__statement {
+    font-family: var(--ha-font-identify);
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: clamp(0.8rem, 1.05vw, 1rem);
+    line-height: 1.55;
+    letter-spacing: 0.035em;
+    margin: var(--ha-landing-gap) 0 0;
+  }
+
+  .ha-landing__rule {
+    border: 0;
+    border-top: 1px solid var(--ha-landing-rule);
+    margin: var(--ha-landing-gap) 0 0;
+    width: 100%;
+  }
+
+  .ha-landing__symbol {
+    display: block;
+    width: {{ section.settings.symbol_size }}px;
+    height: auto;
+    margin: var(--ha-landing-gap) auto 0;
+  }
+
+  .ha-landing__contact {
+    font-family: var(--ha-font-record);
+    font-weight: 500;
+    font-size: clamp(0.75rem, 0.85vw, 0.85rem);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    /* RECORD is an uppercase voice everywhere else on the site. Here it is not:
+       the mockup sets this line in sentence case, and an email address that has
+       been uppercased is a different address to read. */
+    text-transform: none;
+    text-align: center;
+    margin: var(--ha-landing-gap) auto 0;
+    max-width: 34rem;
+  }
+  .ha-landing__contact a {
+    /* The mockup sets the address on its own line under the sentence, so the
+       break is declared rather than left to the width of the viewport. */
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .ha-landing__contact a:hover,
+  .ha-landing__contact a:focus-visible { border-bottom-color: currentColor; }
+
+  /* --- desktop ----------------------------------------------------------- */
+  @media screen and (min-width: 750px) {
+    .ha-landing__body {
+      grid-template-columns: {{ section.settings.media_width }}% 1fr;
+    }
+    .ha-landing__media { aspect-ratio: auto; }
+    .ha-landing__text {
+      padding-left: clamp(3rem, 6vw, 6rem);
+      padding-right: clamp(3rem, 6vw, 6rem);
+    }
+    /* Justified setting is what gives the mockup its even word-spread. It is
+       held back on narrow screens, where justifying a line of four uppercase
+       words opens rivers instead of closing them. */
+    .ha-landing__heading {
+      text-align: justify;
+      text-justify: inter-word;
+      text-wrap: initial;
+    }
+    .ha-landing__body-copy {
+      width: {{ section.settings.copy_width }}%;
+      margin-left: auto;
+      text-align: justify;
+      text-justify: inter-word;
+      text-align-last: right;
+    }
+  }
+
+  {%- if section.settings.copy_lift > 0 -%}
+    /* The lift that puts the paragraph beside the last line of the headline.
+       Held back below 1100px, where the headline's last line is no longer
+       reliably short enough to leave room for it. */
+    @media screen and (min-width: 1100px) {
+      .ha-landing__body-copy {
+        margin-top: calc(var(--ha-landing-display) * var(--ha-landing-display-lh) * -{{ lift }});
+      }
+    }
+  {%- endif -%}
+
+  @media (prefers-reduced-motion: reduce) {
+    .ha-landing__media video { display: none; }
+  }
+{% endstyle %}
+
+<div class="ha-landing">
+  <div class="ha-landing__body">
+    <div class="ha-landing__media{% unless has_video or section.settings.poster != blank %} ha-landing__media--empty{% endunless %}">
+      {%- if section.settings.poster != blank -%}
+        {{
+          section.settings.poster
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '400, 600, 800, 1000, 1200',
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            class: 'ha-landing__media-fill',
+            alt: section.settings.media_alt
+        }}
+      {%- endif -%}
+
+      {%- if section.settings.video_shopify != blank -%}
+        {{
+          section.settings.video_shopify
+          | video_tag:
+            image_size: '1200x',
+            autoplay: true,
+            loop: true,
+            muted: true,
+            controls: false,
+            class: 'ha-landing__media-fill'
+        }}
+      {%- elsif section.settings.video_asset != blank -%}
+        <video
+          class="ha-landing__media-fill"
+          autoplay
+          muted
+          loop
+          playsinline
+          disablepictureinpicture
+          preload="auto"
+          tabindex="-1"
+          aria-hidden="true"
+          {% if section.settings.poster != blank %}poster="{{ section.settings.poster | image_url: width: 1200 }}"{% endif %}
+        >
+          <source src="{{ section.settings.video_asset | asset_url }}" type="video/mp4">
+        </video>
+      {%- endif -%}
+
+      {%- unless has_video or section.settings.poster != blank -%}
+        <p class="ha-landing__media-note">{{ section.settings.media_placeholder }}</p>
+      {%- endunless -%}
+    </div>
+
+    <div class="ha-landing__text">
+      <div class="ha-landing__column">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="ha-landing__heading">
+            {{- section.settings.heading | escape | newline_to_br -}}
+          </h1>
+        {%- endif -%}
+
+        {%- if section.settings.body_copy != blank -%}
+          <p class="ha-landing__body-copy">
+            {{- section.settings.body_copy | escape | newline_to_br -}}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.statement != blank -%}
+          <p class="ha-landing__statement">
+            {{- section.settings.statement | escape | newline_to_br -}}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.show_rule -%}
+          <hr class="ha-landing__rule">
+        {%- endif -%}
+
+        {%- if section.settings.symbol != blank -%}
+          {{
+            section.settings.symbol
+            | image_url: width: 300
+            | image_tag: class: 'ha-landing__symbol', alt: shop.name, loading: 'lazy'
+          }}
+        {%- elsif section.settings.show_symbol -%}
+          <img
+            class="ha-landing__symbol"
+            src="{{ 'ha-house-symbol-black.png' | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            width="986"
+            height="961"
+            loading="lazy"
+          >
+        {%- endif -%}
+
+        <p class="ha-landing__contact">
+          {{- section.settings.contact_label | escape -}}
+          {%- if section.settings.contact_email != blank %}
+            <a href="mailto:{{ section.settings.contact_email | strip }}">{{ section.settings.contact_email | strip }}</a>
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "HA — Landing",
+  "tag": "section",
+  "class": "ha-landing-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Film"
+    },
+    {
+      "type": "text",
+      "id": "video_asset",
+      "label": "Video file in theme assets",
+      "default": "ha-landing-scrapbook.mp4",
+      "info": "Filename only. Currently Scrapbook LANDING03.mp4 (1080×1920, 8.2s, 8.0 MB). Clear this to fall back to the still image alone."
+    },
+    {
+      "type": "video",
+      "id": "video_shopify",
+      "label": "Video from Shopify Files (optional)",
+      "info": "If set, this is used instead of the theme asset above. Preferred once the clip is uploaded to Content › Files — Shopify then serves it in several sizes."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Still image",
+      "info": "Shown before the video loads, and instead of it for visitors who have asked their system to reduce motion. A frame from the clip is ideal."
+    },
+    {
+      "type": "text",
+      "id": "media_alt",
+      "label": "Still image alt text",
+      "info": "Describe the image for screen readers. Required before this page goes public."
+    },
+    {
+      "type": "text",
+      "id": "media_placeholder",
+      "label": "Placeholder label",
+      "default": "Landing film",
+      "info": "Shown only while there is no video and no image."
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Film width (desktop)",
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "media_focus",
+      "label": "Vertical crop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50,
+      "info": "0% keeps the top of the frame, 100% keeps the bottom."
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Headline",
+      "default": "The website is being rebuilt, by hand, just like everything else here.",
+      "info": "Junicode Bold. Set in uppercase by the stylesheet — type it in sentence case."
+    },
+    {
+      "type": "textarea",
+      "id": "body_copy",
+      "label": "Paragraph",
+      "default": "A new home for the Material Record: the fibres, the Masters, the pieces themselves. Write to us directly before it opens.",
+      "info": "Junicode Light. Sits beside the last line of the headline on a wide screen, under it on a narrow one."
+    },
+    {
+      "type": "range",
+      "id": "copy_width",
+      "label": "Paragraph width (desktop)",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "copy_lift",
+      "label": "Paragraph lift",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "How far the paragraph rises into the space beside the headline's last line, as a share of one headline line. 0% drops it back under the headline. Applies from 1100px wide up."
+    },
+    {
+      "type": "textarea",
+      "id": "statement",
+      "label": "Statement (Porter)",
+      "info": "Porter Light, uppercase. Empty in the current design — the second mockup drops it. Punctuation renders in Junicode; Porter carries none by brand rule."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rule",
+      "label": "Show the hairline",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Vertical position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Centre" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end",
+      "info": "The mockup sits the whole column low in the page. Centre it here if it reads better on a tall screen."
+    },
+    {
+      "type": "header",
+      "content": "Mark and contact"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_symbol",
+      "label": "Show the House Symbol",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "symbol",
+      "label": "House Symbol override",
+      "info": "Leave empty to use the theme's own black House Symbol."
+    },
+    {
+      "type": "range",
+      "id": "symbol_size",
+      "label": "House Symbol width",
+      "min": 28,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 66
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact line",
+      "default": "For appointments, wholesale and press enquiries:"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email address",
+      "default": "contact@hartwickatelier.com"
+    },
+    {
+      "type": "header",
+      "content": "Colour"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#332820"
+    },
+    {
+      "type": "color",
+      "id": "ground",
+      "label": "Background",
+      "default": "#F3F0E7"
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Landing"
+    }
+  ]
+}
+{% endschema %}

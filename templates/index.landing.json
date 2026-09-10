@@ -1,0 +1,28 @@
+{
+  "layout": "landing",
+  "sections": {
+    "landing": {
+      "type": "ha-landing",
+      "settings": {
+        "video_asset": "ha-landing-scrapbook.mp4",
+        "media_placeholder": "Landing film",
+        "media_width": 42,
+        "media_focus": 50,
+        "heading": "The website is being rebuilt, by hand, just like everything else here.",
+        "body_copy": "A new home for the Material Record: the fibres, the Masters, the pieces themselves. Write to us directly before it opens.",
+        "copy_width": 70,
+        "copy_lift": 40,
+        "statement": "",
+        "show_rule": true,
+        "text_position": "flex-end",
+        "show_symbol": true,
+        "symbol_size": 66,
+        "contact_label": "For appointments, wholesale and press enquiries:",
+        "contact_email": "contact@hartwickatelier.com",
+        "ink": "#332820",
+        "ground": "#F3F0E7"
+      }
+    }
+  },
+  "order": ["landing"]
+}

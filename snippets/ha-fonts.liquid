@@ -96,6 +96,27 @@
     font-style: normal;
     font-display: swap;
   }
+  {%- comment -%}
+    RECORD MEDIUM. Noto Sans Mono Condensed is not a variable font here — it is
+    a static instance, so weight 500 has to be a second file or the browser
+    synthesises it (that synthesis is what made the footer policy links look
+    like a mix of bold and regular; see .ha-record below).
+
+    Added 10 September 2026 for the landing page, where Aloha specified
+    "Noto Sans Mono Condensed in Medium" for the contact line. Subset from
+    BRANDING/Typography/FONT/NOTO SANS MONO/NotoSansMono_Condensed-Medium.ttf
+    to the same 443 codepoints as the Regular above, 18 KB. Noto is SIL OFL,
+    so unlike Porter there is no licence question here.
+
+    Nothing else on the site uses it yet — .ha-record stays on 400.
+  {%- endcomment -%}
+  @font-face {
+    font-family: "Noto Sans Mono Condensed";
+    src: url({{ 'ha-noto-mono-cond-medium.woff2' | asset_url }}) format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
   :root {
     --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", {% endif %}"Junicode", Georgia, "Times New Roman", serif;
     --ha-font-narrate:  "Junicode", Georgia, "Times New Roman", serif;
