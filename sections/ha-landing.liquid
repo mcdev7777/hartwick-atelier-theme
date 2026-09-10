@@ -277,8 +277,16 @@
 
   {%- if section.settings.copy_lift > 0 -%}
     /* The lift that puts the paragraph beside the last line of the headline.
+
+       At 60% the paragraph's first baseline lands on the headline's last
+       baseline — Aloha's "align it next to the full stop". That number is
+       measured, not eyeballed: it is the heading's half-leading plus descent,
+       plus the paragraph's ascent, over one heading line. Both terms are shares
+       of their own type size, so the alignment drifts by about 2px across the
+       whole desktop range rather than coming apart.
+
        Held back below 1100px, where the headline's last line is no longer
-       reliably short enough to leave room for it. */
+       reliably short enough to leave room for the paragraph at all. */
     @media screen and (min-width: 1100px) {
       .ha-landing__body-copy {
         margin-top: calc(var(--ha-landing-display) * var(--ha-landing-display-lh) * -{{ lift }});
@@ -513,8 +521,8 @@
       "max": 100,
       "step": 5,
       "unit": "%",
-      "default": 40,
-      "info": "How far the paragraph rises into the space beside the headline's last line, as a share of one headline line. 0% drops it back under the headline. Applies from 1100px wide up."
+      "default": 60,
+      "info": "How far the paragraph rises into the space beside the headline's last line, as a share of one headline line. 60% is measured: it is the value that puts the paragraph's first baseline exactly on the headline's last baseline, so the sentence sits level with the full stop rather than below it. 0% drops it back under the headline. Applies from 1100px wide up."
     },
     {
       "type": "textarea",

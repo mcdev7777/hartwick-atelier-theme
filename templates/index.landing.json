@@ -13,7 +13,7 @@
         "measure": 12,
         "copy_size": 15,
         "copy_width": 70,
-        "copy_lift": 40,
+        "copy_lift": 60,
         "statement": "",
         "show_rule": true,
         "text_position": "flex-end",

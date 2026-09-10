@@ -90,6 +90,23 @@ slider — you would just see it fall apart and not know why.
 The paragraph went from ~16.7px to **15px**, which is also the size at which
 Junicode matches Bode by eye elsewhere in the build.
 
+### "Align the sentence next to the full stop"
+
+Her second note, same round. The paragraph was sitting beside the headline's last
+line but **11px below its baseline** — close enough to look intentional, far enough
+to look like a mistake. Aligning the two baselines is what makes it read as
+continuing from the full stop rather than floating under it.
+
+The lift went from 40% to **60% of one headline line**. That is measured, not
+eyeballed: it is the headline's half-leading plus descent, plus the paragraph's
+ascent, over one headline line. Both terms are shares of their own type size, so
+the alignment survives the fluid type — baseline delta is **0px at 1450, +1px at
+1200, −2px at 1920**.
+
+The horizontal gap after the full stop is left alone at ~29px. That is 5.1% of the
+column, against 5.8% in Aloha's own mockup, so it is already a shade tighter than
+what she drew.
+
 ### The measure is set in headline ems, not rem
 
 This is the part worth keeping. The headline is fluid — it scales with the viewport
