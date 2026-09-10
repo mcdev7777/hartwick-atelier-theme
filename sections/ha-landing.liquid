@@ -143,7 +143,20 @@
   }
   .ha-landing__column {
     width: 100%;
-    max-width: 44rem;
+    /* THE MEASURE. Justified setting stretches the word spaces to fill the
+       line, so the wider the column the wider the gaps — Aloha's "a lot of
+       space in the Header". The fix is the measure, not the type size: bring
+       the column in until the headline's natural width nearly fills it and
+       justification has almost nothing left to stretch.
+
+       It is set in headline ems, NOT in rem, and that matters. The headline is
+       fluid (3.3vw between its two clamp stops), so a measure fixed in rem
+       would hold still while the type shrank under it — and the gaps would open
+       straight back up on any screen narrower than the one it was tuned on. Tied
+       to the display size, the ratio of natural line width to column width is
+       the same at every viewport, so the spacing that was tuned at 1450px is the
+       spacing you get at 1200px and at 2560px. */
+    max-width: calc(var(--ha-landing-display) * {{ section.settings.measure }});
     margin: 0 auto;
   }
 
@@ -161,7 +174,7 @@
   .ha-landing__body-copy {
     font-family: var(--ha-font-narrate);
     font-weight: 300;
-    font-size: clamp(1rem, 1.15vw, 1.15rem);
+    font-size: clamp(0.875rem, 1.05vw, {{ section.settings.copy_size }}px);
     line-height: 1.7;
     letter-spacing: 0.005em;
     margin: var(--ha-landing-gap) 0 0;
@@ -443,6 +456,27 @@
       "label": "Paragraph",
       "default": "A new home for the Material Record: the fibres, the Masters, the pieces themselves. Write to us directly before it opens.",
       "info": "Junicode Light. Sits beside the last line of the headline on a wide screen, under it on a narrow one."
+    },
+    {
+      "type": "range",
+      "id": "measure",
+      "label": "Text column width",
+      "min": 8,
+      "max": 18,
+      "step": 0.5,
+      "unit": "em",
+      "default": 12,
+      "info": "Measured in headline ems, so the word spacing holds at every screen width. Narrower means tighter spacing, because justified type has less to stretch. 12 is measured, not guessed — it is the narrowest that still holds the headline on four lines. Below about 11.5 it breaks to five and the spacing opens up badly. Type a line break into the headline to force a break of your own."
+    },
+    {
+      "type": "range",
+      "id": "copy_size",
+      "label": "Paragraph size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
     },
     {
       "type": "range",

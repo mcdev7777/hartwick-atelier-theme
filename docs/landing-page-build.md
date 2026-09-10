@@ -59,6 +59,55 @@ there is 325px of air above the headline. That is bottom-anchored, not centred, 
 that is what is built. On a much taller screen it will read as bottom-heavy, so
 `text_position` offers Top / Centre / Bottom in one click. Default is Bottom.
 
+## Aloha's first round of feedback — 10 September 2026
+
+> "The header title is a bit too wide. Can you bring the header more narrow in…
+> If the subtitle is a little big, simply downsize it. There is a lot of space in
+> the Header."
+
+Both are the same fault, and it was mine. The headline is justified, so the word
+spaces stretch to fill the line — the wider the column, the wider the gaps. At the
+width it shipped at, the three headline lines were carrying **+47, +34 and +54px of
+extra space in every word gap**. That is the "lot of space" she is looking at.
+
+The fix is the measure, not the type size. Bringing the column in until the
+headline's natural width nearly fills it leaves justification almost nothing to
+stretch. Measured across candidate widths at 1450px:
+
+| Column | Extra space per word gap | Lines |
+|---|---|---|
+| 44em (as shipped) | +47 / +34 / +54 px | 4 |
+| 40em | +38 / +25 / +40 px | 4 |
+| 38em | +27 / +14 / +24 px | 4 |
+| **36em → now 12 headline ems** | **+16 / +3 / +7 px** | 4 |
+| 34em | +6 / +49 / **+314** / +107 px | **5** |
+
+Note the cliff. One step narrower and the headline breaks to five lines, stranding
+"JUST LIKE" alone on a line that then justifies to 314px per gap. The setting's
+`info` text says so, because it is not something you would guess from dragging the
+slider — you would just see it fall apart and not know why.
+
+The paragraph went from ~16.7px to **15px**, which is also the size at which
+Junicode matches Bode by eye elsewhere in the build.
+
+### The measure is set in headline ems, not rem
+
+This is the part worth keeping. The headline is fluid — it scales with the viewport
+between its two clamp stops. A column fixed in `rem` would hold still while the type
+shrank underneath it, and the gaps would open straight back up on any screen
+narrower than the one it was tuned on. Tying the measure to the display size keeps
+the ratio constant, so the spacing tuned at 1450px is the spacing you get
+everywhere. Verified:
+
+| Viewport | Headline | Column | Extra per gap |
+|---|---|---|---|
+| 1920 | 53.6px | 643px | +17 / +3 / +8 |
+| 1450 | 47.9px | 574px | +16 / +3 / +7 |
+| 1200 | 39.6px | 475px | +13 / +3 / +6 |
+| 375 | 28px | 327px | not justified on mobile |
+
+Two new settings: **Text column width** (headline ems) and **Paragraph size** (px).
+
 ## Typography — Aloha's spec, and the one thing it needed
 
 Junicode is a variable font here (weight axis 300–700), so **Bold 700** for the
