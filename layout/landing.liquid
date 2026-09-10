@@ -17,7 +17,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="{{ settings.ha_page_ground | default: '#F3F0E7' }}">
+    {%- comment -%}
+      Aloha's landing ground, #F3F0E7. Deliberately NOT `settings.ha_page_ground`:
+      that is the site-wide #F2EFE9, a cooler cream, and it was tinting the
+      browser chrome and the overscroll a shade away from the page. The section
+      re-declares html and body from its own Background setting, which is
+      authoritative — this is the first-paint value, before that CSS is parsed.
+    {%- endcomment -%}
+    <meta name="theme-color" content="#F3F0E7">
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
@@ -48,7 +55,7 @@
       body {
         margin: 0;
         padding: 0;
-        background: {{ settings.ha_page_ground | default: '#F3F0E7' }};
+        background: #F3F0E7; /* first paint only — the section overrides this */
       }
       img, video { max-width: 100%; }
       .skip-to-content-link {

@@ -66,6 +66,23 @@
 -%}
 
 {% style %}
+  {%- comment -%}
+    The ground is painted on the page itself, not only on the section.
+
+    The section covers the viewport, so for a while this looked like it did not
+    matter. It does: the landing layout paints the body from the site-wide
+    `ha_page_ground`, which is #F2EFE9 — a different, cooler cream from Aloha's
+    #F3F0E7. The wrong one shows wherever the section does not reach: the
+    rubber-band overscroll at the top and bottom of the page on macOS and iOS,
+    the strip left when a mobile browser's address bar collapses and the visual
+    viewport grows past 100svh, and the browser chrome tint from theme-color.
+
+    Declaring it here keeps ONE source of truth — the section's own Background
+    setting — instead of two values that agree only by coincidence.
+  {%- endcomment -%}
+  html,
+  body.ha-landing-body { background: {{ ground }}; }
+
   .ha-landing {
     --ha-landing-ink: {{ ink }};
     --ha-landing-ground: {{ ground }};

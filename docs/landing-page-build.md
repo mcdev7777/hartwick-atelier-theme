@@ -132,9 +132,31 @@ Aloha's values are used exactly: text `#332820`, ground `#F3F0E7`.
 
 `#332820` is **Peat Fibre**, already in the Material Archive palette. `#F3F0E7` is new —
 the rest of the site runs on `--ha-page-ground` `#F2EFE9`, two points cooler and darker.
-The difference is invisible on its own but would show if the landing page ever sat
-beside another page. Both are section settings, so reconciling them later is one field,
-not a code change.
+
+### The ground was in two places, and they disagreed
+
+Aloha came back with "make the background colour #F3F0E7", which read at first like a
+setting that was already right. It wasn't. The **section** was `#F3F0E7`; the **page
+behind it** was `#F2EFE9`, because the landing layout painted the body from the
+site-wide `ha_page_ground` and that setting resolves to its schema default rather than
+to blank — so the `| default: '#F3F0E7'` fallback written into the layout could never
+fire. Two creams, one shade apart.
+
+The section covers the viewport, so this hid well. It showed in four places:
+
+- rubber-band overscroll at the top and bottom of the page, on macOS and iOS
+- the strip left when a mobile browser's address bar collapses and the visual viewport
+  grows past `100svh`
+- the mobile browser chrome, via `theme-color`
+- any moment before the section's CSS was parsed
+
+Now the section declares `html` and `body` from its own Background setting, so there is
+one source of truth instead of two values that agreed only by coincidence. The layout
+keeps `#F3F0E7` as the first-paint value only. Verified: `html`, `body`, the section,
+the film panel and `theme-color` all report `#F3F0E7`.
+
+**The rest of the site is still `#F2EFE9`.** That is untouched and deliberate — this was
+a landing-page instruction. Whether the two should be unified is still open (below).
 
 ## Judgement calls, for the record
 
