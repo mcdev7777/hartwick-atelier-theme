@@ -104,6 +104,22 @@
       {%- endif -%}
 
       {%- if section.settings.show_form -%}
+
+        {%- comment -%}
+          An app form — Klaviyo's — drops in here, same idiom as `ha-register`.
+          This is a different switch from `show_form` above and the two must not
+          be confused: `show_form` off removes the application route altogether,
+          which is the Framework v3 answer. `show_native_form` only decides who
+          carries the form when there is one.
+        {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- if section.settings.show_native_form -%}
         {%- form 'customer', class: 'ha-crequest__form', id: 'CircleRequest' -%}
 
           {%- comment -%}
@@ -212,6 +228,7 @@
         {%- endform -%}
 
         <script src="{{ 'ha-circle-request.js' | asset_url }}" defer></script>
+        {%- endif -%}
       {%- else -%}
         {%- comment -%}
           The switch that honours Framework v3. With the form off the section is
@@ -257,6 +274,10 @@
     },
     { "type": "checkbox", "id": "show_form", "label": "Show the access form", "default": true },
     {
+      "type": "checkbox", "id": "show_native_form", "label": "Show the Shopify form", "default": true,
+      "info": "Switch off once the Klaviyo block is added, so only one form is live. This is not the Framework v3 switch — that is 'Show the access form' above."
+    },
+    {
       "type": "text", "id": "contact_tag", "label": "CRM tag", "default": "Circle: Requested Access",
       "info": "Applied to the customer record created by every submission. The Register uses its own separate tag, so joining one never joins the other."
     },
@@ -278,6 +299,7 @@
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
   ],
   "blocks": [
+    { "type": "@app" },
     {
       "type": "interest",
       "name": "Interest",
