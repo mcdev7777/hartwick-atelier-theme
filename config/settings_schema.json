@@ -394,6 +394,35 @@
         "step": 1,
         "unit": "px",
         "default": 18
+      },
+      {
+        "type": "header",
+        "content": "Klaviyo"
+      },
+      {
+        "type": "paragraph",
+        "content": "The Register and Circle request forms post straight to Klaviyo from the theme's own form, so they can match the design. These three values are the only Klaviyo wiring in the theme. The company ID is the public site key already in klaviyo.js — not a secret."
+      },
+      {
+        "type": "text",
+        "id": "ha_klaviyo_company_id",
+        "label": "Company ID (public API key)",
+        "default": "XK6Wjs",
+        "info": "Klaviyo → Settings → API keys → Public API key. Six characters."
+      },
+      {
+        "type": "text",
+        "id": "ha_klaviyo_register_list",
+        "label": "The Register — list ID",
+        "default": "Wf4A23",
+        "info": "The list joined by every 'Join The Register' form. Double opt-in is set on the list itself."
+      },
+      {
+        "type": "text",
+        "id": "ha_klaviyo_circle_list",
+        "label": "Circle Requests — list ID",
+        "default": "S52aGa",
+        "info": "A separate list. Circle requests never join The Register automatically, in either direction."
       }
     ]
   },

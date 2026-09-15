@@ -1,10 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "ha-hero",
       "settings": {
+        "image": "shopify://shop_images/HartwickAtelier-About-Hero.jpg",
+        "image_alt": "",
         "image_label": "Campaign image / cloth in motion",
         "media_width": 58,
+        "height": 84,
         "eyebrow": "Nature · Masters · Wearer",
         "show_eyebrow_desktop": false,
         "heading": "Woven from the earth.\nWorn by those who know.",
@@ -12,8 +24,7 @@
         "body": "<p>A digital house where the making is never separated from the garment. Every interaction should reveal origin before transaction.</p>",
         "cta_text": "Enter the collection",
         "cta_link": "/collections/all",
-        "show_placeholder_note": true,
-        "image": "shopify://shop_images/HartwickAtelier-About-Hero.jpg"
+        "show_placeholder_note": true
       }
     },
     "house": {
@@ -22,13 +33,18 @@
         "eyebrow": "The House",
         "heading": "A slower way of making.",
         "body": "<p>Hartwick Atelier follows the complete life of a garment, from fibre and dye plant to loom, hand-finishing and wearer. The story is not added after the piece is made. The story is the piece.</p>",
-        "lead_image_label": "Archive image / landscape / cloth detail",
-        "tile_one_label": "01 / Raw cloth",
-        "tile_two_label": "02 / Archive image",
-        "show_placeholder_note": true,
+        "cta_text": "",
+        "cta_link": "",
         "lead_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg",
+        "lead_image_alt": "",
+        "lead_image_label": "Archive image / landscape / cloth detail",
         "tile_one_image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg",
-        "tile_two_image": "shopify://shop_images/HartwickAtelier-About-Collage-02.jpg"
+        "tile_one_alt": "",
+        "tile_one_label": "01 / Raw cloth",
+        "tile_two_image": "shopify://shop_images/HartwickAtelier-About-Collage-02.jpg",
+        "tile_two_alt": "",
+        "tile_two_label": "02 / Archive image",
+        "show_placeholder_note": true
       }
     },
     "collection_index": {
@@ -123,11 +139,12 @@
       ],
       "settings": {
         "eyebrow": "Collection index",
+        "lot_confirmed": false,
+        "collection": "",
         "row_limit": 7,
         "cta_text": "View full catalogue",
         "cta_link": "/collections/all",
-        "show_placeholder_note": true,
-        "lot_confirmed": false
+        "show_placeholder_note": true
       }
     },
     "masters_index": {
@@ -209,34 +226,47 @@
         "m_9"
       ],
       "settings": {
+        "field": "peat",
+        "layout": "index",
+        "source": "shop",
         "eyebrow": "The Masters Index",
+        "heading": "Knowledge held in human hands.",
         "intro": "<p>The practices, works and stories behind each collection. The people who hold the knowledge are never background.</p>",
         "list_label": "Featured Masters",
         "item_limit": 9,
         "link_masters": true,
         "masters_page_url": "/pages/the-masters",
         "bg_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg",
+        "bg_image_mobile": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
         "bg_alt": "",
         "bg_overlay": 60,
         "bg_position": "focal",
         "bg_position_mobile": "focal",
         "bg_ratio": "1.7778",
         "bg_ratio_mobile": "0.8",
+        "portrait_image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg",
+        "portrait_alt": "",
+        "portrait_label": "01 / Portrait",
+        "workshop_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg",
+        "workshop_alt": "",
+        "workshop_label": "02 / Workshop",
         "cta_text": "Meet the Masters",
         "cta_show_count": false,
-        "cta_suffix": "[14] pieces",
+        "cta_collection": "",
         "cta_link": "/pages/the-masters",
-        "show_placeholder_note": true,
-        "bg_image_mobile": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
-        "portrait_image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg",
-        "workshop_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg"
+        "cta_suffix": "[14] pieces",
+        "show_placeholder_note": true
       }
     },
     "featured_lot": {
       "type": "ha-featured-lot",
       "settings": {
+        "product": "",
+        "image": "shopify://shop_images/HartwickAtelier-SamarkandNavy-01.jpg",
+        "image_alt": "",
         "image_label": "Full garment / wearer image",
         "link_text": "The Origin",
+        "link_url": "",
         "ph_lot": "Lot I",
         "ph_title": "Style 001",
         "ph_intro": "<p>Natural indigo on handspun khadi. Made slowly in Rajasthan, at the pace the loom and the dye season allow.</p>",
@@ -244,8 +274,7 @@
         "ph_colour": "Natural indigo",
         "ph_made_by": "The Masters, Rajasthan",
         "ph_availability": "Through The Register",
-        "show_placeholder_note": true,
-        "image": "shopify://shop_images/HartwickAtelier-SamarkandNavy-01.jpg"
+        "show_placeholder_note": true
       }
     },
     "journal": {
@@ -256,8 +285,8 @@
           "settings": {
             "title": "The Loom",
             "excerpt": "A story from the workshop.",
-            "image_label": "01 / Editorial image",
-            "image": "shopify://shop_images/042HARTWICK_HANDWOVEN_KHADI_PARIS_TROUSERS_PINK4R1A2705.jpg"
+            "image": "shopify://shop_images/042HARTWICK_HANDWOVEN_KHADI_PARIS_TROUSERS_PINK4R1A2705.jpg",
+            "image_label": "01 / Editorial image"
           }
         },
         "c2": {
@@ -265,8 +294,8 @@
           "settings": {
             "title": "The Colour",
             "excerpt": "The plant, mineral and season behind the cloth.",
-            "image_label": "02 / Editorial image",
-            "image": "shopify://shop_images/001_HARTWICK_OKANAGAN_ROBE_KALAMALKA_BLOCKPRINT_d3e29d4c-3571-40a3-9e7e-6e3b38dbbacc.jpg"
+            "image": "shopify://shop_images/001_HARTWICK_OKANAGAN_ROBE_KALAMALKA_BLOCKPRINT_d3e29d4c-3571-40a3-9e7e-6e3b38dbbacc.jpg",
+            "image_label": "02 / Editorial image"
           }
         },
         "c3": {
@@ -274,8 +303,8 @@
           "settings": {
             "title": "The Wearer",
             "excerpt": "The garment once it enters someone's life.",
-            "image_label": "03 / Editorial image",
-            "image": "shopify://shop_images/HartwickAtelier-About-Hero-02.jpg"
+            "image": "shopify://shop_images/HartwickAtelier-About-Hero-02.jpg",
+            "image_label": "03 / Editorial image"
           }
         }
       },
@@ -285,21 +314,27 @@
         "c3"
       ],
       "settings": {
+        "field": "page",
         "eyebrow": "Journal / Dispatch",
         "blog": "news",
         "post_limit": 3,
         "mobile_layout": "stack",
+        "cta_text": "",
+        "cta_link": "",
         "show_placeholder_note": true
       }
     },
     "register": {
       "type": "ha-register",
       "settings": {
+        "email_placeholder": "you@example.com",
         "eyebrow": "The Register",
         "heading": "Be first to receive what comes next.",
         "body": "<p>Private access to new Lots, The Dispatch, and stories from the workshops before they reach the wider world.</p>",
+        "body_position": "heading",
         "show_native_form": true,
-        "contact_tag": "the-register"
+        "contact_tag": "the-register",
+        "register_source": "homepage_band"
       }
     }
   },

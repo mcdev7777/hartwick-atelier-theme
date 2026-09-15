@@ -2847,6 +2847,60 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-register__body { margin: 2.4rem 0 0; max-width: none; }
 .ha-register__aside { align-self: start; }
 
+/* --- The Register: consent and form states (14 September) ----------------
+   The form now posts to Klaviyo from this markup (assets/ha-klaviyo-form.js),
+   so the states the brief lists are drawn here rather than inherited from
+   Klaviyo's defaults. Same row idiom as the Circle checkboxes: 44px target
+   held by the row, box on the label's first line. */
+.ha-register__consent {
+  display: grid;
+  grid-template-columns: 1.4rem 1fr;
+  gap: 1.2rem;
+  align-items: start;
+  align-content: center;
+  min-height: 44px;
+  margin: 0 0 1.6rem;
+  font-size: var(--ha-t-label);
+  line-height: 1.5;
+  opacity: 0.85;
+  cursor: pointer;
+}
+.ha-register__consent input {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0.25rem 0 0;
+  accent-color: currentColor;
+}
+.ha-register__consent p { margin: 0; }
+.ha-register__consent a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
+
+/* The live region. Errors take the accent the Circle form already uses for
+   its own; on the dark field that is too quiet, so it borrows the rule instead. */
+.ha-register__message[data-ha-form-status] { margin: 0 0 1.6rem; line-height: 1.5; }
+.ha-register__message.is-error { color: var(--ha-cutch-resin); }
+.ha-section--dark .ha-register__message.is-error,
+.ha-section--field-peat .ha-register__message.is-error,
+.ha-section--field-slate .ha-register__message.is-error {
+  color: inherit;
+  border-left: 2px solid currentColor;
+  padding-left: 1.2rem;
+}
+
+/* Sending: the button holds its place and dims, nothing jumps. */
+.ha-register__form[data-state="submitting"] .ha-register__submit { opacity: 0.55; cursor: progress; }
+
+/* Success: the message replaces the controls. The heading and invitation stay. */
+.ha-register__form[data-state="success"] .ha-register__field,
+.ha-register__form[data-state="success"] .ha-register__consent,
+.ha-register__form[data-state="success"] .ha-register__submit { display: none; }
+.ha-register__form[data-state="success"] .ha-register__message[data-ha-form-status] {
+  border: 1px solid currentColor;
+  padding: 1.2rem 1.6rem;
+}
+
+/* Invalid: the field itself says so, not only the message. */
+.ha-register__input[aria-invalid="true"] { text-decoration: underline wavy; text-decoration-skip-ink: none; text-underline-offset: 0.3em; }
+
 /* Footer: the house symbol at 1.5x. */
 .ha-footer__mark { width: 14.4rem; }
 
@@ -3483,7 +3537,19 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   padding: 1.2rem 1.6rem;
   margin: 0 0 3.2rem;
 }
-.ha-crequest__note--error { color: var(--ha-cutch-resin); }
+.ha-crequest__note--error,
+.ha-crequest__note.is-error { color: var(--ha-cutch-resin); }
+.ha-section--field-peat .ha-crequest__note.is-error,
+.ha-section--field-slate .ha-crequest__note.is-error { color: inherit; }
+
+/* States drawn by assets/ha-klaviyo-form.js (14 September). Sending dims the
+   button in place; success leaves the note and removes the controls. */
+.ha-crequest__form[data-state="submitting"] .ha-crequest__submit { opacity: 0.55; cursor: progress; }
+.ha-crequest__form[data-state="success"] .ha-crequest__pair,
+.ha-crequest__form[data-state="success"] .ha-crequest__field,
+.ha-crequest__form[data-state="success"] .ha-crequest__consent,
+.ha-crequest__form[data-state="success"] .ha-crequest__submit { display: none; }
+.ha-crequest__input[aria-invalid="true"] { border-bottom-color: var(--ha-cutch-resin); }
 
 @media screen and (min-width: 750px) {
   .ha-crequest__pair { grid-template-columns: 1fr 1fr; }

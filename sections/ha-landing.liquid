@@ -7,6 +7,8 @@
   Rebuilt the same day against her second mockup, which changed four things:
 
     1. The headline copy — "...just like everything else here."
+       (11 September, Angela: "The website" became "Our website", and
+       "before it opens" became "before Hartwick opens".)
     2. The Porter statement line is gone. The setting stays (empty) so it can
        come back without code.
     3. The Junicode paragraph now sits beside the last line of the headline,
@@ -42,10 +44,17 @@
   punctuation in the statement line renders in Junicode. That is the type
   system behaving as designed, not a fallback failure.
 
-  THE FILM. `Scrapbook LANDING03.mp4` — 1080x1920, 8.2s, 8.0 MB — is served
-  from theme assets. Portrait is the right shape for this column, which is why
-  it survives the crop here where the 16:9 homepage hero did not. It is muted,
-  looping and inert: no controls, no sound, nothing to click. Under
+  THE FILM. `Scrapbook LANDING03.mp4`, re-encoded to 810x1440, 8.2s, 2.4 MB —
+  is served from theme assets. The delivered file was 1080x1920 and 8.0 MB
+  with an AAC track it never used; at 6 fps of collage stills the codec had
+  nothing to reuse between frames, so the weight was all in the pixels. It
+  was re-encoded 11 September 2026 after Aloha reported it not playing on
+  mobile: audio stripped, three-quarter scale, CRF 27, index at the front.
+  Visually identical at 1:1. A video with no audio track is also the most
+  reliable autoplay case on iOS — nothing for a power-saving policy to refuse.
+  Portrait is the right shape for this column, which is why it survives the
+  crop here where the 16:9 homepage hero did not. It is muted, looping and
+  inert: no controls, no sound, nothing to click. Under
   prefers-reduced-motion the video is not rendered at all and the poster image
   stands in its place, so the page still reads for anyone who has asked their
   system for stillness.
@@ -248,6 +257,14 @@
   .ha-landing__contact a:hover,
   .ha-landing__contact a:focus-visible { border-bottom-color: currentColor; }
 
+  /* The cookie preferences link, in the contact line's voice but quieter and
+     tighter to it: a legal necessity on the page, not part of the composition.
+     The holding page has no footer, so this is where it lives. */
+  .ha-landing__cookie {
+    margin-top: calc(var(--ha-landing-gap) / 2);
+    opacity: 0.7;
+  }
+
   /* --- desktop ----------------------------------------------------------- */
   @media screen and (min-width: 750px) {
     .ha-landing__body {
@@ -396,6 +413,12 @@
             <a href="mailto:{{ section.settings.contact_email | strip }}">{{ section.settings.contact_email | strip }}</a>
           {%- endif -%}
         </p>
+
+        {%- if section.settings.show_cookie_preferences -%}
+          <p class="ha-landing__contact ha-landing__cookie">
+            {%- render 'ha-cookie-preferences', label: section.settings.cookie_preferences_label -%}
+          </p>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -416,7 +439,7 @@
       "id": "video_asset",
       "label": "Video file in theme assets",
       "default": "ha-landing-scrapbook.mp4",
-      "info": "Filename only. Currently Scrapbook LANDING03.mp4 (1080×1920, 8.2s, 8.0 MB). Clear this to fall back to the still image alone."
+      "info": "Filename only. Currently Scrapbook LANDING03.mp4, re-encoded for mobile (810×1440, 8.2s, 2.4 MB, no audio). Clear this to fall back to the still image alone."
     },
     {
       "type": "video",
@@ -472,14 +495,14 @@
       "type": "textarea",
       "id": "heading",
       "label": "Headline",
-      "default": "The website is being rebuilt, by hand, just like everything else here.",
+      "default": "Our website is being rebuilt, by hand, just like everything else here.",
       "info": "Junicode Bold. Set in uppercase by the stylesheet — type it in sentence case."
     },
     {
       "type": "textarea",
       "id": "body_copy",
       "label": "Paragraph",
-      "default": "A new home for the Material Record: the fibres, the Masters, the pieces themselves. Write to us directly before it opens.",
+      "default": "A new home for the Material Record: the fibres, the Masters, the pieces themselves. Write to us directly before Hartwick opens.",
       "info": "Junicode Light. Sits beside the last line of the headline on a wide screen, under it on a narrow one."
     },
     {
@@ -585,6 +608,19 @@
       "id": "contact_email",
       "label": "Email address",
       "default": "contact@hartwickatelier.com"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cookie_preferences",
+      "label": "Show the cookie preferences link",
+      "default": true,
+      "info": "Under the contact line. Reopens the cookie banner from Settings > Customer privacy so a visitor can change their choice. The holding page has no footer, so this is the permanent link Angela asked for (14 September 2026)."
+    },
+    {
+      "type": "text",
+      "id": "cookie_preferences_label",
+      "label": "Cookie preferences label",
+      "default": "Cookie preferences"
     },
     {
       "type": "header",

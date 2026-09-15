@@ -14,6 +14,12 @@
   find: they come from shop.policies, so whatever is configured in Admin appears
   here automatically and nothing legal depends on someone remembering to add it.
 
+  "Cookie preferences" sits at the end of that same row (Angela, 14 September
+  2026). It reopens Shopify's own consent dialog — see snippets/ha-cookie-
+  preferences.liquid. It has its own switch so it can be shown even when the
+  policies are hidden, since the banner is a legal requirement in the UK, EEA
+  and Canada whether or not the policy links are wanted here.
+
   The wordmark is the supplied artwork, never live type (LOGO READ ME).
 {%- endcomment -%}
 
@@ -40,13 +46,18 @@
         </nav>
       {%- endif -%}
 
-      {%- if section.settings.show_policies -%}
+      {%- if section.settings.show_policies or section.settings.show_cookie_preferences -%}
         <ul class="ha-footer__policies ha-record" role="list">
-          {%- for policy in shop.policies -%}
-            {%- if policy != blank -%}
-              <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
-            {%- endif -%}
-          {%- endfor -%}
+          {%- if section.settings.show_policies -%}
+            {%- for policy in shop.policies -%}
+              {%- if policy != blank -%}
+                <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          {%- if section.settings.show_cookie_preferences -%}
+            <li>{% render 'ha-cookie-preferences', label: section.settings.cookie_preferences_label %}</li>
+          {%- endif -%}
         </ul>
       {%- endif -%}
     </div>
@@ -94,7 +105,9 @@
       { "value": "slate", "label": "Slate (dark)" }
     ] },
     { "type": "text", "id": "nav_label", "label": "Navigation label (screen readers)", "default": "Footer" },
-    { "type": "checkbox", "id": "show_policies", "label": "Show shop policies", "default": true, "info": "Privacy, Terms, Refund and Shipping policies, taken from Settings > Policies." }
+    { "type": "checkbox", "id": "show_policies", "label": "Show shop policies", "default": true, "info": "Privacy, Terms, Refund and Shipping policies, taken from Settings > Policies." },
+    { "type": "checkbox", "id": "show_cookie_preferences", "label": "Show the cookie preferences link", "default": true, "info": "Reopens the cookie banner from Settings > Customer privacy so a visitor can change their choice. Required alongside the banner in the UK, EEA and Canada." },
+    { "type": "text", "id": "cookie_preferences_label", "label": "Cookie preferences label", "default": "Cookie preferences" }
   ],
   "blocks": [
     {

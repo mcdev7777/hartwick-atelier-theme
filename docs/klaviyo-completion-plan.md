@@ -187,7 +187,26 @@ working copy.
 
 ## Stage 5 — Forms and source attribution (~90 min)
 
-**Check this before asking for code:** `ha-register.liquid` already accepts `@app` blocks
+> **Superseded 14 September — the forms are the theme's own, posting to Klaviyo.**
+> The embedded Klaviyo form (`XiXtvW`) worked end-to-end on 14 Sep (profile,
+> `register_source`, consent, double opt-in all confirmed) but could not be made to
+> match the design without keeping the palette in Klaviyo as well as the theme. So
+> `ha-register` and `ha-circle-request` now submit their existing markup to Klaviyo's
+> client subscription endpoint via `assets/ha-klaviyo-form.js`. Company ID and both
+> list IDs are theme settings (Hartwick → Klaviyo); each placement sets its own
+> `register_source`. Consent checkbox is required and never pre-ticked; wording is a
+> labelled placeholder until Christina's lands. Circle city/note fields are now real
+> (`city_country`, `circle_note`), interests travel as `circle_interests`. Lost:
+> Klaviyo's own `Form viewed / submitted` metrics. Kept: everything the brief
+> requires. Form `XiXtvW` stays in Klaviyo, unpublished, as the fallback.
+>
+> **[Ivan]** on the dev theme: push · remove the Klaviyo app block from the Register
+> section (homepage) and the Circle section · tick "Show the form" on both · submit
+> `+register02` and `+circle01` · click the Register confirmation · load a product
+> page. **[Claude]** then verifies list, source, consent and that `Viewed Product`
+> attached to the profile.
+
+**The original plan for this stage, kept for the record:** `ha-register.liquid` already accepts `@app` blocks
 and already carries the `show_native_form` switch. If Klaviyo's Shopify app exposes a
 sign-up-form app block, it drops straight in and no theme change is needed.
 

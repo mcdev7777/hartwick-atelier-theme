@@ -1,0 +1,46 @@
+{%- comment -%}
+  HA — Cookie preferences link.
+
+  Angela, 14 September 2026: a permanent "Cookie Preferences" link in the
+  footer, so a visitor can change the choice they made on the banner.
+
+  The banner itself is Shopify's own, switched on and region-gated under
+  Settings > Customer privacy. Nothing here draws a banner or sets a cookie.
+  This is one link that reopens Shopify's preferences dialog through the
+  documented hook, `window.privacyBanner.showPreferences()`:
+  https://shopify.dev/docs/api/customer-privacy
+
+  It is an ordinary link first and a button second. The href is the privacy
+  policy, so where the banner script has not loaded — a region the banner is
+  not shown in, a browser with scripts off, the theme editor — the link still
+  goes somewhere honest instead of doing nothing. When the hook is present the
+  click is intercepted and the dialog opens in place.
+
+  Rendered by ha-footer (the site) and ha-landing (the holding page, which has
+  no footer of its own). The listener is bound once however many times the
+  snippet renders.
+
+  Accepts: label (string, defaults to "Cookie preferences").
+{%- endcomment -%}
+
+<a
+  class="ha-cookie-prefs"
+  href="{{ shop.privacy_policy.url | default: routes.root_url }}"
+  data-ha-cookie-prefs
+>{{ label | default: 'Cookie preferences' }}</a>
+
+<script>
+  (function () {
+    if (window.haCookiePrefsBound) return;
+    window.haCookiePrefsBound = true;
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest('[data-ha-cookie-prefs]');
+      if (!link) return;
+      var banner = window.privacyBanner;
+      if (banner && typeof banner.showPreferences === 'function') {
+        event.preventDefault();
+        banner.showPreferences();
+      }
+    });
+  })();
+</script>

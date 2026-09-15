@@ -328,7 +328,8 @@
         "body": "<p>The Register shares new Lots, The Dispatch and notes from the workshops. No application is required.</p>",
         "body_position": "form",
         "show_native_form": true,
-        "contact_tag": "the-register"
+        "contact_tag": "the-register",
+        "register_source": "circle_page"
       }
     }
   },

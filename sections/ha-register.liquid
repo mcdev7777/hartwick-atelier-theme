@@ -13,9 +13,23 @@
   form itself is still Shopify's own customer form — same submission,
   same success and error states, same customer record.
 
-  Klaviyo (Thursday 3 Sep, risk R5): this section accepts @app blocks, so the
-  Klaviyo form block drops in beside or in place of the native form with no rebuild.
-  Consent and source properties get wired then.
+  Klaviyo (14 Sep): the form below posts to Klaviyo directly, from the theme's
+  own markup, via assets/ha-klaviyo-form.js. The embedded Klaviyo form could not
+  be made to match the design without keeping the palette in two places, so the
+  design stays here and only the destination changed. Company and list IDs live
+  in theme settings; the one thing set per placement is `register_source`, which
+  is what lets Aloha see which call to action actually works. With JS off it is
+  still Shopify's customer form and the Shopify → Klaviyo sync catches it.
+
+  The @app block slot is kept as the fallback — if it is ever used again,
+  switch "Show the Shopify form" off so two forms are never live at once.
+
+  `novalidate` so the script draws the invalid states rather than the browser's
+  bubble. `data-nocaptcha` because Shopify's storefront captcha bootstrap binds
+  every /contact customer form and, once bound, calls form.submit() itself on
+  submit — straight past our preventDefault and onto the /challenge page. That
+  attribute is its own documented opt-out. With JS off, Shopify still
+  challenges server-side, so nothing is weakened.
 {%- endcomment -%}
 
 <section id="the-register" class="ha-section ha-section--dark ha-register">
@@ -59,8 +73,29 @@
         {%- endfor -%}
 
         {%- if section.settings.show_native_form -%}
-          {%- form 'customer', class: 'ha-register__form newsletter-form' -%}
+          {%- form 'customer',
+            class: 'ha-register__form newsletter-form',
+            novalidate: 'novalidate',
+            data-nocaptcha: 'true',
+            data-ha-klaviyo: '',
+            data-company-id: settings.ha_klaviyo_company_id,
+            data-list-id: settings.ha_klaviyo_register_list,
+            data-source: section.settings.register_source,
+            data-msg-invalid: section.settings.msg_invalid,
+            data-msg-consent: section.settings.msg_consent,
+            data-msg-submitting: section.settings.msg_submitting,
+            data-msg-success: section.settings.msg_success,
+            data-msg-error: section.settings.msg_error
+          -%}
             <input type="hidden" name="contact[tags]" value="{{ section.settings.contact_tag }}">
+
+            {%- comment -%}
+              One live region for every state the script can reach — invalid,
+              consent, submitting, success, error. Shopify's own messages below
+              only render on the no-JS round trip.
+            {%- endcomment -%}
+            <p class="ha-register__message ha-record" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
+
             <div class="ha-register__field">
               <label class="ha-register__label ha-record" for="HaRegister--{{ section.id }}">
                 {{ 'newsletter.label' | t }}
@@ -92,6 +127,17 @@
               control; the design has a single rule under the input, then space,
               then the solid button.
             {%- endcomment -%}
+            {%- comment -%}
+              Express consent, never pre-ticked. CASL applies — the entity is in
+              British Columbia — so this is a legal requirement, not a style.
+              The wording is Christina's and ships as a labelled placeholder
+              until it lands.
+            {%- endcomment -%}
+            <label class="ha-register__consent ha-narrate">
+              <input type="checkbox" data-ha-consent required aria-required="true">
+              <span>{{ section.settings.consent_text }}</span>
+            </label>
+
             <button type="submit" class="ha-register__submit ha-identify" name="commit">
               {{ 'newsletter.button_label' | t }}
             </button>
@@ -108,6 +154,7 @@
               </p>
             {%- endif -%}
           {%- endform -%}
+          <script src="{{ 'ha-klaviyo-form.js' | asset_url }}" defer></script>
         {%- endif -%}
       </div>
     </div>
@@ -132,8 +179,31 @@
         { "value": "form", "label": "Above the email field (right)" }
       ]
     },
-    { "type": "checkbox", "id": "show_native_form", "label": "Show the Shopify form", "default": true, "info": "Switch off once the Klaviyo block is added." },
-    { "type": "text", "id": "contact_tag", "label": "Customer tag", "default": "the-register" }
+    { "type": "checkbox", "id": "show_native_form", "label": "Show the form", "default": true, "info": "This form posts to Klaviyo. Switch off only if a Klaviyo app block is carrying the form instead — never both." },
+    { "type": "text", "id": "contact_tag", "label": "Customer tag (no-JS fallback only)", "default": "the-register" },
+    { "type": "header", "content": "Klaviyo" },
+    {
+      "type": "select", "id": "register_source", "label": "Source", "default": "homepage_band",
+      "info": "Recorded on the profile as register_source, one value per placement — this is what answers 'which call to action worked'.",
+      "options": [
+        { "value": "homepage_band", "label": "Homepage band" },
+        { "value": "footer", "label": "Footer" },
+        { "value": "product_page", "label": "Product page" },
+        { "value": "circle_page", "label": "The Circle page" },
+        { "value": "journal", "label": "Journal" }
+      ]
+    },
+    {
+      "type": "richtext", "id": "consent_text", "label": "Consent line",
+      "default": "<p>[PLACEHOLDER — wording from Christina] Yes, add me to The Register. I can leave at any time.</p>",
+      "info": "Required to submit and never pre-ticked. The wording is a legal matter under CASL — Aloha to confirm with Christina."
+    },
+    { "type": "header", "content": "Messages" },
+    { "type": "text", "id": "msg_invalid", "label": "Invalid email", "default": "Please enter a valid email address." },
+    { "type": "text", "id": "msg_consent", "label": "Consent not ticked", "default": "Please tick the box to join." },
+    { "type": "text", "id": "msg_submitting", "label": "While sending", "default": "One moment…" },
+    { "type": "text", "id": "msg_success", "label": "Success", "default": "Thank you. A confirmation is on its way — one click and you are on The Register.", "info": "The list is double opt-in, so the success message must send them to their inbox." },
+    { "type": "text", "id": "msg_error", "label": "Service error", "default": "That did not go through. Please try again, or write to contact@hartwickatelier.com." }
   ],
   "blocks": [{ "type": "@app" }],
   "presets": [{ "name": "Hartwick — The Register" }]
