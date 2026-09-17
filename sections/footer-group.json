@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
@@ -5,43 +14,25 @@
     "ha_footer": {
       "type": "ha-footer",
       "blocks": {
-        "l1": {
-          "type": "link",
-          "settings": {
-            "label": "Instagram",
-            "use_instagram_setting": true,
-            "new_tab": true
-          }
-        },
-        "l2": {
-          "type": "link",
-          "settings": {
-            "label": "Contact",
-            "url": "/pages/contact-us"
-          }
-        },
-        "l3": {
-          "type": "link",
-          "settings": {
-            "label": "The Register",
-            "url": "/#the-register"
-          }
-        }
+        "n1": { "type": "link", "settings": { "label": "Collection", "url": "/collections", "column": "left" } },
+        "n2": { "type": "link", "settings": { "label": "The Masters", "url": "/pages/the-makers", "column": "left" } },
+        "n3": { "type": "link", "settings": { "label": "Journal", "url": "/blogs/news", "column": "left" } },
+        "n4": { "type": "link", "settings": { "label": "About", "url": "/pages/about-the-atelier", "column": "left" } },
+        "l1": { "type": "link", "settings": { "label": "Instagram", "social": "instagram", "new_tab": true, "column": "right" } },
+        "l2": { "type": "link", "settings": { "label": "Contact", "url": "/pages/contact-us", "column": "right" } },
+        "l3": { "type": "link", "settings": { "label": "LinkedIn", "social": "linkedin", "new_tab": true, "column": "right" } }
       },
-      "block_order": [
-        "l1",
-        "l2",
-        "l3"
-      ],
+      "block_order": ["n1", "n2", "n3", "n4", "l1", "l2", "l3"],
       "settings": {
         "nav_label": "Footer",
         "show_policies": true,
-        "logo_variant": "black",
+        "policies_label": "Policies",
+        "policies_url": "/pages/policies",
+        "show_cookie_preferences": true,
+        "cookie_preferences_label": "Cookie preferences",
         "field": "page"
       }
     }
   },
-  "order": [
-    "ha_footer"
-  ]
+  "order": ["ha_footer"]
 }

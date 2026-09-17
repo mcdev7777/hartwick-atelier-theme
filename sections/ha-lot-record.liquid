@@ -1,0 +1,136 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — LOT RECORD: "The Production Record".
+  Aloha's product-page brief, 16 September 2026:
+
+    "The Lot table records which production run this Expression belongs to,
+     with approved quantity and production dates. It is a traceable record,
+     not an urgency device."
+
+  Five rows, as the V2 artboard draws them — Style, Expression, Product
+  reference, Lot / Quantity, Production / Completion. Each reads the same
+  records as the rest of the page (snippets/ha-product-fact and the `lot`
+  metaobject), so the Style here can never disagree with the Style at the top.
+
+  A missing fact prints the design's own bracketed annotation in the accent
+  ink — "[Confirm Lot number and production quantity]" — never a number.
+  The quantity is still gated on hartwick.production_quantity_verified (Aloha,
+  3 September): an unchecked figure reads exactly like a checked one.
+
+  The `lot` record gains two fields for this table (docs/data-model.md):
+  `quantity` and `completed_on`. `opened_on` already exists and is the
+  production start.
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+  assign lot = mf.lot.value
+
+  capture f_style
+    render 'ha-product-fact', product: product, field: 'style'
+  endcapture
+  capture f_expression
+    render 'ha-product-fact', product: product, field: 'expression'
+  endcapture
+  capture f_reference
+    render 'ha-product-fact', product: product, field: 'reference'
+  endcapture
+  assign f_style = f_style | strip
+  assign f_expression = f_expression | strip
+  assign f_reference = f_reference | strip
+
+  # Lot / quantity
+  assign lot_cell = ''
+  if lot.number_roman.value != blank
+    assign lot_cell = 'Lot ' | append: lot.number_roman.value
+  endif
+  assign qty = ''
+  if mf.production_quantity_verified == true and mf.production_quantity != blank
+    assign qty = mf.production_quantity | append: ' pieces'
+  elsif lot.quantity.value != blank
+    assign qty = lot.quantity.value | append: ' pieces'
+  endif
+  if lot_cell != blank and qty != blank
+    assign lot_cell = lot_cell | append: ' / ' | append: qty
+  elsif qty != blank
+    assign lot_cell = qty
+  endif
+
+  # Production / completion
+  assign dates_cell = ''
+  if lot.opened_on.value != blank
+    assign dates_cell = lot.opened_on.value | date: '%B %Y'
+  endif
+  if lot.completed_on.value != blank
+    assign done = lot.completed_on.value | date: '%B %Y'
+    if dates_cell != blank
+      assign dates_cell = dates_cell | append: ' / ' | append: done
+    else
+      assign dates_cell = done
+    endif
+  endif
+
+  assign open_facts = false
+  if f_reference == blank or lot_cell == blank or dates_cell == blank
+    assign open_facts = true
+  endif
+-%}
+
+<section class="ha-section ha-lotrec{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" id="lot-record">
+  <div class="ha-wrap ha-lotrec__grid">
+    <div class="ha-lotrec__lead">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-identify ha-lotrec__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="ha-display ha-narrate ha-lotrec__heading">{{ section.settings.heading }}</h2>
+    </div>
+
+    <table class="ha-lotrec__table ha-record">
+      <caption class="visually-hidden">{{ section.settings.heading }}</caption>
+      <tbody>
+        <tr><th scope="row">{{ section.settings.row_style }}</th><td>{{ f_style }}</td></tr>
+        <tr><th scope="row">{{ section.settings.row_expression }}</th><td>{{ f_expression | default: section.settings.confirm_expression }}</td></tr>
+        <tr><th scope="row">{{ section.settings.row_reference }}</th><td>{% if f_reference != blank %}{{ f_reference }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_reference }}</span>{% endif %}</td></tr>
+        <tr><th scope="row">{{ section.settings.row_lot }}</th><td>{% if lot_cell != blank %}{{ lot_cell }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_lot }}</span>{% endif %}</td></tr>
+        <tr><th scope="row">{{ section.settings.row_dates }}</th><td>{% if dates_cell != blank %}{{ dates_cell }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_dates }}</span>{% endif %}</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  {%- if open_facts -%}
+    <div class="ha-wrap ha-lotrec__note">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+        text: 'Bracketed rows are open facts — they publish from the lot record (number, quantity, dates) and the variant SKU once confirmed.' -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "HA — Lot Record",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "The Production Record (V2 design, 16 Sept 2026). A traceable record, not an urgency device. Reads the product's Style, Expression, SKU and lot record." },
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Lot Record" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Production Record" },
+    { "type": "header", "content": "Row labels" },
+    { "type": "text", "id": "row_style", "label": "Style", "default": "Style" },
+    { "type": "text", "id": "row_expression", "label": "Expression", "default": "Expression" },
+    { "type": "text", "id": "row_reference", "label": "Product reference", "default": "Product reference" },
+    { "type": "text", "id": "row_lot", "label": "Lot / quantity", "default": "Lot / Quantity" },
+    { "type": "text", "id": "row_dates", "label": "Production / completion", "default": "Production / Completion" },
+    { "type": "header", "content": "Open facts (design annotations)" },
+    { "type": "text", "id": "confirm_expression", "label": "Expression unknown", "default": "[Confirm Expression name]" },
+    { "type": "text", "id": "confirm_reference", "label": "Reference unknown", "default": "[Confirm product reference]" },
+    { "type": "text", "id": "confirm_lot", "label": "Lot unknown", "default": "[Confirm Lot number and production quantity]" },
+    { "type": "text", "id": "confirm_dates", "label": "Dates unknown", "default": "[Confirm production dates]" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Lot Record" }]
+}
+{% endschema %}

@@ -1,0 +1,33 @@
+/*
+ * Hartwick Atelier — POLICIES
+ *
+ * Aloha, 15 September 2026: one POLICIES link in the footer, one clean page
+ * with every policy on it, each under its own anchor. The text comes from
+ * Settings > Policies; nothing legal lives in the theme.
+ *
+ * ⚠️ ADMIN, not theme: create the page "Policies" (handle: policies) and set
+ *    its Theme template to "policies". The footer link already points at
+ *    /pages/policies.
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": { "content_width": "page-width-narrow", "padding_top": 100, "padding_bottom": 100 }
+    },
+    "policies": {
+      "type": "ha-policies",
+      "settings": {
+        "eyebrow": "Policies",
+        "heading": "The terms on which we work.",
+        "intro": "",
+        "title_shipping": "Shipping",
+        "title_refund": "Returns & Refunds",
+        "title_privacy": "Privacy",
+        "title_terms": "Terms"
+      }
+    }
+  },
+  "order": ["main", "policies"]
+}

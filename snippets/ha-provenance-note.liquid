@@ -1,0 +1,11 @@
+{%- comment -%}
+  The old site's paragraph for a process mark, kept as a closed disclosure
+  beneath its stage. Native <details>: keyboard, touch and no-JavaScript all
+  work, and the text is in the page for a crawler even while closed.
+{%- endcomment -%}
+{%- if body != blank -%}
+  <details class="ha-provenance__note">
+    <summary class="ha-provenance__note-summary ha-record">{{ label | default: 'About' }} {{ title | downcase }}</summary>
+    <div class="ha-provenance__note-body ha-body ha-narrate">{{ body }}</div>
+  </details>
+{%- endif -%}

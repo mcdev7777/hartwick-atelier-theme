@@ -1,16 +1,45 @@
 /*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
+ * Hartwick Atelier — THE COLLECTION INDEX (/collections)
  *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
+ * Aloha's Collection-page wireframe, 15 September 2026:
+ *
+ *   categories  ha-collection-categories  title, the category line, four photographs two by two
+ *   register    ha-register               THE REGISTER — the same form as everywhere else
+ *
+ * Each tile is bound to a collection and links to it:
+ *   Clothing        → apparel          (store title "APPAREL"; the wireframe says Clothing)
+ *   Fine Silks      → fine-silk        (store title "FINE SILK SCARVES")
+ *   Yoga            → yoga
+ *   Fine Jewellery  → fine-jewellery
+ *
+ * ⚠️ PHOTOGRAPHS. Aloha's Drive was not to hand, so the pictures are the
+ *    store's own files (Admin > Files), found by eye against her drawing:
+ *      · Fine Silks      088_HARTWICK_FINESILK_PETITSQUARE01_SCARF_NATURALDYE_BLOCKPRINT.jpg
+ *                        — the frame in the drawing.
+ *      · Fine Jewellery  001_HARTWICK_LIMINAL_ALEXANDRIA_PENDANT_22K_GOLD_EMERALD.jpg
+ *                        — the same photograph; the store's copy is cropped
+ *                        tighter than hers (no hat brim).
+ *      · Clothing        001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg
+ *                        — the same shoot, room and outfit; her frame (the
+ *                        photograph on the dresser bottom-left, her to the
+ *                        right) is not on the store. Nearest of the three.
+ *    The fourth — the rolled yoga mat on stone — exists nowhere on the store
+ *    (there are no yoga products yet), so the Yoga tile carries the Yoga
+ *    collection's own header image as a STAND-IN until her file arrives.
+ *    Picking an image on that block replaces it.
+ *
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor. Shopify
+ * validates a JSON template against each section's schema AS IT EXISTS ON THE
+ * THEME when the template is uploaded, and silently drops any setting the
+ * schema does not yet declare — push the sections before this file.
  * ------------------------------------------------------------
  */
 {
   "sections": {
     "main": {
       "type": "main-list-collections",
+      "disabled": true,
       "settings": {
         "title": "Collections",
         "description": "",
@@ -26,9 +55,76 @@
         "padding_top": 80,
         "padding_bottom": 80
       }
+    },
+    "categories": {
+      "type": "ha-collection-categories",
+      "blocks": {
+        "clothing": {
+          "type": "tile",
+          "settings": {
+            "collection": "apparel",
+            "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg",
+            "label": "Clothing",
+            "alt": "A handwoven ikat shirt and khadi skirt, worn in a timber room",
+            "focus_x": 50,
+            "focus_y": 0
+          }
+        },
+        "silks": {
+          "type": "tile",
+          "settings": {
+            "collection": "fine-silk",
+            "image": "shopify://shop_images/088_HARTWICK_FINESILK_PETITSQUARE01_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+            "label": "Fine Silks",
+            "alt": "A block-printed silk square hung on a line against a stone wall",
+            "focus_x": 40,
+            "focus_y": 50
+          }
+        },
+        "yoga": {
+          "type": "tile",
+          "settings": {
+            "collection": "yoga",
+            "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Yoga.jpg",
+            "label": "Yoga",
+            "alt": "A handwoven yoga mat laid on rock beside the sea",
+            "focus_x": 50,
+            "focus_y": 50
+          }
+        },
+        "jewellery": {
+          "type": "tile",
+          "settings": {
+            "collection": "fine-jewellery",
+            "image": "shopify://shop_images/001_HARTWICK_LIMINAL_ALEXANDRIA_PENDANT_22K_GOLD_EMERALD.jpg",
+            "label": "Fine Jewellery",
+            "alt": "A gold chain and emerald pendant at the neck of a white shirt",
+            "focus_x": 50,
+            "focus_y": 30
+          }
+        }
+      },
+      "block_order": ["clothing", "silks", "yoga", "jewellery"],
+      "settings": {
+        "heading": "The Collection Index",
+        "subline": "Clothing, Fine Silks, Fine Jewellery and Yoga",
+        "touch_reveal": "scroll",
+        "show_placeholder_note": true,
+        "placeholder_text": "Provisional — photographs are the store's own files: Fine Silks and Fine Jewellery are the wireframe's frames, Clothing is the nearest frame from the same shoot, Yoga is a stand-in until the rolled-mat picture arrives"
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "Correspondence from the Atelier, when there is something worth sending.",
+        "body": "<p>The Dispatch carries production notes, material studies, conversations with Masters and considered notice of what the Atelier is making next.</p>",
+        "body_position": "form",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "collection_page"
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main", "categories", "register"]
 }

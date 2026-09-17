@@ -1,0 +1,198 @@
+{%- comment -%}
+  Hartwick Atelier — ONE SET OF FACTS for the product page.
+  Aloha, 16 September 2026 (Product page design and discovery brief): "Both
+  parts should draw from the same product records so that customer-facing
+  facts, search information and sales-channel data stay consistent." and
+  "Use referenced records rather than separately typed biographies and
+  material descriptions across pages."
+
+  Every product-page section asks THIS snippet for a fact, so the Style name
+  in the opening, in the Lot record and on a Related Works card can never
+  disagree. Liquid snippets cannot return a value, so the caller captures the
+  output:
+
+      {%- capture style_name -%}{%- render 'ha-product-fact', product: product, field: 'style' -%}{%- endcapture -%}
+
+  RESOLUTION ORDER, per field: the Hartwick model first (hartwick.*), then
+  the OLD SITE's own records (custom.* and shopify.* — Aloha, 16 Sept: "use
+  the existing text and product information from the old Hartwick website
+  to populate the new layout"), then the product title. Nothing here is
+  invented: a field with no source prints nothing, and the caller decides
+  whether a placeholder stands in.
+
+  The old site's records, and what they carry:
+      custom.subtitle        "Organic Cotton Kalamalka Block Print"  (97 of 97)
+      custom.description     a DETAILS bullet list                   (78)
+      custom.process_1..4    -> `process` metaobject: HANDSPUN,
+                                HANDWOVEN, KHADI, IKAT, JAMDANI, BROCADE,
+                                GOTA PATTI, 100% NATURAL DYE, BLOCK
+                                PRINTED BY HAND                       (78)
+      shopify.fabric         taxonomy: Cotton, Silk, Linen …          (78)
+      shopify.color-pattern  taxonomy colour                          (35)
+      product.title          "OKANAGAN LONG ROBE | Kalamalka Block Print"
+
+  The old titles are "LEGACY NAME | descriptor". CLAUDE.md makes legacy names
+  internal only, so the part before the bar is an INTERIM heading until the
+  Style is linked (hartwick.style) — flagged on the page and to Aloha.
+
+  Fields:
+      style        Style display name          -> title before " | "
+      expression   Expression                  -> title after " | " -> subtitle
+      material     serif line under the Style  -> fibre -> subtitle
+      fibre        "Silk / Linen"              -> shopify.fabric labels
+      yarn         "Handspun"                  -> from the old process marks
+      weave        "Handwoven"                 -> from the old process marks
+      technique    "Ikat"                      -> hartwick.techniques -> process marks
+      dye          "Natural dye"               -> hartwick.dye -> process marks
+      colour       "Natural / Undyed"          -> shopify.color-pattern
+      made_in      place of construction
+      finishing    hartwick.finishing
+      reference    variant SKU (blank on every old product — none were set)
+{%- endcomment -%}
+{%- liquid
+  assign mf = product.metafields.hartwick
+  assign cf = product.metafields.custom
+  assign out = ''
+
+  # --- the old site's process marks, once, as an uppercase string -----------
+  assign marks = ''
+  if cf.process_1.value != blank
+    assign marks = marks | append: '|' | append: cf.process_1.value.title.value
+  endif
+  if cf.process_2.value != blank
+    assign marks = marks | append: '|' | append: cf.process_2.value.title.value
+  endif
+  if cf.process_3.value != blank
+    assign marks = marks | append: '|' | append: cf.process_3.value.title.value
+  endif
+  if cf.process_4.value != blank
+    assign marks = marks | append: '|' | append: cf.process_4.value.title.value
+  endif
+  assign marks = marks | upcase
+
+  assign title_parts = product.title | split: '|'
+
+  case field
+    when 'style'
+      if mf.style.value.display_name != blank
+        assign out = mf.style.value.display_name
+      else
+        assign out = title_parts[0] | strip
+      endif
+
+    when 'expression'
+      if mf.expression != blank
+        assign out = mf.expression
+      elsif title_parts.size > 1
+        assign out = title_parts[1] | strip
+      elsif cf.subtitle != blank
+        assign out = cf.subtitle
+      endif
+
+    when 'material'
+      if mf.fibre != blank
+        assign out = mf.fibre
+      elsif cf.subtitle != blank
+        assign out = cf.subtitle
+      endif
+
+    when 'fibre'
+      if mf.fibre != blank
+        assign out = mf.fibre
+      elsif product.metafields.shopify.fabric.value != blank
+        assign labels = ''
+        for f in product.metafields.shopify.fabric.value
+          if forloop.first
+            assign labels = f.label.value
+          else
+            assign labels = labels | append: ' / ' | append: f.label.value
+          endif
+        endfor
+        assign out = labels
+      endif
+
+    when 'yarn'
+      if mf.yarn != blank
+        assign out = mf.yarn
+      elsif marks contains 'HANDSPUN' or marks contains 'KHADI'
+        assign out = 'Handspun'
+      endif
+
+    when 'weave'
+      if mf.weave != blank
+        assign out = mf.weave
+      elsif marks contains 'HANDWOVEN' or marks contains 'KHADI' or marks contains 'IKAT' or marks contains 'JAMDANI' or marks contains 'BROCADE'
+        assign out = 'Handwoven'
+      endif
+
+    when 'technique'
+      if mf.techniques.value != blank
+        assign names = ''
+        for t in mf.techniques.value
+          if forloop.first
+            assign names = t.name.value
+          else
+            assign names = names | append: ', ' | append: t.name.value
+          endif
+        endfor
+        assign out = names
+      else
+        assign names = ''
+        assign known = 'KHADI,IKAT,JAMDANI,BROCADE,GOTA PATTI' | split: ','
+        for k in known
+          if marks contains k
+            assign nice = k | downcase | capitalize
+            if k == 'GOTA PATTI'
+              assign nice = 'Gota Patti'
+            endif
+            if names == ''
+              assign names = nice
+            else
+              assign names = names | append: ', ' | append: nice
+            endif
+          endif
+        endfor
+        assign out = names
+      endif
+
+    when 'dye'
+      if mf.dye.value.name != blank
+        assign out = mf.dye.value.name
+      elsif marks contains 'NATURAL DYE'
+        assign out = 'Natural dye'
+      elsif marks contains 'BLOCK PRINTED'
+        assign out = 'Block printed by hand'
+      endif
+
+    when 'colour'
+      if mf.colour_name != blank
+        assign out = mf.colour_name
+      elsif product.metafields.shopify['color-pattern'].value != blank
+        assign labels = ''
+        for c in product.metafields.shopify['color-pattern'].value
+          if forloop.first
+            assign labels = c.label.value
+          else
+            assign labels = labels | append: ' / ' | append: c.label.value
+          endif
+        endfor
+        assign out = labels
+      endif
+
+    when 'made_in'
+      if mf.place_of_construction.value.place != blank
+        assign out = mf.place_of_construction.value.place
+      endif
+
+    when 'finishing'
+      if mf.finishing != blank
+        assign out = mf.finishing
+      endif
+
+    when 'reference'
+      assign v = product.selected_or_first_available_variant
+      if v.sku != blank
+        assign out = v.sku
+      endif
+  endcase
+-%}{{ out | strip }}

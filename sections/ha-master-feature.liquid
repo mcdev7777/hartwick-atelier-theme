@@ -1,0 +1,159 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE MASTER (product page).
+  Aloha, 16 September 2026:
+
+    "The Master section introduces the person or workshop responsible for
+     making the selected garment or its cloth. […] A large photograph of the
+     relevant Master working, their hands, loom or workshop. Their name
+     positioned over the photograph. Their discipline and location — what they
+     contributed and where. 'View Master Record' linking to their dedicated
+     page […] each product should reference the appropriate Master record so
+     the photograph, name and link come from that shared record."
+
+  So this section holds NO content of its own. It reads the first `master`
+  record in hartwick.masters (falling back to the product's Lot's masters),
+  and prints that record's workshop photograph, name, discipline and place,
+  and a link to the record's own page — `master.system.url` once the
+  metaobject definition has storefront pages switched on, else the Masters
+  index page chosen below. The photograph may be overridden per section only
+  as a stand-in; the record wins the moment it carries an image.
+
+  HONESTY (CLAUDE.md, and the brief: "Do not connect a generic artisan
+  photograph to this product without confirming the relationship and image
+  permission"). A record with no name renders the design's labelled slot —
+  "[Master name]", "[Discipline] / [Place]", "Workshop photograph / to supply",
+  "Identity + product link to verify" — never a role dressed as a person and
+  never a photograph that has not been tied to this garment. The cross-hairs
+  in the artboard are a design annotation for the empty slot and are drawn
+  here for the same reason, so the slot cannot be mistaken for finished art.
+
+  Composition (V2): a dark full-bleed band ~1040px tall at 1500 wide; eyebrow
+  top-left, the photograph's caption top-right, the name and
+  discipline / place bottom-left over the image, the link beneath a short rule.
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+  assign master = mf.masters.value.first
+  if master == blank
+    assign master = mf.lot.value.masters.value.first
+  endif
+
+  assign m_name = master.name.value
+  assign m_role = master.role.value
+  assign m_place = master.region.value.place
+  if master.region.value.region != blank and m_place != blank
+    assign m_place = m_place | append: ', ' | append: master.region.value.region
+  elsif master.region.value.region != blank
+    assign m_place = master.region.value.region
+  endif
+
+  assign has_identity = false
+  if m_name != blank
+    assign has_identity = true
+  endif
+
+  assign photo = master.workshop_images.value.first | default: master.portrait.value
+  if has_identity == false
+    assign photo = nil
+  endif
+  if photo == blank and section.settings.standin_image != blank
+    assign photo = section.settings.standin_image
+  endif
+
+  assign href = ''
+  if master.system.url != blank
+    assign href = master.system.url
+  elsif section.settings.masters_page != blank
+    assign href = section.settings.masters_page.url
+    if master.system.handle != blank
+      assign href = href | append: '#' | append: master.system.handle
+    endif
+  endif
+
+  assign number = section.settings.number | default: '01'
+-%}
+
+<section class="ha-section ha-section--field-peat ha-masterfeat{% if photo != blank %} ha-masterfeat--photo{% endif %}{% unless has_identity %} ha-masterfeat--slot{% endunless %}">
+  {%- if photo != blank -%}
+    <div class="ha-masterfeat__media">
+      {{ photo
+        | image_url: width: 2800
+        | image_tag:
+          loading: 'lazy',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 2000, 2800',
+          alt: section.settings.photo_alt,
+          class: 'ha-masterfeat__img' }}
+      <span class="ha-masterfeat__scrim" aria-hidden="true"></span>
+    </div>
+  {%- else -%}
+    <div class="ha-masterfeat__slotmarks" aria-hidden="true"><span></span><span></span></div>
+  {%- endif -%}
+
+  <div class="ha-wrap ha-masterfeat__grid">
+    <p class="ha-eyebrow ha-identify ha-masterfeat__eyebrow">{{ section.settings.eyebrow }} / {{ number }}</p>
+
+    <p class="ha-masterfeat__slotlabel ha-record">
+      {%- if photo != blank and section.settings.photo_caption != blank -%}
+        {{ section.settings.photo_caption }}
+      {%- elsif photo == blank -%}
+        {{ section.settings.slot_photo_label }}
+      {%- endif -%}
+    </p>
+
+    <div class="ha-masterfeat__identity">
+      <h2 class="ha-masterfeat__name ha-narrate">
+        {%- if has_identity -%}{{ m_name }}{%- else -%}{{ section.settings.slot_name }}{%- endif -%}
+      </h2>
+      <p class="ha-masterfeat__line ha-record">
+        {%- if has_identity -%}
+          {{ m_role | default: section.settings.slot_discipline }} / {{ m_place | default: section.settings.slot_place }}
+        {%- else -%}
+          {{ section.settings.slot_discipline }} / {{ section.settings.slot_place }}
+        {%- endif -%}
+      </p>
+      <hr class="ha-masterfeat__rule">
+      {%- if has_identity and href != blank -%}
+        <a class="ha-masterfeat__link ha-record" href="{{ href }}">{{ section.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+      {%- else -%}
+        <span class="ha-masterfeat__link ha-masterfeat__link--inert ha-record" aria-disabled="true">{{ section.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></span>
+      {%- endif -%}
+    </div>
+
+    {%- unless has_identity -%}
+      <p class="ha-masterfeat__verify ha-record">{{ section.settings.slot_verify }}</p>
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+        text: 'No Master is linked to this garment yet — the slot publishes from the master record in hartwick.masters (name, discipline, place, workshop photograph, record link).' -%}
+    {%- endunless -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — The Master",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "Reads the first Master linked to this product (hartwick.masters). Nothing about the person is typed here." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Master" },
+    { "type": "text", "id": "number", "label": "Number", "default": "01" },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "View Master Record" },
+    { "type": "page", "id": "masters_page", "label": "Masters page", "info": "Used for the link until the master record has its own page (metaobject storefront pages)." },
+    { "type": "header", "content": "Photograph" },
+    { "type": "text", "id": "photo_caption", "label": "Caption (top right)" },
+    { "type": "text", "id": "photo_alt", "label": "Alt text" },
+    { "type": "image_picker", "id": "standin_image", "label": "Stand-in photograph", "info": "Shown only while the record has no image AND a name is verified. Never shown for an unnamed record." },
+    { "type": "header", "content": "The empty slot (design annotations)" },
+    { "type": "text", "id": "slot_photo_label", "label": "Photo slot label", "default": "Workshop photograph / to supply" },
+    { "type": "text", "id": "slot_name", "label": "Name slot", "default": "[Master name]" },
+    { "type": "text", "id": "slot_discipline", "label": "Discipline slot", "default": "[Discipline]" },
+    { "type": "text", "id": "slot_place", "label": "Place slot", "default": "[Place]" },
+    { "type": "text", "id": "slot_verify", "label": "Verify note", "default": "Identity + product link to verify" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — The Master" }]
+}
+{% endschema %}

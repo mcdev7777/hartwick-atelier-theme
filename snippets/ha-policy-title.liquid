@@ -1,0 +1,28 @@
+{%- comment -%}
+  Hartwick Atelier — a policy's display title, for sections/ha-policies.liquid.
+  Shopify's own title unless the section overrides it (Aloha writes "Returns &
+  Refunds" where Shopify says "Refund policy"). `as: 'index'` prints the
+  anchor link for the list at the top; `as: 'title'` prints the bare title.
+{%- endcomment -%}
+{%- liquid
+  assign title = policy.title
+  case anchor
+    when 'shipping-policy'
+      if s.title_shipping != blank
+        assign title = s.title_shipping
+      endif
+    when 'refund-policy'
+      if s.title_refund != blank
+        assign title = s.title_refund
+      endif
+    when 'privacy-policy'
+      if s.title_privacy != blank
+        assign title = s.title_privacy
+      endif
+    when 'terms-of-service'
+      if s.title_terms != blank
+        assign title = s.title_terms
+      endif
+  endcase
+-%}
+{%- if as == 'index' -%}<li><a href="#{{ anchor }}">{{ title }}</a></li>{%- else -%}{{ title }}{%- endif -%}

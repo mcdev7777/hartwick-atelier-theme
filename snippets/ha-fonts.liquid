@@ -213,6 +213,12 @@
        Uppercasing every Porter surface guarantees a single face. Any label an
        editor types in mixed case is covered automatically. */
     text-transform: uppercase;
+    /* Porter Light, to match the footer (Aloha, 15 September 2026: "not too
+       big… a clean look"; the Medium read as bold beside it). The 300 face is
+       declared above; where Porter is not licensed Junicode carries 300 too.
+       Luxe sets the bar's weight with !important, hence the same here. */
+    font-weight: 300 !important;
+    letter-spacing: 0.14em;
   }
 
   /* Wordmark. Colour comes from `color` because the SVG paints with currentColor:

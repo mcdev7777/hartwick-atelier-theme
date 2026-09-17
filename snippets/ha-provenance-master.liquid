@@ -1,0 +1,6 @@
+{%- comment -%} The Master line of a provenance stage: a verified name, else the confirm text. Never a role dressed as a name. {%- endcomment -%}
+{%- if master != blank and master.name.value != blank -%}
+  {%- if master.system.url != blank -%}<a class="ha-provenance__master-link" href="{{ master.system.url }}">{{ master.name.value }}</a>{%- else -%}{{ master.name.value }}{%- endif -%}
+{%- else -%}
+  {{- confirm | default: '[Confirm]' -}}
+{%- endif -%}

@@ -18,13 +18,25 @@
   Nothing here is Circle-specific in the code. It is a general editorial row and
   can be used on any page.
 
+  Journey layout (About-page wireframe, 15 September 2026):
+
+      A JOURNEY INTO THE HOUSE            heading in the identify voice
+      01              02                  a serif numeral over its own rule,
+      ────────        ────────            then the column heading in small
+      COSTUME +       IMAGE +             capitals, then a paragraph in the
+      CULTURE         PLACE               record voice
+      An early …      Documentary …
+
+  Same blocks, same settings; `layout` switches the dressing, so the About
+  page and the Circle page share one section rather than two near-copies.
+
   ⚠️ ALL COPY IS PLACEHOLDER. Per CLAUDE.md nothing about the Circle — what it
   offers, how someone is considered, what a member receives — may be written by
   us. Every default below is marked and the section carries the standard
   provisional notice until Aloha supplies the real wording.
 {%- endcomment -%}
 
-<section class="ha-section ha-ccols{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+<section class="ha-section ha-ccols ha-ccols--{{ section.settings.layout | default: 'circle' }}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
   <div class="ha-wrap">
 
     <div class="ha-ccols__head">
@@ -33,7 +45,11 @@
           <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="ha-display ha-narrate ha-ccols__heading">{{ section.settings.heading }}</h2>
+          {%- if section.settings.layout == 'journey' -%}
+            <h2 class="ha-ccols__heading ha-ccols__heading--identify ha-identify">{{ section.settings.heading }}</h2>
+          {%- else -%}
+            <h2 class="ha-display ha-narrate ha-ccols__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
         {%- endif -%}
       </div>
 
@@ -51,6 +67,15 @@
       <ol class="ha-ccols__row ha-ccols__row--{{ section.blocks.size }}" role="list">
         {%- for block in section.blocks -%}
           <li class="ha-ccols__col" {{ block.shopify_attributes }}>
+            {%- if section.settings.layout == 'journey' -%}
+              <p class="ha-ccols__num ha-narrate" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="ha-ccols__col-heading ha-ccols__col-heading--identify ha-identify">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="ha-ccols__body ha-record ha-record--prose">{{ block.settings.body }}</div>
+              {%- endif -%}
+            {%- else -%}
             {%- comment -%}
               The number is decorative — a reader hearing this list already
               knows it is the third of four from the list semantics, and having
@@ -80,6 +105,7 @@
             {%- if block.settings.body != blank -%}
               <div class="ha-ccols__body ha-narrate">{{ block.settings.body }}</div>
             {%- endif -%}
+            {%- endif -%}
           </li>
         {%- endfor -%}
       </ol>
@@ -96,8 +122,13 @@
   "class": "ha-section-wrapper",
   "max_blocks": 6,
   "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "default": "circle", "options": [
+      { "value": "circle", "label": "Rules between columns (The Circle)" },
+      { "value": "journey", "label": "Numeral over a rule, record body (About)" }
+    ] },
     { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
       { "value": "page", "label": "Page ground" },
+      { "value": "sand", "label": "Sand (one step darker)" },
       { "value": "white", "label": "White" },
       { "value": "peat", "label": "Peat (dark)" },
       { "value": "clay", "label": "Clay" },

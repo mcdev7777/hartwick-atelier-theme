@@ -862,11 +862,11 @@
     <button id="langSelectorOpenerHeader" class="hdr-item-language-selector{% if equal_selector == true %} mkt-selector-equal-size{% endif %}" aria-label="{{ localization.language.iso_code | upcase }}">{{ localization.language.iso_code | upcase }}{% if section.settings.international_icon == 'arrow' %}{% render 'icon-caret' %}{% endif %}</button>
   {% endif %}  
   {% if section.settings.logo_mobile_position == 'left' %}
-    <div class="header-mobile-logo">{% render 'header-logo', logo_size: section.settings.logo_size, header_transparent: header_transparent %}</div>
+    <div class="header-mobile-logo">{% render 'header-logo', logo_size: section.settings.logo_size, header_transparent: header_transparent, ha_mark: section.settings.ha_mark %}</div>
   {% endif %}
   
   {% if section.settings.logo_dt_position == 'left' or section.settings.logo_dt_position == 'top_left' %}
-    <div class="header-desktop-logo{% if section.settings.logo_size_dt < 250 %} header-desktop-logo--250{% endif %}{% if section.settings.logo_size_dt < 200 %} header-desktop-logo--200{% endif %}{% if section.settings.logo_size_dt < 151 %} header-desktop-logo--150{% endif %}">{% render 'header-logo', logo_size: section.settings.logo_size_dt, header_transparent: header_transparent %}</div>
+    <div class="header-desktop-logo{% if section.settings.logo_size_dt < 250 %} header-desktop-logo--250{% endif %}{% if section.settings.logo_size_dt < 200 %} header-desktop-logo--200{% endif %}{% if section.settings.logo_size_dt < 151 %} header-desktop-logo--150{% endif %}">{% render 'header-logo', logo_size: section.settings.logo_size_dt, header_transparent: header_transparent, ha_mark: section.settings.ha_mark %}</div>
   {% endif %}
 
   {% if section.settings.desktop_nav_position == 'inline' and section.settings.logo_dt_position != 'left' and section.settings.logo_dt_position != 'top_left' and section.settings.logo_dt_position != 'top_center' %}
@@ -879,11 +879,11 @@
 
 <div class="header-bar--center{% if section.settings.logo_dt_position == 'top_center' and section.settings.desktop_nav_position == 'inline' %} header-bar--center--stacked{% endif %} dd-highlight-style-{{ section.settings.dd_highlight_style }}">
   {% if section.settings.logo_mobile_position == 'center' %}
-    <div class="header-mobile-logo">{% render 'header-logo', logo_size: section.settings.logo_size, header_transparent: header_transparent %}</div>
+    <div class="header-mobile-logo">{% render 'header-logo', logo_size: section.settings.logo_size, header_transparent: header_transparent, ha_mark: section.settings.ha_mark %}</div>
   {% endif %}
   
   {% if section.settings.logo_dt_position == 'center' or section.settings.logo_dt_position == 'top_center' %}
-    <div class="header-desktop-logo{% if section.settings.logo_size_dt < 250 %} header-desktop-logo--250{% endif %}{% if section.settings.logo_size_dt < 200 %} header-desktop-logo--200{% endif %}{% if section.settings.logo_size_dt < 151 %} header-desktop-logo--150{% endif %}">{% render 'header-logo', logo_size: section.settings.logo_size_dt, header_transparent: header_transparent %}</div>
+    <div class="header-desktop-logo{% if section.settings.logo_size_dt < 250 %} header-desktop-logo--250{% endif %}{% if section.settings.logo_size_dt < 200 %} header-desktop-logo--200{% endif %}{% if section.settings.logo_size_dt < 151 %} header-desktop-logo--150{% endif %}">{% render 'header-logo', logo_size: section.settings.logo_size_dt, header_transparent: header_transparent, ha_mark: section.settings.ha_mark %}</div>
   {% endif %}
   {% if section.settings.desktop_nav_position == 'inline' and section.settings.logo_dt_position == 'left' %}
     {% render 'header-nav-desktop',
@@ -1374,6 +1374,17 @@ if (searchclosebutton) {
       "type": "header",
       "content": "t:sections.header.settings.logo_header.content",
       "info": "t:sections.header.settings.logo_header.info"
+    },
+    {
+      "type": "select",
+      "id": "ha_mark",
+      "label": "Header mark",
+      "options": [
+        { "value": "symbol", "label": "House symbol (supplied artwork, in the theme)" },
+        { "value": "files", "label": "Logo image from theme settings" }
+      ],
+      "default": "symbol",
+      "info": "Aloha, 15 September 2026: the header carries the House symbol, centred, and the wordmark moves to the foot of the footer. The symbol is the SansAtelier artwork shipped inside the theme, so it never depends on which file is picked in Files."
     },
     {
       "type": "select",

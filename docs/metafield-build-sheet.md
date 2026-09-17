@@ -799,3 +799,69 @@ Already-open questions this stage depends on:
    `style` and `expression` are populated wrong across all 85.
 7. **Masters: 3 or 5** (open q3). **Process steps: 7 or 8** (open q2).
 8. **Care fields** — the divergence flagged in Stage 3.
+
+---
+
+## Stage 5 — 16 September additions (Aloha's product-page brief, V2 design)
+
+The V2 lower page — From Fibre to Garment, The Cloth, The Master, the Lot
+Record, Related Works — reads the model above and **twelve fields it did not
+have**. All are read by the theme today (◆). Until they exist the page shows
+the design's own `[Confirm]` annotations, so nothing breaks if this stage
+waits; it is what turns the annotations into facts.
+
+### 5.1 Add to the `master` definition
+
+| Key | One / List | Type | Validation |
+|---|---|---|---|
+| `stage` ◆ | One | Single line text | Preset choices: `fibre`, `spinning`, `weaving`, `dyeing`, `construction` |
+
+Which provenance stage this Master's line appears on. Until it is set the
+theme matches the `role` by keyword (Spinner → spinning, Weaver → weaving,
+Indigo/Dye → dyeing, Cutter/Finisher → construction), so the five records
+already fall into place.
+
+### 5.2 Add to the `lot` definition
+
+| Key | One / List | Type | Validation |
+|---|---|---|---|
+| `quantity` ◆ | One | Integer | min 1 |
+| `completed_on` ◆ | One | Date | — |
+
+`opened_on` (already there) is the production start; these two complete the
+Production Record row. The theme prints the quantity only through the
+verification gate on the product (`production_quantity_verified`) or from
+this Lot field — never from the old "Limited Edition /25" bullet.
+
+### 5.3 Product metafields (`hartwick.*`)
+
+| Key | Type | Validation | Read by |
+|---|---|---|---|
+| `place_of_fibre` ◆ | Metaobject | Target → `origin` | From Fibre to Garment, stage 01 |
+| `place_of_spinning` ◆ | Metaobject | Target → `origin` | stage 02 |
+| `fibre_ratio` ◆ | Single line text | — | stage 01 Ratio; The Cloth, Composition. "60% silk / 40% linen" |
+| `construction_method` ◆ | Single line text | — | stage 05 method line, e.g. "Full placket" |
+| `cloth_statement` ◆ | Single line text | — | The Cloth's two-line statement. Optional — derived from yarn + weave when empty |
+| `cloth_details` ◆ | File | **List**, Images | The Cloth's numbered photographs. **The image's alt text is its caption** ("Mother-of-pearl button") |
+| `provenance_verified_by` ◆ | Single line text | — | Who confirmed the five stages |
+| `provenance_verified_on` ◆ | Date | — | When. Set → the "/ Unverified" suffix disappears |
+| `related_products` ◆ | Product | **List** | Related Works — Aloha's deliberate picks. *(Already defined on 5 Sept; now read.)* |
+
+### 5.4 What the theme reads from the OLD site meanwhile
+
+No population is needed for the page to show the old site's content. These
+existing fields are read as fallbacks, in this order, wherever the `hartwick`
+field is empty:
+
+| Shown as | hartwick.* | then the old site's |
+|---|---|---|
+| Style name | `style` → display_name | the title before ` \| ` (**legacy name — interim**) |
+| Expression | `expression` | the title after ` \| `, then `custom.subtitle` |
+| Material line | `fibre` | `custom.subtitle` |
+| Fibre | `fibre` | `shopify.fabric` labels |
+| Yarn / Weave / Technique / Dye | `yarn` / `weave` / `techniques` / `dye` | `custom.process_1…4` (HANDSPUN, HANDWOVEN, KHADI, IKAT, JAMDANI, BROCADE, GOTA PATTI, 100% NATURAL DYE, BLOCK PRINTED BY HAND) |
+| Colour | `colour_name` | `shopify.color-pattern` labels |
+| Details list | — | `custom.description` (the "Limited Edition / Lot No." bullet is filtered out) |
+| Cloth photographs | `cloth_details` | `custom.featured_photo`, then the product's images after the first |
+| Related Works | `related_products` | `custom.featured_product_1/2`, then same-collection pieces sharing the fibre or Style |
+| Shipping & Returns | — | Settings › Policies (shipping + refund) — one source, used twice |

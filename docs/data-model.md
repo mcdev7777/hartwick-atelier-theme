@@ -32,6 +32,7 @@ Luxe's existing `custom.*` fields.
 |---|---|---|
 | `name` | single line | ⚠️ Real names only, supplied by Aloha. Never invented. |
 | `role` | single line | Master Weaver, Khadi Spinner, Natural Indigo Master, Pattern Cutter, Hand Finisher |
+| `stage` | single line (fibre / spinning / weaving / dyeing / construction) | Which provenance stage the Master's line sits on (16 Sept). Role keyword is the fallback. |
 | `region` | ref → `origin` | |
 | `techniques` | list of ref → `technique` | |
 | `portrait` / `workshop_images` | file / file list | |
@@ -53,7 +54,8 @@ Angela's written approval before publishing) · `image`
 
 ### `lot` — production batch
 `number_roman` (**Lot I / Lot II** — customer-facing form) · `number_internal` (never
-displayed) · `opened_on` · `masters` (list of ref) · `story` (rich text) · `image`
+displayed) · `opened_on` · `completed_on` (16 Sept) · `quantity` (16 Sept — the run
+size for the Production Record) · `masters` (list of ref) · `story` (rich text) · `image`
 
 ### `release`
 `title` · `lot` (ref) · `ship_date` · `opens_at` / `closes_at` · `dispatch_article` (ref
@@ -105,8 +107,17 @@ One Shopify **product = one Expression**. Sizes are **variants**.
 | `garment_length` | single line | |
 | `model_height` / `size_worn` | single line | |
 | `construction_details` | rich text | |
+| **Provenance — From Fibre to Garment (16 Sept)** | | |
+| `place_of_fibre` / `place_of_spinning` | ref → `origin` | Stages 01 and 02. The garment's made-in country is not the origin of every fibre or process (brief). |
+| `fibre_ratio` | single line | "60% silk / 40% linen" — stage 01 and The Cloth's Composition |
+| `construction_method` | single line | Stage 05, e.g. "Full placket" |
+| `provenance_verified_by` / `provenance_verified_on` | single line / date | "Record who approved provenance and when it was checked." Unset → every classification carries "/ Unverified". |
+| **The Cloth (16 Sept)** | | |
+| `cloth_statement` | single line | The two-line statement; derived from yarn + weave when empty |
+| `cloth_details` | list of files | Numbered detail photographs; each image's alt text is its caption |
 | **Relationships** | | |
-| `masters` | list of ref → `master` | Meet the Masters block |
+| `masters` | list of ref → `master` | The Master feature (first entry) and each provenance stage (by `stage`) |
+| `related_products` | list of ref → product | Related Works — deliberate picks (16 Sept) |
 | `techniques` | list of ref → `technique` | |
 | `process_steps` | list of ref → `process_step` | Fibre → Finished Garment |
 | `journal_articles` | list of ref → article | From the Journal |

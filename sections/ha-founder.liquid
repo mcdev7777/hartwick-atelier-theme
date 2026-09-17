@@ -1,0 +1,85 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE FOUNDER.
+  About-page wireframe (Aloha, 15 September 2026):
+
+      FOUNDER   ANGELA HARTWICK          a small record label and the name in
+                                         the identify voice, centred
+      Angela's path to Hartwick …        one lead paragraph across the page
+      ┌──────────┬────────────┬──────────┐
+      │ column   │            │ column   │  two columns of reading copy set
+      │ of copy  │  portrait  │ of copy  │  either side of a portrait, both
+      │          │            │          │  justified toward the picture
+      └──────────┴────────────┴──────────┘
+
+  On a phone the lead reads first, then the portrait, then the two columns in
+  order. Nothing here names anyone but the founder, and everything is the
+  wireframe's own wording.
+{%- endcomment -%}
+
+<section class="ha-section ha-founder{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+
+    {%- if section.settings.name != blank -%}
+      <h2 class="ha-founder__name">
+        {%- if section.settings.label != blank -%}
+          <span class="ha-founder__label ha-record">{{ section.settings.label }}</span>
+        {%- endif -%}
+        <span class="ha-identify">{{ section.settings.name }}</span>
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.lead != blank -%}
+      <div class="ha-founder__lead ha-narrate">{{ section.settings.lead }}</div>
+    {%- endif -%}
+
+    <div class="ha-founder__grid">
+      {%- if section.settings.left != blank -%}
+        <div class="ha-founder__col ha-founder__col--left ha-narrate">{{ section.settings.left }}</div>
+      {%- endif -%}
+
+      {%- render 'ha-figure',
+        image: section.settings.image,
+        asset: section.settings.asset,
+        asset_w: 1996, asset_h: 2988,
+        label: section.settings.image_label,
+        class: 'ha-founder__figure',
+        sizes: '(min-width: 990px) 40vw, 100vw',
+        alt: section.settings.image_alt
+      -%}
+
+      {%- if section.settings.right != blank -%}
+        <div class="ha-founder__col ha-founder__col--right ha-narrate">{{ section.settings.right }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Founder",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand (one step darker)" },
+      { "value": "white", "label": "White" }, { "value": "peat", "label": "Peat (dark)" }, { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "text", "id": "label", "label": "Label", "default": "Founder" },
+    { "type": "text", "id": "name", "label": "Name", "default": "Angela Hartwick" },
+    { "type": "richtext", "id": "lead", "label": "Lead paragraph" },
+    { "type": "richtext", "id": "left", "label": "Left column" },
+    { "type": "richtext", "id": "right", "label": "Right column" },
+    { "type": "header", "content": "Portrait" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Alt text", "default": "Angela Hartwick standing in a timber cabin" },
+    { "type": "text", "id": "image_label", "label": "Corner caption", "info": "Leave empty for none." },
+    { "type": "text", "id": "asset", "label": "Provisional file (theme asset)", "default": "ha-about-founder.jpg", "info": "Shown only until an image is picked above. Cut from the wireframe drawing; clear it once the real photograph is in." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Founder" }]
+}
+{% endschema %}

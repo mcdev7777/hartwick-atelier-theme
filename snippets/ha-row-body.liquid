@@ -1,0 +1,75 @@
+{%- comment -%}
+  Hartwick Atelier — the body of an accordion row, from one of three sources.
+  Aloha's product-page brief, 16 September 2026: "The delivery accordion shows
+  the same approved policy as the service section below." Shipping & Returns
+  therefore has ONE source on the site — Settings > Policies, the text
+  Shopify already shows at checkout and at /policies/… — and every row that
+  needs it points there instead of carrying its own copy.
+
+  Sources (block.settings.source):
+    manual    the row's own richtext
+    page      a page's content
+    policies  shop.shipping_policy + shop.refund_policy (both, in that order)
+    shipping  shop.shipping_policy only
+    refund    shop.refund_policy only
+    care      the product's hartwick.care_instructions, ageing_patina and
+              repairs, in that order; the row's own text stands in until they
+              exist (pass `product`)
+  Blocks written before `source` existed have no value for it and behave as
+  they did: richtext, then page.
+{%- endcomment -%}
+{%- liquid
+  assign src = block.settings.source | default: 'manual'
+  assign cls = class | default: 'ha-living__body'
+
+  # The policies are found by the handle in their URL, exactly as
+  # sections/ha-policies.liquid does — shop.shipping_policy.body is not
+  # populated on this store, shop.policies is.
+  assign shipping_body = ''
+  assign refund_body = ''
+  for policy in shop.policies
+    assign anchor = policy.url | split: '/' | last
+    if anchor == 'shipping-policy'
+      assign shipping_body = policy.body
+    elsif anchor == 'refund-policy'
+      assign refund_body = policy.body
+    endif
+  endfor
+-%}
+{%- case src -%}
+  {%- when 'care' -%}
+    {%- assign mfc = product.metafields.hartwick -%}
+    {%- if mfc.care_instructions != blank or mfc.ageing_patina != blank or mfc.repairs != blank -%}
+      {%- if mfc.care_instructions != blank -%}<div class="{{ cls }} ha-body ha-narrate">{{ mfc.care_instructions | metafield_tag }}</div>{%- endif -%}
+      {%- if mfc.ageing_patina != blank -%}<div class="{{ cls }} ha-body ha-narrate">{{ mfc.ageing_patina | metafield_tag }}</div>{%- endif -%}
+      {%- if mfc.repairs != blank -%}<div class="{{ cls }} ha-body ha-narrate">{{ mfc.repairs | metafield_tag }}</div>{%- endif -%}
+    {%- elsif block.settings.content != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate">{{ block.settings.content }}</div>
+    {%- endif -%}
+  {%- when 'policies' -%}
+    {%- if shipping_body != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate ha-policy-body">{{ shipping_body }}</div>
+    {%- endif -%}
+    {%- if refund_body != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate ha-policy-body">{{ refund_body }}</div>
+    {%- endif -%}
+  {%- when 'shipping' -%}
+    {%- if shipping_body != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate ha-policy-body">{{ shipping_body }}</div>
+    {%- endif -%}
+  {%- when 'refund' -%}
+    {%- if refund_body != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate ha-policy-body">{{ refund_body }}</div>
+    {%- endif -%}
+  {%- when 'page' -%}
+    {%- if block.settings.page != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate">{{ block.settings.page.content }}</div>
+    {%- endif -%}
+  {%- else -%}
+    {%- if block.settings.content != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate">{{ block.settings.content }}</div>
+    {%- endif -%}
+    {%- if block.settings.page != blank -%}
+      <div class="{{ cls }} ha-body ha-narrate">{{ block.settings.page.content }}</div>
+    {%- endif -%}
+{%- endcase -%}

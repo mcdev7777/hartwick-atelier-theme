@@ -1,0 +1,85 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — FEATURE, a photograph beside a statement.
+  About-page wireframe (Aloha, 15 September 2026), "The work ahead": the
+  picture fills the left half to the page edge, top to bottom, with a record
+  caption in its corner; the text sits in the right half on the page ground —
+  eyebrow, a heading in the identify voice, a paragraph in the record voice,
+  and one outlined pill button.
+
+  Not `ha-hero`: that is the page-top composition with an h1, a record line
+  and a rule, and this is a mid-page band with a different heading voice and
+  a button. Stretching one to be the other would make it worse at both jobs.
+
+  The picture may sit on either side; on a phone it always comes first.
+{%- endcomment -%}
+
+<section class="ha-section ha-feature ha-feature--image-{{ section.settings.image_side }}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-feature__grid">
+    <div class="ha-feature__media">
+      {%- render 'ha-figure',
+        image: section.settings.image,
+        asset: section.settings.asset,
+        asset_w: 2400, asset_h: 1974,
+        label: section.settings.image_label,
+        class: 'ha-feature__figure',
+        sizes: '(min-width: 750px) 50vw, 100vw',
+        alt: section.settings.image_alt
+      -%}
+    </div>
+
+    <div class="ha-feature__text">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ha-feature__heading ha-identify">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="ha-feature__body ha-record ha-record--prose">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.cta_text != blank -%}
+        <p class="ha-feature__cta">
+          <a class="ha-pill ha-identify" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a>
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Feature",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand (one step darker)" },
+      { "value": "white", "label": "White" }, { "value": "peat", "label": "Peat (dark)" }, { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "select", "id": "image_side", "label": "Photograph on the", "default": "left", "options": [
+      { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }
+    ] },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "A line break here is kept." },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "text", "id": "cta_text", "label": "Button text" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "header", "content": "Photograph" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "text", "id": "image_label", "label": "Corner caption" },
+    { "type": "text", "id": "asset", "label": "Provisional file (theme asset)", "info": "Shown only until an image is picked above." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Feature" }]
+}
+{% endschema %}

@@ -23,6 +23,17 @@
   assign peat_r = peat | color_extract: 'red'
   assign peat_g = peat | color_extract: 'green'
   assign peat_b = peat | color_extract: 'blue'
+
+  # Sand: the page ground pulled 6% toward peat. The About-page wireframe
+  # (15 Sep 2026) sets "A journey into the House" on a band one step darker
+  # than the page, and none of the eight archive colours is that step.
+  assign ground = settings.ha_page_ground | default: '#F2EFE9'
+  assign sand_r = ground | color_extract: 'red'   | times: 0.94
+  assign sand_g = ground | color_extract: 'green' | times: 0.94
+  assign sand_b = ground | color_extract: 'blue'  | times: 0.94
+  assign sand_r = peat_r | times: 0.06 | plus: sand_r | round
+  assign sand_g = peat_g | times: 0.06 | plus: sand_g | round
+  assign sand_b = peat_b | times: 0.06 | plus: sand_b | round
 -%}
 
 {% style %}
@@ -53,6 +64,7 @@
     --ha-field-botanical: var(--ha-loden-moss);
     --ha-field-blush:   var(--ha-bare-clay);
     --ha-field-slate:   var(--ha-inkstone);
+    --ha-field-sand:    rgb({{ sand_r }}, {{ sand_g }}, {{ sand_b }});
 
     /* --- tint system (100 / 66 / 33 / 0 against white) --- */
     --ha-soot-66: rgb({{ soot_r | times: 0.66 | plus: 86.7 | round }}, {{ soot_g | times: 0.66 | plus: 86.7 | round }}, {{ soot_b | times: 0.66 | plus: 86.7 | round }});

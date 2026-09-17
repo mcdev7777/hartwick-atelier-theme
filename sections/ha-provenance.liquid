@@ -1,0 +1,284 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ORIGIN + PROCESS: "From Fibre to Garment".
+  Aloha's product-page brief, 16 September 2026, and Hartwick_Product_Desktop_V2:
+
+    "One continuous record shows Fibre, Spinning, Weaving, Dyeing and
+     Construction immediately after the product section. Each stage can carry
+     a verified method, place and Master or workshop reference. Small
+     classifications replace the separate oversized process circles. If the
+     piece is undyed, state that rather than displaying a Natural Dye claim.
+     If a stage is unknown, keep that uncertainty honest."
+
+  This ONE section replaces the previous two (ha-origin's route of circles and
+  ha-process's row of marks). Five columns on desktop, a vertical record on a
+  phone ("The complete provenance sequence remains visible as a vertical
+  record"). Each stage: number, name, the method line, a Master line, a Place
+  line, and the small classification tag the design draws beneath.
+
+  DATA. Every line resolves through snippets/ha-product-fact (the Hartwick
+  model, then the old site's records). The Master for a stage is the first
+  entry of hartwick.masters whose `stage` field names it (fibre / spinning /
+  weaving / dyeing / construction); until that field exists on the master
+  record the role is matched by keyword, which is how the five role-only
+  records in the store today fall into place. Places come from the origin
+  references already in the model, plus two the design exposes a need for:
+  place_of_fibre and place_of_spinning.
+
+  HONESTY. A stage with no source for a line shows "[Confirm]" in the record
+  voice — the design's own annotation — never a guess. The tag carries
+  "/ Unverified" until hartwick.provenance_verified_on is set, exactly as the
+  design prints "HAND FINISHED / UNVERIFIED". Aloha can switch that suffix
+  off per section once the rule is settled (open question to her).
+
+  The old site's process marks each carried a paragraph ("In India, artisans
+  have used hand carved wooden blocks…"). That is existing, approved editorial
+  text, so it is kept: a quiet "About …" disclosure beneath the stage it
+  belongs to, content present in the page for a reader or a crawler, closed by
+  default so the record stays a record.
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+  assign cf = product.metafields.custom
+
+  capture f_fibre
+    render 'ha-product-fact', product: product, field: 'fibre'
+  endcapture
+  capture f_yarn
+    render 'ha-product-fact', product: product, field: 'yarn'
+  endcapture
+  capture f_weave
+    render 'ha-product-fact', product: product, field: 'weave'
+  endcapture
+  capture f_technique
+    render 'ha-product-fact', product: product, field: 'technique'
+  endcapture
+  capture f_dye
+    render 'ha-product-fact', product: product, field: 'dye'
+  endcapture
+  capture f_colour
+    render 'ha-product-fact', product: product, field: 'colour'
+  endcapture
+  capture f_finishing
+    render 'ha-product-fact', product: product, field: 'finishing'
+  endcapture
+  capture f_style
+    render 'ha-product-fact', product: product, field: 'style'
+  endcapture
+  assign f_fibre = f_fibre | strip
+  assign f_yarn = f_yarn | strip
+  assign f_weave = f_weave | strip
+  assign f_technique = f_technique | strip
+  assign f_dye = f_dye | strip
+  assign f_colour = f_colour | strip
+  assign f_finishing = f_finishing | strip
+  assign f_style = f_style | strip
+
+  assign confirm = section.settings.confirm_text | default: '[Confirm]'
+  assign verified = false
+  if mf.provenance_verified_on != blank
+    assign verified = true
+  endif
+
+  # --- Masters by stage --------------------------------------------------
+  assign m_spinning = nil
+  assign m_weaving = nil
+  assign m_dyeing = nil
+  assign m_construction = nil
+  for m in mf.masters.value
+    assign stage = m.stage.value | default: m.role.value | downcase
+    if m_spinning == nil and stage contains 'spin'
+      assign m_spinning = m
+    elsif m_weaving == nil and stage contains 'weav'
+      assign m_weaving = m
+    elsif m_dyeing == nil and stage contains 'dye'
+      assign m_dyeing = m
+    elsif m_dyeing == nil and stage contains 'indigo'
+      assign m_dyeing = m
+    elsif m_dyeing == nil and stage contains 'print'
+      assign m_dyeing = m
+    elsif m_construction == nil and stage contains 'construct'
+      assign m_construction = m
+    elsif m_construction == nil and stage contains 'cut'
+      assign m_construction = m
+    elsif m_construction == nil and stage contains 'finish'
+      assign m_construction = m
+    elsif m_construction == nil and stage contains 'tailor'
+      assign m_construction = m
+    endif
+  endfor
+
+  # --- the old site's process notes, keyed to a stage --------------------
+  assign note_spinning = ''
+  assign note_weaving = ''
+  assign note_dyeing = ''
+  assign note_spinning_title = ''
+  assign note_weaving_title = ''
+  assign note_dyeing_title = ''
+  for i in (1..4)
+    assign key = 'process_' | append: i
+    assign mark = cf[key].value
+    if mark == blank
+      continue
+    endif
+    assign t = mark.title.value | upcase
+    capture body
+      echo mark.description | metafield_tag
+    endcapture
+    if t contains 'HANDSPUN' and note_spinning == ''
+      assign note_spinning = body
+      assign note_spinning_title = mark.title.value
+    elsif t contains 'DYE' or t contains 'PRINT'
+      if note_dyeing == ''
+        assign note_dyeing = body
+        assign note_dyeing_title = mark.title.value
+      endif
+    elsif note_weaving == ''
+      assign note_weaving = body
+      assign note_weaving_title = mark.title.value
+    endif
+  endfor
+
+  # --- dyeing: undyed is a statement, not a missing dye -------------------
+  assign colour_lc = f_colour | downcase
+  assign dye_method = f_dye
+  assign dye_tag = ''
+  if f_dye != blank
+    assign dye_tag = f_dye
+  elsif colour_lc contains 'undyed'
+    assign dye_method = f_colour
+    assign dye_tag = 'Undyed'
+  endif
+
+  assign weave_tag = f_weave
+  if f_technique != blank
+    assign weave_tag = f_technique
+  endif
+-%}
+
+<section class="ha-section ha-provenance{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" id="origin-and-process">
+  <div class="ha-wrap">
+    <div class="ha-provenance__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-eyebrow ha-identify ha-provenance__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="ha-display ha-narrate ha-provenance__heading">{{ section.settings.heading }}</h2>
+      </div>
+      <p class="ha-provenance__ref ha-record">{{ section.settings.ref_label }} / {{ f_style }}</p>
+    </div>
+
+    <ol class="ha-provenance__stages" role="list">
+
+      {%- comment -%} 01 FIBRE {%- endcomment -%}
+      <li class="ha-provenance__stage">
+        <div class="ha-provenance__stage-head">
+          <span class="ha-provenance__num ha-narrate">01</span>
+          <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_1 }}</h3>
+        </div>
+        <dl class="ha-provenance__lines ha-record">
+          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ f_fibre | default: confirm }}</dd></div>
+          <div class="ha-provenance__line"><dt>Origin</dt><dd>{{ mf.place_of_fibre.value.place | default: confirm }}</dd></div>
+          <div class="ha-provenance__line"><dt>Ratio</dt><dd>{{ mf.fibre_ratio | default: confirm }}</dd></div>
+        </dl>
+        {%- render 'ha-provenance-tag', tag: section.settings.tag_material, verified: verified, show_status: section.settings.show_status, known: f_fibre -%}
+      </li>
+
+      {%- comment -%} 02 SPINNING {%- endcomment -%}
+      <li class="ha-provenance__stage">
+        <div class="ha-provenance__stage-head">
+          <span class="ha-provenance__num ha-narrate">02</span>
+          <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_2 }}</h3>
+        </div>
+        <dl class="ha-provenance__lines ha-record">
+          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ f_yarn | default: confirm }}</dd></div>
+          <div class="ha-provenance__line"><dt>Master</dt><dd>{%- render 'ha-provenance-master', master: m_spinning, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_spinning.value.place | default: confirm }}</dd></div>
+        </dl>
+        {%- render 'ha-provenance-tag', tag: f_yarn, verified: verified, show_status: section.settings.show_status, known: f_yarn, confirm: confirm -%}
+        {%- render 'ha-provenance-note', title: note_spinning_title, body: note_spinning, label: section.settings.note_label -%}
+      </li>
+
+      {%- comment -%} 03 WEAVING {%- endcomment -%}
+      <li class="ha-provenance__stage">
+        <div class="ha-provenance__stage-head">
+          <span class="ha-provenance__num ha-narrate">03</span>
+          <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_3 }}</h3>
+        </div>
+        <dl class="ha-provenance__lines ha-record">
+          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ f_weave | default: confirm }}</dd></div>
+          <div class="ha-provenance__line"><dt>Master</dt><dd>{%- render 'ha-provenance-master', master: m_weaving, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_weaving.value.place | default: confirm }}</dd></div>
+        </dl>
+        {%- render 'ha-provenance-tag', tag: weave_tag, verified: verified, show_status: section.settings.show_status, known: f_weave, confirm: confirm -%}
+        {%- render 'ha-provenance-note', title: note_weaving_title, body: note_weaving, label: section.settings.note_label -%}
+      </li>
+
+      {%- comment -%} 04 DYEING {%- endcomment -%}
+      <li class="ha-provenance__stage">
+        <div class="ha-provenance__stage-head">
+          <span class="ha-provenance__num ha-narrate">04</span>
+          <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_4 }}</h3>
+        </div>
+        <dl class="ha-provenance__lines ha-record">
+          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ dye_method | default: confirm }}</dd></div>
+          <div class="ha-provenance__line"><dt>Master</dt><dd>{%- render 'ha-provenance-master', master: m_dyeing, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_dyeing.value.place | default: confirm }}</dd></div>
+        </dl>
+        {%- render 'ha-provenance-tag', tag: dye_tag, verified: verified, show_status: section.settings.show_status, known: dye_method, confirm: confirm -%}
+        {%- render 'ha-provenance-note', title: note_dyeing_title, body: note_dyeing, label: section.settings.note_label -%}
+      </li>
+
+      {%- comment -%} 05 CONSTRUCTION {%- endcomment -%}
+      <li class="ha-provenance__stage">
+        <div class="ha-provenance__stage-head">
+          <span class="ha-provenance__num ha-narrate">05</span>
+          <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_5 }}</h3>
+        </div>
+        <dl class="ha-provenance__lines ha-record">
+          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ mf.construction_method | default: confirm }}</dd></div>
+          <div class="ha-provenance__line"><dt>Atelier</dt><dd>{%- render 'ha-provenance-master', master: m_construction, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_construction.value.place | default: confirm }}</dd></div>
+        </dl>
+        {%- render 'ha-provenance-tag', tag: f_finishing, verified: verified, show_status: section.settings.show_status, known: f_finishing, confirm: confirm -%}
+      </li>
+    </ol>
+
+    {%- unless verified -%}
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+        text: 'Provenance not yet verified — every [Confirm] above is an open fact. Publishes from hartwick.* once Angela and the Masters confirm it.' -%}
+    {%- endunless -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Origin + Process",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "From Fibre to Garment: one record of five stages (V2 design, 16 Sept 2026). Every line reads the product's hartwick.* fields, then the old site's records. Nothing is typed here except labels." },
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Origin + Process" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From Fibre to Garment" },
+    { "type": "text", "id": "ref_label", "label": "Reference label", "default": "Provenance" },
+    { "type": "header", "content": "Stage names" },
+    { "type": "text", "id": "stage_1", "label": "01", "default": "Fibre" },
+    { "type": "text", "id": "stage_2", "label": "02", "default": "Spinning" },
+    { "type": "text", "id": "stage_3", "label": "03", "default": "Weaving" },
+    { "type": "text", "id": "stage_4", "label": "04", "default": "Dyeing" },
+    { "type": "text", "id": "stage_5", "label": "05", "default": "Construction" },
+    { "type": "text", "id": "tag_material", "label": "Fibre classification", "default": "Material" },
+    { "type": "header", "content": "Honesty" },
+    { "type": "text", "id": "confirm_text", "label": "Unknown fact reads", "default": "[Confirm]" },
+    { "type": "checkbox", "id": "show_status", "label": "Append “/ Unverified” to classifications until provenance is verified", "default": true, "info": "Verified = hartwick.provenance_verified_on is set on the product." },
+    { "type": "text", "id": "note_label", "label": "Process note label", "default": "About", "info": "The old site's paragraph for a process mark opens under its stage." },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Origin + Process" }]
+}
+{% endschema %}

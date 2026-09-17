@@ -20,10 +20,21 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
+    {%- comment -%}
+      HA: Shopify hard-codes the cart page's page_title as "Your Shopping Cart".
+      The store says Bag everywhere else, so the tab does too (15 Sep 2026).
+    {%- endcomment -%}
+    {%- liquid
+      if request.page_type == 'cart'
+        assign ha_page_title = 'sections.cart.title' | t
+      else
+        assign ha_page_title = page_title
+      endif
+    -%}
     <title>
-      {%- if current_tags %}{{ current_tags | join: ', ' }} {% endif -%} {{ page_title }}
+      {%- if current_tags %}{{ current_tags | join: ', ' }} {% endif -%} {{ ha_page_title }}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} | {{ shop.name }}{% endunless -%}
+      {%- unless ha_page_title contains shop.name %} | {{ shop.name }}{% endunless -%}
     </title>
 
     {% if page_description %}

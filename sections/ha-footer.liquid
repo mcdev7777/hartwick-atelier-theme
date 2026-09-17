@@ -1,90 +1,109 @@
 {%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
 
 {%- comment -%}
-  Hartwick Atelier — 08 FOOTER.
-  Wireframe (01) HOMEPAGE §08: a single restrained bar — the wordmark, and
-  Instagram · Contact · The Register.
+  Hartwick Atelier — FOOTER.
+  About-page wireframe (Aloha, 15 September 2026): three columns on one row.
 
-  This replaces Luxe's four-column footer at Ivan's instruction. Note for Aloha:
-  the mobile developer brief §10 asks for a fuller practical close (Delivery,
-  Returns, Care & Repair, latest Dispatch). The wireframe outranks the brief and
-  the decision was taken deliberately — recorded in docs/homepage-build.md.
+      COLLECTION  THE MASTERS  JOURNAL  ABOUT      HARTWICK      INSTAGRAM  CONTACT  PRIVACY
+                                                    ATELIER      COOKIE PREFERENCES  LINKEDIN
+      © HARTWICK ATELIER
 
-  Shop policies still render beneath, because those links have to remain easy to
-  find: they come from shop.policies, so whatever is configured in Admin appears
-  here automatically and nothing legal depends on someone remembering to add it.
+  Aloha: "The main logo should be centred at the bottom of the footer, exactly
+  as shown in the wireframe." So the wordmark sits in the middle column, and
+  the House symbol — which used to close the footer — moves up into the header
+  (snippets/header-logo.liquid). The wordmark is the supplied artwork, never
+  live type (LOGO READ ME), drawn with currentColor so it inverts on a dark
+  field without a second file.
 
-  "Cookie preferences" sits at the end of that same row (Angela, 14 September
-  2026). It reopens Shopify's own consent dialog — see snippets/ha-cookie-
-  preferences.liquid. It has its own switch so it can be shown even when the
-  policies are hidden, since the banner is a legal requirement in the UK, EEA
-  and Canada whether or not the policy links are wanted here.
+  Aloha, 15 September (second note): footer type in Porter Light, small, and
+  nothing oversized — the wordmark is the 193px she drew, the links 11px.
 
-  The wordmark is the supplied artwork, never live type (LOGO READ ME).
+  Links are blocks, each assigned to the left or the right column, so the
+  order and the wording stay editable without touching code. The left column
+  can instead take a menu from Admin > Content > Menus — when one is chosen
+  it replaces the left-hand blocks.
+
+  One POLICIES link (Aloha, 15 September 2026: "as quiet and considered as
+  possible rather than having lots of individual policy links") goes to the
+  page that carries every policy under its own anchor — see
+  sections/ha-policies.liquid. "Cookie preferences" follows it (Angela,
+  14 September 2026) and reopens Shopify's own consent dialog — see
+  snippets/ha-cookie-preferences.liquid. It has its own switch so it can be
+  shown even when the policies are hidden, since the banner is a legal
+  requirement in the UK, EEA and Canada whether or not the policy links are
+  wanted here.
 {%- endcomment -%}
+
+{%- liquid
+  assign on_dark = false
+  if section.settings.field == 'peat' or section.settings.field == 'slate'
+    assign on_dark = true
+  endif
+-%}
 
 <footer class="ha-section ha-footer{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" role="contentinfo">
   <div class="ha-wrap ha-footer__inner">
-    <div class="ha-footer__left">
-      {%- if section.blocks.size > 0 -%}
-        <nav class="ha-footer__nav" aria-label="{{ section.settings.nav_label | escape }}">
-          <ul class="ha-footer__links ha-identify" role="list">
+
+    <div class="ha-footer__col ha-footer__col--left">
+      <nav class="ha-footer__nav" aria-label="{{ section.settings.nav_label | escape }}">
+        <ul class="ha-footer__links ha-identify" role="list">
+          {%- if section.settings.menu != blank -%}
+            {%- for link in section.settings.menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
             {%- for block in section.blocks -%}
-              {%- liquid
-                assign href = block.settings.url
-                if href == blank and block.settings.use_instagram_setting
-                  assign href = settings.social_instagram_link
-                endif
-              -%}
-              {%- if block.settings.label != blank -%}
+              {%- if block.settings.column == 'left' and block.settings.label != blank -%}
                 <li {{ block.shopify_attributes }}>
-                  <a href="{{ href | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ block.settings.label }}</a>
+                  <a href="{{ block.settings.url | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ block.settings.label }}</a>
                 </li>
               {%- endif -%}
             {%- endfor -%}
-          </ul>
-        </nav>
-      {%- endif -%}
-
-      {%- if section.settings.show_policies or section.settings.show_cookie_preferences -%}
-        <ul class="ha-footer__policies ha-record" role="list">
-          {%- if section.settings.show_policies -%}
-            {%- for policy in shop.policies -%}
-              {%- if policy != blank -%}
-                <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
-          {%- if section.settings.show_cookie_preferences -%}
-            <li>{% render 'ha-cookie-preferences', label: section.settings.cookie_preferences_label %}</li>
           {%- endif -%}
         </ul>
-      {%- endif -%}
+      </nav>
+      <p class="ha-footer__copy ha-identify">&copy; {{ shop.name }}</p>
     </div>
 
-    <div class="ha-footer__right">
-      {%- comment -%}
-        The house symbol, supplied artwork, never live type (LOGO READ ME).
-        Two variants ship: the white ink reads on a dark field, the black on a
-        light one. `logo_variant` picks; the default pairs with this section's
-        own field so the mark is never invisible.
-      {%- endcomment -%}
-      {%- liquid
-        assign logo_file = 'ha-house-symbol-black.png'
-        if section.settings.logo_variant == 'white'
-          assign logo_file = 'ha-house-symbol-white.png'
-        endif
-      -%}
-      <a class="ha-footer__mark" href="{{ routes.root_url }}" aria-label="{{ shop.name }} — home">
-        <img
-          src="{{ logo_file | asset_url }}"
-          alt="{{ shop.name }}"
-          width="160" height="160"
-          loading="lazy"
-        >
+    <div class="ha-footer__col ha-footer__col--mark">
+      <a class="ha-footer__mark" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} — home">
+        {%- if on_dark -%}
+          {%- render 'ha-wordmark', class: 'ha-wordmark--invert' -%}
+        {%- else -%}
+          {%- render 'ha-wordmark' -%}
+        {%- endif -%}
       </a>
-      <p class="ha-footer__copy ha-record">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
     </div>
+
+    <div class="ha-footer__col ha-footer__col--right">
+      <ul class="ha-footer__links ha-footer__links--right ha-identify" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign href = block.settings.url
+            if href == blank
+              case block.settings.social
+                when 'instagram'
+                  assign href = settings.social_instagram_link
+                when 'linkedin'
+                  assign href = settings.social_linkedin_link
+              endcase
+            endif
+          -%}
+          {%- if block.settings.column == 'right' and block.settings.label != blank -%}
+            <li {{ block.shopify_attributes }}>
+              <a href="{{ href | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ block.settings.label }}</a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if section.settings.show_policies -%}
+          <li><a href="{{ section.settings.policies_url | default: '/pages/policies' }}">{{ section.settings.policies_label | default: 'Policies' }}</a></li>
+        {%- endif -%}
+        {%- if section.settings.show_cookie_preferences -%}
+          <li>{% render 'ha-cookie-preferences', label: section.settings.cookie_preferences_label %}</li>
+        {%- endif -%}
+      </ul>
+    </div>
+
   </div>
 </footer>
 
@@ -93,19 +112,18 @@
   "name": "HA — Footer",
   "tag": "section",
   "class": "ha-section-wrapper",
-  "max_blocks": 6,
+  "max_blocks": 12,
   "settings": [
-    { "type": "select", "id": "logo_variant", "label": "House symbol", "default": "black", "options": [
-      { "value": "black", "label": "Black ink (for a light footer)" },
-      { "value": "white", "label": "White ink (for a dark footer)" }
-    ], "info": "Supplied artwork: Hartwick_logo_PlainFrame_Square. Pick the ink that reads on the footer's ground." },
     { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
       { "value": "page", "label": "Page ground" },
       { "value": "peat", "label": "Peat (dark)" },
       { "value": "slate", "label": "Slate (dark)" }
     ] },
+    { "type": "link_list", "id": "menu", "label": "Left column menu", "info": "Optional. When a menu is chosen it replaces the left-column link blocks below." },
     { "type": "text", "id": "nav_label", "label": "Navigation label (screen readers)", "default": "Footer" },
-    { "type": "checkbox", "id": "show_policies", "label": "Show shop policies", "default": true, "info": "Privacy, Terms, Refund and Shipping policies, taken from Settings > Policies." },
+    { "type": "checkbox", "id": "show_policies", "label": "Show the Policies link", "default": true, "info": "One link to the page that carries every policy (template: policies)." },
+    { "type": "text", "id": "policies_label", "label": "Policies label", "default": "Policies" },
+    { "type": "url", "id": "policies_url", "label": "Policies page", "info": "Defaults to /pages/policies." },
     { "type": "checkbox", "id": "show_cookie_preferences", "label": "Show the cookie preferences link", "default": true, "info": "Reopens the cookie banner from Settings > Customer privacy so a visitor can change their choice. Required alongside the banner in the UK, EEA and Canada." },
     { "type": "text", "id": "cookie_preferences_label", "label": "Cookie preferences label", "default": "Cookie preferences" }
   ],
@@ -116,7 +134,15 @@
       "settings": [
         { "type": "text", "id": "label", "label": "Label" },
         { "type": "url", "id": "url", "label": "Link" },
-        { "type": "checkbox", "id": "use_instagram_setting", "label": "Use the Instagram address from theme settings", "default": false },
+        { "type": "select", "id": "column", "label": "Column", "default": "right", "options": [
+          { "value": "left", "label": "Left (site pages)" },
+          { "value": "right", "label": "Right (contact and social)" }
+        ] },
+        { "type": "select", "id": "social", "label": "Address from theme settings", "default": "none", "info": "Used when the Link above is empty. Theme settings > Social media.", "options": [
+          { "value": "none", "label": "None" },
+          { "value": "instagram", "label": "Instagram" },
+          { "value": "linkedin", "label": "LinkedIn" }
+        ] },
         { "type": "checkbox", "id": "new_tab", "label": "Open in a new tab", "default": false }
       ]
     }
@@ -125,9 +151,13 @@
     {
       "name": "HA — Footer",
       "blocks": [
-        { "type": "link", "settings": { "label": "Instagram", "use_instagram_setting": true, "new_tab": true } },
-        { "type": "link", "settings": { "label": "Contact" } },
-        { "type": "link", "settings": { "label": "The Register" } }
+        { "type": "link", "settings": { "label": "Collection", "url": "/collections/all", "column": "left" } },
+        { "type": "link", "settings": { "label": "The Masters", "column": "left" } },
+        { "type": "link", "settings": { "label": "Journal", "column": "left" } },
+        { "type": "link", "settings": { "label": "About", "url": "/pages/about-the-atelier", "column": "left" } },
+        { "type": "link", "settings": { "label": "Instagram", "social": "instagram", "new_tab": true, "column": "right" } },
+        { "type": "link", "settings": { "label": "Contact", "url": "/pages/contact-us", "column": "right" } },
+        { "type": "link", "settings": { "label": "LinkedIn", "social": "linkedin", "new_tab": true, "column": "right" } }
       ]
     }
   ]

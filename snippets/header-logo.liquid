@@ -1,4 +1,25 @@
+{%- comment -%}
+  HA, 15 September 2026: the header can carry the House symbol instead of the
+  Files logo. The symbol is the SansAtelier artwork that ships in the theme
+  (assets/ha-house-symbol-black.png, white for the transparent header), so the
+  header does not depend on a file in Admin > Content > Files. The framed
+  symbol is square; Luxe sizes the image box as `logo size` wide by `bar
+  height - 10` tall, which would squash a square, so the mark is drawn at
+  `logo size` on both sides and centred in that box (.ha-header-mark in
+  assets/ha-sections.css). The wireframe has it 47px tall in a 76px bar.
+  `ha_mark` comes from the header section's own settings.
+{%- endcomment -%}
 {% assign logo_image_size = logo_size | times: 2 %}
+{%- if ha_mark == 'symbol' -%}
+<div class="header--logo hl-ratio-square ha-header-mark" style="--ha-mark: {{ logo_size }}px;">
+{% unless template == 'gift_card' %}<a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">{% endunless %}
+  <div class="header--logo-std"><img src="{{ 'ha-house-symbol-black.png' | asset_url }}" width="1867" height="1867" alt="{{ shop.name | escape }}"></div>
+  {%- if header_transparent -%}
+  <div class="header--logo-inverted"><img src="{{ 'ha-house-symbol-white.png' | asset_url }}" width="1867" height="1867" alt="{{ shop.name | escape }}"></div>
+  {%- endif -%}
+{% unless template == 'gift_card' %}</a>{% endunless %}
+</div>
+{%- else -%}
 <div class="header--logo{% if settings.logo_main.width > settings.logo_main.height %} hl-ratio-landscape{% endif %}{% if settings.logo_main.width == settings.logo_main.height %} hl-ratio-square{% endif %}{% if settings.logo_main.width < settings.logo_main.height %} hl-ratio-portrait{% endif %}">
 {% unless template == 'gift_card' %}<a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">{% endunless %}
   {%- if settings.logo_main != blank -%}
@@ -26,3 +47,4 @@
   {%- endif -%}
 {% unless template == 'gift_card' %}</a>{% endunless %}
 </div>
+{%- endif -%}

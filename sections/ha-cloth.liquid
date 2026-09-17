@@ -1,0 +1,235 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE CLOTH / MATERIAL RECORD.
+  Aloha's product-page brief, 16 September 2026, and Hartwick_Product_Desktop_V2:
+
+    "A numbered index connects to asymmetrical detail photographs. Selecting an
+     item should focus its image and caption; hover may add emphasis but cannot
+     be the only way to reveal information. Fibre composition, process and
+     material reference stay legible as text. Dedicated weave, button, collar
+     and seam photographs will make this more useful than repeated crops of one
+     image."
+
+  Composition, measured off the V2 artboard (6000px canvas = 4x a 1500 design):
+  a left column carrying the eyebrow, the cloth's name as a display heading, a
+  two-line statement, the numbered index, then Composition and Record, and at
+  the foot "Look closer / Surface, fastening, cut."; on the right three or four
+  photographs staggered — a large one, a small one high on the far right, one
+  lower-centre, one tall on the right — each with its number and caption.
+
+  The stagger is a CSS grid with named areas so it holds at any count from
+  one to four; below 990px the index sits above and the photographs stack in
+  order, the numbering intact.
+
+  DATA.
+    heading     hartwick.fibre -> the old site's fabric taxonomy ("Silk / Linen")
+    statement   hartwick.cloth_statement -> derived from yarn + weave
+                ("Handspun yarn. A handwoven cloth."), which is factual and
+                built only from facts that exist -> nothing
+    photographs hartwick.cloth_details (file list; the image's alt is its
+                caption) -> the old site's custom.featured_photo, then the
+                product's own media after the first — with the caption from
+                each image's alt text. Repeated crops are what the brief warns
+                against, so this fallback is marked provisional on the page.
+    composition hartwick.fibre_ratio -> "[Confirm]"
+    record      the variant SKU -> "[Confirm]" (no old product carries a SKU)
+
+  ANCHOR. The opening's "View the Material Record" link lands here; the id
+  matches ha-product's `record_anchor` default and the section carries
+  scroll-margin for the sticky header, as the brief asks.
+
+  This replaces ha-product-record (the 13-row table) on the product template.
+  "Show the full record table" brings that table back beneath the index if
+  Aloha wants both — one checkbox, no rebuild.
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+  assign cf = product.metafields.custom
+
+  capture f_fibre
+    render 'ha-product-fact', product: product, field: 'fibre'
+  endcapture
+  capture f_yarn
+    render 'ha-product-fact', product: product, field: 'yarn'
+  endcapture
+  capture f_weave
+    render 'ha-product-fact', product: product, field: 'weave'
+  endcapture
+  capture f_reference
+    render 'ha-product-fact', product: product, field: 'reference'
+  endcapture
+  assign f_fibre = f_fibre | strip
+  assign f_yarn = f_yarn | strip
+  assign f_weave = f_weave | strip
+  assign f_reference = f_reference | strip
+
+  assign confirm = section.settings.confirm_text | default: '[Confirm]'
+
+  assign heading = f_fibre | replace: ' / ', ' and '
+  if heading == blank
+    assign heading = section.settings.ph_heading
+  endif
+
+  assign statement = mf.cloth_statement
+  if statement == blank
+    assign weave_lc = f_weave | downcase
+    if f_yarn != blank and f_weave != blank
+      assign statement = f_yarn | append: ' yarn.<br>A ' | append: weave_lc | append: ' cloth.'
+    elsif f_weave != blank
+      assign statement = 'A ' | append: weave_lc | append: ' cloth.'
+    endif
+  endif
+
+  assign composition = mf.fibre_ratio
+  if composition == blank and f_fibre != blank
+    assign composition = f_fibre | append: ' / ratio ' | append: confirm
+  elsif composition == blank
+    assign composition = confirm
+  endif
+
+  # --- the photographs ---------------------------------------------------
+  assign provisional = false
+  assign details = mf.cloth_details.value
+  if details == blank
+    assign provisional = true
+  endif
+  assign max = section.settings.max_images
+-%}
+
+<section
+  class="ha-section ha-cloth{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}"
+  id="the-material-record"
+>
+  <ha-cloth-index class="ha-wrap ha-cloth__grid">
+    <div class="ha-cloth__lead">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-identify ha-cloth__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="ha-display ha-narrate ha-cloth__heading">{{ heading }}</h2>
+      {%- if statement != blank -%}
+        <p class="ha-cloth__statement ha-narrate">{{ statement }}</p>
+      {%- endif -%}
+
+      {%- comment -%}
+        The index. Real buttons: each one focuses its photograph. Without the
+        script they are still a legible numbered list of what is shown.
+      {%- endcomment -%}
+      {%- capture index_items -%}
+        {%- if details != blank -%}
+          {%- for img in details limit: max -%}
+            {%- assign cap = img.alt | default: section.settings.ph_caption -%}
+            <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ forloop.index }}" aria-controls="{{ section.id }}-detail-{{ forloop.index }}"><span class="ha-cloth__index-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign n = 0 -%}
+          {%- if cf.featured_photo.value != blank -%}
+            {%- assign n = n | plus: 1 -%}
+            {%- assign cap = cf.featured_photo.value.alt | default: section.settings.ph_caption -%}
+            <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ n }}" aria-controls="{{ section.id }}-detail-{{ n }}"><span class="ha-cloth__index-num">{{ n | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
+          {%- endif -%}
+          {%- for media in product.media offset: 1 -%}
+            {%- if n >= max -%}{%- break -%}{%- endif -%}
+            {%- if media.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+            {%- assign n = n | plus: 1 -%}
+            {%- assign cap = media.alt -%}
+            {%- if cap == blank or cap == product.title -%}{%- assign cap = section.settings.ph_caption -%}{%- endif -%}
+            <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ n }}" aria-controls="{{ section.id }}-detail-{{ n }}"><span class="ha-cloth__index-num">{{ n | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- if index_items contains '<li>' -%}
+        <ol class="ha-cloth__index" role="list" aria-label="{{ section.settings.index_label }}">{{ index_items }}</ol>
+      {%- endif -%}
+
+      <dl class="ha-cloth__facts ha-record">
+        <div><dt>{{ section.settings.composition_label }}</dt><dd>{{ composition }}</dd></div>
+        <div><dt>{{ section.settings.record_label }}</dt><dd>{{ f_reference | default: confirm }}</dd></div>
+      </dl>
+
+      {%- if section.settings.closer_eyebrow != blank or section.settings.closer_line != blank -%}
+        <div class="ha-cloth__closer">
+          {%- if section.settings.closer_eyebrow != blank -%}<p class="ha-eyebrow ha-identify ha-cloth__closer-eyebrow">{{ section.settings.closer_eyebrow }}</p>{%- endif -%}
+          {%- if section.settings.closer_line != blank -%}<p class="ha-cloth__closer-line ha-narrate">{{ section.settings.closer_line }}</p>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="ha-cloth__figures">
+      {%- capture figures -%}
+        {%- if details != blank -%}
+          {%- for img in details limit: max -%}
+            {%- assign cap = img.alt | default: section.settings.ph_caption -%}
+            {%- render 'ha-cloth-figure', image: img, index: forloop.index, caption: cap, section_id: section.id -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign n = 0 -%}
+          {%- if cf.featured_photo.value != blank -%}
+            {%- assign n = n | plus: 1 -%}
+            {%- assign cap = cf.featured_photo.value.alt | default: section.settings.ph_caption -%}
+            {%- render 'ha-cloth-figure', image: cf.featured_photo.value, index: n, caption: cap, section_id: section.id -%}
+          {%- endif -%}
+          {%- for media in product.media offset: 1 -%}
+            {%- if n >= max -%}{%- break -%}{%- endif -%}
+            {%- if media.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+            {%- assign n = n | plus: 1 -%}
+            {%- assign cap = media.alt -%}
+            {%- if cap == blank or cap == product.title -%}{%- assign cap = section.settings.ph_caption -%}{%- endif -%}
+            {%- render 'ha-cloth-figure', image: media.preview_image, index: n, caption: cap, section_id: section.id -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- if figures contains '<figure' -%}
+        {{ figures }}
+      {%- else -%}
+        {%- render 'ha-figure', label: section.settings.ph_figure_label, class: 'ha-cloth__figure ha-cloth__figure--1' -%}
+      {%- endif -%}
+    </div>
+  </ha-cloth-index>
+
+  {%- if section.settings.show_full_record -%}
+    <div class="ha-wrap ha-cloth__table">
+      {%- render 'ha-material-record', product: product, full: true, hide_eyebrow: true, hide_title: true, hide_intro: true -%}
+    </div>
+  {%- endif -%}
+
+  {%- if provisional -%}
+    <div class="ha-wrap ha-cloth__note">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+        text: 'Provisional — detail photographs are the product’s own gallery images until dedicated weave, button, collar and seam photographs are supplied (hartwick.cloth_details).' -%}
+    </div>
+  {%- endif -%}
+</section>
+
+<script src="{{ 'ha-cloth.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "HA — The Cloth",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "The Cloth / Material Record (V2 design, 16 Sept 2026). Heading, statement, composition and reference read the product's records; the index and photographs come from hartwick.cloth_details, or the product's own images until those exist." },
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Cloth / Material Record" },
+    { "type": "text", "id": "index_label", "label": "Index accessible name", "default": "Details of the cloth" },
+    { "type": "range", "id": "max_images", "label": "Photographs", "min": 1, "max": 4, "step": 1, "default": 4 },
+    { "type": "text", "id": "composition_label", "label": "Composition label", "default": "Composition" },
+    { "type": "text", "id": "record_label", "label": "Record label", "default": "Record" },
+    { "type": "text", "id": "closer_eyebrow", "label": "Foot eyebrow", "default": "Look closer" },
+    { "type": "text", "id": "closer_line", "label": "Foot line", "default": "Surface, fastening, cut." },
+    { "type": "checkbox", "id": "show_full_record", "label": "Show the full record table beneath", "default": false, "info": "The 13-row Material Record from the earlier design." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "text", "id": "confirm_text", "label": "Unknown fact reads", "default": "[Confirm]" },
+    { "type": "text", "id": "ph_heading", "label": "Heading when no fibre is recorded", "default": "The cloth" },
+    { "type": "text", "id": "ph_caption", "label": "Caption when an image has no alt text", "default": "Detail" },
+    { "type": "text", "id": "ph_figure_label", "label": "Empty slot label", "default": "Cloth detail / to supply" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — The Cloth" }]
+}
+{% endschema %}

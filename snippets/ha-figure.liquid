@@ -13,6 +13,15 @@
          class: 'ha-hero__figure',
          sizes: '(min-width: 990px) 58vw, 100vw',
          loading: 'eager' %}
+
+  `asset` (15 Sep 2026): a provisional photograph shipped INSIDE the theme
+  (assets/…jpg), used only while no image has been picked. The About page
+  wireframe arrived with its photographs baked into the drawing and the
+  re-edited originals not yet to hand; the theme cannot write to Admin >
+  Files, so the stand-ins live in assets/ and the picker still wins the moment
+  a real file is chosen. `asset_img_url` gives the CDN's resized copies, so
+  the fallback is as responsive as the picked image would be. `asset_w` /
+  `asset_h` are the file's pixel size, for the browser's aspect reservation.
 {%- endcomment -%}
 
 {%- liquid
@@ -20,9 +29,15 @@
   assign fig_sizes = sizes | default: '100vw'
   assign fig_loading = loading | default: 'lazy'
   assign fig_alt = alt | default: ''
+  assign has_media = false
+  if image
+    assign has_media = true
+  elsif asset != blank
+    assign has_media = true
+  endif
 -%}
 
-<figure class="ha-figure {{ fig_class }}{% unless image %} ha-figure--empty{% endunless %}">
+<figure class="ha-figure {{ fig_class }}{% unless has_media %} ha-figure--empty{% endunless %}">
   {%- if image -%}
     {{
       image
@@ -33,6 +48,16 @@
         widths: '400, 600, 800, 1000, 1200, 1600, 2000, 2400',
         alt: fig_alt
     }}
+  {%- elsif asset != blank -%}
+    <img
+      src="{{ asset | asset_img_url: '1600x' }}"
+      srcset="{{ asset | asset_img_url: '600x' }} 600w, {{ asset | asset_img_url: '1000x' }} 1000w, {{ asset | asset_img_url: '1600x' }} 1600w, {{ asset | asset_img_url: '2400x' }} 2400w"
+      sizes="{{ fig_sizes }}"
+      loading="{{ fig_loading }}"
+      alt="{{ fig_alt | escape }}"
+      width="{{ asset_w | default: 1600 }}"
+      height="{{ asset_h | default: 1600 }}"
+    >
   {%- endif -%}
   {%- if label != blank -%}
     <figcaption class="ha-figure__label ha-record">{{ label }}</figcaption>

@@ -1,0 +1,120 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — POLICIES, one page.
+
+  Aloha, 15 September 2026: "just POLICIES as one link, which then opens a
+  clean page containing all the relevant sections: Shipping, Returns &
+  Refunds, Privacy, Terms, etc. […] making sure each policy section still has
+  its own direct anchor/link."
+
+  Every policy comes from Settings > Policies (shop.policies) — the same text
+  Shopify shows at checkout and at /policies/<name> — so nothing legal is
+  copied into the theme and nothing goes out of step. Each one renders under
+  an anchor named after its Shopify handle, e.g.
+
+      /pages/policies#shipping-policy
+      /pages/policies#refund-policy
+      /pages/policies#privacy-policy
+      /pages/policies#terms-of-service
+
+  so a product page, an email or checkout copy can send someone straight to
+  the section. The list at the top is the same set of anchors. A policy left
+  empty in Admin simply does not appear. Titles can be overridden per policy
+  below (Shopify's own is "Refund policy"; Aloha writes "Returns & Refunds").
+
+  ⚠️ ADMIN, not theme: a page "Policies" (handle: policies) with Theme
+  template "policies" has to exist for this to have an address.
+{%- endcomment -%}
+
+{%- liquid
+  # Aloha's order first — Shipping, Returns & Refunds, Privacy, Terms — then
+  # anything else Shopify has (Contact information, Subscription policy…).
+  assign preferred = 'shipping-policy,refund-policy,privacy-policy,terms-of-service' | split: ','
+  assign ordered = ''
+  for handle in preferred
+    for policy in shop.policies
+      assign anchor = policy.url | split: '/' | last
+      if anchor == handle and policy.body != blank
+        assign ordered = ordered | append: anchor | append: ','
+      endif
+    endfor
+  endfor
+  for policy in shop.policies
+    assign anchor = policy.url | split: '/' | last
+    unless preferred contains anchor
+      if policy.body != blank
+        assign ordered = ordered | append: anchor | append: ','
+      endif
+    endunless
+  endfor
+  assign ordered = ordered | split: ','
+-%}
+
+{%- capture index_items -%}
+  {%- for anchor in ordered -%}
+    {%- for policy in shop.policies -%}
+      {%- assign this = policy.url | split: '/' | last -%}
+      {%- if this == anchor -%}
+        {%- render 'ha-policy-title', anchor: anchor, policy: policy, s: section.settings, as: 'index' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<section class="ha-section ha-policies">
+  <div class="ha-wrap ha-policies__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="ha-display ha-narrate ha-policies__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.intro != blank -%}
+      <div class="ha-body ha-narrate ha-policies__intro">{{ section.settings.intro }}</div>
+    {%- endif -%}
+
+    {%- if ordered.size > 0 -%}
+      <nav class="ha-policies__index" aria-label="{{ section.settings.index_label | escape }}">
+        <ol class="ha-policies__list ha-record" role="list">
+          {{ index_items }}
+        </ol>
+      </nav>
+
+      {%- for anchor in ordered -%}
+        {%- for policy in shop.policies -%}
+          {%- assign this = policy.url | split: '/' | last -%}
+          {%- if this == anchor -%}
+            <article class="ha-policies__policy" id="{{ anchor }}">
+              <h2 class="ha-policies__title ha-narrate">{% render 'ha-policy-title', anchor: anchor, policy: policy, s: section.settings, as: 'title' %}</h2>
+              <div class="ha-body ha-narrate ha-policies__body">{{ policy.body }}</div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      <p class="ha-body ha-narrate">{{ section.settings.empty_text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Policies",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Policies" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The terms on which we work." },
+    { "type": "richtext", "id": "intro", "label": "Introduction", "info": "Optional. Leave empty for none." },
+    { "type": "text", "id": "index_label", "label": "Index label (screen readers)", "default": "Policies on this page" },
+    { "type": "header", "content": "Section titles", "info": "Shopify's own names are used unless overridden here. The text of each policy always comes from Settings > Policies." },
+    { "type": "text", "id": "title_shipping", "label": "Shipping", "default": "Shipping" },
+    { "type": "text", "id": "title_refund", "label": "Refund", "default": "Returns & Refunds" },
+    { "type": "text", "id": "title_privacy", "label": "Privacy", "default": "Privacy" },
+    { "type": "text", "id": "title_terms", "label": "Terms", "default": "Terms" },
+    { "type": "text", "id": "empty_text", "label": "Shown when no policy is written yet", "default": "Policies are being prepared." }
+  ],
+  "presets": [{ "name": "HA — Policies" }]
+}
+{% endschema %}

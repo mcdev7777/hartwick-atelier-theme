@@ -1,22 +1,29 @@
 /*
- * Hartwick Atelier — PRODUCT PAGE (upaya)
+ * Hartwick Atelier — PRODUCT PAGE
  *
- * Built to `04_HA_Product_Desktop_REVISED_EDITABLE.pdf` (Aloha's revised
- * desktop wireframe), 3 September 2026.
+ * Rebuilt 16 September 2026 to Aloha's "Product page design and discovery
+ * brief" and Hartwick_Product_Desktop_V2.png.
  *
- * The opening section is the three-column hero — sticky left rail, scrolling
- * media rail, sticky buy rail — rendered by the custom `ha-product` section.
- * See sections/ha-product.liquid for why that one section is custom while the
- * form inside it is still Luxe's own snippets.
+ * The opening is the three-column section `ha-product` (sticky information
+ * rail | scrolling photographs | sticky purchase rail), kept from 3 September
+ * and extended: serif material line, image count + scroll hint, markers that
+ * stay in view, a size that must be chosen, Product JSON-LD restored, and a
+ * Delivery row that reads Settings > Policies.
  *
- * Below it, the sections follow the wireframe's ORDER and STRUCTURE. Aloha
- * asked that only the structure and positions be taken from that file, not its
- * colours, so the decorative bands are dropped: every section sits on the brand
- * page ground, with the Masters and Register on the established dark field.
+ * Below it, the V2 order: Origin + Process (one record of five stages), The
+ * Cloth / Material Record (numbered index and staggered detail photographs),
+ * The Master (from the shared master record), Lot Record, Care & Repair /
+ * Shipping & Returns, Related Works, then The Register.
  *
- * Field colours are section settings (`field`), so the alternation can be
- * retuned from the theme editor. All placeholder copy is marked on screen and
- * switches to real data the moment the hartwick.* content exists.
+ * The compositions the V2 replaced — The Garment, the 13-row Material Record,
+ * Authorship, The Origin route, Process, A Wearer's Note, Continue — are
+ * DISABLED here, not deleted: their settings and chosen images are intact and
+ * any one returns with a single toggle in the theme editor.
+ *
+ * Content comes from the product's records: hartwick.* first, then the old
+ * site's own custom.* / shopify.* fields and the title (Aloha, 16 Sept: "use
+ * the existing text and product information from the old Hartwick website").
+ * Anything with no source prints a bracketed placeholder and is flagged.
  *
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
@@ -27,39 +34,24 @@
     "main": {
       "type": "ha-product",
       "blocks": {
-        "row_sizing": {
-          "type": "left_row",
-          "settings": {
-            "heading": "Sizing information",
-            "content": "<p><em>Placeholder — measurements and fit guidance pending Angela's approval.</em></p>"
-          }
-        },
-        "row_care": {
-          "type": "left_row",
-          "settings": {
-            "heading": "Customer care",
-            "content": "<p><em>Placeholder — care, delivery and returns terms pending confirmation.</em></p>"
-          }
-        },
         "buy_delivery": {
           "type": "buy_row",
           "settings": {
-            "heading": "Delivery & returns",
+            "heading": "Delivery & Returns",
+            "source": "policies",
             "content": "<p><em>Placeholder — dispatch, duties, returns and exchange terms pending confirmation.</em></p>"
           }
         }
       },
       "block_order": [
-        "buy_delivery",
-        "row_sizing",
-        "row_care"
+        "buy_delivery"
       ],
       "settings": {
         "show_breadcrumb": true,
         "crumb_root": "Collection",
         "crumb_leaf": "Apparel",
-        "fit_heading": "Fit",
-        "record_link_text": "View the material record",
+        "fit_heading": "Fit & Measurements",
+        "record_link_text": "View the Material Record",
         "record_anchor": "#the-material-record",
         "tax_note": "Duties and taxes shown at checkout",
         "appointment_text": "Request Private Appointment",
@@ -67,7 +59,15 @@
         "picker_type": "button",
         "gallery_aspect_ratio": "portrait-4x6",
         "intro_words": 32,
-        "description_row_title": "Description"
+        "description_row_title": "Description",
+        "dots_label": "Product images",
+        "dot_label": "Show image [n] of [total]",
+        "scroll_hint": "Scroll",
+        "require_size": true,
+        "size_prompt": "Select a size",
+        "ph_availability": "[Confirm selected size]",
+        "ph_ship_date": "[Confirm date]",
+        "ph_fit_line_one": "Relaxed through the body."
       }
     },
     "ha_garment": {
@@ -86,7 +86,8 @@
         "field": "page",
         "show_spec_table": false,
         "image": "shopify://shop_images/005_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_SILK_AMMAN_SHIRT_LINEN_SILK_bc14587d-9c57-4bb5-b00e-5fdc7f9c7f8a.jpg"
-      }
+      },
+      "disabled": true
     },
     "ha_record": {
       "type": "ha-product-record",
@@ -112,7 +113,8 @@
         "heading": "What the hand leaves inside the material.",
         "intro": "<p>Explain fibre, yarn, weave, weight, dye, surface and behaviour. Natural variation is described precisely, never as an excuse.</p>",
         "image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg"
-      }
+      },
+      "disabled": true
     },
     "ha_origin": {
       "type": "ha-origin",
@@ -165,7 +167,8 @@
         "s3",
         "s4",
         "s5"
-      ]
+      ],
+      "disabled": true
     },
     "ha_process": {
       "type": "ha-process",
@@ -206,7 +209,8 @@
         "p2",
         "p3",
         "p4"
-      ]
+      ],
+      "disabled": true
     },
     "ha_register": {
       "type": "ha-register",
@@ -228,7 +232,8 @@
         "show_placeholder_note": true,
         "field": "page",
         "image": "shopify://shop_images/HartwickAtelier-About-Hero-02.jpg"
-      }
+      },
+      "disabled": true
     },
     "ha_authorship": {
       "type": "ha-authorship",
@@ -243,52 +248,38 @@
         "show_placeholder_note": true,
         "portrait_image": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
         "workshop_image": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg"
-      }
+      },
+      "disabled": true
     },
     "ha_living": {
       "type": "ha-living",
-      "settings": {
-        "field": "page",
-        "eyebrow": "Living with the piece",
-        "heading": "Fit, care and delivery, kept clear."
-      },
       "blocks": {
-        "r1": {
+        "care": {
           "type": "row",
           "settings": {
-            "heading": "Fit & garment measurements",
-            "open_by_default": true,
-            "content": "<p><em>Placeholder — actual garment measurements, model information and advice when choosing between sizes, pending Angela's approval.</em></p>"
+            "heading": "Care & Repair",
+            "source": "care",
+            "content": "<p><em>Placeholder — care, washing, ageing and repair guidance pending Angela's approval. Publishes from the product's hartwick.care_instructions, ageing_patina and repairs fields.</em></p>"
           }
         },
-        "r2": {
+        "shipping": {
           "type": "row",
           "settings": {
-            "heading": "Care & longevity",
-            "content": "<p><em>Placeholder — care, washing and ageing guidance pending Angela's approval.</em></p>"
-          }
-        },
-        "r3": {
-          "type": "row",
-          "settings": {
-            "heading": "Delivery & returns",
-            "content": "<p><em>Placeholder — dispatch, duties, returns and exchange terms pending confirmation.</em></p>"
-          }
-        },
-        "r4": {
-          "type": "row",
-          "settings": {
-            "heading": "Edition / lot",
-            "content": "<p><em>Placeholder — Lot and, where a garment is individually numbered, its edition. Published only when confirmed.</em></p>"
+            "heading": "Shipping & Returns",
+            "source": "policies",
+            "content": ""
           }
         }
       },
       "block_order": [
-        "r1",
-        "r2",
-        "r3",
-        "r4"
-      ]
+        "care",
+        "shipping"
+      ],
+      "settings": {
+        "field": "page",
+        "eyebrow": "",
+        "heading": ""
+      }
     },
     "ha_continue": {
       "type": "ha-continue",
@@ -324,19 +315,82 @@
       "block_order": [
         "b1",
         "b2"
-      ]
+      ],
+      "disabled": true
+    },
+    "ha_provenance": {
+      "type": "ha-provenance",
+      "settings": {
+        "field": "page",
+        "eyebrow": "Origin + Process",
+        "heading": "From Fibre to Garment",
+        "ref_label": "Provenance",
+        "show_status": true,
+        "show_placeholder_note": true
+      }
+    },
+    "ha_cloth": {
+      "type": "ha-cloth",
+      "settings": {
+        "field": "page",
+        "eyebrow": "The Cloth / Material Record",
+        "max_images": 4,
+        "closer_eyebrow": "Look closer",
+        "closer_line": "Surface, fastening, cut.",
+        "show_full_record": false,
+        "show_placeholder_note": true
+      }
+    },
+    "ha_master": {
+      "type": "ha-master-feature",
+      "settings": {
+        "eyebrow": "The Master",
+        "number": "01",
+        "link_text": "View Master Record",
+        "slot_photo_label": "Workshop photograph / to supply",
+        "slot_name": "[Master name]",
+        "slot_discipline": "[Discipline]",
+        "slot_place": "[Place]",
+        "slot_verify": "Identity + product link to verify",
+        "show_placeholder_note": true
+      }
+    },
+    "ha_lot": {
+      "type": "ha-lot-record",
+      "settings": {
+        "field": "page",
+        "eyebrow": "Lot Record",
+        "heading": "The Production Record",
+        "show_placeholder_note": true
+      }
+    },
+    "ha_related": {
+      "type": "ha-related-works",
+      "settings": {
+        "field": "page",
+        "eyebrow": "Related Works",
+        "all_text": "View the collection",
+        "count": 3,
+        "show_empty": true,
+        "show_placeholder_note": true
+      }
     }
   },
   "order": [
     "main",
+    "ha_provenance",
+    "ha_cloth",
+    "ha_master",
+    "ha_lot",
+    "ha_living",
+    "ha_related",
+    "ha_register",
     "ha_garment",
     "ha_record",
     "ha_authorship",
     "ha_origin",
     "ha_process",
-    "ha_living",
     "ha_wearer",
-    "ha_continue",
-    "ha_register"
+    "ha_continue"
   ]
 }

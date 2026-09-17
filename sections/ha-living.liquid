@@ -13,8 +13,21 @@
   fact (CLAUDE.md).
 {%- endcomment -%}
 
-<section class="ha-section ha-living{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+{%- comment -%}
+  V2 (16 September 2026) draws these rows without a lead column: two
+  full-width rows, "Care & Repair" and "Shipping & Returns", their titles in
+  the editorial serif. Leave the eyebrow and heading empty and the section
+  takes that shape; fill them and the earlier heading-left composition returns.
+{%- endcomment -%}
+{%- liquid
+  assign bare = false
+  if section.settings.eyebrow == blank and section.settings.heading == blank
+    assign bare = true
+  endif
+-%}
+<section class="ha-section ha-living{% if bare %} ha-living--bare{% endif %}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
   <div class="ha-wrap ha-living__grid">
+    {%- unless bare -%}
     <div class="ha-living__lead">
       {%- if section.settings.eyebrow != blank -%}
         <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
@@ -23,17 +36,16 @@
         <h2 class="ha-display ha-narrate ha-living__heading">{{ section.settings.heading }}</h2>
       {%- endif -%}
     </div>
+    {%- endunless -%}
 
     <div class="ha-living__rows">
+      {%- comment -%}
+        16 September 2026: a row may read Settings > Policies instead of its
+        own text, so Shipping & Returns has one source on the site (the buy
+        rail's Delivery row reads the same). See snippets/ha-row-body.
+      {%- endcomment -%}
       {%- for block in section.blocks -%}
-        {%- capture row_body -%}
-          {%- if block.settings.content != blank -%}
-            <div class="ha-living__body ha-body ha-narrate">{{ block.settings.content }}</div>
-          {%- endif -%}
-          {%- if block.settings.page != blank -%}
-            <div class="ha-living__body ha-body ha-narrate">{{ block.settings.page.content }}</div>
-          {%- endif -%}
-        {%- endcapture -%}
+        {%- capture row_body -%}{%- render 'ha-row-body', block: block, class: 'ha-living__body', product: product -%}{%- endcapture -%}
         {%- render 'ha-panel-row',
           id: block.id,
           title: block.settings.heading,
@@ -64,6 +76,12 @@
       "name": "Accordion row",
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "Row title" },
+        { "type": "select", "id": "source", "label": "Content comes from", "default": "manual", "options": [
+          { "value": "manual", "label": "The text below" }, { "value": "page", "label": "A page" },
+          { "value": "policies", "label": "Settings › Policies (shipping + refund)" },
+          { "value": "shipping", "label": "Settings › Policies (shipping only)" }, { "value": "refund", "label": "Settings › Policies (refund only)" },
+          { "value": "care", "label": "The product's care fields (hartwick.*)" }
+        ] },
         { "type": "richtext", "id": "content", "label": "Content" },
         { "type": "page", "id": "page", "label": "Or take content from a page" },
         { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }

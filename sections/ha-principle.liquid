@@ -1,0 +1,69 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE PRINCIPLE.
+  About-page wireframe (Aloha, 15 September 2026): a dark band. Eyebrow and a
+  two-line heading in capitals on the left; on the right, paragraphs in the
+  record voice separated by hairlines, and a small link at the foot.
+
+  The paragraphs are blocks so their number is not fixed. They are set in the
+  record face but in sentence case — the wireframe draws them as running
+  prose, not as labels — which is what `.ha-record--prose` is for.
+
+  Terminology: "The Master", "Masters" — never "makers" or "artisans" as a
+  label (CLAUDE.md).
+{%- endcomment -%}
+
+<section class="ha-section ha-principle ha-section--field-{{ section.settings.field | default: 'peat' }}">
+  <div class="ha-wrap ha-principle__grid">
+    <div class="ha-principle__lead">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ha-display ha-narrate ha-principle__heading">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="ha-principle__aside">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.text != blank -%}
+          <div class="ha-principle__para ha-record ha-record--prose" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if section.settings.cta_text != blank -%}
+        <p class="ha-principle__cta">
+          <a class="ha-link ha-identify" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a>
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Principle",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "peat", "options": [
+      { "value": "peat", "label": "Peat (dark)" }, { "value": "slate", "label": "Slate (dark)" }, { "value": "white", "label": "White" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Principle" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "The Master is not\nbackground labour." },
+    { "type": "text", "id": "cta_text", "label": "Link text", "default": "Made by Masters" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    { "type": "paragraph", "name": "Paragraph", "settings": [
+      { "type": "richtext", "id": "text", "label": "Text" }
+    ] }
+  ],
+  "presets": [{ "name": "HA — Principle", "blocks": [ { "type": "paragraph" }, { "type": "paragraph" } ] }]
+}
+{% endschema %}

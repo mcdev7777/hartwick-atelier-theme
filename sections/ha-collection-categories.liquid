@@ -1,0 +1,143 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+<script src="{{ 'ha-collection-categories.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  Hartwick Atelier — THE COLLECTION INDEX (the /collections page).
+  Aloha's Collection-page wireframe, 15 September 2026
+  (HA_COLLECTION_CATEGORY_DESKTOP_EDITABLE.png):
+
+      THE COLLECTION INDEX                     title, then the categories in
+      CLOTHING, FINE SILKS, FINE JEWELLERY     one tracked line, both centred
+      AND YOGA                                 on the page ground
+
+      ┌──────────────┬──────────────┐          four photographs edge to edge,
+      │   CLOTHING   │  FINE SILKS  │          two by two, each the full half
+      ├──────────────┼──────────────┤          width, the category name in
+      │     YOGA     │FINE JEWELLERY│          capitals near the foot of each
+      └──────────────┴──────────────┘
+
+  Aloha: "I'd like the imagery to appear black and white by default, then
+  transition to colour on hover." So the photographs are the colour originals
+  and the CSS desaturates them; hover, keyboard focus and touch bring the
+  colour back. There is no hover on a phone, so there the colour arrives as
+  each tile scrolls into view (assets/ha-collection-categories.js) — the same
+  reveal, driven by the thumb — or, with `touch_reveal` set to "touch", only
+  when a tile is tapped. Either way a phone starts black and white, like the
+  desktop.
+
+  Each tile is a block bound to a collection. The picture is the block's own
+  image if one is picked, otherwise the collection's featured image; the name
+  is the block's label, otherwise the collection title; the link is always the
+  collection. That is the whole data model: nothing about a category is typed
+  twice, and a fifth category is a fifth block.
+
+  This is NOT the homepage's numbered index (ha-collection-index); that is a
+  different composition with a different job.
+{%- endcomment -%}
+
+{%- liquid
+  assign tile_count = section.blocks.size
+-%}
+
+<section class="ha-section ha-cats ha-cats--reveal-{{ section.settings.touch_reveal | default: 'scroll' }}">
+  <header class="ha-wrap ha-cats__head">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: section.settings.placeholder_text -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="ha-cats__title ha-narrate">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.subline != blank -%}
+      <p class="ha-cats__subline ha-identify">{{ section.settings.subline }}</p>
+    {%- endif -%}
+  </header>
+
+  {%- if tile_count > 0 -%}
+    <ul class="ha-cats__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign col = block.settings.collection
+          assign image = block.settings.image | default: col.featured_image
+          assign label = block.settings.label | default: col.title
+          assign href = col.url | default: '#'
+          assign alt = block.settings.alt | default: image.alt | default: label
+          assign focus_x = block.settings.focus_x | default: 50
+          assign focus_y = block.settings.focus_y | default: 50
+        -%}
+        <li class="ha-cats__cell" {{ block.shopify_attributes }}>
+          <a class="ha-cats__tile" href="{{ href }}"{% if col == blank %} aria-disabled="true"{% endif %}>
+            <figure class="ha-figure ha-cats__figure{% unless image %} ha-figure--empty{% endunless %}" style="--ha-cats-focus: {{ focus_x }}% {{ focus_y }}%">
+              {%- if image -%}
+                {%- comment -%}
+                  Written by hand rather than through image_tag: that filter
+                  writes the file's Admin focal point as an inline style, which
+                  would beat the tile's own crop below. The tile is 21:25 and
+                  most of these files are 2:3, so the crop matters.
+                {%- endcomment -%}
+                <img
+                  src="{{ image | image_url: width: 1600 }}"
+                  srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1000 }} 1000w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w, {{ image | image_url: width: 2000 }} 2000w, {{ image | image_url: width: 2400 }} 2400w"
+                  sizes="(min-width: 750px) 50vw, 100vw"
+                  width="{{ image.width }}"
+                  height="{{ image.height }}"
+                  loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}"
+                  alt="{{ alt | escape }}"
+                >
+              {%- else -%}
+                <figcaption class="ha-figure__label ha-record">Image — pick one, or give the collection a featured image</figcaption>
+              {%- endif -%}
+            </figure>
+            {%- if label != blank -%}
+              <span class="ha-cats__label ha-identify">{{ label }}</span>
+            {%- endif -%}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "HA — Category tiles",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Title", "default": "The Collection Index" },
+    { "type": "text", "id": "subline", "label": "Line beneath", "default": "Clothing, Fine Silks, Fine Jewellery and Yoga", "info": "The categories in one line, as the wireframe sets them." },
+    { "type": "header", "content": "Photographs" },
+    {
+      "type": "select", "id": "touch_reveal", "label": "On touch screens, colour arrives", "default": "scroll",
+      "info": "Desktop shows the photographs black and white until hovered. A phone has no hover, so it needs another cue.",
+      "options": [
+        { "value": "scroll", "label": "As each photograph scrolls into view" },
+        { "value": "touch", "label": "Only when a photograph is touched" }
+      ]
+    },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true },
+    { "type": "text", "id": "placeholder_text", "label": "Notice text", "default": "Provisional — photographs are the store's own files until the wireframe originals arrive" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection", "info": "The tile links here. Its featured image and title are used unless overridden below." },
+        { "type": "image_picker", "id": "image", "label": "Photograph", "info": "Overrides the collection's featured image. Use the colour original — the page makes it black and white." },
+        { "type": "text", "id": "label", "label": "Name", "info": "Overrides the collection title. Leave empty to use it." },
+        { "type": "text", "id": "alt", "label": "Alt text" },
+        { "type": "range", "id": "focus_x", "label": "Crop — horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50, "info": "Where the picture is held when the tile crops it: 0 keeps the left edge, 100 the right." },
+        { "type": "range", "id": "focus_y", "label": "Crop — vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50, "info": "0 keeps the top, 100 the bottom." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Category tiles",
+      "blocks": [
+        { "type": "tile" }, { "type": "tile" }, { "type": "tile" }, { "type": "tile" }
+      ]
+    }
+  ]
+}
+{% endschema %}

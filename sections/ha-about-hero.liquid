@@ -1,0 +1,84 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT, the opening pair.
+  About-page wireframe (Aloha, 15 September 2026): two photographs edge to
+  edge, half the width each, under the header. A dark plate sits over the foot
+  of the left one carrying the page title and a line in italic; the right one
+  carries a record caption ("01 / Angela in Mallorca") in its corner. On a
+  phone the two stack, left first, and the plate sits below the first picture
+  rather than over it so the title never fights the photograph for room.
+
+  The photographs are provisional: cut from the wireframe drawing, because the
+  re-edited originals were not in the files that came with it. Each picker
+  replaces its stand-in the moment a real file is chosen (snippets/ha-figure).
+{%- endcomment -%}
+
+<section class="ha-section ha-abhero">
+  <div class="ha-abhero__grid">
+    <div class="ha-abhero__cell ha-abhero__cell--left">
+      {%- render 'ha-figure',
+        image: section.settings.left_image,
+        asset: section.settings.left_asset,
+        asset_w: 2400, asset_h: 2157,
+        label: section.settings.left_label,
+        class: 'ha-abhero__figure',
+        sizes: '(min-width: 750px) 50vw, 100vw',
+        loading: 'eager',
+        alt: section.settings.left_alt
+      -%}
+      <div class="ha-abhero__plate">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="ha-abhero__title ha-identify">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.subline != blank -%}
+          <p class="ha-abhero__subline ha-narrate">{{ section.settings.subline | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="ha-abhero__cell ha-abhero__cell--right">
+      {%- render 'ha-figure',
+        image: section.settings.right_image,
+        asset: section.settings.right_asset,
+        asset_w: 2263, asset_h: 2400,
+        label: section.settings.right_label,
+        class: 'ha-abhero__figure',
+        sizes: '(min-width: 750px) 50vw, 100vw',
+        loading: 'eager',
+        alt: section.settings.right_alt
+      -%}
+    </div>
+  </div>
+  {%- if section.settings.show_placeholder_note -%}
+    <div class="ha-wrap ha-abhero__note">
+      {%- render 'ha-placeholder-note', show: true, text: section.settings.placeholder_text -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "HA — About hero",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Title plate" },
+    { "type": "text", "id": "heading", "label": "Page title", "default": "About the Hartwick" },
+    { "type": "textarea", "id": "subline", "label": "Line beneath", "default": "A house shaped by material, place and\nthe knowledge of the people who make." },
+    { "type": "header", "content": "Left photograph" },
+    { "type": "image_picker", "id": "left_image", "label": "Image" },
+    { "type": "text", "id": "left_alt", "label": "Alt text", "default": "Angela Hartwick on a balcony in Mallorca" },
+    { "type": "text", "id": "left_label", "label": "Corner caption", "info": "Record voice, bottom-left of the picture. Leave empty for none." },
+    { "type": "text", "id": "left_asset", "label": "Provisional file (theme asset)", "default": "ha-about-hero-left.jpg", "info": "Shown only until an image is picked above. Cut from the wireframe drawing; clear it once the real photograph is in." },
+    { "type": "header", "content": "Right photograph" },
+    { "type": "image_picker", "id": "right_image", "label": "Image" },
+    { "type": "text", "id": "right_alt", "label": "Alt text", "default": "Angela Hartwick seated by a window" },
+    { "type": "text", "id": "right_label", "label": "Corner caption", "default": "01 / Angela in Mallorca" },
+    { "type": "text", "id": "right_asset", "label": "Provisional file (theme asset)", "default": "ha-about-hero-right.jpg", "info": "Shown only until an image is picked above." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true },
+    { "type": "text", "id": "placeholder_text", "label": "Notice text", "default": "Provisional — photographs cut from the wireframe until the re-edited originals are placed; copy transcribed from the wireframe, not yet approved for publication" }
+  ],
+  "presets": [{ "name": "HA — About hero" }]
+}
+{% endschema %}

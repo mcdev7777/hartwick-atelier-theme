@@ -1,0 +1,63 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — STATEMENT, centred.
+  About-page wireframe (Aloha, 15 September 2026). Used twice on that page:
+
+      THE HOUSE                          eyebrow, then a two-line heading in
+      A FASHION HOUSE BUILT AROUND       capitals, then a short paragraph —
+      WHAT CANNOT BE RUSHED.             all centred on the page.
+
+      Craft does not need to be          the heading alone, smaller, in
+      preserved as a relic. …           sentence case: a pull-quote between
+                                         two sections.
+
+  One section, two sizes, so the page carries one idea of "a centred line of
+  text" rather than two. Nothing here is About-specific.
+{%- endcomment -%}
+
+<section class="ha-section ha-statement ha-statement--{{ section.settings.size }}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-wrap ha-statement__inner">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note -%}
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ha-eyebrow ha-record ha-statement__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ha-display ha-narrate ha-statement__heading{% if section.settings.heading_caps %} ha-statement__heading--caps{% endif %}">
+        {{ section.settings.heading | newline_to_br }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.body != blank -%}
+      <div class="ha-statement__body ha-narrate">{{ section.settings.body }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Statement",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand (one step darker)" },
+      { "value": "white", "label": "White" }, { "value": "peat", "label": "Peat (dark)" },
+      { "value": "clay", "label": "Clay" }, { "value": "botanical", "label": "Botanical" }, { "value": "slate", "label": "Slate (dark)" }
+    ] },
+    { "type": "select", "id": "size", "label": "Size", "default": "display", "options": [
+      { "value": "display", "label": "Display — a section opener" },
+      { "value": "quote", "label": "Quote — a line between sections" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "A line break here is kept." },
+    { "type": "checkbox", "id": "heading_caps", "label": "Heading in capitals", "default": false },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": false }
+  ],
+  "presets": [{ "name": "HA — Statement" }]
+}
+{% endschema %}

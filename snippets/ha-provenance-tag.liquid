@@ -1,0 +1,26 @@
+{%- comment -%}
+  One small classification under a provenance stage — "HANDWOVEN",
+  "UNDYED / SOURCE PAGE", "HAND FINISHED / UNVERIFIED" in the V2 design.
+  `tag` is the classification; when it is blank the stage's fact is unknown and
+  the tag reads the confirm text. `known` is the fact the tag rests on; a tag
+  with no fact behind it never claims verification.
+{%- endcomment -%}
+{%- liquid
+  assign label = tag
+  assign is_open = false
+  if label == blank
+    assign label = confirm | default: '[Confirm]'
+    assign is_open = true
+  endif
+  assign suffix = ''
+  if show_status
+    if is_open or known == blank
+      assign suffix = ''
+    elsif verified
+      assign suffix = ''
+    else
+      assign suffix = ' / Unverified'
+    endif
+  endif
+-%}
+<p class="ha-provenance__tag ha-record{% if is_open %} ha-provenance__tag--open{% elsif suffix != '' %} ha-provenance__tag--unverified{% endif %}">{{ label }}{{ suffix }}</p>

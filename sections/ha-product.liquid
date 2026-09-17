@@ -44,15 +44,50 @@
   assign product_form_id = 'product-form-' | append: section.id
   assign mf = product.metafields.hartwick
 
-  assign style_name = product.title
-  if mf.style.value.display_name != blank
-    assign style_name = mf.style.value.display_name
-  endif
+  # ONE SET OF FACTS (Aloha, 16 September 2026). Style, material and
+  # Expression resolve through snippets/ha-product-fact — the Hartwick model,
+  # then the old site's own records, then the title — so this rail, the Lot
+  # record and the Related Works cards can never name a garment differently.
+  capture style_name
+    render 'ha-product-fact', product: product, field: 'style'
+  endcapture
+  capture material_line
+    render 'ha-product-fact', product: product, field: 'material'
+  endcapture
+  capture fact_fibre
+    render 'ha-product-fact', product: product, field: 'fibre'
+  endcapture
+  capture fact_weave
+    render 'ha-product-fact', product: product, field: 'weave'
+  endcapture
+  capture fact_colour
+    render 'ha-product-fact', product: product, field: 'colour'
+  endcapture
+  capture fact_made
+    render 'ha-product-fact', product: product, field: 'made_in'
+  endcapture
+  capture expression
+    render 'ha-product-fact', product: product, field: 'expression'
+  endcapture
+  assign style_name = style_name | strip | default: product.title
+  assign material_line = material_line | strip | default: section.settings.ph_cloth
+  assign fact_fibre = fact_fibre | strip | default: section.settings.ph_fibre
+  assign fact_weave = fact_weave | strip | default: section.settings.ph_weave
+  assign fact_colour = fact_colour | strip | default: section.settings.ph_colour
+  assign fact_made = fact_made | strip | default: section.settings.ph_made_in
+  assign expression = expression | strip | default: section.settings.ph_expression
 
-  # The line under the Style name is the cloth, not the colourway: the design
-  # prints "HANDSPUN SILK & LINEN" there and puts "Natural / Undyed" — the
-  # Expression — in the buy rail as a labelled row.
-  assign cloth = mf.fibre | default: section.settings.ph_cloth
+  # The V2 design sets the material as a serif line under the Style
+  # ("Handspun Silk and Linen") AND repeats it as a record label ("HANDSPUN
+  # SILK + LINEN"). The label is only worth its line when it says something
+  # the serif line does not — so it renders only when the fibre is not already
+  # inside the material line.
+  assign cloth = ''
+  assign material_lc = material_line | downcase
+  assign fibre_lc = fact_fibre | downcase | split: ' / ' | first
+  unless material_lc contains fibre_lc
+    assign cloth = fact_fibre
+  endunless
 
   # The Lot, customer-facing as a Roman numeral (Framework v3). With the Edition
   # gone, this is the opening label Aloha asked for: "If the garments are not
@@ -63,19 +98,8 @@
     assign lot_label = 'Lot ' | append: mf.lot.value.number_roman
   endif
 
-  # Key facts. Each renders only when present; an absent field leaves no
-  # orphaned label and no gap.
-  assign fact_fibre = mf.fibre | default: section.settings.ph_fibre
-  assign fact_weave = mf.weave | default: section.settings.ph_weave
-  assign fact_colour = mf.colour_name | default: section.settings.ph_colour
-  assign fact_made = ''
-  if mf.place_of_construction.value.place != blank
-    assign fact_made = mf.place_of_construction.value.place
-  else
-    assign fact_made = section.settings.ph_made_in
-  endif
-
-  assign expression = mf.expression | default: section.settings.ph_expression
+  # Key facts render only when present; an absent field leaves no orphaned
+  # label and no gap. (Resolved above, with the identity.)
 
   # Availability is a fact, never a countdown. Aloha, 3 Sep 2026: "We do not
   # want to turn that reality into scarcity language."
@@ -90,9 +114,23 @@
     assign fit_b = section.settings.ph_fit_line_two
   endif
 
+  # Provisional until the Hartwick model itself carries the identity: the old
+  # site's title and subtitle are standing in (and the title's legacy name is
+  # internal-only per CLAUDE.md), so the notice stays until hartwick.style is
+  # linked and hartwick.expression is set.
   assign is_placeholder = false
-  if mf.style.value.display_name == blank or mf.fibre == blank or mf.expression == blank
+  if mf.style.value.display_name == blank or mf.expression == blank
     assign is_placeholder = true
+  endif
+
+  # The size must be chosen, not assumed (brief: "Before selection, the button
+  # asks for a size"). Only on a first, unparameterised view of a multi-size
+  # garment that is actually for sale; a ?variant= link, or the section
+  # re-render Luxe fetches after a choice, arrives with a selected variant and
+  # renders the ordinary form.
+  assign size_unset = false
+  if section.settings.require_size and product.selected_variant == blank and product.variants.size > 1 and product.available
+    assign size_unset = true
   endif
 
   # The rail shows an excerpt; the full description becomes an accordion row when
@@ -100,6 +138,33 @@
   assign full_description = product.description
   if full_description == blank
     assign full_description = section.settings.ph_intro
+  endif
+
+  # The old site's DETAILS list (custom.description) belongs with the
+  # description. One bullet class is dropped on the way: "Limited Edition /25
+  # Lot No. 0624" is scarcity language Aloha removed on 3 September and an
+  # unverified run size, so it is filtered here rather than published — the
+  # run size publishes from the Lot record once verified.
+  assign details_html = ''
+  if product.metafields.custom.description != blank
+    capture raw_details
+      echo product.metafields.custom.description | metafield_tag
+    endcapture
+    assign items = raw_details | split: '<li>'
+    for item in items
+      if forloop.first
+        continue
+      endif
+      assign item_lc = item | downcase
+      if item_lc contains 'limited edition' or item_lc contains 'lot no'
+        continue
+      endif
+      assign item = item | remove: '</ul>' | remove: '</div>' | strip
+      assign details_html = details_html | append: '<li>' | append: item
+    endfor
+    if details_html != blank
+      assign details_html = '<ul class="ha-pdp__details">' | append: details_html | append: '</ul>'
+    endif
   endif
   assign plain_description = full_description | strip_html | strip
   assign intro_excerpt = plain_description | truncatewords: section.settings.intro_words
@@ -124,14 +189,27 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Product JSON-LD. Luxe emits `product | structured_data` from
+  sections/main-product.liquid, which this section replaced on 3 September —
+  so the garment pages had no Product record at all until the 16 September
+  audit noticed (Aloha's brief, "Product structured data"). Shopify's own
+  output: name, image, offers with price, currency and availability, SKU,
+  brand. One record, from theme code only — no app emits a second.
+{%- endcomment -%}
+<script type="application/ld+json">
+  {{ product | structured_data }}
+</script>
+
 <product-info
   id="MainProduct-{{ section.id }}"
-  class="ha-section ha-pdp"
+  class="ha-section ha-pdp{% if size_unset %} ha-pdp--size-unset{% endif %}"
   data-section="{{ section.id }}"
   data-product-id="{{ product.id }}"
   data-update-url="true"
   data-url="{{ product.url }}"
   data-section-id="{{ section.id }}"
+  {% if size_unset %}data-ha-size-unset="true" data-ha-size-prompt="{{ section.settings.size_prompt | escape }}"{% endif %}
 >
   <div class="ha-pdp__grid">
 
@@ -167,6 +245,14 @@
         {%- endcomment -%}
         <h1 class="ha-pdp__title ha-narrate">{{ style_name }}</h1>
 
+        {%- comment -%}
+          V2 design: the material as a serif line directly under the Style
+          ("Handspun / Silk and Linen"), then the record label only where it
+          adds a fact the serif line does not carry.
+        {%- endcomment -%}
+        {%- if material_line != blank -%}
+          <p class="ha-pdp__material ha-narrate">{{ material_line }}</p>
+        {%- endif -%}
         {%- if cloth != blank -%}
           <p class="ha-pdp__cloth ha-record">{{ cloth }}</p>
         {%- endif -%}
@@ -210,23 +296,19 @@
           global.js behaviour — see snippets/ha-panel-row.liquid for why this is
           the theme's accordion rather than a second one.
         {%- endcomment -%}
-        {%- if description_is_long -%}
+        {%- if description_is_long or details_html != blank -%}
           {%- capture description_body -%}
-            <div class="ha-pdp__row-body ha-body ha-narrate">{{ full_description }}</div>
+            <div class="ha-pdp__row-body ha-body ha-narrate">
+              {%- if description_is_long -%}{{ full_description }}{%- endif -%}
+              {{ details_html }}
+            </div>
           {%- endcapture -%}
           {%- render 'ha-panel-row', id: 'description', title: section.settings.description_row_title, content: description_body -%}
         {%- endif -%}
 
         {%- for block in section.blocks -%}
           {%- if block.type == 'left_row' -%}
-            {%- capture row_body -%}
-              {%- if block.settings.content != blank -%}
-                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.content }}</div>
-              {%- endif -%}
-              {%- if block.settings.page != blank -%}
-                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.page.content }}</div>
-              {%- endif -%}
-            {%- endcapture -%}
+            {%- capture row_body -%}{%- render 'ha-row-body', block: block, class: 'ha-pdp__row-body', product: product -%}{%- endcapture -%}
             {%- render 'ha-panel-row', id: block.id, title: block.settings.heading, content: row_body -%}
           {%- endif -%}
         {%- endfor -%}
@@ -242,7 +324,39 @@
     <div class="ha-pdp__media">
       {%- if product.media.size > 0 -%}
         <ha-media-rail class="ha-pdp__rail-media" data-count="{{ product.media.size }}">
-          <div class="ha-pdp__frames">
+          {%- comment -%}
+            Position markers, one per frame, drawn over the image's right edge
+            (V2). They sit BEFORE the frames so they can be sticky: a sticky
+            element only holds while its natural position is above the
+            viewport, so placed after the frames they would never stick. Real
+            buttons, not decoration — the rail is a scroller and this is the
+            only way to jump within it without a mouse wheel. Each carries the
+            accessible name the brief asks for: "Show image 2 of 3".
+          {%- endcomment -%}
+          {%- if product.media.size > 1 -%}
+            <ol class="ha-pdp__dots" aria-label="{{ section.settings.dots_label }}">
+              {%- for media in product.media -%}
+                <li>
+                  <button
+                    type="button"
+                    class="ha-pdp__dot"
+                    data-frame="{{ section.id }}-frame-{{ forloop.index }}"
+                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                    aria-label="{{ section.settings.dot_label | replace: '[n]', forloop.index | replace: '[total]', product.media.size }}"
+                  ></button>
+                </li>
+              {%- endfor -%}
+            </ol>
+          {%- endif -%}
+
+          {%- comment -%}
+            Below 990px the frames become one swipeable row (brief, Mobile
+            behaviour). A scroll container needs to be reachable and operable
+            from the keyboard, so it is a focusable region named for what it
+            holds; on desktop the same element is an ordinary block in the
+            document flow and the attributes are inert.
+          {%- endcomment -%}
+          <div class="ha-pdp__frames" role="region" aria-label="{{ section.settings.dots_label }}" tabindex="0" aria-roledescription="carousel">
             {%- for media in product.media -%}
               <figure class="ha-pdp__frame" id="{{ section.id }}-frame-{{ forloop.index }}">
                 {%- if media.media_type == 'image' -%}
@@ -288,24 +402,18 @@
           </div>
 
           {%- comment -%}
-            Position markers, one per frame. The design draws them over the
-            image's right edge. They are real buttons, not decoration: the rail
-            is a scroller and this is the only way to jump within it without a
-            mouse wheel.
+            The readout the V2 design draws at the foot of the frame — "01 / 03"
+            and "Scroll". Sticky to the bottom of the viewport while the rail
+            is taller than the screen, so the count is always in view; the
+            hint disappears after the first scroll (script) and is never shown
+            for a single image.
           {%- endcomment -%}
           {%- if product.media.size > 1 -%}
-            <ol class="ha-pdp__dots" aria-label="Product images">
-              {%- for media in product.media -%}
-                <li>
-                  <button
-                    type="button"
-                    class="ha-pdp__dot"
-                    data-frame="{{ section.id }}-frame-{{ forloop.index }}"
-                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
-                  ><span class="visually-hidden">{{ 'products.product.media.load_image' | t: index: forloop.index }}</span></button>
-                </li>
-              {%- endfor -%}
-            </ol>
+            <div class="ha-pdp__readout ha-record" aria-hidden="true">
+              <span class="ha-pdp__count" data-count-of="{{ product.media.size }}">01 / {{ product.media.size | prepend: '0' | slice: -2, 2 }}</span>
+              <span class="ha-pdp__scroll-hint">{{ section.settings.scroll_hint }}<span class="ha-pdp__scroll-arrow" aria-hidden="true">&darr;</span></span>
+            </div>
+            <p class="visually-hidden" aria-live="polite" data-count-live></p>
           {%- endif -%}
         </ha-media-rail>
         <script src="{{ 'ha-pdp-zoom.js' | asset_url }}" defer></script>
@@ -376,16 +484,15 @@
           The longer purchase terms are a row, not a paragraph, so the buy rail
           stays short enough to read without scrolling the media.
         {%- endcomment -%}
+        {%- comment -%}
+          "The delivery accordion shows the same approved policy as the service
+          section below" (brief). A row set to the policies source reads
+          Settings > Policies — the same text checkout shows — so there is one
+          copy of the delivery terms on the site, not two.
+        {%- endcomment -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'buy_row' -%}
-            {%- capture buy_body -%}
-              {%- if block.settings.content != blank -%}
-                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.content }}</div>
-              {%- endif -%}
-              {%- if block.settings.page != blank -%}
-                <div class="ha-pdp__row-body ha-body ha-narrate">{{ block.settings.page.content }}</div>
-              {%- endif -%}
-            {%- endcapture -%}
+            {%- capture buy_body -%}{%- render 'ha-row-body', block: block, class: 'ha-pdp__row-body', product: product -%}{%- endcapture -%}
             {%- render 'ha-panel-row', id: block.id, title: block.settings.heading, content: buy_body -%}
           {%- endif -%}
         {%- endfor -%}
@@ -397,6 +504,7 @@
     </div>
   </div>
 </product-info>
+{%- if size_unset -%}<script src="{{ 'ha-pdp-size.js' | asset_url }}" defer></script>{%- endif -%}
 
 {% schema %}
 {
@@ -413,7 +521,7 @@
 
     { "type": "header", "content": "Left rail" },
     { "type": "richtext", "id": "ph_intro", "label": "Description fallback", "info": "Used only when the product has no description.", "default": "<p><em>Placeholder — the product description publishes from Shopify.</em></p>" },
-    { "type": "text", "id": "fit_heading", "label": "Fit heading", "default": "Fit" },
+    { "type": "text", "id": "fit_heading", "label": "Fit heading", "default": "Fit & Measurements" },
     { "type": "text", "id": "record_link_text", "label": "Record link text", "default": "View the material record" },
     { "type": "text", "id": "record_anchor", "label": "Record link target", "default": "#the-material-record" },
     { "type": "range", "id": "intro_words", "label": "Description excerpt length", "min": 12, "max": 80, "step": 2, "unit": "wd", "default": 32, "info": "The rail shows this many words; the full description opens in a row beneath." },
@@ -427,6 +535,12 @@
 
     { "type": "header", "content": "Media" },
     { "type": "text", "id": "ph_media_label", "label": "Placeholder label", "default": "Product image / centre media rail" },
+    { "type": "text", "id": "dots_label", "label": "Gallery accessible name", "default": "Product images" },
+    { "type": "text", "id": "dot_label", "label": "Marker accessible name", "default": "Show image [n] of [total]", "info": "[n] and [total] are filled in." },
+    { "type": "text", "id": "scroll_hint", "label": "Scroll hint", "default": "Scroll", "info": "Shown beside the image count until the visitor scrolls." },
+    { "type": "header", "content": "Size selection" },
+    { "type": "checkbox", "id": "require_size", "label": "Ask for a size before Add to Bag", "default": true, "info": "Brief, 16 Sept: “Before selection, the button asks for a size.” Off = Shopify's default, the first available size preselected." },
+    { "type": "text", "id": "size_prompt", "label": "Button reads, until a size is chosen", "default": "Select a size" },
 
     { "type": "header", "content": "Placeholder content", "info": "Used per field, only where the product has no value. Wireframe copy — provenance is unverified and must not go live as fact (risk R7)." },
     { "type": "text", "id": "ph_cloth", "label": "Cloth line", "default": "Handspun silk & linen" },
@@ -456,9 +570,15 @@
       "type": "buy_row",
       "name": "Buy rail row",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Delivery" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Delivery & Returns" },
+        { "type": "select", "id": "source", "label": "Content comes from", "default": "manual", "options": [
+          { "value": "manual", "label": "The text below" }, { "value": "page", "label": "A page" },
+          { "value": "policies", "label": "Settings › Policies (shipping + refund)" },
+          { "value": "shipping", "label": "Settings › Policies (shipping only)" }, { "value": "refund", "label": "Settings › Policies (refund only)" },
+          { "value": "care", "label": "The product's care fields (hartwick.*)" }
+        ] },
         { "type": "richtext", "id": "content", "label": "Content" },
-        { "type": "page", "id": "page", "label": "Or take the content from a page" }
+        { "type": "page", "id": "page", "label": "Page" }
       ]
     },
     {
@@ -466,8 +586,14 @@
       "name": "Left rail row",
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "Sizing information" },
+        { "type": "select", "id": "source", "label": "Content comes from", "default": "manual", "options": [
+          { "value": "manual", "label": "The text below" }, { "value": "page", "label": "A page" },
+          { "value": "policies", "label": "Settings › Policies (shipping + refund)" },
+          { "value": "shipping", "label": "Settings › Policies (shipping only)" }, { "value": "refund", "label": "Settings › Policies (refund only)" },
+          { "value": "care", "label": "The product's care fields (hartwick.*)" }
+        ] },
         { "type": "richtext", "id": "content", "label": "Content" },
-        { "type": "page", "id": "page", "label": "Or take the content from a page" }
+        { "type": "page", "id": "page", "label": "Page" }
       ]
     }
   ],

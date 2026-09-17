@@ -1794,84 +1794,6 @@ body.lx-template--product .magnify-icon:focus-visible {
 }
 
 /* ==========================================================================
-   08 — Footer
-   The wireframe's restrained close: wordmark and three links, with the shop
-   policies kept quietly beneath so legal information stays easy to find.
-   ========================================================================== */
-
-.ha-footer { border-bottom: 0; border-top: 1px solid var(--ha-rule); }
-
-.ha-footer__bar {
-  display: flex;
-  flex-direction: column;
-  gap: 2.4rem;
-  padding-block: 3.2rem 2rem;
-}
-
-.ha-footer__mark { display: inline-block; color: inherit; }
-.ha-footer__mark .ha-wordmark { width: 180px; }
-
-.ha-footer__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2rem 2.8rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.ha-footer__legal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1.2rem 2.4rem;
-  padding-block: 0 3.2rem;
-}
-
-.ha-footer__policies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* One weight and one colour for every policy link — no synthetic bold. */
-.ha-footer__policies,
-.ha-footer__policies a {
-  font-weight: 400;
-}
-.ha-footer__policies a {
-  color: var(--ha-text-quiet);
-  text-decoration: none;
-  font-size: var(--ha-t-meta);
-}
-
-.ha-footer__policies a:hover,
-.ha-footer__policies a:focus-visible {
-  color: var(--ha-text);
-  text-decoration: underline;
-  text-underline-offset: 0.4rem;
-}
-
-.ha-footer__copy { margin: 0; font-size: var(--ha-t-meta); color: var(--ha-text-quiet); }
-
-@media screen and (min-width: 750px) {
-  .ha-footer__bar {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding-block: 4rem 2.4rem;
-  }
-}
-
-/* Anchor target for footer and menu links into The Register. The offset clears
-   the sticky header so the eyebrow is not hidden behind it on arrival. */
-#the-register { scroll-margin-top: 8rem; }
-
-/* ==========================================================================
    WIREFRAME 04 (REVISED) — PRODUCT PAGE
    Aloha's revised desktop design, 3 September 2026. A three-column hero built
    as a custom section (sections/ha-product.liquid), then alternating field
@@ -2391,13 +2313,18 @@ body.lx-template--product .magnify-icon:focus-visible {
   margin: 2.4rem 0 0;
 }
 
-/* Mobile order: identity, then buy (size + Add to Bag), then media, then the
-   left rail's remaining rows sit with identity. Simplest correct approach: the
-   grid is a single column and source order already reads identity -> media ->
-   buy; on mobile move the buy rail up so it follows the title block. */
+/* Mobile order — Aloha's product-page brief, 16 September 2026: "one reading
+   column with a swipeable gallery and visible image count, followed by
+   information and purchase controls." So: media, then the information rail,
+   then the buy rail. The purchase controls are never out of reach — Luxe's
+   sticky Add to Bag bar (enable_sticky_buttons, on) pins the form to the foot
+   of the screen from the first scroll. (Before 16 September the identity and
+   buy rail came first; that is one `order` change away if the mobile artboard,
+   still to arrive, draws it differently.) */
 @media screen and (max-width: 989px) {
-  .ha-pdp__rail--buy { order: -1; margin-top: 1.6rem; }
-  .ha-pdp__rail--left { order: -2; }
+  .ha-pdp__media { order: -1; }
+  .ha-pdp__rail--left { order: 0; }
+  .ha-pdp__rail--buy { order: 1; margin-top: 0; }
 }
 
 /* Sticky Add to Bag on mobile (mobile brief, Wireframe 03).
@@ -2707,41 +2634,6 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* On the dark field the record hairlines flip with the field system already. */
 
 
-/* --- Footer (Wireframe 04) --------------------------------------------- */
-/* The ground is NOT hard-coded here. `.ha-footer` declared later in the file
-   than `.ha-section--field-*`, so an explicit background would win at equal
-   specificity and the field setting would silently do nothing. The footer takes
-   the page ground only when it has no field of its own. */
-.ha-footer:not([class*="ha-section--field-"]) { background: var(--ha-page-ground); }
-.ha-footer { border-top: 1px solid var(--ha-rule); }
-.ha-footer__inner {
-  display: grid; gap: 4rem;
-  padding-top: 4rem; padding-bottom: 3.2rem;
-  align-items: end;
-}
-.ha-footer__left { display: grid; gap: 2rem; align-content: end; }
-.ha-footer__nav .ha-footer__links,
-.ha-footer__policies {
-  list-style: none; margin: 0; padding: 0;
-  display: flex; flex-wrap: wrap; gap: 0.6rem 2.4rem;
-  font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase;
-}
-.ha-footer__nav a { color: var(--ha-text); text-decoration: none; }
-.ha-footer__policies a { color: var(--ha-text-quiet); text-decoration: none; }
-.ha-footer__nav a:hover,
-.ha-footer__policies a:hover { text-decoration: underline; text-underline-offset: 0.3rem; color: var(--ha-text); }
-.ha-footer__right { display: grid; gap: 3.2rem; justify-items: start; }
-.ha-footer__mark { display: inline-block; width: 9.6rem; color: var(--ha-text); }
-.ha-footer__mark svg,
-.ha-footer__mark img { display: block; width: 100%; height: auto; }
-.ha-footer__copy { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: var(--ha-text-quiet); }
-
-@media screen and (min-width: 750px) {
-  .ha-footer__inner { grid-template-columns: 1fr auto; }
-  .ha-footer__right { justify-items: end; text-align: right; }
-}
-
-
 /* --- The Register: 50/50, and a filled Join button ---------------------
    Aloha's design puts the title block and the form side by side at half the
    width each, with Join The Register as a solid block rather than a text link.
@@ -2900,20 +2792,6 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 /* Invalid: the field itself says so, not only the message. */
 .ha-register__input[aria-invalid="true"] { text-decoration: underline wavy; text-decoration-skip-ink: none; text-underline-offset: 0.3em; }
-
-/* Footer: the house symbol at 1.5x. */
-.ha-footer__mark { width: 14.4rem; }
-
-/* Footer nav in the identify voice (Porter). Porter is uppercase-only by brand
-   rule and by subset, so the label is uppercased here rather than relying on the
-   copy being typed in caps. */
-.ha-footer__nav .ha-footer__links {
-  font-size: var(--ha-t-ui);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  gap: 0.6rem 3.2rem;
-}
-
 
 /* --- Material Record: the two columns are one block -----------------------
    The record and its image must read as a single band of equal height. The
@@ -3136,6 +3014,65 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-pdp__lot { color: var(--ha-text); }
 
 
+/* ==========================================================================
+   FOOTER — About-page wireframe, 15 September 2026
+   Three columns on one row: site links and the copyright line on the left,
+   the wordmark centred, contact / social / policies on the right. On a phone
+   the three stack in reading order. Every link is in the record voice, as
+   the wireframe draws it; the ground is NOT hard-coded here, so the field
+   setting still paints it.
+   ========================================================================== */
+
+.ha-footer:not([class*="ha-section--field-"]) { background: var(--ha-page-ground); }
+.ha-footer { border-top: 1px solid var(--ha-rule); border-bottom: 0; }
+
+.ha-footer__inner {
+  display: grid;
+  gap: 3.2rem;
+  align-items: start;
+}
+
+.ha-footer__col--left { display: grid; gap: 2.4rem; align-content: start; }
+
+/* Porter Light, small and evenly tracked — Aloha's second note of 15 Sep:
+   "not too big, so it has a clean look", "footer fonts in Porter - Light".
+   The weight is the 300 face declared in snippets/ha-fonts.liquid. */
+.ha-footer__links {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  font-size: 1.1rem; font-weight: 300; letter-spacing: 0.18em; line-height: 1.4;
+}
+.ha-footer__links a,
+.ha-footer__links button {
+  color: var(--ha-text); text-decoration: none; font: inherit; letter-spacing: inherit;
+  text-transform: inherit; background: none; border: 0; padding: 0; cursor: pointer;
+}
+.ha-footer__links a:hover,
+.ha-footer__links a:focus-visible,
+.ha-footer__links button:hover,
+.ha-footer__links button:focus-visible { text-decoration: underline; text-underline-offset: 0.3rem; }
+
+.ha-footer__copy { margin: 0; font-size: 1.1rem; font-weight: 300; letter-spacing: 0.18em; color: var(--ha-text); }
+
+/* The wordmark at the width Aloha drew it (193px at 1440). The LOGO READ ME
+   names 220px as the digital minimum; her wireframe is the later instruction. */
+.ha-footer__mark { display: block; color: var(--ha-text); }
+.ha-footer__mark .ha-wordmark { width: 195px; max-width: 100%; margin: 0 auto; }
+/* Centred on a phone as well as between the columns — it is the one thing
+   in the footer that is not a list. */
+.ha-footer__col--mark { justify-self: center; text-align: center; }
+
+@media screen and (min-width: 750px) {
+  .ha-footer__inner { grid-template-columns: 1fr auto 1fr; column-gap: 4rem; }
+  .ha-footer__col--mark { justify-self: center; align-self: center; }
+  .ha-footer__col--right { justify-self: end; }
+  .ha-footer__links--right { justify-content: flex-end; text-align: right; }
+}
+
+/* Anchor target for footer and menu links into The Register. The offset clears
+   the sticky header so the eyebrow is not hidden behind it on arrival. */
+#the-register { scroll-margin-top: 8rem; }
+
 /* --- Footer on a dark field ---------------------------------------------
    The footer's link colours are near-black by default, which is right on the
    page ground and unreadable on peat. On a dark field everything inherits the
@@ -3146,26 +3083,404 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   border-top: 0;
 }
 
-.ha-footer.ha-section--field-peat .ha-footer__nav a,
+.ha-footer.ha-section--field-peat .ha-footer__links a,
+.ha-footer.ha-section--field-peat .ha-footer__links button,
 .ha-footer.ha-section--field-peat .ha-footer__copy,
 .ha-footer.ha-section--field-peat .ha-footer__mark,
-.ha-footer.ha-section--field-slate .ha-footer__nav a,
+.ha-footer.ha-section--field-slate .ha-footer__links a,
+.ha-footer.ha-section--field-slate .ha-footer__links button,
 .ha-footer.ha-section--field-slate .ha-footer__copy,
 .ha-footer.ha-section--field-slate .ha-footer__mark {
   color: var(--ha-text-invert);
 }
 
-/* Policy links stay the quieter of the two, but on the light ink not the dark. */
-.ha-footer.ha-section--field-peat .ha-footer__policies a,
-.ha-footer.ha-section--field-slate .ha-footer__policies a {
-  color: var(--ha-text-invert);
-  opacity: 0.7;
+
+/* ==========================================================================
+   ABOUT PAGE — Aloha's wireframe, 15 September 2026
+   Geometry is measured off the drawing at 1440 wide. Six compositions, four
+   of them new sections (ha-about-hero, ha-statement, ha-founder, ha-principle,
+   ha-feature) and one a new dressing of the numbered columns (journey).
+   Every colour is a token; every size is a type token or a multiple of one.
+   ========================================================================== */
+
+/* Sand: the page ground one step darker (snippets/ha-tokens.liquid). Dark ink
+   stays legible on it, so it takes the ordinary text colour. */
+.ha-section--field-sand { background: var(--ha-field-sand); color: var(--ha-text); border-bottom: 0; }
+
+/* Record voice as running prose: the mono face, but sentence case and
+   untracked, the way the wireframe sets the Principle and Journey copy. */
+.ha-record--prose {
+  text-transform: none;
+  letter-spacing: 0;
+  font-variant-numeric: normal;
+  font-size: var(--ha-t-body);
+  line-height: 1.85;
 }
-.ha-footer.ha-section--field-peat .ha-footer__policies a:hover,
-.ha-footer.ha-section--field-slate .ha-footer__policies a:hover {
-  opacity: 1;
+.ha-record--prose p { margin: 0 0 1.2rem; }
+.ha-record--prose p:last-child { margin-bottom: 0; }
+
+/* Outlined pill button, identify voice — "MEET THE MASTERS". */
+.ha-pill {
+  display: inline-block;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 1.5rem 3.6rem;
+  font-size: var(--ha-t-ui);
+  letter-spacing: 0.16em;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.ha-pill:hover,
+.ha-pill:focus-visible { background: var(--ha-text); color: var(--ha-page-ground); }
+.ha-section--field-peat .ha-pill:hover,
+.ha-section--field-slate .ha-pill:hover { background: var(--ha-text-invert); color: var(--ha-field-dark); }
+
+/* --- policies, one page --------------------------------------------------
+   A narrow reading measure, an index of anchors at the top, then each policy
+   under a hairline. Anchors clear the sticky header on arrival. */
+/* The column sits in the middle of the page, not against the left gutter, and
+   runs a little wider than a reading measure (Ivan, 15 Sep). */
+.ha-policies__inner { max-width: 82ch; box-sizing: content-box; margin-inline: auto; }
+.ha-policies__heading { margin-bottom: 2.4rem; }
+.ha-policies__intro { margin-bottom: 3.2rem; }
+.ha-policies__list {
+  list-style: none; margin: 0 0 4.8rem; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 1rem 2.4rem;
+  font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label);
+}
+.ha-policies__list a { color: var(--ha-text); text-decoration: none; border-bottom: 1px solid var(--ha-rule); padding-bottom: 0.3rem; }
+.ha-policies__list a:hover,
+.ha-policies__list a:focus-visible { border-bottom-color: currentColor; }
+.ha-policies__policy { border-top: 1px solid var(--ha-rule); padding-top: 3.2rem; margin-top: 4rem; scroll-margin-top: 10rem; }
+.ha-policies__title { margin: 0 0 2rem; font-size: var(--ha-t-editorial); font-weight: 500; line-height: 1.2; }
+.ha-policies__body { max-width: none; }
+.ha-policies__body h1, .ha-policies__body h2, .ha-policies__body h3, .ha-policies__body h4 {
+  font-family: inherit; font-size: var(--ha-t-statement); font-weight: 500; line-height: 1.3; margin: 2.8rem 0 1.2rem;
+}
+.ha-policies__body p, .ha-policies__body li { margin: 0 0 1.2rem; }
+.ha-policies__body ul, .ha-policies__body ol { padding-left: 2rem; margin: 0 0 1.2rem; }
+.ha-policies__body a { color: inherit; }
+.ha-policies__body strong { font-weight: 500; }
+
+/* Tables come from Admin > Policies as pasted HTML — the shipping table
+   arrives with width="670" and four columns, which on a phone pushed the
+   whole page out to 690px and left the text at half width (Ivan, 16 Sep).
+   The table takes the measure it is given and, where its columns need more,
+   scrolls on its own inside the page rather than widening it. Cells get the
+   record voice's quiet rule so the rows can be read. */
+.ha-policies__body table {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 0 2rem;
+  border-collapse: collapse;
+  font-size: calc(var(--ha-t-body) * 0.93);
+  line-height: 1.5;
+}
+.ha-policies__body table tbody,
+.ha-policies__body table thead { display: table; width: 100%; }
+.ha-policies__body th,
+.ha-policies__body td {
+  text-align: left;
+  vertical-align: top;
+  padding: 1rem 1.6rem 1rem 0;
+  border-bottom: 1px solid var(--ha-rule);
+  min-width: 6.4rem;
+}
+.ha-policies__body th { font-weight: 500; }
+.ha-policies__body td p:last-child { margin-bottom: 0; }
+
+/* --- the House symbol in the header --------------------------------------
+   Luxe's logo box is `logo size` wide and `bar height - 10` tall, which would
+   squash a square mark. The symbol takes `logo size` on both sides and sits
+   centred in the box; --ha-mark is set inline by snippets/header-logo.liquid. */
+.ha-header-mark { display: flex; align-items: center; justify-content: center; }
+.ha-header-mark a { display: flex; align-items: center; justify-content: center; height: 100%; }
+.ha-header-mark img { width: var(--ha-mark) !important; height: var(--ha-mark) !important; object-fit: contain; }
+
+/* --- the opening pair ---------------------------------------------------- */
+.ha-abhero { border-bottom: 0; }
+.ha-abhero__grid { display: grid; }
+.ha-abhero__cell { position: relative; }
+.ha-abhero__figure { aspect-ratio: 4 / 5; }
+
+/* The plate: near-black on the photograph, the title in Porter, the line in
+   Junicode italic. Below 750px it sits beneath the first picture instead. */
+.ha-abhero__plate {
+  background: var(--ha-soot-black);
+  color: var(--ha-text-invert);
+  padding: 2.8rem var(--ha-gutter) 3.2rem;
+}
+.ha-abhero__title {
+  margin: 0 0 1.6rem;
+  font-size: calc(var(--ha-t-ui) * 1.9);
+  letter-spacing: 0.16em;
+  font-weight: 400;
+  color: var(--ha-page-ground);
+}
+.ha-abhero__subline {
+  margin: 0;
+  font-style: italic;
+  font-size: var(--ha-t-statement);
+  line-height: 1.35;
+  color: var(--ha-page-ground);
+}
+.ha-abhero__note { padding-top: 2.4rem; padding-bottom: 0; }
+.ha-abhero__note .ha-placeholder-note { margin: 0; }
+
+@media screen and (min-width: 750px) {
+  .ha-abhero__grid { grid-template-columns: 1fr 1fr; }
+  .ha-abhero__figure { aspect-ratio: auto; height: clamp(44rem, 57vw, 88vh); }
+  .ha-abhero__plate {
+    position: absolute;
+    left: clamp(2rem, 2.8vw, 4rem);
+    bottom: clamp(2rem, 2.6vw, 3.6rem);
+    width: min(68rem, calc(100% - 2 * clamp(2rem, 2.8vw, 4rem)));
+    padding: 3.2rem 4.4rem 3.6rem;
+  }
+  .ha-abhero__title { font-size: calc(var(--ha-t-ui) * 2.3); }
 }
 
+/* --- statement, centred -------------------------------------------------- */
+.ha-statement__inner { text-align: center; }
+.ha-statement__inner .ha-placeholder-note { text-align: left; }
+.ha-statement__eyebrow { margin-bottom: 3.2rem; }
+.ha-statement__heading { margin: 0 auto; max-width: 36ch; }
+.ha-statement__heading--caps { text-transform: uppercase; letter-spacing: 0.02em; }
+.ha-statement--display .ha-statement__heading { font-size: calc(var(--ha-t-editorial) * 1.25); line-height: 1.15; }
+.ha-statement--quote .ha-statement__heading { font-size: calc(var(--ha-t-editorial) * 0.95); line-height: 1.3; max-width: none; font-weight: 400; }
+/* The line between sections sits close to what precedes it — the drawing has
+   136px from the Journey columns to the quote at 1440, not a full band. */
+.ha-statement--quote .ha-wrap { padding-top: 4.8rem; padding-bottom: var(--ha-section-y); }
+.ha-statement__body {
+  margin: 2.8rem auto 0;
+  max-width: 64ch;
+  font-size: var(--ha-t-statement);
+  line-height: 1.5;
+}
+.ha-statement__body p { margin: 0 0 1.2rem; }
+.ha-statement__body p:last-child { margin-bottom: 0; }
+
+@media screen and (min-width: 990px) {
+  .ha-statement--display .ha-statement__heading { font-size: calc(var(--ha-t-editorial) * 1.4); }
+  .ha-statement--quote .ha-statement__heading { font-size: calc(var(--ha-t-editorial) * 1.05); }
+}
+
+/* --- the founder --------------------------------------------------------- */
+.ha-founder__name {
+  margin: 0 0 3.2rem;
+  text-align: center;
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
+  gap: 0.8rem 2.4rem;
+  font-weight: 400;
+}
+.ha-founder__label { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
+.ha-founder__name .ha-identify { font-size: calc(var(--ha-t-ui) * 2.2); letter-spacing: 0.14em; }
+
+.ha-founder__lead {
+  text-align: center;
+  font-size: var(--ha-t-statement);
+  line-height: 1.5;
+  margin: 0 auto 3.2rem;
+  max-width: 100ch;
+}
+.ha-founder__lead p { margin: 0 0 1.2rem; }
+.ha-founder__lead p:last-child { margin-bottom: 0; }
+
+.ha-founder__grid { display: grid; gap: 3.2rem; }
+.ha-founder__figure { aspect-ratio: 2 / 3; }
+.ha-founder__col {
+  font-size: var(--ha-t-statement);
+  line-height: 1.5;
+  text-align: justify;
+  hyphens: auto;
+}
+.ha-founder__col p { margin: 0 0 1.4rem; }
+.ha-founder__col p:last-child { margin-bottom: 0; }
+
+@media screen and (min-width: 990px) {
+  .ha-founder__name { margin-bottom: 4.8rem; }
+  .ha-founder__lead { margin-bottom: 2.4rem; }
+  .ha-founder__grid {
+    grid-template-columns: 1fr 1.45fr 1fr;
+    gap: clamp(2.4rem, 3vw, 4rem);
+    align-items: start;
+  }
+  .ha-founder__col--right { text-align: justify; }
+}
+
+/* --- the principle: a dark band ------------------------------------------- */
+.ha-principle__grid { display: grid; gap: 3.2rem; }
+.ha-principle__heading { text-transform: uppercase; letter-spacing: 0.02em; font-size: calc(var(--ha-t-editorial) * 1.15); line-height: 1.18; margin: 0; }
+.ha-principle__para { color: inherit; opacity: 0.9; }
+.ha-principle__para + .ha-principle__para { border-top: 1px solid var(--ha-rule); margin-top: 3.2rem; padding-top: 3.2rem; }
+.ha-principle__cta { margin: 4rem 0 0; }
+.ha-principle__cta .ha-link { color: inherit; opacity: 0.8; }
+.ha-principle__cta .ha-link:hover { opacity: 1; }
+
+@media screen and (min-width: 990px) {
+  .ha-principle__grid { grid-template-columns: 1.05fr 1fr; column-gap: clamp(4rem, 6vw, 9.6rem); align-items: start; }
+  .ha-principle__heading { font-size: calc(var(--ha-t-editorial) * 1.4); }
+  .ha-principle .ha-wrap { padding-top: calc(var(--ha-section-y) * 1.1); padding-bottom: calc(var(--ha-section-y) * 1.1); }
+}
+
+/* --- numbered columns, journey dressing ---------------------------------- */
+.ha-ccols--journey .ha-ccols__head { grid-template-columns: 1fr; margin-bottom: clamp(3.2rem, 6vw, 5.6rem); }
+.ha-ccols__heading--identify { margin: 0; font-size: calc(var(--ha-t-ui) * 2.2); letter-spacing: 0.12em; font-weight: 400; }
+.ha-ccols--journey .ha-ccols__row { border-top: 0; }
+.ha-ccols--journey .ha-ccols__col { border-bottom: 0; padding: 0 0 3.2rem; }
+.ha-ccols--journey .ha-wrap { padding-bottom: 4.8rem; }
+.ha-ccols--journey .ha-placeholder-note { margin-bottom: 0; }
+.ha-ccols__num {
+  margin: 0 0 1.6rem;
+  font-size: var(--ha-t-statement);
+  font-variant-numeric: oldstyle-nums;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--ha-text);
+}
+.ha-ccols__col-heading--identify { font-size: var(--ha-t-ui); letter-spacing: 0.16em; font-weight: 400; margin: 2.4rem 0 2rem; }
+.ha-ccols--journey .ha-ccols__body { color: var(--ha-text); max-width: 34ch; font-size: calc(var(--ha-t-body) * 0.9); }
+
+@media screen and (min-width: 990px) {
+  .ha-ccols--journey .ha-ccols__row { column-gap: clamp(3.2rem, 5vw, 7.2rem); }
+  .ha-ccols--journey .ha-ccols__col,
+  .ha-ccols--journey .ha-ccols__col + .ha-ccols__col { border: 0; padding: 0; }
+}
+
+/* --- feature: a photograph beside a statement ----------------------------- */
+.ha-feature { border-bottom: 0; }
+.ha-feature__grid { display: grid; }
+.ha-feature__figure { aspect-ratio: 4 / 5; }
+.ha-feature__text { padding: var(--ha-section-y) var(--ha-gutter); }
+.ha-feature__heading { margin: 0 0 3.2rem; font-size: calc(var(--ha-t-ui) * 2.1); letter-spacing: 0.12em; line-height: 1.2; font-weight: 400; }
+.ha-feature__body { max-width: 52ch; }
+.ha-feature__cta { margin: 4rem 0 0; }
+
+@media screen and (min-width: 750px) {
+  .ha-feature__grid { grid-template-columns: 1fr 1fr; align-items: stretch; }
+  .ha-feature--image-right .ha-feature__media { order: 2; }
+  .ha-feature__media { position: relative; }
+  .ha-feature__figure { position: absolute; inset: 0; aspect-ratio: auto; height: 100%; }
+  .ha-feature__text { min-height: clamp(44rem, 46vw, 72rem); display: flex; flex-direction: column; justify-content: center; }
+}
+@media screen and (min-width: 990px) {
+  .ha-feature__text { padding: calc(var(--ha-section-y) * 1.2) clamp(4rem, 5.5vw, 8rem); }
+  .ha-feature__heading { font-size: calc(var(--ha-t-ui) * 3); }
+}
+
+/* ==========================================================================
+   THE COLLECTION INDEX — Aloha's Collection-page wireframe, 15 September 2026
+   /collections. Measured off the drawing at 1440 wide: a 206px title band on
+   the page ground, then four photographs edge to edge at 720 × 858 each
+   (21:25), the category name in Porter capitals 42px above the foot of each,
+   then The Register. Colour arrives on hover — the pictures are the colour
+   originals and this block takes it away.
+   ========================================================================== */
+
+.ha-cats { border-bottom: 0; }
+
+/* The title band. Junicode capitals for the title — cap height 28px in the
+   drawing, which Junicode gives at ~1.35× the editorial size — then the
+   categories in the identify voice, tracked, one size under the navigation. */
+.ha-cats__head {
+  text-align: center;
+  padding-top: calc(var(--ha-section-y) * 0.75);
+  padding-bottom: calc(var(--ha-section-y) * 0.6);
+}
+.ha-cats__head .ha-placeholder-note { text-align: left; margin-top: 0; }
+.ha-cats__title {
+  margin: 0;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  font-size: calc(var(--ha-t-editorial) * 1.2);
+}
+.ha-cats__subline {
+  margin: 2.4rem 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: calc(var(--ha-t-ui) * 0.92);
+  color: var(--ha-text);
+}
+
+/* The photographs: a list of links, no gutter, no rule between them — the
+   pictures meet. One column on a phone, two from 750px. */
+.ha-cats__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.ha-cats__cell { margin: 0; }
+.ha-cats__tile {
+  position: relative;
+  display: block;
+  color: var(--ha-page-ground);
+  text-decoration: none;
+  outline-offset: -4px;
+}
+.ha-cats__figure { aspect-ratio: 4 / 5; }
+.ha-cats__figure img {
+  object-position: var(--ha-cats-focus, center);
+  filter: grayscale(1);
+  transition: filter 700ms ease;
+}
+
+/* Colour on hover, and on keyboard focus so the reveal is reachable without
+   a mouse. Below, the touch-screen rule. */
+.ha-cats__tile:hover .ha-cats__figure img,
+.ha-cats__tile:focus-visible .ha-cats__figure img { filter: grayscale(0); }
+
+/* The name: Porter capitals, centred, sitting on the photograph 42px above
+   its foot. A hairline of depth under it, as on The Masters, so a pale patch
+   of wall never swallows a word. */
+.ha-cats__label {
+  position: absolute;
+  left: var(--ha-gutter);
+  right: var(--ha-gutter);
+  bottom: 3.6rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: calc(var(--ha-t-ui) * 1.6);
+  line-height: 1.2;
+  text-shadow: 0 1px 14px rgba(11, 6, 3, 0.45);
+}
+
+/* No hover on a touch screen, so the reveal is driven another way: a tap
+   (focus), and — the default — the tile scrolling into view, which
+   ha-collection-categories.js marks with .is-revealed. A phone starts black
+   and white exactly like the desktop; only the cue differs. */
+@media (hover: none) {
+  .ha-cats__tile:focus .ha-cats__figure img,
+  .ha-cats__tile.is-revealed .ha-cats__figure img { filter: grayscale(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-cats__figure img { transition: none; }
+}
+
+@media screen and (min-width: 750px) {
+  .ha-cats__grid { grid-template-columns: 1fr 1fr; }
+  .ha-cats__figure { aspect-ratio: 21 / 25; }
+  .ha-cats__label { bottom: 4.2rem; font-size: calc(var(--ha-t-ui) * 1.85); }
+}
+
+@media screen and (min-width: 990px) {
+  .ha-cats__head {
+    padding-top: 6.4rem;
+    padding-bottom: 5.4rem;
+  }
+  .ha-cats__title { font-size: calc(var(--ha-t-editorial) * 1.35); }
+  .ha-cats__subline { margin-top: 3.2rem; }
+  .ha-cats__label { font-size: calc(var(--ha-t-ui) * 2.05); }
+}
 
 /* ==========================================================================
    CODA — IMAGE RESTRAINT
@@ -3718,4 +4033,409 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 @media (prefers-reduced-motion: reduce) {
   .ha-zoom__img { transition: none; }
+}
+
+/* ==========================================================================
+   PRODUCT PAGE V2 — Aloha's "Product page design and discovery brief" and
+   Hartwick_Product_Desktop_V2, 16 September 2026.
+
+   The opening keeps the three-column section above; this block carries what
+   the V2 changes in it, then the five lower-page sections that replace the
+   Origin / Process / Material Record / Authorship / Continue compositions:
+
+     .ha-provenance   Origin + Process — From Fibre to Garment
+     .ha-cloth        The Cloth / Material Record
+     .ha-masterfeat   The Master
+     .ha-lotrec       Lot Record — The Production Record
+     .ha-related      Related Works
+
+   Geometry is read off the V2 artboard (6000px canvas = 4x a 1500 design).
+   ========================================================================== */
+
+/* --- opening: the serif material line, the details list ------------------ */
+/* V2 draws the material at a little over half the Style's size. It moves with
+   the Style token, so retuning the scale keeps the pair in proportion. */
+.ha-pdp__material {
+  font-size: calc(var(--ha-t-style) * 0.72);
+  line-height: 1.2;
+  margin: 0.8rem 0 0;
+  max-width: 16ch;
+}
+.ha-pdp__material + .ha-pdp__cloth { margin-top: 2rem; }
+.ha-pdp__details { margin: 1.2rem 0 0; padding-left: 1.6rem; }
+.ha-pdp__details li { margin: 0 0 0.4rem; }
+.ha-pdp__details li::marker { color: var(--ha-text-quiet); }
+.ha-policy-body table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: var(--ha-t-meta); }
+.ha-policy-body th, .ha-policy-body td { text-align: left; padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--ha-rule); vertical-align: top; font-weight: 400; }
+.ha-policy-body + .ha-policy-body { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--ha-rule); }
+
+/* Anchors under a sticky header: the heading lands below it, as the brief
+   asks for "View the Material Record". */
+#the-material-record, #origin-and-process, #lot-record { scroll-margin-top: var(--ha-pdp-rail-top); }
+
+/* --- opening: the size must be chosen ------------------------------------ */
+.ha-pdp--size-unset .product-form__submit[disabled] {
+  opacity: 1;
+  background: transparent;
+  color: var(--ha-text);
+  border: 1px solid var(--ha-border);
+  cursor: default;
+}
+
+/* --- opening: markers that stay, and the readout ------------------------- */
+/* The markers sit before the frames in the DOM so they can stick. `height: 0`
+   keeps them out of the flow; the list itself hangs from the rail's top-right
+   and rides down with the visitor while the frames scroll past. */
+@media screen and (min-width: 990px) {
+  .ha-pdp__dots {
+    position: sticky;
+    top: calc(var(--ha-pdp-rail-top) + 0.8rem);
+    right: auto;
+    height: 0;
+    overflow: visible;
+    z-index: 2;
+    justify-items: end;
+    margin: 0 2.4rem 0 auto;
+    width: 1rem;
+    padding-top: 2.4rem;
+  }
+  .ha-pdp__dots li { display: block; }
+}
+.ha-pdp__readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.6rem;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text-quiet);
+  padding: 1.2rem 0 0;
+}
+.ha-pdp__scroll-hint { display: inline-flex; align-items: center; gap: 0.6rem; transition: opacity 0.4s; }
+.ha-pdp__scroll-hint--done { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .ha-pdp__scroll-hint { transition: none; } }
+@media screen and (min-width: 990px) {
+  /* Over the foot of the frame, as drawn; sticky to the viewport's bottom
+     while the rail is taller than the screen. */
+  .ha-pdp__readout {
+    position: sticky;
+    bottom: 0;
+    height: 0;
+    padding: 0;
+    align-items: flex-end;
+    transform: translateY(-2.4rem);
+    color: var(--ha-text-invert);
+    margin: 0 2.4rem;
+    text-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+  }
+}
+
+/* --- opening, mobile: one swipeable row with the count ------------------- */
+@media screen and (max-width: 989px) {
+  .ha-pdp__frames {
+    display: flex;
+    gap: 0.8rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 calc(var(--ha-gutter) * -1);
+    padding: 0 var(--ha-gutter);
+  }
+  .ha-pdp__frames::-webkit-scrollbar { display: none; }
+  .ha-pdp__frames:focus-visible { outline: 2px solid var(--ha-text); outline-offset: -2px; }
+  .ha-pdp__frame { flex: 0 0 100%; scroll-snap-align: start; }
+  .ha-pdp__dots { display: none; }
+  /* the count is the indicator on a phone; "Scroll" is a desktop word */
+  .ha-pdp__scroll-hint { display: none; }
+}
+
+/* --- opening: release the sticky rails on a short screen ------------------ */
+/* "Reduce or disable stickiness when a panel is taller than the viewport."
+   A viewport this short cannot hold either rail, so both flow with the page. */
+@media screen and (min-width: 990px) and (max-height: 620px) {
+  .ha-pdp__rail { position: static; }
+  .ha-pdp__rail--left { max-height: none; overflow-y: visible; }
+  .ha-pdp__dots, .ha-pdp__readout { position: absolute; }
+}
+
+/* --- shared: the uppercase serif heading the V2 lower page uses ---------- */
+.ha-provenance__heading,
+.ha-cloth__heading,
+.ha-lotrec__heading {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: calc(var(--ha-t-editorial) * 1.25);
+  line-height: 1.05;
+  max-width: none;
+}
+.ha-provenance__eyebrow,
+.ha-cloth__eyebrow,
+.ha-lotrec__eyebrow,
+.ha-related__eyebrow,
+.ha-masterfeat__eyebrow,
+.ha-cloth__closer-eyebrow {
+  font-size: var(--ha-t-label);
+  letter-spacing: 0.14em;
+  margin: 0 0 2rem;
+}
+
+/* ==========================================================================
+   .ha-provenance — From Fibre to Garment
+   ========================================================================== */
+.ha-provenance__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.6rem 3.2rem;
+  padding-bottom: 2.4rem;
+  border-bottom: 1px solid var(--ha-rule);
+}
+.ha-provenance__ref { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
+.ha-provenance__stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 3.2rem;
+  padding-top: 3.2rem;
+}
+.ha-provenance__stage { min-width: 0; }
+.ha-provenance__stage-head { display: flex; align-items: baseline; gap: 1.6rem; margin: 0 0 1.6rem; }
+.ha-provenance__num { font-size: calc(var(--ha-t-statement) * 1.1); line-height: 1; }
+.ha-provenance__name { font-size: calc(var(--ha-t-statement) * 1.1); line-height: 1; margin: 0; font-weight: 500; }
+.ha-provenance__lines { margin: 0; display: grid; gap: 0.8rem; font-size: var(--ha-t-meta); letter-spacing: 0.03em; text-transform: none; }
+.ha-provenance__line { display: flex; gap: 0.6rem; }
+.ha-provenance__line dt::after { content: ' /'; }
+.ha-provenance__line dd { margin: 0; }
+.ha-provenance__line--method dd { color: var(--ha-text); }
+.ha-provenance__line:not(.ha-provenance__line--method) { color: var(--ha-text-quiet); }
+.ha-provenance__master-link { color: inherit; text-decoration: underline; text-underline-offset: 0.3rem; }
+.ha-provenance__tag {
+  margin: 1.6rem 0 0;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text);
+}
+.ha-provenance__tag--open,
+.ha-provenance__tag--unverified { color: var(--ha-cutch-resin); }
+.ha-provenance__note { margin: 1.6rem 0 0; }
+.ha-provenance__note-summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--ha-t-meta);
+  letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text-quiet);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.ha-provenance__note-summary::-webkit-details-marker { display: none; }
+.ha-provenance__note-summary::before { content: '+'; font-family: var(--ha-font-narrate); }
+.ha-provenance__note[open] .ha-provenance__note-summary::before { content: '\2013'; }
+.ha-provenance__note-summary:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 2px; }
+.ha-provenance__note-body { margin-top: 0.8rem; max-width: 34ch; font-size: var(--ha-t-body); }
+.ha-provenance__note-body .metafield-rich_text_field p { margin: 0 0 0.8rem; }
+
+/* A vertical record on a phone; five columns from 750px in two rows, one row
+   from 990px. */
+@media screen and (min-width: 750px) {
+  .ha-provenance__stages { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 3.2rem; }
+}
+@media screen and (min-width: 990px) {
+  .ha-provenance__stages { grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: clamp(2.4rem, 2.5vw, 4rem); }
+}
+
+/* ==========================================================================
+   .ha-cloth — The Cloth / Material Record
+   ========================================================================== */
+.ha-cloth__grid { display: grid; gap: 4rem; }
+.ha-cloth__lead { min-width: 0; }
+.ha-cloth__statement {
+  font-size: calc(var(--ha-t-statement) * 1.2);
+  line-height: 1.25;
+  margin: 2.4rem 0 0;
+  max-width: 22ch;
+}
+.ha-cloth__index {
+  list-style: none;
+  margin: 4rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--ha-rule);
+}
+.ha-cloth__index li { border-bottom: 1px solid var(--ha-rule); }
+.ha-cloth__index-item {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  width: 100%;
+  min-height: 48px;
+  padding: 1.2rem 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  color: var(--ha-text);
+  font-size: var(--ha-t-label);
+  letter-spacing: 0.03em;
+  text-transform: none;
+  cursor: pointer;
+}
+.ha-cloth__index-num { color: var(--ha-text-quiet); min-width: 2.2rem; }
+.ha-cloth__index-item:hover, .ha-cloth__index-item[aria-current='true'] { color: var(--ha-text); }
+.ha-cloth__index-item[aria-current='true'] .ha-cloth__index-num { color: var(--ha-text); }
+.ha-cloth__index-item[aria-current='true']::after { content: ''; margin-left: auto; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: currentColor; }
+.ha-cloth__index-item:focus-visible { outline: 2px solid var(--ha-text); outline-offset: -2px; }
+.ha-cloth__facts { margin: 4rem 0 0; display: grid; gap: 2rem; font-size: var(--ha-t-meta); text-transform: none; letter-spacing: 0.03em; }
+.ha-cloth__facts dt { text-transform: uppercase; letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); margin: 0 0 0.6rem; }
+.ha-cloth__facts dd { margin: 0; }
+.ha-cloth__closer { margin: 6rem 0 0; }
+.ha-cloth__closer-eyebrow { margin-bottom: 1rem; }
+.ha-cloth__closer-line { font-size: calc(var(--ha-t-statement) * 1.05); margin: 0; }
+
+.ha-cloth__figures { display: grid; gap: 3.2rem; align-content: start; }
+.ha-cloth__figure { margin: 0; outline: none; min-width: 0; }
+.ha-cloth__img-wrap { background: var(--ha-placeholder-field); transition: transform 0.35s ease, box-shadow 0.35s ease; }
+.ha-cloth__img { display: block; width: 100%; height: auto; }
+.ha-cloth__figure--hover .ha-cloth__img-wrap { transform: translateY(-0.4rem); }
+.ha-cloth__figure--current .ha-cloth__img-wrap { box-shadow: 0 0 0 1px var(--ha-border); }
+.ha-cloth__figure:focus-visible .ha-cloth__img-wrap { box-shadow: 0 0 0 2px var(--ha-text); }
+@media (prefers-reduced-motion: reduce) { .ha-cloth__img-wrap { transition: none; } .ha-cloth__figure--hover .ha-cloth__img-wrap { transform: none; } }
+.ha-cloth__caption { display: flex; align-items: baseline; gap: 1.6rem; margin: 1.2rem 0 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
+.ha-cloth__caption-num { font-size: calc(var(--ha-t-statement) * 0.9); line-height: 1; text-transform: none; letter-spacing: 0; }
+.ha-cloth__table { padding-top: 0; }
+.ha-cloth__note, .ha-lotrec__note { padding-top: 0; }
+
+@media screen and (min-width: 990px) {
+  /* lead x50-410 (24%), figures x467-1450 — measured on the 1500 design */
+  .ha-cloth__grid { grid-template-columns: 26fr 66fr; column-gap: clamp(3.2rem, 4vw, 6rem); align-items: start; }
+  .ha-cloth__lead { position: sticky; top: var(--ha-pdp-rail-top); }
+  /* the stagger: a big frame top-left, a small one high right, one lower
+     centre-left, a tall one right — named areas so any count from one to
+     four holds its shape */
+  .ha-cloth__figures {
+    grid-template-columns: 58fr 34fr;
+    grid-template-areas:
+      "one two"
+      "three four";
+    column-gap: clamp(2.4rem, 3vw, 4.8rem);
+    row-gap: 6rem;
+  }
+  .ha-cloth__figure--1 { grid-area: one; }
+  .ha-cloth__figure--2 { grid-area: two; align-self: start; padding-top: 18%; }
+  .ha-cloth__figure--3 { grid-area: three; width: 56%; justify-self: end; }
+  .ha-cloth__figure--4 { grid-area: four; margin-top: -30%; }
+  .ha-cloth__figure--4 .ha-cloth__img { aspect-ratio: 3 / 4; object-fit: cover; }
+  .ha-cloth__figure--2 .ha-cloth__img { aspect-ratio: 1 / 1; object-fit: cover; }
+}
+@media screen and (min-width: 990px) and (max-height: 620px) {
+  .ha-cloth__lead { position: static; }
+}
+
+/* ==========================================================================
+   .ha-masterfeat — The Master
+   ========================================================================== */
+.ha-masterfeat {
+  position: relative;
+  min-height: clamp(48rem, 70vh, 84rem);
+  display: grid;
+  overflow: hidden;
+}
+.ha-masterfeat__media { position: absolute; inset: 0; }
+.ha-masterfeat__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ha-masterfeat__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(20, 14, 10, 0.72) 0%, rgba(20, 14, 10, 0.25) 45%, rgba(20, 14, 10, 0.35) 100%);
+}
+/* the empty slot's cross-hairs — the design's own annotation, not decoration */
+.ha-masterfeat__slotmarks { position: absolute; inset: 0; pointer-events: none; }
+.ha-masterfeat__slotmarks span { position: absolute; background: rgba(233, 243, 255, 0.22); }
+.ha-masterfeat__slotmarks span:first-child { left: 50%; top: 6%; bottom: 6%; width: 1px; }
+.ha-masterfeat__slotmarks span:last-child { top: 50%; left: 39%; right: 39%; height: 1px; }
+.ha-masterfeat__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  gap: 1.6rem 3.2rem;
+  min-height: inherit;
+  align-items: start;
+}
+.ha-masterfeat__eyebrow { grid-column: 1; grid-row: 1; margin: 0; color: var(--ha-text-invert); }
+.ha-masterfeat__slotlabel { grid-column: 2; grid-row: 1; margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-invert); opacity: 0.85; text-align: right; }
+.ha-masterfeat__identity { grid-column: 1; grid-row: 3; align-self: end; max-width: 40rem; }
+.ha-masterfeat__name { font-size: calc(var(--ha-t-editorial) * 1.3); line-height: 1.05; margin: 0 0 1.6rem; font-weight: 400; color: var(--ha-text-invert); }
+.ha-masterfeat--slot .ha-masterfeat__name { opacity: 0.9; }
+.ha-masterfeat__line { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-invert); }
+.ha-masterfeat__rule { border: 0; border-top: 1px solid rgba(233, 243, 255, 0.35); margin: 2.4rem 0; max-width: 30rem; }
+.ha-masterfeat__link {
+  display: inline-flex; align-items: center; gap: 1.2rem;
+  min-height: 44px;
+  font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta);
+  color: var(--ha-text-invert); text-decoration: none;
+}
+.ha-masterfeat__link .ha-pdp__arrow { border-color: currentColor; }
+.ha-masterfeat__link:hover .ha-pdp__arrow, .ha-masterfeat__link:focus-visible .ha-pdp__arrow { width: 4rem; }
+.ha-masterfeat__link--inert { opacity: 0.6; }
+.ha-masterfeat__verify { grid-column: 2; grid-row: 3; align-self: end; margin: 0; text-align: right; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-invert); opacity: 0.85; }
+.ha-masterfeat .ha-placeholder-note { grid-column: 1 / -1; grid-row: 4; align-self: end; margin: 2.4rem 0 0; max-width: 60rem; }
+@media screen and (max-width: 749px) {
+  .ha-masterfeat__grid { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto auto auto; }
+  .ha-masterfeat__slotlabel { grid-column: 1; grid-row: 2; text-align: left; }
+  .ha-masterfeat__identity { grid-row: 4; }
+  .ha-masterfeat__verify { grid-column: 1; grid-row: 5; text-align: left; }
+  .ha-masterfeat .ha-placeholder-note { grid-column: 1; grid-row: 6; }
+}
+
+/* ==========================================================================
+   .ha-lotrec — The Production Record
+   ========================================================================== */
+.ha-lotrec__grid { display: grid; gap: 3.2rem; }
+.ha-lotrec__table { width: 100%; border-collapse: collapse; font-size: var(--ha-t-meta); letter-spacing: 0.03em; text-transform: none; }
+.ha-lotrec__table tr { border-top: 1px solid var(--ha-rule); }
+.ha-lotrec__table tr:last-child { border-bottom: 1px solid var(--ha-rule); }
+.ha-lotrec__table th, .ha-lotrec__table td { text-align: left; padding: 1.8rem 1.6rem 1.8rem 0; vertical-align: top; font-weight: 400; }
+.ha-lotrec__table th { text-transform: uppercase; letter-spacing: var(--ha-track-meta); color: var(--ha-text); width: 32%; }
+.ha-lotrec__open { color: var(--ha-cutch-resin); }
+@media screen and (min-width: 990px) {
+  /* lead x50-600, table x654-1450 on the 1500 design */
+  .ha-lotrec__grid { grid-template-columns: 40fr 57fr; column-gap: clamp(3.2rem, 4vw, 6rem); align-items: start; }
+}
+
+/* ==========================================================================
+   .ha-related — Related Works
+   ========================================================================== */
+.ha-related__head { display: flex; justify-content: space-between; align-items: baseline; gap: 1.6rem; margin: 0 0 2.4rem; }
+.ha-related__head .ha-related__eyebrow { margin: 0; }
+.ha-related__all { display: inline-flex; align-items: center; gap: 1.2rem; min-height: 44px; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: inherit; text-decoration: none; }
+.ha-related__all:hover .ha-pdp__arrow, .ha-related__all:focus-visible .ha-pdp__arrow { width: 4rem; }
+.ha-related__grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 3.2rem; }
+.ha-related__card { min-width: 0; position: relative; }
+.ha-related__link { display: block; color: inherit; text-decoration: none; }
+.ha-related__figure { display: block; position: relative; aspect-ratio: 433 / 250; overflow: hidden; background: var(--ha-field-sand); }
+.ha-related__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.ha-related__link:hover .ha-related__img { transform: scale(1.02); }
+@media (prefers-reduced-motion: reduce) { .ha-related__img { transition: none; } .ha-related__link:hover .ha-related__img { transform: none; } }
+.ha-related__figure--empty { display: grid; place-items: center; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
+.ha-related__num { position: absolute; top: 1.6rem; left: 1.6rem; z-index: 1; font-size: calc(var(--ha-t-statement) * 0.9); color: var(--ha-text-quiet); }
+.ha-related__name { display: block; margin: 1.6rem 0 0; font-size: var(--ha-t-label); letter-spacing: 0.03em; text-transform: none; }
+.ha-related__link:hover .ha-related__name, .ha-related__link:focus-visible .ha-related__name { text-decoration: underline; text-underline-offset: 0.3rem; }
+.ha-related__link:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 4px; }
+.ha-related__note { margin: 2.4rem 0 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
+@media screen and (min-width: 750px) {
+  .ha-related__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(2.4rem, 3.4vw, 5rem); }
+}
+
+/* --- Living, bare: no lead column, serif row titles (V2) ----------------- */
+.ha-living--bare .ha-living__grid { grid-template-columns: 1fr; }
+.ha-living--bare .ha-living__rows .accordion-title { min-height: 72px; padding: 2.4rem 0; }
+.ha-living--bare .ha-living__rows .accordion-title > span {
+  font-family: var(--ha-font-narrate);
+  font-size: calc(var(--ha-t-statement) * 1.3);
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.2;
 }

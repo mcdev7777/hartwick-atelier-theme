@@ -1,0 +1,185 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — RELATED WORKS.
+  Aloha's product-page brief, 16 September 2026:
+
+    "Related Works should link to deliberately selected garments through a
+     genuine relationship, such as shared cloth or cut. They should lead to
+     real product pages with descriptive link text."
+
+  Three cards under an eyebrow, with "View the collection" on the right, as
+  the V2 artboard draws it. Each card is the piece's photograph and its
+  "Style / Expression" line, both resolved through snippets/ha-product-fact
+  so a related piece is named exactly as its own page names it.
+
+  WHICH PIECES. In order, the first three of:
+    1. hartwick.related_products      — Aloha's deliberate picks (the model)
+    2. custom.featured_product_1 / _2 — the OLD SITE's own hand-picked pairs,
+                                        kept as existing curation
+    3. pieces from the same collection that share this garment's cloth
+       (the same fibre record), then the same Style — a genuine relationship,
+       derived, never random
+  A card whose product no longer exists collapses. When the row is derived
+  rather than chosen the section says so beneath, so a derived row is never
+  mistaken for a curated one.
+
+  Not Luxe's `related-products`: that is Shopify's recommendation engine,
+  which picks by behaviour, not by relationship, and the brief asks for the
+  relationship.
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.hartwick
+  assign cf = product.metafields.custom
+  assign max = section.settings.count
+
+  capture my_fibre
+    render 'ha-product-fact', product: product, field: 'fibre'
+  endcapture
+  assign my_fibre = my_fibre | strip
+  assign my_style = mf.style.value.system.handle
+
+  # Collect handles, in priority order, without repeats.
+  assign picks = ''
+  assign curated = false
+
+  for p in mf.related_products.value
+    if p.handle != blank and p.handle != product.handle
+      unless picks contains p.handle
+        assign picks = picks | append: ',' | append: p.handle
+        assign curated = true
+      endunless
+    endif
+  endfor
+
+  for i in (1..2)
+    assign key = 'featured_product_' | append: i
+    assign p = cf[key].value
+    if p.handle != blank and p.handle != product.handle
+      unless picks contains p.handle
+        assign picks = picks | append: ',' | append: p.handle
+        assign curated = true
+      endunless
+    endif
+  endfor
+
+  assign derived = false
+  assign list = picks | remove_first: ',' | split: ','
+  if list.size < max and product.collections.first != blank
+    for c in product.collections.first.products limit: 50
+      if list.size >= max
+        break
+      endif
+      if c.handle == product.handle or picks contains c.handle
+        continue
+      endif
+      capture c_fibre
+        render 'ha-product-fact', product: c, field: 'fibre'
+      endcapture
+      assign c_fibre = c_fibre | strip
+      assign related = false
+      if my_fibre != blank and c_fibre == my_fibre
+        assign related = true
+      elsif my_style != blank and c.metafields.hartwick.style.value.system.handle == my_style
+        assign related = true
+      endif
+      if related
+        assign picks = picks | append: ',' | append: c.handle
+        assign list = picks | remove_first: ',' | split: ','
+        assign derived = true
+      endif
+    endfor
+  endif
+
+  assign collection_url = routes.all_products_collection_url
+  if product.collections.first != blank
+    assign collection_url = product.collections.first.url
+  endif
+  if section.settings.collection != blank
+    assign collection_url = section.settings.collection.url
+  endif
+-%}
+
+{%- if list.size > 0 or section.settings.show_empty -%}
+<section class="ha-section ha-related{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+  <div class="ha-wrap">
+    <div class="ha-related__head">
+      <h2 class="ha-eyebrow ha-identify ha-related__eyebrow">{{ section.settings.eyebrow }}</h2>
+      <a class="ha-related__all ha-record" href="{{ collection_url }}">{{ section.settings.all_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+    </div>
+
+    <ul class="ha-related__grid" role="list">
+      {%- for handle in list limit: max -%}
+        {%- assign piece = all_products[handle] -%}
+        {%- if piece == blank -%}{%- continue -%}{%- endif -%}
+        {%- capture p_style -%}{%- render 'ha-product-fact', product: piece, field: 'style' -%}{%- endcapture -%}
+        {%- capture p_expr -%}{%- render 'ha-product-fact', product: piece, field: 'expression' -%}{%- endcapture -%}
+        {%- assign p_style = p_style | strip -%}
+        {%- assign p_expr = p_expr | strip -%}
+        {%- assign p_alt = p_style -%}
+        {%- if p_expr != blank -%}{%- assign p_alt = p_style | append: ' — ' | append: p_expr -%}{%- endif -%}
+        <li class="ha-related__card">
+          <a class="ha-related__link" href="{{ piece.url }}" aria-label="{{ p_alt | escape }}">
+            {%- if piece.featured_media != blank -%}
+              <span class="ha-related__figure">
+                {{ piece.featured_media.preview_image
+                  | image_url: width: 1200
+                  | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 30vw, 100vw', widths: '400, 600, 800, 1200', alt: '', class: 'ha-related__img' }}
+              </span>
+            {%- else -%}
+              <span class="ha-related__figure ha-related__figure--empty"><span class="ha-record">{{ section.settings.ph_image_label }}</span></span>
+            {%- endif -%}
+            <span class="ha-related__name ha-record">{{ p_style }}{% if p_expr != blank %} / {{ p_expr }}{% endif %}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+
+      {%- if section.settings.show_empty -%}
+        {%- assign shown = list.size | at_most: max -%}
+        {%- for i in (1..max) -%}
+          {%- if i <= shown -%}{%- continue -%}{%- endif -%}
+          <li class="ha-related__card ha-related__card--empty">
+            <span class="ha-related__num ha-narrate" aria-hidden="true">{{ i | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="ha-related__figure ha-related__figure--empty"><span class="ha-record">{{ section.settings.ph_image_label }}</span></span>
+            <span class="ha-related__name ha-record">{{ section.settings.ph_name }}</span>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+
+    {%- if derived -%}
+      <p class="ha-related__note ha-record">{{ section.settings.derived_note }}</p>
+    {%- endif -%}
+    {%- if curated == false -%}
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+        text: 'No related pieces have been chosen for this garment (hartwick.related_products). Cards shown are derived from shared cloth or Style within the collection, or are empty slots.' -%}
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "HA — Related Works",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "Three deliberately related pieces (V2 design, 16 Sept 2026). Reads hartwick.related_products, then the old site's featured products, then pieces sharing this garment's cloth or Style." },
+    { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
+      { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Related Works" },
+    { "type": "text", "id": "all_text", "label": "Collection link text", "default": "View the collection" },
+    { "type": "collection", "id": "collection", "label": "Collection link target", "info": "Defaults to the garment's own collection." },
+    { "type": "range", "id": "count", "label": "Cards", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_empty", "label": "Show empty slots when fewer pieces are related", "default": true },
+    { "type": "text", "id": "derived_note", "label": "Note under a derived row", "default": "Selected by shared cloth or Style — a curated list will replace this." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "text", "id": "ph_image_label", "label": "Empty slot label", "default": "Image to select" },
+    { "type": "text", "id": "ph_name", "label": "Empty slot name", "default": "[Related Style / Expression]" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Related Works" }]
+}
+{% endschema %}

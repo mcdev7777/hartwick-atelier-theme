@@ -1,0 +1,178 @@
+/*
+ * Hartwick Atelier — ABOUT
+ *
+ * Aloha's About-page wireframe, 15 September 2026, section by section:
+ *
+ *   hero       ha-about-hero       two photographs, the title plate
+ *   house      ha-statement        THE HOUSE — the centred opener
+ *   founder    ha-founder          FOUNDER · ANGELA HARTWICK, two columns and a portrait
+ *   principle  ha-principle        THE PRINCIPLE — the dark band
+ *   journey    ha-circle-columns   A JOURNEY INTO THE HOUSE — four numbered columns (journey layout)
+ *   quote      ha-statement        the centred line on the same sand band
+ *   work       ha-feature          THE WORK AHEAD — photograph and pill button
+ *   register   ha-register         THE REGISTER — the same form as everywhere else
+ *
+ * ⚠️ PROVISIONAL. Every word is transcribed from the wireframe and none of it
+ *    is approved for publication yet; each section shows its notice until it
+ *    is switched off. Two sentences in the drawing are cut short and are NOT
+ *    completed here — nothing may be invented (CLAUDE.md):
+ *      · The House, after "…setters and goldsmiths." the drawing has "The
+ *        material" and stops.
+ *      · Founder, right column, after "The result is not nostalgia." the
+ *        drawing has "It is a working model for how a modern fashion house
+ *        can value the source of" and stops.
+ *
+ * ⚠️ PHOTOGRAPHS. The three pictures are cut from the wireframe drawing itself
+ *    and ship inside the theme (assets/ha-about-*.jpg), because the re-edited
+ *    originals had not arrived with it. Picking an image in any section
+ *    replaces its stand-in at once.
+ *
+ * ⚠️ ADMIN, not theme: the page "About the Atelier" (handle about-the-atelier)
+ *    must have its Theme template set to "about" for this file to apply.
+ *
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor. Shopify
+ * validates a JSON template against each section's schema AS IT EXISTS ON THE
+ * THEME when the template is uploaded, and silently drops any setting the
+ * schema does not yet declare — push the sections before this file.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "page-width-narrow",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "hero": {
+      "type": "ha-about-hero",
+      "settings": {
+        "heading": "About the Hartwick",
+        "subline": "A house shaped by material, place and\nthe knowledge of the people who make.",
+        "left_alt": "Angela Hartwick on a balcony in Mallorca",
+        "left_label": "",
+        "left_asset": "ha-about-hero-left.jpg",
+        "right_alt": "Angela Hartwick seated by a window",
+        "right_label": "01 / Angela in Mallorca",
+        "right_asset": "ha-about-hero-right.jpg",
+        "show_placeholder_note": true
+      }
+    },
+    "house": {
+      "type": "ha-statement",
+      "settings": {
+        "field": "page",
+        "size": "display",
+        "eyebrow": "The House",
+        "heading": "A fashion house built around\nwhat cannot be rushed.",
+        "heading_caps": true,
+        "body": "<p>Hartwick Atelier brings together handspun and handwoven cloth, natural dyes, fine tailoring and jewellery made by Master weavers, printers, dyers, stonecutters, setters and goldsmiths.</p>",
+        "show_placeholder_note": true
+      }
+    },
+    "founder": {
+      "type": "ha-founder",
+      "settings": {
+        "field": "page",
+        "label": "Founder",
+        "name": "Angela Hartwick",
+        "lead": "<p>Angela’s path to Hartwick began with a long study of how objects carry culture. In her early career as a costume designer and commercial stylist specialising in Middle Eastern cultures, textiles were never simply surface. They held place, memory, technique and identity.</p>",
+        "left": "<p>Across two decades, her work moved through documentary filmmaking, art collecting, wilderness conservation and cultural projects across New York, Paris, Dubai, Mumbai and the Canadian backcountry.</p><p>Living and working between global fashion centres and off-grid wilderness sharpened a central contradiction: fashion depends upon natural resources and human skill, yet too often hides both.</p>",
+        "right": "<p>Hartwick Atelier grew from Angela’s wish to make those relationships visible. The house works with natural fibres, natural colour and techniques carried through generations, then brings them into a contemporary language of cut, proportion and wear.</p><p>The result is not nostalgia.</p>",
+        "image_alt": "Angela Hartwick standing in a timber cabin",
+        "image_label": "",
+        "asset": "ha-about-founder.jpg",
+        "show_placeholder_note": true
+      }
+    },
+    "principle": {
+      "type": "ha-principle",
+      "blocks": {
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>The Master is an author of material and process. Hartwick’s role is not to borrow craft as decoration, but to build a house in which specialist knowledge remains visible, respected and economically alive. Names, workshops, places and techniques are recorded wherever permission and documentation allow.</p>"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Production follows the pace required by hand-spinning, weaving, natural dyeing, block-printing, stone-cutting and finishing. Quantity is shaped by the work itself, not by manufactured urgency.</p>"
+          }
+        }
+      },
+      "block_order": ["p1", "p2"],
+      "settings": {
+        "field": "peat",
+        "eyebrow": "The Principle",
+        "heading": "The Master is not\nbackground labour.",
+        "cta_text": "Made by Masters",
+        "cta_link": "/pages/the-makers",
+        "show_placeholder_note": true
+      }
+    },
+    "journey": {
+      "type": "ha-circle-columns",
+      "blocks": {
+        "j1": { "type": "column", "settings": { "label": "", "heading": "Costume + Culture", "body": "<p>An early career in costume design and commercial styling developed Angela’s attention to traditional textiles and the stories held within them.</p>" } },
+        "j2": { "type": "column", "settings": { "label": "", "heading": "Image + Place", "body": "<p>Documentary filmmaking and cultural projects trained her eye on people, place and the responsibility of telling another person’s story accurately.</p>" } },
+        "j3": { "type": "column", "settings": { "label": "", "heading": "Wilderness + Material", "body": "<p>Life between cities and wilderness made the consequences of material choices impossible to treat as an abstract part of fashion.</p>" } },
+        "j4": { "type": "column", "settings": { "label": "", "heading": "Hartwick Atelier", "body": "<p>The house brings these strands together: design, provenance, natural systems and the living knowledge of the Masters.</p>" } }
+      },
+      "block_order": ["j1", "j2", "j3", "j4"],
+      "settings": {
+        "layout": "journey",
+        "field": "sand",
+        "eyebrow": "",
+        "heading": "A journey into the House",
+        "aside": "",
+        "show_placeholder_note": true
+      }
+    },
+    "quote": {
+      "type": "ha-statement",
+      "settings": {
+        "field": "sand",
+        "size": "quote",
+        "eyebrow": "",
+        "heading": "Craft does not need to be preserved as a relic.\nIt needs fair work, continued demand and a place in contemporary design.",
+        "heading_caps": false,
+        "body": "",
+        "show_placeholder_note": false
+      }
+    },
+    "work": {
+      "type": "ha-feature",
+      "settings": {
+        "field": "page",
+        "image_side": "left",
+        "eyebrow": "The work ahead",
+        "heading": "Protecting a place\nfor living knowledge",
+        "body": "<p>Angela wants Hartwick to help protect the place of Master craft within contemporary fashion: commissioning work at the pace it requires, maintaining provenance, giving workshops meaningful visibility and creating demand for skills that cannot be industrially replicated. Protection does not mean freezing knowledge in the past. It means giving it a viable future, with the Master recognised as part of the authorship of every piece.</p>",
+        "cta_text": "Meet the Masters",
+        "cta_link": "/pages/the-makers",
+        "image_alt": "Angela Hartwick wearing Hartwick, seated by a window",
+        "image_label": "03 / Angela wearing Hartwick",
+        "asset": "ha-about-work.jpg",
+        "show_placeholder_note": true
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "Correspondence from the Atelier, when there is something worth sending.",
+        "body": "<p>The Dispatch carries production notes, material studies, conversations with Masters and considered notice of what the Atelier is making next.</p>",
+        "body_position": "form",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "about_page"
+      }
+    }
+  },
+  "order": ["main", "hero", "house", "founder", "principle", "journey", "quote", "work", "register"]
+}
