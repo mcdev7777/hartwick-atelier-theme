@@ -67,12 +67,21 @@
 
   assign confirm = section.settings.confirm_text | default: '[Confirm]'
 
-  assign heading = f_fibre | replace: ' / ', ' and '
+  # Tab 03 (16 September): "Material heading" (MATKA SILK), "Material short
+  # introduction" (two lines), "Material explanation" (a paragraph), "Exact
+  # composition", "Material-record reference" and "Look closer line" — each
+  # its own field, so Angela's edits land where she made them.
+  assign heading = mf.cloth_heading
+  if heading == blank
+    assign heading = f_fibre | replace: ' / ', ' and '
+  endif
   if heading == blank
     assign heading = section.settings.ph_heading
   endif
+  assign explanation = mf.cloth_explanation
+  assign look_closer = mf.look_closer | default: section.settings.closer_line
 
-  assign statement = mf.cloth_statement
+  assign statement = mf.cloth_statement | newline_to_br
   if statement == blank
     assign weave_lc = f_weave | downcase
     if f_yarn != blank and f_weave != blank
@@ -111,6 +120,9 @@
       {%- if statement != blank -%}
         <p class="ha-cloth__statement ha-narrate">{{ statement }}</p>
       {%- endif -%}
+      {%- if explanation != blank -%}
+        <p class="ha-cloth__explanation ha-body ha-narrate">{{ explanation | newline_to_br }}</p>
+      {%- endif -%}
 
       {%- comment -%}
         The index. Real buttons: each one focuses its photograph. Without the
@@ -118,6 +130,12 @@
       {%- endcomment -%}
       {%- capture index_items -%}
         {%- if details != blank -%}
+          {%- comment -%}
+            Tab 03 gives each photograph an index label ("Cloth surface") and
+            a caption ("SURFACE / HANDWOVEN MATKA SILK"). The image's alt
+            text is the label; hartwick.cloth_captions is the list of
+            captions in the same order.
+          {%- endcomment -%}
           {%- for img in details limit: max -%}
             {%- assign cap = img.alt | default: section.settings.ph_caption -%}
             <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ forloop.index }}" aria-controls="{{ section.id }}-detail-{{ forloop.index }}"><span class="ha-cloth__index-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
@@ -152,7 +170,7 @@
       {%- if section.settings.closer_eyebrow != blank or section.settings.closer_line != blank -%}
         <div class="ha-cloth__closer">
           {%- if section.settings.closer_eyebrow != blank -%}<p class="ha-eyebrow ha-identify ha-cloth__closer-eyebrow">{{ section.settings.closer_eyebrow }}</p>{%- endif -%}
-          {%- if section.settings.closer_line != blank -%}<p class="ha-cloth__closer-line ha-narrate">{{ section.settings.closer_line }}</p>{%- endif -%}
+          {%- if look_closer != blank -%}<p class="ha-cloth__closer-line ha-narrate">{{ look_closer }}</p>{%- endif -%}
         </div>
       {%- endif -%}
     </div>
@@ -160,9 +178,12 @@
     <div class="ha-cloth__figures">
       {%- capture figures -%}
         {%- if details != blank -%}
+          {%- assign captions = mf.cloth_captions.value -%}
           {%- for img in details limit: max -%}
-            {%- assign cap = img.alt | default: section.settings.ph_caption -%}
-            {%- render 'ha-cloth-figure', image: img, index: forloop.index, caption: cap, section_id: section.id -%}
+            {%- assign label = img.alt | default: section.settings.ph_caption -%}
+            {%- assign i0 = forloop.index0 -%}
+            {%- assign cap = captions[i0] | default: label -%}
+            {%- render 'ha-cloth-figure', image: img, index: forloop.index, caption: cap, alt: label, section_id: section.id -%}
           {%- endfor -%}
         {%- else -%}
           {%- assign n = 0 -%}

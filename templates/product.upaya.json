@@ -39,7 +39,9 @@
           "settings": {
             "heading": "Delivery & Returns",
             "source": "policies",
-            "content": "<p><em>Placeholder — dispatch, duties, returns and exchange terms pending confirmation.</em></p>"
+            "content": "<p><em>Placeholder — dispatch, duties, returns and exchange terms pending confirmation.</em></p>",
+            "link_text": "View delivery information",
+            "link_text_2": "View returns policy"
           }
         }
       },
@@ -54,7 +56,7 @@
         "record_link_text": "View the Material Record",
         "record_anchor": "#the-material-record",
         "tax_note": "Duties and taxes shown at checkout",
-        "appointment_text": "Request Private Appointment",
+        "appointment_text": "Request a Private Appointment",
         "payment_note": "Full payment is taken when the order is placed. Delivery timing is shown before checkout.",
         "picker_type": "button",
         "gallery_aspect_ratio": "portrait-4x6",
@@ -62,12 +64,19 @@
         "description_row_title": "Description",
         "dots_label": "Product images",
         "dot_label": "Show image [n] of [total]",
-        "scroll_hint": "Scroll",
+        "scroll_hint": "Scroll to explore",
         "require_size": true,
         "size_prompt": "Select a size",
         "ph_availability": "[Confirm selected size]",
         "ph_ship_date": "[Confirm date]",
-        "ph_fit_line_one": "Relaxed through the body."
+        "ph_fit_line_one": "Relaxed through the body.",
+        "dispatch_label": "Expected dispatch",
+        "expression_label": "Expression",
+        "availability_label": "Availability",
+        "show_availability": true,
+        "availability_in_stock": "Available",
+        "availability_sold_out": "Sold out",
+        "ph_made_in": "[Confirm garment origin]"
       }
     },
     "ha_garment": {
@@ -259,7 +268,9 @@
           "settings": {
             "heading": "Care & Repair",
             "source": "care",
-            "content": "<p><em>Placeholder — care, washing, ageing and repair guidance pending Angela's approval. Publishes from the product's hartwick.care_instructions, ageing_patina and repairs fields.</em></p>"
+            "content": "<p><em>Placeholder — care, washing, ageing and repair guidance pending Angela's approval. Publishes from the product's hartwick.care_instructions, ageing_patina and repairs fields.</em></p>",
+            "link_text": "Ask about care",
+            "link_url": "/pages/contact-us"
           }
         },
         "shipping": {
@@ -267,7 +278,9 @@
           "settings": {
             "heading": "Shipping & Returns",
             "source": "policies",
-            "content": ""
+            "content": "",
+            "link_text": "View delivery information",
+            "link_text_2": "View returns policy"
           }
         }
       },
@@ -352,7 +365,8 @@
         "slot_discipline": "[Discipline]",
         "slot_place": "[Place]",
         "slot_verify": "Identity + product link to verify",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "show_slot": true
       }
     },
     "ha_lot": {

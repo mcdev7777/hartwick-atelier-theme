@@ -51,7 +51,7 @@
   capture style_name
     render 'ha-product-fact', product: product, field: 'style'
   endcapture
-  capture material_line
+  capture material_line_fallback
     render 'ha-product-fact', product: product, field: 'material'
   endcapture
   capture fact_fibre
@@ -69,25 +69,40 @@
   capture expression
     render 'ha-product-fact', product: product, field: 'expression'
   endcapture
+  capture subtitle
+    render 'ha-product-fact', product: product, field: 'subtitle'
+  endcapture
+  capture selector
+    render 'ha-product-fact', product: product, field: 'selector'
+  endcapture
+  capture technique_line
+    render 'ha-product-fact', product: product, field: 'material_line'
+  endcapture
   assign style_name = style_name | strip | default: product.title
-  assign material_line = material_line | strip | default: section.settings.ph_cloth
   assign fact_fibre = fact_fibre | strip | default: section.settings.ph_fibre
-  assign fact_weave = fact_weave | strip | default: section.settings.ph_weave
-  assign fact_colour = fact_colour | strip | default: section.settings.ph_colour
+  # The opening's WEAVE fact is the first fragment only; the further lines of
+  # a ";"-separated weave ("black silk weft") belong to the provenance stage.
+  assign fact_weave = fact_weave | strip | split: ';' | first | strip | default: section.settings.ph_weave
   assign fact_made = fact_made | strip | default: section.settings.ph_made_in
   assign expression = expression | strip | default: section.settings.ph_expression
 
-  # The V2 design sets the material as a serif line under the Style
-  # ("Handspun Silk and Linen") AND repeats it as a record label ("HANDSPUN
-  # SILK + LINEN"). The label is only worth its line when it says something
-  # the serif line does not — so it renders only when the fibre is not already
-  # inside the material line.
-  assign cloth = ''
-  assign material_lc = material_line | downcase
-  assign fibre_lc = fact_fibre | downcase | split: ' / ' | first
-  unless material_lc contains fibre_lc
-    assign cloth = fact_fibre
-  endunless
+  # Aloha's product-copy sheet, tab 01 (16 September): the serif line under
+  # the Style is the "Short hero subtitle" — the Expression before its comma
+  # ("Handspun Matka Silk"); the record label beneath it is the "Material /
+  # technique line" ("HANDSPUN / HANDWOVEN"); the buy rail's Expression row
+  # and the COLOUR fact are the "Colour / expression selector" ("Emerald
+  # Changeant"). The full Expression stays in the Lot record.
+  assign material_line = subtitle | strip
+  if material_line == blank
+    assign material_line = material_line_fallback | strip | default: section.settings.ph_cloth
+  endif
+  assign cloth = technique_line | strip
+  assign selector = selector | strip
+  if selector == blank
+    assign selector = fact_colour | strip
+  endif
+  assign fact_colour = selector | default: section.settings.ph_colour
+  assign expression_row = selector | default: expression
 
   # The Lot, customer-facing as a Roman numeral (Framework v3). With the Edition
   # gone, this is the opening label Aloha asked for: "If the garments are not
@@ -103,10 +118,12 @@
 
   # Availability is a fact, never a countdown. Aloha, 3 Sep 2026: "We do not
   # want to turn that reality into scarcity language."
-  assign availability = mf.availability_note | default: section.settings.ph_availability
   assign ship_date = mf.expected_ship_date | default: section.settings.ph_ship_date
 
+  # Tab 01: "Fit summary" (HIGH WAIST / FULL LENGTH) is the record line under
+  # the Fit heading; "Fit & measurements body" is the sentence beneath it.
   assign fit_a = mf.fit | default: section.settings.ph_fit_line_one
+  assign fit_body = mf.fit_measurements
   assign fit_b = ''
   if mf.model_height != blank and mf.size_worn != blank
     assign fit_b = 'Model is ' | append: mf.model_height | append: ' and wears ' | append: mf.size_worn | append: '.'
@@ -135,6 +152,19 @@
 
   # The rail shows an excerpt; the full description becomes an accordion row when
   # it is longer than the excerpt, so nothing is lost and nothing is buried.
+  # Tab 01 "Hero introduction" is staged in hartwick.hero_introduction while
+  # it is draft — Aloha: "Anything marked draft or unconfirmed should remain
+  # unpublished", and product.description is live on every theme. When it is
+  # present it IS the opening (whole; it is short by design) and the
+  # Description row holds the construction sentence (tab 01 "Description
+  # accordion" -> hartwick.construction_details). Without it, the old
+  # behaviour: an excerpt of product.description, the rest in the row.
+  assign hero_intro = ''
+  if mf.hero_introduction != blank
+    capture hero_intro
+      echo mf.hero_introduction | metafield_tag
+    endcapture
+  endif
   assign full_description = product.description
   if full_description == blank
     assign full_description = section.settings.ph_intro
@@ -145,8 +175,10 @@
   # Lot No. 0624" is scarcity language Aloha removed on 3 September and an
   # unverified run size, so it is filtered here rather than published — the
   # run size publishes from the Lot record once verified.
+  # Once the sheet's copy is on the product (hero_introduction), the old
+  # site's bullets are superseded and stay out of the row.
   assign details_html = ''
-  if product.metafields.custom.description != blank
+  if product.metafields.custom.description != blank and mf.hero_introduction == blank
     capture raw_details
       echo product.metafields.custom.description | metafield_tag
     endcapture
@@ -171,6 +203,16 @@
   assign description_is_long = false
   if plain_description.size > intro_excerpt.size
     assign description_is_long = true
+  endif
+  if hero_intro != blank
+    assign intro_excerpt = hero_intro
+    assign description_is_long = false
+  endif
+  assign construction_html = ''
+  if mf.construction_details != blank
+    capture construction_html
+      echo mf.construction_details | metafield_tag
+    endcapture
   endif
 -%}
 
@@ -264,7 +306,7 @@
           first sentences; the whole description is the "Description" row.
         {%- endcomment -%}
         {%- if intro_excerpt != blank -%}
-          <div class="ha-pdp__intro ha-body ha-narrate">{{ intro_excerpt }}</div>
+          <div class="ha-pdp__intro ha-body ha-narrate{% if hero_intro != blank %} ha-pdp__intro--rich{% endif %}">{{ intro_excerpt }}</div>
         {%- endif -%}
 
         {%- if fact_fibre != blank or fact_weave != blank or fact_colour != blank or fact_made != blank -%}
@@ -283,10 +325,11 @@
           </a>
         {%- endif -%}
 
-        {%- if fit_a != blank or fit_b != blank -%}
+        {%- if fit_a != blank or fit_b != blank or fit_body != blank -%}
           <div class="ha-pdp__fit">
             <h2 class="ha-pdp__fit-title ha-narrate">{{ section.settings.fit_heading }}</h2>
             {%- if fit_a != blank -%}<p class="ha-record">{{ fit_a }}</p>{%- endif -%}
+            {%- if fit_body != blank -%}<p class="ha-pdp__fit-body ha-body ha-narrate">{{ fit_body | newline_to_br }}</p>{%- endif -%}
             {%- if fit_b != blank -%}<p class="ha-record">{{ fit_b }}</p>{%- endif -%}
           </div>
         {%- endif -%}
@@ -296,9 +339,10 @@
           global.js behaviour — see snippets/ha-panel-row.liquid for why this is
           the theme's accordion rather than a second one.
         {%- endcomment -%}
-        {%- if description_is_long or details_html != blank -%}
+        {%- if description_is_long or details_html != blank or construction_html != blank -%}
           {%- capture description_body -%}
             <div class="ha-pdp__row-body ha-body ha-narrate">
+              {{ construction_html }}
               {%- if description_is_long -%}{{ full_description }}{%- endif -%}
               {{ details_html }}
             </div>
@@ -433,10 +477,10 @@
           <p class="ha-pdp__tax ha-record">{{ section.settings.tax_note }}</p>
         {%- endif -%}
 
-        {%- if expression != blank -%}
+        {%- if expression_row != blank -%}
           <div class="ha-pdp__field">
-            <p class="ha-pdp__field-label ha-record">Expression</p>
-            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-narrate">{{ expression }}</p>
+            <p class="ha-pdp__field-label ha-record">{{ section.settings.expression_label }}</p>
+            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-narrate">{{ expression_row }}</p>
           </div>
         {%- endif -%}
 
@@ -455,16 +499,38 @@
             swatches: false -%}
         </div>
 
-        {%- if availability != blank -%}
+        {%- comment -%}
+          Availability — tab 05: "Use current inventory, not old lot
+          availability." With no note recorded, the line is live: "Select a
+          size" until one is chosen, then the chosen size's state (script,
+          from Luxe's own variantChange event). A recorded note — "Through
+          The Register" — takes precedence, because that is a statement of
+          route, not of stock.
+        {%- endcomment -%}
+        {%- if mf.availability_note != blank -%}
           <div class="ha-pdp__field">
-            <p class="ha-pdp__field-label ha-record">Availability</p>
-            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-record">{{ availability }}</p>
+            <p class="ha-pdp__field-label ha-record">{{ section.settings.availability_label }}</p>
+            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-record">{{ mf.availability_note }}</p>
+          </div>
+        {%- elsif section.settings.show_availability -%}
+          {%- liquid
+            assign v0 = product.selected_or_first_available_variant
+            assign live_text = section.settings.availability_in_stock
+            if size_unset
+              assign live_text = section.settings.size_prompt
+            elsif v0.available == false
+              assign live_text = section.settings.availability_sold_out
+            endif
+          -%}
+          <div class="ha-pdp__field">
+            <p class="ha-pdp__field-label ha-record">{{ section.settings.availability_label }}</p>
+            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-record" data-ha-availability data-in-stock="{{ section.settings.availability_in_stock | escape }}" data-sold-out="{{ section.settings.availability_sold_out | escape }}">{{ live_text }}</p>
           </div>
         {%- endif -%}
 
         {%- if ship_date != blank -%}
           <div class="ha-pdp__field">
-            <p class="ha-pdp__field-label ha-record">Expected to ship</p>
+            <p class="ha-pdp__field-label ha-record">{{ section.settings.dispatch_label }}</p>
             <p class="ha-pdp__field-value ha-record">{{ ship_date }}</p>
           </div>
         {%- endif -%}
@@ -504,7 +570,7 @@
     </div>
   </div>
 </product-info>
-{%- if size_unset -%}<script src="{{ 'ha-pdp-size.js' | asset_url }}" defer></script>{%- endif -%}
+{%- if size_unset or section.settings.show_availability -%}<script src="{{ 'ha-pdp-size.js' | asset_url }}" defer></script>{%- endif -%}
 
 {% schema %}
 {
@@ -528,16 +594,22 @@
     { "type": "text", "id": "description_row_title", "label": "Description row title", "default": "Description" },
 
     { "type": "header", "content": "Buy rail" },
+    { "type": "text", "id": "expression_label", "label": "Expression label", "default": "Expression" },
+    { "type": "text", "id": "availability_label", "label": "Availability label", "default": "Availability" },
+    { "type": "checkbox", "id": "show_availability", "label": "Show live availability", "default": true, "info": "“Select a size”, then the chosen size's state. A recorded hartwick.availability_note always wins." },
+    { "type": "text", "id": "availability_in_stock", "label": "Available reads", "default": "Available" },
+    { "type": "text", "id": "availability_sold_out", "label": "Sold out reads", "default": "Sold out" },
+    { "type": "text", "id": "dispatch_label", "label": "Dispatch label", "default": "Expected dispatch" },
     { "type": "text", "id": "tax_note", "label": "Tax note", "default": "Duties and taxes shown at checkout" },
     { "type": "page", "id": "size_guide_page", "label": "Size guide page" },
-    { "type": "text", "id": "appointment_text", "label": "Appointment link", "default": "Request Private Appointment" },
+    { "type": "text", "id": "appointment_text", "label": "Appointment link", "default": "Request a Private Appointment" },
     { "type": "textarea", "id": "payment_note", "label": "Payment note", "default": "Full payment is taken when the order is placed. Delivery timing is shown before checkout." },
 
     { "type": "header", "content": "Media" },
     { "type": "text", "id": "ph_media_label", "label": "Placeholder label", "default": "Product image / centre media rail" },
     { "type": "text", "id": "dots_label", "label": "Gallery accessible name", "default": "Product images" },
     { "type": "text", "id": "dot_label", "label": "Marker accessible name", "default": "Show image [n] of [total]", "info": "[n] and [total] are filled in." },
-    { "type": "text", "id": "scroll_hint", "label": "Scroll hint", "default": "Scroll", "info": "Shown beside the image count until the visitor scrolls." },
+    { "type": "text", "id": "scroll_hint", "label": "Scroll hint", "default": "Scroll to explore", "info": "Shown beside the image count until the visitor scrolls." },
     { "type": "header", "content": "Size selection" },
     { "type": "checkbox", "id": "require_size", "label": "Ask for a size before Add to Bag", "default": true, "info": "Brief, 16 Sept: “Before selection, the button asks for a size.” Off = Shopify's default, the first available size preselected." },
     { "type": "text", "id": "size_prompt", "label": "Button reads, until a size is chosen", "default": "Select a size" },
@@ -547,7 +619,7 @@
     { "type": "text", "id": "ph_fibre", "label": "Fibre", "default": "Silk / linen" },
     { "type": "text", "id": "ph_weave", "label": "Weave", "default": "Handwoven" },
     { "type": "text", "id": "ph_colour", "label": "Colour", "default": "Natural / undyed" },
-    { "type": "text", "id": "ph_made_in", "label": "Made in", "default": "India" },
+    { "type": "text", "id": "ph_made_in", "label": "Made in", "default": "[Confirm garment origin]", "info": "Shown only while hartwick.place_of_construction is empty. Tab 02: “Do not infer garment origin from textile origin.”" },
     { "type": "text", "id": "ph_expression", "label": "Expression", "default": "Natural / Undyed" },
     { "type": "text", "id": "ph_availability", "label": "Availability", "default": "Made in small quantities" },
     { "type": "text", "id": "ph_ship_date", "label": "Expected to ship" },
@@ -578,6 +650,9 @@
           { "value": "care", "label": "The product's care fields (hartwick.*)" }
         ] },
         { "type": "richtext", "id": "content", "label": "Content" },
+        { "type": "text", "id": "link_text", "label": "Link text", "info": "Care rows: with the URL below. Policy rows: the delivery-policy link." },
+        { "type": "url", "id": "link_url", "label": "Link URL (care rows)" },
+        { "type": "text", "id": "link_text_2", "label": "Second link text (policy rows: the returns-policy link)" },
         { "type": "page", "id": "page", "label": "Page" }
       ]
     },
@@ -593,6 +668,9 @@
           { "value": "care", "label": "The product's care fields (hartwick.*)" }
         ] },
         { "type": "richtext", "id": "content", "label": "Content" },
+        { "type": "text", "id": "link_text", "label": "Link text", "info": "Care rows: with the URL below. Policy rows: the delivery-policy link." },
+        { "type": "url", "id": "link_url", "label": "Link URL (care rows)" },
+        { "type": "text", "id": "link_text_2", "label": "Second link text (policy rows: the returns-policy link)" },
         { "type": "page", "id": "page", "label": "Page" }
       ]
     }

@@ -1,5 +1,6 @@
 {%- comment -%} One numbered detail photograph in The Cloth. Its number and caption sit beneath, as the V2 design draws them. {%- endcomment -%}
 {%- assign num = index | prepend: '0' | slice: -2, 2 -%}
+{%- assign alt = alt | default: caption -%}
 <figure class="ha-cloth__figure ha-cloth__figure--{{ index }}" id="{{ section_id }}-detail-{{ index }}" tabindex="-1">
   <div class="ha-cloth__img-wrap">
     {{ image
@@ -8,7 +9,7 @@
         loading: 'lazy',
         sizes: '(min-width: 990px) 40vw, 100vw',
         widths: '480, 720, 960, 1200, 1600',
-        alt: caption,
+        alt: alt,
         class: 'ha-cloth__img' }}
   </div>
   <figcaption class="ha-cloth__caption ha-record"><span class="ha-cloth__caption-num ha-narrate">{{ num }}</span><span>{{ caption }}</span></figcaption>

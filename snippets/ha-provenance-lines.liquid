@@ -1,0 +1,16 @@
+{%- comment -%}
+  The method line(s) of a provenance stage. A method may hold several
+  fragments separated by ";" (the sheet's own convention — "Handwoven; black
+  silk weft"); each renders as its own line. Empty -> the confirm text.
+{%- endcomment -%}
+{%- assign parts = text | split: ';' -%}
+{%- assign printed = 0 -%}
+{%- for part in parts -%}
+  {%- assign line = part | strip -%}
+  {%- if line == blank -%}{%- continue -%}{%- endif -%}
+  {%- assign printed = printed | plus: 1 -%}
+  <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ line }}</dd></div>
+{%- endfor -%}
+{%- if printed == 0 -%}
+  <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ confirm | default: '[Confirm]' }}</dd></div>
+{%- endif -%}

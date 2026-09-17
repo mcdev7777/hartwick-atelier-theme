@@ -865,3 +865,27 @@ field is empty:
 | Cloth photographs | `cloth_details` | `custom.featured_photo`, then the product's images after the first |
 | Related Works | `related_products` | `custom.featured_product_1/2`, then same-collection pieces sharing the fibre or Style |
 | Shipping & Returns | — | Settings › Policies (shipping + refund) — one source, used twice |
+
+### 5.5 Fields Aloha's product-copy sheet adds (16 September, second pass)
+
+The sheet *Hartwick Atelier | Product Copy for Angela & Ivan* has columns with
+no home in the model above. One field per column, so Angela's edit lands
+where she made it. Read by the theme today (◆). Full column → field table:
+`docs/product-data-mapping.md`. `scripts/sheet-to-shopify.py --definitions`
+creates all of these in one go once write scopes are granted.
+
+| Key | Type | Validation / note |
+|---|---|---|
+| `hero_introduction` ◆ | Rich text | Tab 01 "Hero introduction". **Draft staging** — the opening reads it; at launch the importer copies it to the Shopify description |
+| `material_line` ◆ | Single line text | Tab 01 "Material / technique line" — HANDSPUN / HANDWOVEN |
+| `fit_measurements` ◆ | Multi-line text | Tab 01 "Fit & measurements body" |
+| `dye_process` ◆ | Single line text | Tab 02 stage 04 — text; a linked `dye` record wins |
+| `process_tags` ◆ | Single line text | Tab 02 "Process tags (01–05)", kept whole |
+| `cloth_heading` ◆ | Single line text | Tab 03 "Material heading" — MATKA SILK |
+| `cloth_statement` ◆ | **Multi-line** text (was single line in 5.3) | Tab 03 "Material short introduction" |
+| `cloth_explanation` ◆ | Multi-line text | Tab 03 "Material explanation" |
+| `material_record_ref` ◆ | Single line text | Tab 03 "Material-record reference" — distinct from the SKU (tab 05) |
+| `cloth_captions` ◆ | **List** of single line text | Tab 03 captions, same order as `cloth_details` |
+| `look_closer` ◆ | Single line text | Tab 03 "Look closer line" |
+| `internal_notes` | Multi-line text, **Storefront access: none** | Approval / verification notes from tabs 01, 02, 04. Never rendered |
+| `delivery_exception` ◆ | Rich text | Tab 04 — empty on all rows; create only when first used |

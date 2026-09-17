@@ -27,12 +27,16 @@
   # populated on this store, shop.policies is.
   assign shipping_body = ''
   assign refund_body = ''
+  assign shipping_url = ''
+  assign refund_url = ''
   for policy in shop.policies
     assign anchor = policy.url | split: '/' | last
     if anchor == 'shipping-policy'
       assign shipping_body = policy.body
+      assign shipping_url = policy.url
     elsif anchor == 'refund-policy'
       assign refund_body = policy.body
+      assign refund_url = policy.url
     endif
   endfor
 -%}
@@ -46,7 +50,21 @@
     {%- elsif block.settings.content != blank -%}
       <div class="{{ cls }} ha-body ha-narrate">{{ block.settings.content }}</div>
     {%- endif -%}
+    {%- if block.settings.link_text != blank and block.settings.link_url != blank -%}
+      <p class="ha-row-links"><a class="ha-row-link ha-record" href="{{ block.settings.link_url }}">{{ block.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a></p>
+    {%- endif -%}
   {%- when 'policies' -%}
+    {%- comment -%}
+      Tab 05: "VIEW DELIVERY INFORMATION" and "VIEW RETURNS POLICY" lead to
+      the policies themselves — Shopify's own /policies/… pages, the same
+      text as below and at checkout.
+    {%- endcomment -%}
+    {%- if shipping_url != blank or refund_url != blank -%}
+      <p class="ha-row-links">
+        {%- if shipping_url != blank and block.settings.link_text != blank -%}<a class="ha-row-link ha-record" href="{{ shipping_url }}">{{ block.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>{%- endif -%}
+        {%- if refund_url != blank and block.settings.link_text_2 != blank -%}<a class="ha-row-link ha-record" href="{{ refund_url }}">{{ block.settings.link_text_2 }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>{%- endif -%}
+      </p>
+    {%- endif -%}
     {%- if shipping_body != blank -%}
       <div class="{{ cls }} ha-body ha-narrate ha-policy-body">{{ shipping_body }}</div>
     {%- endif -%}

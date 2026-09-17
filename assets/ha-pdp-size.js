@@ -61,9 +61,27 @@
     selects.addEventListener('change', release, true);
   }
 
+  // The live Availability line (tab 05: "Use current inventory"). Luxe
+  // publishes variantChange with the resolved variant after every choice;
+  // the line follows it. Runs whether or not the size gate is on.
+  function availability() {
+    var line = document.querySelector('[data-ha-availability]');
+    // Luxe declares `subscribe` and `PUB_SUB_EVENTS` at the top level of
+    // pubsub.js — a global binding, but not a property of `window` (they are
+    // `const`/function declarations, not assignments), so they are tested
+    // by name.
+    if (!line || typeof subscribe !== 'function' || typeof PUB_SUB_EVENTS === 'undefined') return;
+    subscribe(PUB_SUB_EVENTS.variantChange, function (e) {
+      var v = e && e.data && e.data.variant;
+      if (!v) return;
+      line.textContent = v.available ? line.getAttribute('data-in-stock') : line.getAttribute('data-sold-out');
+    });
+  }
+
+  function boot() { init(); availability(); }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    init();
+    boot();
   }
 })();

@@ -156,6 +156,73 @@
   if f_technique != blank
     assign weave_tag = f_technique
   endif
+
+  # Aloha's sheet, tab 02 (16 September). Each stage cell is free text with
+  # fragments separated by ";" — "Handwoven; black silk weft; maker and place
+  # to confirm". The importer stores the factual fragments in the method
+  # field (yarn / weave / dye_process / construction_method), so a method may
+  # carry several lines; they render one under another. "Process tags
+  # (01–05)" is one cell — "SILK / HANDSPUN / CHANGEANT / [dye tag to
+  # confirm] / BOX PLEATS" — held whole in hartwick.process_tags; a bracketed
+  # entry is an open fact and reads as the confirm text.
+  assign tags = mf.process_tags | split: '/'
+  assign tag_1 = ''
+  assign tag_2 = ''
+  assign tag_3 = ''
+  assign tag_4 = ''
+  assign tag_5 = ''
+  if tags.size == 5
+    # exactly five: positional, 01..05
+    assign tag_1 = tags[0] | strip
+    assign tag_2 = tags[1] | strip
+    assign tag_3 = tags[2] | strip
+    assign tag_4 = tags[3] | strip
+    assign tag_5 = tags[4] | strip
+  else
+    # fewer (most rows: "HANDSPUN / HANDWOVEN / NATURAL DYE"): each tag goes
+    # to the stage its word belongs to, and a stage with no tag falls back
+    # to its own fact.
+    for raw in tags
+      assign t = raw | strip
+      assign u = t | upcase
+      if u contains 'SPUN'
+        assign tag_2 = t
+      elsif u contains 'DYE' or u contains 'PRINT' or u contains 'INDIGO' or u contains 'AJRAKH'
+        assign tag_4 = t
+      elsif u contains 'WOVEN' or u contains 'IKAT' or u contains 'JAMDANI' or u contains 'BROCADE' or u contains 'CHANGEANT' or u contains 'KHADI' or u contains 'TWILL' or u contains 'MASHRU'
+        assign tag_3 = t
+      elsif u contains 'SILK' or u contains 'COTTON' or u contains 'LINEN' or u contains 'WOOL' or u contains 'MULMUL'
+        assign tag_1 = t
+      else
+        assign tag_5 = t
+      endif
+    endfor
+  endif
+  if tag_1 contains '['
+    assign tag_1 = ''
+  endif
+  if tag_2 contains '['
+    assign tag_2 = ''
+  endif
+  if tag_3 contains '['
+    assign tag_3 = ''
+  endif
+  if tag_4 contains '['
+    assign tag_4 = ''
+  endif
+  if tag_5 contains '['
+    assign tag_5 = ''
+  endif
+  assign tag_material = tag_1 | default: section.settings.tag_material
+  assign tag_spinning = tag_2 | default: f_yarn
+  assign tag_weaving = tag_3 | default: weave_tag
+  assign tag_dyeing = tag_4 | default: dye_tag
+  assign tag_construction = tag_5 | default: f_finishing
+
+  if mf.dye_process != blank
+    assign dye_method = mf.dye_process
+  endif
+  assign construction_method = mf.construction_method
 -%}
 
 <section class="ha-section ha-provenance{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" id="origin-and-process">
@@ -179,11 +246,11 @@
           <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_1 }}</h3>
         </div>
         <dl class="ha-provenance__lines ha-record">
-          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ f_fibre | default: confirm }}</dd></div>
-          <div class="ha-provenance__line"><dt>Origin</dt><dd>{{ mf.place_of_fibre.value.place | default: confirm }}</dd></div>
-          <div class="ha-provenance__line"><dt>Ratio</dt><dd>{{ mf.fibre_ratio | default: confirm }}</dd></div>
+          {%- render 'ha-provenance-lines', text: f_fibre, confirm: confirm -%}
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_origin }}</dt><dd>{{ mf.place_of_fibre.value.place | default: confirm }}</dd></div>
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_composition }}</dt><dd>{{ mf.fibre_ratio | default: confirm }}</dd></div>
         </dl>
-        {%- render 'ha-provenance-tag', tag: section.settings.tag_material, verified: verified, show_status: section.settings.show_status, known: f_fibre -%}
+        {%- render 'ha-provenance-tag', tag: tag_material, verified: verified, show_status: section.settings.show_status, known: f_fibre -%}
       </li>
 
       {%- comment -%} 02 SPINNING {%- endcomment -%}
@@ -193,11 +260,11 @@
           <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_2 }}</h3>
         </div>
         <dl class="ha-provenance__lines ha-record">
-          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ f_yarn | default: confirm }}</dd></div>
-          <div class="ha-provenance__line"><dt>Master</dt><dd>{%- render 'ha-provenance-master', master: m_spinning, confirm: confirm -%}</dd></div>
-          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_spinning.value.place | default: confirm }}</dd></div>
+          {%- render 'ha-provenance-lines', text: f_yarn, confirm: confirm -%}
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_master }}</dt><dd>{%- render 'ha-provenance-master', master: m_spinning, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_place }}</dt><dd>{{ mf.place_of_spinning.value.place | default: confirm }}</dd></div>
         </dl>
-        {%- render 'ha-provenance-tag', tag: f_yarn, verified: verified, show_status: section.settings.show_status, known: f_yarn, confirm: confirm -%}
+        {%- render 'ha-provenance-tag', tag: tag_spinning, verified: verified, show_status: section.settings.show_status, known: f_yarn, confirm: confirm -%}
         {%- render 'ha-provenance-note', title: note_spinning_title, body: note_spinning, label: section.settings.note_label -%}
       </li>
 
@@ -208,11 +275,11 @@
           <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_3 }}</h3>
         </div>
         <dl class="ha-provenance__lines ha-record">
-          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ f_weave | default: confirm }}</dd></div>
-          <div class="ha-provenance__line"><dt>Master</dt><dd>{%- render 'ha-provenance-master', master: m_weaving, confirm: confirm -%}</dd></div>
-          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_weaving.value.place | default: confirm }}</dd></div>
+          {%- render 'ha-provenance-lines', text: f_weave, confirm: confirm -%}
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_master }}</dt><dd>{%- render 'ha-provenance-master', master: m_weaving, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_place }}</dt><dd>{{ mf.place_of_weaving.value.place | default: confirm }}</dd></div>
         </dl>
-        {%- render 'ha-provenance-tag', tag: weave_tag, verified: verified, show_status: section.settings.show_status, known: f_weave, confirm: confirm -%}
+        {%- render 'ha-provenance-tag', tag: tag_weaving, verified: verified, show_status: section.settings.show_status, known: f_weave, confirm: confirm -%}
         {%- render 'ha-provenance-note', title: note_weaving_title, body: note_weaving, label: section.settings.note_label -%}
       </li>
 
@@ -223,11 +290,11 @@
           <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_4 }}</h3>
         </div>
         <dl class="ha-provenance__lines ha-record">
-          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ dye_method | default: confirm }}</dd></div>
-          <div class="ha-provenance__line"><dt>Master</dt><dd>{%- render 'ha-provenance-master', master: m_dyeing, confirm: confirm -%}</dd></div>
-          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_dyeing.value.place | default: confirm }}</dd></div>
+          {%- render 'ha-provenance-lines', text: dye_method, confirm: confirm -%}
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_master }}</dt><dd>{%- render 'ha-provenance-master', master: m_dyeing, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_place }}</dt><dd>{{ mf.place_of_dyeing.value.place | default: confirm }}</dd></div>
         </dl>
-        {%- render 'ha-provenance-tag', tag: dye_tag, verified: verified, show_status: section.settings.show_status, known: dye_method, confirm: confirm -%}
+        {%- render 'ha-provenance-tag', tag: tag_dyeing, verified: verified, show_status: section.settings.show_status, known: dye_method, confirm: confirm -%}
         {%- render 'ha-provenance-note', title: note_dyeing_title, body: note_dyeing, label: section.settings.note_label -%}
       </li>
 
@@ -238,11 +305,11 @@
           <h3 class="ha-provenance__name ha-narrate">{{ section.settings.stage_5 }}</h3>
         </div>
         <dl class="ha-provenance__lines ha-record">
-          <div class="ha-provenance__line ha-provenance__line--method"><dd>{{ mf.construction_method | default: confirm }}</dd></div>
-          <div class="ha-provenance__line"><dt>Atelier</dt><dd>{%- render 'ha-provenance-master', master: m_construction, confirm: confirm -%}</dd></div>
-          <div class="ha-provenance__line"><dt>Place</dt><dd>{{ mf.place_of_construction.value.place | default: confirm }}</dd></div>
+          {%- render 'ha-provenance-lines', text: construction_method, confirm: confirm -%}
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_atelier }}</dt><dd>{%- render 'ha-provenance-master', master: m_construction, confirm: confirm -%}</dd></div>
+          <div class="ha-provenance__line"><dt>{{ section.settings.label_place }}</dt><dd>{{ mf.place_of_construction.value.place | default: confirm }}</dd></div>
         </dl>
-        {%- render 'ha-provenance-tag', tag: f_finishing, verified: verified, show_status: section.settings.show_status, known: f_finishing, confirm: confirm -%}
+        {%- render 'ha-provenance-tag', tag: tag_construction, verified: verified, show_status: section.settings.show_status, known: construction_method, confirm: confirm -%}
       </li>
     </ol>
 
@@ -272,7 +339,13 @@
     { "type": "text", "id": "stage_3", "label": "03", "default": "Weaving" },
     { "type": "text", "id": "stage_4", "label": "04", "default": "Dyeing" },
     { "type": "text", "id": "stage_5", "label": "05", "default": "Construction" },
-    { "type": "text", "id": "tag_material", "label": "Fibre classification", "default": "Material" },
+    { "type": "text", "id": "tag_material", "label": "Fibre classification", "default": "Material", "info": "Used when hartwick.process_tags has no first entry." },
+    { "type": "header", "content": "Line labels" },
+    { "type": "text", "id": "label_origin", "label": "Fibre origin", "default": "Origin" },
+    { "type": "text", "id": "label_composition", "label": "Fibre composition", "default": "Composition" },
+    { "type": "text", "id": "label_master", "label": "Master", "default": "Master", "info": "Framework v3 term. The SKIRT 001 placement PNG writes “Maker”; change here if Aloha confirms it." },
+    { "type": "text", "id": "label_atelier", "label": "Construction atelier", "default": "Atelier" },
+    { "type": "text", "id": "label_place", "label": "Place", "default": "Place" },
     { "type": "header", "content": "Honesty" },
     { "type": "text", "id": "confirm_text", "label": "Unknown fact reads", "default": "[Confirm]" },
     { "type": "checkbox", "id": "show_status", "label": "Append “/ Unverified” to classifications until provenance is verified", "default": true, "info": "Verified = hartwick.provenance_verified_on is set on the product." },

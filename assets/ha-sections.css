@@ -4439,3 +4439,12 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   text-transform: none;
   line-height: 1.2;
 }
+
+/* --- accordion row links (tab 05: Ask about care / View delivery information) */
+.ha-row-links { display: flex; flex-wrap: wrap; gap: 1.2rem 3.2rem; margin: 0 0 1.6rem; }
+.ha-row-link { display: inline-flex; align-items: center; gap: 1.2rem; min-height: 44px; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: inherit; text-decoration: none; }
+.ha-row-link:hover .ha-pdp__arrow, .ha-row-link:focus-visible .ha-pdp__arrow { width: 4rem; }
+.ha-cloth__explanation { margin: 2rem 0 0; max-width: 34ch; }
+.ha-pdp__fit-body { margin: 0.8rem 0 0; max-width: 32ch; }
+.ha-pdp__intro--rich p { margin: 0 0 1rem; }
+.ha-pdp__intro--rich p:last-child { margin-bottom: 0; }

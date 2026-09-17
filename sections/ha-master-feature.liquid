@@ -76,6 +76,15 @@
   assign number = section.settings.number | default: '01'
 -%}
 
+{%- comment -%}
+  Tab 05 (16 September): "Hide unverified maker module until confirmed."
+  With no verified Master the section renders nothing — unless "Show the
+  empty slot" is on, which it is on the development theme so Aloha can check
+  the placement. Untick it before publishing and the module disappears from
+  every garment that has no verified Master, and returns by itself when one
+  is linked.
+{%- endcomment -%}
+{%- if has_identity or section.settings.show_slot -%}
 <section class="ha-section ha-section--field-peat ha-masterfeat{% if photo != blank %} ha-masterfeat--photo{% endif %}{% unless has_identity %} ha-masterfeat--slot{% endunless %}">
   {%- if photo != blank -%}
     <div class="ha-masterfeat__media">
@@ -130,6 +139,7 @@
     {%- endunless -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
@@ -152,6 +162,7 @@
     { "type": "text", "id": "slot_discipline", "label": "Discipline slot", "default": "[Discipline]" },
     { "type": "text", "id": "slot_place", "label": "Place slot", "default": "[Place]" },
     { "type": "text", "id": "slot_verify", "label": "Verify note", "default": "Identity + product link to verify" },
+    { "type": "checkbox", "id": "show_slot", "label": "Show the empty slot when no Master is verified", "default": false, "info": "Off = the module is hidden until a Master is linked (sheet, tab 05). On for layout checks." },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
   ],
   "presets": [{ "name": "HA — The Master" }]

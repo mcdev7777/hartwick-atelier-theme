@@ -47,7 +47,18 @@
       colour       "Natural / Undyed"          -> shopify.color-pattern
       made_in      place of construction
       finishing    hartwick.finishing
-      reference    variant SKU (blank on every old product — none were set)
+      reference    variant SKU -> hartwick.material_record_ref
+      subtitle     the Expression before its comma: "Handspun Matka Silk"
+                   (tab 01 "Short hero subtitle") — the serif line under the Style
+      selector     hartwick.colour_name -> the Expression after its comma:
+                   "Emerald Changeant" (tab 01 "Colour / expression selector") —
+                   the buy rail's Expression row and the COLOUR fact
+      material_line hartwick.material_line -> "HANDSPUN / HANDWOVEN" derived
+                   from yarn + weave (tab 01 "Material / technique line")
+
+  16 September, second pass: the fields follow Aloha's product-copy sheet
+  ("Hartwick Atelier | Product Copy for Angela & Ivan") one column each —
+  see docs/product-data-mapping.md for the column -> field table.
 {%- endcomment -%}
 {%- liquid
   assign mf = product.metafields.hartwick
@@ -190,9 +201,69 @@
       endif
 
     when 'reference'
+      # The product reference is the SKU without its size suffix: the
+      # importer writes AP-SKI-001-HWMS-EMG-S / -M / -L per variant, and the
+      # Production Record names the Expression, not a size.
       assign v = product.selected_or_first_available_variant
       if v.sku != blank
         assign out = v.sku
+        if product.variants.size > 1
+          assign segs = v.sku | split: '-'
+          assign tail = segs | last
+          assign size_code = v.title | upcase | slice: 0, 3
+          if segs.size > 1 and tail == size_code
+            assign keep = segs.size | minus: 1
+            assign out = segs | slice: 0, keep | join: '-'
+          endif
+        endif
+      elsif mf.material_record_ref != blank
+        assign out = mf.material_record_ref
+      endif
+
+    when 'subtitle'
+      assign e = mf.expression
+      if e == blank and title_parts.size > 1
+        assign e = title_parts[1] | strip
+      elsif e == blank
+        assign e = cf.subtitle
+      endif
+      assign out = e | split: ',' | first
+
+    when 'selector'
+      if mf.colour_name != blank
+        assign out = mf.colour_name
+      else
+        assign e = mf.expression
+        if e == blank and title_parts.size > 1
+          assign e = title_parts[1] | strip
+        endif
+        assign parts = e | split: ','
+        if parts.size > 1
+          assign out = parts | last
+        endif
+      endif
+
+    when 'material_line'
+      if mf.material_line != blank
+        assign out = mf.material_line
+      else
+        assign y = ''
+        if mf.yarn != blank
+          assign y = mf.yarn
+        elsif marks contains 'HANDSPUN' or marks contains 'KHADI'
+          assign y = 'Handspun'
+        endif
+        assign w = ''
+        if mf.weave != blank
+          assign w = mf.weave | split: '/' | first | strip
+        elsif marks contains 'HANDWOVEN' or marks contains 'KHADI' or marks contains 'IKAT' or marks contains 'JAMDANI' or marks contains 'BROCADE'
+          assign w = 'Handwoven'
+        endif
+        if y != blank and w != blank
+          assign out = y | append: ' / ' | append: w
+        else
+          assign out = y | append: w
+        endif
       endif
   endcase
 -%}{{ out | strip }}

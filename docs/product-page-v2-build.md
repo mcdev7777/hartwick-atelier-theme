@@ -163,3 +163,77 @@ Definitions are created in the admin by hand, as before.
 
 Running total against the 40-hour ceiling: **from the hours log** — not
 recorded here.
+
+---
+
+# Second pass — Aloha's product-copy sheet, 16 September (afternoon)
+
+Aloha's follow-up: use the V2 layout with the **SKIRT 001 PNG** as the
+placement guide, take the copy from the sheet *Hartwick Atelier | Product
+Copy for Angela & Ivan* (5 tabs, 78 expressions), leave placeholders where
+the sheet has no fact, and map **sheet field → Shopify field → website
+location → SEO/AI use**.
+
+## Built
+
+- **Every tab column has a field on the page.** Thirteen new `hartwick.*`
+  fields (build sheet §5.5) for columns with no home; everything else maps to
+  what existed. The fact snippet resolves subtitle / selector / material line
+  from one Expression string so nothing is stored twice.
+- **Tab 05's shared text**: COLLECT (locale `add_to_cart`, so Luxe's JS
+  restores the same word after a size change), EXPECTED DISPATCH, "Request a
+  Private Appointment", "Scroll to explore", live AVAILABILITY ("Select a
+  size" → Available / Sold out from Luxe's `variantChange` event; a recorded
+  `availability_note` wins), ASK ABOUT CARE, VIEW DELIVERY INFORMATION / VIEW
+  RETURNS POLICY to `/policies/…`, the Master module hidden until a Master is
+  verified (`show_slot` on for the placement check).
+- **From Fibre to Garment** reads the sheet's `;`-separated stage cells as
+  lines and the "Process tags" cell either positionally (five entries) or by
+  keyword (fewer). Labels Origin / Composition / Master / Atelier / Place are
+  settings — "Master" kept per Framework v3, "Maker" is one field away.
+- **The Cloth** reads heading, statement (multi-line), explanation,
+  composition, record reference, captions list and the look-closer line.
+- `scripts/sheet-to-shopify.py` — the importer: `--match` (78 rows → Shopify
+  products, 54 certain), `--plan P001`, `--write P001` (metafields + SKUs,
+  invisible on the live theme), `--launch` (title / description — live), `--
+  definitions`, `--csv` (admin-import alternative), `--doc` (regenerates
+  `docs/product-data-mapping.md` from the same table).
+
+## Written to Shopify (after Ivan granted write scopes, 16 Sept evening)
+
+- Definitions: `place_of_fibre`, `place_of_spinning` (→ origin),
+  `related_products` (list of products); `master.stage`, `lot.quantity`,
+  `lot.completed_on`. The other 57 `hartwick.*` product definitions were
+  already live. The data model is complete.
+- **SKIRT 001** (`tribeca-skirt-handwoven-matka-silk-emerald`,
+  gid 9663711478059): 21 metafields from the sheet + variant SKUs
+  AP-SKI-001-HWMS-EMG-S / -M / -L. Title, description and price untouched.
+  Verified rendering on Hartwik - Dev: provenance and Cloth match the SKIRT
+  001 placement PNG; Production Record reads the reference without its size
+  suffix; the old site's bullets no longer append once sheet copy exists;
+  MADE IN reads “[Confirm garment origin]” rather than a stand-in.
+
+## Not done, and why
+
+- **No images placed.** Aloha is renaming; tab 03's filename cells are empty.
+  `~/Downloads/THE BRAND BOOK/IMAGE` holds ~400 old-named originals
+  (`…TRIBECA_SKIRT…`) — the legacy-name column matches them, but which frame
+  shows the waistband or the pleats is her selection, not a guess.
+- **Price not written** — EU RRP vs USD base currency needs Christina's rule.
+
+## Verification
+
+Development theme, 1440: Collect / Select a size → M → Collect + Available;
+labels Expression / Availability / Expected dispatch; five policy and care
+links resolve; no Liquid errors; Theme Check 0 errors. Pushed to Hartwik -
+Dev, confirmed rendering there.
+
+## Hours — second pass
+
+| | Hrs |
+|---|---|
+| Sheet read (5 tabs, 78 rows), profiling, product matching | 1.0 |
+| Theme: tab 05 text, live availability, sheet fields in five sections | 2.0 |
+| Importer + mapping document generator | 2.0 |
+| Verification, push, documents, reply draft | 1.0 |
+| **Total** | **6.0** |
