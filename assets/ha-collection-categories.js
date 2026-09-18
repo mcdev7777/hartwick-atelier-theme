@@ -14,8 +14,11 @@
  * counter measures rather than observes.
  */
 (() => {
+  // Touch, or phone width: the theme editor's phone view and a desktop
+  // browser at phone width must behave like the phone itself.
   const touch = window.matchMedia('(hover: none)');
-  if (!touch.matches) return;
+  const narrow = window.matchMedia('(max-width: 749px)');
+  if (!touch.matches && !narrow.matches) return;
   const tiles = Array.from(document.querySelectorAll(
     '.ha-cats--reveal-scroll .ha-cats__tile, .ha-clothing__card, .ha-clothing__feature-media, .ha-idx__card, .ha-idx__editorial'
   ));

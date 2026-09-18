@@ -204,7 +204,7 @@
             "view_all_text": "View all silk scarves",
             "view_all_url": "/collections/fine-silk",
             "dir_mode": "summary",
-            "dir_summary": "Silk scarves — seven formats",
+            "dir_summary": "Silk scarves",
             "dir_second": "Explore silk formats",
             "editorial_image": "shopify://shop_images/196_HARTWICK_FINESILK_PETITSQUARE01_SCARF_NATURALDYE_BLOCKPRINT.jpg",
             "editorial_alt": "Block-printed fine silk in the studio"
@@ -326,7 +326,7 @@
             "view_all_text": "View all jewellery",
             "view_all_url": "/collections/fine-jewellery",
             "dir_mode": "entries",
-            "dir_show_secondary": true,
+            "dir_show_secondary": false,
             "dir_direct": false
           }
         },
@@ -444,14 +444,14 @@
         "e_4_01"
       ],
       "settings": {
-        "header_image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg",
+        "header_image": "shopify://shop_images/HartwickAtelier-Loom-Warp-4R1A4471.jpg",
         "header_focus_x": 50,
         "header_focus_y": 50,
         "crumb": "Collection",
         "heading": "The Collection Index",
         "intro": "Clothing, silk scarves, fine jewellery and yoga mats. Find your way by category.",
         "dir_label": "Explore the index",
-        "dir_count": "Four collections",
+        "dir_count": "",
         "back_text": "Back to index",
         "empty_text": "Photograph to supply",
         "show_placeholder_note": true,

@@ -116,7 +116,7 @@
 }
 
 .ha-display {
-  font-weight: 500;
+  font-weight: 300;
   line-height: 1.12;
   letter-spacing: 0;
   margin: 0;
@@ -683,7 +683,7 @@
 
 .ha-journal__title {
   font-size: var(--ha-t-expression);
-  font-weight: 500;
+  font-weight: 300;
   margin: 0 0 0.8rem;
 }
 
@@ -2194,6 +2194,7 @@ body.lx-template--product .magnify-icon:focus-visible {
 }
 .ha-pdp__field-value--lead {
   font-family: var(--ha-font-narrate);
+  font-weight: 300; /* Junicode is always Light; .ha-record's 400 is for Noto */
   font-size: var(--ha-t-expression);
   letter-spacing: 0.01em;
   text-transform: none;
@@ -3153,15 +3154,15 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-policies__list a:hover,
 .ha-policies__list a:focus-visible { border-bottom-color: currentColor; }
 .ha-policies__policy { border-top: 1px solid var(--ha-rule); padding-top: 3.2rem; margin-top: 4rem; scroll-margin-top: 10rem; }
-.ha-policies__title { margin: 0 0 2rem; font-size: var(--ha-t-editorial); font-weight: 500; line-height: 1.2; }
+.ha-policies__title { margin: 0 0 2rem; font-size: var(--ha-t-editorial); font-weight: 300; line-height: 1.2; }
 .ha-policies__body { max-width: none; }
 .ha-policies__body h1, .ha-policies__body h2, .ha-policies__body h3, .ha-policies__body h4 {
-  font-family: inherit; font-size: var(--ha-t-statement); font-weight: 500; line-height: 1.3; margin: 2.8rem 0 1.2rem;
+  font-family: inherit; font-size: var(--ha-t-statement); font-weight: 300; line-height: 1.3; margin: 2.8rem 0 1.2rem;
 }
 .ha-policies__body p, .ha-policies__body li { margin: 0 0 1.2rem; }
 .ha-policies__body ul, .ha-policies__body ol { padding-left: 2rem; margin: 0 0 1.2rem; }
 .ha-policies__body a { color: inherit; }
-.ha-policies__body strong { font-weight: 500; }
+.ha-policies__body strong { font-weight: 300; }
 
 /* Tables come from Admin > Policies as pasted HTML — the shipping table
    arrives with width="670" and four columns, which on a phone pushed the
@@ -3191,7 +3192,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   border-bottom: 1px solid var(--ha-rule);
   min-width: 6.4rem;
 }
-.ha-policies__body th { font-weight: 500; }
+.ha-policies__body th { font-weight: 300; }
 .ha-policies__body td p:last-child { margin-bottom: 0; }
 
 /* --- the House symbol in the header --------------------------------------
@@ -3201,6 +3202,11 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-header-mark { display: flex; align-items: center; justify-content: center; }
 .ha-header-mark a { display: flex; align-items: center; justify-content: center; height: 100%; }
 .ha-header-mark img { width: var(--ha-mark) !important; height: var(--ha-mark) !important; object-fit: contain; }
+/* The symbol sat 10px high (Ivan, 18 Sept): Luxe's .header--logo-std is a
+   70px block and the 50px image hugged its top. Centre the image inside it. */
+.ha-header-mark .header--logo-std { display: flex; align-items: center; justify-content: center; height: 100%; }
+.header-bar .header--logo-std { display: flex; align-items: center; justify-content: center; }
+.header-bar .header--logo-std img { display: block; margin: auto; }
 
 /* --- the opening pair ---------------------------------------------------- */
 .ha-abhero { border-bottom: 0; }
@@ -3252,7 +3258,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-statement__heading { margin: 0 auto; max-width: 36ch; }
 .ha-statement__heading--caps { text-transform: uppercase; letter-spacing: 0.02em; }
 .ha-statement--display .ha-statement__heading { font-size: calc(var(--ha-t-editorial) * 1.25); line-height: 1.15; }
-.ha-statement--quote .ha-statement__heading { font-size: calc(var(--ha-t-editorial) * 0.95); line-height: 1.3; max-width: none; font-weight: 400; }
+.ha-statement--quote .ha-statement__heading { font-size: calc(var(--ha-t-editorial) * 0.95); line-height: 1.3; max-width: none; font-weight: 300; }
 /* The line between sections sits close to what precedes it — the drawing has
    136px from the Journey columns to the quote at 1440, not a full band. */
 .ha-statement--quote .ha-wrap { padding-top: 4.8rem; padding-bottom: var(--ha-section-y); }
@@ -3394,7 +3400,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-cats__head .ha-placeholder-note { text-align: left; margin-top: 0; }
 .ha-cats__title {
   margin: 0;
-  font-weight: 400;
+  font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1.1;
@@ -3642,7 +3648,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   line-height: 1.25;
   letter-spacing: 0.01em;
   margin: 0 0 1.2rem;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .ha-ccols__body {
@@ -4066,7 +4072,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-pdp__details li { margin: 0 0 0.4rem; }
 .ha-pdp__details li::marker { color: var(--ha-text-quiet); }
 .ha-policy-body table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: var(--ha-t-meta); }
-.ha-policy-body th, .ha-policy-body td { text-align: left; padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--ha-rule); vertical-align: top; font-weight: 400; }
+.ha-policy-body th, .ha-policy-body td { text-align: left; padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--ha-rule); vertical-align: top; font-weight: 300; }
 .ha-policy-body + .ha-policy-body { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--ha-rule); }
 
 /* Anchors under a sticky header: the heading lands below it, as the brief
@@ -4205,7 +4211,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-provenance__stage { min-width: 0; }
 .ha-provenance__stage-head { display: flex; align-items: baseline; gap: 1.6rem; margin: 0 0 1.6rem; }
 .ha-provenance__num { font-size: calc(var(--ha-t-statement) * 1.1); line-height: 1; }
-.ha-provenance__name { font-size: calc(var(--ha-t-statement) * 1.1); line-height: 1; margin: 0; font-weight: 500; }
+.ha-provenance__name { font-size: calc(var(--ha-t-statement) * 1.1); line-height: 1; margin: 0; font-weight: 300; }
 .ha-provenance__lines { margin: 0; display: grid; gap: 0.8rem; font-size: var(--ha-t-meta); letter-spacing: 0.03em; text-transform: none; }
 .ha-provenance__line { display: flex; gap: 0.6rem; }
 .ha-provenance__line dt::after { content: ' /'; }
@@ -4367,7 +4373,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-masterfeat__eyebrow { grid-column: 1; grid-row: 1; margin: 0; color: var(--ha-text-invert); }
 .ha-masterfeat__slotlabel { grid-column: 2; grid-row: 1; margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-invert); opacity: 0.85; text-align: right; }
 .ha-masterfeat__identity { grid-column: 1; grid-row: 3; align-self: end; max-width: 40rem; }
-.ha-masterfeat__name { font-size: calc(var(--ha-t-editorial) * 1.3); line-height: 1.05; margin: 0 0 1.6rem; font-weight: 400; color: var(--ha-text-invert); }
+.ha-masterfeat__name { font-size: calc(var(--ha-t-editorial) * 1.3); line-height: 1.05; margin: 0 0 1.6rem; font-weight: 300; color: var(--ha-text-invert); }
 .ha-masterfeat--slot .ha-masterfeat__name { opacity: 0.9; }
 .ha-masterfeat__line { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-invert); }
 .ha-masterfeat__rule { border: 0; border-top: 1px solid rgba(233, 243, 255, 0.35); margin: 2.4rem 0; max-width: 30rem; }
@@ -4397,7 +4403,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-lotrec__table { width: 100%; border-collapse: collapse; font-size: var(--ha-t-meta); letter-spacing: 0.03em; text-transform: none; }
 .ha-lotrec__table tr { border-top: 1px solid var(--ha-rule); }
 .ha-lotrec__table tr:last-child { border-bottom: 1px solid var(--ha-rule); }
-.ha-lotrec__table th, .ha-lotrec__table td { text-align: left; padding: 1.8rem 1.6rem 1.8rem 0; vertical-align: top; font-weight: 400; }
+.ha-lotrec__table th, .ha-lotrec__table td { text-align: left; padding: 1.8rem 1.6rem 1.8rem 0; vertical-align: top; font-weight: 300; }
 .ha-lotrec__table th { text-transform: uppercase; letter-spacing: var(--ha-track-meta); color: var(--ha-text); width: 32%; }
 .ha-lotrec__open { color: var(--ha-cutch-resin); }
 @media screen and (min-width: 990px) {
@@ -4473,7 +4479,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-clothing__head-grid { display: grid; gap: 2.4rem; padding-bottom: 2.4rem; }
 .ha-clothing__crumbs { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); margin: 0 0 2.4rem; }
 .ha-clothing__crumbs a { color: inherit; text-decoration: none; }
-.ha-clothing__title { font-size: calc(var(--ha-t-editorial) * 1.9); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1; margin: 0 0 2.4rem; font-weight: 400; }
+.ha-clothing__title { font-size: calc(var(--ha-t-editorial) * 1.9); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1; margin: 0 0 2.4rem; font-weight: 300; }
 .ha-clothing__back { display: inline-block; font-size: var(--ha-t-ui); letter-spacing: 0.12em; text-decoration: none; color: var(--ha-text); min-height: 44px; line-height: 44px; }
 .ha-clothing__intro { font-size: calc(var(--ha-t-statement) * 1.05); line-height: 1.35; margin: 0; max-width: 24ch; }
 @media screen and (min-width: 990px) {
@@ -4523,7 +4529,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-clothing__cat-grid { display: grid; gap: 2.4rem; }
 .ha-clothing__rail-inner { display: grid; gap: 1.2rem; }
 .ha-clothing__cat-num { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
-.ha-clothing__cat-heading { margin: 0; font-size: calc(var(--ha-t-editorial) * 0.95); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1; font-weight: 400; }
+.ha-clothing__cat-heading { margin: 0; font-size: calc(var(--ha-t-editorial) * 0.95); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1; font-weight: 300; }
 .ha-clothing__top { display: inline-flex; align-items: center; gap: 0.8rem; font-size: var(--ha-t-ui); letter-spacing: 0.12em; text-decoration: none; color: var(--ha-text); min-height: 44px; }
 .ha-clothing__chev { width: 0.7rem; height: 0.7rem; border-top: 1px solid currentColor; border-left: 1px solid currentColor; transform: rotate(45deg) translateY(0.2rem); }
 .ha-clothing__cat-blurb { margin: 1.2rem 0 0; font-size: var(--ha-t-body); line-height: 1.45; color: var(--ha-text-quiet); max-width: 18ch; }
@@ -4539,7 +4545,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-clothing__link:focus-visible .ha-clothing__img,
 .ha-clothing__card:focus-within .ha-clothing__img { filter: grayscale(0); }
 .ha-clothing__empty { display: grid; place-items: center; height: 100%; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
-.ha-clothing__name { margin: 0 0 0.4rem; font-size: calc(var(--ha-t-statement) * 1.15); font-weight: 400; line-height: 1.2; }
+.ha-clothing__name { margin: 0 0 0.4rem; font-size: calc(var(--ha-t-statement) * 1.15); font-weight: 300; line-height: 1.2; }
 .ha-clothing__expr { margin: 0; font-size: var(--ha-t-body); line-height: 1.4; }
 .ha-clothing__lot { margin: 2rem 0 0.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
 .ha-clothing__meta { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
@@ -4573,7 +4579,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 @media (hover: none) { .ha-clothing--touch-colour .ha-clothing__feature-figure img { filter: grayscale(0); } }
 @media (prefers-reduced-motion: reduce) { .ha-clothing__feature-figure img { transition: none; } }
 .ha-clothing__feature-eyebrow { margin-bottom: 1.6rem; }
-.ha-clothing__feature-heading { margin: 0 0 2rem; font-size: calc(var(--ha-t-editorial) * 1.15); font-weight: 400; line-height: 1.1; }
+.ha-clothing__feature-heading { margin: 0 0 2rem; font-size: calc(var(--ha-t-editorial) * 1.15); font-weight: 300; line-height: 1.1; }
 .ha-clothing__feature-body { max-width: 52ch; font-size: calc(var(--ha-t-body) * 1.15); }
 .ha-clothing__feature-link { display: inline-flex; align-items: center; gap: 1.2rem; margin-top: 3.2rem; font-size: var(--ha-t-ui); letter-spacing: 0.12em; text-decoration: none; color: var(--ha-text); min-height: 44px; }
 .ha-clothing__corner { width: 0.8rem; height: 0.8rem; border-top: 1px solid currentColor; border-right: 1px solid currentColor; }
@@ -4614,17 +4620,24 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-idx__crumbs { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); margin: 0 0 3.2rem; opacity: 0.9; }
 .ha-idx__crumbs a { color: inherit; text-decoration: none; }
 .ha-idx__title-row { display: grid; gap: 1.6rem; align-items: end; }
-.ha-idx__title { margin: 0; font-size: calc(var(--ha-t-editorial) * 1.6); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.05; font-weight: 400; color: var(--ha-text-invert); }
-.ha-idx__intro { margin: 0; font-style: italic; font-size: calc(var(--ha-t-statement) * 1.05); line-height: 1.35; max-width: 34ch; }
+/* Junicode Light throughout the header — Aloha, 18 September 2026: "please use
+   Junicode Light not Bold". The Regular read as bold in white on the photograph.
+   Sizes are off the 1440 artboard: title cap height 36px (Junicode's cap is
+   0.666 em, so 54px), directory headings cap 20px (30px), intro 23px. */
+.ha-idx__title { margin: 0; font-size: calc(var(--ha-t-editorial) * 1.6); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.05; font-weight: 300; color: var(--ha-text-invert); }
+.ha-idx__intro { margin: 0; font-style: italic; font-weight: 300; font-size: calc(var(--ha-t-statement) * 1.05); line-height: 1.35; max-width: 34ch; }
 .ha-idx__rule { border: 0; border-top: 1px solid rgba(233, 243, 255, 0.45); margin: 2.4rem 0 1.6rem; }
 .ha-idx__dir-labels { display: flex; justify-content: space-between; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.9; margin: 0 0 2rem; }
 .ha-idx__dir { display: grid; gap: 2.4rem; }
-.ha-idx__dir-col { min-width: 0; }
-.ha-idx__dir-heading { display: flex; align-items: baseline; gap: 1.2rem; margin: 0 0 1.2rem; font-size: calc(var(--ha-t-statement) * 1.15); font-weight: 400; color: var(--ha-text-invert); }
+.ha-idx__dir-col { position: relative; min-width: 0; }
+.ha-idx__dir-heading { display: flex; align-items: baseline; gap: 2.4rem; margin: 0 0 1.4rem; font-size: calc(var(--ha-t-statement) * 1.15); font-weight: 300; line-height: 1.2; color: var(--ha-text-invert); }
 .ha-idx__dir-heading a { color: inherit; text-decoration: none; }
 .ha-idx__dir-heading a:hover, .ha-idx__dir-heading a:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
 .ha-idx__dir-num { font-size: var(--ha-t-meta); opacity: 0.8; }
-.ha-idx__dir-list { list-style: none; margin: 0; padding: 0; }
+/* The list is ruled top and bottom: a hairline above the first name and one
+   under each name, as the artboard draws every column (Aloha, 18 September:
+   "missing a line marking above in the fine silk and yoga"). */
+.ha-idx__dir-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(233, 243, 255, 0.55); }
 .ha-idx__dir-link { display: block; padding: 1rem 0 0.9rem; border-bottom: 1px solid rgba(233, 243, 255, 0.55); color: var(--ha-text-invert); text-decoration: none; font-size: var(--ha-t-ui); letter-spacing: 0.1em; min-height: 44px; }
 .ha-idx__dir-link:hover, .ha-idx__dir-link:focus-visible { border-bottom-color: currentColor; text-decoration: underline; text-underline-offset: 0.4rem; }
 .ha-idx__dir-link--quiet { border-bottom: 0; }
@@ -4632,14 +4645,24 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   .ha-idx__dir { grid-template-columns: 1fr 1fr; column-gap: 4rem; }
 }
 @media screen and (min-width: 990px) {
-  .ha-idx__head-inner { padding-top: 4rem; padding-bottom: 4.8rem; }
+  .ha-idx__head-inner { padding-top: 4rem; padding-bottom: 6.4rem; }
+  .ha-idx__crumbs { margin-bottom: 4rem; }
   .ha-idx__title-row { grid-template-columns: 1fr auto; column-gap: 4rem; }
-  .ha-idx__title { font-size: calc(var(--ha-t-editorial) * 2.1); }
-  .ha-idx__dir { grid-template-columns: repeat(4, 1fr); column-gap: 0; }
-  .ha-idx__dir-col { padding: 0 3.2rem; border-left: 1px solid rgba(233, 243, 255, 0.35); }
-  .ha-idx__dir-col:first-child { padding-left: 0; border-left: 0; }
-  .ha-idx__dir-col:last-child { padding-right: 0; }
+  .ha-idx__title { font-size: calc(var(--ha-t-editorial) * 1.7); }
+  .ha-idx__rule { margin: 3.6rem 0 2.4rem; }
+  .ha-idx__dir-heading { font-size: calc(var(--ha-t-editorial) * 0.94); }
+  /* Four columns at the artboard's proportions: on a 350px pitch the names
+     and their rules run 262px, then 64px of air, the column rule, and 24px
+     before the next column's names. The gap between columns is therefore
+     88px (a quarter of the pitch) and the rule sits 27% of the way across it
+     from the right; both scale with the viewport so the ratio holds. Aloha,
+     18 September: the rules "look too wide" when they ran to the column rule. */
+  .ha-idx__dir { --ha-idx-dir-gap: clamp(4.8rem, 5.4vw, 7.8rem); grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--ha-idx-dir-gap); }
+  .ha-idx__dir-col + .ha-idx__dir-col::before { content: ""; position: absolute; top: 0.4rem; bottom: -2rem; left: calc(var(--ha-idx-dir-gap) * -0.27); border-left: 1px solid rgba(233, 243, 255, 0.35); }
+  /* 35px rows, as drawn. The 44px touch height stays for phones and tablets. */
+  .ha-idx__dir-link { padding: 1rem 0 0.9rem; min-height: 0; line-height: 1.3; }
 }
+@media (hover: none) { .ha-idx__dir-link { min-height: 44px; } }
 
 /* --- a group: rail + cards ---------------------------------------------- */
 .ha-idx__group { border-bottom: 1px solid var(--ha-rule); scroll-margin-top: var(--ha-idx-header); }
@@ -4647,7 +4670,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-idx__group-grid > * { min-width: 0; }
 .ha-idx__rail-inner { display: grid; gap: 1.2rem; align-content: start; }
 .ha-idx__num { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
-.ha-idx__heading { margin: 0; font-size: calc(var(--ha-t-editorial) * 0.95); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1; font-weight: 400; color: var(--ha-ink-title); }
+.ha-idx__heading { margin: 0; font-size: calc(var(--ha-t-editorial) * 0.95); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1; font-weight: 300; color: var(--ha-ink-title); }
 .ha-idx__count { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
 .ha-idx__back { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.2rem; font-size: var(--ha-t-ui); letter-spacing: 0.12em; text-decoration: none; color: var(--ha-text); min-height: 44px; margin-top: 0.8rem; }
 .ha-idx__chev { width: 0.7rem; height: 0.7rem; border-top: 1px solid currentColor; border-right: 1px solid currentColor; transform: rotate(45deg); }
@@ -4752,6 +4775,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   .ha-idx__rule { border-top-color: var(--ha-rule); }
   .ha-idx__dir-labels { color: var(--ha-text-quiet); }
   .ha-idx__dir-heading, .ha-idx__dir-heading a { color: var(--ha-ink-title); }
+  .ha-idx__dir-list { border-top-color: var(--ha-rule); }
   .ha-idx__dir-link { color: var(--ha-text); border-bottom-color: var(--ha-rule); padding: 0.8rem 0 0.7rem; }
   .ha-idx__dir { gap: 2rem; }
   .ha-idx__dir-col + .ha-idx__dir-col { padding-top: 0.8rem; }
@@ -4767,12 +4791,14 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    "on mobile mode the texts should have full width".
    ========================================================================== */
 
-/* 1. Black and white on touch screens, everywhere: at rest the photograph is
+/* 1. Black and white on phones, everywhere: at rest the photograph is
    monochrome; colour arrives as it scrolls into view and leaves as it scrolls
-   out (assets/ha-collection-categories.js, IntersectionObserver at 55%), and a
-   tap opens the destination. This overrides the brief's "colour on touch" —
-   Ivan and Aloha both want the effect on phones. */
-@media (hover: none) {
+   out (assets/ha-collection-categories.js), and a tap opens the destination.
+   Keyed on touch OR on phone width, so the theme editor's phone view and a
+   desktop browser at phone width behave like the phone itself (Ivan, 18 Sept:
+   "doesn't work on mobile mode again"). Overrides the brief's "colour on
+   touch" — Ivan and Aloha both want the effect on phones. */
+@media (hover: none), (max-width: 749px) {
   .ha-clothing--touch-colour .ha-clothing__img,
   .ha-clothing--touch-colour .ha-clothing__feature-figure img,
   .ha-idx__img, .ha-idx__editorial-img { filter: grayscale(1); }

@@ -128,11 +128,29 @@
     --font-accent-family:  var(--ha-font-record);
 
     /* Luxe derives these from the old Swiss 721 font picker (weight 400).
-       The brand book sets Junicode body copy and editorial display at Medium. */
-    --font-body-weight: 500;
-    --font-body-weight-bold: 700;
+       The brand book set Junicode body copy and editorial display at Medium;
+       Aloha overruled that on 18 September 2026: "All Junicode fonts are always
+       Light, and when it's in Italics, it's also Light Italic." Body copy is
+       therefore 300, and so is bold — <strong> in Junicode no longer changes
+       weight (the italic face is the emphasis available). The variable file
+       still carries 300-700 because the landing page's headline is set in
+       Junicode Bold by its own design and is not part of this rule. */
+    --font-body-weight: 300;
+    --font-body-weight-bold: 300;
     --font-body-style: normal;
+    /* Luxe's price weight comes from its font picker (400); prices are set in
+       Junicode, so Light as well. */
+    --price-font-weight: 300;
   }
+
+  /* No bold anywhere in Junicode. The browser default for <strong> and <b> is
+     "bolder", which lifts Light (300) to 400 — that is what put the shipping
+     note's opening sentence a weight above its paragraph. Emphasis now keeps
+     its parent's weight in every voice; italic remains the emphasis available
+     in Junicode. Shopify's cookie-consent banner inherits Junicode and sets its
+     own heading bold, hence the id-qualified override. */
+  strong, b { font-weight: inherit; }
+  #shopify-pc__banner h2 { font-weight: 300; }
 
   /* IDENTIFY — brand book: uppercase only, tracking +20 to +80, line height 90-110%
 
@@ -156,9 +174,12 @@
     line-height: 1;
   }
 
-  /* NARRATE — brand book: body line height 140-155%, tracking 0 to +10 */
+  /* NARRATE — brand book: body line height 140-155%, tracking 0 to +10.
+     Always Light (see the weight note above): stated here so that a heading
+     given this voice takes 300 rather than Luxe's font-picker heading weight. */
   .ha-narrate {
     font-family: var(--ha-font-narrate);
+    font-weight: 300;
     line-height: 1.45;
     letter-spacing: 0.005em;
   }

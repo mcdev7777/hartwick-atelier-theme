@@ -57,7 +57,7 @@
         {%- if section.settings.intro != blank -%}<p class="ha-idx__intro ha-narrate">{{ section.settings.intro }}</p>{%- endif -%}
       </div>
       <hr class="ha-idx__rule">
-      <div class="ha-idx__dir-labels ha-record"><span>{{ section.settings.dir_label }}</span><span>{{ section.settings.dir_count }}</span></div>
+      <div class="ha-idx__dir-labels ha-record"><span>{{ section.settings.dir_label }}</span>{% if section.settings.dir_count != blank %}<span>{{ section.settings.dir_count }}</span>{% endif %}</div>
       <nav class="ha-idx__dir" aria-label="{{ section.settings.dir_label }}">
         {%- assign gi = 0 -%}
         {%- for block in section.blocks -%}
@@ -181,7 +181,7 @@
     { "type": "text", "id": "heading", "label": "Title", "default": "The Collection Index" },
     { "type": "textarea", "id": "intro", "label": "Introduction", "default": "Clothing, silk scarves, fine jewellery and yoga mats. Find your way by category." },
     { "type": "text", "id": "dir_label", "label": "Directory label", "default": "Explore the index" },
-    { "type": "text", "id": "dir_count", "label": "Directory right label", "default": "Four collections" },
+    { "type": "text", "id": "dir_count", "label": "Directory right label", "info": "Empty by default — Aloha removed \"Four collections\" on 18 September 2026." },
     { "type": "header", "content": "Sections" },
     { "type": "text", "id": "back_text", "label": "Back to index", "default": "Back to index" },
     { "type": "text", "id": "empty_text", "label": "Empty image reads", "default": "Photograph to supply" },

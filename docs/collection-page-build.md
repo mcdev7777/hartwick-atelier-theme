@@ -146,3 +146,32 @@ A mobile **Collections drawer / Index control** (the brief points to the
 earlier mobile wireframe, which is not in the files sent). Mobile reflows the
 directory and the 17 entries in reading order; the drawer is a separate
 piece once its drawing arrives.
+
+## Aloha's feedback, 18 September 2026
+
+Three points on the header, against her screenshot of the artboard:
+
+| Feedback | Change |
+|---|---|
+| "Use Junicode Light not Bold" | title, introduction, directory headings and section headings at weight 300 (they were 400, which reads bold in white on the photograph); title resized to the artboard's 36px cap height (54px) |
+| "Missing a line marking above in the fine silk and yoga" | every directory list is now ruled above its first name as well as under each name — all four columns, as the artboard draws them |
+| "Line placement… it looks too wide" | the rules ran to within 32px of the column rule; now the artboard's proportions — names and rules take 75% of the column pitch, then 18% of air, the column rule, 7% before the next column. Rows 35px on desktop (44px stays on touch) |
+| "Here is the image to use" | the loom photograph `4R1A4471.jpg` uploaded to Files as `HartwickAtelier-Loom-Warp-4R1A4471.jpg` and set as the header; replaces the Tokyo khadi photograph |
+
+Her screenshot also shows the directory names without the descriptors —
+*Silk scarves*, *Rings*, *Earrings*, *Bangles & Bracelets*, *Necklaces &
+Pendants* — where the artboard in the brief had *Silk scarves — seven formats*
+and *Rings / Fingers*. The directory follows the newer screenshot; the rail and
+the cards keep *Fingers / Ear / Wrist / Neck* as the brief asks. Both are
+settings on the Fine Silk and Fine Jewellery group blocks (*Summary line*,
+*Show the secondary descriptor in the directory*), so either can be put back without code.
+
+Later the same day: "delete the tag that says Four collections" — the
+directory's right-hand label is gone (the *Directory right label* setting is
+empty and the section omits the span when it is). And a rule for the whole
+storefront: "All Junicode fonts are always Light, and when it's in Italics,
+it's also Light Italic" — applied in `snippets/ha-fonts.liquid` (body and bold
+weights 300, prices 300, `strong`/`b` inherit, the cookie banner's heading) and
+to every Junicode rule in `assets/ha-sections.css`. Porter and Noto keep their
+weights. Audited on the Index, product, All Clothing, home and Policies pages:
+every Junicode text node computes to 300.
