@@ -58,7 +58,7 @@ SNAPSHOT = os.path.join(ROOT, "store-snapshot")
 MAPPING = [
  # --- 01 Product copy -----------------------------------------------------
  ("01","ID","none","none","—","—","Worksheet key only. Never published (tab 05)."),
- ("01","Product name","ref:style:metaobject_reference","ref","Opening — the Style heading (h1); Lot record; Related Works cards; page <title>","Product name in JSON-LD; the crawlable heading","Resolved to the existing `style` record by display name (54 exist). Title stays the legacy name until --launch."),
+ ("01","Product name","ref:style:metaobject_reference","ref","Opening — the Style heading (h1); Lot record; Related Works cards; the browser tab title","Product name in JSON-LD; the crawlable heading","Resolved to the existing `style` record by display name (54 exist). Title stays the legacy name until --launch."),
  ("01","Expression / full subtitle","mf:expression:single_line_text_field","mf","Lot record EXPRESSION; the source of the subtitle and selector below","Part of the product name / description in JSON-LD","Split at the comma: before = subtitle, after = selector."),
  ("01","EU retail (€)","core:price","core","Buy rail price (Shopify money, Markets converts)","Offer price / currency in JSON-LD; channel feeds","LAUNCH ONLY. Store base is USD; EU RRP is entered on the EUR market price list or converted — Christina to confirm which."),
  ("01","Legacy name - internal only","ref:style.legacy_name","ref","Nowhere","Nowhere","Already on the `style` record. Used to match sheet rows to Shopify products (--match)."),
