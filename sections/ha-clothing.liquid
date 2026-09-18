@@ -1,0 +1,349 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ALL CLOTHING.
+  Aloha's "All Clothing & LOT — build brief for Ivan" and the artboards
+  All Clothing - Desktop (1440 x 7450), Interaction & build guide, The LOT /
+  design & function — 17 September 2026.
+
+  One page for the clothing range: header and introduction; the five category
+  links, sticky below the site header; Made in Lots with its inline "How Lots
+  work" disclosure; then a section per category — a rail (number, heading,
+  Back to top, a line of copy) beside a three-column grid of garment cards —
+  with the Made by Masters feature placed between two of them; onward links;
+  then The Register (its own section on the template).
+
+  ONE CARD PER STYLE. The cards are not typed: they are the products of this
+  collection grouped by their Style record (hartwick.style). Each card shows
+  the Style's HERO Expression — `style.hero_product` when Aloha has chosen
+  one, else the first product in collection order that has a photograph —
+  and the whole card is ONE link to that product, so the visitor arrives on
+  the pictured Expression with its Lot (the product's own hartwick.lot). The
+  expression count is the number of products sharing the Style. "LOT [NUMBER]"
+  is the design's own placeholder and prints until the hero product carries a
+  Lot; nothing is invented.
+
+  A category block names which Style categories it gathers ("Skirt"), and
+  may include or exclude Styles by name — "Dress 002" sits in Loungewear as
+  the brief proposes. A Style appears once, in the first section that claims
+  it. The Style number is set in Cutch Resin (snippets/ha-style-name).
+
+  BLACK AND WHITE -> COLOUR. Colour originals, `filter: grayscale(1)` at rest,
+  colour on hover or focus-within of the card only; no transition under
+  reduced motion; on touch screens the photographs are in colour and one tap
+  opens the piece (brief, Tablet and mobile) — or, by setting, the Collection
+  Index's scroll reveal. Hovering never scrolls or navigates.
+
+  Headings and every product fact are real text and real links: one H1 (All
+  Clothing), a section H2 per category, an H3 per Style.
+{%- endcomment -%}
+
+{%- liquid
+  assign nav_label = section.settings.nav_label
+-%}
+
+<script src="{{ 'ha-collection-categories.js' | asset_url }}" defer="defer"></script>
+<script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('[data-clothing-top]');
+      if (!a) return;
+      e.preventDefault();
+      window.scrollTo({ top: 0, left: 0, behavior: reduce ? 'auto' : 'smooth' });
+      var nav = document.querySelector('.ha-clothing__nav-link');
+      if (nav) window.setTimeout(function () { nav.focus({ preventScroll: true }); }, reduce ? 0 : 400);
+      if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+    });
+  })();
+</script>
+{%- paginate collection.products by 250 -%}
+<div class="ha-clothing ha-clothing--touch-{{ section.settings.touch }}">
+
+  {%- comment -%} ---------- HEAD ---------- {%- endcomment -%}
+  <header class="ha-section ha-clothing__head" id="clothing-page">
+    <div class="ha-wrap ha-clothing__head-grid">
+      <div>
+        <nav class="ha-clothing__crumbs ha-record" aria-label="Breadcrumb">
+          <a href="{{ routes.root_url }}">{{ shop.name }}</a><span aria-hidden="true"> / </span><a href="{{ routes.collections_url }}">{{ section.settings.crumb_collection }}</a><span aria-hidden="true"> / </span><span>{{ section.settings.crumb_leaf }}</span>
+        </nav>
+        <h1 class="ha-clothing__title ha-narrate">{{ section.settings.title | default: collection.title }}</h1>
+        {%- if section.settings.back_text != blank -%}
+          <a class="ha-clothing__back ha-identify" href="{{ section.settings.back_url | default: routes.collections_url }}">{{ section.settings.back_text }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.intro != blank -%}
+        <p class="ha-clothing__intro ha-narrate">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </div>
+  </header>
+
+  {%- comment -%} ---------- CATEGORY NAVIGATION, sticky ---------- {%- endcomment -%}
+  <nav class="ha-clothing__nav" aria-label="{{ nav_label }}" id="clothing-top">
+    <div class="ha-wrap ha-clothing__nav-grid">
+      <p class="ha-clothing__nav-label ha-record">{{ nav_label }}</p>
+      <ul class="ha-clothing__nav-list" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            <li><a class="ha-clothing__nav-link ha-narrate" href="#{{ block.settings.anchor | default: block.id }}">{{ block.settings.heading }}</a></li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </nav>
+
+  {%- comment -%} ---------- MADE IN LOTS ---------- {%- endcomment -%}
+  {%- if section.settings.lots_line != blank -%}
+    <div class="ha-section ha-clothing__lots">
+      <div class="ha-wrap ha-clothing__lots-grid">
+        <p class="ha-clothing__lots-label ha-identify">{{ section.settings.lots_label }}</p>
+        <div class="ha-clothing__lots-body">
+          <p class="ha-clothing__lots-line ha-narrate">{{ section.settings.lots_line }}</p>
+          {%- comment -%}
+            A native disclosure: keyboard-operable, opens below the control on
+            every screen, never on hover (brief, 01 / Customer journey). The
+            copy is in the page whether open or closed.
+          {%- endcomment -%}
+          <details class="ha-clothing__lots-details">
+            <summary class="ha-clothing__lots-toggle ha-record"><span class="ha-clothing__lots-open">{{ section.settings.lots_toggle }}<span aria-hidden="true"> +</span></span><span class="ha-clothing__lots-close">{{ section.settings.lots_toggle }}<span aria-hidden="true"> –</span></span></summary>
+            <div class="ha-clothing__lots-more ha-narrate">
+              {{ section.settings.lots_more }}
+              {%- if section.settings.lots_note != blank -%}<p class="ha-clothing__lots-note ha-record">{{ section.settings.lots_note }}</p>{%- endif -%}
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ---------- SECTIONS ---------- {%- endcomment -%}
+  {%- assign seen = ',' -%}
+  {%- assign section_n = 0 -%}
+  {%- for block in section.blocks -%}
+
+    {%- if block.type == 'feature' -%}
+      <section class="ha-section ha-clothing__feature" {{ block.shopify_attributes }}>
+        <div class="ha-wrap ha-clothing__feature-grid">
+          <div class="ha-clothing__feature-media">
+            {%- render 'ha-figure', image: block.settings.image, label: block.settings.image_label, class: 'ha-clothing__feature-figure', sizes: '(min-width: 990px) 34vw, 100vw', alt: block.settings.image_alt -%}
+          </div>
+          <div class="ha-clothing__feature-text">
+            {%- if block.settings.eyebrow != blank -%}<p class="ha-eyebrow ha-record ha-clothing__feature-eyebrow">{{ block.settings.eyebrow }}</p>{%- endif -%}
+            {%- if block.settings.heading != blank -%}<h2 class="ha-clothing__feature-heading ha-narrate">{{ block.settings.heading }}</h2>{%- endif -%}
+            {%- if block.settings.body != blank -%}<div class="ha-clothing__feature-body ha-body ha-narrate">{{ block.settings.body }}</div>{%- endif -%}
+            {%- if block.settings.link_text != blank -%}
+              <a class="ha-clothing__feature-link ha-identify" href="{{ block.settings.link_url | default: '#' }}">{{ block.settings.link_text }}<span class="ha-clothing__corner" aria-hidden="true"></span></a>
+            {%- endif -%}
+            {%- if block.settings.link_url == blank -%}
+              {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'The feature link has no destination yet — bind the approved Masters / textile story.' -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </section>
+
+    {%- elsif block.type == 'category' -%}
+      {%- assign section_n = section_n | plus: 1 -%}
+      {%- assign cats = block.settings.categories | downcase | split: ',' -%}
+      {%- assign incl = block.settings.include | downcase | split: ',' -%}
+      {%- assign excl = block.settings.exclude | downcase | split: ',' -%}
+      {%- assign anchor = block.settings.anchor | default: block.id -%}
+      <section class="ha-section ha-clothing__cat" id="{{ anchor }}" {{ block.shopify_attributes }}>
+        <div class="ha-wrap ha-clothing__cat-grid">
+          <div class="ha-clothing__rail">
+            <div class="ha-clothing__rail-inner">
+              <p class="ha-clothing__cat-num ha-record">{{ section_n | prepend: '0' | slice: -2, 2 }}</p>
+              <h2 class="ha-clothing__cat-heading ha-narrate">{{ block.settings.heading }}</h2>
+              {%- comment -%}
+                Back to top returns to the head of the page — NOT to the sticky
+                navigation. An anchor on a sticky element scrolls to wherever
+                that element currently sits, which on a long page is where you
+                already are (Ivan, 18 Sept: "doesn't seem to work"). The href
+                works without a script; the script makes it smooth and hands
+                keyboard focus to the navigation.
+              {%- endcomment -%}
+              <a class="ha-clothing__top ha-identify" href="#clothing-page" data-clothing-top>{{ section.settings.top_text }}<span class="ha-clothing__chev" aria-hidden="true"></span></a>
+              {%- if block.settings.blurb != blank -%}<p class="ha-clothing__cat-blurb ha-narrate">{{ block.settings.blurb }}</p>{%- endif -%}
+            </div>
+          </div>
+
+          <ul class="ha-clothing__grid" role="list">
+            {%- comment -%}
+              Two passes. First, every Style this block claims, keyed
+              "number|handle" so a plain string sort puts 001 before 002
+              before 003 whatever the collection's order. Second, a card per
+              key, from the products that share the Style.
+            {%- endcomment -%}
+            {%- assign keys = '' -%}
+            {%- for product in collection.products -%}
+              {%- assign st = product.metafields.hartwick.style.value -%}
+              {%- if st == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign key = ',' | append: st.system.handle | append: ',' -%}
+              {%- if seen contains key -%}{%- continue -%}{%- endif -%}
+              {%- assign sname = st.display_name.value | default: st.display_name -%}
+              {%- assign sname_lc = sname | downcase | strip -%}
+              {%- assign scat = st.category.value | default: st.category | downcase | strip -%}
+              {%- assign claim = false -%}
+              {%- for c in cats -%}
+                {%- assign cs = c | strip -%}
+                {%- if cs != blank and cs == scat -%}{%- assign claim = true -%}{%- endif -%}
+              {%- endfor -%}
+              {%- for n in incl -%}
+                {%- assign ns = n | strip -%}
+                {%- if ns != blank and ns == sname_lc -%}{%- assign claim = true -%}{%- endif -%}
+              {%- endfor -%}
+              {%- for n in excl -%}
+                {%- assign ns = n | strip -%}
+                {%- if ns != blank and ns == sname_lc -%}{%- assign claim = false -%}{%- endif -%}
+              {%- endfor -%}
+              {%- unless claim -%}{%- continue -%}{%- endunless -%}
+              {%- assign seen = seen | append: st.system.handle | append: ',' -%}
+              {%- assign snum = st.number.value | default: st.number | default: '999' -%}
+              {%- assign keys = keys | append: snum | append: '|' | append: st.system.handle | append: ',' -%}
+            {%- endfor -%}
+            {%- assign sorted = keys | split: ',' | sort -%}
+            {%- assign cards = 0 -%}
+            {%- for k in sorted -%}
+              {%- if k == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign shandle = k | split: '|' | last -%}
+              {%- assign st = nil -%}
+              {%- assign hero = nil -%}
+              {%- assign count = 0 -%}
+              {%- for p2 in collection.products -%}
+                {%- if p2.metafields.hartwick.style.value.system.handle == shandle -%}
+                  {%- if st == nil -%}{%- assign st = p2.metafields.hartwick.style.value -%}{%- endif -%}
+                  {%- assign count = count | plus: 1 -%}
+                  {%- if hero == nil and p2.featured_media != blank -%}{%- assign hero = p2 -%}{%- endif -%}
+                  {%- if hero == nil -%}{%- assign last_p = p2 -%}{%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if st.hero_product.value != blank -%}{%- assign hero = st.hero_product.value -%}{%- endif -%}
+              {%- if hero == nil -%}{%- assign hero = last_p -%}{%- endif -%}
+              {%- assign sname = st.display_name.value | default: st.display_name -%}
+              {%- assign cards = cards | plus: 1 -%}
+              {%- capture expr -%}{%- render 'ha-product-fact', product: hero, field: 'expression' -%}{%- endcapture -%}
+              {%- assign expr = expr | strip -%}
+              {%- assign lot = hero.metafields.hartwick.lot.value.number_roman.value | default: hero.metafields.hartwick.lot.value.number_roman -%}
+              {%- assign alt = hero.featured_media.alt | default: sname -%}
+              {%- if expr != blank -%}{%- assign alt = sname | append: ', ' | append: expr -%}{%- endif -%}
+
+              <li class="ha-clothing__card">
+                <a class="ha-clothing__link" href="{{ hero.url }}" aria-label="{{ sname | escape }}{% if expr != blank %}, {{ expr | escape }}{% endif %} — {{ section.settings.view_text | escape }}">
+                  <figure class="ha-clothing__figure{% unless hero.featured_media %} ha-figure--empty{% endunless %}">
+                    {%- if hero.featured_media -%}
+                      {{ hero.featured_media.preview_image
+                        | image_url: width: 1200
+                        | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 26vw, (min-width: 750px) 45vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: alt, class: 'ha-clothing__img' }}
+                    {%- else -%}
+                      <span class="ha-clothing__empty ha-record">{{ section.settings.image_slot_text }}</span>
+                    {%- endif -%}
+                  </figure>
+                  <h3 class="ha-clothing__name ha-narrate">{%- render 'ha-style-name', name: sname -%}</h3>
+                  {%- if expr != blank -%}<p class="ha-clothing__expr ha-narrate">{{ expr }}</p>{%- endif -%}
+                  <p class="ha-clothing__lot ha-record">{% if lot != blank %}{{ section.settings.lot_label }} {{ lot }}{% else %}{{ section.settings.lot_placeholder }}{% endif %}</p>
+                  <p class="ha-clothing__meta ha-record">{% if count > 1 %}{{ count | prepend: '0' | slice: -2, 2 }} {{ section.settings.count_text }} / {% endif %}{{ section.settings.view_text }}</p>
+                </a>
+              </li>
+            {%- endfor -%}
+            {%- if cards == 0 -%}
+              <li class="ha-clothing__card ha-clothing__card--none"><p class="ha-record">{{ section.settings.none_text }}</p></li>
+            {%- endif -%}
+          </ul>
+        </div>
+      </section>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} ---------- ONWARD ---------- {%- endcomment -%}
+  {%- if section.settings.onward_label != blank -%}
+    <section class="ha-section ha-clothing__onward">
+      <div class="ha-wrap ha-clothing__onward-grid">
+        <p class="ha-clothing__onward-label ha-record">{{ section.settings.onward_label }}</p>
+        <ul class="ha-clothing__onward-list" role="list">
+          {%- for i in (1..3) -%}
+            {%- assign t = 'onward_' | append: i | append: '_text' -%}
+            {%- assign u = 'onward_' | append: i | append: '_url' -%}
+            {%- if section.settings[t] != blank -%}
+              <li><a class="ha-clothing__onward-link ha-narrate" href="{{ section.settings[u] | default: '#' }}">{{ section.settings[t] }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+    text: 'Provisional — Lot references print as the design placeholder until each product carries a Lot; hero photographs are each Style’s first product image until Aloha chooses one on the style record.' -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "HA — All Clothing",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "The clothing range as one card per Style, grouped into the category blocks below. Cards come from this collection's products and their Style records; nothing is typed here except headings and copy." },
+    { "type": "header", "content": "Head" },
+    { "type": "text", "id": "crumb_collection", "label": "Breadcrumb: collection", "default": "Collection" },
+    { "type": "text", "id": "crumb_leaf", "label": "Breadcrumb: this page", "default": "Clothing" },
+    { "type": "text", "id": "title", "label": "Title", "default": "All Clothing" },
+    { "type": "textarea", "id": "intro", "label": "Introduction", "default": "Clothing in cotton, silk and linen. Find a shape, then explore its cloth, weave and colour." },
+    { "type": "text", "id": "back_text", "label": "Back link", "default": "Back to the Collection Index" },
+    { "type": "url", "id": "back_url", "label": "Back link URL" },
+    { "type": "text", "id": "nav_label", "label": "Navigation label", "default": "Explore clothing" },
+    { "type": "header", "content": "Made in Lots" },
+    { "type": "text", "id": "lots_label", "label": "Label", "default": "Made in Lots" },
+    { "type": "textarea", "id": "lots_line", "label": "Line", "default": "A Lot is a numbered release of clothing. Each piece belongs to a Lot, with a record of its cloth, making and availability." },
+    { "type": "text", "id": "lots_toggle", "label": "Disclosure control", "default": "How Lots work" },
+    { "type": "richtext", "id": "lots_more", "label": "Expanded copy", "default": "<p>We release clothing in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details, available sizes and whether it is ready to send or available to pre-order.</p>" },
+    { "type": "text", "id": "lots_note", "label": "Expanded note", "default": "Dates, quantities and access windows appear only when confirmed." },
+    { "type": "header", "content": "Cards" },
+    { "type": "text", "id": "lot_label", "label": "Lot label", "default": "Lot" },
+    { "type": "text", "id": "lot_placeholder", "label": "Lot not yet confirmed reads", "default": "Lot [number]" },
+    { "type": "text", "id": "count_text", "label": "Count text", "default": "fabric expressions" },
+    { "type": "text", "id": "view_text", "label": "Link text", "default": "View piece" },
+    { "type": "text", "id": "top_text", "label": "Back to top", "default": "Back to top" },
+    { "type": "text", "id": "image_slot_text", "label": "Empty image slot reads", "default": "Photograph to supply" },
+    { "type": "text", "id": "none_text", "label": "Empty category reads", "default": "No pieces in this category yet." },
+    { "type": "select", "id": "touch", "label": "On touch screens", "default": "colour", "options": [
+      { "value": "colour", "label": "Photographs in colour (brief)" }, { "value": "scroll", "label": "Black and white; colour as cards scroll in" }
+    ] },
+    { "type": "header", "content": "Onward" },
+    { "type": "text", "id": "onward_label", "label": "Label", "default": "Continue through the collection" },
+    { "type": "text", "id": "onward_1_text", "label": "Link 1", "default": "Fine Silk" }, { "type": "url", "id": "onward_1_url", "label": "Link 1 URL" },
+    { "type": "text", "id": "onward_2_text", "label": "Link 2", "default": "Fine Jewellery" }, { "type": "url", "id": "onward_2_url", "label": "Link 2 URL" },
+    { "type": "text", "id": "onward_3_text", "label": "Link 3", "default": "Yoga" }, { "type": "url", "id": "onward_3_url", "label": "Link 3 URL" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Skirts" },
+        { "type": "text", "id": "anchor", "label": "Anchor (URL #id)", "default": "skirts" },
+        { "type": "text", "id": "blurb", "label": "Line of copy" },
+        { "type": "text", "id": "categories", "label": "Style categories gathered", "default": "Skirt", "info": "The style record's category, comma-separated: Skirt · Shirt · Trouser · Dress · Coat · Robe · Kaftan · PJ · Shorts" },
+        { "type": "text", "id": "include", "label": "Also include these Styles", "info": "By name, comma-separated — e.g. Dress 002" },
+        { "type": "text", "id": "exclude", "label": "Exclude these Styles", "info": "By name, comma-separated" }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Made by Masters feature",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photograph" },
+        { "type": "text", "id": "image_alt", "label": "Alt text" },
+        { "type": "text", "id": "image_label", "label": "Empty slot label", "default": "Cloth detail / to supply" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Made by Masters / The cloth" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "From yarn to cloth." },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Much of this collection begins with cotton khadi: yarn spun by hand, then woven on a handloom. Across plain cloth, stripes and checks, spinning and weaving give each fabric its particular texture.</p>" },
+        { "type": "text", "id": "link_text", "label": "Link text", "default": "Explore handspinning & handweaving" },
+        { "type": "url", "id": "link_url", "label": "Link URL", "info": "The approved Masters / textile story. Left empty, the page says so." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "HA — All Clothing" }]
+}
+{% endschema %}

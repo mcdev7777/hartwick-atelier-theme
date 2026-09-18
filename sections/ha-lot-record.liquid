@@ -89,7 +89,7 @@
     <table class="ha-lotrec__table ha-record">
       <caption class="visually-hidden">{{ section.settings.heading }}</caption>
       <tbody>
-        <tr><th scope="row">{{ section.settings.row_style }}</th><td>{{ f_style }}</td></tr>
+        <tr><th scope="row">{{ section.settings.row_style }}</th><td>{%- render 'ha-style-name', name: f_style -%}</td></tr>
         <tr><th scope="row">{{ section.settings.row_expression }}</th><td>{{ f_expression | default: section.settings.confirm_expression }}</td></tr>
         <tr><th scope="row">{{ section.settings.row_reference }}</th><td>{% if f_reference != blank %}{{ f_reference }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_reference }}</span>{% endif %}</td></tr>
         <tr><th scope="row">{{ section.settings.row_lot }}</th><td>{% if lot_cell != blank %}{{ lot_cell }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_lot }}</span>{% endif %}</td></tr>

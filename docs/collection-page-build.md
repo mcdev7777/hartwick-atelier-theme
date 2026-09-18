@@ -97,3 +97,52 @@ editor (the grid becomes three tiles; the last one sits alone on the left).
   page still to come; The Masters page; a call at 11:30 tomorrow on the
   Product page and Homepage; Angela to set up Google Analytics — are noted,
   not built.
+
+---
+
+# Refined Collection Index — 17 September 2026
+
+Source: Aloha's **Collection Index brief** (PDF) and
+`Hartwick_Collection_Index_Refined` (artboard 1: the page; artboard 2: rest and
+hover states). Replaces the four-tile page of 15 September; that section is
+kept on the template, disabled.
+
+## Built — `sections/ha-index.liquid`, `assets/ha-index.js`
+
+| Brief | Built as |
+|---|---|
+| Photographic header, title, introduction, **opening directory** of four collections | dark photographic band; directory columns from the blocks — clothing and jewellery names jump to their cards, Fine Silk jumps to its section / its formats, Yoga goes straight to the shopping destination |
+| Four sections in order; rail (number, heading, count, Back to index, numbered index, View all) beside the image group; rail sticky within its section, released at the boundary and on short viewports | yes |
+| Clothing asymmetric five · Fine Silk editorial image + seven format cards · Jewellery four · Yoga one feature | `layout` per group block; the silk editorial image is context, not an entry |
+| **One name, one image, one destination** — index name, photograph and caption share one href | each entry is one block; the rail link and the card link carry the same `data-idx` key |
+| Colour reveal: only the matching photograph; underline matching name and caption; both directions; ~220 ms; reduced motion; touch = colour, one tap | CSS on the card's own hover/focus; `ha-index.js` carries the key between rail and card; `(hover: none)` colour; 220 ms, none under reduced motion |
+| Stable key, display number, name, secondary descriptor, anchor, destination, colour image, alt, order; silk dimensions; jewellery body descriptor; editable without code | all block settings; 17 entries + 4 groups in `templates/list-collections.json` |
+| One H1, section H2s, real links | yes |
+| The Register | heading and body from the artboard |
+
+Rendered on the CLI dev server: 4 directory columns with 12 jump links, 17
+cards keyed to their index names, no Liquid errors.
+
+## Destinations bound (verified store URLs)
+
+| Entry | Destination |
+|---|---|
+| Skirts · Shirts · Trousers · Dresses & Coats · Loungewear | `/collections/apparel#skirts` … — the All Clothing page's own category sections (one listing, five anchors); View all → `/collections/apparel` |
+| Petit Square · Medium Square · Large Square · Classic Stole · Oversize Dupatta | their existing format collections |
+| **Rich Ribbon · Shayla** | `/collections/fine-silk` — **no format collection exists and their products are drafts**; bind once they are active |
+| Rings · Earrings · Bangles & Bracelets · Necklaces & Pendants | their collections; View all → `/collections/fine-jewellery` |
+| **Yoga mats** | `/collections/yoga` (empty) — **no yoga-mat product exists**; the brief wants one product page with swatches |
+
+## Images
+
+All provisional, from Shopify Files (two uploaded today: Rich Ribbon, Shayla —
+`scripts/files-upload.py`). The **header** is a khadi close-up standing in for
+the loom photograph; the brief wants approved, correctly matched photographs
+for every card and the Yoga colour master.
+
+## Not built
+
+A mobile **Collections drawer / Index control** (the brief points to the
+earlier mobile wireframe, which is not in the files sent). Mobile reflows the
+directory and the 17 entries in reading order; the drawer is a separate
+piece once its drawing arrives.

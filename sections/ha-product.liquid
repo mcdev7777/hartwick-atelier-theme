@@ -262,9 +262,18 @@
         {%- if section.settings.show_breadcrumb -%}
           <nav class="ha-pdp__crumbs ha-record" aria-label="Breadcrumb">
             <a href="{{ routes.collections_url }}">{{ section.settings.crumb_root }}</a>
+            {%- comment -%}
+              Tab 05: "COLLECTION / APPAREL — adapt the category for
+              accessories and fine silks." The leaf is the collection the
+              visitor came from; otherwise the product's own first
+              collection; the typed fallback only when it belongs to none.
+            {%- endcomment -%}
             {%- if collection.title != blank -%}
               <span aria-hidden="true"> / </span>
               <a href="{{ collection.url }}">{{ collection.title }}</a>
+            {%- elsif product.collections.first != blank -%}
+              <span aria-hidden="true"> / </span>
+              <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
             {%- elsif section.settings.crumb_leaf != blank -%}
               <span aria-hidden="true"> / </span>{{ section.settings.crumb_leaf }}
             {%- endif -%}
@@ -285,7 +294,7 @@
           one face. The heading keeps its uppercase and its size from
           .ha-pdp__title — only the voice changes.
         {%- endcomment -%}
-        <h1 class="ha-pdp__title ha-narrate">{{ style_name }}</h1>
+        <h1 class="ha-pdp__title ha-narrate">{%- render 'ha-style-name', name: style_name -%}</h1>
 
         {%- comment -%}
           V2 design: the material as a serif line directly under the Style

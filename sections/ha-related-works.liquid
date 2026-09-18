@@ -130,7 +130,7 @@
             {%- else -%}
               <span class="ha-related__figure ha-related__figure--empty"><span class="ha-record">{{ section.settings.ph_image_label }}</span></span>
             {%- endif -%}
-            <span class="ha-related__name ha-record">{{ p_style }}{% if p_expr != blank %} / {{ p_expr }}{% endif %}</span>
+            <span class="ha-related__name ha-record">{%- render 'ha-style-name', name: p_style -%}{% if p_expr != blank %} / {{ p_expr }}{% endif %}</span>
           </a>
         </li>
       {%- endfor -%}

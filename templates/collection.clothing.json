@@ -1,0 +1,131 @@
+/*
+ * Hartwick Atelier — ALL CLOTHING (the Apparel collection).
+ * Aloha's "All Clothing & LOT" build brief and artboard, 17 September 2026.
+ * Assigned to the `apparel` collection as its template. One card per Style,
+ * grouped by the category blocks; the Made by Masters feature sits between
+ * Skirts and Shirts as drawn; Dress 002 and Shorts 006 in Loungewear as the
+ * brief proposes.
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "clothing": {
+      "type": "ha-clothing",
+      "blocks": {
+        "skirts": {
+          "type": "category",
+          "settings": {
+            "heading": "Skirts",
+            "anchor": "skirts",
+            "blurb": "Pleats, borders and the movement of cloth.",
+            "categories": "Skirt"
+          }
+        },
+        "masters": {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "Made by Masters / The cloth",
+            "heading": "From yarn to cloth.",
+            "body": "<p>Much of this collection begins with cotton khadi: yarn spun by hand, then woven on a handloom. Across plain cloth, stripes and checks, spinning and weaving give each fabric its particular texture.</p>",
+            "link_text": "Explore handspinning & handweaving",
+            "image_label": "Cloth detail / to supply",
+            "image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg",
+            "image_alt": "Handspun, handwoven cotton khadi, close"
+          }
+        },
+        "shirts": {
+          "type": "category",
+          "settings": {
+            "heading": "Shirts",
+            "anchor": "shirts",
+            "blurb": "Shapes to wear on their own or in layers.",
+            "categories": "Shirt"
+          }
+        },
+        "trousers": {
+          "type": "category",
+          "settings": {
+            "heading": "Trousers",
+            "anchor": "trousers",
+            "blurb": "Straight, wide and relaxed silhouettes.",
+            "categories": "Trouser"
+          }
+        },
+        "dresses": {
+          "type": "category",
+          "settings": {
+            "heading": "Dresses & Coats",
+            "anchor": "dresses-and-coats",
+            "blurb": "Pieces to wear whole or layer over separates.",
+            "categories": "Dress, Coat",
+            "exclude": "Dress 002"
+          }
+        },
+        "lounge": {
+          "type": "category",
+          "settings": {
+            "heading": "Loungewear",
+            "anchor": "loungewear",
+            "blurb": "Easy shapes for slower hours.",
+            "categories": "Robe, Kaftan, PJ, Shorts",
+            "include": "Dress 002"
+          }
+        }
+      },
+      "block_order": [
+        "skirts",
+        "masters",
+        "shirts",
+        "trousers",
+        "dresses",
+        "lounge"
+      ],
+      "settings": {
+        "crumb_collection": "Collection",
+        "crumb_leaf": "Clothing",
+        "title": "All Clothing",
+        "intro": "Clothing in cotton, silk and linen. Find a shape, then explore its cloth, weave and colour.",
+        "back_text": "Back to the Collection Index",
+        "back_url": "/collections",
+        "nav_label": "Explore clothing",
+        "lots_label": "Made in Lots",
+        "lots_line": "A Lot is a numbered release of clothing. Each piece belongs to a Lot, with a record of its cloth, making and availability.",
+        "lots_toggle": "How Lots work",
+        "lots_more": "<p>We release clothing in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details, available sizes and whether it is ready to send or available to pre-order.</p>",
+        "lots_note": "Dates, quantities and access windows appear only when confirmed.",
+        "lot_label": "Lot",
+        "lot_placeholder": "Lot [number]",
+        "count_text": "fabric expressions",
+        "view_text": "View piece",
+        "top_text": "Back to top",
+        "touch": "colour",
+        "onward_label": "Continue through the collection",
+        "onward_1_text": "Fine Silk",
+        "onward_1_url": "/collections/fine-silk",
+        "onward_2_text": "Fine Jewellery",
+        "onward_2_url": "/collections/fine-jewellery",
+        "onward_3_text": "Yoga",
+        "onward_3_url": "/collections/yoga",
+        "show_placeholder_note": true
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "Notes from the Atelier.",
+        "body": "<p>Materials, makers and work in progress.</p>",
+        "body_position": "form",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "collection_page"
+      }
+    }
+  },
+  "order": [
+    "clothing",
+    "register"
+  ]
+}

@@ -76,7 +76,8 @@
         "show_availability": true,
         "availability_in_stock": "Available",
         "availability_sold_out": "Sold out",
-        "ph_made_in": "[Confirm garment origin]"
+        "ph_made_in": "[Confirm garment origin]",
+        "size_guide_page": "size-guide"
       }
     },
     "ha_garment": {

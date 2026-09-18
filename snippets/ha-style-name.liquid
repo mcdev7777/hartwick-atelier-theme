@@ -1,0 +1,21 @@
+{%- comment -%}
+  Hartwick Atelier — a Style name with its number in Cutch Resin.
+  Aloha's All Clothing brief, 17 September 2026: "The numbered identifiers in
+  Clothing names — such as 001 in Skirt 001 — use Cutch Resin #541F00 … the
+  consistent colour code for Clothing numbering across the website, including
+  the Collection Index, clothing listings and individual product pages."
+
+      {% render 'ha-style-name', name: 'Skirt 001' %}
+      -> Skirt <span class="ha-num">001</span>
+
+  A name with no trailing number (a legacy title, an accessory) prints as is.
+{%- endcomment -%}
+{%- assign parts = name | strip | split: ' ' -%}
+{%- assign tail = parts | last -%}
+{%- assign digits = tail | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9' -%}
+{%- if parts.size > 1 and digits == blank and tail.size >= 2 -%}
+  {%- assign keep = parts.size | minus: 1 -%}
+  {{- parts | slice: 0, keep | join: ' ' }} <span class="ha-num">{{ tail }}</span>
+{%- else -%}
+  {{- name -}}
+{%- endif -%}
