@@ -4793,30 +4793,3 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   .ha-pdp__material, .ha-pdp__fit-body, .ha-provenance__note-body, .ha-masterfeat__identity,
   .ha-masterfeat__rule, .ha-related__note, .ha-pdp .ha-body, .ha-clothing .ha-body, .ha-idx .ha-body { max-width: none; }
 }
-
-/* --- Collection Index directory: no rules (Ivan, 18 Sept) -----------------
-   The artboard draws a hairline under every directory link and a vertical
-   rule between the four columns. Rendered, the unequal lengths and the rules
-   trailing below the shorter columns read as clutter, so the directory keeps
-   only the one rule under the title. Spacing holds the rows apart instead. */
-.ha-idx__dir-link { border-bottom: 0; padding: 0.7rem 0; }
-.ha-idx__dir-link:hover, .ha-idx__dir-link:focus-visible { border-bottom: 0; }
-@media screen and (min-width: 990px) {
-  .ha-idx__dir-col { border-left: 0; padding-left: 0; padding-right: 3.2rem; }
-}
-@media screen and (max-width: 749px) {
-  .ha-idx__dir-link { border-bottom: 0; }
-}
-
-/* --- No per-item hairlines on lists, anywhere (Ivan, 18 Sept) ---------------
-   The same clutter the directory had: a rule under every row of a list. Gone
-   from the Index's rail indexes and the product page's Cloth index; rows are
-   spaced instead. Full-width section dividers, the accordion rows and the
-   Production Record table keep their rules — those are structure, not
-   decoration. */
-.ha-idx__index { border-top: 0; margin-top: 1.6rem; }
-.ha-idx__index-item { border-bottom: 0; }
-.ha-idx__index-link { padding: 0.8rem 0; min-height: 44px; }
-.ha-cloth__index { border-top: 0; margin-top: 3.2rem; }
-.ha-cloth__index li { border-bottom: 0; }
-.ha-cloth__index-item { padding: 0.9rem 0; }
