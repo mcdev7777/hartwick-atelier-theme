@@ -1,0 +1,171 @@
+{%- comment -%}
+  Hartwick Atelier — a film slot on The Masters page.
+
+  One piece of markup for the four places the artboard puts moving image:
+  the weaving film beside the still (variant: panel), the small archive
+  tiles (tile), the open glossary entry (glossary) and the wide archive band
+  (feature). The rule that matters is the same in all four: a slot is only a
+  film when a video is attached. Otherwise it renders the poster as a plain
+  photograph — no play control, no "Play film" line, no video element — so a
+  still never masquerades as a film (brief §2, §8).
+
+  Playback (brief §4), carried by assets/ha-masters.js:
+    - begins only on the visible Play button; nothing on hover or scroll
+    - one film at a time; paused when it leaves view
+    - native controls once playing: pause, sound, captions, full screen
+    - preload="none": the poster is a lightweight responsive image and the
+      video file is not requested until Play
+    - one MP4 source: the largest rendition whose long side is 1280 or
+      under. Shopify names renditions by height, so a phone-shot portrait
+      original (1080 × 1920) offers 606 × 1080 as its "1080p", and that is
+      the right file for a 440px frame on a retina screen; a landscape
+      original gets its 1280 × 720
+    - a captions track when a .vtt is supplied; a Transcript disclosure under
+      the film when a transcript or description is written
+
+  Search data (brief §5): a VideoObject is emitted only for a playable film
+  that has a title, a description (the transcript field) and a recorded
+  date, and it describes exactly what the visitor sees — the same poster,
+  the same file. Nothing is described that is not on the page.
+
+  Parameters
+    variant         panel | tile | glossary | feature
+    id              unique per slot (element ids)
+    video           a Shopify video object, or blank
+    poster          image; falls back to the video's own preview frame
+    poster_alt      alt text for the poster / still
+    focus           an inline `--ha-mst-focus: x% y%` for the crop
+    eyebrow         feature only: small line above the title
+    label           overlay label (panel) or the big title (feature)
+    sublabel        the "Play film / sound on request" line — film only
+    title           the film's name for search data and the play button
+    transcript      richtext; also the VideoObject description
+    transcript_label, captions_url, credit, date, monochrome, empty_text, sizes
+{%- endcomment -%}
+
+{%- liquid
+  assign has_video = false
+  if video != blank and video.sources.size > 0
+    assign has_video = true
+  endif
+
+  assign poster_img = poster
+  if poster_img == blank and has_video
+    assign poster_img = video.preview_image
+  endif
+
+  assign sizes_attr = sizes | default: '100vw'
+  assign film_name = title | default: label | default: 'Film'
+
+  # One MP4: the largest rendition whose long side is 1280 or under.
+  assign src_url = ''
+  assign src_type = ''
+  assign src_area = 0
+  assign fallback_url = ''
+  assign fallback_area = 99999999
+  if has_video
+    for s in video.sources
+      if s.format != 'mp4'
+        continue
+      endif
+      assign long_side = s.width
+      if s.height > long_side
+        assign long_side = s.height
+      endif
+      assign area = s.width | times: s.height
+      if long_side <= 1280 and area > src_area
+        assign src_area = area
+        assign src_url = s.url
+        assign src_type = s.mime_type
+      endif
+      if area < fallback_area
+        assign fallback_area = area
+        assign fallback_url = s.url
+        assign fallback_type = s.mime_type
+      endif
+    endfor
+    if src_url == ''
+      assign src_url = fallback_url
+      assign src_type = fallback_type
+    endif
+  endif
+
+  assign show_schema = false
+  if has_video and title != blank and transcript != blank and date != blank
+    assign show_schema = true
+  endif
+
+  # Search data wants absolute URLs; the CDN gives protocol-relative ones.
+  assign content_url = src_url
+  unless content_url contains 'https://'
+    if content_url contains '//'
+      assign content_url = 'https:' | append: content_url
+    else
+      assign content_url = shop.url | append: content_url
+    endif
+  endunless
+  assign duration_s = 0
+  if video.duration
+    assign duration_s = video.duration | divided_by: 1000.0 | round
+  endif
+-%}
+
+<div class="ha-mst-film ha-mst-film--{{ variant }}{% if has_video %} ha-mst-film--playable{% endif %}{% if monochrome %} ha-mst-film--mono{% endif %}"{% if has_video %} data-mst-film{% endif %}>
+  <div class="ha-mst-film__frame ha-figure{% unless poster_img %} ha-figure--empty{% endunless %}"{% if focus %} style="{{ focus }}"{% endif %}>
+    {%- if poster_img -%}
+      {{ poster_img | image_url: width: 1800 | image_tag: loading: 'lazy', sizes: sizes_attr, widths: '400, 600, 900, 1200, 1600, 1800', alt: poster_alt, class: 'ha-mst-film__poster' }}
+    {%- else -%}
+      <span class="ha-mst__empty ha-record">{{ empty_text }}</span>
+    {%- endif -%}
+
+    {%- if has_video -%}
+      <video class="ha-mst-film__video" id="{{ id }}-video" preload="none" playsinline tabindex="-1" aria-label="{{ film_name | escape }}"{% if captions_url != blank %} crossorigin="anonymous"{% endif %}>
+        <source src="{{ src_url }}" type="{{ src_type }}">
+        {%- if captions_url != blank -%}<track kind="captions" src="{{ captions_url }}" srclang="en" label="English">{%- endif -%}
+      </video>
+      <button type="button" class="ha-mst-film__play" data-mst-play aria-label="{{ 'Play film: ' | append: film_name | escape }}">
+        <span class="ha-mst-film__ring" aria-hidden="true"></span>
+      </button>
+    {%- endif -%}
+
+    {%- if variant == 'feature' or variant == 'panel' -%}
+      {%- if eyebrow != blank or label != blank -%}
+        <div class="ha-mst-film__overlay">
+          {%- if eyebrow != blank -%}<p class="ha-mst-film__eyebrow ha-record">{{ eyebrow }}</p>{%- endif -%}
+          {%- if label != blank -%}
+            {%- if variant == 'feature' -%}
+              <p class="ha-mst-film__title ha-narrate">{{ label }}</p>
+            {%- else -%}
+              {%- if has_video -%}<p class="ha-mst-film__label ha-identify">{{ label }}</p>{%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+          {%- if has_video and sublabel != blank -%}<p class="ha-mst-film__sub ha-record">{{ sublabel }}</p>{%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  {%- if has_video and transcript != blank -%}
+    <details class="ha-mst-film__transcript">
+      <summary class="ha-mst-film__transcript-toggle ha-record">{{ transcript_label | default: 'Transcript' }}</summary>
+      <div class="ha-mst-film__transcript-body ha-narrate">{{ transcript }}</div>
+    </details>
+  {%- endif -%}
+
+  {%- if show_schema -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": {{ title | json }},
+      "description": {{ transcript | strip_html | strip_newlines | json }},
+      "thumbnailUrl": {{ poster_img | image_url: width: 1200 | prepend: 'https:' | json }},
+      "uploadDate": {{ date | json }},
+      "contentUrl": {{ content_url | json }}{% if duration_s > 0 %},
+      "duration": {{ duration_s | prepend: 'PT' | append: 'S' | json }}{% endif %}{% if credit != blank %},
+      "creditText": {{ credit | json }}{% endif %},
+      "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+    }
+    </script>
+  {%- endif -%}
+</div>

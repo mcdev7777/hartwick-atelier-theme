@@ -1,0 +1,478 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE MASTERS (the /pages/the-masters page).
+  Aloha's "The Masters: Build Brief for Ivan" and the founder's
+  Hartwick_The_Masters.png (left board: the public page; centre: interaction
+  notes; right: expanded glossary copy), 18 September 2026. Confirmed by
+  Angela, per Aloha's message the same day.
+
+  The page in reading order, each part a setting or a block so nothing is
+  hard-coded (CLAUDE.md: reusable sections, no hard-coded editorial pages):
+
+    hero        the wide loom photograph with a small framed monochrome inset
+                overlapping the transition into the introduction
+    intro       THE MASTERS (the one H1), THE PEOPLE. THE KNOWLEDGE. THE WORK.,
+                and Angela's introduction divided across THE CLOTH / THE
+                KNOWLEDGE / THE HANDWORK with her complete wording
+    pair        a still on the left, the weaving film on the right; the play
+                control belongs to the film and appears only when a film exists
+    archive     three small archival images and the Gandhi quotation
+    glossary    eleven techniques as compact ruled rows; one opens at a time
+                into its fuller copy, matching media, caption and credit
+    feature     the wide archive film, "At the printing table."
+    continue    THE WORK CONTINUES and the Journal link
+    (then the shared Register and footer from the template)
+
+  FILMS. Every film slot is a Shopify video (Files) with an optional poster.
+  Playback starts only on the visible Play button: no autoplay, nothing on
+  hover or scroll, one film at a time, paused when it leaves view, native
+  controls (pause, sound, captions, full screen) once playing. With no video
+  attached the slot renders as a still WITHOUT a play control — the brief's
+  "stills never masquerade as films". assets/ha-masters.js carries this.
+
+  GLOSSARY. Real buttons with aria-expanded and a labelled region each; Enter
+  and Space work natively; visible focus. Every technique has a stable id
+  (#khadi, #handwoven …) and a direct link opens that entry. The complete
+  text of every entry is in the HTML whether or not its panel is open — the
+  panels are collapsed by the script, so search systems and no-JS readers get
+  everything. Normal scrolling only; the script never hijacks the scroll.
+
+  SYMBOLS. Aloha, 18 September: "don't use the icons that are in the Masters
+  Page. I will be placing something else instead." The positions where the
+  artboard puts a symbol are optional image slots, empty by default.
+
+  CONTENT. Copy is transcribed from the two boards. The expanded glossary
+  copy is the founder's editorial DRAFT pending Angela's review (brief §3);
+  the placeholder notice stays on until Aloha signs it off. Photographs and
+  films come from the store's own Files — the matches the store can honestly
+  make — until the Masters edits from Angela's folder are uploaded. No artisan
+  name, location or credit is invented: the credit and Master fields exist
+  and render only once they are filled.
+
+  LATER (brief §7): individual Master records. Each technique carries a
+  hidden record ID and a separate, optional destination link, so Master
+  profiles or the future Made by Masters site connect without a rebuild.
+{%- endcomment -%}
+
+{%- liquid
+  assign hero = section.settings.hero_image
+  assign hero_focus = '--ha-mst-focus: ' | append: section.settings.hero_focus_x | append: '% ' | append: section.settings.hero_focus_y | append: '%'
+  assign inset = section.settings.inset_image
+  assign still = section.settings.still_image
+  assign still_focus = '--ha-mst-focus: ' | append: section.settings.still_focus_x | append: '% ' | append: section.settings.still_focus_y | append: '%'
+  assign film_focus = '--ha-mst-focus: ' | append: section.settings.film_focus_x | append: '% ' | append: section.settings.film_focus_y | append: '%'
+  assign feature_focus = '--ha-mst-focus: ' | append: section.settings.feature_focus_x | append: '% ' | append: section.settings.feature_focus_y | append: '%'
+  assign transcript_label = section.settings.transcript_label | default: 'Transcript'
+  assign empty_text = section.settings.empty_text | default: 'To supply'
+  assign ink = section.settings.ink
+-%}
+<script>document.documentElement.classList.add('ha-mst-js');</script>
+<script src="{{ 'ha-masters.js' | asset_url }}" defer="defer"></script>
+
+<div class="ha-mst ha-mst--ink-{{ ink }}" id="the-masters" data-mst data-mst-muted="{{ section.settings.start_muted }}">
+
+  {%- comment -%} ---------- HERO: the wide photograph, the framed inset ---------- {%- endcomment -%}
+  <header class="ha-mst__hero{% if inset %} ha-mst__hero--inset{% endif %}">
+    <figure class="ha-mst__hero-figure ha-figure{% unless hero %} ha-figure--empty{% endunless %}">
+      {%- if hero -%}
+        {{ hero | image_url: width: 2800 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1500, 2000, 2800', alt: section.settings.hero_alt, class: 'ha-mst__hero-img', style: hero_focus }}
+      {%- else -%}
+        <span class="ha-mst__empty ha-record">{{ empty_text }}</span>
+      {%- endif -%}
+      {%- if section.settings.hero_label != blank -%}
+        <figcaption class="ha-mst__hero-label ha-record">{{ section.settings.hero_label }}</figcaption>
+      {%- endif -%}
+    </figure>
+    {%- if inset -%}
+      <figure class="ha-mst__inset">
+        {{ inset | image_url: width: 800 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 15vw, 40vw', widths: '240, 320, 400, 600, 800', alt: section.settings.inset_alt, class: 'ha-mst__inset-img' }}
+      </figure>
+    {%- endif -%}
+  </header>
+
+  {%- comment -%} ---------- INTRODUCTION: one H1, the line, three columns ---------- {%- endcomment -%}
+  <section class="ha-section ha-mst__intro" aria-labelledby="ha-mst-title">
+    <div class="ha-wrap ha-mst__intro-inner">
+      <h1 id="ha-mst-title" class="ha-mst__title ha-narrate">{{ section.settings.heading }}</h1>
+      {%- if section.settings.subline != blank -%}
+        <p class="ha-mst__subline ha-identify">{{ section.settings.subline }}</p>
+      {%- endif -%}
+      <div class="ha-mst__columns">
+        {%- for i in (1..3) -%}
+          {%- assign k_label = 'col' | append: i | append: '_label' -%}
+          {%- assign k_body = 'col' | append: i | append: '_body' -%}
+          {%- assign k_symbol = 'col' | append: i | append: '_symbol' -%}
+          {%- assign col_symbol = section.settings[k_symbol] -%}
+          {%- if section.settings[k_body] != blank -%}
+            <div class="ha-mst__col{% if col_symbol %} ha-mst__col--symbol{% endif %}">
+              <div class="ha-mst__col-text">
+                {%- if section.settings[k_label] != blank -%}<h2 class="ha-mst__col-label ha-record">{{ section.settings[k_label] }}</h2>{%- endif -%}
+                <div class="ha-mst__col-body ha-narrate">{{ section.settings[k_body] }}</div>
+              </div>
+              {%- if col_symbol -%}
+                {%- comment -%} A decorative symbol: empty alt, never a control. {%- endcomment -%}
+                <figure class="ha-mst__symbol">{{ col_symbol | image_url: width: 240 | image_tag: loading: 'lazy', sizes: '80px', widths: '80, 160, 240', alt: '' }}</figure>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- STILL AND MOVEMENT ----------
+    Two figures. On a phone each caption sits under its own image; from 750px
+    the figures become `display: contents` so the two frames share one row
+    and the two captions the row beneath, as the artboard draws them.
+  {%- endcomment -%}
+  <section class="ha-mst__pair" aria-label="{{ section.settings.pair_aria | default: 'Still and movement' }}">
+    <div class="ha-mst__pair-grid">
+      <figure class="ha-mst__still">
+        <div class="ha-mst__still-frame ha-figure{% unless still %} ha-figure--empty{% endunless %}">
+          {%- if still -%}
+            {{ still | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '600, 900, 1200, 1600', alt: section.settings.still_alt, class: 'ha-mst__still-img', style: still_focus }}
+          {%- else -%}
+            <span class="ha-mst__empty ha-record">{{ empty_text }}</span>
+          {%- endif -%}
+        </div>
+        <figcaption class="ha-mst__caption ha-mst__caption--still">
+          {%- if section.settings.still_number != blank -%}<span class="ha-mst__caption-num ha-record">{{ section.settings.still_number }}</span>{%- endif -%}
+          {%- if section.settings.still_caption != blank -%}<span class="ha-mst__caption-text ha-narrate">{{ section.settings.still_caption }}</span>{%- endif -%}
+        </figcaption>
+      </figure>
+      <figure class="ha-mst__movement">
+        {%- render 'ha-masters-film',
+          variant: 'panel',
+          id: 'ha-mst-film-weaving',
+          video: section.settings.film_video,
+          poster: section.settings.film_poster,
+          poster_alt: section.settings.film_poster_alt,
+          focus: film_focus,
+          label: section.settings.film_label,
+          sublabel: section.settings.film_sublabel,
+          title: section.settings.film_title,
+          transcript: section.settings.film_transcript,
+          transcript_label: transcript_label,
+          captions_url: section.settings.film_captions,
+          credit: section.settings.film_credit,
+          date: section.settings.film_date,
+          empty_text: empty_text,
+          sizes: '(min-width: 750px) 50vw, 100vw'
+        -%}
+        <figcaption class="ha-mst__caption ha-mst__caption--film">
+          {%- if section.settings.film_number != blank -%}<span class="ha-mst__caption-num ha-record">{{ section.settings.film_number }}</span>{%- endif -%}
+          {%- if section.settings.film_caption != blank -%}<span class="ha-mst__caption-text ha-narrate">{{ section.settings.film_caption }}</span>{%- endif -%}
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- ARCHIVE TILES AND THE QUOTATION ---------- {%- endcomment -%}
+  <section class="ha-section ha-mst__archive" aria-labelledby="ha-mst-quote-label">
+    <div class="ha-wrap ha-mst__archive-inner">
+      {%- assign tiles = section.blocks | where: 'type', 'archive' -%}
+      {%- if tiles.size > 0 -%}
+        <ul class="ha-mst__tiles" role="list">
+          {%- for tile in tiles -%}
+            <li class="ha-mst__tile" {{ tile.shopify_attributes }}>
+              {%- render 'ha-masters-film',
+                variant: 'tile',
+                id: tile.id,
+                video: tile.settings.video,
+                poster: tile.settings.image,
+                poster_alt: tile.settings.alt,
+                title: tile.settings.title,
+                transcript: tile.settings.transcript,
+                transcript_label: transcript_label,
+                captions_url: tile.settings.captions,
+                credit: tile.settings.credit,
+                date: tile.settings.date,
+                empty_text: empty_text,
+                sizes: '(min-width: 750px) 12vw, 30vw'
+              -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      <p id="ha-mst-quote-label" class="ha-mst__quote-label ha-record">{{ section.settings.quote_label }}</p>
+      <blockquote class="ha-mst__quote">
+        <p class="ha-mst__quote-text ha-narrate">{{ section.settings.quote | newline_to_br }}</p>
+        {%- if section.settings.quote_cite != blank -%}<footer class="ha-mst__quote-cite ha-record">{{ section.settings.quote_cite }}</footer>{%- endif -%}
+      </blockquote>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- THE GLOSSARY OF HERITAGE TECHNIQUES ---------- {%- endcomment -%}
+  <section class="ha-section ha-mst__glossary" id="glossary" aria-labelledby="ha-mst-glossary-title">
+    <div class="ha-wrap">
+      <div class="ha-mst__glossary-head">
+        <h2 id="ha-mst-glossary-title" class="ha-mst__glossary-title ha-narrate">{{ section.settings.glossary_heading | newline_to_br }}</h2>
+        <div class="ha-mst__glossary-lead{% if section.settings.glossary_symbol %} ha-mst__glossary-lead--symbol{% endif %}">
+          {%- if section.settings.glossary_symbol -%}
+            <figure class="ha-mst__symbol">{{ section.settings.glossary_symbol | image_url: width: 240 | image_tag: loading: 'lazy', sizes: '80px', widths: '80, 160, 240', alt: '' }}</figure>
+          {%- endif -%}
+          {%- if section.settings.glossary_intro != blank -%}<p class="ha-mst__glossary-intro ha-narrate">{{ section.settings.glossary_intro }}</p>{%- endif -%}
+        </div>
+      </div>
+
+      <ol class="ha-mst__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'technique' -%}
+            {%- assign key = block.settings.key | default: block.settings.title | handleize -%}
+            {%- assign has_link = false -%}
+            {%- if block.settings.master_url != blank and block.settings.master_text != blank -%}{%- assign has_link = true -%}{%- endif -%}
+            <li class="ha-mst__row" id="{{ key }}" data-mst-row {{ block.shopify_attributes }}>
+              <h3 class="ha-mst__row-head">
+                <button type="button" class="ha-mst__toggle" id="{{ key }}-toggle" aria-expanded="false" aria-controls="{{ key }}-panel" data-mst-toggle data-mst-key="{{ key }}">
+                  <span class="ha-mst__row-num ha-record">{{ block.settings.number }}</span>
+                  <span class="ha-mst__row-title ha-narrate">{{ block.settings.title }}</span>
+                  {%- if block.settings.summary != blank -%}<span class="ha-mst__row-summary ha-narrate">{{ block.settings.summary }}</span>{%- endif -%}
+                  <span class="ha-mst__row-icon" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="ha-mst__panel" id="{{ key }}-panel" role="region" aria-labelledby="{{ key }}-toggle" data-mst-panel>
+                <button type="button" class="ha-mst__close ha-record" data-mst-close>{{ section.settings.close_text | default: 'Close' }}</button>
+                {%- assign has_media = false -%}
+                {%- if block.settings.video != blank or block.settings.image != blank -%}{%- assign has_media = true -%}{%- endif -%}
+                <div class="ha-mst__panel-grid{% unless has_media %} ha-mst__panel-grid--text{% endunless %}">
+                  {%- if has_media -%}
+                    <div class="ha-mst__panel-media">
+                      {%- render 'ha-masters-film',
+                        variant: 'glossary',
+                        id: key,
+                        video: block.settings.video,
+                        poster: block.settings.image,
+                        poster_alt: block.settings.alt,
+                        title: block.settings.film_title,
+                        transcript: block.settings.transcript,
+                        transcript_label: transcript_label,
+                        captions_url: block.settings.captions,
+                        credit: block.settings.credit,
+                        date: block.settings.date,
+                        empty_text: empty_text,
+                        sizes: '(min-width: 990px) 34vw, 100vw'
+                      -%}
+                      {%- if block.settings.caption != blank -%}<p class="ha-mst__panel-caption ha-record">{{ block.settings.caption }}</p>{%- endif -%}
+                    </div>
+                  {%- endif -%}
+                  <div class="ha-mst__panel-text">
+                    {%- if block.settings.tagline != blank -%}<p class="ha-mst__panel-eyebrow ha-record">{{ block.settings.tagline }}</p>{%- endif -%}
+                    <div class="ha-mst__panel-body ha-narrate">{{ block.settings.body }}</div>
+                    {%- if block.settings.credit != blank -%}
+                      <p class="ha-mst__panel-credit ha-record"><span class="ha-mst__panel-credit-label">{{ section.settings.credit_label }}</span> {{ block.settings.credit }}</p>
+                    {%- endif -%}
+                    {%- if has_link -%}
+                      <a class="ha-mst__panel-link ha-identify" href="{{ block.settings.master_url }}"{% if block.settings.master_id != blank %} data-master-id="{{ block.settings.master_id | escape }}"{% endif %}>{{ block.settings.master_text }}<span class="ha-mst__corner" aria-hidden="true"></span></a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+
+      {%- if section.settings.handwork_line != blank -%}
+        <div class="ha-mst__handwork">
+          {%- if section.settings.handwork_label != blank -%}<p class="ha-mst__handwork-label ha-record">{{ section.settings.handwork_label }}</p>{%- endif -%}
+          <p class="ha-mst__handwork-line ha-narrate">{{ section.settings.handwork_line }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} ---------- FROM THE HARTWICK ARCHIVE: the wide film ---------- {%- endcomment -%}
+  <section class="ha-mst__feature" aria-label="{{ section.settings.feature_title | escape }}">
+    {%- render 'ha-masters-film',
+      variant: 'feature',
+      id: 'ha-mst-film-feature',
+      video: section.settings.feature_video,
+      poster: section.settings.feature_poster,
+      poster_alt: section.settings.feature_poster_alt,
+      focus: feature_focus,
+      eyebrow: section.settings.feature_eyebrow,
+      label: section.settings.feature_title,
+      sublabel: section.settings.feature_sublabel,
+      title: section.settings.feature_title,
+      transcript: section.settings.feature_transcript,
+      transcript_label: transcript_label,
+      captions_url: section.settings.feature_captions,
+      credit: section.settings.feature_credit,
+      date: section.settings.feature_date,
+      monochrome: section.settings.feature_mono,
+      empty_text: empty_text,
+      sizes: '100vw'
+    -%}
+  </section>
+
+  {%- comment -%} ---------- THE WORK CONTINUES ---------- {%- endcomment -%}
+  <section class="ha-section ha-mst__continue" aria-labelledby="ha-mst-continue-title">
+    <div class="ha-wrap ha-mst__continue-grid{% if section.settings.continue_image %} ha-mst__continue-grid--image{% endif %}">
+      <h2 id="ha-mst-continue-title" class="ha-mst__continue-heading ha-narrate">{{ section.settings.continue_heading }}</h2>
+      {%- if section.settings.continue_image -%}
+        <figure class="ha-mst__continue-figure">{{ section.settings.continue_image | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 12vw, 40vw', widths: '160, 240, 320, 480', alt: section.settings.continue_alt }}</figure>
+      {%- endif -%}
+      <div class="ha-mst__continue-text">
+        {%- if section.settings.continue_body != blank -%}<div class="ha-body ha-narrate ha-mst__continue-body">{{ section.settings.continue_body }}</div>{%- endif -%}
+        {%- if section.settings.continue_link_text != blank -%}
+          <a class="ha-mst__continue-link ha-identify" href="{{ section.settings.continue_link_url | default: '/blogs/news' }}" data-mst-journal>{{ section.settings.continue_link_text }}<span class="ha-mst__corner" aria-hidden="true"></span></a>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="ha-wrap ha-mst__note-wrap">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: section.settings.placeholder_text -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "HA — The Masters page",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "paragraph", "content": "The Masters (Aloha's build brief and the founder's artboard, 18 Sept 2026). Add one Technique block per glossary entry, in order, and up to three Archive blocks for the small images above the quotation." },
+    { "type": "select", "id": "ink", "label": "Heading ink", "default": "resin", "options": [
+      { "value": "resin", "label": "Cutch Resin (as the artboard draws it)" },
+      { "value": "peat", "label": "Peat (as the Clothing pages)" }
+    ], "info": "Confirm against the editable artwork — the brief says not to assume the Clothing colour applies here." },
+    { "type": "checkbox", "id": "start_muted", "label": "Films start muted (sound on request)", "default": true },
+    { "type": "text", "id": "transcript_label", "label": "Transcript disclosure reads", "default": "Transcript" },
+    { "type": "text", "id": "close_text", "label": "Close control reads", "default": "Close" },
+    { "type": "text", "id": "credit_label", "label": "Credit label", "default": "Master" },
+    { "type": "text", "id": "empty_text", "label": "Empty media reads", "default": "To supply" },
+
+    { "type": "header", "content": "Hero" },
+    { "type": "image_picker", "id": "hero_image", "label": "Wide photograph" },
+    { "type": "text", "id": "hero_alt", "label": "Alt text", "default": "Warp threads stretched on a handloom" },
+    { "type": "range", "id": "hero_focus_x", "label": "Focus, horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "range", "id": "hero_focus_y", "label": "Focus, vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "text", "id": "hero_label", "label": "Small label on the photograph" },
+    { "type": "image_picker", "id": "inset_image", "label": "Framed inset (monochrome)" },
+    { "type": "text", "id": "inset_alt", "label": "Inset alt text", "default": "Carved wooden printing blocks stacked on workshop shelves" },
+
+    { "type": "header", "content": "Introduction" },
+    { "type": "text", "id": "heading", "label": "Title (the H1)", "default": "The Masters" },
+    { "type": "text", "id": "subline", "label": "Line beneath", "default": "The people. The knowledge. The work." },
+    { "type": "text", "id": "col1_label", "label": "Column 1 label", "default": "The cloth" },
+    { "type": "richtext", "id": "col1_body", "label": "Column 1", "default": "<p>Textile History dates back to the beginning of human civilization. Hartwick Atelier specializes in hand spun and handwoven fabrics, natural and ayurvedic dyes, and exquisite heritage handwork.</p>" },
+    { "type": "image_picker", "id": "col1_symbol", "label": "Column 1 symbol (optional)" },
+    { "type": "text", "id": "col2_label", "label": "Column 2 label", "default": "The knowledge" },
+    { "type": "richtext", "id": "col2_body", "label": "Column 2", "default": "<p>These artisanal techniques rely on rare knowledge and the natural cycles of the sun, wind and rain.</p>" },
+    { "type": "image_picker", "id": "col2_symbol", "label": "Column 2 symbol (optional)" },
+    { "type": "text", "id": "col3_label", "label": "Column 3 label", "default": "The handwork" },
+    { "type": "richtext", "id": "col3_body", "label": "Column 3", "default": "<p>Each handcrafted piece in the collection is a glimpse into the rich history, intricate process, and generations of skill that have gone into its creation.</p>" },
+    { "type": "image_picker", "id": "col3_symbol", "label": "Column 3 symbol (optional)" },
+
+    { "type": "header", "content": "Still and movement — the still" },
+    { "type": "text", "id": "pair_aria", "label": "Group name for screen readers", "default": "Still and movement" },
+    { "type": "image_picker", "id": "still_image", "label": "Photograph" },
+    { "type": "text", "id": "still_alt", "label": "Alt text", "default": "A hank of handspun yarn" },
+    { "type": "range", "id": "still_focus_x", "label": "Focus, horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "range", "id": "still_focus_y", "label": "Focus, vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "text", "id": "still_number", "label": "Caption number", "default": "01 / Handspinning" },
+    { "type": "text", "id": "still_caption", "label": "Caption", "default": "A moment held." },
+
+    { "type": "header", "content": "Still and movement — the film" },
+    { "type": "video", "id": "film_video", "label": "Film", "info": "With no film the slot is a still with no play control." },
+    { "type": "image_picker", "id": "film_poster", "label": "Poster (the opening image)" },
+    { "type": "text", "id": "film_poster_alt", "label": "Poster alt text", "default": "Warp threads on the loom, seen close" },
+    { "type": "range", "id": "film_focus_x", "label": "Focus, horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "range", "id": "film_focus_y", "label": "Focus, vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "text", "id": "film_label", "label": "Label on the film", "default": "Watch the weaving" },
+    { "type": "text", "id": "film_sublabel", "label": "Line beneath the label", "default": "Play film / sound on request" },
+    { "type": "text", "id": "film_number", "label": "Caption number", "default": "02 / Handweaving" },
+    { "type": "text", "id": "film_caption", "label": "Caption", "default": "A process in motion." },
+    { "type": "text", "id": "film_title", "label": "Film title (search data)", "default": "Handweaving at the loom" },
+    { "type": "richtext", "id": "film_transcript", "label": "Transcript, or a description of a silent film" },
+    { "type": "url", "id": "film_captions", "label": "Captions file (.vtt)" },
+    { "type": "text", "id": "film_credit", "label": "Credit (verified only)" },
+    { "type": "text", "id": "film_date", "label": "Recorded (YYYY-MM-DD)", "info": "Search data needs a date; left empty, the film is not described to search engines." },
+
+    { "type": "header", "content": "The quotation" },
+    { "type": "text", "id": "quote_label", "label": "Label", "default": "The khadi spirit" },
+    { "type": "textarea", "id": "quote", "label": "Quotation", "default": "If we have the khadi spirit in us,\nwe would surround ourselves with simplicity\nin every walk of life" },
+    { "type": "text", "id": "quote_cite", "label": "Attribution", "default": "Mahatma Gandhi" },
+
+    { "type": "header", "content": "The glossary" },
+    { "type": "textarea", "id": "glossary_heading", "label": "Heading", "default": "A glossary of\nheritage techniques" },
+    { "type": "image_picker", "id": "glossary_symbol", "label": "Symbol (optional)" },
+    { "type": "textarea", "id": "glossary_intro", "label": "Introduction", "default": "Explore the knowledge behind the work. Open a technique to read its story and watch the process." },
+    { "type": "text", "id": "handwork_label", "label": "Handwork note label", "default": "Handwork naturally results in variations" },
+    { "type": "text", "id": "handwork_line", "label": "Handwork note", "default": "We cherish these nuances for their human touch" },
+
+    { "type": "header", "content": "From the archive — the wide film" },
+    { "type": "video", "id": "feature_video", "label": "Film" },
+    { "type": "image_picker", "id": "feature_poster", "label": "Poster (the opening image)" },
+    { "type": "text", "id": "feature_poster_alt", "label": "Poster alt text", "default": "Black-and-white photographs from the Hartwick archive laid out on a table" },
+    { "type": "range", "id": "feature_focus_x", "label": "Focus, horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "range", "id": "feature_focus_y", "label": "Focus, vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "checkbox", "id": "feature_mono", "label": "Show the poster in black and white", "default": true },
+    { "type": "text", "id": "feature_eyebrow", "label": "Eyebrow", "default": "From the Hartwick archive" },
+    { "type": "text", "id": "feature_title", "label": "Title", "default": "At the printing table." },
+    { "type": "text", "id": "feature_sublabel", "label": "Line beneath the title (film only)", "default": "Watch the Master at work" },
+    { "type": "richtext", "id": "feature_transcript", "label": "Transcript, or a description of a silent film" },
+    { "type": "url", "id": "feature_captions", "label": "Captions file (.vtt)" },
+    { "type": "text", "id": "feature_credit", "label": "Credit (verified only)" },
+    { "type": "text", "id": "feature_date", "label": "Recorded (YYYY-MM-DD)" },
+
+    { "type": "header", "content": "The work continues" },
+    { "type": "text", "id": "continue_heading", "label": "Heading", "default": "The work continues" },
+    { "type": "image_picker", "id": "continue_image", "label": "Image or symbol (optional)" },
+    { "type": "text", "id": "continue_alt", "label": "Image alt text" },
+    { "type": "richtext", "id": "continue_body", "label": "Text", "default": "<p>Stories of the people, their materials and the knowledge they carry. Follow the work through the Journal.</p>" },
+    { "type": "text", "id": "continue_link_text", "label": "Link text", "default": "Read the Journal" },
+    { "type": "url", "id": "continue_link_url", "label": "Link", "info": "The Journal is /blogs/news, as the footer links it. Left empty, that is where this goes." },
+
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true },
+    { "type": "text", "id": "placeholder_text", "label": "Notice", "default": "Provisional: photographs and films from the store's own files, and glossary copy from the founder's draft, until Angela's review and the Masters edits are supplied." }
+  ],
+  "blocks": [
+    {
+      "type": "technique",
+      "name": "Technique",
+      "settings": [
+        { "type": "text", "id": "key", "label": "Stable ID (the #anchor)", "default": "khadi", "info": "Lowercase, hyphens: khadi, hand-spun, handwoven. Once linked from elsewhere, keep it." },
+        { "type": "text", "id": "number", "label": "Number", "default": "01" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Khadi" },
+        { "type": "text", "id": "summary", "label": "Short line (closed row)", "default": "Handspun and handwoven natural-fibre cloth." },
+        { "type": "text", "id": "tagline", "label": "Eyebrow (open entry)", "default": "Handspun and handwoven" },
+        { "type": "richtext", "id": "body", "label": "Expanded copy", "default": "<p>Khadi is cloth made from yarn spun by hand and woven on a handloom. Spinning and weaving both shape its character. Small variations in the yarn and weave record the work of the hands that made it.</p>" },
+        { "type": "header", "content": "Media" },
+        { "type": "image_picker", "id": "image", "label": "Photograph, or the film's poster" },
+        { "type": "text", "id": "alt", "label": "Alt text" },
+        { "type": "video", "id": "video", "label": "Film (optional)" },
+        { "type": "text", "id": "caption", "label": "Caption beneath the media" },
+        { "type": "text", "id": "film_title", "label": "Film title (search data)" },
+        { "type": "richtext", "id": "transcript", "label": "Transcript, or a description of a silent film" },
+        { "type": "url", "id": "captions", "label": "Captions file (.vtt)" },
+        { "type": "text", "id": "date", "label": "Recorded (YYYY-MM-DD)" },
+        { "type": "header", "content": "The Master (later phase — shown only when filled)" },
+        { "type": "text", "id": "credit", "label": "Verified credit", "info": "Name and preferred credit as the Master approved them. Never a guess." },
+        { "type": "text", "id": "master_id", "label": "Master record ID", "info": "Never shown. Kept apart from the link so either can change alone." },
+        { "type": "text", "id": "master_text", "label": "Link text" },
+        { "type": "url", "id": "master_url", "label": "Link destination", "info": "An approved profile or Made by Masters page only. Empty = no link." }
+      ]
+    },
+    {
+      "type": "archive",
+      "name": "Archive image",
+      "limit": 3,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photograph, or the film's poster" },
+        { "type": "text", "id": "alt", "label": "Alt text" },
+        { "type": "video", "id": "video", "label": "Film (optional)", "info": "Only when the matching film exists — otherwise the tile is a still with no play control." },
+        { "type": "text", "id": "title", "label": "Film title (search data)" },
+        { "type": "richtext", "id": "transcript", "label": "Transcript, or a description of a silent film" },
+        { "type": "url", "id": "captions", "label": "Captions file (.vtt)" },
+        { "type": "text", "id": "credit", "label": "Credit (verified only)" },
+        { "type": "text", "id": "date", "label": "Recorded (YYYY-MM-DD)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "HA — The Masters page" }]
+}
+{% endschema %}

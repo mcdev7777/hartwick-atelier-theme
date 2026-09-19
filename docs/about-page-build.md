@@ -81,6 +81,13 @@ header at her request. Preview until the page exists:
 
 ## Admin (not theme code)
 
+> **Done 18 September 2026, by API** (the CLI login now carries
+> `write_content`): `about-the-atelier` → template `about`, `policies` →
+> `policies`, `the-circle` → `the-circle`, and `the-makers` renamed to
+> `the-masters` with its own template and a redirect. None of these pages
+> needs `?view=` any more. Items 1, 1b and 3 below are therefore closed.
+
+
 1. Page **About the Atelier** → Theme template → `about`. Until then the page
    needs `?view=about`.
 1b. Create page **Policies** (handle `policies`) → Theme template →

@@ -1,6 +1,6 @@
 /*
  * Hartwick Atelier — ALL CLOTHING (the Apparel collection).
- * Aloha's "All Clothing & LOT" build brief and artboard, 17 September 2026.
+ * Aloha's "All Apparel & LOT" build brief and artboard, 17 September 2026.
  * Assigned to the `apparel` collection as its template. One card per Style,
  * grouped by the category blocks; the Made by Masters feature sits between
  * Skirts and Shirts as drawn; Dress 002 and Shorts 006 in Loungewear as the
@@ -30,6 +30,7 @@
             "heading": "From yarn to cloth.",
             "body": "<p>Much of this collection begins with cotton khadi: yarn spun by hand, then woven on a handloom. Across plain cloth, stripes and checks, spinning and weaving give each fabric its particular texture.</p>",
             "link_text": "Explore handspinning & handweaving",
+            "link_url": "/pages/the-masters#khadi",
             "image_label": "Cloth detail / to supply",
             "image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg",
             "image_alt": "Handspun, handwoven cotton khadi, close"
@@ -84,16 +85,16 @@
       ],
       "settings": {
         "crumb_collection": "Collection",
-        "crumb_leaf": "Clothing",
-        "title": "All Clothing",
-        "intro": "Clothing in cotton, silk and linen. Find a shape, then explore its cloth, weave and colour.",
+        "crumb_leaf": "Apparel",
+        "title": "All Apparel",
+        "intro": "Apparel in cotton, silk and linen. Find a shape, then explore its cloth, weave and colour.",
         "back_text": "Back to the Collection Index",
         "back_url": "/collections",
-        "nav_label": "Explore clothing",
+        "nav_label": "Explore apparel",
         "lots_label": "Made in Lots",
-        "lots_line": "A Lot is a numbered release of clothing. Each piece belongs to a Lot, with a record of its cloth, making and availability.",
+        "lots_line": "A Lot is a numbered release of apparel. Each piece belongs to a Lot, with a record of its cloth, making and availability.",
         "lots_toggle": "How Lots work",
-        "lots_more": "<p>We release clothing in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details, available sizes and whether it is ready to send or available to pre-order.</p>",
+        "lots_more": "<p>We release apparel in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details, available sizes and whether it is ready to send or available to pre-order.</p>",
         "lots_note": "Dates, quantities and access windows appear only when confirmed.",
         "lot_label": "Lot",
         "lot_placeholder": "Lot [number]",

@@ -1,7 +1,7 @@
 /*
  * Hartwick Atelier — THE COLLECTION INDEX (/collections)
  * Refined to Aloha's Collection Index brief and artboard, 17 September 2026:
- * photographic header + opening directory, then Clothing / Fine Silk / Fine
+ * photographic header + opening directory, then Apparel / Fine Silk / Fine
  * Jewellery / Yoga sections, each a rail beside its image group; 17 numbered
  * entries, one name = one image = one destination. The 15 September category
  * tiles (`ha-collection-categories`) are kept, disabled, one toggle away.
@@ -38,7 +38,7 @@
           "settings": {
             "collection": "apparel",
             "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg",
-            "label": "Clothing",
+            "label": "Apparel",
             "alt": "A handwoven ikat shirt and khadi skirt, worn in a timber room",
             "focus_x": 50,
             "focus_y": 0
@@ -86,10 +86,10 @@
       ],
       "settings": {
         "heading": "The Collection Index",
-        "subline": "Clothing, Fine Silks, Fine Jewellery and Yoga",
+        "subline": "Apparel, Fine Silks, Fine Jewellery and Yoga",
         "touch_reveal": "scroll",
         "show_placeholder_note": true,
-        "placeholder_text": "Provisional — photographs are the store's own files: Fine Silks and Fine Jewellery are the wireframe's frames, Clothing is the nearest frame from the same shoot, Yoga is a stand-in until the rolled-mat picture arrives"
+        "placeholder_text": "Provisional — photographs are the store's own files: Fine Silks and Fine Jewellery are the wireframe's frames, Apparel is the nearest frame from the same shoot, Yoga is a stand-in until the rolled-mat picture arrives"
       },
       "disabled": true
     },
@@ -112,11 +112,11 @@
           "type": "group",
           "settings": {
             "number": "01",
-            "heading": "Clothing",
+            "heading": "Apparel",
             "count_label": "Five categories",
             "anchor": "idx-clothing",
             "layout": "clothing",
-            "view_all_text": "View all clothing",
+            "view_all_text": "View all apparel",
             "view_all_url": "/collections/apparel",
             "dir_mode": "entries",
             "dir_show_secondary": false,
@@ -449,7 +449,7 @@
         "header_focus_y": 50,
         "crumb": "Collection",
         "heading": "The Collection Index",
-        "intro": "Clothing, silk scarves, fine jewellery and yoga mats. Find your way by category.",
+        "intro": "Apparel, silk scarves, fine jewellery and yoga mats. Find your way by category.",
         "dir_label": "Explore the index",
         "dir_count": "",
         "back_text": "Back to index",

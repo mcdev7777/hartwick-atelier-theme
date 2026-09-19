@@ -1,12 +1,15 @@
 {%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
 
 {%- comment -%}
-  Hartwick Atelier — ALL CLOTHING.
+  Hartwick Atelier — A RANGE PAGE: Apparel, Fine Silk, Fine Jewellery, Yoga.
   Aloha's "All Clothing & LOT — build brief for Ivan" and the artboards
   All Clothing - Desktop (1440 x 7450), Interaction & build guide, The LOT /
-  design & function — 17 September 2026.
+  design & function — 17 September 2026. Aloha, 18 September: the same
+  structure for Fine Silk, Yoga and Fine Jewellery, and the word "Clothing"
+  retired in favour of "Apparel" everywhere a visitor reads it. (File and
+  class names keep the older word; they are internal, like legacy SKUs.)
 
-  One page for the clothing range: header and introduction; the five category
+  One page per range: header and introduction; the category
   links, sticky below the site header; Made in Lots with its inline "How Lots
   work" disclosure; then a section per category — a rail (number, heading,
   Back to top, a line of copy) beside a three-column grid of garment cards —
@@ -27,6 +30,14 @@
   may include or exclude Styles by name — "Dress 002" sits in Loungewear as
   the brief proposes. A Style appears once, in the first section that claims
   it. The Style number is set in Cutch Resin (snippets/ha-style-name).
+
+  ONE CARD PER PRODUCT, where there are no Style records. Fine Silk, Fine
+  Jewellery and Yoga have no `hartwick.style` yet, so a category block may
+  instead name a COLLECTION (the format or form sub-collection: Classic
+  Stoles, Rings …) and the cards are that collection's products, one each,
+  in its own order. The card is the same; the count line is simply absent.
+  When Style records arrive for those ranges the block can switch back
+  without touching the layout.
 
   BLACK AND WHITE -> COLOUR. Colour originals, `filter: grayscale(1)` at rest,
   colour on hover or focus-within of the card only; no transition under
@@ -55,6 +66,17 @@
       if (nav) window.setTimeout(function () { nav.focus({ preventScroll: true }); }, reduce ? 0 : 400);
       if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
     });
+    // The sticky category navigation can run to two lines on a range with
+    // long category names (Fine Silk). Its measured height feeds the anchor
+    // offsets and the rail's resting point, so nothing hides beneath it.
+    function measureNav() {
+      var page = document.querySelector('.ha-clothing');
+      var nav = document.querySelector('.ha-clothing__nav');
+      if (page && nav) page.style.setProperty('--ha-clothing-nav-h', nav.offsetHeight + 'px');
+    }
+    window.addEventListener('load', measureNav);
+    window.addEventListener('resize', measureNav);
+    if (document.readyState !== 'loading') measureNav(); else document.addEventListener('DOMContentLoaded', measureNav);
   })();
 </script>
 {%- paginate collection.products by 250 -%}
@@ -167,6 +189,45 @@
           </div>
 
           <ul class="ha-clothing__grid" role="list">
+            {%- assign cards = 0 -%}
+            {%- if block.settings.collection != blank -%}
+              {%- comment -%} One card per product of the named collection. {%- endcomment -%}
+              {%- for hero in block.settings.collection.products -%}
+                {%- assign key = ',' | append: hero.handle | append: ',' -%}
+                {%- if seen contains key -%}{%- continue -%}{%- endif -%}
+                {%- assign seen = seen | append: hero.handle | append: ',' -%}
+                {%- comment -%}
+                  With no Style record the name is the product title up to its
+                  " | " — the part after it is the Expression, which
+                  ha-product-fact already reads, so it is not printed twice.
+                {%- endcomment -%}
+                {%- assign short_title = hero.title | split: ' | ' | first | strip -%}
+                {%- assign sname = hero.metafields.hartwick.style.value.display_name.value | default: hero.metafields.hartwick.style.value.display_name | default: short_title -%}
+                {%- assign cards = cards | plus: 1 -%}
+                {%- capture expr -%}{%- render 'ha-product-fact', product: hero, field: 'expression' -%}{%- endcapture -%}
+                {%- assign expr = expr | strip -%}
+                {%- assign lot = hero.metafields.hartwick.lot.value.number_roman.value | default: hero.metafields.hartwick.lot.value.number_roman -%}
+                {%- assign alt = hero.featured_media.alt | default: sname -%}
+                {%- if expr != blank -%}{%- assign alt = sname | append: ', ' | append: expr -%}{%- endif -%}
+                <li class="ha-clothing__card">
+                  <a class="ha-clothing__link" href="{{ hero.url }}" aria-label="{{ sname | escape }}{% if expr != blank %}, {{ expr | escape }}{% endif %} — {{ section.settings.view_text | escape }}">
+                    <figure class="ha-clothing__figure{% unless hero.featured_media %} ha-figure--empty{% endunless %}">
+                      {%- if hero.featured_media -%}
+                        {{ hero.featured_media.preview_image
+                          | image_url: width: 1200
+                          | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 26vw, (min-width: 750px) 45vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: alt, class: 'ha-clothing__img' }}
+                      {%- else -%}
+                        <span class="ha-clothing__empty ha-record">{{ section.settings.image_slot_text }}</span>
+                      {%- endif -%}
+                    </figure>
+                    <h3 class="ha-clothing__name ha-narrate">{%- render 'ha-style-name', name: sname -%}</h3>
+                    {%- if expr != blank -%}<p class="ha-clothing__expr ha-narrate">{{ expr }}</p>{%- endif -%}
+                    <p class="ha-clothing__lot ha-record">{% if lot != blank %}{{ section.settings.lot_label }} {{ lot }}{% else %}{{ section.settings.lot_placeholder }}{% endif %}</p>
+                    <p class="ha-clothing__meta ha-record">{{ section.settings.view_text }}</p>
+                  </a>
+                </li>
+              {%- endfor -%}
+            {%- else -%}
             {%- comment -%}
               Two passes. First, every Style this block claims, keyed
               "number|handle" so a plain string sort puts 001 before 002
@@ -201,7 +262,6 @@
               {%- assign keys = keys | append: snum | append: '|' | append: st.system.handle | append: ',' -%}
             {%- endfor -%}
             {%- assign sorted = keys | split: ',' | sort -%}
-            {%- assign cards = 0 -%}
             {%- for k in sorted -%}
               {%- if k == blank -%}{%- continue -%}{%- endif -%}
               {%- assign shandle = k | split: '|' | last -%}
@@ -244,6 +304,7 @@
                 </a>
               </li>
             {%- endfor -%}
+            {%- endif -%}
             {%- if cards == 0 -%}
               <li class="ha-clothing__card ha-clothing__card--none"><p class="ha-record">{{ section.settings.none_text }}</p></li>
             {%- endif -%}
@@ -278,24 +339,24 @@
 
 {% schema %}
 {
-  "name": "HA — All Clothing",
+  "name": "HA — Range page",
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
-    { "type": "paragraph", "content": "The clothing range as one card per Style, grouped into the category blocks below. Cards come from this collection's products and their Style records; nothing is typed here except headings and copy." },
+    { "type": "paragraph", "content": "A range page — Apparel, Fine Silk, Fine Jewellery or Yoga. Apparel: one card per Style, from this collection's products and their Style records. Ranges without Style records: give each Category block a collection and it lists that collection's products, one card each. Nothing is typed here except headings and copy." },
     { "type": "header", "content": "Head" },
     { "type": "text", "id": "crumb_collection", "label": "Breadcrumb: collection", "default": "Collection" },
-    { "type": "text", "id": "crumb_leaf", "label": "Breadcrumb: this page", "default": "Clothing" },
-    { "type": "text", "id": "title", "label": "Title", "default": "All Clothing" },
-    { "type": "textarea", "id": "intro", "label": "Introduction", "default": "Clothing in cotton, silk and linen. Find a shape, then explore its cloth, weave and colour." },
+    { "type": "text", "id": "crumb_leaf", "label": "Breadcrumb: this page", "default": "Apparel" },
+    { "type": "text", "id": "title", "label": "Title", "default": "All Apparel" },
+    { "type": "textarea", "id": "intro", "label": "Introduction", "default": "Apparel in cotton, silk and linen. Find a shape, then explore its cloth, weave and colour." },
     { "type": "text", "id": "back_text", "label": "Back link", "default": "Back to the Collection Index" },
     { "type": "url", "id": "back_url", "label": "Back link URL" },
-    { "type": "text", "id": "nav_label", "label": "Navigation label", "default": "Explore clothing" },
+    { "type": "text", "id": "nav_label", "label": "Navigation label", "default": "Explore apparel" },
     { "type": "header", "content": "Made in Lots" },
     { "type": "text", "id": "lots_label", "label": "Label", "default": "Made in Lots" },
-    { "type": "textarea", "id": "lots_line", "label": "Line", "default": "A Lot is a numbered release of clothing. Each piece belongs to a Lot, with a record of its cloth, making and availability." },
+    { "type": "textarea", "id": "lots_line", "label": "Line", "default": "A Lot is a numbered release of apparel. Each piece belongs to a Lot, with a record of its cloth, making and availability." },
     { "type": "text", "id": "lots_toggle", "label": "Disclosure control", "default": "How Lots work" },
-    { "type": "richtext", "id": "lots_more", "label": "Expanded copy", "default": "<p>We release clothing in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details, available sizes and whether it is ready to send or available to pre-order.</p>" },
+    { "type": "richtext", "id": "lots_more", "label": "Expanded copy", "default": "<p>We release apparel in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details, available sizes and whether it is ready to send or available to pre-order.</p>" },
     { "type": "text", "id": "lots_note", "label": "Expanded note", "default": "Dates, quantities and access windows appear only when confirmed." },
     { "type": "header", "content": "Cards" },
     { "type": "text", "id": "lot_label", "label": "Lot label", "default": "Lot" },
@@ -323,6 +384,7 @@
         { "type": "text", "id": "heading", "label": "Heading", "default": "Skirts" },
         { "type": "text", "id": "anchor", "label": "Anchor (URL #id)", "default": "skirts" },
         { "type": "text", "id": "blurb", "label": "Line of copy" },
+        { "type": "collection", "id": "collection", "label": "Or: list this collection's products", "info": "For ranges without Style records (Fine Silk, Fine Jewellery, Yoga). Set, it overrides the Style categories below: one card per product, in the collection's order." },
         { "type": "text", "id": "categories", "label": "Style categories gathered", "default": "Skirt", "info": "The style record's category, comma-separated: Skirt · Shirt · Trouser · Dress · Coat · Robe · Kaftan · PJ · Shorts" },
         { "type": "text", "id": "include", "label": "Also include these Styles", "info": "By name, comma-separated — e.g. Dress 002" },
         { "type": "text", "id": "exclude", "label": "Exclude these Styles", "info": "By name, comma-separated" }
@@ -344,6 +406,6 @@
       ]
     }
   ],
-  "presets": [{ "name": "HA — All Clothing" }]
+  "presets": [{ "name": "HA — Range page" }]
 }
 {% endschema %}

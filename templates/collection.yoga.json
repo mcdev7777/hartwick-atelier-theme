@@ -1,0 +1,76 @@
+/*
+ * Hartwick Atelier — YOGA (/collections/yoga)
+ * Aloha, 18 September 2026: the same structure as the Apparel page; the
+ * Masters knowledge for this range follows from her. Category blocks list
+ * the range's sub-collections, one card per product, until Style records
+ * exist for it.
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "clothing": {
+      "type": "ha-clothing",
+      "blocks": {
+        "mats": {
+          "type": "category",
+          "settings": {
+            "heading": "Yoga Mats",
+            "anchor": "yoga-mats",
+            "blurb": "For your practice.",
+            "collection": "yoga",
+            "categories": ""
+          }
+        }
+      },
+      "block_order": [
+        "mats"
+      ],
+      "settings": {
+        "crumb_collection": "Collection",
+        "crumb_leaf": "Yoga",
+        "title": "Yoga",
+        "intro": "Mats for your practice. Pieces appear here as they are released.",
+        "back_text": "Back to the Collection Index",
+        "back_url": "/collections",
+        "nav_label": "Explore yoga",
+        "lots_label": "Made in Lots",
+        "lots_line": "A Lot is a numbered release. Each piece belongs to a Lot, with a record of its making and availability.",
+        "lots_toggle": "How Lots work",
+        "lots_more": "<p>We release pieces in numbered Lots. The Lot reference connects a piece to its making. Open a piece to see its Lot details and whether it is ready to send or available to pre-order.</p>",
+        "lots_note": "Dates, quantities and access windows appear only when confirmed.",
+        "lot_label": "Lot",
+        "lot_placeholder": "Lot [number]",
+        "count_text": "expressions",
+        "view_text": "View piece",
+        "top_text": "Back to top",
+        "touch": "colour",
+        "onward_label": "Continue through the collection",
+        "onward_1_text": "Apparel",
+        "onward_1_url": "/collections/apparel",
+        "onward_2_text": "Fine Silk",
+        "onward_2_url": "/collections/fine-silk",
+        "onward_3_text": "Fine Jewellery",
+        "onward_3_url": "/collections/fine-jewellery",
+        "show_placeholder_note": true
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "Notes from the Atelier.",
+        "body": "<p>Materials, makers and work in progress.</p>",
+        "body_position": "form",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "collection_page"
+      }
+    }
+  },
+  "order": [
+    "clothing",
+    "register"
+  ]
+}

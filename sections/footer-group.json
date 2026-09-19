@@ -15,7 +15,7 @@
       "type": "ha-footer",
       "blocks": {
         "n1": { "type": "link", "settings": { "label": "Collection", "url": "/collections", "column": "left" } },
-        "n2": { "type": "link", "settings": { "label": "The Masters", "url": "/pages/the-makers", "column": "left" } },
+        "n2": { "type": "link", "settings": { "label": "The Masters", "url": "/pages/the-masters", "column": "left" } },
         "n3": { "type": "link", "settings": { "label": "Journal", "url": "/blogs/news", "column": "left" } },
         "n4": { "type": "link", "settings": { "label": "About", "url": "/pages/about-the-atelier", "column": "left" } },
         "l1": { "type": "link", "settings": { "label": "Instagram", "social": "instagram", "new_tab": true, "column": "right" } },

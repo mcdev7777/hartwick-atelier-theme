@@ -1,0 +1,109 @@
+/*
+ * Hartwick Atelier — FINE JEWELLERY (/collections/fine-jewellery)
+ * Aloha, 18 September 2026: the same structure as the Apparel page; the
+ * Masters knowledge for this range follows from her. Category blocks list
+ * the range's sub-collections, one card per product, until Style records
+ * exist for it.
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "clothing": {
+      "type": "ha-clothing",
+      "blocks": {
+        "earrings": {
+          "type": "category",
+          "settings": {
+            "heading": "Earrings",
+            "anchor": "earrings",
+            "blurb": "Drops, hoops and studs in gold and stone.",
+            "collection": "earrings",
+            "categories": ""
+          }
+        },
+        "rings": {
+          "type": "category",
+          "settings": {
+            "heading": "Rings",
+            "anchor": "rings",
+            "blurb": "Signets, steps and settings.",
+            "collection": "rings",
+            "categories": ""
+          }
+        },
+        "bangles": {
+          "type": "category",
+          "settings": {
+            "heading": "Bangles & Bracelets",
+            "anchor": "bangles-and-bracelets",
+            "blurb": "Worn singly or gathered.",
+            "collection": "bangles-and-bracelets",
+            "categories": ""
+          }
+        },
+        "necklaces": {
+          "type": "category",
+          "settings": {
+            "heading": "Necklaces & Pendants",
+            "anchor": "necklaces-and-pendants",
+            "blurb": "Chains, pendants and strands.",
+            "collection": "necklaces-and-pendants",
+            "categories": ""
+          }
+        }
+      },
+      "block_order": [
+        "earrings",
+        "rings",
+        "bangles",
+        "necklaces"
+      ],
+      "settings": {
+        "crumb_collection": "Collection",
+        "crumb_leaf": "Fine Jewellery",
+        "title": "Fine Jewellery",
+        "intro": "Earrings, rings, bangles and necklaces. Find a form, then explore its metal and stones.",
+        "back_text": "Back to the Collection Index",
+        "back_url": "/collections",
+        "nav_label": "Explore fine jewellery",
+        "lots_label": "Made in Lots",
+        "lots_line": "A Lot is a numbered release of fine jewellery. Each piece belongs to a Lot, with a record of its making and availability.",
+        "lots_toggle": "How Lots work",
+        "lots_more": "<p>We release fine jewellery in numbered Lots. The Lot reference connects a piece to its making. Open a piece to see its Lot details and whether it is ready to send or available to pre-order.</p>",
+        "lots_note": "Dates, quantities and access windows appear only when confirmed.",
+        "lot_label": "Lot",
+        "lot_placeholder": "Lot [number]",
+        "count_text": "expressions",
+        "view_text": "View piece",
+        "top_text": "Back to top",
+        "touch": "colour",
+        "onward_label": "Continue through the collection",
+        "onward_1_text": "Apparel",
+        "onward_1_url": "/collections/apparel",
+        "onward_2_text": "Fine Silk",
+        "onward_2_url": "/collections/fine-silk",
+        "onward_3_text": "Yoga",
+        "onward_3_url": "/collections/yoga",
+        "show_placeholder_note": true
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "Notes from the Atelier.",
+        "body": "<p>Materials, makers and work in progress.</p>",
+        "body_position": "form",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "collection_page"
+      }
+    }
+  },
+  "order": [
+    "clothing",
+    "register"
+  ]
+}

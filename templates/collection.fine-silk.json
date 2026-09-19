@@ -1,0 +1,134 @@
+/*
+ * Hartwick Atelier — FINE SILK (/collections/fine-silk)
+ * Aloha, 18 September 2026: the same structure as the Apparel page; the
+ * Masters knowledge for this range follows from her. Category blocks list
+ * the range's sub-collections, one card per product, until Style records
+ * exist for it.
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "clothing": {
+      "type": "ha-clothing",
+      "blocks": {
+        "dupattas": {
+          "type": "category",
+          "settings": {
+            "heading": "Oversized Dupattas",
+            "anchor": "oversized-dupattas",
+            "blurb": "The largest format, worn draped or wrapped.",
+            "collection": "dupatta-oversize-scarves",
+            "categories": ""
+          }
+        },
+        "stoles": {
+          "type": "category",
+          "settings": {
+            "heading": "Classic Stoles",
+            "anchor": "classic-stoles",
+            "blurb": "A long rectangle for the shoulders.",
+            "collection": "classic-stoles-scarves",
+            "categories": ""
+          }
+        },
+        "masters": {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "Made by Masters / The print",
+            "heading": "Block printed by hand.",
+            "body": "<p>The printer places a carved wooden block onto the cloth, then repeats the impression to build the pattern. Each colour is applied in its own pass. Small variations in placement and colour are part of this hand process.</p>",
+            "link_text": "Explore block printing",
+            "link_url": "/pages/the-masters#block-printed-by-hand",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_BLOCK_FACE_4R1A4565.jpg",
+            "image_alt": "The raised printing face of a carved wooden block",
+            "image_label": "Print detail / to supply"
+          }
+        },
+        "large": {
+          "type": "category",
+          "settings": {
+            "heading": "Large Squares",
+            "anchor": "large-squares",
+            "blurb": "A generous square to fold or knot.",
+            "collection": "large-squares",
+            "categories": ""
+          }
+        },
+        "medium": {
+          "type": "category",
+          "settings": {
+            "heading": "Medium Squares",
+            "anchor": "medium-squares",
+            "blurb": "The square for the neck or the hair.",
+            "collection": "medium-square-scarves",
+            "categories": ""
+          }
+        },
+        "petit": {
+          "type": "category",
+          "settings": {
+            "heading": "Petit Squares",
+            "anchor": "petit-squares",
+            "blurb": "The smallest square, for the wrist or the bag.",
+            "collection": "petit-square-scarves",
+            "categories": ""
+          }
+        }
+      },
+      "block_order": [
+        "dupattas",
+        "stoles",
+        "masters",
+        "large",
+        "medium",
+        "petit"
+      ],
+      "settings": {
+        "crumb_collection": "Collection",
+        "crumb_leaf": "Fine Silk",
+        "title": "Fine Silk",
+        "intro": "Silk scarves in five formats. Find a format, then explore its print and colour.",
+        "back_text": "Back to the Collection Index",
+        "back_url": "/collections",
+        "nav_label": "Explore fine silk",
+        "lots_label": "Made in Lots",
+        "lots_line": "A Lot is a numbered release of fine silk. Each piece belongs to a Lot, with a record of its cloth, making and availability.",
+        "lots_toggle": "How Lots work",
+        "lots_more": "<p>We release fine silk in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details and whether it is ready to send or available to pre-order.</p>",
+        "lots_note": "Dates, quantities and access windows appear only when confirmed.",
+        "lot_label": "Lot",
+        "lot_placeholder": "Lot [number]",
+        "count_text": "expressions",
+        "view_text": "View piece",
+        "top_text": "Back to top",
+        "touch": "colour",
+        "onward_label": "Continue through the collection",
+        "onward_1_text": "Apparel",
+        "onward_1_url": "/collections/apparel",
+        "onward_2_text": "Fine Jewellery",
+        "onward_2_url": "/collections/fine-jewellery",
+        "onward_3_text": "Yoga",
+        "onward_3_url": "/collections/yoga",
+        "show_placeholder_note": true
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "Notes from the Atelier.",
+        "body": "<p>Materials, makers and work in progress.</p>",
+        "body_position": "form",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "collection_page"
+      }
+    }
+  },
+  "order": [
+    "clothing",
+    "register"
+  ]
+}
