@@ -1,0 +1,181 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE REGISTER PAGE 03 / THE CIRCLE, BY INVITATION.
+  Aloha's Hartwick_The_Register artboard, 21 September 2026.
+
+  Two columns on the page ground. Left: "The Circle / By invitation", the
+  heading, one paragraph and a quieter second one ("Membership begins with a
+  personal invitation. It is separate from joining The Register."). Right:
+  "Already received an invitation?", "Respond to the Atelier.", and a form —
+  full name, the email the invitation went to, a note — with "Your reply goes
+  to the Atelier team for confirmation." and an outlined button.
+
+  ══════════════════════════════════════════════════════════════════════════
+  ⚠️  TERMINOLOGY. Framework v3 — the top of the source-of-truth hierarchy —
+      records The Circle as invitation-only: "No public form. No application
+      route." This form is not an application: it is for someone who already
+      holds an invitation to reply to it. But it is still a public form that
+      names The Circle, and the same conflict that sections/ha-circle-request
+      carries (Aloha's written instruction of 4 September against Framework
+      v3, with Christina to settle) applies to it. So it is built to be
+      switched off in one click — `show_form` off leaves the words and the
+      layout and removes the form — and the switch is off is the Framework
+      v3 answer. Until Christina decides, the page shows Aloha's design.
+  ══════════════════════════════════════════════════════════════════════════
+
+  What reaches the CRM: the same Klaviyo path as the Circle request
+  (assets/ha-klaviyo-form.js, the Circle list from theme settings), with its
+  own `register_source` and its own tag, so a reply to an invitation is never
+  confused with a request for one. The full name travels as the profile's
+  first name and as a `full_name` property; the note as `invitation_note`.
+  Nothing here, and no flow, may read as acceptance: the success line says
+  the reply has been received, and a person answers it.
+
+  No consent box is drawn on the artboard: a reply to an invitation the
+  Atelier sent is a response to its own correspondence, not a subscription.
+  The `consent_text` setting adds one if Christina wants it.
+{%- endcomment -%}
+
+<section id="{{ section.settings.anchor | default: 'the-circle' }}" class="ha-home ha-reg ha-reg-circle" aria-labelledby="ha-reg-circle-title">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard; the reply form exists on her design and the Framework v3 question is with Christina." -%}
+
+    <div class="ha-reg__grid">
+      <div class="ha-reg__lead">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="ha-reg-circle-title" class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="ha-home__prose ha-narrate" style="margin-top: 1.6rem;">{{ section.settings.body }}</div>
+        {%- endif -%}
+        {%- if section.settings.quiet != blank -%}
+          <div class="ha-home__prose ha-reg__quiet ha-narrate" style="margin-top: 3.2rem;">{{ section.settings.quiet }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="ha-reg__aside">
+        {%- if section.settings.aside_eyebrow != blank -%}
+          <p class="ha-home__eyebrow ha-identify">{{ section.settings.aside_eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.aside_heading != blank -%}
+          <h2 class="ha-home__heading ha-narrate">{{ section.settings.aside_heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.show_form -%}
+          {%- form 'customer',
+            class: 'ha-reg-form',
+            id: 'CircleReply',
+            novalidate: 'novalidate',
+            data-nocaptcha: 'true',
+            data-ha-klaviyo: '',
+            data-company-id: settings.ha_klaviyo_company_id,
+            data-list-id: settings.ha_klaviyo_circle_list,
+            data-source: section.settings.register_source,
+            data-msg-invalid: section.settings.msg_invalid,
+            data-msg-consent: section.settings.msg_consent,
+            data-msg-submitting: section.settings.msg_submitting,
+            data-msg-success: section.settings.msg_success,
+            data-msg-error: section.settings.msg_error
+          -%}
+            <input type="hidden" name="contact[tags]" value="{{ section.settings.contact_tag | escape }}">
+
+            <p class="ha-reg-form__message ha-record" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
+
+            {%- if form.posted_successfully? -%}
+              <p class="ha-reg-form__message ha-reg-form__message--server ha-record" tabindex="-1" autofocus>{{ section.settings.msg_success }}</p>
+            {%- elsif form.errors -%}
+              <p class="ha-reg-form__message ha-reg-form__message--server ha-record is-error" tabindex="-1" autofocus>{{ form.errors | default_errors }}</p>
+            {%- endif -%}
+
+            <div class="ha-reg-form__field">
+              <label class="ha-reg-form__label ha-record" for="CircleReplyName">{{ section.settings.label_name }}</label>
+              <input id="CircleReplyName" class="ha-reg-form__input ha-narrate" type="text" name="contact[first_name]" value="{{ form.first_name }}" autocomplete="name" data-klaviyo-prop="full_name" aria-required="true" required>
+            </div>
+
+            <div class="ha-reg-form__field">
+              <label class="ha-reg-form__label ha-record" for="CircleReplyEmail">{{ section.settings.label_email }}</label>
+              <input id="CircleReplyEmail" class="ha-reg-form__input ha-narrate" type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" autocorrect="off" autocapitalize="off" aria-required="true" required>
+            </div>
+
+            {%- if section.settings.show_note -%}
+              <div class="ha-reg-form__field">
+                <label class="ha-reg-form__label ha-record" for="CircleReplyNote">{{ section.settings.label_note }}</label>
+                <input id="CircleReplyNote" class="ha-reg-form__input ha-narrate" type="text" name="contact[note]" data-klaviyo-prop="invitation_note">
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.consent_text != blank -%}
+              <label class="ha-reg-form__check ha-record">
+                <input type="checkbox" data-ha-consent required aria-required="true">
+                <span>{{ section.settings.consent_text }}</span>
+              </label>
+            {%- endif -%}
+
+            {%- if section.settings.note_text != blank -%}
+              <div class="ha-reg-form__note ha-record">{{ section.settings.note_text }}</div>
+            {%- endif -%}
+
+            <button type="submit" class="ha-reg-form__submit ha-reg-form__submit--outline ha-identify">{{ section.settings.submit_text }}</button>
+          {%- endform -%}
+          <script src="{{ 'ha-klaviyo-form.js' | asset_url }}" defer></script>
+        {%- else -%}
+          {%- comment -%} The switch that honours Framework v3: words, no form. {%- endcomment -%}
+          {%- if section.settings.closed_text != blank -%}
+            <div class="ha-home__prose ha-reg-form__closed ha-narrate">{{ section.settings.closed_text }}</div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Register: The Circle",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "the-circle", "info": "Links elsewhere point at #this." },
+    { "type": "header", "content": "Left column" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Circle / By invitation" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A personal connection." },
+    { "type": "richtext", "id": "body", "label": "Text", "default": "<p>A small group of founding friends whose connection to Hartwick grows through wearing, conversation and shared experience.</p>" },
+    { "type": "richtext", "id": "quiet", "label": "Quiet line", "default": "<p>Membership begins with a personal invitation. It is separate from joining The Register.</p>" },
+    { "type": "header", "content": "Right column" },
+    { "type": "text", "id": "aside_eyebrow", "label": "Eyebrow", "default": "Already received an invitation?" },
+    { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Respond to the Atelier." },
+    {
+      "type": "header",
+      "content": "The reply form",
+      "info": "⚠ Framework v3 records The Circle as invitation-only with no public form. This form lets someone who already holds an invitation reply to it, on Aloha's design of 21 September 2026; the question is with Christina. Switching it off leaves the words and removes the form."
+    },
+    { "type": "checkbox", "id": "show_form", "label": "Show the reply form", "default": true },
+    { "type": "text", "id": "label_name", "label": "Name label", "default": "Full name *" },
+    { "type": "text", "id": "label_email", "label": "Email label", "default": "Email used for your invitation *" },
+    { "type": "checkbox", "id": "show_note", "label": "Ask for a note", "default": true },
+    { "type": "text", "id": "label_note", "label": "Note label", "default": "A note (optional)" },
+    { "type": "richtext", "id": "note_text", "label": "Line above the button", "default": "<p>Your reply goes to the Atelier team for confirmation.</p>" },
+    {
+      "type": "richtext", "id": "consent_text", "label": "Consent line (optional)",
+      "info": "The artboard draws none: a reply to the Atelier's own invitation is not a subscription. Add one here if Christina wants it; it is then required and never pre-ticked."
+    },
+    { "type": "text", "id": "submit_text", "label": "Button", "default": "Respond to your invitation" },
+    { "type": "text", "id": "contact_tag", "label": "CRM tag", "default": "Circle: Invitation reply", "info": "Its own tag, so a reply is never confused with a request for access." },
+    { "type": "text", "id": "register_source", "label": "Klaviyo source", "default": "register_page_invitation_reply", "info": "Recorded on the profile as register_source." },
+    { "type": "richtext", "id": "closed_text", "label": "Text shown when the form is off", "info": "Used instead of the form when the reply form is switched off. Aloha's words, not the build's." },
+    { "type": "header", "content": "Messages" },
+    { "type": "text", "id": "msg_success", "label": "Success", "default": "Thank you. Your reply has been received and the Atelier team will be in touch.", "info": "Must not read as acceptance into The Circle." },
+    { "type": "text", "id": "msg_invalid", "label": "Invalid email", "default": "Please enter the email address your invitation was sent to." },
+    { "type": "text", "id": "msg_consent", "label": "Consent not ticked", "default": "Please tick the box to send your reply." },
+    { "type": "text", "id": "msg_submitting", "label": "While sending", "default": "One moment…" },
+    { "type": "text", "id": "msg_error", "label": "Service error", "default": "That did not go through. Please try again, or write to contact@hartwickatelier.com." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Register: The Circle" }]
+}
+{% endschema %}

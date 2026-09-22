@@ -1,0 +1,127 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE REGISTER PAGE 04 / YOUR CORRESPONDENCE.
+  Aloha's Hartwick_The_Register artboard, 21 September 2026.
+
+  An eyebrow at the left and a two-line statement at the right — "The Register
+  is our open email list. The Dispatch is the letter we send to it. The Circle
+  remains a personal, invitation-only relationship." — then the photograph
+  within the page gutters with three ruled columns set over its foot:
+  01 / The Dispatch, 02 / Releases & Reserve, 03 / Atelier evenings. Each
+  column is a block: label, title, one sentence. The numbers count themselves.
+
+  The photograph exists only in the artboard, with the three columns baked
+  into its lower third; the provisional file is the frame cut above them
+  (2.2:1), so Aloha's original — the Paris room, the frame with the table —
+  is asked for. The band takes the picture's own proportion on desktop, held
+  between a floor and the media cap; on a phone the columns follow the
+  picture on the ground, where three stacked columns over a small picture
+  would be neither.
+
+  The artboard draws no shade under its white type and the words cannot be
+  read on the tiled floor; a foot of shade is drawn here and its depth is a
+  setting (default 55%), so Aloha can take it down if the real photograph is
+  darker there.
+
+  Terminology (CLAUDE.md): Reserve is a Register-only right and Phase 2 — the
+  column speaks of it in Aloha's words and builds nothing. "cloth, makers and
+  the knowledge" on the artboard is set as "cloth, Masters and the knowledge",
+  the same call the homepage Register line took ("Materials, Masters and work
+  in progress") — flagged to Aloha, hers to reverse.
+{%- endcomment -%}
+
+{%- liquid
+  assign ratio = 1.44
+  if section.settings.image
+    assign ratio = section.settings.image.aspect_ratio
+  endif
+  assign scrim = section.settings.scrim | divided_by: 100.0
+-%}
+
+<section class="ha-home ha-reg ha-reg-corr{% if section.settings.overlay %} ha-reg-corr--overlay{% endif %}" aria-labelledby="ha-reg-corr-title" style="--ha-reg-corr-ratio: {{ ratio }}; --ha-reg-corr-scrim: {{ scrim }};">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard; the photograph is the artboard's frame cut above its type, pending her original." -%}
+
+    <header class="ha-reg-corr__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <h2 id="ha-reg-corr-title" class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</h2>
+      {%- endif -%}
+      {%- if section.settings.statement != blank -%}
+        <div class="ha-reg-corr__statement ha-home__lead ha-narrate">{{ section.settings.statement }}</div>
+      {%- endif -%}
+    </header>
+
+    <figure class="ha-reg-corr__figure">
+      <div class="ha-reg-corr__media">
+        {%- if section.settings.image -%}
+          {{
+            section.settings.image
+            | image_url: width: 2400
+            | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 93vw, 100vw', widths: '600, 800, 1000, 1200, 1600, 2000, 2400', alt: section.settings.image_alt, class: 'ha-reg-corr__img'
+          }}
+        {%- else -%}
+          <span class="ha-figure ha-figure--empty ha-reg-corr__empty"><span class="ha-figure__label ha-record">01 / Photograph</span></span>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <ol class="ha-reg-corr__list" role="list">
+          {%- for block in section.blocks -%}
+            {%- assign num = forloop.index | prepend: '0' | slice: -2, 2 -%}
+            <li class="ha-reg-corr__item" {{ block.shopify_attributes }}>
+              <p class="ha-reg-corr__num ha-identify">{{ num }}{% if block.settings.label != blank %} / {{ block.settings.label }}{% endif %}</p>
+              {%- if block.settings.title != blank -%}
+                <h3 class="ha-reg-corr__title ha-narrate">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="ha-reg-corr__body ha-home__prose ha-narrate">{{ block.settings.body }}</div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ol>
+      {%- endif -%}
+    </figure>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Register: Columns",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your correspondence" },
+    { "type": "richtext", "id": "statement", "label": "Statement", "default": "<p>The Register is our open email list. The Dispatch is the letter we send to it. The Circle remains a personal, invitation-only relationship.</p>" },
+    { "type": "header", "content": "Photograph" },
+    { "type": "image_picker", "id": "image", "label": "Photograph" },
+    { "type": "text", "id": "image_alt", "label": "Alt text", "default": "A woman in a white shirt and blue ikat trousers standing by a long wooden table in a panelled Paris room, a glass chandelier above" },
+    { "type": "checkbox", "id": "overlay", "label": "Set the columns over the photograph (desktop)", "default": true, "info": "Off, they follow it on the ground at every size." },
+    { "type": "range", "id": "scrim", "label": "Shade beneath the columns", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 55, "info": "The artboard draws none; its white type could not be read on the tiled floor." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "info": "After the number: 01 / The Dispatch" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "richtext", "id": "body", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Register: Columns",
+      "blocks": [
+        { "type": "column", "settings": { "label": "The Dispatch", "title": "A closer look at the work.", "body": "<p>Letters on cloth, Masters and the knowledge behind each piece.</p>" } },
+        { "type": "column", "settings": { "label": "Releases & Reserve", "title": "Know what is coming.", "body": "<p>First notice of each Release and details of your early Reserve access.</p>" } },
+        { "type": "column", "settings": { "label": "Atelier evenings", "title": "Time for conversation.", "body": "<p>Invitations to selected gatherings around cloth, craft and the people involved.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

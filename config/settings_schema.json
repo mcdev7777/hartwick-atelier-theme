@@ -114,11 +114,42 @@
       },
       {
         "type": "header",
+        "content": "Correspondence — The Register page"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha's Register page design (21 September 2026) opens on a wine-coloured band with an envelope drawn in paper. Neither colour is one of the eight Material Archive colours; they are held here so the page follows the palette when it is finalised."
+      },
+      {
+        "type": "color",
+        "id": "ha_correspondence_field",
+        "label": "Correspondence band",
+        "default": "#512F38"
+      },
+      {
+        "type": "color",
+        "id": "ha_paper",
+        "label": "Envelope paper",
+        "default": "#EEE8D4"
+      },
+      {
+        "type": "header",
         "content": "Typography"
       },
       {
         "type": "paragraph",
         "content": "Porter is a licensed commercial font supplied as desktop OTF only. Until a webfont licence is confirmed it carries Junicode. Turning this on once the licence lands is the only change needed."
+      },
+      {
+        "type": "header",
+        "content": "Provisional-content notices"
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_placeholder_notes",
+        "label": "Show provisional-content notices",
+        "default": false,
+        "info": "The boxed PLACEHOLDER markers every section can carry. Off since 20 September 2026 (Ivan); each section's own checkbox still applies when this is on."
       },
       {
         "type": "checkbox",

@@ -5438,3 +5438,146 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   .ha-register--form-line .ha-register__aside { padding-top: 3.2rem; }
 }
 
+
+/* ==========================================================================
+   THE REGISTER PAGE — Aloha's Hartwick_The_Register artboard, 21 September 2026.
+   Four sections — ha-register-hero, -join, -circle, -correspondence — on the
+   editorial idiom the homepage set (.ha-home shared classes: eyebrow, heading,
+   lead, prose). Measured off the artboard's 1440 grid: band 930 tall; the
+   envelope 990 wide — flaps 257 × 330, body 476 × 482, top flap 178 tall,
+   card 446 × 304 inset 15 / 10; "THE REGISTER." caps 40 tall (~60px
+   Junicode); form labels mono 11 → held at the 12 floor; the wine band and
+   the paper are theme settings (Correspondence — The Register page).
+   Luxe's div:empty { display: none } (0,1,1) hides every empty <div>: each
+   drawn part of the envelope is declared with two classes for that reason.
+   ========================================================================== */
+
+/* --- 01  The opening: wine band, envelope, heading ------------------------ */
+.ha-reg-hero { background: var(--ha-field-correspondence); color: var(--ha-text-invert); border-bottom: 0; text-align: center; }
+.ha-reg-hero > .ha-wrap { padding-top: calc(var(--ha-section-y) * 0.65); padding-bottom: calc(var(--ha-section-y) * 0.85); }
+.ha-reg-hero .ha-home__eyebrow { margin-bottom: 3.6rem; }
+.ha-reg-hero__title { margin: 4rem 0 0; font-size: min(calc(var(--ha-t-editorial) * 1.9), 11vw); line-height: 1; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; }
+
+/* The envelope, opened flat: top flap, two side flaps, the body with the card
+   on it and the bottom flap folded down. Percentages of the 990 the artboard
+   draws, so it scales with the page; the type inside keeps the site's tokens
+   rather than scaling with the drawing, and the body grows if the card's
+   text needs more than its drawn height. */
+.ha-reg-envelope { --paper: var(--ha-paper); --fold: var(--ha-peat-rgb); display: grid; width: min(100%, 99rem); margin: 0 auto; color: var(--ha-text); text-align: center; grid-template-columns: 1fr 1fr; grid-template-areas: "top top" "body body" "left right"; }
+.ha-reg-envelope .ha-reg-envelope__top { display: block; grid-area: top; aspect-ratio: 476 / 178; background: linear-gradient(to bottom, rgba(var(--fold), 0) 0%, rgba(var(--fold), 0.07) 100%), var(--paper); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.ha-reg-envelope__body { grid-area: body; position: relative; aspect-ratio: 476 / 482; background: var(--paper); padding: 2.1% 3.15% 0; }
+/* The bottom flap: a fold line under the card, then the paper darkening to
+   its edge (#E8E0CE → #D4CCB6 on the artboard). */
+.ha-reg-envelope .ha-reg-envelope__body::after { content: ""; position: absolute; left: 0; right: 0; top: 65%; bottom: 0; background: linear-gradient(to bottom, rgba(var(--fold), 0.08) 0, rgba(var(--fold), 0.03) 10%, rgba(var(--fold), 0.16) 100%); pointer-events: none; }
+.ha-reg-envelope__side { position: relative; display: grid; align-content: center; justify-items: center; gap: 1.6rem; aspect-ratio: 257 / 330; padding: 2rem; background: var(--paper); color: inherit; text-decoration: none; }
+.ha-reg-envelope__side--left { grid-area: left; background: linear-gradient(to right, rgba(var(--fold), 0) 0%, rgba(var(--fold), 0.02) 100%), var(--paper); }
+.ha-reg-envelope__side--right { grid-area: right; background: linear-gradient(to right, rgba(var(--fold), 0.04) 0%, rgba(var(--fold), 0.07) 100%), var(--paper); }
+.ha-reg-envelope__side-label { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); text-transform: uppercase; font-weight: 300; }
+.ha-reg-envelope__side-word { font-style: italic; font-weight: 300; font-size: calc(var(--ha-t-statement) * 1.15); line-height: 1.2; }
+a.ha-reg-envelope__side:hover .ha-reg-envelope__side-word, a.ha-reg-envelope__side:focus-visible .ha-reg-envelope__side-word { text-decoration: underline; text-underline-offset: 0.3em; text-decoration-thickness: 1px; }
+a.ha-reg-envelope__side:focus-visible { outline: 2px solid var(--ha-text); outline-offset: -6px; }
+/* The card on the body: peat, as the artboard has it (#332820), the House
+   symbol above the words. */
+.ha-reg-envelope__card { position: relative; z-index: 1; display: grid; align-content: center; justify-items: center; gap: 1.6rem; aspect-ratio: 446 / 304; padding: 2.4rem 2rem; background: var(--ha-field-dark); color: var(--ha-text-invert); }
+.ha-reg-envelope__mark { display: block; width: 3.6rem; height: 3.6rem; margin-bottom: 0.4rem; }
+.ha-reg-envelope__card-title { margin: 0; font-size: calc(var(--ha-t-editorial) * 0.95); line-height: 1.1; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 300; }
+.ha-reg-envelope__card-line { margin: 0; font-style: italic; font-weight: 300; font-size: var(--ha-t-statement); line-height: 1.3; }
+.ha-reg-envelope .ha-reg-envelope__card-label, .ha-reg-envelope .ha-reg-envelope__card-label:visited { display: inline-block; margin-top: 1.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); text-transform: uppercase; font-weight: 300; color: var(--ha-text-invert); text-decoration: none; }
+a.ha-reg-envelope__card-label:hover, a.ha-reg-envelope__card-label:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
+a.ha-reg-envelope__card-label:focus-visible { outline: 2px solid var(--ha-text-invert); outline-offset: 4px; }
+@media screen and (max-width: 749px) {
+  /* A phone cannot hold three flaps abreast with readable words on them:
+     top flap, body and card at full width, then the two side flaps as a
+     pair beneath — the same paper, folded the other way. */
+  .ha-reg-envelope__side { aspect-ratio: auto; min-height: 14rem; }
+  .ha-reg-envelope__body { aspect-ratio: auto; padding-bottom: 12%; }
+  .ha-reg-envelope .ha-reg-envelope__body::after { top: auto; height: 12%; }
+  .ha-reg-hero__title { margin-top: 3.2rem; }
+}
+@media screen and (min-width: 750px) {
+  .ha-reg-envelope { grid-template-columns: 25.96% 48.08% 25.96%; grid-template-areas: ". top ." "left body right"; align-items: start; }
+  .ha-reg-hero .ha-home__eyebrow { margin-bottom: 4.4rem; }
+  .ha-reg-hero__title { margin-top: 4.8rem; }
+}
+
+/* --- shared: two columns, the page's forms ------------------------------- */
+.ha-reg__grid { display: grid; gap: 4.8rem; }
+/* The artboard breaks "Cloth. People. / The work in between." — its heading
+   column is 450 wide at 44px; the same measure, held in ems so the type scale
+   can move. */
+.ha-reg__lead .ha-home__heading { max-width: 11em; }
+.ha-reg__quiet { color: var(--ha-text-quiet); }
+.ha-reg__card { display: block; max-width: 40rem; margin-top: 4rem; }
+.ha-reg__card img { display: block; width: 100%; height: auto; }
+.ha-reg__card .ha-figure--empty { aspect-ratio: 1585 / 1021; display: grid; place-items: center; }
+@media screen and (min-width: 990px) {
+  .ha-reg__grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); column-gap: clamp(4.8rem, 12vw, 22rem); align-items: start; }
+  .ha-reg__aside { padding-top: 0.2rem; }
+}
+
+/* The Register page form: mono uppercase label, one rule, the same states as
+   the homepage Register (assets/ha-klaviyo-form.js drives both). */
+.ha-reg-form { margin-top: 3.2rem; }
+.ha-reg-form__field { display: block; margin: 0 0 2.4rem; padding: 0; border: 0; border-bottom: 1px solid var(--ha-rule); min-width: 0; transition: border-color 160ms ease; }
+.ha-reg-form__field:focus-within { border-bottom-color: currentColor; }
+.ha-reg-form__label { display: block; padding: 0 0 0.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); text-transform: uppercase; }
+.ha-reg-form__input { display: block; width: 100%; min-height: 4.4rem; padding: 0.4rem 0 1.2rem; background: transparent; border: 0; border-radius: 0; color: inherit; font-family: var(--ha-font-narrate); font-size: max(var(--ha-t-body), 1.6rem); }
+.ha-reg-form__input:focus-visible { outline: none; }
+.ha-reg-form__input::placeholder { color: currentColor; opacity: 0.45; }
+.ha-reg-form__input[aria-invalid="true"] { text-decoration: underline wavy; text-decoration-skip-ink: none; text-underline-offset: 0.3em; }
+/* Mono in sentence case, as the artboard sets them (.ha-record uppercases). */
+.ha-reg-form__check, .ha-reg-form__note, .ha-reg-form__message { text-transform: none; }
+.ha-reg-form__check { display: grid; grid-template-columns: 1.4rem 1fr; gap: 1.2rem; align-items: start; align-content: center; min-height: 44px; margin: 0 0 1.2rem; font-size: var(--ha-t-meta); letter-spacing: 0.02em; line-height: 1.6; cursor: pointer; }
+.ha-reg-form__check input { width: 1.4rem; height: 1.4rem; margin: 0.35rem 0 0; accent-color: var(--ha-text); }
+.ha-reg-form__check p { margin: 0; }
+.ha-reg-form__note { margin: 0 0 2.4rem; font-size: var(--ha-t-meta); letter-spacing: 0.02em; line-height: 1.6; color: var(--ha-text-quiet); }
+.ha-reg-form__note p { margin: 0; }
+.ha-reg-form__note a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
+.ha-reg-form__submit { display: inline-block; min-width: 100%; min-height: 5.6rem; padding: 0 3.2rem; border: 1px solid var(--ha-field-correspondence); background: var(--ha-field-correspondence); color: var(--ha-text-invert); font-family: var(--ha-font-identify); font-size: var(--ha-t-ui); letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: opacity 160ms ease; }
+.ha-reg-form__submit:hover { opacity: 0.88; }
+.ha-reg-form__submit:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 3px; }
+/* The Circle reply is the quiet one: ink outline, no fill, full width. */
+.ha-reg-form__submit--outline { background: transparent; border-color: var(--ha-text); color: var(--ha-text); }
+.ha-reg-form__submit--outline:hover { opacity: 1; background: var(--ha-text); color: var(--ha-page-ground); }
+@media screen and (min-width: 560px) { .ha-reg-form__submit { min-width: 32rem; } .ha-reg-form__submit--outline { min-width: 100%; } }
+.ha-reg-form__message[data-ha-form-status] { margin: 0 0 1.6rem; font-size: var(--ha-t-meta); letter-spacing: 0.02em; line-height: 1.6; }
+.ha-reg-form__message.is-error { color: var(--ha-cutch-resin); }
+.ha-reg-form[data-state="submitting"] .ha-reg-form__submit { opacity: 0.55; cursor: progress; }
+.ha-reg-form[data-state="success"] .ha-reg-form__field,
+.ha-reg-form[data-state="success"] .ha-reg-form__check,
+.ha-reg-form[data-state="success"] .ha-reg-form__note,
+.ha-reg-form[data-state="success"] .ha-reg-form__submit { display: none; }
+.ha-reg-form[data-state="success"] .ha-reg-form__message[data-ha-form-status] { border: 1px solid var(--ha-rule); padding: 1.6rem 2rem; }
+.ha-reg-form__closed { margin: 3.2rem 0 0; }
+
+/* --- 04  Your correspondence: statement, photograph, three columns -------- */
+.ha-reg-corr__head { display: grid; gap: 2rem; margin-bottom: 3.2rem; }
+.ha-reg-corr__statement { max-width: 40em; }
+.ha-reg-corr__figure { position: relative; margin: 0; }
+.ha-reg-corr__media { position: relative; overflow: hidden; background: var(--ha-placeholder-field); aspect-ratio: 4 / 3; }
+.ha-reg-corr__img, .ha-reg-corr__empty { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ha-reg-corr__empty { display: grid; place-items: center; }
+.ha-reg-corr__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.4rem; }
+.ha-reg-corr__item { border-top: 1px solid var(--ha-rule); padding-top: 1.6rem; min-width: 0; }
+.ha-reg-corr__num { margin: 0 0 1.2rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); text-transform: uppercase; font-weight: 300; }
+.ha-reg-corr__title { margin: 0 0 1rem; font-size: calc(var(--ha-t-editorial) * 0.95); line-height: 1.15; font-weight: 300; }
+.ha-reg-corr__body p { margin: 0; }
+/* Below the desktop switch the three columns follow the photograph on the
+   ground; a phone has no room for them over the picture. */
+.ha-reg-corr__list { margin-top: 3.2rem; }
+@media screen and (min-width: 990px) {
+  .ha-reg-corr__head { grid-template-columns: 1fr 2fr; margin-bottom: 4rem; }
+  .ha-reg-corr__statement { grid-column: 2; }
+  /* The band takes the photograph's own proportion (1.44 on the artboard),
+     held between a floor and the media cap, and the columns sit on it over a
+     foot of shade — the artboard draws none, and its white type on the tiled
+     floor cannot be read; the depth is a setting. */
+  .ha-reg-corr__media { aspect-ratio: var(--ha-reg-corr-ratio, 1.44); min-height: 52rem; max-height: 88vh; }
+  .ha-reg-corr--overlay .ha-reg-corr__media::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 62%; background: linear-gradient(to top, rgba(11, 6, 3, var(--ha-reg-corr-scrim, 0.55)), rgba(11, 6, 3, 0)); pointer-events: none; }
+  .ha-reg-corr--overlay .ha-reg-corr__list { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; margin: 0; padding: 0 clamp(2.4rem, 3.5vw, 5rem) clamp(2.8rem, 3.6vw, 5.2rem); grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(2.4rem, 3vw, 4.8rem); color: var(--ha-text-invert); }
+  .ha-reg-corr--overlay .ha-reg-corr__item { border-top-color: rgba(233, 243, 255, 0.55); padding-top: 1.4rem; }
+  .ha-reg-corr--overlay .ha-reg-corr__body { font-size: calc(var(--ha-t-body) * 1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ha-reg-form__field, .ha-reg-form__submit { transition: none; }
+}

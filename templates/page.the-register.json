@@ -1,0 +1,152 @@
+/*
+ * Hartwick Atelier — THE REGISTER
+ *
+ * Built 21 September 2026 from Aloha's Hartwick_The_Register artboard (6000 ×
+ * 14542; the 1440 grid at 4.167×). The header and footer she drew were not
+ * built — Ivan: "ignore the odd header and footer" — the site's own carry on.
+ * Build note: docs/register-page-build.md.
+ *
+ * Four sections: the opening (wine band, the envelope drawn in CSS, the
+ * title), Join the correspondence (the Register form), The Circle by
+ * invitation (a reply form behind a switch — Framework v3 records no public
+ * Circle form; Christina to settle), Your correspondence (statement,
+ * photograph, three columns).
+ *
+ * Every word is transcribed from the artboard except: "makers" → "Masters"
+ * twice (the same call the homepage Register line took); the Privacy Policy
+ * is a link. Both flagged to Aloha. Reserve is named in her copy and nothing
+ * of it is built (Phase 2).
+ *
+ * Pictures: the Register card and the room photograph exist only in the
+ * artboard and were cut from it (HA_REGISTER_*_ARTBOARD); the photograph is
+ * cut above the type baked into its lower third, so her original frame is
+ * asked for.
+ *
+ * The page record (title The Register, handle the-register, template
+ * the-register) was created by API on 21 September 2026.
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "opening": {
+      "type": "ha-register-hero",
+      "settings": {
+        "eyebrow": "Hartwick Atelier / Correspondence",
+        "heading": "The Register.",
+        "show_mark": true,
+        "card_title": "The Register",
+        "card_line": "A letter from the Atelier.",
+        "card_label": "Open to all",
+        "card_link": "/pages/the-register#join-the-register",
+        "left_label": "The Dispatch",
+        "left_word": "Read.",
+        "left_link": "/pages/the-register#join-the-register",
+        "right_label": "The Circle",
+        "right_word": "By invitation.",
+        "right_link": "/pages/the-register#the-circle",
+        "show_placeholder_note": true
+      }
+    },
+    "join": {
+      "type": "ha-register-join",
+      "settings": {
+        "anchor": "join-the-register",
+        "eyebrow": "Join the correspondence",
+        "heading": "Cloth. People. The work in between.",
+        "lead": "<p>The story continues beyond the piece.</p>",
+        "show_card": true,
+        "card_image": "shopify://shop_images/HA_REGISTER_CARD_ARTBOARD.png",
+        "card_alt": "The Register card: the House symbol, The Register, Correspondence from the Atelier, a band with the Atelier's seal, Hartwick Atelier",
+        "aside_eyebrow": "The Dispatch / Email correspondence",
+        "aside_heading": "Join The Register.",
+        "body": "<p>Notes on materials, Masters and work in progress. Sent when there is something worth sharing.</p>",
+        "show_form": true,
+        "label_email": "Email address *",
+        "show_first_name": true,
+        "label_first": "First name (optional)",
+        "consent_text": "<p>I would like to receive The Dispatch and Release notices.</p>",
+        "privacy_note": "<p>Read our <a href=\"/policies/privacy-policy\">Privacy Policy</a>. Unsubscribe at any time.</p>",
+        "submit_text": "Join The Register",
+        "contact_tag": "the-register",
+        "register_source": "register_page",
+        "msg_invalid": "Please enter a valid email address.",
+        "msg_consent": "Please tick the box to join.",
+        "msg_submitting": "One moment…",
+        "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
+        "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com.",
+        "show_placeholder_note": true
+      }
+    },
+    "circle": {
+      "type": "ha-register-circle",
+      "settings": {
+        "anchor": "the-circle",
+        "eyebrow": "The Circle / By invitation",
+        "heading": "A personal connection.",
+        "body": "<p>A small group of founding friends whose connection to Hartwick grows through wearing, conversation and shared experience.</p>",
+        "quiet": "<p>Membership begins with a personal invitation. It is separate from joining The Register.</p>",
+        "aside_eyebrow": "Already received an invitation?",
+        "aside_heading": "Respond to the Atelier.",
+        "show_form": true,
+        "label_name": "Full name *",
+        "label_email": "Email used for your invitation *",
+        "show_note": true,
+        "label_note": "A note (optional)",
+        "note_text": "<p>Your reply goes to the Atelier team for confirmation.</p>",
+        "consent_text": "",
+        "submit_text": "Respond to your invitation",
+        "contact_tag": "Circle: Invitation reply",
+        "register_source": "register_page_invitation_reply",
+        "closed_text": "",
+        "msg_success": "Thank you. Your reply has been received and the Atelier team will be in touch.",
+        "msg_invalid": "Please enter the email address your invitation was sent to.",
+        "msg_consent": "Please tick the box to send your reply.",
+        "msg_submitting": "One moment…",
+        "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com.",
+        "show_placeholder_note": true
+      }
+    },
+    "correspondence": {
+      "type": "ha-register-correspondence",
+      "blocks": {
+        "dispatch": {
+          "type": "column",
+          "settings": {
+            "label": "The Dispatch",
+            "title": "A closer look at the work.",
+            "body": "<p>Letters on cloth, Masters and the knowledge behind each piece.</p>"
+          }
+        },
+        "releases": {
+          "type": "column",
+          "settings": {
+            "label": "Releases & Reserve",
+            "title": "Know what is coming.",
+            "body": "<p>First notice of each Release and details of your early Reserve access.</p>"
+          }
+        },
+        "evenings": {
+          "type": "column",
+          "settings": {
+            "label": "Atelier evenings",
+            "title": "Time for conversation.",
+            "body": "<p>Invitations to selected gatherings around cloth, craft and the people involved.</p>"
+          }
+        }
+      },
+      "block_order": ["dispatch", "releases", "evenings"],
+      "settings": {
+        "eyebrow": "Your correspondence",
+        "statement": "<p>The Register is our open email list. The Dispatch is the letter we send to it. The Circle remains a personal, invitation-only relationship.</p>",
+        "image": "shopify://shop_images/HA_REGISTER_ROOM_PARIS_ARTBOARD.jpg",
+        "image_alt": "A woman in a white shirt and blue ikat trousers standing by a long wooden table in a panelled Paris room, a glass chandelier above",
+        "overlay": true,
+        "scrim": 55,
+        "show_placeholder_note": true
+      }
+    }
+  },
+  "order": ["opening", "join", "circle", "correspondence"]
+}

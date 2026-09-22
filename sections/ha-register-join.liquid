@@ -1,0 +1,194 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE REGISTER PAGE 02 / JOIN THE CORRESPONDENCE.
+  Aloha's Hartwick_The_Register artboard, 21 September 2026.
+
+  Two columns on the page ground. Left: an eyebrow, the heading, a lead line
+  and the Register card (a picture — the artboard's own card artwork until a
+  photograph of the printed card replaces it through the picker). Right: an
+  eyebrow, "Join The Register.", one paragraph and the form — email, first
+  name (optional), the consent line, a privacy note and the wine button.
+
+  The form is The Register's form — the same submission as the homepage band
+  (sections/ha-register.liquid): Shopify's customer form in the markup, posted
+  to Klaviyo by assets/ha-klaviyo-form.js with the company and list ids from
+  theme settings, and `register_source` recording that this placement was the
+  one that worked. `novalidate` and `data-nocaptcha` for the same reasons as
+  there. With JS off it is Shopify's own form and the sync catches it.
+
+  Terminology (CLAUDE.md): The Register is public and free to join; every
+  call to action here says Join The Register. The Dispatch is what it
+  receives. Nothing on this form touches The Circle.
+
+  Consent: the artboard's own line — "I would like to receive The Dispatch and
+  Release notices." — with "Read our Privacy Policy. Unsubscribe at any time."
+  beneath. Express consent under CASL, never pre-ticked; whether the box's
+  wording must itself name Hartwick Atelier is for Christina.
+{%- endcomment -%}
+
+<section id="{{ section.settings.anchor | default: 'join-the-register' }}" class="ha-home ha-reg ha-reg-join" aria-labelledby="ha-reg-join-title">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard, for her to confirm." -%}
+
+    <div class="ha-reg__grid">
+      <div class="ha-reg__lead">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.lead != blank -%}
+          <div class="ha-home__lead ha-narrate" style="margin-top: 2.4rem;">{{ section.settings.lead }}</div>
+        {%- endif -%}
+        {%- if section.settings.show_card -%}
+          <div class="ha-reg__card">
+            {%- if section.settings.card_image -%}
+              {{
+                section.settings.card_image
+                | image_url: width: 1200
+                | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 28vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: section.settings.card_alt
+              }}
+            {%- else -%}
+              <span class="ha-figure ha-figure--empty"><span class="ha-figure__label ha-record">01 / The Register card</span></span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="ha-reg__aside">
+        {%- if section.settings.aside_eyebrow != blank -%}
+          <p class="ha-home__eyebrow ha-identify">{{ section.settings.aside_eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.aside_heading != blank -%}
+          <h2 id="ha-reg-join-title" class="ha-home__heading ha-narrate">{{ section.settings.aside_heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="ha-home__prose ha-narrate" style="margin-top: 1.6rem;">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.show_form -%}
+          {%- form 'customer',
+            class: 'ha-reg-form',
+            novalidate: 'novalidate',
+            data-nocaptcha: 'true',
+            data-ha-klaviyo: '',
+            data-company-id: settings.ha_klaviyo_company_id,
+            data-list-id: settings.ha_klaviyo_register_list,
+            data-source: section.settings.register_source,
+            data-msg-invalid: section.settings.msg_invalid,
+            data-msg-consent: section.settings.msg_consent,
+            data-msg-submitting: section.settings.msg_submitting,
+            data-msg-success: section.settings.msg_success,
+            data-msg-error: section.settings.msg_error
+          -%}
+            <input type="hidden" name="contact[tags]" value="{{ section.settings.contact_tag | escape }}">
+
+            <p class="ha-reg-form__message ha-record" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
+
+            <div class="ha-reg-form__field">
+              <label class="ha-reg-form__label ha-record" for="HaRegJoinEmail--{{ section.id }}">{{ section.settings.label_email }}</label>
+              <input
+                id="HaRegJoinEmail--{{ section.id }}"
+                class="ha-reg-form__input ha-narrate"
+                type="email"
+                name="contact[email]"
+                value="{{ form.email }}"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                aria-required="true"
+                {% if form.errors %}aria-invalid="true" aria-describedby="HaRegJoinError--{{ section.id }}"{% elsif form.posted_successfully? %}aria-describedby="HaRegJoinSuccess--{{ section.id }}"{% endif %}
+                required
+              >
+            </div>
+
+            {%- if section.settings.show_first_name -%}
+              <div class="ha-reg-form__field">
+                <label class="ha-reg-form__label ha-record" for="HaRegJoinFirst--{{ section.id }}">{{ section.settings.label_first }}</label>
+                <input id="HaRegJoinFirst--{{ section.id }}" class="ha-reg-form__input ha-narrate" type="text" name="contact[first_name]" value="{{ form.first_name }}" autocomplete="given-name">
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.consent_text != blank -%}
+              <label class="ha-reg-form__check ha-record">
+                <input type="checkbox" data-ha-consent required aria-required="true">
+                <span>{{ section.settings.consent_text }}</span>
+              </label>
+            {%- endif -%}
+
+            {%- if section.settings.privacy_note != blank -%}
+              <div class="ha-reg-form__note ha-record">{{ section.settings.privacy_note }}</div>
+            {%- endif -%}
+
+            <button type="submit" class="ha-reg-form__submit ha-identify" name="commit">{{ section.settings.submit_text }}</button>
+
+            {%- if form.errors -%}
+              <p class="ha-reg-form__message ha-reg-form__message--server ha-record is-error" id="HaRegJoinError--{{ section.id }}" role="alert" style="margin-top: 1.6rem;">
+                {{- form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email -}}
+              </p>
+            {%- endif -%}
+            {%- if form.posted_successfully? -%}
+              <p class="ha-reg-form__message ha-reg-form__message--server ha-record" id="HaRegJoinSuccess--{{ section.id }}" tabindex="-1" role="status" style="margin-top: 1.6rem;">
+                {{- section.settings.msg_success -}}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+          <script src="{{ 'ha-klaviyo-form.js' | asset_url }}" defer></script>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Register: Join",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "join-the-register", "info": "Links elsewhere point at #this." },
+    { "type": "header", "content": "Left column" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the correspondence" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Cloth. People. The work in between." },
+    { "type": "richtext", "id": "lead", "label": "Lead", "default": "<p>The story continues beyond the piece.</p>" },
+    { "type": "checkbox", "id": "show_card", "label": "Show the Register card", "default": true },
+    { "type": "image_picker", "id": "card_image", "label": "Card picture", "info": "The artboard's card artwork until a photograph of the printed card replaces it." },
+    { "type": "text", "id": "card_alt", "label": "Card alt text", "default": "The Register card: the House symbol, The Register, Correspondence from the Atelier, a band with the Atelier's seal, Hartwick Atelier" },
+    { "type": "header", "content": "Right column" },
+    { "type": "text", "id": "aside_eyebrow", "label": "Eyebrow", "default": "The Dispatch / Email correspondence" },
+    { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Join The Register." },
+    { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Notes on materials, Masters and work in progress. Sent when there is something worth sharing.</p>" },
+    { "type": "header", "content": "The form" },
+    { "type": "checkbox", "id": "show_form", "label": "Show the form", "default": true, "info": "Posts to Klaviyo's Register list, as the homepage band does." },
+    { "type": "text", "id": "label_email", "label": "Email label", "default": "Email address *" },
+    { "type": "checkbox", "id": "show_first_name", "label": "Ask for a first name", "default": true },
+    { "type": "text", "id": "label_first", "label": "First name label", "default": "First name (optional)" },
+    {
+      "type": "richtext", "id": "consent_text", "label": "Consent line",
+      "default": "<p>I would like to receive The Dispatch and Release notices.</p>",
+      "info": "Required to submit and never pre-ticked. Express consent under CASL; Christina to confirm the wording."
+    },
+    {
+      "type": "richtext", "id": "privacy_note", "label": "Note beneath",
+      "default": "<p>Read our <a href=\"/policies/privacy-policy\">Privacy Policy</a>. Unsubscribe at any time.</p>"
+    },
+    { "type": "text", "id": "submit_text", "label": "Button", "default": "Join The Register" },
+    { "type": "text", "id": "contact_tag", "label": "Customer tag (no-JS fallback only)", "default": "the-register" },
+    {
+      "type": "text", "id": "register_source", "label": "Klaviyo source", "default": "register_page",
+      "info": "Recorded on the profile as register_source, one value per placement."
+    },
+    { "type": "header", "content": "Messages" },
+    { "type": "text", "id": "msg_invalid", "label": "Invalid email", "default": "Please enter a valid email address." },
+    { "type": "text", "id": "msg_consent", "label": "Consent not ticked", "default": "Please tick the box to join." },
+    { "type": "text", "id": "msg_submitting", "label": "While sending", "default": "One moment…" },
+    { "type": "text", "id": "msg_success", "label": "Success", "default": "Thank you. A confirmation is on its way — one click and you are on The Register.", "info": "The list is double opt-in, so the success message must send them to their inbox." },
+    { "type": "text", "id": "msg_error", "label": "Service error", "default": "That did not go through. Please try again, or write to contact@hartwickatelier.com." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Register: Join" }]
+}
+{% endschema %}
