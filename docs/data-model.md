@@ -65,9 +65,13 @@ to blog article) · `status` (Announced / Reserve / Public / Sold Out / Archived
 
 ### `style` — permanent silhouette identity
 `number` (`001`) · `category` (Skirt/Shirt/Trouser/Coat/Dress/Scarf/Robe/Kaftan/Tote/
-Pouch/Belt/Shorts/PJ/Fine Silk/Yoga Mat) · `display_name` (`Skirt 001`) ·
-`silhouette_description` · `fit_notes` · `is_core` (boolean → drives pre-order
-availability) · `legacy_name` (**internal only, never rendered**)
+Pouch/Belt/Shorts/PJ/Fine Silk/Yoga Mat) · `display_name` (**the customer-facing
+name: `Tribeca Skirt`** — since 21 Sep 2026; `Shayla 03` where no location name is
+recorded) · `code` (`Skirt 001`, **internal**, added 21 Sep) · `silhouette_description`
+· `fit_notes` · `is_core` (boolean → drives pre-order availability) · `legacy_name`
+(the same location name; kept as the sheet-to-store key) · `hero_product`
+> 21 Sep 2026, Aloha: "We've returned to the original names … Style codes and product
+> IDs stay internal." `--styles` in `scripts/sheet-to-shopify.py` did the swap.
 
 ### `process_step` — Fibre → Finished Garment
 `order` · `label` (Fibre, Spinning, Weaving, Dyeing, Cutting, Construction, Finishing,

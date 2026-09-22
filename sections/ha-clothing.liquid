@@ -27,9 +27,14 @@
   Lot; nothing is invented.
 
   A category block names which Style categories it gathers ("Skirt"), and
-  may include or exclude Styles by name — "Dress 002" sits in Loungewear as
-  the brief proposes. A Style appears once, in the first section that claims
-  it. The Style number is set in Cutch Resin (snippets/ha-style-name).
+  may include or exclude Styles by name or by code — "Jasmine Dress" (Dress
+  002) sits in Loungewear as the brief proposes. A Style appears once, in the
+  first section that claims it. Since 21 September 2026 the card's name is
+  the location name (Aloha: "We've returned to the original names … Style
+  codes and product IDs stay internal"); the code stays on the style record
+  as `code`, so a template written before that date still finds its Style.
+  A trailing number (the fine-silk codes) is set in Cutch Resin
+  (snippets/ha-style-name).
 
   ONE CARD PER PRODUCT, where there are no Style records. Fine Silk, Fine
   Jewellery and Yoga have no `hartwick.style` yet, so a category block may
@@ -242,6 +247,7 @@
               {%- if seen contains key -%}{%- continue -%}{%- endif -%}
               {%- assign sname = st.display_name.value | default: st.display_name -%}
               {%- assign sname_lc = sname | downcase | strip -%}
+              {%- assign scode_lc = st.code.value | default: st.code | downcase | strip -%}
               {%- assign scat = st.category.value | default: st.category | downcase | strip -%}
               {%- assign claim = false -%}
               {%- for c in cats -%}
@@ -251,10 +257,12 @@
               {%- for n in incl -%}
                 {%- assign ns = n | strip -%}
                 {%- if ns != blank and ns == sname_lc -%}{%- assign claim = true -%}{%- endif -%}
+                {%- if ns != blank and ns == scode_lc -%}{%- assign claim = true -%}{%- endif -%}
               {%- endfor -%}
               {%- for n in excl -%}
                 {%- assign ns = n | strip -%}
                 {%- if ns != blank and ns == sname_lc -%}{%- assign claim = false -%}{%- endif -%}
+                {%- if ns != blank and ns == scode_lc -%}{%- assign claim = false -%}{%- endif -%}
               {%- endfor -%}
               {%- unless claim -%}{%- continue -%}{%- endunless -%}
               {%- assign seen = seen | append: st.system.handle | append: ',' -%}
@@ -386,8 +394,8 @@
         { "type": "text", "id": "blurb", "label": "Line of copy" },
         { "type": "collection", "id": "collection", "label": "Or: list this collection's products", "info": "For ranges without Style records (Fine Silk, Fine Jewellery, Yoga). Set, it overrides the Style categories below: one card per product, in the collection's order." },
         { "type": "text", "id": "categories", "label": "Style categories gathered", "default": "Skirt", "info": "The style record's category, comma-separated: Skirt · Shirt · Trouser · Dress · Coat · Robe · Kaftan · PJ · Shorts" },
-        { "type": "text", "id": "include", "label": "Also include these Styles", "info": "By name, comma-separated — e.g. Dress 002" },
-        { "type": "text", "id": "exclude", "label": "Exclude these Styles", "info": "By name, comma-separated" }
+        { "type": "text", "id": "include", "label": "Also include these Styles", "info": "By name or code, comma-separated — e.g. Jasmine Dress, or Dress 002" },
+        { "type": "text", "id": "exclude", "label": "Exclude these Styles", "info": "By name or code, comma-separated" }
       ]
     },
     {

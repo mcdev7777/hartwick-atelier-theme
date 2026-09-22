@@ -34,10 +34,13 @@
   do on the native template. Variants, inventory, analytics and checkout are
   untouched.
 
-  TERMINOLOGY (CLAUDE.md). The heading is the permanent numbered Style; the line
-  beneath it is the material; the Expression is a labelled row in the buy rail.
-  The Lot is customer-facing as a Roman numeral. No Edition number renders
-  unless the garment is individually numbered — see snippets/ha-pdp-identity.
+  TERMINOLOGY (CLAUDE.md). The heading is the Style's customer-facing name —
+  since 21 September 2026 the location name, Tribeca Skirt (Aloha: "We've
+  returned to the original names … Style codes and product IDs stay
+  internal"); the line beneath it is the material; the Expression is a
+  labelled row in the buy rail. The Lot is customer-facing as a Roman numeral.
+  No Edition number renders unless the garment is individually numbered — see
+  snippets/ha-pdp-identity.
 {%- endcomment -%}
 
 {%- liquid
@@ -132,12 +135,23 @@
   endif
 
   # Provisional until the Hartwick model itself carries the identity: the old
-  # site's title and subtitle are standing in (and the title's legacy name is
-  # internal-only per CLAUDE.md), so the notice stays until hartwick.style is
-  # linked and hartwick.expression is set.
+  # site's title and subtitle are standing in, so the notice stays until
+  # hartwick.style is linked and hartwick.expression is set.
   assign is_placeholder = false
   if mf.style.value.display_name == blank or mf.expression == blank
     assign is_placeholder = true
+  endif
+
+  # THE GATE (Aloha, 21 September 2026: "keeping anything marked draft or
+  # awaiting confirmation unpublished"). The importer writes the sheet's
+  # Approval-notes verdict to hartwick.copy_status; a draft page says so, on
+  # the unpublished theme only (the notice snippet is off on a published
+  # theme), so Angela sees what she is reviewing and nobody mistakes staged
+  # copy for approved copy. Live-visible fields never leave the sheet for a
+  # draft row — the importer refuses --launch for it.
+  assign is_draft = false
+  if mf.copy_status == 'draft'
+    assign is_draft = true
   endif
 
   # The size must be chosen, not assumed (brief: "Before selection, the button
@@ -369,6 +383,10 @@
         {%- if is_placeholder -%}
           {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
             text: 'Placeholder — Style, cloth and Expression publish from hartwick.* metafields' -%}
+        {%- endif -%}
+        {%- if is_draft -%}
+          {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+            text: section.settings.draft_note -%}
         {%- endif -%}
       </div>
     </div>
@@ -635,6 +653,7 @@
     { "type": "text", "id": "ph_fit_line_one", "label": "Fit line 1", "default": "Relaxed through the body." },
     { "type": "text", "id": "ph_fit_line_two", "label": "Fit line 2" },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true },
+    { "type": "text", "id": "draft_note", "label": "Draft-copy notice", "default": "Draft copy — awaiting Angela’s review (sheet tab 01, Approval notes). Not for publication.", "info": "Shown when hartwick.copy_status is “draft”, with the placeholder notices; never on a published theme." },
 
     { "type": "header", "content": "Shopify form (read by Luxe's own snippets)", "info": "These are the settings snippets/product-variant-picker.liquid and snippets/buy-buttons.liquid read from their calling section. Leave them alone unless the form misbehaves." },
     { "type": "select", "id": "picker_type", "label": "Size picker", "options": [{ "value": "button", "label": "Buttons" }, { "value": "dropdown", "label": "Dropdown" }], "default": "button" },

@@ -3,8 +3,8 @@
  * Aloha's "All Apparel & LOT" build brief and artboard, 17 September 2026.
  * Assigned to the `apparel` collection as its template. One card per Style,
  * grouped by the category blocks; the Made by Masters feature sits between
- * Skirts and Shirts as drawn; Dress 002 and Shorts 006 in Loungewear as the
- * brief proposes.
+ * Skirts and Shirts as drawn; the Jasmine Dress (Dress 002) and Blossom
+ * Shorts (Shorts 006) in Loungewear as the brief proposes.
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
  * ------------------------------------------------------------
@@ -61,7 +61,7 @@
             "anchor": "dresses-and-coats",
             "blurb": "Pieces to wear whole or layer over separates.",
             "categories": "Dress, Coat",
-            "exclude": "Dress 002"
+            "exclude": "Jasmine Dress"
           }
         },
         "lounge": {
@@ -71,7 +71,7 @@
             "anchor": "loungewear",
             "blurb": "Easy shapes for slower hours.",
             "categories": "Robe, Kaftan, PJ, Shorts",
-            "include": "Dress 002"
+            "include": "Jasmine Dress"
           }
         }
       },

@@ -6,16 +6,20 @@
   as a single line — the wireframe needs two, and they are two different things:
 
       LOT I                        <- hartwick.lot -> number_roman
-      SHIRT 001                    <- hartwick.style -> display_name   (the h1)
+      AMMAN SHIRT                  <- hartwick.style -> display_name   (the h1)
       Handspun Silk-Linen,         <- hartwick.expression
       Natural Pearl Shimmer
 
   Terminology (CLAUDE.md): the Style is the permanent silhouette identity and the
-  Expression is its fabric/dye realisation. The wireframe prints "TIDE", which is
-  a legacy name — internal SKU mapping only, never customer-facing. Aloha
-  confirmed this structure on 3 September 2026: "Your current naming structure is
-  correct. Please use the permanent numbered Style as the heading, with the
-  Expression beneath it."
+  Expression is its fabric/dye realisation. Its NAME changed on 21 September
+  2026 — Aloha: "We've returned to the original names, such as Tribeca Skirt
+  and Amman Shirt. Please use these as the customer facing product titles, with
+  the Expression underneath … Style codes and product IDs stay internal." So
+  the heading is the location name and the numbered code (Shirt 001) lives on
+  the style record as `code`, never rendered. (3 September had it the other
+  way round — "use the permanent numbered Style as the heading"; superseded.)
+  The fine-silk pieces have no location name recorded, so their code stays
+  their name: Shayla 03, Large Square 01.
 
   The Lot is customer-facing as a Roman numeral (Lot I), per Framework v3.
 

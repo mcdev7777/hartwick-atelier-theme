@@ -31,9 +31,12 @@
       shopify.color-pattern  taxonomy colour                          (35)
       product.title          "OKANAGAN LONG ROBE | Kalamalka Block Print"
 
-  The old titles are "LEGACY NAME | descriptor". CLAUDE.md makes legacy names
-  internal only, so the part before the bar is an INTERIM heading until the
-  Style is linked (hartwick.style) — flagged on the page and to Aloha.
+  The old titles are "LOCATION NAME | descriptor" — TRIBECA SKIRT | Handwoven
+  Emerald Matka Silk. Since 21 September 2026 the location name IS the
+  customer-facing name (Aloha: "We've returned to the original names … Style
+  codes and product IDs stay internal"), so the part before the bar is a
+  correct heading, not an interim one; the linked Style's display_name carries
+  the same name once the sheet is imported.
 
   Fields:
       style        Style display name          -> title before " | "
@@ -48,8 +51,9 @@
       made_in      place of construction
       finishing    hartwick.finishing
       reference    variant SKU -> hartwick.material_record_ref
-      subtitle     the Expression before its comma: "Handspun Matka Silk"
-                   (tab 01 "Short hero subtitle") — the serif line under the Style
+      subtitle     hartwick.subtitle (tab 01's short hero subtitle: "Handspun
+                   Linen" where the Expression says "Handspun/Handwoven Linen")
+                   -> the Expression before its comma — the serif line under the name
       selector     hartwick.colour_name -> the Expression after its comma:
                    "Emerald Changeant" (tab 01 "Colour / expression selector") —
                    the buy rail's Expression row and the COLOUR fact
@@ -221,13 +225,17 @@
       endif
 
     when 'subtitle'
-      assign e = mf.expression
-      if e == blank and title_parts.size > 1
-        assign e = title_parts[1] | strip
-      elsif e == blank
-        assign e = cf.subtitle
+      if mf.subtitle != blank
+        assign out = mf.subtitle
+      else
+        assign e = mf.expression
+        if e == blank and title_parts.size > 1
+          assign e = title_parts[1] | strip
+        elsif e == blank
+          assign e = cf.subtitle
+        endif
+        assign out = e | split: ',' | first
       endif
-      assign out = e | split: ',' | first
 
     when 'selector'
       if mf.colour_name != blank

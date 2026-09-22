@@ -31,7 +31,7 @@ The mobile homepage brief (`Hartwick_Atelier_Mobile_Homepage_Developer_Brief.doc
 | **The Dispatch** | ~~newsletter~~ | Editorial newsletter sent to The Register. |
 | **The Circle** | — | Invitation-only group of founding friends. **No public form. No application route.** Editorial appearances only, with approval. |
 | **The Masters** | ~~The Makers~~, ~~artisans~~ (as a label) | The artisans in India. |
-| **Style** | — | Permanent silhouette identity: `Skirt 001`, `Shirt 007`. Never a place name. |
+| **Style** | — | Permanent silhouette identity. **Customer-facing name = the original location name** (`Tribeca Skirt`, `Amman Shirt`) with the Expression beneath it — Aloha, 21 Sep 2026. The numbered code (`Skirt 001`) is internal (`style.code`). Fine-silk pieces have no location name recorded, so their code is their name (`Shayla 03`). |
 | **Expression** | — | The fabric/dye/colour realisation of a Style. One Style → many Expressions. |
 | **Edition** | — | `3/25` — piece position / run size. |
 | **The Lot** | — | Production batch. Customer-facing as **Roman numerals**: Lot I, Lot II. |
@@ -40,8 +40,12 @@ The mobile homepage brief (`Hartwick_Atelier_Mobile_Homepage_Developer_Brief.doc
 | **Origin** | — | Full provenance story of a piece. |
 | **The Archive** | — | Record of everything made; not a sale section. |
 
-Legacy names (Tribeca, Palma, Bombay…) are **internal SKU mapping only** — never
-customer-facing.
+**Naming, 21 Sep 2026 (Aloha):** the location names (Tribeca, Palma, Bombay…) are the
+customer-facing product names again, with the Expression beneath. Style codes
+(`Skirt 001`) and worksheet IDs (`P001`) are internal. This reverses the earlier rule
+("legacy names are internal SKU mapping only"); the Framework v3 wording has not been
+re-issued to match — flagged to Aloha. Store title format: `Tribeca Skirt | Handspun
+Matka Silk, Emerald Changeant`.
 
 ## Content rules
 - **Never invent** artisan names, provenance, materials, production detail, health claims,
@@ -50,6 +54,11 @@ customer-facing.
 - Do not source or publish external imagery without approval.
 - `[pending Chanchal verification]` in the naming spreadsheet = unverified origin. Treat
   as placeholder.
+- **Product copy comes only from Aloha's sheet, through `scripts/sheet-to-shopify.py`.**
+  A row whose Approval notes say DRAFT / to review stays in `hartwick.*` metafields
+  (read by the unpublished theme only, marked "Draft copy" there); `--launch` — title,
+  description, price on the live product — refuses it. Only P001's introduction and
+  description are approved as of 21 Sep 2026.
 
 ## Architecture decisions (approved by Aloha)
 - Reusable sections + **metafields/metaobjects**. No hard-coded product or editorial pages.

@@ -13,6 +13,32 @@ I'd like us to use this same spreadsheet going forward as the team's working
 source … Then on your side, the relevant fields can map into the Shopify
 product records, metafields and metaobjects you've already created."
 
+Aloha, 21 September 2026 (sheet "(2)"): "We've returned to the original names,
+such as Tribeca Skirt and Amman Shirt. Please use these as the customer facing
+product titles, with the Expression underneath to distinguish the fabric,
+weave, colour or treatment. Style codes and product IDs stay internal. Column O
+in '01 Product copy' is now in short bullet points, ready for the product page
+description accordion. You can use the updated sheet to build out the website
+product pages, keeping anything marked draft or awaiting confirmation
+unpublished."
+
+So, from that sheet on:
+  - tab 01 "Product name" IS the customer-facing name (Tribeca Skirt). The
+    `style` record's display_name carries it; the numbered code (Skirt 001)
+    moves to style.code, internal (--styles does the one-off swap).
+  - the fine-silk rows have no location name recorded (DUPATTA 01, SHAYLA 03):
+    tab 05, "Do not invent location names where none is recorded" — their code
+    stays the name.
+  - column O is a bullet list -> hartwick.construction_details as a rich-text
+    LIST, which the Description row renders as <ul>.
+  - the "Approval notes" column is the gate: a row that says DRAFT / to review
+    / awaiting gets hartwick.copy_status = draft, the unpublished theme marks
+    the page, and --launch refuses it.
+  - the sheet's column E still reads "Legacy name - internal only" but holds
+    the short hero subtitle ("Handspun Matka Silk") — the old "Short hero
+    subtitle" column was dropped and its data kept under the stale header. It
+    is read as the subtitle (hartwick.subtitle) and Aloha is told.
+
 MAPPING is the single source of truth for column -> field. docs/product-data-
 mapping.md is generated from it (--doc), so the document Aloha reads and the
 code that runs are the same table.
@@ -22,28 +48,35 @@ USAGE
     python3 scripts/sheet-to-shopify.py --plan P001               # what would be written for SKIRT 001
     python3 scripts/sheet-to-shopify.py --write P001              # metafields + SKUs (needs write scopes)
     python3 scripts/sheet-to-shopify.py --write P001 --launch     # ALSO title, description, price: LIVE-VISIBLE
+    python3 scripts/sheet-to-shopify.py --write-all               # metafields for every row with a certain match
+    python3 scripts/sheet-to-shopify.py --styles                  # one-off: style.display_name <- location name, code <- number
+    python3 scripts/sheet-to-shopify.py --refresh                 # re-pull products + metaobjects into store-snapshot/
     python3 scripts/sheet-to-shopify.py --definitions             # create the missing hartwick.* definitions
     python3 scripts/sheet-to-shopify.py --csv out.csv             # admin-import CSV (Handle + metafield columns)
     python3 scripts/sheet-to-shopify.py --doc                     # regenerate docs/product-data-mapping.md
 
     --sheet PATH   the .xlsx export (default: the one in ~/Downloads)
     --dry          print the GraphQL instead of running it
+    --skus         also write the product reference to the variant SKUs (off
+                   until the size-suffix question is settled)
 
 WRITES go through the Shopify CLI's stored store auth:
     shopify store auth --store 9c8a52-dc.myshopify.com --scopes read_products,write_products,read_metaobjects,write_metaobjects,read_metaobject_definitions,write_metaobject_definitions
 and `shopify store execute --allow-mutations`. Nothing here stores a token.
 
 WHAT STAYS UNPUBLISHED. Draft copy goes into hartwick.* metafields, which no
-published theme reads, so the live site does not change. Title, description,
-price and SKU are visible on the live theme's product pages, so they are
-written only with --launch, per product, after Angela's review.
+published theme reads (checked 21 Sep: the live "Hartwick - Landing" theme
+renders Luxe's native product section), so the live site does not change.
+Title, description, price and SKU are visible on the live theme's product
+pages, so they are written only with --launch, per product, and only for a
+row whose Approval notes do not say DRAFT.
 """
 import argparse, csv, json, os, re, subprocess, sys, tempfile
 from collections import OrderedDict
 
 STORE = "9c8a52-dc.myshopify.com"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_SHEET = os.path.expanduser("~/Downloads/Hartwick Atelier _ Product Data text.xlsx")
+DEFAULT_SHEET = os.path.expanduser("~/Downloads/Hartwick Atelier _ Product Data text (2).xlsx")
 SNAPSHOT = os.path.join(ROOT, "store-snapshot")
 
 # ---------------------------------------------------------------------------
@@ -58,12 +91,12 @@ SNAPSHOT = os.path.join(ROOT, "store-snapshot")
 MAPPING = [
  # --- 01 Product copy -----------------------------------------------------
  ("01","ID","none","none","—","—","Worksheet key only. Never published (tab 05)."),
- ("01","Product name","ref:style:metaobject_reference","ref","Opening — the Style heading (h1); Lot record; Related Works cards; the browser tab title","Product name in JSON-LD; the crawlable heading","Resolved to the existing `style` record by display name (54 exist). Title stays the legacy name until --launch."),
+ ("01","Product name","ref:style:metaobject_reference","ref","Opening — the heading (h1); Lot record STYLE; Related Works cards; the browser tab title","Product name in JSON-LD; the crawlable heading","The customer-facing name (Aloha, 21 Sept: Tribeca Skirt, Amman Shirt). Resolved to the `style` record whose display_name / legacy_name / code matches; the record's display_name IS this name after --styles. Fine-silk rows keep their code (DUPATTA 01) — no location name is recorded. At --launch it becomes the title before the bar: “Tribeca Skirt | Handspun Matka Silk, Emerald Changeant”."),
  ("01","Expression / full subtitle","mf:expression:single_line_text_field","mf","Lot record EXPRESSION; the source of the subtitle and selector below","Part of the product name / description in JSON-LD","Split at the comma: before = subtitle, after = selector."),
  ("01","EU retail (€)","core:price","core","Buy rail price (Shopify money, Markets converts)","Offer price / currency in JSON-LD; channel feeds","LAUNCH ONLY. Store base is USD; EU RRP is entered on the EUR market price list or converted — Christina to confirm which."),
- ("01","Legacy name - internal only","ref:style.legacy_name","ref","Nowhere","Nowhere","Already on the `style` record. Used to match sheet rows to Shopify products (--match)."),
- ("01","Approval notes","mf:internal_notes:multi_line_text_field","mf","Nowhere (no storefront access)","Nowhere","Internal. Appended with tab 02/04 notes."),
- ("01","Short hero subtitle","none","derived","Opening — serif line under the Style","—","Derived: the Expression before its comma. Not stored twice."),
+ ("01","Legacy name - internal only","mf:subtitle:single_line_text_field","mf","Opening — serif line under the name","—","STALE HEADER. Since the 21 Sept sheet this column holds the short hero subtitle (“Handspun Matka Silk”, “Handspun Linen”); the old Short-hero-subtitle column was removed and its data kept here. Read as the subtitle. The legacy name itself is now the Product name."),
+ ("01","Approval notes","mf:copy_status:single_line_text_field","mf","Unpublished theme only — a “Draft copy” marker on the page; nothing on the live theme","Nowhere","THE GATE. “DRAFT | Angela to review …” -> draft; “… approved …” -> approved. --launch refuses a draft row. The note text itself goes to internal_notes (no storefront access)."),
+ ("01","Short hero subtitle","none","derived","Opening — serif line under the name","—","Column E above when filled; else the Expression before its comma. Not stored twice."),
  ("01","Material / technique line","mf:material_line:single_line_text_field","mf","Opening — record label under the subtitle","—","“HANDSPUN / HANDWOVEN”."),
  ("01","Hero introduction","mf:hero_introduction:rich_text_field","mf","Opening — the introduction paragraph(s)","Product description in JSON-LD (at launch it becomes product.description)","Staged here while DRAFT; --launch copies it to the Shopify description, which is live."),
  ("01","Fibre","mf:fibre:single_line_text_field","mf","Opening FIBRE fact; From Fibre to Garment stage 01; The Cloth heading fallback","`material` in JSON-LD","“Silk”."),
@@ -72,9 +105,10 @@ MAPPING = [
  ("01","Made in","ref:place_of_construction:origin","ref","Opening MADE IN fact; stage 05 Place","`countryOfOrigin` in JSON-LD","Resolved to an `origin` record by place name (India / Jaipur / West Bengal exist); a new place needs a new record."),
  ("01","Fit summary","mf:fit:single_line_text_field","mf","Opening — FIT & MEASUREMENTS record line","—","“HIGH WAIST / FULL LENGTH”."),
  ("01","Fit & measurements body","mf:fit_measurements:multi_line_text_field","mf","Opening — sentence under the Fit line","—",""),
- ("01","Description accordion","mf:construction_details:rich_text_field","mf","Opening — DESCRIPTION row","Description in JSON-LD (appended at launch)","Existing field; the construction sentence."),
+ ("01","Description accordion (these should be bullet points)","mf:construction_details:rich_text_field","mf","Opening — DESCRIPTION row, as a bullet list","Description in JSON-LD (appended at launch)","Column O, 21 Sept: “•” lines -> one rich-text list item each; a line without a bullet is a paragraph. The row renders <ul>."),
  ("01","Size options","core:variants","core","Buy rail size picker","Offers per variant in JSON-LD","Variants already exist (S / M / L). Not written; compared and warned."),
  ("01","Size-guide link","theme","theme","Buy rail SIZE GUIDE link","—","One theme setting (the size-guide page), not per product."),
+ ("—","(style code: Skirt 001)","ref:style.code","ref","Nowhere — internal (Aloha, 21 Sept)","Nowhere","No longer in the sheet. Kept on the `style` record as `code`, filled by --styles from the old display_name; the collection template may still address a Style by it."),
  ("01","Availability / dispatch notes","mf:availability_note:single_line_text_field","mf","Buy rail AVAILABILITY (overrides the live stock line) and EXPECTED DISPATCH","Offer availability in JSON-LD comes from live stock, not this note","Only a CONFIRMED note is written; “Confirm …” text is dropped and the live line shows instead."),
  ("01","Old product URL","none","none","—","301 redirect old URL -> new","Squarespace category URLs; product-level redirects need the product-level old URLs."),
  # --- 02 Origin and maker -------------------------------------------------
@@ -135,13 +169,18 @@ EXTRA_DEFS = {
 }
 
 # ---------------------------------------------------------------------------
+# Headers that were renamed between exports, mapped to the name the code uses.
+HEADER_ALIASES = {
+    "Description accordion (these should be bullet points)": "Description accordion",
+}
+
 def load_sheet(path):
     import openpyxl
     wb = openpyxl.load_workbook(path, data_only=True)
     tabs = {}
     for ws in wb.worksheets[:4]:
         rows = list(ws.iter_rows(min_row=3, values_only=True))
-        hdr = rows[0]
+        hdr = [HEADER_ALIASES.get(h, h) for h in rows[0]]
         recs = OrderedDict()
         for r in rows[1:]:
             if not r or not r[0]:
@@ -149,6 +188,18 @@ def load_sheet(path):
             rec = {hdr[i]: (r[i] if r[i] is not None else "") for i in range(len(hdr)) if hdr[i]}
             recs[rec["ID"]] = rec
         tabs[ws.title[:2]] = recs
+    # 21 Sept export: the "Short hero subtitle" column is gone and its data sits
+    # under the stale "Legacy name - internal only" header. Detect that by the
+    # data, not the header: a legacy name would repeat the Product name's noun
+    # ("Tribeca Skirt"); the subtitle never does ("Handspun Matka Silk").
+    t1 = tabs.get("01", {})
+    if t1 and "Short hero subtitle" not in next(iter(t1.values())):
+        col = "Legacy name - internal only"
+        looks_like_subtitle = sum(1 for r in t1.values() if s(r.get(col)) and norm(s(r.get(col)).split()[-1]) not in norm(r.get("Product name"))) 
+        for r in t1.values():
+            r["Short hero subtitle"] = s(r.get(col)) if looks_like_subtitle > len(t1) / 2 else ""
+        if looks_like_subtitle > len(t1) / 2:
+            sys.stderr.write(f"note: tab 01 column {col!r} holds the short hero subtitle on {looks_like_subtitle} of {len(t1)} rows (stale header) — read as the subtitle\n")
     return tabs
 
 def s(v):
@@ -166,11 +217,45 @@ def fragments(cell):
         (notes if CONFIRM_RE.search(p) else facts).append(p)
     return facts, notes
 
+BULLET_RE = re.compile(r"^\s*[•·\-\*–]\s+")
+
 def rich(text):
-    """Shopify rich_text_field JSON from plain paragraphs."""
-    paras = [p.strip() for p in re.split(r"\n\s*\n|\n", s(text)) if p.strip()]
-    return json.dumps({"type": "root", "children": [
-        {"type": "paragraph", "children": [{"type": "text", "value": p}]} for p in paras]})
+    """Shopify rich_text_field JSON from plain text. A run of "• …" lines is one
+    unordered list (column O, 21 Sept); anything else is a paragraph."""
+    children, items = [], []
+    def flush():
+        nonlocal items
+        if items:
+            children.append({"type": "list", "listType": "unordered", "children": [
+                {"type": "list-item", "children": [{"type": "text", "value": i}]} for i in items]})
+            items = []
+    for line in s(text).split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        if BULLET_RE.match(line):
+            items.append(BULLET_RE.sub("", line).strip().rstrip("."))
+        else:
+            flush(); children.append({"type": "paragraph", "children": [{"type": "text", "value": line}]})
+    flush()
+    return json.dumps({"type": "root", "children": children})
+
+def bullets_html(text):
+    """The same bullets as HTML, for the launch-time description."""
+    items = [BULLET_RE.sub("", l).strip().rstrip(".") for l in s(text).split("\n") if BULLET_RE.match(l.strip())]
+    return "<ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>" if items else ""
+
+# The sheet's approval column, read as a status. Anything not clearly approved
+# is a draft — that is the direction Aloha asked for ("keeping anything marked
+# draft or awaiting confirmation unpublished").
+DRAFT_RE = re.compile(r"\bdraft\b|to review|awaiting|unconfirmed|not approved", re.I)
+APPROVED_RE = re.compile(r"\bapproved\b", re.I)
+
+def copy_status(note):
+    n = s(note)
+    if DRAFT_RE.search(n): return "draft"
+    if APPROVED_RE.search(n): return "approved"
+    return "draft"
 
 # ---------------------------------------------------------------------------
 def load_snapshot():
@@ -178,30 +263,96 @@ def load_snapshot():
     mos = json.load(open(os.path.join(SNAPSHOT, "metaobjects.json")))
     return prods, mos
 
-def norm(x): return re.sub(r"[^a-z0-9 ]", " ", s(x).lower())
+def norm(x): return re.sub(r"[^a-z0-9 ]", " ", s(x).lower()).strip()
 STOP = {"the","and","with","in","of","handwoven","handspun","natural","silk","cotton","khadi","dye","block","print","printed",
         "blouse","shirt","skirt","trousers","dress","robe","coat","scarf","long","short","set","pyjama","tote","belt","pouch","kaftan","fine","mashru"}
-ALIAS = {"samarkant": "samarkand", "calcutta blouse": "calcutta shirt"}
+# Sheet name -> what the old site's title/handle actually says (typos included).
+ALIAS = {"samarkant dress": "samarkand dress", "calcutta blouse": "calcutta shirt", "cyprus pyjama set": "cyprus lounge set",
+         "blossom shorts": "blossom lounge shorts", "pine shirt": "pine lounge shirt", "jasmine dress": "jasmine lounge dress",
+         "jaipur scarf": "jaipur sarong", "cedar trousers": "cedar pants", "sitges tote": "stiges tote bag",
+         "dupatta 01": "oversized dupatta 01", "dupatta 02": "oversized dupatta 02", "classic stole 01": "stole 01", "classic stole 02": "stole 02"}
+# The store's own vocabulary for a sheet colour, where the old records show it:
+# jodhpur-blouse-handwoven-ikat-navy-celeste, "Navy Quilted Handwoven Cotton Ikat".
+SYNONYM = {"celeste": "navy"}
+NOISE = {"the","and","with","in","of","by","a","an","raw","hand","pattern","print","motif"}
 
-def match_products(tab01, prods):
-    out = {}
+def stem(w):
+    w = SYNONYM.get(w, w)
+    if len(w) > 4 and w.endswith("ed"): w = w[:-2]
+    elif len(w) > 3 and w.endswith("s"): w = w[:-1]
+    return w
+
+def tokens(text):
+    return {stem(w) for w in re.split(r"[^a-z0-9]+", s(text).lower()) if len(w) > 2 and w not in NOISE}
+
+OLD_NAME_RE = re.compile(r"(?:changed from|omits the older)\s+(.+?)\s+(?:in the older|motif|to\b)", re.I)
+
+def style_index(mos):
+    """Every name a `style` record answers to -> its gid: display_name, legacy_name, code."""
+    idx = {}
+    for mo in mos.get("style", []):
+        for k in ("display_name", "legacy_name", "code"):
+            v = norm(x_field(mo, k))
+            if v: idx.setdefault(v, mo["id"])
+    return idx
+
+def match_products(tab01, prods, mos=None):
+    """Sheet row -> Shopify product.
+
+    Candidates come from the Style record the product is already linked to
+    (hartwick.style, written 17 Sept on the apparel; the sheet's Product name
+    is that record's legacy name), or, with no Style linked (fine silk,
+    accessories), from title words. Within the candidates the Expression's
+    words decide, weighted by where they appear — the old title counts most,
+    the old subtitle next, the handle least (handles of "-copy" products lie).
+    Old print names the sheet notes as renamed ("changed from Victorian Rouge
+    … to Vine Red") count as the row's words too.
+
+    Rows are settled best score first, and a product once taken is off the
+    table for the rest — so two Tribeca Skirts cannot both take the emerald
+    one. ok = a clear winner; check = a tie to settle by eye; none = nothing
+    left (the note says who took it)."""
+    styles = style_index(mos or {})
+    by_style = {}
+    for p in prods:
+        for m in p["metafields"]["nodes"]:
+            if m["namespace"] == "hartwick" and m["key"] == "style":
+                by_style.setdefault(m["value"], []).append(p)
+    rows = {}
     for pid, r in tab01.items():
-        legacy = s(r["Legacy name - internal only"]); expr = s(r["Expression / full subtitle"])
-        key = norm(ALIAS.get(legacy.lower(), legacy))
-        words = [w for w in key.split() if w not in STOP]
-        cands = [p for p in prods if all(w in norm(p["title"]) or w in norm(p["handle"]) for w in words)]
-        et = {t for t in norm(expr).split() if len(t) > 2 and t not in STOP}
+        name = s(r["Product name"])
+        sid = styles.get(norm(name))
+        cands = list(by_style.get(sid, [])) if sid else []
+        how = "style"
+        if not cands:
+            how = "title"
+            key = norm(ALIAS.get(norm(name), name))
+            words = [w for w in key.split() if w not in STOP]
+            cands = [p for p in prods if words and all(w in norm(p["title"]) or w in norm(p["handle"]) for w in words)]
+        want = tokens(r["Expression / full subtitle"]) | tokens(r.get("Colour / expression selector"))
+        for old in OLD_NAME_RE.findall(s(r.get("Approval notes"))):
+            want |= tokens(old)
         scored = []
         for p in cands:
-            mf = {m["key"]: m["value"] for m in p["metafields"]["nodes"] if m["namespace"] == "custom"}
-            hay = norm(p["title"] + " " + (mf.get("subtitle") or "") + " " + p["handle"])
-            scored.append((sum(1 for t in et if t in hay), p))
+            cf = {m["key"]: m["value"] for m in p["metafields"]["nodes"] if m["namespace"] == "custom"}
+            title = p["title"].split("|", 1)[1] if "|" in p["title"] else p["title"]
+            sc = 3 * len(want & tokens(title)) + 2 * len(want & tokens(cf.get("subtitle"))) + len(want & tokens(p["handle"].replace("-", " ")))
+            scored.append((sc, p))
         scored.sort(key=lambda x: -x[0])
-        best = scored[0][1] if scored else None
-        tie = len(scored) > 1 and scored[1][0] == scored[0][0]
-        conf = "none" if not best else ("check" if tie else "ok")
-        out[pid] = {"product": best, "confidence": conf, "candidates": [p["handle"] for _, p in scored[:4]]}
-    return out
+        rows[pid] = {"how": how, "scored": scored}
+    out, taken = {}, {}
+    for pid in sorted(rows, key=lambda k: -(rows[k]["scored"][0][0] if rows[k]["scored"] else -1)):
+        left = [(sc, p) for sc, p in rows[pid]["scored"] if p["id"] not in taken]
+        cands = [p["handle"] for _, p in left[:4]]
+        if not left:
+            gone = [f"{p['handle']} → {taken[p['id']]}" for _, p in rows[pid]["scored"][:2]]
+            out[pid] = {"product": None, "confidence": "none", "how": rows[pid]["how"], "candidates": gone}
+            continue
+        best = left[0][1]
+        tie = len(left) > 1 and left[1][0] == left[0][0]
+        if not tie: taken[best["id"]] = pid
+        out[pid] = {"product": best, "confidence": "check" if tie else "ok", "how": rows[pid]["how"], "candidates": cands}
+    return OrderedDict((pid, out[pid]) for pid in tab01)
 
 # ---------------------------------------------------------------------------
 def build_payload(pid, tabs, matches, mos, opts):
@@ -210,15 +361,25 @@ def build_payload(pid, tabs, matches, mos, opts):
     m = matches[pid]; prod = m["product"]
     mf, core, warn, notes = OrderedDict(), OrderedDict(), [], []
 
-    # style record
-    styles = {norm(x_field(mo, "display_name")): mo["id"] for mo in mos.get("style", [])}
-    name = s(t1.get("Product name")).title().replace("Pj ", "PJ ")
-    sid = styles.get(norm(name))
+    # The customer-facing name (Aloha, 21 Sept). The sheet writes the fine-silk
+    # codes in capitals (DUPATTA 01); the store's records say Dupatta 01, and a
+    # heading in capitals is the theme's job, so the case is normalised there
+    # only. Location names keep the sheet's own spelling.
+    name = s(t1.get("Product name"))
+    if name.isupper(): name = name.title()
+    sid = style_index(mos).get(norm(name))
     if sid: mf["style"] = ("metaobject_reference", sid)
-    else: warn.append(f"no `style` record named {name!r} — create it")
+    else: warn.append(f"no `style` record answers to {name!r} — create it")
+    if prod and norm(name).split()[0] not in norm(prod["title"]) and norm(ALIAS.get(norm(name), "")).split()[:1] != norm(prod["title"]).split()[:1]:
+        warn.append(f"name {name!r} vs store title {prod['title']!r} — spelling differs; the sheet wins at --launch")
+
+    # the gate
+    status = copy_status(t1.get("Approval notes"))
+    mf["copy_status"] = ("single_line_text_field", status)
 
     expr = s(t1.get("Expression / full subtitle"))
     if expr: mf["expression"] = ("single_line_text_field", expr)
+    if s(t1.get("Short hero subtitle")): mf["subtitle"] = ("single_line_text_field", s(t1["Short hero subtitle"]))
     if s(t1.get("Material / technique line")): mf["material_line"] = ("single_line_text_field", s(t1["Material / technique line"]))
     if s(t1.get("Hero introduction")): mf["hero_introduction"] = ("rich_text_field", rich(t1["Hero introduction"]))
     if s(t1.get("Fibre")): mf["fibre"] = ("single_line_text_field", s(t1["Fibre"]))
@@ -300,16 +461,21 @@ def build_payload(pid, tabs, matches, mos, opts):
                             s(t4.get("Verified care source")), s(t4.get("Approval / outstanding facts"))] if x]
     if internal: mf["internal_notes"] = ("multi_line_text_field", "\n".join(internal))
 
-    # launch-only core fields
+    # launch-only core fields. The title is the name, then the Expression
+    # after a bar — the form the old site already used and the theme's fallback
+    # parses; the cart, checkout and order mail show the title alone, and two
+    # "Tribeca Skirt" lines there must still tell the silk from the cotton.
     if expr and name: core["title"] = f"{name} | {expr}"
-    if s(t1.get("Hero introduction")): core["descriptionHtml"] = "".join(f"<p>{p.strip()}</p>" for p in re.split(r"\n\s*\n|\n", s(t1["Hero introduction"])) if p.strip())
+    if s(t1.get("Hero introduction")):
+        core["descriptionHtml"] = "".join(f"<p>{p.strip()}</p>" for p in re.split(r"\n\s*\n|\n", s(t1["Hero introduction"])) if p.strip())
+        core["descriptionHtml"] += bullets_html(t1.get("Description accordion"))
     if s(t1.get("EU retail (€)")): core["price_eur"] = float(t1["EU retail (€)"])
     sizes = s(t1.get("Size options"))
     if prod and sizes:
         have = [v["title"] for v in prod["variants"]["nodes"]]
         want = [x.strip() for x in sizes.split("/")]
         if have != want: warn.append(f"sizes: sheet says {want}, Shopify has {have}")
-    return {"id": pid, "name": name, "product": prod, "confidence": m["confidence"], "metafields": mf, "core": core, "warnings": warn, "notes": notes}
+    return {"id": pid, "name": name, "status": status, "product": prod, "confidence": m["confidence"], "metafields": mf, "core": core, "warnings": warn, "notes": notes}
 
 def x_field(mo, key):
     for f in mo.get("fields", []):
@@ -325,13 +491,14 @@ def lot_id(mos, numeral):
         if x_field(mo, "number_roman").upper() == n or x_field(mo, "number_internal") == n:
             return mo["id"]
 def resolve_related(cell, tab01, matches):
-    """'Suggested: SHIRT 001 - Handspun Silk-Linen, Natural Pearl Shimmer. Confirm …' -> product gid"""
+    """'Suggested: Amman Shirt - Handspun Silk-Linen, Natural Pearl Shimmer. Confirm …' -> product gid.
+    The name is whichever tab-01 Product name the cell begins with (longest first)."""
     txt = re.sub(r"^suggested:\s*", "", cell, flags=re.I)
     txt = re.split(r"\.\s*confirm", txt, flags=re.I)[0]
-    mname = re.match(r"([A-Z][A-Z ]+?\s\d{2,3})", txt)
-    if not mname: return None
-    style = mname.group(1).strip()
-    rest = norm(txt[mname.end():])
+    names = sorted({s(r["Product name"]) for r in tab01.values()}, key=len, reverse=True)
+    style = next((n for n in names if norm(txt).startswith(norm(n))), None)
+    if not style: return None
+    rest = norm(txt)[len(norm(style)):]
     best, score = None, -1
     for pid, r in tab01.items():
         if norm(r["Product name"]) != norm(style): continue
@@ -366,7 +533,9 @@ def write_product(payload, opts):
             errs = r.get("metafieldsSet", {}).get("userErrors") or r.get("data", {}).get("metafieldsSet", {}).get("userErrors")
             print(f"  metafields {i+1}-{i+len(mfs[i:i+25])}: {'ok' if not errs else errs}")
     sku = payload["core"].get("sku")
-    if sku:
+    if sku and not opts.skus:
+        print(f"  SKUs: {sku} not written (--skus; the size-suffix rule is still open with Aloha)")
+    elif sku:
         vs = []
         for v in prod["variants"]["nodes"]:
             size = v["selectedOptions"][0]["value"] if v.get("selectedOptions") else ""
@@ -375,7 +544,9 @@ def write_product(payload, opts):
         q2 = "mutation($productId:ID!,$variants:[ProductVariantsBulkInput!]!){ productVariantsBulkUpdate(productId:$productId, variants:$variants){ userErrors{ field message } } }"
         r = gql(q2, {"productId": gid, "variants": vs}, mutate=True, dry=opts.dry)
         if r is not None: print(f"  SKUs: {vs[0]['inventoryItem']['sku']} … {'ok' if not (r.get('productVariantsBulkUpdate') or {}).get('userErrors') else r}")
-    if opts.launch:
+    if opts.launch and payload["status"] != "approved":
+        print(f"  ✗ --launch refused: {payload['id']} is {payload['status']} in the sheet's Approval notes (Aloha: draft stays unpublished)")
+    elif opts.launch:
         core = payload["core"]
         q3 = "mutation($product:ProductUpdateInput!){ productUpdate(product:$product){ product{ id title } userErrors{ field message } } }"
         inp = {"id": gid}
@@ -437,6 +608,70 @@ def create_definitions(opts):
             node = r.get("metaobjectDefinitionUpdate") or {}
             print(f"  {mo_type}.{'/'.join(f['key'] for f in todo)}: {'ok' if node.get('metaobjectDefinition') else node.get('userErrors')}")
 
+CODE_RE = re.compile(r"^[A-Za-z][A-Za-z ]*\s\d{2,3}$")
+
+def swap_style_names(mos, opts):
+    """One-off for Aloha's 21 Sept decision, idempotent. On every `style`
+    record: code <- the numbered display_name (Skirt 001) if code is empty;
+    display_name <- legacy_name (Tribeca Skirt) when the record has one that
+    differs. Fine-silk records (Dupatta 01 / Dupatta 01) and the yoga
+    editions keep their display_name — no location name is recorded. Also
+    sets the definition's displayNameKey so the admin lists read by name."""
+    have, defs = live_definitions()
+    st = defs.get("style")
+    if not st: print("no `style` metaobject definition"); return
+    keys = {f["key"] for f in st["fieldDefinitions"]}
+    q = ("mutation($id:ID!,$definition:MetaobjectDefinitionUpdateInput!){ metaobjectDefinitionUpdate(id:$id, definition:$definition){"
+         " metaobjectDefinition{ type displayNameKey } userErrors{ field message code } } }")
+    d = {"displayNameKey": "display_name"}
+    if "code" not in keys:
+        d["fieldDefinitions"] = [{"create": {"key": "code", "name": "Style code (internal)", "type": "single_line_text_field",
+                                             "description": "Skirt 001 - production / data reference. Never customer-facing (Aloha, 21 Sept 2026)."}}]
+    r = gql(q, {"id": st["id"], "definition": d}, mutate=True, dry=opts.dry)
+    if r is not None:
+        node = r.get("metaobjectDefinitionUpdate") or {}
+        print(f"  style definition: {'ok' if node.get('metaobjectDefinition') else node.get('userErrors')}")
+    q2 = "mutation($id:ID!,$metaobject:MetaobjectUpdateInput!){ metaobjectUpdate(id:$id, metaobject:$metaobject){ metaobject{ handle } userErrors{ field message code } } }"
+    n = 0
+    for mo in mos.get("style", []):
+        disp, legacy, code = x_field(mo, "display_name"), x_field(mo, "legacy_name"), x_field(mo, "code")
+        fields = []
+        if not code and CODE_RE.match(disp): fields.append({"key": "code", "value": disp})
+        if legacy and norm(legacy) != norm(disp) and CODE_RE.match(disp): fields.append({"key": "display_name", "value": legacy})
+        if not fields: continue
+        r = gql(q2, {"id": mo["id"], "metaobject": {"fields": fields}}, mutate=True, dry=opts.dry)
+        n += 1
+        if r is not None:
+            node = r.get("metaobjectUpdate") or {}
+            print(f"  {disp:18} -> {dict((f['key'], f['value']) for f in fields)}: {'ok' if node.get('metaobject') else node.get('userErrors')}")
+    print(f"{n} style records updated" + (" (dry)" if opts.dry else ""))
+
+PRODUCTS_Q = """query($cursor: String) { products(first: 100, after: $cursor) {
+  pageInfo { hasNextPage endCursor }
+  nodes { id handle title status productType vendor tags templateSuffix
+    featuredMedia { ... on MediaImage { id } }
+    variants(first: 100) { nodes { id title sku price inventoryQuantity selectedOptions { name value } } }
+    metafields(first: 60) { nodes { namespace key type value } } } } }"""
+METAOBJECTS_Q = "query($t:String!){ metaobjects(type:$t, first:100){ nodes { id handle displayName fields { key type value } } } }"
+
+def refresh_snapshot():
+    """Re-pull what this script matches against — products and the metaobjects —
+    into store-snapshot/ through the CLI, so --match reflects the store today.
+    (scripts/store-audit.sh is the full snapshot; it needs a token env.)"""
+    prods, cur = [], None
+    while True:
+        d = gql(PRODUCTS_Q, {"cursor": cur}); node = d.get("products") or {}
+        prods += node.get("nodes", [])
+        if not node.get("pageInfo", {}).get("hasNextPage"): break
+        cur = node["pageInfo"]["endCursor"]
+    mos = {}
+    for t in ["style", "lot", "origin", "master", "dye", "process", "technique", "collection", "release", "process_step"]:
+        d = gql(METAOBJECTS_Q, {"t": t})
+        mos[t] = (d.get("metaobjects") or {}).get("nodes", [])
+    json.dump(prods, open(os.path.join(SNAPSHOT, "products.json"), "w"), indent=1)
+    json.dump(mos, open(os.path.join(SNAPSHOT, "metaobjects.json"), "w"), indent=1)
+    print(f"store-snapshot refreshed: {len(prods)} products, " + ", ".join(f"{k} {len(v)}" for k, v in mos.items() if v))
+
 def write_csv(path, tabs, matches, mos, opts):
     keys = sorted(MF_TYPES)
     with open(path, "w", newline="") as f:
@@ -452,8 +687,9 @@ def write_doc(tabs, matches, mos):
     path = os.path.join(ROOT, "docs", "product-data-mapping.md")
     L = []
     L.append("# Product data — where each sheet field lives\n")
-    L.append("Generated by `scripts/sheet-to-shopify.py --doc` from the mapping the importer runs on, so this table and the code cannot disagree. Source: **Hartwick Atelier | Product Copy for Angela & Ivan** (5 tabs, 78 expressions across 52 styles).\n")
+    L.append("Generated by `scripts/sheet-to-shopify.py --doc` from the mapping the importer runs on, so this table and the code cannot disagree. Source: **Hartwick Atelier | Product Copy for Angela & Ivan** (5 tabs, 78 expressions across 52 styles), the 21 September 2026 export.\n")
     L.append("Flow: **Google Sheet** (team working source; Angela reviews) → **Shopify product record + `hartwick.*` metafields + metaobjects** (live structured source) → **product page / JSON-LD / channels**.\n")
+    L.append("**Names, from 21 September (Aloha):** the location name — *Tribeca Skirt*, *Amman Shirt* — is the customer-facing product name, with the Expression beneath it. Style codes (*Skirt 001*) and worksheet IDs (*P001*) are internal. The `style` record's `display_name` now carries the location name and its `code` field the number; the fine-silk pieces keep their code as the name because no location name is recorded for them (tab 05). **Publication:** only a row whose Approval notes do not read DRAFT can go live (`--launch`); every other row stays in `hartwick.*` fields, which no published theme reads, and is marked *Draft copy* on the unpublished theme.\n")
     L.append("| Tab | Spreadsheet field | Shopify field / metafield | Website location | SEO / AI use | Notes |\n|---|---|---|---|---|---|")
     for tab, col, target, kind, web, seo, note in MAPPING:
         if target.startswith("mf:"): _, key, typ = target.split(":", 2); tgt = f"`hartwick.{key}` ({typ})"
@@ -510,12 +746,12 @@ def write_doc(tabs, matches, mos):
     for fact, n, where in counts: L.append(f"| {fact} | {n} | {where} |")
     # match table
     L.append("\n## Sheet row → Shopify product\n")
-    L.append("Matched by legacy name, then expression words, against the store's 97 products. **ok** = one clear match; **check** = two candidates scored equally — confirm by eye; **none** = no product with that legacy name exists (to be created).\n")
-    L.append("| ID | Product | Expression | Legacy | Shopify handle | Confidence |\n|---|---|---|---|---|---|")
+    L.append("Matched through the Style record the product is already linked to (`hartwick.style`, whose legacy name is the sheet's Product name), or by title words where no Style is linked, then by Expression words within the Style — against the store's 97 products. **ok** = one clear match; **check** = two candidates scored equally, or one product claimed by two rows — confirm by eye; **none** = no product exists (to be created).\n")
+    L.append("| ID | Product | Expression | Status | Shopify handle | Confidence |\n|---|---|---|---|---|---|")
     for pid, r in tabs["01"].items():
         m = matches[pid]; h = m["product"]["handle"] if m["product"] else "—"
         alt = "" if m["confidence"] == "ok" else (" · also: " + ", ".join(c for c in m["candidates"][1:3]) if m["candidates"][1:3] else "")
-        L.append(f"| {pid} | {r['Product name']} | {s(r['Expression / full subtitle'])[:48]} | {r['Legacy name - internal only']} | `{h}` | {m['confidence']}{alt} |")
+        L.append(f"| {pid} | {r['Product name']} | {s(r['Expression / full subtitle'])[:48]} | {copy_status(r.get('Approval notes'))} | `{h}` | {m['confidence']}{alt} |")
     open(path, "w").write("\n".join(L) + "\n"); print("wrote", path)
 
 # ---------------------------------------------------------------------------
@@ -527,18 +763,39 @@ def main():
     ap.add_argument("--csv"); ap.add_argument("--doc", action="store_true"); ap.add_argument("--dry", action="store_true")
     ap.add_argument("--include-suggested", action="store_true"); ap.add_argument("--sku-suffix", action="store_true", default=True)
     ap.add_argument("--no-sku-suffix", dest="sku_suffix", action="store_false")
+    ap.add_argument("--skus", action="store_true", help="also write variant SKUs (off by default)")
+    ap.add_argument("--write-all", action="store_true", help="metafields for every row whose match is certain")
+    ap.add_argument("--styles", action="store_true", help="style.display_name <- location name; code <- number")
+    ap.add_argument("--refresh", action="store_true", help="re-pull products + metaobjects into store-snapshot/")
     opts = ap.parse_args()
-    tabs = load_sheet(opts.sheet); prods, mos = load_snapshot(); matches = match_products(tabs["01"], prods)
+    if opts.refresh: refresh_snapshot()
+    tabs = load_sheet(opts.sheet); prods, mos = load_snapshot()
+    if opts.styles:
+        swap_style_names(mos, opts)
+        if not opts.dry: refresh_snapshot(); prods, mos = load_snapshot()
+    matches = match_products(tabs["01"], prods, mos)
     if opts.match:
         for pid, m in matches.items():
-            r = tabs["01"][pid]; print(f"{m['confidence']:5} {pid} {r['Product name']:16} {s(r['Expression / full subtitle'])[:40]:40} -> {m['product']['handle'] if m['product'] else '-'}")
+            r = tabs["01"][pid]; print(f"{m['confidence']:5} {m['how']:5} {pid} {r['Product name']:20} {s(r['Expression / full subtitle'])[:40]:40} -> {m['product']['handle'] if m['product'] else '-'}")
+        n = sum(1 for m in matches.values() if m["confidence"] == "ok")
+        print(f"\n{n} ok / {sum(1 for m in matches.values() if m['confidence'] == 'check')} check / {sum(1 for m in matches.values() if m['confidence'] == 'none')} none of {len(matches)}")
+    if opts.write_all:
+        done, skipped = 0, []
+        for pid in tabs["01"]:
+            p = build_payload(pid, tabs, matches, mos, opts)
+            if p["confidence"] != "ok":
+                skipped.append(f"{pid} {p['name']} ({p['confidence']})"); continue
+            print(f"{pid} {p['name']} [{p['status']}] -> {p['product']['handle']}")
+            for w in p["warnings"]: print("  ! " + w)
+            write_product(p, opts); done += 1
+        print(f"\n{done} products written" + (" (dry)" if opts.dry else "") + f"; skipped {len(skipped)}: " + ", ".join(skipped))
     if opts.plan or opts.write:
         pid = opts.plan or opts.write
         p = build_payload(pid, tabs, matches, mos, opts)
-        print(f"\n{pid} {p['name']} -> {p['product']['handle'] if p['product'] else 'NO MATCH'} ({p['confidence']})")
+        print(f"\n{pid} {p['name']} [{p['status']}] -> {p['product']['handle'] if p['product'] else 'NO MATCH'} ({p['confidence']})")
         print("\nMETAFIELDS (hartwick.*) — invisible on the live theme:")
         for k, (t, v) in p["metafields"].items(): print(f"  {k:26} {t:28} {str(v)[:90]}")
-        print("\nVARIANT SKUs (written with --write; not customer-facing):")
+        print("\nVARIANT SKUs (written only with --skus; not customer-facing):")
         if "sku" in p["core"]: print(f"  {'sku':26} {p['core']['sku']}{'-S / -M / -L' if opts.sku_suffix else ''}")
         print("\nCORE (live-visible, written only with --launch):")
         for k, v in p["core"].items():

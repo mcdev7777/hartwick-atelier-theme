@@ -95,9 +95,12 @@ card cannot differ. Order: `hartwick.*` → the old site's `custom.*` /
 
 Each is marked on screen and publishes from the field named.
 
-1. **Style names are the legacy names** (TOKYO BLOUSE, AMMAN SHIRT, BOMBAY
-   TROUSERS…) until `hartwick.style` is linked — interim, per her note that
-   the naming is being re-edited. The 54 `style` records exist; none is linked.
+1. ~~**Style names are the legacy names** (TOKYO BLOUSE, AMMAN SHIRT, BOMBAY
+   TROUSERS…) until `hartwick.style` is linked — interim.~~ **Settled 21 Sep
+   2026:** Aloha returned to the original names as the customer-facing names,
+   with the Expression beneath; the codes (Skirt 001) are internal. The
+   `style` records carry the location name as `display_name` and the code as
+   `code`; every apparel product is linked. See `docs/product-copy-2026-09-21.md`.
 2. **Provenance:** Origin, Ratio, Master and Place read `[Confirm]` on every
    stage, and every classification carries "/ Unverified" until
    `provenance_verified_on` is set. Construction has no source at all.

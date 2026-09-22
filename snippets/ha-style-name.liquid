@@ -5,10 +5,13 @@
   consistent colour code for Clothing numbering across the website, including
   the Collection Index, clothing listings and individual product pages."
 
-      {% render 'ha-style-name', name: 'Skirt 001' %}
-      -> Skirt <span class="ha-num">001</span>
+      {% render 'ha-style-name', name: 'Shayla 03' %}
+      -> Shayla <span class="ha-num">03</span>
 
-  A name with no trailing number (a legacy title, an accessory) prints as is.
+  A name with no trailing number prints as is — which, since 21 September
+  2026 (Aloha: the location names are the customer-facing names, the codes
+  internal), is every apparel piece: Tribeca Skirt, Amman Shirt. The number
+  treatment now reaches only the fine-silk pieces, whose code is their name.
 {%- endcomment -%}
 {%- assign parts = name | strip | split: ' ' -%}
 {%- assign tail = parts | last -%}

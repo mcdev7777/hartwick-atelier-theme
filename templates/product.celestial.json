@@ -310,7 +310,7 @@
         "b1": {
           "type": "piece",
           "settings": {
-            "ph_name": "Skirt 001",
+            "ph_name": "Calcutta Skirt",
             "ph_expression": "Tiny Pinstripe Cotton Khadi",
             "ph_image_label": "Product / on body",
             "product": "calcutta-skirt-and-top-set-handwoven-blue-stripe-border"
@@ -319,7 +319,7 @@
         "b2": {
           "type": "piece",
           "settings": {
-            "ph_name": "Trouser 001",
+            "ph_name": "Bombay Trousers",
             "ph_expression": "Celeste Handwoven Ikat",
             "ph_image_label": "Product / on body",
             "product": "bombay-trousers-handwoven-ikat"
