@@ -1,0 +1,136 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — HOMEPAGE 03 / THREE EDITORIAL STORIES.
+  Aloha's Hartwick_Homepage_Editorial artboard, 19 September 2026, §03:
+
+      "The three images and ruled caption structures answer what we do, why we
+       do it and how we work. Link to Collection Index, The Masters and the
+       approved About destination. If About is not live, keep that final story
+       as text until its destination exists."
+
+  A centred eyebrow and an uppercase Junicode heading with a hairline either
+  side, then three columns. Each column is a photograph set as a print (a
+  narrow mat and a soft shadow), a rule, its number in the record voice, an
+  italic title, a short paragraph, and a ruled link — the text held between
+  two hairlines, which brighten together on hover and focus (Ivan, 18
+  September: the line is the hover; never an underline as well).
+
+  A block with no link text renders its story without a link, which is the
+  "keep that final story as text" case. About is live at
+  /pages/about-the-atelier, so the default links it.
+
+  §07: a print marked monochrome is greyscaled in CSS and shows its colour on
+  hover and keyboard focus. On touch there is no hover, so the print stays
+  as the file was supplied.
+
+  Aloha, 21 September 2026: the three prints arrived as cut-outs already on
+  their paper mats with a transparent surround. A block marked "carries its
+  own mat" gets no mat from the theme; the file is shown whole.
+{%- endcomment -%}
+
+<section class="ha-home ha-home-stories">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — proposed copy for Aloha to confirm before launch.' -%}
+
+    <header class="ha-home-stories__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <div class="ha-home-stories__title-row">
+          <span class="ha-home-stories__rule" aria-hidden="true"></span>
+          <h2 class="ha-home-stories__title ha-narrate">{{ section.settings.heading }}</h2>
+          <span class="ha-home-stories__rule" aria-hidden="true"></span>
+        </div>
+      {%- endif -%}
+    </header>
+
+    <ol class="ha-home-stories__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign num = forloop.index | prepend: '0' | slice: -2, 2
+          assign has_link = false
+          if block.settings.link_text != blank and block.settings.link_url != blank
+            assign has_link = true
+          endif
+        -%}
+        <li class="ha-home-story{% if block.settings.mono %} ha-home-story--mono{% endif %}" {{ block.shopify_attributes }}>
+          {%- if has_link -%}
+            <a class="ha-home-story__print ha-home__print{% if block.settings.own_mat %} ha-home__print--own-mat{% endif %}" href="{{ block.settings.link_url }}" tabindex="-1" aria-hidden="true">
+          {%- else -%}
+            <div class="ha-home-story__print ha-home__print{% if block.settings.own_mat %} ha-home__print--own-mat{% endif %}">
+          {%- endif -%}
+              {%- if block.settings.image -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 26vw, (min-width: 750px) 30vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: block.settings.alt, class: 'ha-home-story__img'
+                }}
+              {%- else -%}
+                <span class="ha-figure ha-figure--empty ha-home-story__empty"><span class="ha-figure__label ha-record">{{ num }} / Photograph</span></span>
+              {%- endif -%}
+          {%- if has_link -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+
+          <div class="ha-home-story__text">
+            <p class="ha-home-story__num ha-record">{{ num }}</p>
+            {%- if block.settings.title != blank -%}
+              <h3 class="ha-home-story__title ha-narrate">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="ha-home-story__body ha-home__prose ha-narrate">{{ block.settings.body }}</div>
+            {%- endif -%}
+            {%- if has_link -%}
+              <a class="ha-home__ruled ha-record" href="{{ block.settings.link_url }}">{{ block.settings.link_text }}</a>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Home: Three stories",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About the Atelier" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What we make. Why it matters." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Story",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photograph" },
+        { "type": "text", "id": "alt", "label": "Alt text" },
+        { "type": "checkbox", "id": "own_mat", "label": "Print carries its own paper mat", "info": "For a cut-out supplied on its mat with a transparent surround. The theme then draws no mat of its own.", "default": false },
+        { "type": "checkbox", "id": "mono", "label": "Show in monochrome, colour on hover", "default": true },
+        { "type": "text", "id": "title", "label": "Title", "default": "Cloth, considered." },
+        { "type": "richtext", "id": "body", "label": "Text" },
+        { "type": "text", "id": "link_text", "label": "Link text", "info": "Leave empty to keep the story as text until its destination exists." },
+        { "type": "url", "id": "link_url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Home: Three stories",
+      "blocks": [
+        { "type": "story", "settings": { "title": "Cloth, considered.", "body": "<p>Apparel, silk scarves, fine jewellery and yoga mats. A collection shaped by material, purpose and the hand that makes it.</p>", "link_text": "Explore the Collection", "link_url": "/collections", "mono": true } },
+        { "type": "story", "settings": { "title": "Knowledge, kept in use.", "body": "<p>A technique continues through the people who practise it. We want the work and the knowledge behind it to be seen.</p>", "link_text": "Enter the Masters", "link_url": "/pages/the-masters", "mono": true } },
+        { "type": "story", "settings": { "title": "Small Lots. Close attention.", "body": "<p>We work with independent makers through considered production. Each Lot records a shared period of making.</p>", "link_text": "About the Atelier", "link_url": "/pages/about-the-atelier", "mono": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

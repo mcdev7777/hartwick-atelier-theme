@@ -1,0 +1,171 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — HOMEPAGE 01 / THE NEW OPENING.
+  Aloha's Hartwick_Homepage_Editorial artboard, 19 September 2026, §01:
+
+      "Two independent image frames pair a detail with a full silhouette from
+       the same Hartwick outfit. Both can lead to All Clothing. Keep the
+       photographs colour as shown; replace the image pair together when the
+       campaign changes."
+
+  Two frames side by side, each its own picker, each its own link. The left
+  frame carries the house line (eyebrow + headline) in light type over the
+  photograph; the right carries the destination label and a record-voice link
+  in dark type. Which ink each frame uses is a setting, because the next
+  campaign pair may be lit the other way round.
+
+  The headline and the link are real DOM text, not part of the picture —
+  §10 asks for live HTML headings — so search engines and screen readers get
+  them, and the campaign copy can change without a re-export.
+
+  Only the LEFT image is preloaded (§10: "preload only the main hero image");
+  it is the largest contentful paint. The right frame loads eagerly but
+  without the preload hint.
+
+  Phones (§08): "keep the two hero images as a compact diptych if crops remain
+  readable; otherwise stack detail then silhouette." At 375px two frames are
+  187px wide and the headline would break four times over the rail, so the
+  default stacks them; the setting keeps the diptych for a pair whose crops
+  can take it.
+
+  The artboard binds the two frames with chrome rings on the seam — the
+  scrapbook conceit from the landing page. They are drawn as SVG
+  (snippets/ha-home-rings.liquid) rather than cut from the artboard, so they
+  sit on the seam at any size and turn with it when the frames stack.
+
+  Ivan, 20 September 2026: both frames carry light type, and the photographs
+  are dimmed so the type reads. The dimming is one setting for the pair.
+
+  Aloha, 21 September 2026: the pair now comes from her photograph of the
+  two bound prints (IMG_6402) rather than the artboard cut-outs — each print
+  turned upright and cut to the artboard's framing, the real rings left out
+  because the SVG rings take their place on the seam.
+{%- endcomment -%}
+
+{%- liquid
+  assign left_url = section.settings.left_link | default: section.settings.right_link | default: '/collections/apparel'
+  assign right_url = section.settings.right_link | default: '/collections/apparel'
+-%}
+
+<section
+  class="ha-home ha-home-hero ha-home-hero--phone-{{ section.settings.phone_layout }}"
+  style="--ha-home-hero-h: {{ section.settings.height }}vh; --ha-home-hero-dim: {{ section.settings.dim | divided_by: 100.0 }};"
+  aria-label="{{ section.settings.aria_label | escape }}"
+>
+  {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — campaign pair from Aloha's photograph of the bound prints; the pair is replaced together when the campaign changes." -%}
+
+  <div class="ha-home-hero__frames{% if section.settings.show_rings %} ha-home-hero__frames--bound{% endif %}">
+
+    {%- comment -%} LEFT — the house line {%- endcomment -%}
+    <a class="ha-home-hero__frame ha-home-hero__frame--left ha-home-hero__frame--ink-{{ section.settings.left_ink }}" href="{{ left_url }}">
+      <div class="ha-home-hero__media">
+        {%- if section.settings.left_image -%}
+          {{
+            section.settings.left_image
+            | image_url: width: 2400
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              preload: true,
+              sizes: '(min-width: 750px) 49vw, 100vw',
+              widths: '400, 600, 800, 1000, 1200, 1600, 2000, 2400',
+              alt: section.settings.left_alt,
+              class: 'ha-home-hero__img'
+          }}
+        {%- else -%}
+          <div class="ha-figure ha-figure--empty ha-home-hero__empty"><span class="ha-figure__label ha-record">01 / Campaign image</span></div>
+        {%- endif -%}
+      </div>
+      <div class="ha-home-hero__text">
+        {%- if section.settings.left_eyebrow != blank -%}
+          <span class="ha-home-hero__eyebrow ha-identify">{{ section.settings.left_eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.left_heading != blank -%}
+          <h1 class="ha-home-hero__heading ha-narrate">{{ section.settings.left_heading }}</h1>
+        {%- endif -%}
+      </div>
+    </a>
+
+    {%- comment -%} RIGHT — the destination {%- endcomment -%}
+    <a class="ha-home-hero__frame ha-home-hero__frame--right ha-home-hero__frame--ink-{{ section.settings.right_ink }}" href="{{ right_url }}">
+      <div class="ha-home-hero__media">
+        {%- if section.settings.right_image -%}
+          {{
+            section.settings.right_image
+            | image_url: width: 2400
+            | image_tag:
+              loading: 'eager',
+              sizes: '(min-width: 750px) 51vw, 100vw',
+              widths: '400, 600, 800, 1000, 1200, 1600, 2000, 2400',
+              alt: section.settings.right_alt,
+              class: 'ha-home-hero__img'
+          }}
+        {%- else -%}
+          <div class="ha-figure ha-figure--empty ha-home-hero__empty"><span class="ha-figure__label ha-record">02 / Campaign image</span></div>
+        {%- endif -%}
+      </div>
+      <div class="ha-home-hero__text">
+        {%- if section.settings.right_label != blank -%}
+          <span class="ha-home-hero__label ha-identify">{{ section.settings.right_label }}</span>
+        {%- endif -%}
+        {%- if section.settings.right_cta != blank -%}
+          <span class="ha-home-hero__cta ha-record">{{ section.settings.right_cta }}<span class="ha-home-hero__chev" aria-hidden="true"></span></span>
+        {%- endif -%}
+      </div>
+    </a>
+
+    {%- if section.settings.show_rings -%}
+      {%- render 'ha-home-rings' -%}
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Home: Opening",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "Two image frames. Replace the pair together when the campaign changes (Aloha, 19 September 2026)." },
+    { "type": "range", "id": "height", "min": 60, "max": 96, "step": 2, "unit": "vh", "label": "Height on desktop", "default": 84 },
+    {
+      "type": "select", "id": "phone_layout", "label": "On a phone", "default": "stack",
+      "options": [
+        { "value": "stack", "label": "Stack the two frames" },
+        { "value": "diptych", "label": "Keep them side by side" }
+      ]
+    },
+    { "type": "text", "id": "aria_label", "label": "Section label (screen readers)", "default": "Hartwick Atelier" },
+    { "type": "range", "id": "dim", "min": 0, "max": 60, "step": 5, "unit": "%", "label": "Dim the photographs", "default": 30, "info": "A wash of peat over both frames so light type reads (Ivan, 20 September 2026)." },
+    { "type": "checkbox", "id": "show_rings", "label": "Binder rings on the seam", "default": true },
+
+    { "type": "header", "content": "Left frame — the house line" },
+    { "type": "image_picker", "id": "left_image", "label": "Image" },
+    { "type": "text", "id": "left_alt", "label": "Alt text", "default": "A rail of Hartwick shirts and a striped bag hanging from a bamboo pole" },
+    { "type": "text", "id": "left_eyebrow", "label": "Eyebrow", "default": "Hartwick Atelier" },
+    { "type": "text", "id": "left_heading", "label": "Headline", "default": "Clothing carries memory." },
+    { "type": "url", "id": "left_link", "label": "Link", "info": "Empty: follows the right frame's link." },
+    {
+      "type": "select", "id": "left_ink", "label": "Type colour", "default": "light",
+      "options": [ { "value": "light", "label": "Light on the photograph" }, { "value": "dark", "label": "Dark on the photograph" } ]
+    },
+
+    { "type": "header", "content": "Right frame — the destination" },
+    { "type": "image_picker", "id": "right_image", "label": "Image" },
+    { "type": "text", "id": "right_alt", "label": "Alt text", "default": "Silver and gold bangles, earrings and studs laid out on a wooden tray" },
+    { "type": "text", "id": "right_label", "label": "Label", "default": "The Collection / Apparel" },
+    { "type": "text", "id": "right_cta", "label": "Link text", "default": "Explore all Apparel" },
+    { "type": "url", "id": "right_link", "label": "Link" },
+    {
+      "type": "select", "id": "right_ink", "label": "Type colour", "default": "light",
+      "options": [ { "value": "light", "label": "Light on the photograph" }, { "value": "dark", "label": "Dark on the photograph" } ]
+    },
+
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Home: Opening" }]
+}
+{% endschema %}

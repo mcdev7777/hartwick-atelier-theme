@@ -1,0 +1,84 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — HOMEPAGE 02 / FOUNDER NOTE & SIGNATURE.
+  Aloha's Hartwick_Homepage_Editorial artboard, 19 September 2026, §02:
+
+      "The note is proposed founder copy for Angela to approve. The cursive
+       angela hartwick signature is a temporary typeset design placeholder,
+       not her real signature. Replace its named layer with the original
+       Angela supplies on Monday before publishing."
+
+  Centred: a Porter eyebrow, one Junicode heading, the statement, then the
+  signature and a record-voice caption. The signature is an image slot; until
+  the real one is picked, the typeset placeholder is shown from assets/ (it
+  is not a real signature and must not go live), and the placeholder notice
+  says so. The moment an image is chosen the asset is never referenced.
+  The asset was cut from the artboard on 19 September; on 21 September Aloha
+  sent her own file for it ("fake signature.png", transparent) and that
+  replaced it — still a stand-in, by her own name for it.
+
+  The signature is decorative — the caption beneath already names her — so
+  its alt is empty and the caption is the accessible text.
+{%- endcomment -%}
+
+<section class="ha-home ha-home-note">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — proposed founder copy awaiting Angela; the signature is a typeset stand-in, not her real signature.' -%}
+
+    <div class="ha-home-note__inner">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="ha-home-note__body ha-home__lead ha-narrate">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.signature -%}
+        {{
+          section.settings.signature
+          | image_url: width: 900
+          | image_tag: loading: 'lazy', sizes: '320px', widths: '320, 640, 900', alt: '', class: 'ha-home-note__signature'
+        }}
+      {%- elsif section.settings.signature_asset != blank -%}
+        <img
+          class="ha-home-note__signature ha-home-note__signature--placeholder"
+          src="{{ section.settings.signature_asset | asset_url }}"
+          alt=""
+          width="900"
+          height="225"
+          loading="lazy"
+        >
+      {%- endif -%}
+
+      {%- if section.settings.caption != blank -%}
+        <p class="ha-home-note__caption ha-identify">{{ section.settings.caption }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Home: Founder note",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A note from Hartwick" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The work begins with people." },
+    { "type": "richtext", "id": "body", "label": "Statement", "default": "<p>I choose pieces for the way they are made and the people behind them. The cloth, the handwork and the small differences matter. Hartwick Atelier brings that work together, with time to understand where it comes from and how it can become part of everyday life.</p>" },
+    { "type": "header", "content": "Signature" },
+    { "type": "image_picker", "id": "signature", "label": "Signature (PNG with transparency)", "info": "Angela's own signature. Until it is picked, the typeset placeholder below is shown." },
+    { "type": "text", "id": "signature_asset", "label": "Placeholder file (theme asset)", "default": "ha-signature-placeholder.png", "info": "Typeset stand-in supplied by Aloha, not Angela's hand. Clear this once the real signature is in." },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Angela Hartwick / Founder" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Home: Founder note" }]
+}
+{% endschema %}

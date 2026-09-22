@@ -267,7 +267,7 @@
         "contact_tag": "Circle: Requested Access",
         "show_extra_fields": true,
         "label_interests": "I would like to hear about",
-        "consent_text": "<p><em>Placeholder consent line — wording to be confirmed with Christina before this page is published.</em></p>",
+        "consent_text": "<p>Yes, Hartwick Atelier may contact me about this request. I can withdraw at any time.</p>",
         "submit_text": "Send request",
         "success_text": "Thank you. Your request has been received.",
         "closed_text": "<p><em>The Circle is invitation-only. Placeholder — wording pending Aloha.</em></p>",

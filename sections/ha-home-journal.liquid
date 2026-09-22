@@ -1,0 +1,78 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — HOMEPAGE 07 / THE JOURNAL.
+  Aloha's Hartwick_Homepage_Editorial artboard, 19 September 2026, §09:
+
+      "The Journal invitation points to its approved landing page and does
+       not imply these are published articles."
+
+  A print on the left (the pattern-paper photograph, on a paper mat), the
+  invitation on the right: eyebrow, heading, one paragraph, a ruled link.
+  Nothing here lists articles — the store's only blog (news) has none — so
+  the section reads as an invitation to a place, not a feed.
+
+  Destination: the store has no page named Journal yet. The main menu's
+  JOURNAL entry still resolves to /pages/press (the old Press page) and The
+  Masters page's "Read the Journal" goes to /blogs/news. This section follows
+  The Masters page so the two agree; the setting takes the approved landing
+  page the moment Aloha names it. Flagged in docs/homepage-v2-build.md.
+{%- endcomment -%}
+
+<section class="ha-home ha-home-journal" aria-labelledby="ha-home-journal-title">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — proposed copy; the Journal’s landing page is not yet confirmed (linked to the blog for now).' -%}
+
+    <div class="ha-home-journal__grid">
+      <div class="ha-home-journal__media">
+        <div class="ha-home__print ha-home-journal__print">
+          {%- if section.settings.image -%}
+            {{
+              section.settings.image
+              | image_url: width: 1400
+              | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 30vw, 100vw', widths: '400, 600, 800, 1000, 1400', alt: section.settings.image_alt, class: 'ha-home-journal__img'
+            }}
+          {%- else -%}
+            <span class="ha-figure ha-figure--empty ha-home-journal__empty"><span class="ha-figure__label ha-record">Print / To supply</span></span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="ha-home-journal__text">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="ha-home-journal-title" class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="ha-home-journal__body ha-home__lead ha-narrate">{{ section.settings.body }}</div>
+        {%- endif -%}
+        {%- if section.settings.link_text != blank -%}
+          <a class="ha-home__ruled ha-record" href="{{ section.settings.link_url | default: '/blogs/news' }}">{{ section.settings.link_text }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Home: The Journal",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Journal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Notes on material and making." },
+    { "type": "richtext", "id": "body", "label": "Text", "default": "<p>A place for workshop visits, conversations and a closer look at the cloth. Follow the work as it develops.</p>" },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "Read the Journal" },
+    { "type": "url", "id": "link_url", "label": "Link", "info": "The Journal’s approved landing page. Empty: /blogs/news." },
+    { "type": "header", "content": "Print" },
+    { "type": "image_picker", "id": "image", "label": "Photograph" },
+    { "type": "text", "id": "image_alt", "label": "Alt text", "default": "Pattern pieces cut from brown paper, one labelled Angela" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Home: The Journal" }]
+}
+{% endschema %}

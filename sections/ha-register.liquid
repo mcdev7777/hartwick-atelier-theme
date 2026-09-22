@@ -32,7 +32,7 @@
   challenges server-side, so nothing is weakened.
 {%- endcomment -%}
 
-<section id="the-register" class="ha-section ha-section--dark ha-register">
+<section id="the-register" class="ha-section ha-section--dark ha-register ha-register--form-{{ section.settings.form_style | default: 'box' }}">
   <div class="ha-wrap">
     <div class="ha-register__grid">
       <div>
@@ -40,7 +40,7 @@
           <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="ha-display ha-narrate">{{ section.settings.heading }}</h2>
+          <h2 class="ha-display ha-narrate{% if section.settings.heading_style == 'caps' %} ha-register__heading--caps{% endif %}">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- comment -%}
           WHERE THE INVITATION COPY SITS.
@@ -119,6 +119,17 @@
                 {% endif %}
                 required
               >
+              {%- comment -%}
+                THE LINE FORM (Aloha's homepage artboard, 19 September 2026): the
+                label at the left, "Join The Register" at the right, one rule
+                under both. The button lives inside the ruled row here so the
+                rule can run beneath it; the boxed form keeps the button below.
+              {%- endcomment -%}
+              {%- if section.settings.form_style == 'line' -%}
+                <button type="submit" class="ha-register__submit ha-register__submit--inline ha-identify" name="commit">
+                  {{ 'newsletter.button_label' | t }}
+                </button>
+              {%- endif -%}
             </div>
 
             {%- comment -%}
@@ -138,9 +149,11 @@
               <span>{{ section.settings.consent_text }}</span>
             </label>
 
-            <button type="submit" class="ha-register__submit ha-identify" name="commit">
-              {{ 'newsletter.button_label' | t }}
-            </button>
+            {%- unless section.settings.form_style == 'line' -%}
+              <button type="submit" class="ha-register__submit ha-identify" name="commit">
+                {{ 'newsletter.button_label' | t }}
+              </button>
+            {%- endunless -%}
 
             {%- if form.errors -%}
               <p class="ha-register__message ha-record" id="HaRegister-error--{{ section.id }}" role="alert">
@@ -179,6 +192,15 @@
         { "value": "form", "label": "Above the email field (right)" }
       ]
     },
+    {
+      "type": "select", "id": "heading_style", "label": "Heading", "default": "sentence",
+      "options": [ { "value": "sentence", "label": "As written" }, { "value": "caps", "label": "Uppercase (homepage artboard)" } ]
+    },
+    {
+      "type": "select", "id": "form_style", "label": "Form", "default": "box",
+      "info": "Box: the bordered field with the button beneath (Ivan, 3 September). Line: label left, Join The Register right, one rule under both (homepage artboard, 19 September).",
+      "options": [ { "value": "box", "label": "Boxed field" }, { "value": "line", "label": "One rule, button on the line" } ]
+    },
     { "type": "checkbox", "id": "show_native_form", "label": "Show the form", "default": true, "info": "This form posts to Klaviyo. Switch off only if a Klaviyo app block is carrying the form instead — never both." },
     { "type": "text", "id": "contact_tag", "label": "Customer tag (no-JS fallback only)", "default": "the-register" },
     { "type": "header", "content": "Klaviyo" },
@@ -198,8 +220,8 @@
     },
     {
       "type": "richtext", "id": "consent_text", "label": "Consent line",
-      "default": "<p>[PLACEHOLDER — wording from Christina] Yes, add me to The Register. I can leave at any time.</p>",
-      "info": "Required to submit and never pre-ticked. The wording is a legal matter under CASL — Aloha to confirm with Christina."
+      "default": "<p>Yes, add me to The Register. Hartwick Atelier may write to me with The Dispatch and news of each Release. I can leave at any time.</p>",
+      "info": "Required to submit and never pre-ticked. Express consent under CASL: names the sender, says what will be sent, says it can be withdrawn. Christina may still refine the wording."
     },
     { "type": "header", "content": "Messages" },
     { "type": "text", "id": "msg_invalid", "label": "Invalid email", "default": "Please enter a valid email address." },

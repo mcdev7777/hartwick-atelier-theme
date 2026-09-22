@@ -4,9 +4,17 @@
   CLAUDE.md: anything unverified ships as a clearly labelled placeholder in the
   unpublished theme. This renders that label. Every section that can carry
   placeholder copy has a checkbox to switch it off once real content is in.
+
+  Ivan, 20 September 2026: "remove all these kind of placeholder texts in all
+  pages." The notices are now gated on ONE theme setting — Theme settings >
+  Hartwick — Material Archive > "Show provisional-content notices" — which is
+  off. Every section's own checkbox still exists and still applies when the
+  global switch is on, so the review markers can come back in one click
+  without re-ticking 37 sections. The record of what is provisional lives in
+  the build notes under docs/, not on the page.
 {%- endcomment -%}
 
-{%- if show -%}
+{%- if show and settings.ha_placeholder_notes -%}
   <p class="ha-placeholder-note ha-record">
     {{ text | default: 'Placeholder content — wireframe copy, not approved for publication' }}
   </p>

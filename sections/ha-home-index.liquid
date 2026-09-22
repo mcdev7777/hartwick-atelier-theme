@@ -1,0 +1,209 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+<script src="{{ 'ha-home-pair.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  Hartwick Atelier — HOMEPAGE 04 / COLLECTION INDEX FEATURE.
+  Aloha's Hartwick_Homepage_Editorial artboard, 19 September 2026, §04–05:
+
+      "Retains the original left-hand ruled index and asymmetrical image
+       collage. Replaces legacy mock product names with the four current
+       collections. Hover or keyboard focus selects a category and its
+       matching montage; click follows the category destination. Current
+       artwork shows the Clothing montage. Supply verified Silk, Jewellery
+       and Yoga image sets for their states."
+
+      "Clothing leads to All Clothing. Fine Silk leads to the silk scarves
+       listing. Fine Jewellery leads to its collection landing page. Yoga
+       leads to the single yoga mat product with swatches. Use confirmed
+       production URLs rather than inventing links. The full-index call to
+       action leads to Collection Index."
+
+  Left: eyebrow, heading, one line of prose, then four ruled rows — each a
+  real link to its range page — the Porter corner-link to the complete Index,
+  and a closing line about Lots. Right: the montage for the selected row.
+  One montage per Category block: a tall frame, two small frames, one wide,
+  measured off the artboard (332 × 602, 236 × 276, 540 × 400). Every frame is
+  itself a link to the category, so keyboard focus reaches the photographs
+  and §07's colour-on-hover works from the keyboard too.
+
+  Which row is selected is decided by assets/ha-home-pair.js — hover for a
+  mouse, focus for a keyboard, and nothing at all for a finger, which just
+  follows the link. A Category with no images falls back to the first
+  block's montage rather than a blank panel.
+
+  Terminology: the range formerly labelled Clothing is Apparel (Aloha, 18
+  September 2026). The artboard's "01 / CLOTHING" captions read
+  "01 / Apparel" here. Framework v3 outranks the artboard on labels.
+
+  Destinations, confirmed on the store on 19 September 2026:
+    /collections/apparel · /collections/fine-silk · /collections/fine-jewellery
+    /collections/yoga — the yoga range page. No yoga-mat product exists on
+    the store yet, so the "single yoga mat product with swatches" the
+    artboard names cannot be linked; the range page is the confirmed URL.
+    /collections — the Collection Index.
+{%- endcomment -%}
+
+{%- liquid
+  assign first_key = ''
+  for block in section.blocks
+    if forloop.first
+      assign first_key = block.id
+    endif
+  endfor
+-%}
+
+<section class="ha-home ha-home-index" aria-labelledby="ha-home-index-title">
+  <div class="ha-wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — the Apparel montage is the artboard’s; the Fine Silk, Fine Jewellery and Yoga sets are provisional picks from existing Hartwick photography until Aloha supplies theirs.' -%}
+
+    <ha-pair class="ha-home-index__grid" data-pair-active="{{ first_key }}">
+
+      <div class="ha-home-index__rail">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="ha-home-index-title" class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subline != blank -%}
+          <div class="ha-home-index__subline ha-home__lead ha-narrate">{{ section.settings.subline }}</div>
+        {%- endif -%}
+
+        <ol class="ha-home-index__list" role="list">
+          {%- for block in section.blocks -%}
+            <li class="ha-home-index__row" {{ block.shopify_attributes }}>
+              <a class="ha-home-index__link ha-record" href="{{ block.settings.url | default: '#' }}" data-pair-for="{{ block.id }}">
+                <span class="ha-home-index__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="ha-home-index__name">{{ block.settings.name }}</span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ol>
+
+        <div class="ha-home-index__foot">
+          {%- if section.settings.cta_text != blank -%}
+            <a class="ha-home__corner ha-identify" href="{{ section.settings.cta_link | default: '/collections' }}">{{ section.settings.cta_text }}<span class="ha-home__corner-mark" aria-hidden="true"></span></a>
+          {%- endif -%}
+          {%- if section.settings.note != blank -%}
+            <div class="ha-home-index__note ha-home__lead ha-narrate">{{ section.settings.note }}</div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="ha-home-index__panels">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign cat = block.settings.name
+            assign url = block.settings.url | default: '#'
+            assign label = block.settings.caption_label | default: cat
+          -%}
+          <div
+            class="ha-home-index__montage"
+            data-pair-panel="{{ block.id }}"
+            {% if forloop.first %}data-pair-default{% else %}hidden{% endif %}
+          >
+            {%- comment -%} 01 — tall {%- endcomment -%}
+            <a class="ha-home-index__frame ha-home-index__frame--tall" href="{{ url }}" aria-label="{{ cat | escape }}">
+              <span class="ha-home-index__figure">
+                {%- if block.settings.image_tall -%}
+                  {{ block.settings.image_tall | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 24vw, (min-width: 750px) 40vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: block.settings.alt_tall, class: 'ha-home-index__img' }}
+                {%- else -%}
+                  <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">01 / To supply</span></span>
+                {%- endif -%}
+              </span>
+              <span class="ha-home-index__caption ha-record">01 / {{ label }}</span>
+            </a>
+
+            <div class="ha-home-index__right">
+              {%- comment -%} 04 and 03 — the two small frames, captions set vertically beside them {%- endcomment -%}
+              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--a" href="{{ url }}" aria-label="{{ cat | escape }}">
+                <span class="ha-home-index__figure">
+                  {%- if block.settings.image_small_a -%}
+                    {{ block.settings.image_small_a | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: block.settings.alt_small_a, class: 'ha-home-index__img' }}
+                  {%- else -%}
+                    <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">04 / To supply</span></span>
+                  {%- endif -%}
+                </span>
+                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-record">04 / {{ label }}</span>
+              </a>
+
+              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--b" href="{{ url }}" aria-label="{{ cat | escape }}">
+                <span class="ha-home-index__figure">
+                  {%- if block.settings.image_small_b -%}
+                    {{ block.settings.image_small_b | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: block.settings.alt_small_b, class: 'ha-home-index__img' }}
+                  {%- else -%}
+                    <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">03 / To supply</span></span>
+                  {%- endif -%}
+                </span>
+                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-home-index__caption--after ha-record">03 / {{ label }}</span>
+              </a>
+
+              {%- comment -%} 02 — wide {%- endcomment -%}
+              <a class="ha-home-index__frame ha-home-index__frame--wide" href="{{ url }}" aria-label="{{ cat | escape }}">
+                <span class="ha-home-index__figure">
+                  {%- if block.settings.image_wide -%}
+                    {{ block.settings.image_wide | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 38vw, (min-width: 750px) 60vw, 100vw', widths: '400, 600, 800, 1000, 1200, 1600', alt: block.settings.alt_wide, class: 'ha-home-index__img' }}
+                  {%- else -%}
+                    <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">02 / To supply</span></span>
+                  {%- endif -%}
+                </span>
+                <span class="ha-home-index__caption ha-record">02 / {{ label }}</span>
+              </a>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+    </ha-pair>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Home: Index",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Collection Index" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Four collections." },
+    { "type": "richtext", "id": "subline", "label": "Line under the heading", "default": "<p>Find your way by material, form and use.</p>" },
+    { "type": "text", "id": "cta_text", "label": "Index link text", "default": "Explore the complete Index" },
+    { "type": "url", "id": "cta_link", "label": "Index link", "info": "The Collection Index, /collections." },
+    { "type": "richtext", "id": "note", "label": "Closing line", "default": "<p>Each piece belongs to a Lot, a record of its making.</p>" },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Apparel" },
+        { "type": "url", "id": "url", "label": "Destination", "info": "The confirmed range page — never an invented link." },
+        { "type": "text", "id": "caption_label", "label": "Caption label", "info": "Printed after the frame number, e.g. 01 / Apparel. Empty: the name." },
+        { "type": "header", "content": "Montage — four frames" },
+        { "type": "image_picker", "id": "image_tall", "label": "01 / Tall" },
+        { "type": "text", "id": "alt_tall", "label": "01 alt text" },
+        { "type": "image_picker", "id": "image_small_a", "label": "04 / Small, left" },
+        { "type": "text", "id": "alt_small_a", "label": "04 alt text" },
+        { "type": "image_picker", "id": "image_small_b", "label": "03 / Small, right" },
+        { "type": "text", "id": "alt_small_b", "label": "03 alt text" },
+        { "type": "image_picker", "id": "image_wide", "label": "02 / Wide" },
+        { "type": "text", "id": "alt_wide", "label": "02 alt text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Home: Index",
+      "blocks": [
+        { "type": "category", "settings": { "name": "Apparel", "url": "/collections/apparel" } },
+        { "type": "category", "settings": { "name": "Fine Silk", "url": "/collections/fine-silk" } },
+        { "type": "category", "settings": { "name": "Fine Jewellery", "url": "/collections/fine-jewellery" } },
+        { "type": "category", "settings": { "name": "Yoga", "url": "/collections/yoga" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

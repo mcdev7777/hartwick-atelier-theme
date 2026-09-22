@@ -4071,6 +4071,13 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-pdp__details { margin: 1.2rem 0 0; padding-left: 1.6rem; }
 .ha-pdp__details li { margin: 0 0 0.4rem; }
 .ha-pdp__details li::marker { color: var(--ha-text-quiet); }
+/* The Description row is a bullet list from 21 September (Aloha's sheet,
+   column O) — hartwick.construction_details as a rich-text list, which
+   metafield_tag prints as <ul>. Same quiet marker as the old DETAILS list. */
+.ha-pdp__row-body ul, .ha-pdp__row-body ol { margin: 0 0 1rem; padding-left: 1.6rem; }
+.ha-pdp__row-body li { margin: 0 0 0.4rem; }
+.ha-pdp__row-body li::marker { color: var(--ha-text-quiet); }
+.ha-pdp__row-body > :last-child, .ha-pdp__row-body .metafield-rich_text_field > :last-child { margin-bottom: 0; }
 .ha-policy-body table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: var(--ha-t-meta); }
 .ha-policy-body th, .ha-policy-body td { text-align: left; padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--ha-rule); vertical-align: top; font-weight: 300; }
 .ha-policy-body + .ha-policy-body { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--ha-rule); }
@@ -5055,7 +5062,9 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* --- from the archive: the wide film, then The work continues ------------- */
 .ha-mst__feature { border-bottom: 1px solid var(--ha-rule); }
 .ha-mst__continue { border-bottom: 0; }
-.ha-mst__continue-grid { display: grid; gap: 2.4rem; padding-bottom: 0; }
+/* The foot of the page. Its bottom air used to come from the notice wrap
+   beneath it; with the notices off (20 September) the grid carries it. */
+.ha-mst__continue-grid { display: grid; gap: 2.4rem; padding-bottom: var(--ha-section-y); }
 .ha-mst__continue-grid > * { min-width: 0; }
 .ha-mst__continue-heading { margin: 0; font-size: calc(var(--ha-t-editorial) * 0.8); line-height: 1.15; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; color: var(--ha-mst-ink); }
 .ha-mst__continue-figure { margin: 0; width: 12.8rem; aspect-ratio: 1 / 1; overflow: hidden; }
@@ -5109,3 +5118,323 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   .ha-cfeature__body, .ha-crequest__body, .ha-crequest__closed,
   .ha-provenance__note-body, .ha-cloth__statement { max-width: none; }
 }
+
+/* ==========================================================================
+   HOMEPAGE — Aloha's Hartwick_Homepage_Editorial artboard, 19 September 2026.
+   Seven sections (ha-home-hero, -note, -stories, -index, -lots, -masters,
+   -journal) and two additions to The Register. Measured off the artboard's
+   1440 grid: page gutter 50; section headings Junicode Light 44 (1.375× the
+   editorial token); lead paragraphs 24/30 (the statement token, as the
+   Collection Index uses it); story copy 20/26 (1.2× body); eyebrows Porter
+   10 → held at the 12px floor; ruled and corner links 10 → 12. Every size is
+   a multiple of a token so Theme settings > Type scale still moves the page.
+   ========================================================================== */
+
+/* --- shared ------------------------------------------------------------- */
+.ha-home { background: var(--ha-page-ground); color: var(--ha-text); border-bottom: 1px solid var(--ha-rule); }
+/* The artboard sits its sections 60–70px apart; the site's 88 was drawn for
+   the product page's air, so this page takes four-fifths of it. */
+.ha-home > .ha-wrap { padding-top: calc(var(--ha-section-y) * 0.8); padding-bottom: calc(var(--ha-section-y) * 0.8); }
+.ha-home .ha-placeholder-note { margin-top: 0; }
+
+.ha-home__eyebrow { margin: 0 0 2rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; }
+.ha-home__heading { margin: 0; font-size: calc(var(--ha-t-editorial) * 1.375); line-height: 1.1; font-weight: 300; letter-spacing: 0; }
+.ha-home__lead { font-size: calc(var(--ha-t-statement) * 1.05); line-height: 1.32; font-weight: 300; }
+.ha-home__lead p { margin: 0 0 0.6em; }
+.ha-home__lead p:last-child { margin-bottom: 0; }
+.ha-home__prose { font-size: calc(var(--ha-t-body) * 1.2); line-height: 1.45; font-weight: 300; }
+.ha-home__prose p { margin: 0 0 0.8em; }
+.ha-home__prose p:last-child { margin-bottom: 0; }
+
+/* A ruled link: the record voice held between two hairlines. Both rules
+   brighten together on hover and focus and the text is never underlined
+   (Ivan, 18 September: the line is the hover). */
+.ha-home__ruled { display: inline-block; min-width: 22rem; padding: 1.5rem 0 1.4rem; border-top: 1px solid var(--ha-rule); border-bottom: 1px solid var(--ha-rule); font-size: var(--ha-t-ui); letter-spacing: var(--ha-track-ui); color: inherit; text-decoration: none; transition: border-color 160ms ease; }
+.ha-home__ruled:hover, .ha-home__ruled:focus-visible { border-color: currentColor; text-decoration: none; }
+.ha-home__ruled:focus-visible { outline-offset: 6px; }
+
+/* A corner link: Porter, with the ┐ mark The Masters page draws. No rule of
+   its own, so it keeps an underline for hover and focus. */
+.ha-home__corner { display: inline-flex; align-items: center; gap: 1.2rem; min-height: 44px; white-space: nowrap; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; color: inherit; text-decoration: none; }
+.ha-home__corner-mark { display: inline-block; width: 0.8rem; height: 0.8rem; border-top: 1px solid currentColor; border-right: 1px solid currentColor; }
+.ha-home__corner:hover, .ha-home__corner:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
+
+/* A print: the photograph on a narrow paper mat with a soft shadow, as the
+   artboard sets every still on this page. */
+.ha-home__print { display: block; position: relative; padding: 1rem; background: rgba(255, 255, 255, 0.9); box-shadow: 0 1px 2px rgba(11, 6, 3, 0.06), 0 10px 28px rgba(11, 6, 3, 0.07); }
+.ha-home__print img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ha-home__print .ha-figure--empty { display: grid; place-items: center; }
+/* A print supplied on its own mat (Aloha's cut-outs, 21 September): the
+   paper, its shadow and a transparent surround are in the file, so the
+   theme draws no mat and the whole cut-out sits in the frame, ground
+   showing through. */
+.ha-home__print--own-mat { padding: 0; background: none; box-shadow: none; }
+.ha-home__print--own-mat img { object-fit: contain; }
+
+@media screen and (min-width: 990px) {
+  .ha-home__eyebrow { margin-bottom: 2.4rem; }
+}
+/* Between the desktop switch and 1200 the columns are the artboard's shape
+   at three-quarters of its width; the headings take a step down so "Four
+   collections." and "A record of the making." hold one line. */
+@media screen and (min-width: 990px) and (max-width: 1199px) {
+  .ha-home__heading { font-size: calc(var(--ha-t-editorial) * 1.2); }
+  .ha-home-masters .ha-home__heading { font-size: calc(var(--ha-t-editorial) * 1.1); }
+}
+
+/* --- 01  The opening ----------------------------------------------------- */
+.ha-home-hero { border-bottom: 0; }
+.ha-home-hero > .ha-placeholder-note { margin: 1.6rem var(--ha-gutter); }
+.ha-home-hero__frames { display: grid; }
+.ha-home-hero__frame { position: relative; display: block; overflow: hidden; aspect-ratio: 1 / 1; color: inherit; text-decoration: none; background: var(--ha-placeholder-field); }
+.ha-home-hero__media { position: absolute; inset: 0; }
+.ha-home-hero__img, .ha-home-hero__empty { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Ivan, 20 September 2026: the type is light on both frames and the
+   photographs are dimmed so it reads — a wash of peat across the whole frame
+   (the section's Dim setting) and a foot of shade beneath the type.
+   Two classes on the ink rules: Luxe's a:not(.button) { color: inherit }
+   outranks one. */
+.ha-home-hero__media::before { content: ""; position: absolute; inset: 0; background: rgba(11, 6, 3, var(--ha-home-hero-dim, 0.3)); z-index: 1; }
+/* …and :visited as well: Luxe's a:not(.button):visited { color: inherit }
+   is (0,2,1), so once the Apparel page has been seen the frames fell back to
+   the page's dark ink. Ivan, 20 September: "these texts must be white." */
+.ha-home-hero .ha-home-hero__frame--ink-light,
+.ha-home-hero .ha-home-hero__frame--ink-light:visited,
+.ha-home-hero .ha-home-hero__frame--ink-light:hover { color: var(--ha-text-invert); }
+.ha-home-hero__frame--ink-light .ha-home-hero__media::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 50%; background: linear-gradient(to top, rgba(11, 6, 3, 0.5), rgba(11, 6, 3, 0)); z-index: 1; }
+.ha-home-hero__text { z-index: 2; }
+/* The seam: a hairline of the dark field between the two pages, as the
+   artboard's binding shows, and the rings across it. */
+.ha-home-hero__frames--bound { position: relative; gap: 3px; background: var(--ha-field-dark); }
+.ha-home-hero__rings { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.ha-home-hero__ring { position: absolute; width: clamp(9rem, 9.2vw, 14rem); height: auto; left: 49%; transform: translateX(-50%); filter: drop-shadow(0 2px 3px rgba(11, 6, 3, 0.45)); }
+.ha-home-hero__ring--1 { top: 24%; }
+.ha-home-hero__ring--2 { top: 74%; }
+/* Stacked frames: the seam is horizontal, so the rings turn with it. */
+@media screen and (max-width: 749px) {
+  .ha-home-hero--phone-stack .ha-home-hero__ring { left: auto; top: 50%; transform: translate(-50%, -50%) rotate(90deg); width: clamp(8rem, 24vw, 10rem); }
+  .ha-home-hero--phone-stack .ha-home-hero__ring--1 { left: 25%; }
+  .ha-home-hero--phone-stack .ha-home-hero__ring--2 { left: 75%; }
+  /* The rings reach ~45px above the seam; the headline on the upper frame
+     steps up to clear them. */
+  .ha-home-hero--phone-stack .ha-home-hero__frames--bound .ha-home-hero__frame--left .ha-home-hero__text { bottom: 6.4rem; }
+}
+.ha-home-hero .ha-home-hero__frame--ink-dark,
+.ha-home-hero .ha-home-hero__frame--ink-dark:visited,
+.ha-home-hero .ha-home-hero__frame--ink-dark:hover { color: var(--ha-text); }
+.ha-home-hero__text { position: absolute; left: var(--ha-gutter); right: var(--ha-gutter); bottom: 2.8rem; display: grid; justify-items: start; gap: 1.2rem; }
+.ha-home-hero__eyebrow, .ha-home-hero__label { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; }
+.ha-home-hero__heading { margin: 0; font-size: var(--ha-t-editorial); line-height: 1.15; font-weight: 300; letter-spacing: 0; color: inherit; max-width: 16em; }
+.ha-home-hero__cta { display: inline-flex; align-items: center; gap: 1.2rem; font-size: var(--ha-t-ui); letter-spacing: var(--ha-track-ui); border-bottom: 1px solid transparent; padding-bottom: 0.3rem; transition: border-color 160ms ease; }
+.ha-home-hero__chev { display: inline-block; width: 0.6rem; height: 0.6rem; border-top: 1px solid currentColor; border-right: 1px solid currentColor; transform: rotate(45deg); }
+.ha-home-hero__frame:hover .ha-home-hero__cta, .ha-home-hero__frame:focus-visible .ha-home-hero__cta { border-bottom-color: currentColor; }
+.ha-home-hero__frame:focus-visible { outline: 2px solid var(--ha-text-invert); outline-offset: -6px; }
+.ha-home-hero__frame--ink-dark:focus-visible { outline-color: var(--ha-text); }
+
+@media screen and (max-width: 749px) {
+  .ha-home-hero--phone-diptych .ha-home-hero__frames { grid-template-columns: 1fr 1fr; }
+  .ha-home-hero--phone-diptych .ha-home-hero__frame { aspect-ratio: 3 / 4; }
+  .ha-home-hero--phone-diptych .ha-home-hero__text { left: 1.6rem; right: 1.6rem; bottom: 1.6rem; }
+  .ha-home-hero--phone-diptych .ha-home-hero__heading { font-size: var(--ha-t-statement); }
+}
+@media screen and (min-width: 750px) {
+  /* 697 : 726 on the artboard — the seam sits just left of centre. */
+  .ha-home-hero__frames { grid-template-columns: 49fr 51fr; }
+  .ha-home-hero__frame { aspect-ratio: auto; height: min(var(--ha-home-hero-h, 84vh), 54vw); min-height: 36rem; max-height: 96rem; }
+  /* 54vw: the artboard's 769 on 1440. A tablet held upright would otherwise
+     give two 376px frames 860px of height and crop both photographs to a
+     sliver of hangers. */
+  .ha-home-hero__text { left: clamp(2.4rem, 3.5vw, 5rem); right: clamp(2.4rem, 3.5vw, 5rem); bottom: clamp(2.8rem, 3.6vw, 5.2rem); }
+}
+
+/* --- 02  Founder note ---------------------------------------------------- */
+.ha-home-note { border-bottom: 0; text-align: center; }
+.ha-home-note__inner { display: grid; justify-items: center; max-width: 80rem; margin: 0 auto; }
+.ha-home-note__body { margin: 2.4rem auto 0; max-width: 34em; }
+.ha-home-note__signature { display: block; width: clamp(20rem, 24vw, 32rem); height: auto; margin: 3.2rem auto 0; }
+.ha-home-note__caption { margin: 2rem 0 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; }
+
+/* --- 03  Three stories --------------------------------------------------- */
+.ha-home-stories__head { text-align: center; }
+.ha-home-stories__title-row { display: flex; align-items: center; gap: 2.4rem; }
+.ha-home-stories__rule { flex: 1 1 0; border-top: 1px solid var(--ha-rule); }
+.ha-home-stories__title { margin: 0; font-size: var(--ha-t-editorial); text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; line-height: 1.15; }
+.ha-home-stories__grid { list-style: none; margin: 4rem 0 0; padding: 0; display: grid; gap: 4.8rem; }
+.ha-home-story { min-width: 0; display: flex; flex-direction: column; }
+.ha-home-story__text { display: flex; flex-direction: column; flex: 1 1 auto; }
+/* The ruled link closes every column on the same line, as the artboard draws
+   it, however long the copy above it runs. */
+.ha-home-story__text > .ha-home__ruled { margin-top: auto; align-self: flex-start; }
+.ha-home-story__print { width: 96%; margin: 0 auto; }
+.ha-home-story__img, .ha-home-story__empty { aspect-ratio: 4 / 5; }
+.ha-home-story__empty { display: grid; place-items: center; }
+.ha-home-story__text { margin-top: 1.6rem; border-top: 1px solid var(--ha-rule); padding-top: 1.6rem; }
+.ha-home-story__num { margin: 0 0 1.6rem; font-size: var(--ha-t-meta); letter-spacing: 0.04em; color: var(--ha-text-quiet); }
+.ha-home-story__title { margin: 0 0 1.2rem; font-style: italic; font-weight: 300; font-size: calc(var(--ha-t-statement) * 1.2); line-height: 1.2; }
+.ha-home-story__body { margin: 0 0 3.2rem; max-width: 36ch; }
+/* §07: a print marked monochrome shows its colour on hover and focus. */
+.ha-home-story--mono .ha-home-story__img { filter: grayscale(1); transition: filter 220ms ease; }
+.ha-home-story--mono:hover .ha-home-story__img, .ha-home-story--mono:focus-within .ha-home-story__img { filter: none; }
+@media (hover: none) { .ha-home-story--mono .ha-home-story__img { filter: none; } }
+@media screen and (min-width: 750px) {
+  .ha-home-stories__title-row { gap: 4rem; }
+  .ha-home-stories__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(3.2rem, 6.25vw, 9rem); margin-top: 4.8rem; }
+  .ha-home-story__body { margin-bottom: 4.8rem; }
+}
+
+/* --- 04  Collection Index feature --------------------------------------- */
+.ha-home-index__grid { display: grid; gap: 4rem; }
+.ha-home-index__subline { margin-top: 2rem; max-width: 20em; }
+.ha-home-index__list { list-style: none; margin: 3.2rem 0 0; padding: 0; }
+/* The four rows, 43px pitch on the artboard: mono uppercase on a hairline,
+   the hairline answering hover, focus and the pictured row. */
+.ha-home-index__link { display: grid; grid-template-columns: 4.4rem 1fr; align-items: baseline; padding: 1.3rem 0 1.2rem; min-height: 44px; border-bottom: 1px solid var(--ha-rule); color: inherit; text-decoration: none; font-size: calc(var(--ha-t-ui) * 1.15); letter-spacing: 0.1em; transition: border-color 160ms ease; }
+.ha-home-index__num { font-size: var(--ha-t-meta); letter-spacing: 0.04em; color: var(--ha-text-quiet); }
+.ha-home-index__link:hover, .ha-home-index__link:focus-visible, .ha-home-index__link.is-active { border-bottom-color: currentColor; }
+.ha-home-index__link.is-active .ha-home-index__num { color: var(--ha-text); }
+.ha-home-index__link:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 2px; }
+.ha-home-index__foot { margin-top: 4rem; display: grid; gap: 2.4rem; justify-items: start; }
+.ha-home-index__note { max-width: 20em; }
+
+.ha-home-index__panels { position: relative; min-width: 0; }
+.ha-home-index__montage { display: grid; gap: 2.4rem; }
+.ha-home-index__montage[hidden] { display: none; }
+.ha-home-index__frame { display: block; position: relative; color: inherit; text-decoration: none; min-width: 0; }
+.ha-home-index__figure { display: block; overflow: hidden; background: var(--ha-placeholder-field); }
+.ha-home-index__frame--tall .ha-home-index__figure { aspect-ratio: 332 / 602; }
+.ha-home-index__frame--small .ha-home-index__figure { aspect-ratio: 236 / 276; }
+.ha-home-index__frame--wide .ha-home-index__figure { aspect-ratio: 540 / 400; }
+.ha-home-index__img { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter 220ms ease; }
+.ha-home-index__empty { display: grid; place-items: center; height: 100%; }
+/* §07: colour on hover and keyboard focus; a finger sees the file as supplied. */
+.ha-home-index__frame:hover .ha-home-index__img, .ha-home-index__frame:focus-visible .ha-home-index__img { filter: none; }
+.ha-home-index__frame:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 3px; }
+.ha-home-index__caption { display: block; margin-top: 1.2rem; font-size: var(--ha-t-meta); letter-spacing: 0.04em; color: var(--ha-text-quiet); }
+.ha-home-index__right { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "a b" "w w"; gap: 2.4rem 1.8rem; align-content: start; }
+.ha-home-index__frame--a { grid-area: a; }
+.ha-home-index__frame--b { grid-area: b; }
+.ha-home-index__frame--wide { grid-area: w; }
+@media (hover: none) { .ha-home-index__img { filter: none; } }
+/* One column on a phone: the tall frame keeps a portrait proportion rather
+   than the artboard's 11:20, which at full width would run to 680px. */
+@media screen and (max-width: 749px) {
+  .ha-home-index__frame--tall .ha-home-index__figure { aspect-ratio: 4 / 5; }
+}
+@media screen and (min-width: 750px) {
+  .ha-home-index__montage { grid-template-columns: 332fr 540fr; column-gap: 2rem; align-items: start; }
+}
+@media screen and (min-width: 990px) {
+  /* Rail 306 wide from the gutter; montage from 480 to the far gutter. */
+  .ha-home-index__grid { grid-template-columns: 28rem minmax(0, 1fr); column-gap: 4.8rem; align-items: start; }
+  .ha-home-index__foot { margin-top: clamp(6.4rem, 10vw, 14rem); }
+}
+@media screen and (min-width: 1200px) {
+  /* The artboard's own proportions: rail 306, gap 124, and the two small
+     frames inset 60px so their captions can stand vertically beside them,
+     as drawn: 04 reads up the left of the first, 03 up the right of the
+     second, into the page gutter. Below 1200 the frames need the width
+     more than the captions need the gutter, so they sit beneath instead. */
+  .ha-home-index__grid { grid-template-columns: minmax(30.6rem, 1fr) minmax(0, 2.9fr); column-gap: clamp(4.8rem, 8.6vw, 12.4rem); }
+  /* 1 : 2.9 is the artboard's rail-to-montage ratio, so on a wide monitor the
+     rail grows with the page and the montage does not take three-quarters
+     of it (Aloha, 4 September: images support the page, never overwhelm it). */
+  .ha-home-index__right { grid-template-columns: 6rem 1fr 1fr; grid-template-areas: ". a b" "w w w"; }
+  .ha-home-index__caption--vertical { position: absolute; top: 0; bottom: 0; right: 100%; margin: 0 1.2rem 0 0; writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; justify-content: flex-start; white-space: nowrap; }
+  .ha-home-index__caption--after { right: auto; left: 100%; margin: 0 0 0 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ha-home-index__img, .ha-home-story__img, .ha-home__ruled, .ha-home-index__link, .ha-home-hero__cta { transition: none; }
+}
+
+/* --- 05  Made in Lots ---------------------------------------------------- */
+.ha-home-lots__grid { display: grid; gap: 4rem; }
+.ha-home-lots__body { margin: 2.4rem 0 3.2rem; max-width: 27em; }
+.ha-home-lots__print { max-width: 52rem; }
+.ha-home-lots__img, .ha-home-lots__empty { aspect-ratio: 4 / 3; }
+@media screen and (min-width: 750px) {
+  .ha-home-lots__grid { grid-template-columns: 1.35fr 1fr; column-gap: clamp(4rem, 8vw, 12rem); align-items: center; }
+  .ha-home-lots__media { justify-self: end; width: 100%; }
+  .ha-home-lots__print { margin-left: auto; }
+}
+
+/* --- 06  Masters Index feature (dark band, photograph behind) ----------- */
+.ha-home-masters { position: relative; isolation: isolate; border-bottom: 0; background: var(--ha-field-dark); color: var(--ha-text-invert); }
+.ha-home-masters__inner { display: block; position: relative; min-height: calc(100vw / var(--ha-home-masters-ratio, 2)); }
+.ha-home-masters__bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+/* Stacked layers: the resting image and one per technique. Only .is-active
+   is opaque; the pairing script moves the class on hover and focus. */
+.ha-home-masters__layer { position: absolute; inset: 0; opacity: 0; transition: opacity 360ms ease; }
+.ha-home-masters__layer.is-active { opacity: 1; }
+.ha-home-masters__img { width: 100%; height: 100%; object-fit: cover; object-position: var(--ha-home-masters-focal, 50% 50%); display: block; }
+.ha-home-masters--mono .ha-home-masters__img { filter: grayscale(1); }
+/* Peat rather than black, heavier at the left where the reading copy sits. */
+/* Luxe's base.css hides every empty <div> (div:empty { display: none }),
+   which is exactly what a scrim is; two classes outrank it. */
+.ha-home-masters__bg .ha-home-masters__scrim { display: block; }
+.ha-home-masters__scrim { position: absolute; inset: 0; background: linear-gradient(to right, rgba(11, 6, 3, calc(var(--ha-home-masters-scrim, 0.4) * 1.25)), rgba(11, 6, 3, calc(var(--ha-home-masters-scrim, 0.4) * 0.7))); }
+.ha-home-masters__grid { position: relative; z-index: 1; display: grid; gap: 3.2rem; }
+.ha-home-masters__lead, .ha-home-masters__directory, .ha-home-masters__aside { text-shadow: 0 1px 14px rgba(11, 6, 3, 0.45); }
+/* One line on the artboard: 40px against the page's 44. */
+.ha-home-masters .ha-home__heading { font-size: calc(var(--ha-t-editorial) * 1.25); }
+.ha-home-masters__eyebrow { margin: 0 0 2rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
+.ha-home-masters__subline { margin-top: 1.6rem; max-width: 24em; }
+.ha-home-masters__list-label { margin: 0 0 1.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.85; }
+.ha-home-masters__list { list-style: none; margin: 0; padding: 0; }
+/* The technique names are set in the record face at reading size, mixed
+   case as the artboard draws them (Khadi, Gota Patti, Banaras brocade are
+   names, not labels). No rule under these rows, so the underline is the
+   hover; the pictured row simply holds full ink. */
+.ha-home-masters__link { display: inline-block; font-family: var(--ha-font-record); font-weight: 400; text-transform: none; letter-spacing: 0.02em; font-size: clamp(1.6rem, 1.55vw, 2.2rem); line-height: 1.55; padding: 0.2rem 0; color: inherit; text-decoration: none; opacity: 0.86; }
+.ha-home-masters__link:hover, .ha-home-masters__link:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; opacity: 1; }
+.ha-home-masters__link.is-active { opacity: 1; }
+.ha-home-masters__link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.ha-home-masters .ha-home__corner { font-family: var(--ha-font-record); text-transform: uppercase; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
+@media screen and (min-width: 990px) {
+  .ha-home-masters__inner { min-height: min(calc(100vw / var(--ha-home-masters-ratio, 2)), 88vh); display: flex; align-items: center; }
+  .ha-home-masters__grid { width: 100%; grid-template-columns: 1.3fr 0.9fr auto; column-gap: clamp(3.2rem, 5vw, 7.2rem); align-items: start; }
+  .ha-home-masters__directory { padding-top: clamp(4rem, 7vw, 10rem); }
+  .ha-home-masters__aside { justify-self: end; padding-top: clamp(4rem, 7vw, 10rem); }
+}
+@media (prefers-reduced-motion: reduce) { .ha-home-masters__layer { transition: none; } }
+@media (prefers-contrast: more) { .ha-home-masters__scrim { background: rgba(11, 6, 3, 0.85); } }
+
+/* --- 07  The Journal ----------------------------------------------------- */
+.ha-home-journal__grid { display: grid; gap: 4rem; }
+.ha-home-journal__print { max-width: 42rem; }
+.ha-home-journal__img, .ha-home-journal__empty { aspect-ratio: 4 / 3; }
+.ha-home-journal__body { margin: 2.4rem 0 3.2rem; max-width: 26em; }
+@media screen and (min-width: 750px) {
+  .ha-home-journal__grid { grid-template-columns: 1fr 1.5fr; column-gap: clamp(4rem, 5vw, 7.2rem); align-items: center; }
+  /* The print stands 52px in from the gutter on the artboard. */
+  .ha-home-journal__media { padding-left: clamp(0rem, 3.6vw, 5.2rem); }
+}
+@media screen and (min-width: 990px) {
+  .ha-home-journal__grid { grid-template-columns: 450fr 890fr; }
+}
+
+/* --- 08  The Register, as the homepage artboard sets it ----------------- */
+.ha-register__heading--caps { text-transform: uppercase; letter-spacing: 0.02em; font-size: calc(var(--ha-t-editorial) * 1.15); }
+/* The line form: label left, Join The Register right, one rule under both.
+   The placeholder carries the label in Porter; the <label> stays for
+   assistive technology, visually hidden. Typed text is Junicode at 16px so
+   iOS does not zoom. Ivan's boxed field (3 September) is untouched — this
+   is a per-section choice. */
+.ha-register--form-line .ha-register__field { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 2.4rem; border: 0; border-bottom: 1px solid rgba(233, 243, 255, 0.55); padding: 0 0 0.6rem; margin: 0 0 1.6rem; transition: border-color 160ms ease; }
+.ha-register--form-line .ha-register__label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.ha-register--form-line .ha-register__input { padding: 1rem 0; min-height: 44px; }
+.ha-register--form-line .ha-register__input::placeholder { font-family: var(--ha-font-identify); text-transform: uppercase; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.9; }
+/* Text, not the solid block the boxed form draws (specificity over the
+   light-field flip at .ha-register:not(...) .ha-register__submit). */
+.ha-register.ha-register--form-line .ha-register__submit--inline { margin: 0; padding: 1rem 0; min-height: 44px; width: auto; display: inline-block; background: none; color: inherit; border: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; opacity: 1; }
+.ha-register.ha-register--form-line .ha-register__submit--inline:hover { opacity: 1; }
+.ha-register.ha-register--form-line .ha-register__input { min-height: 44px; padding: 1rem 0; }
+.ha-register.ha-register--form-line .ha-register__field { padding-top: 0; }
+.ha-register.ha-register--form-line .ha-register__field:focus-within { border-bottom-width: 1px; }
+.ha-register--form-line .ha-register__field:focus-within { outline: none; border-bottom-color: currentColor; }
+.ha-register--form-line .ha-register__submit--inline:hover { text-decoration: underline !important; text-underline-offset: 0.4rem; }
+.ha-register--form-line .ha-register__consent { opacity: 0.75; }
+@media screen and (min-width: 990px) {
+  /* The rule sits level with the heading's foot on the artboard. */
+  .ha-register--form-line .ha-register__aside { padding-top: 3.2rem; }
+}
+

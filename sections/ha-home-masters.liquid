@@ -1,0 +1,175 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+<script src="{{ 'ha-home-pair.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  Hartwick Atelier — HOMEPAGE 06 / MASTERS INDEX FEATURE.
+  Aloha's Hartwick_Homepage_Editorial artboard, 19 September 2026, §06:
+
+      "Retains the dark editorial directory, now paired with an archive image.
+       Until individual profiles exist, use verified technique names.
+       Hover/focus pairs each name with matching media; click opens that
+       technique on The Masters page. Printing is the displayed state. No
+       unverified Master names, locations or collection counts."
+
+  A full-width monochrome photograph from the Masters shoot (the charkha,
+  4R1A4525, cropped below the Master's face — faces are not published until
+  Angela confirms names and permission), with the directory over it: eyebrow,
+  heading and one line at the left; the technique list in the middle; the
+  corner-link to the collection at the right.
+
+  The list is the eleven techniques The Masters page already publishes, in
+  its order, each linking to its own entry (/pages/the-masters#khadi …), which
+  that page opens on arrival. The artboard's list — "Master Weaver ·
+  Rajasthan", "Dye House" and the rest — was the old homepage's placeholder
+  roles and carries a location, so §06 rules it out.
+
+  Hover or keyboard focus on a technique brings up its photograph behind the
+  directory (assets/ha-home-pair.js, fade mode); a technique with no
+  photograph keeps the resting image. A finger simply follows the link.
+  §07: the homepage does not autoplay films; the two carving films stay on
+  The Masters page.
+
+  Every photograph on this band is shown monochrome, as the artboard draws
+  it. The scrim is a setting: the artboard has none and its type disappears
+  into the white cloth at the top left, so the default carries a light one.
+{%- endcomment -%}
+
+{%- liquid
+  assign masters_url = section.settings.masters_page_url | default: '/pages/the-masters'
+  assign ratio = section.settings.bg_ratio | default: '1.5'
+-%}
+
+<section
+  class="ha-home ha-home-masters ha-section--dark{% if section.settings.mono %} ha-home-masters--mono{% endif %}"
+  style="--ha-home-masters-ratio: {{ ratio }}; --ha-home-masters-scrim: {{ section.settings.scrim | divided_by: 100.0 }}; --ha-home-masters-focal: {{ section.settings.bg_focus_x }}% {{ section.settings.bg_focus_y }}%;"
+  aria-labelledby="ha-home-masters-title"
+>
+  <ha-pair class="ha-home-masters__inner" data-pair-mode="fade" data-pair-active="resting">
+
+    <div class="ha-home-masters__bg" aria-hidden="true">
+      {%- comment -%} The resting image, and one layer per technique that has its own. {%- endcomment -%}
+      <div class="ha-home-masters__layer is-active" data-pair-panel="resting" data-pair-default>
+        {%- if section.settings.bg_image -%}
+          {{
+            section.settings.bg_image
+            | image_url: width: 2400
+            | image_tag: loading: 'lazy', sizes: '100vw', widths: '600, 800, 1000, 1200, 1600, 2000, 2400', alt: '', class: 'ha-home-masters__img'
+          }}
+        {%- endif -%}
+      </div>
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image -%}
+          <div class="ha-home-masters__layer" data-pair-panel="{{ block.id }}">
+            {{
+              block.settings.image
+              | image_url: width: 2400
+              | image_tag: loading: 'lazy', sizes: '100vw', widths: '600, 800, 1000, 1200, 1600, 2000, 2400', alt: '', class: 'ha-home-masters__img'
+            }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+      <div class="ha-home-masters__scrim"></div>
+    </div>
+
+    <div class="ha-wrap ha-home-masters__grid">
+      <div class="ha-home-masters__lead">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-home-masters__eyebrow ha-record">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="ha-home-masters-title" class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subline != blank -%}
+          <div class="ha-home-masters__subline ha-home__lead ha-narrate">{{ section.settings.subline }}</div>
+        {%- endif -%}
+      </div>
+
+      <nav class="ha-home-masters__directory" aria-label="{{ section.settings.list_label | escape }}">
+        {%- if section.settings.list_label != blank -%}
+          <p class="ha-home-masters__list-label ha-record">{{ section.settings.list_label }}</p>
+        {%- endif -%}
+        <ul class="ha-home-masters__list" role="list">
+          {%- for block in section.blocks limit: section.settings.item_limit -%}
+            {%- liquid
+              assign key = block.settings.key | default: block.settings.name | handleize
+              assign href = masters_url | append: '#' | append: key
+            -%}
+            <li class="ha-home-masters__item" {{ block.shopify_attributes }}>
+              <a class="ha-home-masters__link" href="{{ href }}" data-pair-for="{{ block.id }}">{{ block.settings.name }}</a>
+            </li>
+          {%- endfor -%}
+          {%- if section.blocks.size > section.settings.item_limit -%}
+            <li class="ha-home-masters__item ha-home-masters__item--more">
+              <a class="ha-home-masters__link" href="{{ masters_url }}#glossary" aria-label="{{ section.settings.more_label | escape }}">[…]</a>
+            </li>
+          {%- endif -%}
+        </ul>
+      </nav>
+
+      <div class="ha-home-masters__aside">
+        {%- if section.settings.cta_text != blank -%}
+          <a class="ha-home__corner ha-home__corner--light ha-record" href="{{ section.settings.cta_link | default: '/collections' }}">{{ section.settings.cta_text }}<span class="ha-home__corner-mark" aria-hidden="true"></span></a>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </ha-pair>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Home: Masters Index",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 16,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Masters Index" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The people behind the work." },
+    { "type": "richtext", "id": "subline", "label": "Line under the heading", "default": "<p>The practices, processes and knowledge behind the collection.</p>" },
+    { "type": "text", "id": "list_label", "label": "List label", "default": "Explore the handwork" },
+    { "type": "range", "id": "item_limit", "min": 3, "max": 16, "step": 1, "label": "Techniques shown", "default": 11, "info": "The rest are reached through the […] row." },
+    { "type": "text", "id": "more_label", "label": "[…] row label (screen readers)", "default": "All techniques on The Masters page" },
+    { "type": "url", "id": "masters_page_url", "label": "The Masters page", "info": "Each technique links to its anchor on this page." },
+    { "type": "text", "id": "cta_text", "label": "Corner link text", "default": "View the collection pieces" },
+    { "type": "url", "id": "cta_link", "label": "Corner link" },
+    { "type": "header", "content": "Photograph" },
+    { "type": "image_picker", "id": "bg_image", "label": "Resting image" },
+    { "type": "range", "id": "bg_focus_x", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Focal point, across", "default": 50 },
+    { "type": "range", "id": "bg_focus_y", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Focal point, down", "default": 50 },
+    { "type": "select", "id": "bg_ratio", "label": "Band proportion", "default": "2", "options": [
+      { "value": "2.4", "label": "Shallow (12:5)" }, { "value": "2", "label": "As drawn (2:1)" }, { "value": "1.7778", "label": "16:9" }, { "value": "1.5", "label": "3:2" }
+    ] },
+    { "type": "checkbox", "id": "mono", "label": "Monochrome", "default": true },
+    { "type": "range", "id": "scrim", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Scrim", "default": 40, "info": "The artboard has none; some is needed for the type over the white cloth." }
+  ],
+  "blocks": [
+    {
+      "type": "technique",
+      "name": "Technique",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Khadi", "info": "A verified technique name from The Masters page — never a Master's name or a location." },
+        { "type": "text", "id": "key", "label": "Anchor on The Masters page", "default": "khadi", "info": "The technique's Stable ID there: khadi, hand-spun, handwoven …" },
+        { "type": "image_picker", "id": "image", "label": "Photograph on hover", "info": "Empty: the resting image stays." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Home: Masters Index",
+      "blocks": [
+        { "type": "technique", "settings": { "name": "Khadi", "key": "khadi" } },
+        { "type": "technique", "settings": { "name": "Hand spun", "key": "hand-spun" } },
+        { "type": "technique", "settings": { "name": "Handwoven", "key": "handwoven" } },
+        { "type": "technique", "settings": { "name": "Block printed by hand", "key": "block-printed-by-hand" } },
+        { "type": "technique", "settings": { "name": "Hand carved wooden blocks", "key": "hand-carved-wooden-blocks" } },
+        { "type": "technique", "settings": { "name": "Natural dye", "key": "natural-dye" } },
+        { "type": "technique", "settings": { "name": "Ajrakh", "key": "ajrakh" } },
+        { "type": "technique", "settings": { "name": "Ikat", "key": "ikat" } },
+        { "type": "technique", "settings": { "name": "Gota Patti", "key": "gota-patti" } },
+        { "type": "technique", "settings": { "name": "Jamdani", "key": "jamdani" } },
+        { "type": "technique", "settings": { "name": "Banaras brocade", "key": "banaras-brocade" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
