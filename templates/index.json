@@ -382,7 +382,7 @@
         "show_native_form": true,
         "contact_tag": "the-register",
         "register_source": "homepage_band",
-        "field": "correspondence"
+        "field": "dark"
       }
     }
   },
