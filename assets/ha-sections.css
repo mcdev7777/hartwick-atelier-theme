@@ -6128,7 +6128,10 @@ html.ha-scrollbar::-webkit-scrollbar { display: none; }
 .ha-scrollbar__track:hover,
 .ha-scrollbar__track.is-active,
 .ha-scrollbar-dragging .ha-scrollbar__track { opacity: 1; }
-.ha-scrollbar__thumb {
+/* Two classes and display:block: the thumb is an empty <div>, and Luxe's
+   div:empty { display: none } would remove it. */
+.ha-scrollbar__track .ha-scrollbar__thumb {
+  display: block;
   position: absolute;
   top: 0;
   right: 0.3rem;
