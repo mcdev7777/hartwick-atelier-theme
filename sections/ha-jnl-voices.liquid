@@ -1,0 +1,71 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("JOURNAL"), loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE JOURNAL: client voices.
+  Aloha's artboard, 23 September 2026: "WORN. LIVED IN. SHARED." and a ruled
+  box (a double rule along the top), a quotation on the left and, beyond a
+  vertical rule, a note on where more will come from.
+
+  HONESTY (CLAUDE.md: never invent Circle member or client quotations). The
+  quotation on her artboard is her own sample wording, labelled on the
+  artboard itself "Sample wording / Replace with Rebecca's quote" and
+  "Layout placeholder / Not a client endorsement". It ships with those
+  labels, and "Show the quotation" must be unticked — or the client's own
+  approved words put in and the labels removed — before this is published.
+{%- endcomment -%}
+
+{%- unless current_tags -%}
+<section class="ha-jnl ha-jnl-voices">
+  <div class="ha-jnl-wrap">
+    <p class="ha-jnl-kicker ha-jnl-kicker--semibold">{{ section.settings.kicker }}</p>
+    <h2 class="ha-jnl-display ha-jnl-voices__heading">{{ section.settings.heading }}</h2>
+    {%- if section.settings.intro != blank -%}
+      <p class="ha-jnl-voices__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+
+    <div class="ha-jnl-voices__box">
+      <div class="ha-jnl-voices__quote">
+        {%- if section.settings.show_quote -%}
+          {%- if section.settings.quote_label != blank -%}
+            <p class="ha-jnl-label ha-jnl-label--peat">{{ section.settings.quote_label }}</p>
+          {%- endif -%}
+          <blockquote class="ha-jnl-voices__words">{{ section.settings.quote | newline_to_br }}</blockquote>
+          {%- if section.settings.quote_note != blank -%}
+            <p class="ha-jnl-meta">{{ section.settings.quote_note }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+      <div class="ha-jnl-voices__more">
+        <p class="ha-jnl-label">{{ section.settings.more_label }}</p>
+        <p class="ha-jnl-voices__more-heading">{{ section.settings.more_heading | newline_to_br }}</p>
+        {%- if section.settings.more_note != blank -%}
+          <p class="ha-jnl-meta">{{ section.settings.more_note }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "HA — Journal: voices",
+  "tag": "div",
+  "class": "ha-jnl-section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Client voices" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Worn. Lived in. Shared." },
+    { "type": "text", "id": "intro", "label": "Introduction", "default": "Experiences of the pieces, in the words of the people who wear them." },
+    { "type": "header", "content": "Quotation" },
+    { "type": "checkbox", "id": "show_quote", "label": "Show the quotation", "default": true, "info": "Aloha's artboard wording is a layout placeholder, not a client's words. Untick before publishing unless the client's approved quotation is in and the labels are removed." },
+    { "type": "text", "id": "quote_label", "label": "Label above", "default": "Sample wording / Replace with Rebecca’s quote" },
+    { "type": "textarea", "id": "quote", "label": "Quotation" },
+    { "type": "text", "id": "quote_note", "label": "Note beneath", "default": "Layout placeholder / Not a client endorsement" },
+    { "type": "header", "content": "More client voices" },
+    { "type": "text", "id": "more_label", "label": "Label", "default": "More client voices" },
+    { "type": "textarea", "id": "more_heading", "label": "Text", "default": "A place for Angela’s\ncollected testimonials,\nadded as they are approved." },
+    { "type": "text", "id": "more_note", "label": "Note", "default": "Content in preparation" }
+  ],
+  "presets": [{ "name": "HA — Journal: voices" }]
+}
+{% endschema %}

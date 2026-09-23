@@ -1,0 +1,16 @@
+{%- comment -%}
+  Hartwick Atelier — a Journal link: the record voice, no ">" after it.
+  Aloha, 23 September 2026: "Please replace '>' to the circle icons instead"
+  — the double oval of her sheet, drawn round the last word on hover or tap
+  (assets/ha-marks.js, data-ha-oval). With no address the words still show,
+  not as a link, so a link is never made to point nowhere.
+
+  Accepts: text, url, class (optional), new_tab (optional)
+{%- endcomment -%}
+{%- if text != blank -%}
+  {%- if url != blank -%}
+    <a class="ha-jnl-link ha-record{% if class %} {{ class }}{% endif %}" href="{{ url }}" data-ha-oval{% if new_tab %} target="_blank" rel="noopener"{% endif %}>{{ text }}</a>
+  {%- else -%}
+    <span class="ha-jnl-link ha-jnl-link--inert ha-record{% if class %} {{ class }}{% endif %}">{{ text }}</span>
+  {%- endif -%}
+{%- endif -%}

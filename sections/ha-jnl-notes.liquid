@@ -1,0 +1,80 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("JOURNAL"), loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE JOURNAL: two notes side by side.
+  Aloha's artboard, 23 September 2026: "02 / Field notes / Looking ahead"
+  and "03 / Field notes / Recently returned", split by a vertical rule. Each
+  note is a kicker, a picture, a heading, a paragraph and a link. Where the
+  photograph has not been taken yet, the note sets its title in a dark
+  Inkstone panel instead (her "NEW YORK / FASHION WEEK", with "Photography to
+  follow" inside it) — the panel is what the note shows until an image is
+  chosen, not a placeholder box.
+{%- endcomment -%}
+
+{%- unless current_tags -%}
+<section class="ha-jnl ha-jnl-notes">
+  <div class="ha-jnl-wrap">
+    <div class="ha-jnl-notes__grid">
+      {%- for block in section.blocks -%}
+        <article class="ha-jnl-note" {{ block.shopify_attributes }}>
+          <p class="ha-jnl-meta ha-jnl-meta--peat">{{ block.settings.kicker }}</p>
+          {%- if block.settings.image != blank -%}
+            <div class="ha-jnl-note__media">
+              {{ block.settings.image
+                | image_url: width: 1800
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 990px) 45vw, 100vw',
+                  widths: '600, 900, 1200, 1800',
+                  class: 'ha-jnl-img' }}
+            </div>
+            <p class="ha-jnl-meta ha-jnl-caption">{{ block.settings.caption }}</p>
+          {%- else -%}
+            <div class="ha-jnl-note__media ha-jnl-note__panel">
+              <p class="ha-jnl-note__panel-title">{{ block.settings.panel_title | newline_to_br }}</p>
+              {%- if block.settings.caption != blank -%}
+                <p class="ha-jnl-meta ha-jnl-note__panel-caption">{{ block.settings.caption }}</p>
+              {%- endif -%}
+            </div>
+            <p class="ha-jnl-meta ha-jnl-caption" aria-hidden="true"></p>
+          {%- endif -%}
+          <h2 class="ha-jnl-note__heading">{{ block.settings.heading }}</h2>
+          <p class="ha-jnl-note__body">{{ block.settings.body | newline_to_br }}</p>
+          <div class="ha-jnl-note__foot">
+            {%- render 'ha-jnl-link', text: block.settings.link_text, url: block.settings.link_url -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "HA — Journal: notes",
+  "tag": "div",
+  "class": "ha-jnl-section",
+  "max_blocks": 2,
+  "settings": [
+    { "type": "paragraph", "content": "Two notes side by side. A note with no photograph shows its panel title on the dark Inkstone panel." }
+  ],
+  "blocks": [
+    {
+      "type": "note",
+      "name": "Note",
+      "settings": [
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "02 / Field notes / Looking ahead" },
+        { "type": "image_picker", "id": "image", "label": "Photograph" },
+        { "type": "textarea", "id": "panel_title", "label": "Panel title (no photograph)", "info": "Set in capitals on the dark panel. A line break here is a line break on the page." },
+        { "type": "text", "id": "caption", "label": "Caption", "info": "Under the photograph, or inside the panel." },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "India, before departure." },
+        { "type": "textarea", "id": "body", "label": "Text" },
+        { "type": "text", "id": "link_text", "label": "Link text", "default": "Read the India note" },
+        { "type": "url", "id": "link_url", "label": "Link", "info": "Empty = the words show without a link." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "HA — Journal: notes", "blocks": [{ "type": "note" }, { "type": "note" }] }]
+}
+{% endschema %}

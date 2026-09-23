@@ -1,0 +1,150 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("JOURNAL"), loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE JOURNAL: masthead.
+  Aloha's artboard, 23 September 2026 (FINALHartwick_Journal_Editorial.pdf,
+  1440 x 4400): the Journal set as a newspaper front page.
+
+      MALLORCA / AND ELSEWHERE        HARTWICK NEWS        VOL. 01 / SEPT 2026
+      ─────────────────────────────────────────────────────────────────────
+      01 / NOW OPEN        │ 02 / OCTOBER          │ 03 / BACK FROM
+      A place in Esporles. │ Getting ready for …   │ New York Fashion Week.
+      ┌─────────────────────────────────────────────────────────────────────┐
+      │                         THE JOURNAL                (grain)          │
+      └─────────────────────────────────────────────────────────────────────┘
+      NEWS. PEOPLE. PLACES. WORK IN PROGRESS.     FROM HARTWICK, IN ONE PLACE.
+      ─────────────────────────────────────────────────────────────────────
+      ALL ENTRIES   HARTWICK NEWS   FIELD NOTES   CREATIVE PROJECTS   CLIENT VOICES
+      ─────────────────────────────────────────────────────────────────────
+
+  The section nav filters the blog by tag (/blogs/news/tagged/field-notes):
+  the section that is showing carries its ring. A section with no entry yet
+  is its name only, not a link (Shopify 404s an empty tag). Everything is a setting or a
+  block; nothing is typed into the markup.
+{%- endcomment -%}
+
+{%- liquid
+  assign journal_url = blog.url | default: '/blogs/news'
+  assign current = current_tags.first | default: '' | handleize
+
+  # Shopify answers /tagged/<tag> with a 404 until an article carries the
+  # tag, so a section links only once it has an entry; before that its name
+  # stands in the nav as words.
+  assign live_tags = '|'
+  for t in blog.all_tags
+    assign live_tags = live_tags | append: t | handleize | append: '|'
+  endfor
+-%}
+
+<section class="ha-jnl ha-jnl-mast">
+  <div class="ha-jnl-wrap">
+    <div class="ha-jnl-mast__meta">
+      <p class="ha-jnl-meta">{{ section.settings.meta_left }}</p>
+      <p class="ha-jnl-mast__name">{{ section.settings.masthead }}</p>
+      <p class="ha-jnl-meta ha-jnl-mast__meta-right">{{ section.settings.meta_right }}</p>
+    </div>
+
+    {%- assign headlines = section.blocks | where: 'type', 'headline' -%}
+    {%- if headlines.size > 0 -%}
+      <div class="ha-jnl-tickers">
+        {%- for block in headlines -%}
+          <article class="ha-jnl-ticker" {{ block.shopify_attributes }}>
+            <p class="ha-jnl-ticker__kicker">{{ block.settings.kicker }}</p>
+            <h2 class="ha-jnl-ticker__title">
+              {%- if block.settings.url != blank -%}
+                <a href="{{ block.settings.url }}">{{ block.settings.title }}</a>
+              {%- else -%}
+                {{ block.settings.title }}
+              {%- endif -%}
+            </h2>
+            {%- if block.settings.line != blank -%}
+              <p class="ha-jnl-ticker__line">{{ block.settings.line }}</p>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ha-jnl-band ha-grain-block" style="--ha-jnl-band: {{ section.settings.band_colour }}; --ha-jnl-band-ink: {{ section.settings.band_ink }};">
+      <h1 class="ha-jnl-band__title">{{ section.settings.title }}</h1>
+    </div>
+
+    <div class="ha-jnl-strap">
+      <p class="ha-jnl-strap__text">{{ section.settings.strap_left }}</p>
+      <p class="ha-jnl-strap__text">{{ section.settings.strap_right }}</p>
+    </div>
+
+    {%- assign cats = section.blocks | where: 'type', 'category' -%}
+    <nav class="ha-jnl-cats" aria-label="{{ section.settings.nav_label | escape }}">
+      <ul class="ha-jnl-cats__list" role="list">
+        <li>
+          <a class="ha-jnl-cats__link{% if current == blank %} is-current{% endif %}" href="{{ journal_url }}"{% if current == blank %} aria-current="page"{% endif %}>{{ section.settings.all_label }}</a>
+        </li>
+        {%- for block in cats -%}
+          {%- liquid
+            assign tag = block.settings.tag | default: block.settings.label | handleize
+            assign is_current = false
+            if current != blank and current == tag
+              assign is_current = true
+            endif
+            assign needle = '|' | append: tag | append: '|'
+          -%}
+          <li {{ block.shopify_attributes }}>
+            {%- if live_tags contains needle -%}
+              <a class="ha-jnl-cats__link{% if is_current %} is-current{% endif %}" href="{{ journal_url }}/tagged/{{ tag }}"{% if is_current %} aria-current="page"{% endif %}>{{ block.settings.label }}</a>
+            {%- else -%}
+              <span class="ha-jnl-cats__link ha-jnl-cats__link--empty">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Journal: masthead",
+  "tag": "div",
+  "class": "ha-jnl-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "paragraph", "content": "Aloha's Journal artboard, 23 September 2026: the masthead, three headlines, THE JOURNAL band and the section nav." },
+    { "type": "text", "id": "meta_left", "label": "Masthead, left", "default": "Mallorca / and elsewhere" },
+    { "type": "text", "id": "masthead", "label": "Masthead name", "default": "Hartwick News" },
+    { "type": "text", "id": "meta_right", "label": "Masthead, right", "default": "Vol. 01 / Sept 2026" },
+    { "type": "header", "content": "Title band" },
+    { "type": "text", "id": "title", "label": "Title", "default": "The Journal" },
+    { "type": "color", "id": "band_colour", "label": "Band colour", "default": "#25231F" },
+    { "type": "color", "id": "band_ink", "label": "Title colour", "default": "#E9E4D8" },
+    { "type": "text", "id": "strap_left", "label": "Strapline, left", "default": "News. People. Places. Work in progress." },
+    { "type": "text", "id": "strap_right", "label": "Strapline, right", "default": "From Hartwick, in one place." },
+    { "type": "header", "content": "Section nav" },
+    { "type": "text", "id": "all_label", "label": "First item", "default": "All entries", "info": "Always the whole Journal." },
+    { "type": "text", "id": "nav_label", "label": "Accessible name", "default": "Journal sections" }
+  ],
+  "blocks": [
+    {
+      "type": "headline",
+      "name": "Headline",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "01 / Now open" },
+        { "type": "text", "id": "title", "label": "Headline", "default": "A place in Esporles." },
+        { "type": "text", "id": "line", "label": "Line beneath", "default": "The showroom opens for private appointments." },
+        { "type": "url", "id": "url", "label": "Link", "info": "Optional: the entry, once it is published." }
+      ]
+    },
+    {
+      "type": "category",
+      "name": "Section",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Field notes" },
+        { "type": "text", "id": "tag", "label": "Article tag", "info": "The tag an article carries to appear here, e.g. field-notes. Empty = the label, lower-cased and hyphenated." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "HA — Journal: masthead" }]
+}
+{% endschema %}

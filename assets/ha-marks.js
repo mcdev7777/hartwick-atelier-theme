@@ -36,12 +36,16 @@
     '.ha-row-link', '.ha-masterfeat__link', '.ha-related__all', '.ha-continue__more', '.ha-authorship__link',
     '.hdr-nav-primary-level-ul > li > a', '.ha-util', '.hdr-st-item-cart .cart-icon--bubble',
     '.ha-footer__links a', '.ha-bag__action', '.ha-suggest__go', '.ha-suggest__stay',
-    '.ha-reg-form__submit--outline', '.ha-circle__signin', '.ha-bag-empty__cta'
+    '.ha-reg-form__submit--outline', '.ha-circle__signin', '.ha-bag-empty__cta',
+    'a.ha-jnl-cats__link'
   ].join(',');
   // Full-width rows (the phone menu, REGION / THE CIRCLE in it): the ring
   // goes round the label's words, not round the whole row.
   var RING_LABEL = '.nav-ul--primary > li > a, .ha-util-row';
   var CORNER = '.ha-home__corner-mark, .ha-mst__corner, .ha-clothing__corner';
+  // Links that take the oval without ever having had a corner mark: the
+  // Journal's (Aloha, 23 Sept: "replace '>' to the circle icons").
+  var OVAL = '[data-ha-oval]';
   var CONTROL = 'a[href], button, [role="button"]';
 
   function span(cls) {
@@ -134,6 +138,9 @@
     document.querySelectorAll(CORNER).forEach(function (c) {
       var el = c.closest(CONTROL);
       if (el && !el.hasAttribute('data-ha-mark')) oval(el);
+    });
+    document.querySelectorAll(OVAL).forEach(function (el) {
+      if (!el.hasAttribute('data-ha-mark')) oval(el);
     });
     document.querySelectorAll(RING_LABEL).forEach(function (el) {
       if (!el.hasAttribute('data-ha-mark')) ringLabel(el);

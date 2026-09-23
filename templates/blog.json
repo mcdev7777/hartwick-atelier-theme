@@ -1,27 +1,246 @@
 /*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
+ * Hartwick Atelier — THE JOURNAL (/blogs/news)
  *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
+ * Aloha's artboard, 23 September 2026 (FINALHartwick_Journal_Editorial.pdf):
+ * the Journal as a newspaper front page — masthead and three headlines, THE
+ * JOURNAL band, the section nav, the lead story (the Esporles showroom), two
+ * field notes, the Atelier noticeboard, client voices, The Register.
+ *
+ * The section nav filters the blog by tag; on a tagged view the front page
+ * gives way to "HA — Journal: entries" (the list of entries in that section).
+ * Copy is hers, verbatim, except "Materials, makers and work in progress",
+ * which is set as "Masters" (terminology: never "makers") and flagged.
+ *
+ * ------------------------------------------------------------
+ * NOTE: this file is also written by the Shopify theme editor.
  * ------------------------------------------------------------
  */
 {
   "sections": {
-    "main": {
-      "type": "main-blog",
+    "masthead": {
+      "type": "ha-jnl-masthead",
+      "blocks": {
+        "h1": {
+          "type": "headline",
+          "settings": {
+            "kicker": "01 / Now open",
+            "title": "A place in Esporles.",
+            "line": "The showroom opens for private appointments."
+          }
+        },
+        "h2": {
+          "type": "headline",
+          "settings": {
+            "kicker": "02 / October",
+            "title": "Getting ready for India.",
+            "line": "Angela prepares to meet with the Masters."
+          }
+        },
+        "h3": {
+          "type": "headline",
+          "settings": {
+            "kicker": "03 / Back from",
+            "title": "New York Fashion Week.",
+            "line": "Angela returns. A new entry for the Journal."
+          }
+        },
+        "c1": {
+          "type": "category",
+          "settings": {
+            "label": "Hartwick news",
+            "tag": "hartwick-news"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "label": "Field notes",
+            "tag": "field-notes"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "label": "Creative projects",
+            "tag": "creative-projects"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "label": "Client voices",
+            "tag": "client-voices"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
       "settings": {
-        "pagination_value": 20,
-        "layout_desktop": 3,
-        "grid_padding_top": 60,
-        "show_image": true,
-        "padding_top": 100,
-        "padding_bottom": 100
+        "meta_left": "Mallorca / and elsewhere",
+        "masthead": "Hartwick News",
+        "meta_right": "Vol. 01 / Sept 2026",
+        "title": "The Journal",
+        "band_colour": "#25231F",
+        "band_ink": "#E9E4D8",
+        "strap_left": "News. People. Places. Work in progress.",
+        "strap_right": "From Hartwick, in one place.",
+        "all_label": "All entries",
+        "nav_label": "Journal sections"
+      }
+    },
+    "entries": {
+      "type": "ha-jnl-entries",
+      "settings": {
+        "read_text": "Read the entry",
+        "empty_text": "The first entries in this section are being written."
+      }
+    },
+    "lead": {
+      "type": "ha-jnl-lead",
+      "settings": {
+        "kicker": "01 / Atelier news / Mallorca",
+        "heading": "A new address.\nA personal visit.",
+        "image": "shopify://shop_images/HA_JOURNAL_SHOWROOM_STUDY.jpg",
+        "caption": "Editorial image study / Showroom photograph to follow",
+        "standfirst": "The latest from Hartwick Atelier: new spaces, working visits and observations from beyond the collection.",
+        "aside_kicker": "Esporles / Serra de Tramuntana",
+        "aside_heading": "The showroom\nis open.",
+        "aside_body": "<p>Our new showroom in Esporles, in Mallorca’s Serra de Tramuntana, is ready for private booking.</p><p>A place to see the collection in person, look closely at the cloth and handwork, and take time over the pieces.</p>",
+        "link_text": "Read the showroom story",
+        "link_url": "",
+        "visit_kicker": "Visiting the atelier",
+        "visit_heading": "Private appointments in Esporles,\nMallorca.",
+        "visit_text": "Enquire about a visit",
+        "visit_url": "/pages/contact-us"
+      }
+    },
+    "notes": {
+      "type": "ha-jnl-notes",
+      "blocks": {
+        "n1": {
+          "type": "note",
+          "settings": {
+            "kicker": "02 / Field notes / Looking ahead",
+            "image": "shopify://shop_images/HA_JOURNAL_INDIA_BLOCK_WORKSHOP.jpg",
+            "caption": "From the Hartwick craft archive",
+            "heading": "India, before departure.",
+            "body": "Angela heads to India in October to meet with the Masters. Ahead of the visit, a look at the places, materials and handwork that inform her thinking.",
+            "link_text": "Read the India note",
+            "link_url": ""
+          }
+        },
+        "n2": {
+          "type": "note",
+          "settings": {
+            "kicker": "03 / Field notes / Recently returned",
+            "panel_title": "New York\nFashion week",
+            "caption": "Angela’s notes / Photography to follow",
+            "heading": "Back from New York.",
+            "body": "Angela has returned from New York Fashion Week. Her observations and photographs will form a new entry in the Journal.",
+            "link_text": "Read the New York note",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "n1",
+        "n2"
+      ],
+      "settings": {}
+    },
+    "board": {
+      "type": "ha-jnl-noticeboard",
+      "blocks": {
+        "b1": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/HA_JOURNAL_INSTAGRAM_JEWELLERY.jpg",
+            "kicker": "01 / Instagram",
+            "title": "A closer look.",
+            "link_text": "View Instagram",
+            "link_source": "instagram"
+          }
+        },
+        "b2": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/HA_JOURNAL_WORKING_TABLE_CARVING.jpg",
+            "kicker": "02 / Creative projects",
+            "title": "At the working table.",
+            "note": "Project preview / Content to follow",
+            "link_source": "custom"
+          }
+        },
+        "b3": {
+          "type": "card",
+          "settings": {
+            "kicker": "03 / LinkedIn",
+            "title": "From Angela’s\nperspective.",
+            "body": "Longer observations on the work, the people and running the Atelier.",
+            "link_text": "View LinkedIn",
+            "link_source": "linkedin"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {
+        "kicker": "The Atelier noticeboard",
+        "heading": "Between stories.",
+        "intro": "Short updates, creative projects and\nconversations from across the table.",
+        "band_colour": "#25231F",
+        "band_ink": "#E9E4D8"
+      }
+    },
+    "voices": {
+      "type": "ha-jnl-voices",
+      "settings": {
+        "kicker": "Client voices",
+        "heading": "Worn. Lived in. Shared.",
+        "intro": "Experiences of the pieces, in the words of the people who wear them.",
+        "show_quote": true,
+        "quote_label": "Sample wording / Replace with Rebecca’s quote",
+        "quote": "“I notice the cloth first, then the details.\nThese are pieces I reach for often,\nand enjoy more as I wear them.”",
+        "quote_note": "Layout placeholder / Not a client endorsement",
+        "more_label": "More client voices",
+        "more_heading": "A place for Angela’s\ncollected testimonials,\nadded as they are approved.",
+        "more_note": "Content in preparation"
+      }
+    },
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "eyebrow": "The Register",
+        "heading": "Notes from Hartwick.",
+        "body": "<p>Materials, Masters and work in progress.</p>",
+        "body_position": "heading",
+        "heading_style": "caps",
+        "field": "dark",
+        "grain": true,
+        "form_style": "line",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "journal"
       }
     }
   },
   "order": [
-    "main"
+    "masthead",
+    "entries",
+    "lead",
+    "notes",
+    "board",
+    "voices",
+    "register"
   ]
 }

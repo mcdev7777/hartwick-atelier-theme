@@ -1,0 +1,57 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("JOURNAL"), loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE JOURNAL: the entries under one section.
+  The masthead's section nav links to the blog filtered by tag
+  (/blogs/news/tagged/field-notes). Aloha's artboard draws only the front
+  page, so a filtered view is this plain list in the same voices: date and
+  tags, title, excerpt, link. Until an entry is published under a section,
+  the list says so in one line rather than showing an empty page.
+
+  Renders on tagged views only; the front page is the other sections.
+{%- endcomment -%}
+
+{%- if current_tags -%}
+<section class="ha-jnl ha-jnl-entries">
+  <div class="ha-jnl-wrap">
+    {%- paginate blog.articles by 12 -%}
+      {%- if blog.articles.size > 0 -%}
+        <ol class="ha-jnl-entries__list" role="list">
+          {%- for article in blog.articles -%}
+            <li class="ha-jnl-entry">
+              <p class="ha-jnl-meta ha-jnl-meta--peat">
+                {{- article.published_at | date: '%d %B %Y' -}}
+                {%- for tag in article.tags limit: 2 %} / {{ tag }}{% endfor -%}
+              </p>
+              <h2 class="ha-jnl-entry__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+              {%- if article.excerpt_or_content != blank -%}
+                <p class="ha-jnl-entry__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 40 }}</p>
+              {%- endif -%}
+              {%- render 'ha-jnl-link', text: section.settings.read_text, url: article.url -%}
+            </li>
+          {%- endfor -%}
+        </ol>
+        {%- if paginate.pages > 1 -%}
+          {%- render 'pagination', paginate: paginate -%}
+        {%- endif -%}
+      {%- else -%}
+        <p class="ha-jnl-entries__empty">{{ section.settings.empty_text }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "HA — Journal: entries",
+  "tag": "div",
+  "class": "ha-jnl-section",
+  "settings": [
+    { "type": "paragraph", "content": "Shows only when a section of the Journal is chosen from the nav (a tag). The front page is the other sections." },
+    { "type": "text", "id": "read_text", "label": "Link text", "default": "Read the entry" },
+    { "type": "text", "id": "empty_text", "label": "No entries yet", "default": "The first entries in this section are being written." }
+  ],
+  "presets": [{ "name": "HA — Journal: entries" }]
+}
+{% endschema %}

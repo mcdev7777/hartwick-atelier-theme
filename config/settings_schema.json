@@ -135,6 +135,25 @@
       },
       {
         "type": "header",
+        "content": "Grain on dark blocks — Journal, 23 September"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha's grain layer, as she laid it over the dark blocks of the Journal artboard: her own grain image, Normal blend. Only blocks that carry it (the Journal's dark bands and any Register band with Grain ticked) are affected; light grounds and photographs never are."
+      },
+      {
+        "type": "range",
+        "id": "ha_grain_block",
+        "label": "Grain strength",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "%",
+        "default": 32,
+        "info": "32% = her layer on the artboard. 0 = no grain anywhere."
+      },
+      {
+        "type": "header",
         "content": "Correspondence — The Register page"
       },
       {

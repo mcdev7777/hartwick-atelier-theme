@@ -84,6 +84,13 @@
     --ha-mark-oval:   url("{{ 'ha-mark-oval.svg' | asset_url }}");
     --ha-mark-ring-1: url("{{ 'ha-mark-ring-1.svg' | asset_url }}");
     --ha-mark-ring-2: url("{{ 'ha-mark-ring-2.svg' | asset_url }}");
+    /* Aloha's grain layer on dark blocks (Journal artboard, 23 September
+       2026): her Grain.png, cut to a 320px tile at the scale she placed it
+       (assets/ha-grain-block.svg; SVG so the CDN does not re-encode it) —
+       ha-sections.css ".ha-grain-block". Her image is grey at 60% alpha;
+       the layer strength multiplies that, as her 32% layer did. */
+    --ha-grain-tile: url("{{ 'ha-grain-block.svg' | asset_url }}");
+    --ha-grain-strength: {{ settings.ha_grain_block | default: 32 | times: 0.6 | divided_by: 100.0 }};
 
     /* --- tint system (100 / 66 / 33 / 0 against white) --- */
     --ha-soot-66: rgb({{ soot_r | times: 0.66 | plus: 86.7 | round }}, {{ soot_g | times: 0.66 | plus: 86.7 | round }}, {{ soot_b | times: 0.66 | plus: 86.7 | round }});

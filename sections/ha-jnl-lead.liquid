@@ -1,0 +1,95 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("JOURNAL"), loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE JOURNAL: the lead story.
+  Aloha's artboard, 23 September 2026. Two columns under a hairline, as a
+  front page: the story (kicker, a two-line headline in capitals, the
+  photograph, its caption, the standfirst) and, beyond a vertical rule, the
+  side column — the story's own summary and link, then a second item with a
+  dark button.
+
+  On a tagged view of the blog (/blogs/news/tagged/…) the front page gives
+  way to the list of entries (sections/ha-jnl-entries), so this renders only
+  on the Journal itself.
+{%- endcomment -%}
+
+{%- unless current_tags -%}
+<section class="ha-jnl ha-jnl-lead">
+  <div class="ha-jnl-wrap">
+    <div class="ha-jnl-lead__grid">
+      <div class="ha-jnl-lead__story">
+        <p class="ha-jnl-kicker ha-jnl-kicker--medium">{{ section.settings.kicker }}</p>
+        <h2 class="ha-jnl-lead__heading">{{ section.settings.heading | newline_to_br }}</h2>
+        {%- if section.settings.image != blank -%}
+          <div class="ha-jnl-lead__media">
+            {{ section.settings.image
+              | image_url: width: 2400
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 990px) 62vw, 100vw',
+                widths: '600, 900, 1200, 1600, 2000, 2400',
+                class: 'ha-jnl-img' }}
+          </div>
+        {%- else -%}
+          <div class="ha-jnl-lead__media ha-jnl-slot" aria-hidden="true"></div>
+        {%- endif -%}
+        {%- if section.settings.caption != blank -%}
+          <p class="ha-jnl-meta ha-jnl-caption">{{ section.settings.caption }}</p>
+        {%- endif -%}
+        {%- if section.settings.standfirst != blank -%}
+          <p class="ha-jnl-lead__standfirst">{{ section.settings.standfirst }}</p>
+        {%- endif -%}
+      </div>
+
+      <aside class="ha-jnl-lead__aside">
+        <div class="ha-jnl-lead__summary">
+          <p class="ha-jnl-meta">{{ section.settings.aside_kicker }}</p>
+          <h3 class="ha-jnl-lead__aside-heading">{{ section.settings.aside_heading | newline_to_br }}</h3>
+          <div class="ha-jnl-lead__aside-body">{{ section.settings.aside_body }}</div>
+          {%- render 'ha-jnl-link', text: section.settings.link_text, url: section.settings.link_url -%}
+        </div>
+
+        <div class="ha-jnl-lead__visit">
+          <p class="ha-jnl-meta">{{ section.settings.visit_kicker }}</p>
+          <p class="ha-jnl-lead__visit-heading">{{ section.settings.visit_heading | newline_to_br }}</p>
+          {%- if section.settings.visit_text != blank -%}
+            {%- if section.settings.visit_url != blank -%}
+              <a class="ha-jnl-button ha-record" href="{{ section.settings.visit_url }}" data-ha-oval>{{ section.settings.visit_text }}</a>
+            {%- else -%}
+              <span class="ha-jnl-button ha-jnl-button--inert ha-record">{{ section.settings.visit_text }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "HA — Journal: lead story",
+  "tag": "div",
+  "class": "ha-jnl-section",
+  "settings": [
+    { "type": "paragraph", "content": "The front page's main story and its side column. Shown on the Journal; a tagged view shows the list of entries instead." },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "01 / Atelier news / Mallorca" },
+    { "type": "textarea", "id": "heading", "label": "Headline", "default": "A new address.\nA personal visit.", "info": "Set in capitals. A line break here is a line break on the page." },
+    { "type": "image_picker", "id": "image", "label": "Photograph" },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Editorial image study / Showroom photograph to follow" },
+    { "type": "textarea", "id": "standfirst", "label": "Standfirst", "default": "The latest from Hartwick Atelier: new spaces, working visits and observations from beyond the collection." },
+    { "type": "header", "content": "Side column" },
+    { "type": "text", "id": "aside_kicker", "label": "Kicker", "default": "Esporles / Serra de Tramuntana" },
+    { "type": "textarea", "id": "aside_heading", "label": "Heading", "default": "The showroom\nis open." },
+    { "type": "richtext", "id": "aside_body", "label": "Text", "default": "<p>Our new showroom in Esporles, in Mallorca’s Serra de Tramuntana, is ready for private booking.</p><p>A place to see the collection in person, look closely at the cloth and handwork, and take time over the pieces.</p>" },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "Read the showroom story" },
+    { "type": "url", "id": "link_url", "label": "Link", "info": "The story's entry once it is published. Empty = the words show without a link." },
+    { "type": "header", "content": "Second item" },
+    { "type": "text", "id": "visit_kicker", "label": "Kicker", "default": "Visiting the atelier" },
+    { "type": "textarea", "id": "visit_heading", "label": "Heading", "default": "Private appointments in Esporles,\nMallorca." },
+    { "type": "text", "id": "visit_text", "label": "Button text", "default": "Enquire about a visit" },
+    { "type": "url", "id": "visit_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "HA — Journal: lead story" }]
+}
+{% endschema %}
