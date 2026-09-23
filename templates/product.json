@@ -357,6 +357,66 @@
     },
     "ha_master": {
       "type": "ha-master-feature",
+      "blocks": {
+        "t_hand_spun": {
+          "type": "tool",
+          "settings": {
+            "technique": "Hand spun",
+            "match": "handspun, hand spun, hand-spun",
+            "name": "The Charkha",
+            "line": "From fibre to yarn",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_CHARKHA_4R1A4460.jpg",
+            "alt": "A charkha, the spinning wheel, standing in the yard",
+            "caption": "The charkha, the spinning wheel",
+            "anchor": "hand-spun"
+          }
+        },
+        "t_handwoven": {
+          "type": "tool",
+          "settings": {
+            "technique": "Handwoven",
+            "match": "handwoven, hand woven, hand-woven, handloom, khadi, ikat, jamdani, brocade",
+            "name": "The Handloom",
+            "line": "Working at the loom",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_WARP_CLOSE_4R1A4475.jpg",
+            "alt": "Warp threads running into the loom, seen close",
+            "caption": "Warp threads at the handloom",
+            "anchor": "handwoven"
+          }
+        },
+        "t_block_printed": {
+          "type": "tool",
+          "settings": {
+            "technique": "Block printed by hand",
+            "match": "block print, block-print, blockprint, ajrakh",
+            "name": "The Carved Block",
+            "line": "Layer by layer, colour by colour",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_BLOCK_FACE_4R1A4565.jpg",
+            "alt": "The raised printing face of a carved wooden block",
+            "caption": "The printing face of a carved block",
+            "anchor": "block-printed-by-hand"
+          }
+        },
+        "t_natural_dye": {
+          "type": "tool",
+          "settings": {
+            "technique": "Natural dye",
+            "match": "natural dye, natural-dye, indigo",
+            "name": "Dyed Yarn",
+            "line": "Colour from plants and minerals",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_DYED_BOBBINS_4R1A4528.jpg",
+            "alt": "Blue-dyed yarn wound on bobbins",
+            "caption": "Dyed yarn wound on bobbins",
+            "anchor": "natural-dye"
+          }
+        }
+      },
+      "block_order": [
+        "t_hand_spun",
+        "t_handwoven",
+        "t_block_printed",
+        "t_natural_dye"
+      ],
       "settings": {
         "eyebrow": "The Master",
         "number": "01",
@@ -367,7 +427,8 @@
         "slot_place": "[Place]",
         "slot_verify": "Identity + product link to verify",
         "show_placeholder_note": true,
-        "show_slot": true
+        "show_slot": true,
+        "masters_page": "the-masters"
       }
     },
     "ha_lot": {

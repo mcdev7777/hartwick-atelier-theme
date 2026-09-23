@@ -2273,8 +2273,8 @@ body.lx-template--product .magnify-icon:focus-visible {
   justify-content: center;
   letter-spacing: 0.04em;
   margin: 0;
-  min-height: 54px;
-  min-width: 4.4rem;
+  min-height: var(--ha-size-h, 44px);
+  min-width: var(--ha-size-h, 44px);
   padding: 0 1rem;
   text-transform: uppercase;
   transition: background-color 0.15s ease, color 0.15s ease;
@@ -2295,17 +2295,23 @@ body.lx-template--product .magnify-icon:focus-visible {
   text-decoration: line-through;
 }
 
-/* Add to Bag — the rail's one solid mark; 267 wide, 58 tall on the canvas. */
-.ha-pdp .product-buy-buttons-wrapper { margin-top: 3.2rem; }
+/* Add to Bag — the rail's one solid mark. The canvas drew it 267 x 58; Aloha,
+   23 Sept: "It doesn't need to be that big." Height and width now come from
+   the section (Size selection > Button height / width) so she can try sizes
+   in the editor; 44px is the default, the touch minimum. */
+.ha-pdp .product-buy-buttons-wrapper { margin-top: 2.4rem; }
 .ha-pdp .product-form__submit {
   border-radius: 0;
   font-family: var(--ha-font-identify);
   font-size: var(--ha-t-ui);
   letter-spacing: 0.16em;
-  min-height: 58px;
+  min-height: var(--ha-buy-h, 44px);
+  height: var(--ha-buy-h, 44px);
+  padding: 0 2.4rem;
   text-transform: uppercase;
   width: 100%;
 }
+.ha-pdp--buy-fit .product-form__submit { width: auto; min-width: 16rem; }
 
 .ha-pdp .ha-pdp__appointment { margin-top: 2.4rem; }
 .ha-pdp .ha-appointment__open {

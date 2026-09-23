@@ -29,6 +29,23 @@
   in the artboard are a design annotation for the empty slot and are drawn
   here for the same reason, so the slot cannot be mistaken for finished art.
 
+  THE MASTER'S TOOL (Aloha, 23 September 2026): "On each individual product
+  page, please feature the master's handcrafted tools that our products
+  highlight. For example, if a shirt is labeled as handspun, we should
+  showcase the master's handspun tool." Each `tool` block pairs a technique
+  with the photograph of its tool from the Masters shoot — the same frames
+  the Masters page glossary uses (charkha for hand spun, the loom's warp for
+  handwoven, a carved block's face for block printing, dyed bobbins for
+  natural dye). The product's own label is read in the order a visitor
+  reads it — Expression ("Handspun Silk & Linen"), the material line
+  ("HANDSPUN / HANDWOVEN"), the process tags, the old site's process marks,
+  the title — and the tool whose word comes FIRST wins, so a handspun shirt
+  shows the charkha and a block print shows the block.
+  The tool is shown as a tool, never as a person: with no verified Master
+  the heading is the tool's name, not a name slot. A verified Master keeps
+  their name; the tool photograph then stands in only while their record
+  has no image of its own.
+
   Composition (V2): a dark full-bleed band ~1040px tall at 1500 wide; eyebrow
   top-left, the photograph's caption top-right, the name and
   discipline / place bottom-left over the image, the link beneath a short rule.
@@ -55,12 +72,69 @@
     assign has_identity = true
   endif
 
+  # --- the tool: the technique whose word comes first in the product's label
+  capture label
+    render 'ha-product-fact', product: product, field: 'expression'
+    echo ' | '
+    render 'ha-product-fact', product: product, field: 'material_line'
+    echo ' | '
+    echo mf.process_tags
+    for i in (1..4)
+      assign key = 'process_' | append: i
+      assign mark = product.metafields.custom[key].value
+      if mark != blank
+        echo ' | '
+        echo mark.title.value
+      endif
+    endfor
+    echo ' | '
+    echo product.title
+  endcapture
+  assign label = label | upcase
+  assign tool = nil
+  assign tool_pos = 100000
+  for block in section.blocks
+    if block.type != 'tool' or block.settings.image == blank
+      continue
+    endif
+    assign words = block.settings.match | upcase | split: ','
+    for w in words
+      assign w = w | strip
+      if w == blank
+        continue
+      endif
+      unless label contains w
+        continue
+      endunless
+      assign pos = label | split: w | first | size
+      if pos < tool_pos
+        assign tool_pos = pos
+        assign tool = block
+      endif
+    endfor
+  endfor
+
   assign photo = master.workshop_images.value.first | default: master.portrait.value
+  assign photo_alt = section.settings.photo_alt
   if has_identity == false
     assign photo = nil
   endif
-  if photo == blank and section.settings.standin_image != blank
+  assign photo_is_tool = false
+  if photo == blank and tool != blank
+    assign photo_is_tool = true
+    assign photo = tool.settings.image
+    assign photo_alt = tool.settings.alt | default: tool.settings.name
+  endif
+  if photo == blank and has_identity and section.settings.standin_image != blank
     assign photo = section.settings.standin_image
+  endif
+
+  assign tool_href = ''
+  if tool != blank and section.settings.masters_page != blank
+    assign tool_href = section.settings.masters_page.url
+    if tool.settings.anchor != blank
+      assign tool_href = tool_href | append: '#' | append: tool.settings.anchor
+    endif
   endif
 
   assign href = ''
@@ -84,8 +158,14 @@
   every garment that has no verified Master, and returns by itself when one
   is linked.
 {%- endcomment -%}
-{%- if has_identity or section.settings.show_slot -%}
-<section class="ha-section ha-section--field-peat ha-masterfeat{% if photo != blank %} ha-masterfeat--photo{% endif %}{% unless has_identity %} ha-masterfeat--slot{% endunless %}">
+{%- liquid
+  assign show_tool = false
+  if has_identity == false and tool != blank
+    assign show_tool = true
+  endif
+-%}
+{%- if has_identity or show_tool or section.settings.show_slot -%}
+<section class="ha-section ha-section--field-peat ha-masterfeat{% if photo != blank %} ha-masterfeat--photo{% endif %}{% if show_tool %} ha-masterfeat--tool{% elsif has_identity == false %} ha-masterfeat--slot{% endif %}"{% if tool != blank %} data-tool="{{ tool.settings.anchor | escape }}"{% endif %}>
   {%- if photo != blank -%}
     <div class="ha-masterfeat__media">
       {{ photo
@@ -94,7 +174,7 @@
           loading: 'lazy',
           sizes: '100vw',
           widths: '750, 1100, 1500, 2000, 2800',
-          alt: section.settings.photo_alt,
+          alt: photo_alt,
           class: 'ha-masterfeat__img' }}
       <span class="ha-masterfeat__scrim" aria-hidden="true"></span>
     </div>
@@ -103,10 +183,13 @@
   {%- endif -%}
 
   <div class="ha-wrap ha-masterfeat__grid">
-    <p class="ha-eyebrow ha-identify ha-masterfeat__eyebrow">{{ section.settings.eyebrow }} / {{ number }}</p>
+    <p class="ha-eyebrow ha-identify ha-masterfeat__eyebrow">
+      {%- if show_tool -%}{{ section.settings.tool_eyebrow }}{%- else -%}{{ section.settings.eyebrow }}{%- endif %} / {{ number }}</p>
 
     <p class="ha-masterfeat__slotlabel ha-record">
-      {%- if photo != blank and section.settings.photo_caption != blank -%}
+      {%- if photo_is_tool -%}
+        {{ tool.settings.caption }}
+      {%- elsif photo != blank and section.settings.photo_caption != blank -%}
         {{ section.settings.photo_caption }}
       {%- elsif photo == blank -%}
         {{ section.settings.slot_photo_label }}
@@ -115,10 +198,12 @@
 
     <div class="ha-masterfeat__identity">
       <h2 class="ha-masterfeat__name ha-narrate">
-        {%- if has_identity -%}{{ m_name }}{%- else -%}{{ section.settings.slot_name }}{%- endif -%}
+        {%- if has_identity -%}{{ m_name }}{%- elsif show_tool -%}{{ tool.settings.name }}{%- else -%}{{ section.settings.slot_name }}{%- endif -%}
       </h2>
       <p class="ha-masterfeat__line ha-record">
-        {%- if has_identity -%}
+        {%- if show_tool -%}
+          {{ tool.settings.technique }}{% if tool.settings.line != blank %} / {{ tool.settings.line }}{% endif %}
+        {%- elsif has_identity -%}
           {{ m_role | default: section.settings.slot_discipline }} / {{ m_place | default: section.settings.slot_place }}
         {%- else -%}
           {{ section.settings.slot_discipline }} / {{ section.settings.slot_place }}
@@ -127,16 +212,22 @@
       <hr class="ha-masterfeat__rule">
       {%- if has_identity and href != blank -%}
         <a class="ha-masterfeat__link ha-record" href="{{ href }}">{{ section.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+      {%- elsif show_tool and tool_href != blank -%}
+        <a class="ha-masterfeat__link ha-record" href="{{ tool_href }}">{{ section.settings.tool_link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+      {%- elsif show_tool -%}
       {%- else -%}
         <span class="ha-masterfeat__link ha-masterfeat__link--inert ha-record" aria-disabled="true">{{ section.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></span>
       {%- endif -%}
     </div>
 
-    {%- unless has_identity -%}
+    {%- if show_tool -%}
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+        text: 'No named Master is linked to this garment yet, so the section shows the tool of its first technique (matched from the product label). A Master linked in hartwick.masters takes this place with their name.' -%}
+    {%- elsif has_identity == false -%}
       <p class="ha-masterfeat__verify ha-record">{{ section.settings.slot_verify }}</p>
       {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
         text: 'No Master is linked to this garment yet — the slot publishes from the master record in hartwick.masters (name, discipline, place, workshop photograph, record link).' -%}
-    {%- endunless -%}
+    {%- endif -%}
   </div>
 </section>
 {%- endif -%}
@@ -155,7 +246,10 @@
     { "type": "header", "content": "Photograph" },
     { "type": "text", "id": "photo_caption", "label": "Caption (top right)" },
     { "type": "text", "id": "photo_alt", "label": "Alt text" },
-    { "type": "image_picker", "id": "standin_image", "label": "Stand-in photograph", "info": "Shown only while the record has no image AND a name is verified. Never shown for an unnamed record." },
+    { "type": "image_picker", "id": "standin_image", "label": "Stand-in photograph", "info": "Shown only while the record has no image, no tool matches AND a name is verified. Never shown for an unnamed record." },
+    { "type": "header", "content": "The Master's tool", "info": "Aloha, 23 Sept: feature the tool of the technique the product is labelled with. Add one Tool block per technique; the first matching word in the product's label wins." },
+    { "type": "text", "id": "tool_eyebrow", "label": "Eyebrow when a tool is shown", "default": "The Master's Tool" },
+    { "type": "text", "id": "tool_link_text", "label": "Tool link text", "default": "Visit The Masters" },
     { "type": "header", "content": "The empty slot (design annotations)" },
     { "type": "text", "id": "slot_photo_label", "label": "Photo slot label", "default": "Workshop photograph / to supply" },
     { "type": "text", "id": "slot_name", "label": "Name slot", "default": "[Master name]" },
@@ -164,6 +258,22 @@
     { "type": "text", "id": "slot_verify", "label": "Verify note", "default": "Identity + product link to verify" },
     { "type": "checkbox", "id": "show_slot", "label": "Show the empty slot when no Master is verified", "default": false, "info": "Off = the module is hidden until a Master is linked (sheet, tab 05). On for layout checks." },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "tool",
+      "name": "Tool",
+      "settings": [
+        { "type": "text", "id": "technique", "label": "Technique", "default": "Hand spun" },
+        { "type": "text", "id": "match", "label": "Label words that select it", "default": "handspun, hand spun, hand-spun", "info": "Comma-separated, any case. Matched against the Expression, material line, process tags, old process marks and title." },
+        { "type": "text", "id": "name", "label": "Tool name (heading)", "default": "The Charkha" },
+        { "type": "text", "id": "line", "label": "Line beneath", "default": "From fibre to yarn" },
+        { "type": "image_picker", "id": "image", "label": "Photograph of the tool" },
+        { "type": "text", "id": "alt", "label": "Alt text" },
+        { "type": "text", "id": "caption", "label": "Caption (top right)" },
+        { "type": "text", "id": "anchor", "label": "Masters page entry", "default": "hand-spun", "info": "The glossary key on The Masters page — the link opens that entry." }
+      ]
+    }
   ],
   "presets": [{ "name": "HA — The Master" }]
 }

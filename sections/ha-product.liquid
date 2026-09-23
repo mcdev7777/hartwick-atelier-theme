@@ -259,7 +259,8 @@
 
 <product-info
   id="MainProduct-{{ section.id }}"
-  class="ha-section ha-pdp{% if size_unset %} ha-pdp--size-unset{% endif %}"
+  class="ha-section ha-pdp{% if size_unset %} ha-pdp--size-unset{% endif %}{% if section.settings.buy_width == 'fit' %} ha-pdp--buy-fit{% endif %}"
+  style="--ha-buy-h: {{ section.settings.buy_height | default: 44 }}px; --ha-size-h: {{ section.settings.size_box | default: 44 }}px;"
   data-section="{{ section.id }}"
   data-product-id="{{ product.id }}"
   data-update-url="true"
@@ -640,6 +641,9 @@
     { "type": "header", "content": "Size selection" },
     { "type": "checkbox", "id": "require_size", "label": "Ask for a size before Add to Bag", "default": true, "info": "Brief, 16 Sept: “Before selection, the button asks for a size.” Off = Shopify's default, the first available size preselected." },
     { "type": "text", "id": "size_prompt", "label": "Button reads, until a size is chosen", "default": "Select a size" },
+    { "type": "range", "id": "buy_height", "label": "Button height", "min": 36, "max": 58, "step": 2, "unit": "px", "default": 44, "info": "Select a size / Add to Bag. Aloha, 23 Sept: “It doesn't need to be that big.” Was 58. 44 is the comfortable touch minimum." },
+    { "type": "select", "id": "buy_width", "label": "Button width", "options": [{ "value": "full", "label": "Full width of the rail" }, { "value": "fit", "label": "Fit the words" }], "default": "full" },
+    { "type": "range", "id": "size_box", "label": "Size box", "min": 32, "max": 54, "step": 2, "unit": "px", "default": 44, "info": "Height and minimum width of each S / M / L box. Was 54 tall." },
 
     { "type": "header", "content": "Placeholder content", "info": "Used per field, only where the product has no value. Wireframe copy — provenance is unverified and must not go live as fact (risk R7)." },
     { "type": "text", "id": "ph_cloth", "label": "Cloth line", "default": "Handspun silk & linen" },
