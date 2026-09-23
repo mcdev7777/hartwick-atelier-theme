@@ -232,7 +232,7 @@
       "type": "ha-home-binding",
       "settings": {
         "rings": true,
-        "holes": "top"
+        "holes": "both"
       }
     },
     "masters_index": {
