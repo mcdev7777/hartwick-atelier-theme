@@ -263,6 +263,28 @@
       },
       {
         "type": "header",
+        "content": "Pencil marks on links"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha, 23 September 2026: her hand-drawn pencil marks on links and buttons, drawn as the visitor hovers (desktop) or taps (phone). Arrow links carry her pencil arrow; links that had the small corner mark get her double oval round their last word; the other text links and ruled buttons get one of her two loose rings. Toggles (+), close buttons, size boxes, photographs and the filled buttons are left plain."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_marks",
+        "label": "Pencil marks",
+        "default": true,
+        "info": "Off = the plain arrows and corner marks come back."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_marks_random",
+        "label": "Vary the rings",
+        "default": true,
+        "info": "On = each link gets one of her two rings at random, with a slight turn. Off = always her option no.1."
+      },
+      {
+        "type": "header",
         "content": "Typography voices"
       },
       {

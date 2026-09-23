@@ -50,6 +50,11 @@
 
     {% render 'global-theme-styles' %}
     {% render 'ha-tokens' %}
+    {%- if settings.ha_marks -%}
+      {%- comment -%} Pencil marks: the class is set before first paint so the arrows never flash plain. {%- endcomment -%}
+      <script>document.documentElement.classList.add('ha-marks');window.haMarks={random:{{ settings.ha_marks_random | json }}};</script>
+      <script src="{{ 'ha-marks.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
     {% render 'ha-fonts' %}
     
     {{ 'base.css' | asset_url | stylesheet_tag }}

@@ -6800,3 +6800,106 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   .ha-drawer__inner, .ha-drawer__overlay, .ha-suggest,
   body cart-drawer .drawer__inner { transition: none; }
 }
+
+/* ==========================================================================
+   PENCIL MARKS  —  Aloha, 23 September 2026
+   "when someone hovers over a link on desktop, the circle or arrow would
+    animate as if it were being drawn. On mobile, the animation could trigger
+    when the link is tapped." Her marks, cut from her sheet as alpha masks
+   (scripts/make-pencil-marks.py, tokens --ha-mark-* in ha-tokens), painted
+   in the link's own colour so they turn light on the dark bands.
+
+   assets/ha-marks.js sorts links into three families (data-ha-mark) and adds
+   the empty mark spans; everything visible is here:
+     arrow  the .ha-pdp__arrow becomes her pencil arrow — the old arrow's
+            size, not longer (her note) — and is redrawn on hover
+     oval   the corner mark goes; her double oval draws round the last word
+     ring   one of her two loose rings draws round the label
+   "Drawn" = the mark is masked a second time by a sweep: a conic gradient
+   turning round the ring's centre, or a wipe along the arrow. The sweep is
+   a registered custom property, so it animates; a browser without
+   @property simply shows the finished mark.
+
+   Everything is scoped to html.ha-marks (Theme settings > Pencil marks),
+   so switching the setting off returns the plain arrows and corners.
+   ========================================================================== */
+@property --ha-draw { syntax: '<angle>'; inherits: false; initial-value: 360deg; }
+@property --ha-wipe { syntax: '<percentage>'; inherits: false; initial-value: 100%; }
+
+@keyframes ha-mark-draw { from { --ha-draw: 0deg; } to { --ha-draw: 360deg; } }
+@keyframes ha-mark-wipe { from { --ha-wipe: 0%; } to { --ha-wipe: 100%; } }
+
+/* --- the arrow ----------------------------------------------------------- */
+.ha-marks .ha-pdp__arrow {
+  width: 3.8rem !important;          /* the old arrow's hover growth is dropped: one size */
+  height: 1rem;
+  background: currentColor;
+  -webkit-mask: var(--ha-mark-arrow) center / 100% 100% no-repeat, linear-gradient(90deg, #000 var(--ha-wipe), transparent calc(var(--ha-wipe) + 4%));
+  -webkit-mask-composite: source-in;
+  mask: var(--ha-mark-arrow) center / 100% 100% no-repeat, linear-gradient(90deg, #000 var(--ha-wipe), transparent calc(var(--ha-wipe) + 4%));
+  mask-composite: intersect;
+  flex: none;
+  transition: none;
+}
+.ha-marks .ha-pdp__arrow::after { content: none; }
+
+/* --- the oval and the rings ---------------------------------------------- */
+.ha-marks .ha-mark-host { position: relative; }
+.ha-marks .ha-mark-word, .ha-marks .ha-mark-label { position: relative; display: inline-block; }
+.ha-marks .ha-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  pointer-events: none;
+  background: currentColor;
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(var(--ha-mark-turn, 0deg)) scaleX(var(--ha-mark-flip, 1));
+  -webkit-mask: var(--ha-mark-img) center / 100% 100% no-repeat, conic-gradient(from var(--ha-mark-from, 280deg), #000 var(--ha-draw), transparent 0);
+  -webkit-mask-composite: source-in;
+  mask: var(--ha-mark-img) center / 100% 100% no-repeat, conic-gradient(from var(--ha-mark-from, 280deg), #000 var(--ha-draw), transparent 0);
+  mask-composite: intersect;
+  transition: opacity 240ms ease;
+}
+/* Rings: round the whole label, wider than it and a little taller, as her
+   "LEARN FROM THE MASTERS" sketch — the ruled lines run through the ring. */
+.ha-marks .ha-mark--ring {
+  width: calc(100% + 2.2em);
+  aspect-ratio: 5 / 1;       /* long labels keep a ring's shape, not a squashed line */
+  min-height: 2.8em;
+}
+.ha-marks .ha-mark--ring-1 { --ha-mark-img: var(--ha-mark-ring-1); --ha-mark-from: 290deg; }
+.ha-marks .ha-mark--ring-2 { --ha-mark-img: var(--ha-mark-ring-2); --ha-mark-from: 250deg; }
+.ha-marks .ha-home__ruled > .ha-mark--ring { width: calc(100% + 3.2em); height: calc(100% + 1.8em); aspect-ratio: auto; }
+/* The oval: round one word, as her "EXPLORE THE COMPLETE INDEX" sketch. */
+.ha-marks .ha-mark--oval {
+  --ha-mark-img: var(--ha-mark-oval);
+  --ha-mark-from: 300deg;
+  width: calc(100% + 2em);
+  height: 3em;
+}
+
+/* The corner mark is replaced by the oval. */
+.ha-marks [data-ha-mark="oval"] :is(.ha-home__corner-mark, .ha-mst__corner, .ha-clothing__corner) { display: none; }
+
+/* The mark takes the place of the old hover underline; ruled buttons keep
+   their hairlines brightening (Ivan, 18 Sept: the ruled-row idiom). */
+.ha-marks [data-ha-mark]:is(:hover, :focus-visible, .is-marking) { text-decoration: none !important; }
+.ha-marks .ha-link[data-ha-mark]:is(:hover, :focus-visible, .is-marking),
+.ha-marks .ha-home-hero__cta[data-ha-mark]:is(:hover, :focus-visible, .is-marking) { border-bottom-color: transparent; }
+
+/* --- drawing ------------------------------------------------------------- */
+@media (hover: hover) {
+  .ha-marks [data-ha-mark]:hover .ha-mark { opacity: 1; animation: ha-mark-draw 520ms cubic-bezier(0.45, 0.05, 0.35, 1) both; }
+  .ha-marks [data-ha-mark]:hover .ha-pdp__arrow { animation: ha-mark-wipe 420ms cubic-bezier(0.45, 0.05, 0.35, 1) both; }
+}
+.ha-marks [data-ha-mark]:focus-visible .ha-mark,
+.ha-marks [data-ha-mark].is-marking .ha-mark { opacity: 1; animation: ha-mark-draw 520ms cubic-bezier(0.45, 0.05, 0.35, 1) both; }
+.ha-marks [data-ha-mark]:focus-visible .ha-pdp__arrow,
+.ha-marks [data-ha-mark].is-marking .ha-pdp__arrow { animation: ha-mark-wipe 420ms cubic-bezier(0.45, 0.05, 0.35, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-marks [data-ha-mark] .ha-mark,
+  .ha-marks [data-ha-mark] .ha-pdp__arrow { animation: none !important; }
+}
+@media print { .ha-marks .ha-mark { display: none; } }

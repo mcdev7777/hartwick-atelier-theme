@@ -78,6 +78,12 @@
     --ha-paper-panel:   {{ settings.ha_paper_panel | default: '#EEECE2' }};
     --ha-binding-bar:   {{ settings.ha_binding_bar | default: '#392B24' }};
     --ha-scrollbar-thumb: {{ settings.ha_scrollbar_color | default: '#69645F' }};
+    /* Aloha's pencil marks (23 September 2026) — alpha masks cut from her
+       sheet by scripts/make-pencil-marks.py; ha-sections.css "PENCIL MARKS". */
+    --ha-mark-arrow:  url("{{ 'ha-mark-arrow.svg' | asset_url }}");
+    --ha-mark-oval:   url("{{ 'ha-mark-oval.svg' | asset_url }}");
+    --ha-mark-ring-1: url("{{ 'ha-mark-ring-1.svg' | asset_url }}");
+    --ha-mark-ring-2: url("{{ 'ha-mark-ring-2.svg' | asset_url }}");
 
     /* --- tint system (100 / 66 / 33 / 0 against white) --- */
     --ha-soot-66: rgb({{ soot_r | times: 0.66 | plus: 86.7 | round }}, {{ soot_g | times: 0.66 | plus: 86.7 | round }}, {{ soot_b | times: 0.66 | plus: 86.7 | round }});
