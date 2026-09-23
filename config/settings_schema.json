@@ -227,6 +227,42 @@
       },
       {
         "type": "header",
+        "content": "Scrolling"
+      },
+      {
+        "type": "paragraph",
+        "content": "Ivan, 23 September 2026: smoother scrolling and a slim scrollbar, as niccolomiranda.com. Desktop only; phones and tablets keep their own momentum, and anyone who has asked their device for reduced motion gets plain scrolling."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_smooth_scroll",
+        "label": "Smooth scrolling",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "ha_smooth_scroll_ease",
+        "label": "Glide",
+        "min": 4,
+        "max": 20,
+        "step": 1,
+        "default": 10,
+        "info": "How much of the remaining distance the page travels each frame, in hundredths. Lower = longer, softer glide. 10 = the reference site."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_custom_scrollbar",
+        "label": "Slim scrollbar",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "ha_scrollbar_color",
+        "label": "Scrollbar colour",
+        "default": "#69645F"
+      },
+      {
+        "type": "header",
         "content": "Paper texture (test)"
       },
       {

@@ -101,6 +101,16 @@
 
   <body class="body{% if rtl_layout == true %} body-rtl{% endif %} lx-template--{{ template.name }} lx-color-scheme--{{ main_site_color_scheme }} lx-settings-sliders--{{ settings.carousel_width }} lx-settings-sliders--av-{{ settings.carousel_arrow_visibility }}">
     {%- render 'ha-paper-grain', part: 'body' -%}
+    {%- if settings.ha_smooth_scroll -%}
+      <script>
+        window.haScrollSettings = {
+          ease: {{ settings.ha_smooth_scroll_ease | default: 10 | divided_by: 100.0 }},
+          scrollbar: {{ settings.ha_custom_scrollbar | json }},
+          designMode: {{ request.design_mode | json }}
+        };
+      </script>
+      <script src="{{ 'ha-smooth-scroll.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ "accessibility.skip_to_text" | t }}
     </a>

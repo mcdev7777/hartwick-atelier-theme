@@ -6104,6 +6104,46 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 .ha-register.ha-register--field-correspondence { background: var(--ha-field-correspondence); }
 
 /* ==========================================================================
+   SCROLLING  —  Ivan, 23 September 2026 (reference: niccolomiranda.com)
+   assets/ha-smooth-scroll.js eases the wheel on desktop and, when it runs,
+   puts .ha-scrollbar on <html>: the native scrollbar is hidden and this slim
+   thumb drawn instead — the reference's 5px, 3px in from the edge, a warm
+   grey, shown while the page moves and while the pointer is on it. Touch
+   screens and reduced motion never get the class, so they keep the native
+   bar.
+   ========================================================================== */
+html.ha-scrollbar { scrollbar-width: none; }
+html.ha-scrollbar::-webkit-scrollbar { display: none; }
+.ha-scrollbar__track {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 101;
+  width: 1.1rem;
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.ha-scrollbar__track[hidden] { display: none; }
+.ha-scrollbar__track:hover,
+.ha-scrollbar__track.is-active,
+.ha-scrollbar-dragging .ha-scrollbar__track { opacity: 1; }
+.ha-scrollbar__thumb {
+  position: absolute;
+  top: 0;
+  right: 0.3rem;
+  width: 0.5rem;
+  border-radius: 0.5rem;
+  background: var(--ha-scrollbar-thumb, rgb(105, 100, 95));
+  cursor: grab;
+  transition: width 200ms ease;
+}
+.ha-scrollbar__track:hover .ha-scrollbar__thumb,
+.ha-scrollbar-dragging .ha-scrollbar__thumb { width: 0.7rem; }
+.ha-scrollbar-dragging, .ha-scrollbar-dragging * { cursor: grabbing !important; user-select: none; }
+@media print { .ha-scrollbar__track { display: none; } }
+
+/* ==========================================================================
    PAPER TEXTURE  —  Aloha, 22 September 2026 (a test on the development theme)
 
    "a very subtle grain layer […] across the overall interface so that
