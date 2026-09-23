@@ -206,11 +206,41 @@
       },
       {
         "type": "header",
+        "content": "Typography voices"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aloha, 22 September 2026: \"Porter = major titles/product names. Junicode = editorial headings, Expressions, numbers and selected introductions. Noto Sans Mono Condensed = body copy, navigation, functional information, captions and data.\" Two of those rows move a voice, and each reverses an earlier decision of hers, so each is a switch rather than a rewrite. Both default to the 22 September table. Flagged to Aloha \u2014 if either was not intended, change it here, not in the code."
+      },
+      {
+        "type": "select",
+        "id": "ha_body_voice",
+        "label": "Body copy",
+        "options": [
+          { "value": "record", "label": "Noto Sans Mono Condensed (Aloha, 22 Sep)" },
+          { "value": "narrate", "label": "Junicode (brand book)" }
+        ],
+        "default": "record",
+        "info": "The brand book gave body copy to Junicode as the NARRATE voice. The 22 September table gives it to Noto Sans Mono Condensed at 13px. This also sets the typeface of every unstyled word in the theme \u2014 the cart, the account pages, forms and the cookie banner."
+      },
+      {
+        "type": "select",
+        "id": "ha_chrome_voice",
+        "label": "Navigation and footer",
+        "options": [
+          { "value": "record", "label": "Noto Sans Mono Condensed (Aloha, 22 Sep)" },
+          { "value": "identify", "label": "Porter Light (Aloha, 15 Sep)" }
+        ],
+        "default": "record",
+        "info": "The header and footer have run in Porter Light since Aloha's 15 September note (\"footer fonts in Porter - Light\"). Her 22 September table puts navigation and footer in Noto Sans Mono Condensed."
+      },
+      {
+        "type": "header",
         "content": "Type scale"
       },
       {
         "type": "paragraph",
-        "content": "Aloha, 4 September 2026: \"Their text sizing is much easier to read and scan […] I want all the text on the website to have the same size text as Bode's.\" Bode sets almost every word on their product page at 12px in Neue Haas Unica. Matching that PIXEL number would not match what the eye sees, because Junicode is an old-style serif with a much smaller x-height (0.415em against Unica's 0.508em, both measured from the actual font files). 12px of Junicode reads about a fifth smaller than 12px of Unica. So these defaults match Bode's APPARENT size instead: 15px for Junicode body copy, 12px for the Noto mono record voice, whose x-height is already close to Unica's. Every slider now reaches 12px if a literal match is wanted — see the Style name and Editorial headings notes below."
+        "content": "Aloha, 22 September 2026 (\"web text sizes\"): \"We need to heavily decrease the sizes of our texts […] I want to tighten the typography across the entire site. […] Can we establish a consistent typography system across the theme rather than adjusting sections individually? […] The overall aim is smaller and calmer. Photography, spacing and information structure should create the hierarchy rather than oversized typography.\" Every size on the storefront now comes from the sliders below — the Hartwick sections, the Luxe header, footer, cart, product cards and account pages alike. Nothing is set section by section any more, so moving one slider moves that text category everywhere at once. Her table is the default for every slider; a page should deviate only where there is an intentional editorial reason."
       },
       {
         "type": "header",
@@ -218,60 +248,81 @@
       },
       {
         "type": "range",
-        "id": "ha_t_style_d",
-        "label": "Style name",
-        "min": 12,
-        "max": 56,
+        "id": "ha_t_hero_d",
+        "label": "Hero / large editorial heading",
+        "min": 18,
+        "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 26,
-        "info": "Bode set their product name at 12px — the same size as their body copy, with hierarchy carried by weight and position rather than size. 26px keeps the Style name as a heading. Drag to 12 for a literal match to Bode."
+        "default": 32,
+        "info": "Aloha's table gives a range of 30–34px here; 32 is its centre. This is the largest type anywhere on the site — nothing above it, by design."
+      },
+      {
+        "type": "range",
+        "id": "ha_t_h1_d",
+        "label": "Page title (H1)",
+        "min": 16,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "default": 26
+      },
+      {
+        "type": "range",
+        "id": "ha_t_h2_d",
+        "label": "Section title (H2)",
+        "min": 14,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "ha_t_h3_d",
+        "label": "Editorial subheading (H3)",
+        "min": 12,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "ha_t_intro_d",
+        "label": "Editorial intro paragraph",
+        "min": 11,
+        "max": 22,
+        "step": 1,
+        "unit": "px",
+        "default": 15,
+        "info": "The larger Junicode paragraph that opens a section. Ordinary body copy is the row below."
       },
       {
         "type": "range",
         "id": "ha_t_expression_d",
-        "label": "Expression",
-        "min": 11,
-        "max": 30,
+        "label": "Product Expression",
+        "min": 10,
+        "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 13
       },
       {
         "type": "range",
         "id": "ha_t_body_d",
         "label": "Body copy",
-        "min": 11,
+        "min": 10,
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 13
       },
       {
         "type": "range",
-        "id": "ha_t_body_lh_d",
-        "label": "Body line height",
-        "min": 16,
-        "max": 32,
-        "step": 1,
-        "unit": "px",
-        "default": 24
-      },
-      {
-        "type": "range",
-        "id": "ha_t_price_d",
-        "label": "Price",
-        "min": 11,
-        "max": 28,
-        "step": 1,
-        "unit": "px",
-        "default": 15
-      },
-      {
-        "type": "range",
-        "id": "ha_t_label_d",
-        "label": "Section and accordion labels",
-        "min": 10,
+        "id": "ha_t_detail_d",
+        "label": "Product details and bullets",
+        "min": 9,
         "max": 18,
         "step": 1,
         "unit": "px",
@@ -279,10 +330,10 @@
       },
       {
         "type": "range",
-        "id": "ha_t_meta_d",
-        "label": "Lot and technical metadata",
-        "min": 10,
-        "max": 16,
+        "id": "ha_t_price_d",
+        "label": "Price",
+        "min": 9,
+        "max": 20,
         "step": 1,
         "unit": "px",
         "default": 12
@@ -290,33 +341,54 @@
       {
         "type": "range",
         "id": "ha_t_ui_d",
-        "label": "Buttons and navigation",
-        "min": 10,
-        "max": 18,
+        "label": "Navigation, links, buttons",
+        "min": 9,
+        "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 11
       },
       {
         "type": "range",
-        "id": "ha_t_editorial_d",
-        "label": "Editorial headings",
-        "min": 12,
-        "max": 64,
+        "id": "ha_t_label_d",
+        "label": "Small labels (FOUNDER, ORIGIN)",
+        "min": 8,
+        "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 32,
-        "info": "Bode's page has no display typography at all; its largest text is 16px. 32px keeps Hartwick's editorial voice from the brand book. Drag down freely — the floor is 12px."
+        "default": 10
       },
       {
         "type": "range",
-        "id": "ha_t_statement_d",
-        "label": "Statement line",
-        "min": 12,
-        "max": 48,
+        "id": "ha_t_meta_d",
+        "label": "Captions, records and metadata",
+        "min": 8,
+        "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 21
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "ha_t_legal_d",
+        "label": "Copyright and legal",
+        "min": 8,
+        "max": 14,
+        "step": 1,
+        "unit": "px",
+        "default": 9,
+        "info": "The one 9px surface Aloha specified. It carries the copyright line and nothing else."
+      },
+      {
+        "type": "range",
+        "id": "ha_t_style_d",
+        "label": "Product name (Style)",
+        "min": 11,
+        "max": 28,
+        "step": 1,
+        "unit": "px",
+        "default": 16,
+        "info": "Porter. Sits one step above the editorial subheading, not on the section-title line."
       },
       {
         "type": "header",
@@ -324,73 +396,84 @@
       },
       {
         "type": "paragraph",
-        "content": "Aloha: labels and technical information no smaller than 12px on mobile. The minimum is enforced in code, so lowering this slider cannot take a label below 12px."
+        "content": "The 3 September floor (\"labels and technical information never below 12px on mobile\") is superseded by the 22 September table, which sets labels, captions and metadata at 10px on both breakpoints and legal text at 9px. The floor is no longer enforced in code."
       },
       {
         "type": "range",
-        "id": "ha_t_style_m",
-        "label": "Style name",
-        "min": 12,
-        "max": 44,
+        "id": "ha_t_hero_m",
+        "label": "Hero / large editorial heading",
+        "min": 16,
+        "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 22
+        "default": 28,
+        "info": "Her range is 26–30px; 28 is its centre."
       },
       {
         "type": "range",
-        "id": "ha_t_expression_m",
-        "label": "Expression",
+        "id": "ha_t_h1_m",
+        "label": "Page title (H1)",
+        "min": 14,
+        "max": 34,
+        "step": 1,
+        "unit": "px",
+        "default": 23
+      },
+      {
+        "type": "range",
+        "id": "ha_t_h2_m",
+        "label": "Section title (H2)",
+        "min": 12,
+        "max": 28,
+        "step": 1,
+        "unit": "px",
+        "default": 18
+      },
+      {
+        "type": "range",
+        "id": "ha_t_h3_m",
+        "label": "Editorial subheading (H3)",
         "min": 11,
-        "max": 26,
+        "max": 22,
         "step": 1,
         "unit": "px",
         "default": 15
       },
       {
         "type": "range",
-        "id": "ha_t_body_m",
-        "label": "Body copy",
+        "id": "ha_t_intro_m",
+        "label": "Editorial intro paragraph",
         "min": 11,
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 14
       },
       {
         "type": "range",
-        "id": "ha_t_body_lh_m",
-        "label": "Body line height",
-        "min": 16,
-        "max": 30,
-        "step": 1,
-        "unit": "px",
-        "default": 24
-      },
-      {
-        "type": "range",
-        "id": "ha_t_price_m",
-        "label": "Price",
-        "min": 11,
-        "max": 26,
-        "step": 1,
-        "unit": "px",
-        "default": 15
-      },
-      {
-        "type": "range",
-        "id": "ha_t_label_m",
-        "label": "Section and accordion labels",
+        "id": "ha_t_expression_m",
+        "label": "Product Expression",
         "min": 10,
-        "max": 18,
+        "max": 20,
         "step": 1,
         "unit": "px",
         "default": 12
       },
       {
         "type": "range",
-        "id": "ha_t_meta_m",
-        "label": "Lot and technical metadata",
+        "id": "ha_t_body_m",
+        "label": "Body copy",
         "min": 10,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "ha_t_detail_m",
+        "label": "Product details and bullets",
+        "min": 9,
         "max": 16,
         "step": 1,
         "unit": "px",
@@ -398,9 +481,9 @@
       },
       {
         "type": "range",
-        "id": "ha_t_ui_m",
-        "label": "Buttons and navigation",
-        "min": 10,
+        "id": "ha_t_price_m",
+        "label": "Price",
+        "min": 9,
         "max": 18,
         "step": 1,
         "unit": "px",
@@ -408,23 +491,68 @@
       },
       {
         "type": "range",
-        "id": "ha_t_editorial_m",
-        "label": "Editorial headings",
-        "min": 12,
-        "max": 44,
+        "id": "ha_t_ui_m",
+        "label": "Navigation, links, buttons",
+        "min": 9,
+        "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 24
+        "default": 11
       },
       {
         "type": "range",
-        "id": "ha_t_statement_m",
-        "label": "Statement line",
-        "min": 12,
-        "max": 36,
+        "id": "ha_t_label_m",
+        "label": "Small labels (FOUNDER, ORIGIN)",
+        "min": 8,
+        "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 18
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "ha_t_meta_m",
+        "label": "Captions, records and metadata",
+        "min": 8,
+        "max": 16,
+        "step": 1,
+        "unit": "px",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "ha_t_legal_m",
+        "label": "Copyright and legal",
+        "min": 8,
+        "max": 14,
+        "step": 1,
+        "unit": "px",
+        "default": 9
+      },
+      {
+        "type": "range",
+        "id": "ha_t_style_m",
+        "label": "Product name (Style)",
+        "min": 11,
+        "max": 26,
+        "step": 1,
+        "unit": "px",
+        "default": 15
+      },
+      {
+        "type": "header",
+        "content": "Type scale — line height"
+      },
+      {
+        "type": "range",
+        "id": "ha_t_body_lh",
+        "label": "Body line height",
+        "min": 140,
+        "max": 180,
+        "step": 5,
+        "unit": "%",
+        "default": 160,
+        "info": "Aloha gave body copy a range of 1.55–1.65. The other line heights in her table are fixed per category and are set in snippets/ha-tokens.liquid."
       },
       {
         "type": "header",
@@ -707,6 +835,10 @@
   {
     "name": "t:settings_schema.typography.name",
     "settings": [
+      {
+        "type": "paragraph",
+        "content": "\u26a0\ufe0f THE SIZES IN THIS GROUP NO LONGER DO ANYTHING. Aloha asked on 22 September 2026 for one typography system across the whole theme rather than sizes set section by section, so every size on the storefront \u2014 Luxe's own header, footer, cart, product cards and account pages included \u2014 is now driven from Hartwick \u2014 Material Archive > Type scale. The font pickers, letter spacing and text case below still apply; the pixel sliders are overridden. Change the type scale, not these."
+      },
       {
         "type": "header",
         "content": "t:settings_schema.typography.settings.header__1.content",

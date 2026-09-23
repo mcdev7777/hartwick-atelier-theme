@@ -131,67 +131,111 @@
     --ha-media-cap: {{ settings.ha_media_cap | default: 56 }}vh;
 
     /* ==================================================================
-       TYPE SCALE  —  Aloha, 3 September 2026
-       "The typography currently feels too large and visually dense […]
-        Too many elements have similar visual weight."
+       TYPE SCALE  —  Aloha, 22 September 2026 ("web text sizes")
 
-       --- RETUNED 4 SEPTEMBER 2026, AGAINST BODE ---------------------------
-       Aloha: "Their text sizing is much easier to read and scan […] I want all
-       the text on the website to have the same size text as Bode's."
+       "We need to heavily decrease the sizes of our texts […] quite a lot of
+        the text feels oversized so we're losing some of the editorial
+        hierarchy. […] Can we establish a consistent typography system across
+        the theme rather than adjusting sections individually? […] The overall
+        aim is smaller and calmer. Photography, spacing and information
+        structure should create the hierarchy rather than oversized typography."
 
-       Bode set essentially their whole product page at 12px — product name,
-       price, description, sizes, Add to bag, navigation. The largest text
-       anywhere on that page is 16px, and the <h1> is visually hidden. Copying
-       that PIXEL value would not copy what the eye sees. Measured off the font
-       files themselves rather than guessed:
+       THIS BLOCK IS THE SYSTEM. Her table has one row per text category; each
+       row is one token below, and every rule in the theme points at a token
+       rather than at a number. Nothing outside this file sets a type size —
+       not a section, not a Luxe component, not the header. That is what makes
+       "set globally rather than manually resizing each block" true rather than
+       aspirational, and it is why the earlier multiplier idiom
+       (`calc(var(--ha-t-editorial) * 1.7)`) has been removed everywhere: a
+       heading derived from another heading cannot be governed from one table.
 
-           Neue Haas Unica (Bode)      x-height 0.508 em
-           Junicode        (narrate)   x-height 0.415 em
-           Noto Mono Cond  (record)    x-height 0.536 em
-           Porter          (identify)  cap-height 0.700 em
+       WHAT CHANGED, AND WHY THE OLD NOTES BELOW ARE GONE
+       The 4 September tuning reasoned from x-heights — Junicode reads about a
+       fifth smaller than a sans at the same nominal size, so body copy was set
+       at 15px of Junicode to match Bode's 12px of Unica by eye. That reasoning
+       is now spent, because Aloha's new table assigns the FONT and the SIZE
+       together in the same row: body copy is 13px of Noto Sans Mono Condensed,
+       whose x-height (0.536em) is larger than Unica's, and Junicode appears
+       only at 13px and above (Expression, intro, H3). The table is internally
+       consistent on its own terms, so it is taken literally here.
 
-       Junicode is an old-style serif and reads about a fifth smaller than
-       Unica at the same nominal size. Apparent parity with Bode's 12px is
-       therefore 15px of Junicode and 12px of Noto, and that is what these
-       defaults now are — the record voice matches at Bode's own number because
-       it is already a sans of similar proportion.
+       Her font hierarchy, applied as the voice each token carries:
+         Porter   — major titles and product names        (hero, h1, h2, style)
+         Junicode — editorial headings, Expressions,
+                    numbers, selected introductions       (h3, intro, expression)
+         Noto Sans Mono Condensed — body copy, navigation,
+                    functional information, captions, data (everything else)
 
-       The display sizes are cut hard but not all the way to 12px. Bode carry
-       hierarchy with weight and position and have no display typography at
-       all; Hartwick's brand book has an editorial voice that would be deleted,
-       not reduced, by a literal match. Both display sliders now reach 12px, so
-       that decision stays Aloha's and needs no developer to reverse.
-
-       Her stated hierarchy, held as tokens rather than as numbers scattered
-       through CSS, so the whole site can be re-tuned from
-       Theme settings > Hartwick — Material Archive > Type scale. She asked for
-       these to be treated as starting points, so they have to be adjustable
-       without a developer.
+       SUPERSEDED: the 3 September floor "labels and technical information never
+       below 12px on mobile". The new table sets small labels, captions and
+       metadata at 10px on both breakpoints and legal text at 9px, so the
+       `at_least: 12` guard has been removed. 9px is small; it is applied only
+       to the copyright/legal line, exactly as the table specifies.
 
        Mobile first; the desktop values take over at 990px, Luxe's own
-       breakpoint. Sizes are rem against Luxe's 10px root (1.6rem = 16px) so a
+       breakpoint. Sizes are rem against Luxe's 10px root (1.3rem = 13px) so a
        visitor who has raised their browser's default text size still gets it.
-
-       Aloha's floor: labels and technical information never below 12px on
-       mobile. `at_least: 12` enforces it here, so the slider cannot break it.
+       Every row is a slider in Theme settings > Hartwick — Material Archive >
+       Type scale, so the scale stays Aloha's to re-tune without a developer.
        ================================================================== */
-    --ha-t-style:      {{ settings.ha_t_style_m      | default: 22 | divided_by: 10.0 }}rem;
-    --ha-t-expression: {{ settings.ha_t_expression_m | default: 15 | divided_by: 10.0 }}rem;
-    --ha-t-body:       {{ settings.ha_t_body_m       | default: 15 | divided_by: 10.0 }}rem;
-    --ha-t-body-lh:    {{ settings.ha_t_body_lh_m    | default: 24 | divided_by: 10.0 }}rem;
-    --ha-t-price:      {{ settings.ha_t_price_m      | default: 15 | divided_by: 10.0 }}rem;
-    --ha-t-label:      {{ settings.ha_t_label_m      | default: 12 | at_least: 12 | divided_by: 10.0 }}rem;
-    --ha-t-meta:       {{ settings.ha_t_meta_m       | default: 12 | at_least: 12 | divided_by: 10.0 }}rem;
-    --ha-t-ui:         {{ settings.ha_t_ui_m         | default: 12 | at_least: 12 | divided_by: 10.0 }}rem;
-    --ha-t-editorial:  {{ settings.ha_t_editorial_m  | default: 24 | divided_by: 10.0 }}rem;
 
-    /* One size between the editorial heading and body copy, for the two places
-       the revised design sets a single sentence as a statement in its own right:
-       the process line and the wearer's quotation. Wireframe 04 measures both
-       at 32px on desktop. */
-    --ha-t-statement:  {{ settings.ha_t_statement_m  | default: 18 | divided_by: 10.0 }}rem;
+    /* --- display: Porter ------------------------------------------------ */
+    --ha-t-hero:       {{ settings.ha_t_hero_m       | default: 28 | divided_by: 10.0 }}rem;
+    --ha-t-h1:         {{ settings.ha_t_h1_m         | default: 23 | divided_by: 10.0 }}rem;
+    --ha-t-h2:         {{ settings.ha_t_h2_m         | default: 18 | divided_by: 10.0 }}rem;
+    /* --- editorial: Junicode -------------------------------------------- */
+    --ha-t-h3:         {{ settings.ha_t_h3_m         | default: 15 | divided_by: 10.0 }}rem;
+    --ha-t-intro:      {{ settings.ha_t_intro_m      | default: 14 | divided_by: 10.0 }}rem;
+    --ha-t-expression: {{ settings.ha_t_expression_m | default: 12 | divided_by: 10.0 }}rem;
+    /* --- record: Noto Sans Mono Condensed -------------------------------- */
+    --ha-t-body:       {{ settings.ha_t_body_m       | default: 13 | divided_by: 10.0 }}rem;
+    --ha-t-detail:     {{ settings.ha_t_detail_m     | default: 12 | divided_by: 10.0 }}rem;
+    --ha-t-price:      {{ settings.ha_t_price_m      | default: 12 | divided_by: 10.0 }}rem;
+    --ha-t-ui:         {{ settings.ha_t_ui_m         | default: 11 | divided_by: 10.0 }}rem;
+    --ha-t-label:      {{ settings.ha_t_label_m      | default: 10 | divided_by: 10.0 }}rem;
+    --ha-t-meta:       {{ settings.ha_t_meta_m       | default: 10 | divided_by: 10.0 }}rem;
+    --ha-t-legal:      {{ settings.ha_t_legal_m      | default: 9  | divided_by: 10.0 }}rem;
+    /* The product name is a Porter surface and sits on its own row in the
+       table (16 / 15), one step above H3 rather than on the H2 line. */
+    --ha-t-style:      {{ settings.ha_t_style_m      | default: 15 | divided_by: 10.0 }}rem;
 
-    /* Tracking travels with size: the record voice needs it, a 40px display
+    /* Roles the table names separately but sizes identically to a row above.
+       They are aliases rather than sliders so the two can never drift apart
+       by accident, and so a future instruction that splits them has one
+       obvious place to land. */
+    --ha-t-caption:        var(--ha-t-meta);        /* image captions      10 */
+    --ha-t-nav:            var(--ha-t-ui);          /* navigation          11 */
+    --ha-t-button:         var(--ha-t-ui);          /* button text         11 */
+    --ha-t-accordion:      var(--ha-t-ui);          /* accordion headings  11 */
+    --ha-t-footer:         var(--ha-t-ui);          /* footer links/body   11 */
+    --ha-t-footer-heading: var(--ha-t-label);       /* footer headings     10 */
+
+    /* --- line heights, per her table ------------------------------------
+       Unitless, so they travel with whatever size the token above resolves to
+       and a slider move cannot break the setting. */
+    --ha-t-lh-hero:       1.08;   /* 1.05–1.1 */
+    --ha-t-lh-h1:         1.1;
+    --ha-t-lh-h2:         1.15;
+    --ha-t-lh-h3:         1.25;
+    --ha-t-lh-intro:      1.5;
+    --ha-t-lh-expression: 1.35;
+    --ha-t-lh-style:      1.2;
+    --ha-t-lh-detail:     1.5;
+    --ha-t-lh-price:      1.3;
+    --ha-t-lh-ui:         1.3;
+    --ha-t-lh-button:     1;
+    --ha-t-lh-nav:        1.2;
+    --ha-t-lh-label:      1.2;
+    --ha-t-lh-meta:       1.4;
+    --ha-t-lh-footer:     1.5;
+    --ha-t-lh-legal:      1.4;
+    /* Body is the one line height Aloha gave as a range (1.55–1.65) and the
+       one most worth being able to nudge, so it stays a slider. It used to be
+       a LENGTH in px, consumed as `calc(--ha-t-body-lh / --ha-t-body)`; it is
+       a plain ratio now, and those calc() call sites have been replaced. */
+    --ha-t-body-lh:    {{ settings.ha_t_body_lh | default: 160 | divided_by: 100.0 }};
+
+    /* Tracking travels with size: the record voice needs it, a 32px display
        heading does not. Declared here so a section never invents its own. */
     --ha-track-meta:  0.14em;
     --ha-track-label: 0.12em;
@@ -200,16 +244,116 @@
 
   @media screen and (min-width: 990px) {
     :root {
-      --ha-t-style:      {{ settings.ha_t_style_d      | default: 26 | divided_by: 10.0 }}rem;
-      --ha-t-expression: {{ settings.ha_t_expression_d | default: 15 | divided_by: 10.0 }}rem;
-      --ha-t-body:       {{ settings.ha_t_body_d       | default: 15 | divided_by: 10.0 }}rem;
-      --ha-t-body-lh:    {{ settings.ha_t_body_lh_d    | default: 24 | divided_by: 10.0 }}rem;
-      --ha-t-price:      {{ settings.ha_t_price_d      | default: 15 | divided_by: 10.0 }}rem;
-      --ha-t-label:      {{ settings.ha_t_label_d      | default: 12 | divided_by: 10.0 }}rem;
-      --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 12 | divided_by: 10.0 }}rem;
-      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 12 | divided_by: 10.0 }}rem;
-      --ha-t-editorial:  {{ settings.ha_t_editorial_d  | default: 32 | divided_by: 10.0 }}rem;
-      --ha-t-statement:  {{ settings.ha_t_statement_d  | default: 21 | divided_by: 10.0 }}rem;
+      --ha-t-hero:       {{ settings.ha_t_hero_d       | default: 32 | divided_by: 10.0 }}rem;
+      --ha-t-h1:         {{ settings.ha_t_h1_d         | default: 26 | divided_by: 10.0 }}rem;
+      --ha-t-h2:         {{ settings.ha_t_h2_d         | default: 20 | divided_by: 10.0 }}rem;
+      --ha-t-h3:         {{ settings.ha_t_h3_d         | default: 16 | divided_by: 10.0 }}rem;
+      --ha-t-intro:      {{ settings.ha_t_intro_d      | default: 15 | divided_by: 10.0 }}rem;
+      --ha-t-expression: {{ settings.ha_t_expression_d | default: 13 | divided_by: 10.0 }}rem;
+      --ha-t-body:       {{ settings.ha_t_body_d       | default: 13 | divided_by: 10.0 }}rem;
+      --ha-t-detail:     {{ settings.ha_t_detail_d     | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-price:      {{ settings.ha_t_price_d      | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 11 | divided_by: 10.0 }}rem;
+      --ha-t-label:      {{ settings.ha_t_label_d      | default: 10 | divided_by: 10.0 }}rem;
+      --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 10 | divided_by: 10.0 }}rem;
+      --ha-t-legal:      {{ settings.ha_t_legal_d      | default: 9  | divided_by: 10.0 }}rem;
+      --ha-t-style:      {{ settings.ha_t_style_d      | default: 16 | divided_by: 10.0 }}rem;
     }
+  }
+
+  {%- comment -%}
+    THE LUXE BRIDGE.
+
+    Luxe funnels its own typography — headings, body, buttons, captions, cart,
+    badges, dialogs — through the --font-* custom properties that
+    `global-theme-styles` builds out of the theme's font-size settings. This
+    snippet renders AFTER that one, so re-declaring them here points every
+    native section at Aloha's table without touching a single Luxe stylesheet
+    and without a theme update overwriting the work.
+
+    Without this bridge the site would have two typographies: a small, calm
+    Hartwick one and an untouched Luxe one running the header, the footer, the
+    cart, the product cards and the customer account pages. That split is
+    exactly what "a consistent typography system across the theme" rules out.
+
+    Luxe has a tablet step at 750px that the Hartwick scale does not; tablet
+    takes the desktop value, since the table has only two columns.
+  {%- endcomment -%}
+  :root {
+    /* body copy — 13px */
+    --font-body-base-size-mobile:  {{ settings.ha_t_body_m   | default: 13 }}px;
+    --font-body-base-size-tablet:  {{ settings.ha_t_body_d   | default: 13 }}px;
+    --font-body-base-size-desktop: {{ settings.ha_t_body_d   | default: 13 }}px;
+    --base-line-height: {{ settings.ha_t_body_lh | default: 160 | divided_by: 100.0 }};
+
+    /* interface text — 11px. Luxe's "small" and "micro" steps are the label
+       and caption row, 10px. */
+    --font-ui-size-mobile:        {{ settings.ha_t_ui_m    | default: 11 }}px;
+    --font-ui-size-desktop:       {{ settings.ha_t_ui_d    | default: 11 }}px;
+    --font-ui-size-small-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-ui-size-small-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-size-micro-mobile:     {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-size-micro-desktop:    {{ settings.ha_t_label_d | default: 10 }}px;
+
+    /* captions and metadata — 10px */
+    --font-caption-size-mobile:  {{ settings.ha_t_meta_m | default: 10 }}px;
+    --font-caption-size-desktop: {{ settings.ha_t_meta_d | default: 10 }}px;
+
+    /* product badges — a label */
+    --font-size-product-badge-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-size-product-badge-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
+
+    /* cart and dialogs are functional information — 12px */
+    --font-size-cart-drawer-mobile:  {{ settings.ha_t_detail_m | default: 12 }}px;
+    --font-size-cart-drawer-desktop: {{ settings.ha_t_detail_d | default: 12 }}px;
+    --dialog-title-size-mobile:  {{ settings.ha_t_h3_m | default: 15 }}px;
+    --dialog-title-size-tablet:  {{ settings.ha_t_h3_d | default: 16 }}px;
+    --dialog-title-size-desktop: {{ settings.ha_t_h3_d | default: 16 }}px;
+
+    /* FORM FIELDS ARE THE ONE DELIBERATE EXCEPTION on mobile. iOS Safari zooms
+       the page whenever a focused input is under 16px, and the zoom does not
+       reverse when the field is left — a visitor filling in The Register would
+       be stranded at 1.3x with the layout broken. 16px on phones, the table's
+       body size on everything else. The same reason is why the Hartwick form
+       rules read `max(var(--ha-t-body), 1.6rem)`. */
+    --font-form-placeholder-size-mobile:  16px;
+    --font-form-placeholder-size-desktop: {{ settings.ha_t_body_d | default: 13 }}px;
+
+    /* buttons — 11px, line height 1 */
+    --buttons-font-size-mobile:  {{ settings.ha_t_ui_m | default: 11 }}px;
+    --buttons-font-size-desktop: {{ settings.ha_t_ui_d | default: 11 }}px;
+
+    /* Luxe's heading ladder. h1–h3 are Aloha's rows. h4 takes the intro size,
+       h5 the body size and h6 the label size, which is where Luxe's own
+       templates use them (h6 is Luxe's uppercase eyebrow). h0/hxl/hxxl are
+       Luxe's oversize display steps — every one of them collapses onto the
+       hero row, because the table has no size above it. */
+    --font-h1-size-mobile:  {{ settings.ha_t_h1_m | default: 23 }}px;
+    --font-h1-size-tablet:  {{ settings.ha_t_h1_d | default: 26 }}px;
+    --font-h1-size-desktop: {{ settings.ha_t_h1_d | default: 26 }}px;
+    --font-h2-size-mobile:  {{ settings.ha_t_h2_m | default: 18 }}px;
+    --font-h2-size-tablet:  {{ settings.ha_t_h2_d | default: 20 }}px;
+    --font-h2-size-desktop: {{ settings.ha_t_h2_d | default: 20 }}px;
+    --font-h3-size-mobile:  {{ settings.ha_t_h3_m | default: 15 }}px;
+    --font-h3-size-tablet:  {{ settings.ha_t_h3_d | default: 16 }}px;
+    --font-h3-size-desktop: {{ settings.ha_t_h3_d | default: 16 }}px;
+    --font-h4-size-mobile:  {{ settings.ha_t_intro_m | default: 14 }}px;
+    --font-h4-size-tablet:  {{ settings.ha_t_intro_d | default: 15 }}px;
+    --font-h4-size-desktop: {{ settings.ha_t_intro_d | default: 15 }}px;
+    --font-h5-size-mobile:  {{ settings.ha_t_body_m | default: 13 }}px;
+    --font-h5-size-tablet:  {{ settings.ha_t_body_d | default: 13 }}px;
+    --font-h5-size-desktop: {{ settings.ha_t_body_d | default: 13 }}px;
+    --font-h6-size-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-h6-size-tablet:  {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-h6-size-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-h0-size-mobile:   {{ settings.ha_t_hero_m | default: 28 }}px;
+    --font-h0-size-tablet:   {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-h0-size-desktop:  {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxl-size-mobile:  {{ settings.ha_t_hero_m | default: 28 }}px;
+    --font-hxl-size-tablet:  {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxl-size-desktop: {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxxl-size-mobile:  {{ settings.ha_t_hero_m | default: 28 }}px;
+    --font-hxxl-size-tablet:  {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxxl-size-desktop: {{ settings.ha_t_hero_d | default: 32 }}px;
   }
 {% endstyle %}

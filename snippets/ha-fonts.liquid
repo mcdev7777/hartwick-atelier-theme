@@ -122,35 +122,93 @@
     --ha-font-narrate:  "Junicode", Georgia, "Times New Roman", serif;
     --ha-font-record:   "Noto Sans Mono Condensed", ui-monospace, "SF Mono", Menlo, monospace;
 
-    /* override Luxe's font_picker-generated families */
+    /* ==================================================================
+       WHICH VOICE CARRIES WHICH ROLE  —  Aloha, 22 September 2026
+
+       Her "web text sizes" note restates the hierarchy with one row per text
+       category, and two of those rows move a voice:
+
+         Porter   — major titles and product names
+         Junicode — editorial headings, Expressions, numbers,
+                    selected introductions
+         Noto Sans Mono Condensed — BODY COPY, NAVIGATION, functional
+                    information, captions and data
+
+       Body copy and the navigation/footer chrome were both in other voices
+       until now: body copy in Junicode (the brand book's NARRATE role) and the
+       header and footer in Porter (Aloha's own 15 September note, "footer fonts
+       in Porter - Light"). Her table is the later instruction and is taken as
+       the direction, so both default to the record voice here.
+
+       Each is a single setting rather than a rewrite, because each reverses an
+       earlier decision of hers and a reversal should cost one click, not a
+       developer. Theme settings > Hartwick — Material Archive > Typography
+       voices. Flagged to Aloha.
+       ================================================================== */
+    {%- liquid
+      assign body_voice = settings.ha_body_voice | default: 'record'
+      assign chrome_voice = settings.ha_chrome_voice | default: 'record'
+    -%}
+    {%- if body_voice == 'narrate' -%}
+    --ha-voice-body: var(--ha-font-narrate);
+    --ha-voice-body-weight: 300;
+    {%- else -%}
+    --ha-voice-body: var(--ha-font-record);
+    /* Noto Sans Mono Condensed ships here as two static instances, 400 and 500.
+       Asking a 400-only face for 300 is harmless (no lighter face is
+       synthesised, the browser serves the 400) but asking for it explicitly
+       states the intent and keeps the weight off the synthesis path. */
+    --ha-voice-body-weight: 400;
+    {%- endif -%}
+    {%- if chrome_voice == 'identify' -%}
+    --ha-voice-chrome: var(--ha-font-identify);
+    --ha-voice-chrome-weight: 300;
+    {%- else -%}
+    --ha-voice-chrome: var(--ha-font-record);
+    --ha-voice-chrome-weight: 400;
+    {%- endif -%}
+
+    /* override Luxe's font_picker-generated families.
+
+       --font-body-family is the family every unmarked word on the site
+       inherits — Luxe's cart, account pages, forms, facets, cards and the
+       cookie banner included. Pointing it at the body voice is what makes
+       "Noto Sans Mono Condensed = body copy […] functional information" true
+       across the whole theme rather than only in the Hartwick sections. */
     --font-heading-family: var(--ha-font-identify);
-    --font-body-family:    var(--ha-font-narrate);
+    --font-body-family:    var(--ha-voice-body);
     --font-accent-family:  var(--ha-font-record);
 
     /* Luxe derives these from the old Swiss 721 font picker (weight 400).
        The brand book set Junicode body copy and editorial display at Medium;
        Aloha overruled that on 18 September 2026: "All Junicode fonts are always
-       Light, and when it's in Italics, it's also Light Italic." Body copy is
-       therefore 300, and so is bold — <strong> in Junicode no longer changes
-       weight (the italic face is the emphasis available). The variable file
-       still carries 300-700 because the landing page's headline is set in
-       Junicode Bold by its own design and is not part of this rule. */
-    --font-body-weight: 300;
-    --font-body-weight-bold: 300;
+       Light, and when it's in Italics, it's also Light Italic." Junicode is
+       therefore 300 wherever it appears, and so is its bold — <strong> in
+       Junicode no longer changes weight (the italic face is the emphasis
+       available). The variable file still carries 300-700 because the landing
+       page's headline is set in Junicode Bold by its own design and is not
+       part of this rule.
+
+       The body weight now follows the body voice: 300 while Junicode carries
+       body copy, 400 once Noto does. */
+    --font-body-weight: var(--ha-voice-body-weight);
+    --font-body-weight-bold: var(--ha-voice-body-weight);
     --font-body-style: normal;
-    /* Luxe's price weight comes from its font picker (400); prices are set in
-       Junicode, so Light as well. */
-    --price-font-weight: 300;
+    /* Price is a record row in Aloha's table (12px, Noto), so it takes the
+       record weight. It followed Junicode's 300 while prices were set in
+       Junicode. */
+    --price-font-weight: 400;
   }
 
-  /* No bold anywhere in Junicode. The browser default for <strong> and <b> is
-     "bolder", which lifts Light (300) to 400 — that is what put the shipping
-     note's opening sentence a weight above its paragraph. Emphasis now keeps
-     its parent's weight in every voice; italic remains the emphasis available
-     in Junicode. Shopify's cookie-consent banner inherits Junicode and sets its
-     own heading bold, hence the id-qualified override. */
+  /* No synthetic bold in any voice. The browser default for <strong> and <b>
+     is "bolder", which lifts Junicode Light (300) to 400 — that is what put the
+     shipping note's opening sentence a weight above its paragraph — and which
+     makes the browser fake a bold for Noto, whose 700 is not loaded. Emphasis
+     keeps its parent's weight everywhere; italic remains the emphasis available
+     in Junicode. Shopify's cookie-consent banner sets its own heading bold,
+     hence the id-qualified override. */
   strong, b { font-weight: inherit; }
-  #shopify-pc__banner h2 { font-weight: 300; }
+  #shopify-pc__banner h2 { font-weight: inherit; }
 
   /* IDENTIFY — brand book: uppercase only, tracking +20 to +80, line height 90-110%
 
@@ -200,11 +258,13 @@
     letter-spacing: 0.02em;
   }
 
-  /* Navigation is an IDENTIFY surface per the typography rules ("house identification,
-     principal headings, navigation, collection titles"). Luxe's base.css assigns
-     --font-accent-family to .header-bar-inner with !important, which would put the
-     nav in the RECORD voice; these selectors are more specific, so they win.
-     Buttons and other interface detail are left on RECORD, which the rules allow. */
+  /* NAVIGATION. The typography rules made this an IDENTIFY surface ("house
+     identification, principal headings, navigation, collection titles") and it
+     ran in Porter until now; Aloha's 22 September table moves the navigation row
+     to Noto Sans Mono Condensed, so it follows --ha-voice-chrome and defaults
+     there. Luxe's base.css assigns --font-accent-family to .header-bar-inner
+     with !important; these selectors are more specific, so they win either way.
+     Buttons and other interface detail were already on RECORD. */
   .hdr-nav-primary-level-ul a,
   .nav-ul--primary a,
   .nav-ul--secondary a,
@@ -220,8 +280,9 @@
   .header-bar--shopping-tools .hdr-st-item-label,
   .hdr-search-btn .hdr-st-item-label,
   .cart-count-bubble {
-    font-family: var(--ha-font-identify) !important;
-    /* UPPERCASE IS NOT DECORATION HERE — it is required.
+    font-family: var(--ha-voice-chrome) !important;
+    /* UPPERCASE IS NOT DECORATION HERE — it is required while Porter carries
+       this surface.
 
        Porter is subset to A-Z and space (the brand rule: no numbers,
        punctuation or symbols). A label typed in sentence case therefore renders
@@ -237,9 +298,15 @@
     /* Porter Light, to match the footer (Aloha, 15 September 2026: "not too
        big… a clean look"; the Medium read as bold beside it). The 300 face is
        declared above; where Porter is not licensed Junicode carries 300 too.
-       Luxe sets the bar's weight with !important, hence the same here. */
-    font-weight: 300 !important;
+       Noto has no 300, so the token resolves to 400 on that voice. Luxe sets
+       the bar's weight with !important, hence the same here. */
+    font-weight: var(--ha-voice-chrome-weight) !important;
     letter-spacing: 0.14em;
+    /* Aloha's table: navigation is 11px, line height 1.2. Luxe's header section
+       sets its own sizes from section settings, which are set to match; this is
+       the backstop for any nav surface the section does not name. */
+    font-size: var(--ha-t-nav);
+    line-height: var(--ha-t-lh-nav);
   }
 
   /* Wordmark. Colour comes from `color` because the SVG paints with currentColor:
