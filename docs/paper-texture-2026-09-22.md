@@ -1,5 +1,9 @@
 # Paper texture — test build, 22 September 2026
 
+> **Removed 23 September 2026 (Ivan):** the paper effect, its Current / Paper preview
+> switch and its theme settings are gone from the theme, along with the tiles and the
+> generator scripts. They are in git history (commit 13d41e5) if it is ever wanted back.
+
 Aloha's request (22 Sep, following Angela's earlier suggestion): a very subtle paper
 grain across the whole interface, so that backgrounds, colour fields and editorial
 photography feel like one printed surface. It should not look distressed, vintage or like
