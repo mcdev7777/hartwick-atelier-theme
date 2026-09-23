@@ -50,6 +50,7 @@
 
     {% render 'global-theme-styles' %}
     {% render 'ha-tokens' %}
+    {%- render 'ha-paper-grain', part: 'head' -%}
     {% render 'ha-fonts' %}
     
     {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -99,6 +100,7 @@
   {% endif %}
 
   <body class="body{% if rtl_layout == true %} body-rtl{% endif %} lx-template--{{ template.name }} lx-color-scheme--{{ main_site_color_scheme }} lx-settings-sliders--{{ settings.carousel_width }} lx-settings-sliders--av-{{ settings.carousel_arrow_visibility }}">
+    {%- render 'ha-paper-grain', part: 'body' -%}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ "accessibility.skip_to_text" | t }}
     </a>

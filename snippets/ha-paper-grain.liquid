@@ -1,0 +1,119 @@
+{%- comment -%}
+  Hartwick Atelier — the paper sheet laid over the site, and the switch
+  between the two modes while it is a test.
+  Aloha, 22 September 2026: "a lightweight global texture overlay rather than
+  baking texture individually into every image". Strengths in Theme settings >
+  Hartwick — Material Archive > Paper texture (test); tokens in ha-tokens;
+  every rule in ha-sections.css (block "PAPER TEXTURE").
+
+  TWO MODES (Ivan, 22 Sep: "keep both modes … a button to preview both")
+    Current — the site exactly as it was: no sheet, no grain, no restacking.
+    Paper   — `html.ha-paper`: every grain rule is scoped to that class.
+  The setting `ha_grain` picks the mode the site opens in. On a preview or
+  development theme a reviewer can flip it with the Current / Paper button;
+  the choice is remembered in that browser (localStorage) across pages.
+  On the published theme (Shopify.theme.role "main") and inside the theme
+  editor the button never shows and only the setting counts.
+
+  Rendered twice from layout/theme.liquid:
+    part: 'head' — after ha-tokens, decides the mode before the first paint
+                   so the page never flashes the other one.
+    part: 'body' — straight after <body>: the sheet and the button.
+
+  From a URL, on a preview theme:
+    ?grain=on / ?grain=off   paper / current (remembered like the button)
+    ?grain=10                paper, interface strength 10%
+    ?grain=8,14,2            paper, interface / editorial / product
+    ?grain=reset             forget all of it, back to the theme settings
+  Strength overrides last for the browser tab.
+{%- endcomment -%}
+{%- liquid
+  assign grain_default = settings.ha_grain
+  if grain_default == nil
+    assign grain_default = false
+  endif
+-%}
+{%- if part == 'head' -%}
+  <script>
+    (function () {
+      var paper = {{ grain_default | json }};
+      var theme = (window.Shopify && window.Shopify.theme) || {};
+      var preview = theme.role !== 'main' && !{{ request.design_mode | json }};
+      if (preview) {
+        try {
+          var local = window.localStorage, tab = window.sessionStorage;
+          var q = new URLSearchParams(window.location.search).get('grain');
+          if (q === 'reset') { local.removeItem('ha-paper-mode'); tab.removeItem('ha-grain'); q = null; }
+          else if (q === 'off') { local.setItem('ha-paper-mode', 'current'); q = null; }
+          else if (q === 'on') { local.setItem('ha-paper-mode', 'paper'); q = null; }
+          else if (q) { local.setItem('ha-paper-mode', 'paper'); tab.setItem('ha-grain', q); }
+          var mode = local.getItem('ha-paper-mode');
+          if (mode) paper = mode === 'paper';
+          var n = q || tab.getItem('ha-grain');
+          if (n) {
+            var css = '';
+            n.split(',').forEach(function (v, i) {
+              v = parseFloat(v);
+              if (i < 3 && !isNaN(v)) css += '--ha-grain-' + ['ui', 'editorial', 'product'][i] + ':' + Math.min(Math.max(v, 0), 100) / 100 + ';';
+            });
+            // Same weight as the ha-tokens rule and later, so it wins — and,
+            // being scoped to .ha-paper, it vanishes in Current mode.
+            var s = document.createElement('style');
+            s.textContent = ':root.ha-paper{' + css + '}';
+            document.head.appendChild(s);
+          }
+        } catch (e) {}
+      }
+      if (paper) document.documentElement.classList.add('ha-paper');
+      window.haPaperPreview = preview;
+    })();
+  </script>
+{%- else -%}
+  {%- liquid
+    assign grain_editorial = false
+    case template.name
+      when 'blog', 'article'
+        assign grain_editorial = true
+      when 'page'
+        if template.suffix == 'the-circle' or template.suffix == 'the-masters'
+          assign grain_editorial = true
+        endif
+    endcase
+  -%}
+  {%- if grain_editorial -%}
+    <style>:root { --ha-grain-page: var(--ha-grain-editorial); }</style>
+  {%- endif -%}
+  <div class="ha-grain ha-grain--page" aria-hidden="true"></div>
+  {%- if settings.ha_grain_preview_button -%}
+    <div class="ha-paper-toggle" role="group" aria-label="Preview mode" hidden>
+      <span class="ha-paper-toggle__label">Preview</span>
+      <button class="ha-paper-toggle__btn" type="button" data-ha-paper-mode="current" aria-pressed="false">Current</button>
+      <button class="ha-paper-toggle__btn" type="button" data-ha-paper-mode="paper" aria-pressed="false">Paper</button>
+    </div>
+    <script>
+      (function () {
+        if (!window.haPaperPreview) return;
+        var box = document.querySelector('.ha-paper-toggle');
+        if (!box) return;
+        var html = document.documentElement;
+        var buttons = box.querySelectorAll('[data-ha-paper-mode]');
+        function show() {
+          var paper = html.classList.contains('ha-paper');
+          buttons.forEach(function (b) {
+            b.setAttribute('aria-pressed', String((b.getAttribute('data-ha-paper-mode') === 'paper') === paper));
+          });
+        }
+        buttons.forEach(function (b) {
+          b.addEventListener('click', function () {
+            var mode = b.getAttribute('data-ha-paper-mode');
+            html.classList.toggle('ha-paper', mode === 'paper');
+            try { window.localStorage.setItem('ha-paper-mode', mode); } catch (e) {}
+            show();
+          });
+        });
+        show();
+        box.hidden = false;
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}

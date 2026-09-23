@@ -27,12 +27,24 @@
   Aloha, 21 September 2026: the three prints arrived as cut-outs already on
   their paper mats with a transparent surround. A block marked "carries its
   own mat" gets no mat from the theme; the file is shown whole.
+
+  Aloha, 23 September 2026 (remade homepage, Downloads/Asset 1.pdf): style
+  "Cards". No heading; three cards across nearly the full width, each hung
+  from the binding bar above by a ring. A card is a tab of paper (the paper
+  panel colour) carrying its label — "02 / Collection Index", "03 / The
+  Masters", "04 / Founder's Story" — that runs on over the top quarter of
+  the photograph as a translucent sheet (her 76%); then the number, the
+  italic title, the paragraph set justified, and the ruled link on the
+  right. Artboard: cards 440 wide with 32 between on 1440; tab 200 above
+  the photograph plus 150 over it; photograph 427 x 591.
 {%- endcomment -%}
 
-<section class="ha-home ha-home-stories">
+{%- assign stories_style = section.settings.style | default: 'prints' -%}
+<section class="ha-home ha-home-stories ha-home-stories--{{ stories_style }}">
   <div class="ha-wrap">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — proposed copy for Aloha to confirm before launch.' -%}
 
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
     <header class="ha-home-stories__head">
       {%- if section.settings.eyebrow != blank -%}
         <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
@@ -45,6 +57,7 @@
         </div>
       {%- endif -%}
     </header>
+    {%- endif -%}
 
     <ol class="ha-home-stories__grid" role="list">
       {%- for block in section.blocks -%}
@@ -56,6 +69,13 @@
           endif
         -%}
         <li class="ha-home-story{% if block.settings.mono %} ha-home-story--mono{% endif %}" {{ block.shopify_attributes }}>
+          {%- if stories_style == 'cards' -%}
+            <div class="ha-home-story__tab">
+              {%- if block.settings.label != blank -%}
+                <p class="ha-home-story__label ha-identify">{{ block.settings.label }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
           {%- if has_link -%}
             <a class="ha-home-story__print ha-home__print{% if block.settings.own_mat %} ha-home__print--own-mat{% endif %}" href="{{ block.settings.link_url }}" tabindex="-1" aria-hidden="true">
           {%- else -%}
@@ -101,6 +121,14 @@
   "class": "ha-section-wrapper",
   "max_blocks": 3,
   "settings": [
+    {
+      "type": "select", "id": "style", "label": "Style", "default": "prints",
+      "options": [
+        { "value": "cards", "label": "Cards (23 Sep homepage)" },
+        { "value": "prints", "label": "Prints (19 Sep)" }
+      ],
+      "info": "Cards: no heading, a paper tab with each story's label running over the top of its photograph. Leave eyebrow and heading empty for it."
+    },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About the Atelier" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "What we make. Why it matters." },
     { "type": "header", "content": "Provisional content" },
@@ -111,6 +139,7 @@
       "type": "story",
       "name": "Story",
       "settings": [
+        { "type": "text", "id": "label", "label": "Card label", "info": "Cards style: printed on the paper tab, e.g. 02 / Collection Index." },
         { "type": "image_picker", "id": "image", "label": "Photograph" },
         { "type": "text", "id": "alt", "label": "Alt text" },
         { "type": "checkbox", "id": "own_mat", "label": "Print carries its own paper mat", "info": "For a cut-out supplied on its mat with a transparent surround. The theme then draws no mat of its own.", "default": false },

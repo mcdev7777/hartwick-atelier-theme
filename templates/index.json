@@ -9,6 +9,12 @@
  * for the opening pair, the three story prints and the Lots collage
  * replaced those (HA_HOMEPAGE_HERO_*_IMG6402, HA_HOMEPAGE_STORY_0*_PRINT,
  * HA_HOMEPAGE_LOTS_HAWA_MAHAL_COLLAGE).
+ * 23 September: Aloha's remade homepage (Downloads/Asset 1.pdf). The page
+ * opens on the note (style Opening) while she chooses the photograph for the
+ * top — the opening pair is kept, disabled, one toggle away. Binding bars
+ * (ha-home-binding) between note / stories, stories / index and lots /
+ * masters; the stories are cards (HA_HOMEPAGE_CARD_0* from her mixed-media
+ * folder); The Register on the wine band.
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
  * ------------------------------------------------------------
@@ -36,17 +42,27 @@
         "dim": 30,
         "show_rings": true,
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "note": {
       "type": "ha-home-note",
       "settings": {
-        "eyebrow": "A note from Hartwick",
-        "heading": "The work begins with people.",
-        "body": "<p>I choose pieces for the way they are made and the people behind them. The cloth, the handwork and the small differences matter. Hartwick Atelier brings that work together, with time to understand where it comes from and how it can become part of everyday life.</p>",
-        "signature_asset": "ha-signature-placeholder.png",
-        "caption": "Angela Hartwick / Founder",
-        "show_placeholder_note": true
+        "style": "opening",
+        "eyebrow": "01 / The Product Experience",
+        "heading": "Made to be worn.",
+        "body": "<p>The feel of handwoven cloth. The weight of a silver bangle. The small differences you notice when a piece becomes part of your everyday life.</p><p>Hartwick Atelier brings together clothing, silk scarves, fine jewellery and yoga mats. The collection begins with material and use, and with the Masters whose knowledge gives each piece its character.</p>",
+        "tagline": "Cloth. Handwork. Everyday life.",
+        "signature_asset": "",
+        "caption": "",
+        "show_placeholder_note": false
+      }
+    },
+    "binding_note": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": true,
+        "holes": "both"
       }
     },
     "stories": {
@@ -55,48 +71,63 @@
         "cloth": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/HA_HOMEPAGE_STORY_01_YARN_PRINT.png",
-            "alt": "A hank of handspun natural yarn",
-            "own_mat": true,
+            "label": "02 / Collection Index",
+            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_01_ATELIER_DSCF6858.jpg",
+            "alt": "The atelier: garments on a hanging rail beneath a gilt mirror, linen curtains drawn to one side",
+            "own_mat": false,
             "mono": true,
             "title": "Cloth, considered.",
             "body": "<p>Apparel, silk scarves, fine jewellery and yoga mats. A collection shaped by material, purpose and the hand that makes it.</p>",
-            "link_text": "Explore the Collection",
+            "link_text": "Window shop",
             "link_url": "/collections"
           }
         },
         "knowledge": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/HA_HOMEPAGE_STORY_02_BLOCK_PRINTER_PRINT.png",
-            "alt": "A Master block printing a length of cloth by hand",
-            "own_mat": true,
+            "label": "03 / The Masters",
+            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_02_MASTERS_4R1A4427.jpg",
+            "alt": "A Master's hand carving a wooden printing block with a fine chisel",
+            "own_mat": false,
             "mono": true,
             "title": "Knowledge, kept in use.",
             "body": "<p>A technique continues through the people who practise it. We want the work and the knowledge behind it to be seen.</p>",
-            "link_text": "Enter the Masters",
+            "link_text": "Learn from the Masters",
             "link_url": "/pages/the-masters"
           }
         },
         "lots": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/HA_HOMEPAGE_STORY_03_TILED_STEP_PRINT.png",
-            "alt": "A photograph of a woman seated on a tiled step in a Hartwick dress",
-            "own_mat": true,
+            "label": "04 / Founder's Story",
+            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_03_FOUNDER_DSCF6865.jpg",
+            "alt": "A woman in a white shirt reflected in a gilt mirror between rails of clothing",
+            "own_mat": false,
             "mono": true,
             "title": "Small Lots. Close attention.",
             "body": "<p>We work with independent makers through considered production. Each Lot records a shared period of making.</p>",
-            "link_text": "About the Atelier",
+            "link_text": "Read our story",
             "link_url": "/pages/about-the-atelier"
           }
         }
       },
-      "block_order": ["cloth", "knowledge", "lots"],
+      "block_order": [
+        "cloth",
+        "knowledge",
+        "lots"
+      ],
       "settings": {
-        "eyebrow": "About the Atelier",
-        "heading": "What we make. Why it matters.",
-        "show_placeholder_note": true
+        "style": "cards",
+        "eyebrow": "",
+        "heading": "",
+        "show_placeholder_note": false
+      }
+    },
+    "binding_stories": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": false,
+        "holes": "both"
       }
     },
     "collection_index": {
@@ -167,7 +198,12 @@
           }
         }
       },
-      "block_order": ["apparel", "fine_silk", "fine_jewellery", "yoga"],
+      "block_order": [
+        "apparel",
+        "fine_silk",
+        "fine_jewellery",
+        "yoga"
+      ],
       "settings": {
         "eyebrow": "The Collection Index",
         "heading": "Four collections.",
@@ -192,24 +228,115 @@
         "show_placeholder_note": true
       }
     },
+    "binding_masters": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": true,
+        "holes": "top"
+      }
+    },
     "masters_index": {
       "type": "ha-home-masters",
       "blocks": {
-        "t_khadi": { "type": "technique", "settings": { "name": "Khadi", "key": "khadi", "image": "shopify://shop_images/HARTWICK_MASTERS_WEAVER_AT_LOOM_4R1A4504.jpg" } },
-        "t_hand_spun": { "type": "technique", "settings": { "name": "Hand spun", "key": "hand-spun", "image": "shopify://shop_images/HARTWICK_MASTERS_SPINNER_HANDS_4R1A4494.jpg" } },
-        "t_handwoven": { "type": "technique", "settings": { "name": "Handwoven", "key": "handwoven", "image": "shopify://shop_images/HARTWICK_MASTERS_WARP_CLOSE_4R1A4475.jpg" } },
-        "t_block_printed": { "type": "technique", "settings": { "name": "Block printed by hand", "key": "block-printed-by-hand", "image": "shopify://shop_images/HARTWICK_MASTERS_BLOCK_FACE_4R1A4565.jpg" } },
-        "t_blocks": { "type": "technique", "settings": { "name": "Hand carved wooden blocks", "key": "hand-carved-wooden-blocks", "image": "shopify://shop_images/HARTWICK_MASTERS_CARVING_PATTERN_4R1A4442.jpg" } },
-        "t_natural_dye": { "type": "technique", "settings": { "name": "Natural dye", "key": "natural-dye", "image": "shopify://shop_images/HARTWICK_MASTERS_DYED_BOBBINS_4R1A4528.jpg" } },
-        "t_ajrakh": { "type": "technique", "settings": { "name": "Ajrakh", "key": "ajrakh" } },
-        "t_ikat": { "type": "technique", "settings": { "name": "Ikat", "key": "ikat", "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg" } },
-        "t_gota_patti": { "type": "technique", "settings": { "name": "Gota Patti", "key": "gota-patti", "image": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg" } },
-        "t_jamdani": { "type": "technique", "settings": { "name": "Jamdani", "key": "jamdani", "image": "shopify://shop_images/006_HARTWICK_HANDWOVEN_PARIS_TROUSERS_KHADI_HANOI_SHIRT_JAMDANI.jpg" } },
-        "t_banaras": { "type": "technique", "settings": { "name": "Banaras brocade", "key": "banaras-brocade" } }
+        "t_khadi": {
+          "type": "technique",
+          "settings": {
+            "name": "Khadi",
+            "key": "khadi",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_WEAVER_AT_LOOM_4R1A4504.jpg"
+          }
+        },
+        "t_hand_spun": {
+          "type": "technique",
+          "settings": {
+            "name": "Hand spun",
+            "key": "hand-spun",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_SPINNER_HANDS_4R1A4494.jpg"
+          }
+        },
+        "t_handwoven": {
+          "type": "technique",
+          "settings": {
+            "name": "Handwoven",
+            "key": "handwoven",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_WARP_CLOSE_4R1A4475.jpg"
+          }
+        },
+        "t_block_printed": {
+          "type": "technique",
+          "settings": {
+            "name": "Block printed by hand",
+            "key": "block-printed-by-hand",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_BLOCK_FACE_4R1A4565.jpg"
+          }
+        },
+        "t_blocks": {
+          "type": "technique",
+          "settings": {
+            "name": "Hand carved wooden blocks",
+            "key": "hand-carved-wooden-blocks",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_CARVING_PATTERN_4R1A4442.jpg"
+          }
+        },
+        "t_natural_dye": {
+          "type": "technique",
+          "settings": {
+            "name": "Natural dye",
+            "key": "natural-dye",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_DYED_BOBBINS_4R1A4528.jpg"
+          }
+        },
+        "t_ajrakh": {
+          "type": "technique",
+          "settings": {
+            "name": "Ajrakh",
+            "key": "ajrakh"
+          }
+        },
+        "t_ikat": {
+          "type": "technique",
+          "settings": {
+            "name": "Ikat",
+            "key": "ikat",
+            "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg"
+          }
+        },
+        "t_gota_patti": {
+          "type": "technique",
+          "settings": {
+            "name": "Gota Patti",
+            "key": "gota-patti",
+            "image": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg"
+          }
+        },
+        "t_jamdani": {
+          "type": "technique",
+          "settings": {
+            "name": "Jamdani",
+            "key": "jamdani",
+            "image": "shopify://shop_images/006_HARTWICK_HANDWOVEN_PARIS_TROUSERS_KHADI_HANOI_SHIRT_JAMDANI.jpg"
+          }
+        },
+        "t_banaras": {
+          "type": "technique",
+          "settings": {
+            "name": "Banaras brocade",
+            "key": "banaras-brocade"
+          }
+        }
       },
       "block_order": [
-        "t_khadi", "t_hand_spun", "t_handwoven", "t_block_printed", "t_blocks", "t_natural_dye",
-        "t_ajrakh", "t_ikat", "t_gota_patti", "t_jamdani", "t_banaras"
+        "t_khadi",
+        "t_hand_spun",
+        "t_handwoven",
+        "t_block_printed",
+        "t_blocks",
+        "t_natural_dye",
+        "t_ajrakh",
+        "t_ikat",
+        "t_gota_patti",
+        "t_jamdani",
+        "t_banaras"
       ],
       "settings": {
         "eyebrow": "The Masters Index",
@@ -254,16 +381,20 @@
         "body_position": "heading",
         "show_native_form": true,
         "contact_tag": "the-register",
-        "register_source": "homepage_band"
+        "register_source": "homepage_band",
+        "field": "correspondence"
       }
     }
   },
   "order": [
     "opening",
     "note",
+    "binding_note",
     "stories",
+    "binding_stories",
     "collection_index",
     "lots",
+    "binding_masters",
     "masters_index",
     "journal",
     "register"

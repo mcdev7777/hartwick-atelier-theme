@@ -27,7 +27,7 @@
   # Sand: the page ground pulled 6% toward peat. The About-page wireframe
   # (15 Sep 2026) sets "A journey into the House" on a band one step darker
   # than the page, and none of the eight archive colours is that step.
-  assign ground = settings.ha_page_ground | default: '#F2EFE9'
+  assign ground = settings.ha_page_ground | default: '#F3F0E7'
   assign sand_r = ground | color_extract: 'red'   | times: 0.94
   assign sand_g = ground | color_extract: 'green' | times: 0.94
   assign sand_b = ground | color_extract: 'blue'  | times: 0.94
@@ -52,15 +52,16 @@
        The page runs on ONE ground, not the alternating colour bands the revised
        wireframe drew — those fills were placeholder, and Aloha asked that only
        the structure and positions be taken from that file, not its colours.
-       #F2EFE9 stays the placeholder ground pending her confirmation (the logo
-       rules name Chalk Blue instead). Changing this one field restyles the site.
+       Aloha, 23 September 2026: "no white on the background, please use again
+       f3f0e7 colour throughout" — #F3F0E7 (was the placeholder #F2EFE9).
+       Changing this one field restyles the site.
 
        The --ha-field-* tokens remain as an available capability — a section can
        still opt into a field with its `field` setting — but nothing on the
        product page reaches for one; every section sits on the page ground. */
-    --ha-page-ground:   {{ settings.ha_page_ground   | default: '#F2EFE9' }};
+    --ha-page-ground:   {{ settings.ha_page_ground   | default: '#F3F0E7' }};
     --ha-field-dark:    {{ settings.ha_field_dark    | default: '#332820' }};
-    --ha-field-white:   {{ settings.ha_page_ground   | default: '#F2EFE9' }};
+    --ha-field-white:   {{ settings.ha_page_ground   | default: '#F3F0E7' }};
     --ha-field-botanical: var(--ha-loden-moss);
     --ha-field-blush:   var(--ha-bare-clay);
     --ha-field-slate:   var(--ha-inkstone);
@@ -71,6 +72,11 @@
     --ha-field-correspondence: {{ settings.ha_correspondence_field | default: '#512F38' }};
     --ha-paper:         {{ settings.ha_paper | default: '#EEE8D4' }};
     --ha-peat-rgb:      {{ peat_r }}, {{ peat_g }}, {{ peat_b }};
+    /* Aloha's remade homepage (23 September 2026): the opening and the story
+       cards are a darker sheet than the page; the sections are bound by a dark
+       bar with binder rings. */
+    --ha-paper-panel:   {{ settings.ha_paper_panel | default: '#EEECE2' }};
+    --ha-binding-bar:   {{ settings.ha_binding_bar | default: '#392B24' }};
 
     /* --- tint system (100 / 66 / 33 / 0 against white) --- */
     --ha-soot-66: rgb({{ soot_r | times: 0.66 | plus: 86.7 | round }}, {{ soot_g | times: 0.66 | plus: 86.7 | round }}, {{ soot_b | times: 0.66 | plus: 86.7 | round }});
@@ -129,6 +135,55 @@
        Angela and will want to retune once the real crops land.
        ================================================================== */
     --ha-media-cap: {{ settings.ha_media_cap | default: 56 }}vh;
+
+    /* ==================================================================
+       PAPER TEXTURE  —  Aloha, 22 September 2026 (a test, not yet committed)
+
+       "a very subtle grain layer […] across the overall interface so that
+        backgrounds, colour fields and selected editorial photography feel as
+        though they belong to the same printed surface […] texture strength
+        controlled through CSS so we can easily increase/reduce it."
+
+       Three strengths, her own brackets:
+         interface / backgrounds   6–10%   --ha-grain-ui
+         editorial photography     10–15%  --ha-grain-editorial
+           (and the whole Journal, Circle and Masters pages)
+         product photography       0–4%    --ha-grain-product
+       --ha-grain-page is the strength of the one sheet laid over the current
+       page; the snippet ha-paper-grain raises it on the editorial templates.
+
+       The tile is generated (scripts/make-paper-grain.py), 512 px, seamless.
+       The layer and every rule it drives live in ha-sections.css, block
+       "PAPER TEXTURE".
+
+       TWO MODES while this is a test. The flat site as it was ("current")
+       holds all three strengths at 0 here; `html.ha-paper` ("paper") takes
+       the strengths from the sliders — the rule after this block. Which one
+       loads is snippets/ha-paper-grain (the setting, or a previewer's choice
+       on the Current / Paper button).
+       ================================================================== */
+    {%- liquid
+      assign grain_scale = settings.ha_grain_scale | default: 100
+      # Two textures (22 Sep / 23 Sep): Aloha's paper sheet, shown at her
+      # artboard placement (1024 x 768 px tile drawn 1444 x 2519), or the
+      # generated fine grain (512 px, drawn 1:1).
+      if settings.ha_grain_texture == 'grain'
+        assign grain_file = 'ha-paper-grain'
+        assign grain_w = 512
+        assign grain_h = 512
+      else
+        assign grain_file = 'ha-paper-sheet'
+        assign grain_w = 1444
+        assign grain_h = 2519
+      endif
+    -%}
+    --ha-grain-avif: url("{{ grain_file | append: '.avif' | asset_url }}");
+    --ha-grain-webp: url("{{ grain_file | append: '.webp' | asset_url }}");
+    --ha-grain-size: {{ grain_w | times: grain_scale | divided_by: 100 }}px {{ grain_h | times: grain_scale | divided_by: 100 }}px;
+    --ha-grain-ui: 0;
+    --ha-grain-editorial: 0;
+    --ha-grain-product: 0;
+    --ha-grain-page: var(--ha-grain-ui);
 
     /* ==================================================================
        TYPE SCALE  —  Aloha, 22 September 2026 ("web text sizes")
@@ -355,5 +410,12 @@
     --font-hxxl-size-mobile:  {{ settings.ha_t_hero_m | default: 28 }}px;
     --font-hxxl-size-tablet:  {{ settings.ha_t_hero_d | default: 32 }}px;
     --font-hxxl-size-desktop: {{ settings.ha_t_hero_d | default: 32 }}px;
+  }
+
+  /* Paper mode (see PAPER TEXTURE above). */
+  :root.ha-paper {
+    --ha-grain-ui:        {{ settings.ha_grain_ui | default: 22 | divided_by: 100.0 }};
+    --ha-grain-editorial: {{ settings.ha_grain_editorial | default: 30 | divided_by: 100.0 }};
+    --ha-grain-product:   {{ settings.ha_grain_product | default: 0 | divided_by: 100.0 }};
   }
 {% endstyle %}

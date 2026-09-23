@@ -32,7 +32,7 @@
   challenges server-side, so nothing is weakened.
 {%- endcomment -%}
 
-<section id="the-register" class="ha-section ha-section--dark ha-register ha-register--form-{{ section.settings.form_style | default: 'box' }}">
+<section id="the-register" class="ha-section ha-section--dark ha-register ha-register--form-{{ section.settings.form_style | default: 'box' }}{% if section.settings.field == 'correspondence' %} ha-register--field-correspondence{% endif %}">
   <div class="ha-wrap">
     <div class="ha-register__grid">
       <div>
@@ -195,6 +195,11 @@
     {
       "type": "select", "id": "heading_style", "label": "Heading", "default": "sentence",
       "options": [ { "value": "sentence", "label": "As written" }, { "value": "caps", "label": "Uppercase (homepage artboard)" } ]
+    },
+    {
+      "type": "select", "id": "field", "label": "Band colour", "default": "dark",
+      "info": "Aloha's remade homepage (23 September 2026) sets The Register on the wine of the Register page.",
+      "options": [ { "value": "dark", "label": "Dark field (peat)" }, { "value": "correspondence", "label": "Correspondence (wine)" } ]
     },
     {
       "type": "select", "id": "form_style", "label": "Form", "default": "box",

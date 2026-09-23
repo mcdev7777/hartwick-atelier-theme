@@ -5177,8 +5177,10 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-home__corner:hover, .ha-home__corner:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
 
 /* A print: the photograph on a narrow paper mat with a soft shadow, as the
-   artboard sets every still on this page. */
-.ha-home__print { display: block; position: relative; padding: 1rem; background: rgba(255, 255, 255, 0.9); box-shadow: 0 1px 2px rgba(11, 6, 3, 0.06), 0 10px 28px rgba(11, 6, 3, 0.07); }
+   artboard sets every still on this page. The mat was 90% white; Aloha, 23
+   September: "there should be no white on the background" — her journal
+   print's mat is a grey paper (#ECECEA), so the mat is the paper panel. */
+.ha-home__print { display: block; position: relative; padding: 1rem; background: var(--ha-paper-panel); box-shadow: 0 1px 2px rgba(11, 6, 3, 0.06), 0 10px 28px rgba(11, 6, 3, 0.07); }
 .ha-home__print img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .ha-home__print .ha-figure--empty { display: grid; place-items: center; }
 /* A print supplied on its own mat (Aloha's cut-outs, 21 September): the
@@ -5983,3 +5985,432 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 @media screen and (min-width: 750px) {
   body .quantity__input { font-size: var(--ha-t-detail); }
 }
+
+
+
+/* ==========================================================================
+   HOMEPAGE, 23 SEPTEMBER  —  Aloha's remade homepage (Downloads/Asset 1.pdf)
+
+   "I've remade the homepage […] there has been added bits." Measured off
+   her 1440 artboard:
+     · the page opens on the note, on a paper panel (#EEECE2 → the
+       ha_paper_panel setting), until she chooses the photograph for the top;
+     · the sections are bound by a 16px bar (#392B24 → ha_binding_bar), with
+       binder rings where she draws them (sections/ha-home-binding);
+     · the three stories are cards hung from the bar: a paper tab with the
+       label that runs on over the photograph at 76%;
+     · The Register sits on the Register page's wine.
+   Type stays on the 22 September table (her artboard was drawn at the
+   earlier, larger sizes — flagged, not copied).
+   ========================================================================== */
+
+/* --- the binding bar ------------------------------------------------------ */
+/* The section rises above its neighbours so the rings lie over the paper
+   above and the card or photograph below. Two classes on the bar: without
+   rings it is an empty <div>, and Luxe's div:empty { display: none } would
+   remove it. */
+.ha-home-binding-section { position: relative; z-index: 3; }
+.ha-home-binding-section .ha-home-binding {
+  display: block;
+  position: relative;
+  height: clamp(0.8rem, 1.11vw, 1.6rem);            /* 16 on 1440 */
+  background: var(--ha-binding-bar);
+  --ha-ring-w: clamp(2.2rem, 2.78vw, 4rem);         /* 40 on 1440 */
+}
+/* The ring's upper hole sits 44px above the bar (1.1 ring-widths); the
+   drawing's hole centre is 18 of its 40 units from the top. */
+.ha-home-binding__ring {
+  position: absolute;
+  top: calc(var(--ha-ring-w) * -1.55);
+  width: var(--ha-ring-w);
+  height: auto;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 1px 2px rgba(11, 6, 3, 0.35));
+  pointer-events: none;
+}
+.ha-home-binding__ring--1 { left: 8.2%; }   /* 118 / 1440 */
+.ha-home-binding__ring--2 { left: 50%; }
+.ha-home-binding__ring--3 { left: 91.8%; }  /* 1326 / 1440 */
+
+/* --- 01  The opening note ----------------------------------------------- */
+/* Artboard: the panel runs from under the header to the bar, 1008 tall on
+   1440; the text block sits in the middle of it. */
+.ha-home-note--opening { background: var(--ha-paper-panel); }
+.ha-home-note--opening > .ha-wrap {
+  display: grid;
+  align-content: center;
+  min-height: min(70vw, calc(100svh - 6rem));
+  padding-top: clamp(8rem, 12vw, 17rem);
+  padding-bottom: clamp(8rem, 12vw, 16rem);
+}
+.ha-home-note--opening .ha-home-note__inner { max-width: none; }
+/* Eyebrow and heading are one block, centred on the page, the eyebrow
+   starting where the heading starts. */
+.ha-home-note--opening .ha-home-note__head { text-align: left; }
+.ha-home-note--opening .ha-home__heading { text-transform: uppercase; letter-spacing: 0.02em; }
+.ha-home-note--opening .ha-home-note__body { text-align: left; max-width: 31em; margin-top: clamp(3.2rem, 4.9vw, 7rem); }
+.ha-home-note--opening .ha-home-note__body p { margin: 0 0 1.4em; }
+.ha-home-note--opening .ha-home-note__body p:last-child { margin-bottom: 0; }
+.ha-home-note--opening .ha-home-note__tagline { margin: clamp(4rem, 6.2vw, 9rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: 300; }
+
+/* --- 03  The story cards -------------------------------------------------- */
+.ha-home-stories--cards { border-bottom: 0; }
+.ha-home-stories--cards > .ha-wrap {
+  padding: clamp(2rem, 2.5vw, 3.6rem) clamp(1.6rem, 2.1vw, 3rem) clamp(3.2rem, 3.8vw, 5.4rem);
+}
+.ha-home-stories--cards .ha-home-stories__grid { margin-top: 0; gap: 4.8rem; }
+@media screen and (min-width: 750px) {
+  .ha-home-stories--cards .ha-home-stories__grid { margin-top: 0; column-gap: clamp(1.6rem, 2.2vw, 3.2rem); }
+}
+/* the paper tab: 200 above the photograph on a 440 card, the label near its
+   foot. Two classes: an unlabelled tab is an empty <div> (Luxe div:empty). */
+.ha-home-stories--cards .ha-home-story__tab {
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 440 / 200;
+  padding: 0 6.4% 10%;
+  background: var(--ha-paper-panel);
+}
+.ha-home-story__label { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; }
+/* the photograph, full width of the card, no mat; the tab runs on over its
+   top quarter as a translucent sheet (her 150 of 591, at 76%) */
+.ha-home-stories--cards .ha-home-story__print { width: 100%; margin: 0; padding: 0; background: none; box-shadow: none; }
+.ha-home-stories--cards .ha-home-story__img,
+.ha-home-stories--cards .ha-home-story__empty { aspect-ratio: 593 / 822; }
+.ha-home-stories--cards .ha-home-story__print::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 25.4%;
+  background: var(--ha-paper-panel);
+  opacity: 0.76;
+  z-index: 1;
+  pointer-events: none;
+}
+.ha-home-stories--cards .ha-home-story__text { margin-top: 1.3rem; padding: 0 clamp(1.2rem, 2vw, 2.4rem); border-top: 0; }
+.ha-home-stories--cards .ha-home-story__num { margin-bottom: 1.2rem; }
+.ha-home-stories--cards .ha-home-story__body { max-width: none; margin-bottom: clamp(3.2rem, 4.4vw, 6.4rem); }
+/* Set justified as she draws it — but only where the column is wide enough
+   (~360px) not to open rivers; in the monospaced body voice a narrow
+   justified column falls apart. */
+@media screen and (min-width: 1200px) {
+  .ha-home-stories--cards .ha-home-story__body { text-align: justify; hyphens: auto; }
+}
+.ha-home-stories--cards .ha-home-story__text > .ha-home__ruled { align-self: flex-end; min-width: 0; padding-left: 1.2rem; padding-right: 1.2rem; text-align: center; }
+
+/* --- 08  The Register on the wine band ----------------------------------- */
+.ha-register.ha-register--field-correspondence { background: var(--ha-field-correspondence); }
+
+/* ==========================================================================
+   PAPER TEXTURE  —  Aloha, 22 September 2026 (a test on the development theme)
+
+   "a very subtle grain layer […] across the overall interface so that
+    backgrounds, colour fields and selected editorial photography feel as
+    though they belong to the same printed surface […] I don't want the effect
+    to feel distressed, vintage or like a filter."
+
+   TWO MODES while it is a test (snippets/ha-paper-grain decides which):
+     Current — no class: nothing in this block applies, the site is exactly
+               as it was — no sheet, no grain, no change to any stacking.
+     Paper   — `html.ha-paper`: everything below.
+   Every rule here is scoped to .ha-paper for that reason; keep it so.
+   The Current / Paper preview button at the end of the block is the only
+   thing that shows in both modes (and only on a preview theme).
+
+   HOW PAPER MODE IS BUILT
+   One sheet, .ha-grain--page, fixed over the screen. The 512 px tile
+   (assets/ha-paper-grain.avif / .webp, generated by
+   scripts/make-paper-grain.py) repeats across it. The tile is greyscale
+   centred on 50% grey and blends `hard-light`: 50% grey changes nothing, the
+   darker tooth deepens the ground, the lighter fibres lift it — so the one
+   sheet reads on the page ground, the wine band and the peat fields alike, and
+   the page colours underneath stay whatever Theme settings say. Opacity is the
+   strength; every strength is a token (ha-tokens, "PAPER TEXTURE").
+
+   THE LAYERS, bottom to top
+     page content ...................... z < 97   under the sheet
+     .ha-grain--page ................... z 97
+     product photography ............... z 98     above the sheet: untouched
+     sticky buy bar, category bar ...... z 99     their own grain
+     header (100), drawers, zoom ....... z ≥ 100  header and drawers carry
+                                                  their own grain; the zoom
+                                                  lightbox is product
+                                                  photography and has none
+   A product photograph rises above the sheet only because nothing between it
+   and <body> forms a stacking context (checked 22 Sep 2026: the gallery,
+   the related pieces and the collection grid have overflow, which clips but
+   does not stack). On the product page the whole gallery column rises, not
+   each frame, so the markers and readout drawn over the frames from outside
+   them rise with it. A transform, opacity or isolation added to one of those
+   ancestors later would drop its photographs back under the sheet at the
+   interface strength — never stronger. Anything opaque that must stay over
+   a product photograph (a sticky bar) needs z 99 and its own grain.
+
+   EDITORIAL PHOTOGRAPHY outside the editorial pages carries a second, local
+   grain that tops it up from the interface strength to the editorial one
+   (at these strengths two layers add, near enough). On Journal, Circle and
+   Masters the whole sheet is already editorial and the top-up is zero.
+
+   The two lists below are the whole classification. A photograph on neither
+   list sits under the sheet at the interface strength. To protect another
+   photograph, add its frame to PRODUCT or give it .ha-grain-product-plate;
+   to strengthen one, add it to EDITORIAL or give it .ha-grain-editorial.
+   ========================================================================== */
+
+/* the tile: AVIF where the browser can say so, WebP otherwise */
+:root { --ha-grain-image: var(--ha-grain-webp); }
+@supports (background-image: image-set(url("t.avif") type("image/avif"))) {
+  :root { --ha-grain-image: image-set(var(--ha-grain-avif) type("image/avif"), var(--ha-grain-webp) type("image/webp")); }
+}
+
+/* --- the sheet ----------------------------------------------------------- */
+/* Rendered in both modes, drawn only in Paper. Two classes: Luxe's
+   `div:empty { display: none }` would hide one. 100lvh keeps it covering
+   the screen while a phone's address bar slides away. */
+.ha-grain.ha-grain--page { display: none; }
+.ha-paper .ha-grain.ha-grain--page {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
+  z-index: 97;
+  pointer-events: none;
+  background-image: var(--ha-grain-image);
+  background-size: var(--ha-grain-size);
+  background-position: 0 0;
+  mix-blend-mode: hard-light;
+  opacity: var(--ha-grain-page);
+}
+
+/* --- chrome that stacks above the sheet paints its own grain ------------- */
+/* The header sits at the top-left of the screen like the sheet, so the two
+   tiles line up and the grain runs through the header's edge unbroken. */
+.ha-paper .header-bar::after,
+.ha-paper cart-drawer .drawer__inner::after,
+.ha-paper .header-nav-drawer::after,
+.ha-paper .ha-clothing__nav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: var(--ha-grain-image);
+  background-size: var(--ha-grain-size);
+  mix-blend-mode: hard-light;
+  opacity: var(--ha-grain-page);
+}
+.ha-paper cart-drawer .drawer__inner { position: relative; }
+/* The menu drawer scrolls itself, and an absolute layer would scroll away
+   with its links. Fixed, with the drawer's own geometry and transition, the
+   grain stays put and slides in with it. */
+.ha-paper .header-nav-drawer::after {
+  position: fixed;
+  inset: auto;
+  top: inherit;
+  left: inherit;
+  width: inherit;
+  height: inherit;
+  transition: inherit;
+}
+/* The collection pages' category bar sticks under the header while the
+   product cards scroll beneath it, so it rises above them (it is z 5). */
+.ha-paper .ha-clothing__nav { z-index: 99; }
+
+/* The mobile sticky buy bar is fixed over the gallery and must stay above
+   the product photographs scrolling under it. Only where it is fixed (below
+   990px). The extra class outweighs Luxe's own `.sticky-buy-buttons
+   .product-form { z-index: 5 }`, which section-main-product.css loads after
+   this file. */
+@media screen and (max-width: 989px) {
+  .ha-paper .sticky-buy-buttons .product-form { z-index: 99; }
+  .ha-paper .sticky-buy-buttons .product-form::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: var(--ha-grain-image);
+    background-size: var(--ha-grain-size);
+    mix-blend-mode: hard-light;
+    opacity: var(--ha-grain-page);
+  }
+}
+
+/* --- PRODUCT photography: above the sheet -------------------------------- */
+/* "when somebody opens a Matka silk detail photograph, they can see Matka
+    silk, not our fake paper grain." The gallery, the cloth details, the
+   collection cards, related pieces, the product record, the cart, Luxe's
+   product cards. --ha-grain-product (default 0) lays a local grain back on
+   if the 2–4% she allowed is wanted.
+   :where() on both halves gives the position no weight: a frame that is
+   already positioned keeps its own rule, a static one becomes relative. */
+:where(.ha-paper) :where(
+  .ha-grain-product-plate,
+  .ha-pdp__media,
+  .ha-cloth__img-wrap,
+  .ha-cloth__figure,
+  .ha-related__figure,
+  .ha-clothing__figure,
+  .ha-precord__figure,
+  .ha-garment__figure,
+  .ha-lot__figure,
+  .ha-continue__figure--piece,
+  .cart-item__image-container,
+  .card-product--image
+) { position: relative; }
+.ha-paper :is(
+  .ha-grain-product-plate,
+  .ha-pdp__media,
+  .ha-cloth__img-wrap,
+  .ha-cloth__figure,
+  .ha-related__figure,
+  .ha-clothing__figure,
+  .ha-precord__figure,
+  .ha-garment__figure,
+  .ha-lot__figure,
+  .ha-continue__figure--piece,
+  .cart-item__image-container,
+  .card-product--image
+) { z-index: 98; }
+.ha-paper :is(
+  .ha-grain-product-plate,
+  .ha-pdp__media,
+  .ha-cloth__img-wrap,
+  .ha-cloth__figure,
+  .ha-related__figure,
+  .ha-clothing__figure,
+  .ha-precord__figure,
+  .ha-garment__figure,
+  .ha-lot__figure,
+  .ha-continue__figure--piece,
+  .cart-item__image-container,
+  .card-product--image
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: var(--ha-grain-image);
+  background-size: var(--ha-grain-size);
+  mix-blend-mode: hard-light;
+  opacity: var(--ha-grain-product);
+}
+
+/* --- EDITORIAL photography: topped up to the editorial strength ---------- */
+:where(.ha-paper) :where(
+  .ha-grain-editorial,
+  .ha-masters__figure,
+  .ha-idx__editorial,
+  .ha-idx__figure
+) { position: relative; }
+.ha-paper :is(
+  .ha-grain-editorial,
+  .ha-home-hero__frame,
+  .ha-home__print,
+  .ha-home-index__frame,
+  .ha-home-masters__bg,
+  .ha-masters__figure,
+  .ha-abhero__figure,
+  .ha-founder__figure,
+  .ha-feature__figure,
+  .ha-authorship__figure,
+  .ha-house__figure--lead,
+  .ha-house__figure--tile,
+  .ha-wearer__figure,
+  .ha-continue__figure--story,
+  .ha-hero__figure,
+  .ha-journal__figure,
+  .ha-cfeature__figure,
+  .ha-crequest__figure,
+  .ha-reg-corr__figure,
+  .ha-clothing__feature-figure,
+  .ha-cats__figure,
+  .ha-index__figure--primary,
+  .ha-index__figure--wide,
+  .ha-index__figure--detail,
+  .ha-idx__head-media,
+  .ha-idx__editorial,
+  .ha-idx__figure
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: var(--ha-grain-image);
+  background-size: var(--ha-grain-size);
+  mix-blend-mode: hard-light;
+  opacity: max(0, var(--ha-grain-editorial) - var(--ha-grain-page));
+}
+/* a placeholder frame is not a photograph */
+.ha-paper .ha-figure--empty::after { content: none; }
+
+/* Print, Windows high contrast and "increase contrast" get the flat page. */
+@media print, (forced-colors: active), (prefers-contrast: more) {
+  :root {
+    --ha-grain-ui: 0 !important;
+    --ha-grain-editorial: 0 !important;
+    --ha-grain-product: 0 !important;
+  }
+  .ha-paper .ha-grain.ha-grain--page { display: none; }
+}
+
+/* --- the Current / Paper preview button ----------------------------------- */
+/* Preview and development themes only (the snippet unhides it; the published
+   theme never does). Bottom-left, above the page and the header, below the
+   drawers, which cover it when open. */
+.ha-paper-toggle[hidden] { display: none !important; }
+.ha-paper-toggle {
+  position: fixed;
+  left: 1.6rem;
+  bottom: calc(1.6rem + env(safe-area-inset-bottom, 0px));
+  z-index: 101;
+  display: flex;
+  align-items: stretch;
+  background: var(--ha-page-ground);
+  color: var(--ha-text);
+  border: 1px solid var(--ha-border);
+  font-family: var(--ha-font-record);
+  font-size: max(var(--ha-t-meta), 1.1rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.ha-paper-toggle__label {
+  display: flex;
+  align-items: center;
+  padding: 0 1.2rem;
+  color: var(--ha-text-quiet);
+  border-right: 1px solid var(--ha-rule);
+}
+.ha-paper-toggle .ha-paper-toggle__btn {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  min-height: 44px;
+  padding: 0 1.4rem;
+  cursor: pointer;
+}
+.ha-paper-toggle .ha-paper-toggle__btn[aria-pressed="true"] {
+  background: var(--ha-text);
+  color: var(--ha-page-ground);
+  cursor: default;
+}
+.ha-paper-toggle .ha-paper-toggle__btn:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 2px; }
+/* Clear of the mobile sticky buy bar on the product page. */
+@media screen and (max-width: 989px) {
+  .lx-template--product .ha-paper-toggle { bottom: calc(10.4rem + env(safe-area-inset-bottom, 0px)); }
+}
+@media print { .ha-paper-toggle { display: none !important; } }
