@@ -911,6 +911,15 @@
   </div>
   {% endif %}
   
+  {%- comment -%}
+    Hartwick: REGION / LANGUAGE / THE CIRCLE / BAG (Aloha, 22 September 2026).
+    With the Hartwick utilities on (Theme settings > Hartwick — Header
+    utilities), Luxe's own region, language and account items stand down and
+    snippets/ha-utilities.liquid draws the three in their place, before BAG.
+  {%- endcomment -%}
+  {% if settings.ha_util_enable %}
+    {% render 'ha-utilities', part: 'bar' %}
+  {% else %}
   {% if section.settings.enable_international and localization.available_countries.size > 1 and section.settings.logo_dt_position != 'top_center' %}
     {% # theme-check-disable %}
     <button id="locSelectorBtn" aria-label="{{ 'localization.country_label' | t }}" class="market-selector--opener hdr-toolbar-item hdr-item-market-selector hdr-st-item-dto{% if equal_selector == true %} mkt-selector-equal-size{% endif %} ms-style-{{ section.settings.international_icon }}">
@@ -922,6 +931,7 @@
   {% if localization.available_languages.size > 1 and language_selector_header and section.settings.logo_dt_position != 'top_center' %}
     <button id="langSelectorOpenerHeader" class="hdr-item-language-selector{% if equal_selector == true %} mkt-selector-equal-size{% endif %}" aria-label="{{ localization.language.iso_code | upcase }}">{{ localization.language.iso_code | upcase }}{% if section.settings.international_icon == 'arrow' %}{% render 'icon-caret' %}{% endif %}</button>
   {% endif %}
+  {% endif %}
   
   {% if section.settings.search_enable %}
   <button id="searchButton" role="button" aria-label="{{ 'general.search.search' | t }}" class="hdr-st-item hdr-search-btn">
@@ -929,7 +939,7 @@
   </button>
   {% endif %}
 
-  {% if shop.customer_accounts_enabled and section.settings.account_enable %}
+  {% if shop.customer_accounts_enabled and section.settings.account_enable and settings.ha_util_enable == false %}
   <div class="hdr-st-item hdr-st-item-dto{% if section.settings.account_ui == 'icon' %} hdr-account-icon-link{% endif %}">
   <a href="{{ routes.account_url }}" title="{{ 'customer.account.title' | t }}">
   {% if section.settings.account_ui == 'word' %}<span class="hdr-st-item-label">{{ 'customer.account.title' | t }}</span>{% else %}{% render 'icon-account' %}{% endif %}  
@@ -981,6 +991,9 @@
   {% render 'header-nav-drawer' %}
   <div class="mob-drawer--market-menu{% if section.settings.show_drawer_border_additional_menu %} mob-drawer--market-menu--border-top{% endif %} nav-font-family--{{ section.settings.nav_font_family_drawer_secondary_menu }} hdr-item-mobile-only sl-hide">
 
+  {% if settings.ha_util_enable %}
+    {% render 'ha-utilities', part: 'drawer' %}
+  {% else %}
   {% if shop.customer_accounts_enabled and section.settings.account_enable and section.settings.secondary_menu.links == blank %}
     <a class="nav-drawer--secondary-link--account" href="{{ routes.account_url }}">{{ 'customer.account.title' | t }}</a>
   {% endif %}
@@ -1001,6 +1014,7 @@
   {% if localization.available_languages.size > 1 and language_selector_drawer %}
     <button id="langSelectorOpenerDrawer" class="header-drawer-language-selector" aria-label="{{ localization.language.endonym_name | capitalize }}">{{ 'localization.language_label' | t }}: {{ localization.language.endonym_name | capitalize }}{% if section.settings.international_icon == 'arrow' %}{% render 'icon-caret' %}{% endif %}</button>
   {% endif %}    
+  {% endif %}
     
   </div>
   {% if section.settings.social_show %}
@@ -1017,6 +1031,10 @@
   </div>
 </div>
 <div id="drawBg" class="drawer-bg-pane"></div>
+
+{% if settings.ha_util_enable %}
+  {% render 'ha-utilities', part: 'panels' %}
+{% endif %}
 
 {% if localization.available_countries.size > 1 %}
 <div id="locSelectorPanel" class="header-lang-selector-panel panel-style--modal" tabindex="-1" aria-modal="true">

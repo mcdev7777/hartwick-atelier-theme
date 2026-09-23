@@ -720,6 +720,196 @@
     ]
   },
   {
+    "name": "Hartwick — Header utilities",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "REGION / LANGUAGE / THE CIRCLE / BAG — Aloha, 22 September 2026. Four utilities in the header, each opening a quiet drawer that shares the bag's typography, rules and close control. On a phone the first three sit at the foot of the menu."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_util_enable",
+        "label": "Use the Hartwick header utilities",
+        "default": true,
+        "info": "Off restores Luxe's own region, language and account items (Header section settings)."
+      },
+      {
+        "type": "header",
+        "content": "Region"
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_util_region",
+        "label": "Show REGION",
+        "default": true,
+        "info": "The countries and currencies are Shopify Markets (Settings > Markets). The header shows the current one, e.g. ES / EUR."
+      },
+      {
+        "type": "text",
+        "id": "ha_region_title",
+        "label": "Drawer title",
+        "default": "Change your region"
+      },
+      {
+        "type": "text",
+        "id": "ha_region_intro",
+        "label": "Line under the current region",
+        "default": "Prices, currency and delivery follow the country you choose."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_region_suggest",
+        "label": "Suggest the visitor's region",
+        "default": true,
+        "info": "Shopify's detection offers a switch; it never changes region by itself, and the selector always stays available. \"Stay\" is remembered in that browser."
+      },
+      {
+        "type": "text",
+        "id": "ha_region_suggest_line",
+        "label": "Suggestion line",
+        "default": "You appear to be in [country].",
+        "info": "[country] is replaced by the detected country."
+      },
+      {
+        "type": "header",
+        "content": "Language"
+      },
+      {
+        "type": "paragraph",
+        "content": "Shopify's native languages (Settings > Languages): each published language gets its own URL (/fr, /de) and hreflang. LANGUAGE appears on its own once a second language is published."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_util_language_single",
+        "label": "Show LANGUAGE while only one language is published",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "ha_language_title",
+        "label": "Drawer title",
+        "default": "Change language"
+      },
+      {
+        "type": "text",
+        "id": "ha_language_intro",
+        "label": "Line above the languages"
+      },
+      {
+        "type": "header",
+        "content": "The Circle"
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_util_circle",
+        "label": "Show THE CIRCLE",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "ha_circle_tag",
+        "label": "Circle member customer tag",
+        "default": "circle-member",
+        "info": "Signing in unlocks the member space only for customers carrying this exact tag (Customers > customer > Tags). A purchase never does. Build the Circle segment on the same tag."
+      },
+      {
+        "type": "text",
+        "id": "ha_circle_intro",
+        "label": "Line for visitors",
+        "default": "A private space for members of Hartwick Atelier's Circle."
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_circle_show_signin",
+        "label": "Show MEMBER SIGN IN",
+        "default": true,
+        "info": "Opens Shopify's customer sign-in. There is no Create Account link anywhere in the drawer."
+      },
+      {
+        "type": "text",
+        "id": "ha_circle_signin_label",
+        "label": "Sign-in label",
+        "default": "Member sign in"
+      },
+      {
+        "type": "text",
+        "id": "ha_circle_about_label",
+        "label": "Secondary link label",
+        "default": "About The Circle"
+      },
+      {
+        "type": "url",
+        "id": "ha_circle_about_url",
+        "label": "Secondary link",
+        "info": "Empty uses the page with the handle the-circle."
+      },
+      {
+        "type": "text",
+        "id": "ha_circle_customer_note",
+        "label": "Line for signed-in customers who are not members",
+        "default": "Circle membership is by invitation."
+      },
+      {
+        "type": "text",
+        "id": "ha_circle_member_greeting",
+        "label": "Member greeting",
+        "default": "Welcome",
+        "info": "Followed by the member's first name."
+      },
+      {
+        "type": "richtext",
+        "id": "ha_circle_member_note",
+        "label": "Note for members"
+      },
+      {
+        "type": "link_list",
+        "id": "ha_circle_member_menu",
+        "label": "Member links",
+        "info": "Circle communications, invitations, early access, the private Journal — add each here as it exists. Orders & details and Sign out are always shown."
+      },
+      {
+        "type": "header",
+        "content": "Bag"
+      },
+      {
+        "type": "text",
+        "id": "ha_bag_title",
+        "label": "Drawer title",
+        "default": "Your bag"
+      },
+      {
+        "type": "text",
+        "id": "ha_bag_empty_title",
+        "label": "Empty — heading",
+        "default": "Your bag is empty"
+      },
+      {
+        "type": "text",
+        "id": "ha_bag_empty_line",
+        "label": "Empty — short line",
+        "default": "Pieces you add will appear here."
+      },
+      {
+        "type": "text",
+        "id": "ha_bag_empty_cta",
+        "label": "Empty — link label",
+        "default": "View the collection"
+      },
+      {
+        "type": "url",
+        "id": "ha_bag_empty_url",
+        "label": "Empty — link",
+        "default": "/collections"
+      },
+      {
+        "type": "checkbox",
+        "id": "ha_bag_tax_note",
+        "label": "Show the taxes and shipping line under the subtotal",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.colors.name",
     "settings": [
       {

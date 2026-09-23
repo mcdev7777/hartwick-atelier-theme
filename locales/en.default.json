@@ -556,5 +556,28 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "hartwick": {
+    "utilities": {
+      "region": "Region",
+      "language": "Language",
+      "circle": "The Circle",
+      "current": "Current",
+      "find_country": "Find a country or region",
+      "no_country": "No country or region matches.",
+      "member": "Member",
+      "orders_details": "Orders & details",
+      "your_orders": "Your orders",
+      "sign_out": "Sign out",
+      "suggest_label": "Region suggestion",
+      "suggest_go": "Shop in [country] — [currency]",
+      "suggest_stay": "Stay in [country]"
+    },
+    "bag": {
+      "quantity": "Quantity",
+      "edit": "Edit",
+      "tax_included": "Tax included. Shipping is calculated at checkout.",
+      "tax_excluded": "Shipping and taxes are calculated at checkout."
+    }
   }
 }

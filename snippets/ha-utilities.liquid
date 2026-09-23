@@ -1,0 +1,297 @@
+{%- comment -%}
+  Hartwick Atelier — the header utilities: REGION / LANGUAGE / THE CIRCLE / BAG.
+  Aloha, 22 September 2026, "International & Member Experience":
+
+    "Rather than sending the customer away to separate pages, these open as
+     very simple overlays/drawers … using our own typography, spacing and
+     visual system rather than copying their design."
+    "They should still share the same visual system: typography, spacing,
+     borders, drawer/modal behaviour and close controls."
+    "ES / EUR · EN · ♙ · BAG (0) — showing the currently selected setting."
+
+  The BAG is Luxe's cart drawer (snippets/cart-drawer.liquid), restyled in
+  place so add-to-bag keeps working; the other three are drawn here and share
+  its geometry and close control through .ha-drawer in ha-sections.css.
+
+  Parts:
+    part: 'bar'     the desktop row, before BAG (0) in the header's
+                    shopping tools. Desktop only (Luxe's .hdr-st-item-dto).
+    part: 'drawer'  the same three as ruled rows at the foot of the phone
+                    menu, which is where a phone keeps them.
+    part: 'panels'  the three drawers themselves. Rendered once.
+
+  REGION is Shopify Markets: the list is localization.available_countries,
+  and choosing one posts the native /localization form, so market, currency,
+  duties and product availability are Shopify's, not the theme's. Detection
+  only ever SUGGESTS (assets/ha-utilities.js) — "I don't want customers
+  trapped in a region simply because Shopify/IP detection has guessed".
+
+  LANGUAGE is Shopify's own multilingual architecture: the same form with a
+  language_code, which sends the visitor to /fr, /de … It renders only when
+  more than one language is published — "only publish languages we can
+  properly translate and review" — unless the editor switch forces it.
+
+  THE CIRCLE is membership, not account administration. Three states:
+    guest       her words, MEMBER SIGN IN, ABOUT THE CIRCLE. No Create Account.
+    member      signed in AND carrying the Circle tag (Theme settings) —
+                the private space. Tag, not purchase: "normal customers aren't
+                automatically treated as Circle members simply because they
+                have purchased something."
+    customer    signed in without the tag: told plainly that membership is by
+                invitation, and given their orders.
+  A tag rather than a segment because the theme can read a tag at render
+  time and cannot read a segment; the Circle segment for The Dispatch and
+  invitations is built on the same tag in Admin.
+{%- endcomment -%}
+{%- liquid
+  assign part = part | default: 'bar'
+
+  assign show_region = false
+  if settings.ha_util_region and localization.available_countries.size > 1
+    assign show_region = true
+  endif
+
+  assign show_language = false
+  if localization.available_languages.size > 1 or settings.ha_util_language_single
+    assign show_language = true
+  endif
+
+  assign show_circle = settings.ha_util_circle
+
+  assign region_code = localization.country.iso_code | upcase
+  assign region_currency = localization.country.currency.iso_code | upcase
+  assign language_code = localization.language.iso_code | split: '-' | first | upcase
+
+  assign circle_tag = settings.ha_circle_tag | default: 'circle-member' | strip | downcase
+  assign circle_state = 'guest'
+  if customer
+    assign circle_state = 'customer'
+    for tag in customer.tags
+      assign t = tag | strip | downcase
+      if t == circle_tag
+        assign circle_state = 'member'
+        break
+      endif
+    endfor
+  endif
+
+  assign circle_about_url = settings.ha_circle_about_url
+  if circle_about_url == blank and pages['the-circle'].url != blank
+    assign circle_about_url = pages['the-circle'].url
+  endif
+-%}
+
+{%- case part -%}
+
+{%- when 'bar' -%}
+  {%- if show_region -%}
+    <button type="button" class="hdr-st-item hdr-st-item-dto ha-util" data-ha-open="region" aria-haspopup="dialog" aria-controls="HaDrawer-region">
+      <span class="visually-hidden">{{ settings.ha_region_title | default: 'Change your region' | escape }}. </span>
+      <span class="ha-util__value">{{ region_code }} / {{ region_currency }}</span>
+    </button>
+  {%- endif -%}
+  {%- if show_language -%}
+    <button type="button" class="hdr-st-item hdr-st-item-dto ha-util" data-ha-open="language" aria-haspopup="dialog" aria-controls="HaDrawer-language" lang="{{ localization.language.iso_code }}">
+      <span class="visually-hidden">{{ settings.ha_language_title | default: 'Change language' | escape }}. </span>
+      <span class="ha-util__value">{{ language_code }}</span>
+    </button>
+  {%- endif -%}
+  {%- if show_circle -%}
+    <button type="button" class="hdr-st-item hdr-st-item-dto ha-util{% if circle_state == 'member' %} ha-util--member{% endif %}" data-ha-open="circle" aria-haspopup="dialog" aria-controls="HaDrawer-circle">
+      <span class="ha-util__value">{{ 'hartwick.utilities.circle' | t }}</span>
+    </button>
+  {%- endif -%}
+
+{%- when 'drawer' -%}
+  {%- if show_region or show_language or show_circle -%}
+  <ul class="ha-util-rows" role="list">
+    {%- if show_region -%}
+      <li><button type="button" class="ha-util-row" data-ha-open="region" aria-haspopup="dialog" aria-controls="HaDrawer-region">
+        <span class="ha-util-row__label">{{ 'hartwick.utilities.region' | t }}</span>
+        <span class="ha-util-row__value">{{ region_code }} / {{ region_currency }}</span>
+      </button></li>
+    {%- endif -%}
+    {%- if show_language -%}
+      <li><button type="button" class="ha-util-row" data-ha-open="language" aria-haspopup="dialog" aria-controls="HaDrawer-language">
+        <span class="ha-util-row__label">{{ 'hartwick.utilities.language' | t }}</span>
+        <span class="ha-util-row__value" lang="{{ localization.language.iso_code }}">{{ language_code }}</span>
+      </button></li>
+    {%- endif -%}
+    {%- if show_circle -%}
+      <li><button type="button" class="ha-util-row" data-ha-open="circle" aria-haspopup="dialog" aria-controls="HaDrawer-circle">
+        <span class="ha-util-row__label">{{ 'hartwick.utilities.circle' | t }}</span>
+        {%- if circle_state == 'member' -%}<span class="ha-util-row__value">{{ 'hartwick.utilities.member' | t }}</span>{%- endif -%}
+      </button></li>
+    {%- endif -%}
+  </ul>
+  {%- endif -%}
+
+{%- when 'panels' -%}
+  <script src="{{ 'ha-utilities.js' | asset_url }}" defer="defer"></script>
+
+  {%- comment -%} REGION {%- endcomment -%}
+  {%- if show_region -%}
+  <div id="HaDrawer-region" class="ha-drawer" data-ha-drawer="region" hidden>
+    <div class="ha-drawer__overlay" data-ha-close></div>
+    <div class="ha-drawer__inner" role="dialog" aria-modal="true" aria-labelledby="HaDrawer-region-title" tabindex="-1">
+      <div class="ha-drawer__head">
+        <h2 id="HaDrawer-region-title" class="ha-drawer__title">{{ settings.ha_region_title | default: 'Change your region' | escape }}</h2>
+        <button type="button" class="ha-drawer__close" data-ha-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+      </div>
+      <div class="ha-drawer__body">
+        <p class="ha-drawer__current">
+          <span class="ha-drawer__current-label">{{ 'hartwick.utilities.current' | t }}</span>
+          <span>{{ localization.country.name }} — {{ region_currency }}{% unless localization.country.currency.symbol == region_currency %} {{ localization.country.currency.symbol }}{% endunless %}</span>
+        </p>
+        {%- if settings.ha_region_intro != blank -%}
+          <p class="ha-drawer__intro">{{ settings.ha_region_intro | escape }}</p>
+        {%- endif -%}
+        {%- if localization.available_countries.size > 12 -%}
+          <div class="ha-drawer__filter">
+            <label for="HaRegionFilter" class="visually-hidden">{{ 'hartwick.utilities.find_country' | t }}</label>
+            <input id="HaRegionFilter" class="ha-drawer__filter-input" type="search" placeholder="{{ 'hartwick.utilities.find_country' | t }}" autocomplete="off" spellcheck="false" data-ha-filter="HaRegionList">
+          </div>
+        {%- endif -%}
+        {%- form 'localization', id: 'HaRegionForm', class: 'ha-drawer__form' -%}
+          <input type="hidden" name="language_code" value="{{ localization.language.iso_code }}">
+          <ul id="HaRegionList" class="ha-choice-list" role="list">
+            {%- for country in localization.available_countries -%}
+              {%- assign is_current = false -%}
+              {%- if country.iso_code == localization.country.iso_code -%}{%- assign is_current = true -%}{%- endif -%}
+              <li data-ha-filter-text="{{ country.name | downcase | escape }} {{ country.iso_code | downcase }} {{ country.currency.iso_code | downcase }}">
+                <button type="submit" name="country_code" value="{{ country.iso_code }}" class="ha-choice{% if is_current %} is-current{% endif %}"{% if is_current %} aria-current="true"{% endif %}>
+                  <span class="ha-choice__name">{{ country.name }}</span>
+                  <span class="ha-choice__meta">{{ country.currency.iso_code }}{% unless country.currency.symbol == country.currency.iso_code %} {{ country.currency.symbol }}{% endunless %}</span>
+                </button>
+              </li>
+            {%- endfor -%}
+          </ul>
+          <p class="ha-drawer__empty-filter" data-ha-filter-empty hidden>{{ 'hartwick.utilities.no_country' | t }}</p>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+
+  {%- comment -%} LANGUAGE {%- endcomment -%}
+  {%- if show_language -%}
+  <div id="HaDrawer-language" class="ha-drawer" data-ha-drawer="language" hidden>
+    <div class="ha-drawer__overlay" data-ha-close></div>
+    <div class="ha-drawer__inner" role="dialog" aria-modal="true" aria-labelledby="HaDrawer-language-title" tabindex="-1">
+      <div class="ha-drawer__head">
+        <h2 id="HaDrawer-language-title" class="ha-drawer__title">{{ settings.ha_language_title | default: 'Change language' | escape }}</h2>
+        <button type="button" class="ha-drawer__close" data-ha-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+      </div>
+      <div class="ha-drawer__body">
+        {%- if settings.ha_language_intro != blank -%}
+          <p class="ha-drawer__intro">{{ settings.ha_language_intro | escape }}</p>
+        {%- endif -%}
+        {%- form 'localization', id: 'HaLanguageForm', class: 'ha-drawer__form' -%}
+          <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+          <ul class="ha-choice-list" role="list">
+            {%- for language in localization.available_languages -%}
+              {%- assign is_current = false -%}
+              {%- if language.iso_code == localization.language.iso_code -%}{%- assign is_current = true -%}{%- endif -%}
+              <li>
+                <button type="submit" name="language_code" value="{{ language.iso_code }}" class="ha-choice{% if is_current %} is-current{% endif %}" lang="{{ language.iso_code }}" hreflang="{{ language.iso_code }}"{% if is_current %} aria-current="true"{% endif %}>
+                  <span class="ha-choice__name">{{ language.endonym_name | capitalize }}</span>
+                  <span class="ha-choice__meta">{{ language.iso_code | split: '-' | first | upcase }}</span>
+                </button>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+
+  {%- comment -%} THE CIRCLE {%- endcomment -%}
+  {%- if show_circle -%}
+  <div id="HaDrawer-circle" class="ha-drawer ha-drawer--circle" data-ha-drawer="circle" data-circle-state="{{ circle_state }}" hidden>
+    <div class="ha-drawer__overlay" data-ha-close></div>
+    <div class="ha-drawer__inner" role="dialog" aria-modal="true" aria-labelledby="HaDrawer-circle-title" tabindex="-1">
+      <div class="ha-drawer__head">
+        <button type="button" class="ha-drawer__close" data-ha-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+      </div>
+      <div class="ha-drawer__body ha-circle">
+        <h2 id="HaDrawer-circle-title" class="ha-circle__title">{{ 'hartwick.utilities.circle' | t }}</h2>
+
+        {%- if circle_state == 'member' -%}
+          <p class="ha-circle__intro">
+            {%- if customer.first_name != blank -%}
+              {{ settings.ha_circle_member_greeting | default: 'Welcome' | escape }}, {{ customer.first_name | escape }}.
+            {%- else -%}
+              {{ settings.ha_circle_member_greeting | default: 'Welcome' | escape }}.
+            {%- endif -%}
+          </p>
+          {%- if settings.ha_circle_member_note != blank -%}
+            <div class="ha-circle__note">{{ settings.ha_circle_member_note }}</div>
+          {%- endif -%}
+          <ul class="ha-choice-list ha-circle__links" role="list">
+            {%- for link in settings.ha_circle_member_menu.links -%}
+              <li><a class="ha-choice" href="{{ link.url }}"><span class="ha-choice__name">{{ link.title | escape }}</span></a></li>
+            {%- endfor -%}
+            <li><a class="ha-choice" href="{{ routes.account_url }}"><span class="ha-choice__name">{{ 'hartwick.utilities.orders_details' | t }}</span></a></li>
+            <li><a class="ha-choice ha-choice--quiet" href="{{ routes.account_logout_url }}"><span class="ha-choice__name">{{ 'hartwick.utilities.sign_out' | t }}</span></a></li>
+          </ul>
+
+        {%- else -%}
+          <p class="ha-circle__intro">{{ settings.ha_circle_intro | default: "A private space for members of Hartwick Atelier's Circle." | escape }}</p>
+
+          {%- if circle_state == 'customer' -%}
+            {%- if settings.ha_circle_customer_note != blank -%}
+              <p class="ha-circle__note">{{ settings.ha_circle_customer_note | escape }}</p>
+            {%- endif -%}
+            <ul class="ha-choice-list ha-circle__links" role="list">
+              {%- if circle_about_url != blank -%}
+                <li><a class="ha-choice" href="{{ circle_about_url }}"><span class="ha-choice__name">{{ settings.ha_circle_about_label | default: 'About The Circle' | escape }}</span></a></li>
+              {%- endif -%}
+              <li><a class="ha-choice" href="{{ routes.account_url }}"><span class="ha-choice__name">{{ 'hartwick.utilities.your_orders' | t }}</span></a></li>
+              <li><a class="ha-choice ha-choice--quiet" href="{{ routes.account_logout_url }}"><span class="ha-choice__name">{{ 'hartwick.utilities.sign_out' | t }}</span></a></li>
+            </ul>
+
+          {%- else -%}
+            {%- if settings.ha_circle_show_signin and shop.customer_accounts_enabled -%}
+              <a class="button ha-circle__signin" href="{{ routes.account_login_url }}">{{ settings.ha_circle_signin_label | default: 'Member sign in' | escape }}</a>
+            {%- endif -%}
+            {%- if circle_about_url != blank -%}
+              <ul class="ha-choice-list ha-circle__links" role="list">
+                <li><a class="ha-choice" href="{{ circle_about_url }}"><span class="ha-choice__name">{{ settings.ha_circle_about_label | default: 'About The Circle' | escape }}</span></a></li>
+              </ul>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+
+  {%- comment -%}
+    REGION SUGGESTION — filled by ha-utilities.js from Shopify's
+    /browsing_context_suggestions.json. Never switches by itself; the
+    visitor chooses, and "Stay" is remembered in this browser.
+  {%- endcomment -%}
+  {%- if show_region and settings.ha_region_suggest -%}
+    {%- capture countries_json -%}{%- for c in localization.available_countries -%}{{ c.iso_code | json }}:{"name":{{ c.name | json }},"currency":{%- if c.currency.symbol == c.currency.iso_code -%}{{ c.currency.iso_code | json }}{%- else -%}{{ c.currency.iso_code | append: ' ' | append: c.currency.symbol | json }}{%- endif -%}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- endcapture -%}
+    <div class="ha-suggest" id="HaRegionSuggest" role="region" aria-label="{{ 'hartwick.utilities.suggest_label' | t }}" hidden
+      data-current-country="{{ localization.country.iso_code }}"
+      data-current-name="{{ localization.country.name | escape }}"
+      data-current-language="{{ localization.language.iso_code }}"
+      data-line="{{ settings.ha_region_suggest_line | default: 'You appear to be in [country].' | escape }}"
+      data-go="{{ 'hartwick.utilities.suggest_go' | t | escape }}"
+      data-stay="{{ 'hartwick.utilities.suggest_stay' | t | escape }}">
+      <script type="application/json" data-ha-countries>{ {{ countries_json }} }</script>
+      {%- form 'localization', class: 'ha-suggest__form' -%}
+        <input type="hidden" name="country_code" value="" data-ha-suggest-country>
+        <input type="hidden" name="language_code" value="{{ localization.language.iso_code }}" data-ha-suggest-language>
+        <p class="ha-suggest__line" data-ha-suggest-line></p>
+        <div class="ha-suggest__actions">
+          <button type="submit" class="ha-suggest__go" data-ha-suggest-go></button>
+          <button type="button" class="ha-suggest__stay" data-ha-suggest-stay></button>
+        </div>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+
+{%- endcase -%}
