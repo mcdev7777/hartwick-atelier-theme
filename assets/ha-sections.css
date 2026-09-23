@@ -2234,6 +2234,7 @@ body.lx-template--product .magnify-icon:focus-visible {
 .ha-pdp__size-guide:hover { color: var(--ha-text); text-decoration: underline; text-underline-offset: 0.3rem; }
 
 .ha-pdp .product-variant-picker-block { margin: 0; }
+.ha-pdp .product-form__input .radio-options-wrapper { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .ha-pdp .product-form__input--pill,
 .ha-pdp .product-form__input {
   display: flex;
@@ -2259,15 +2260,18 @@ body.lx-template--product .magnify-icon:focus-visible {
   width: 1px;
   height: 1px;
 }
-/* Four sizes fill the row equally rather than wrapping: at 64px each plus gaps
-   they overrun the 267px buy rail. `flex: 1` divides the width between however
-   many sizes a garment has, and each stays well above the 44px touch minimum. */
+/* Every size is the same square, however many a garment has (Aloha, 23 Sept:
+   "the shape changes when we have extra size options … make sure everything
+   is cohesive"). Sharing the row with `flex: 1` made three sizes squares and
+   four sizes oblongs. Now each box is --ha-size-h square and the row keeps
+   its width at the left; a longer label (S/M, One size) widens only its own
+   box. Five sizes (XS–XL) still fit the rail on one line. */
 .ha-pdp .product-form__input input[type='radio'] + label {
   align-items: center;
   border: 1px solid var(--ha-border);
   color: var(--ha-text);
   display: inline-flex;
-  flex: 1 1 0;
+  flex: 0 0 auto;
   font-family: var(--ha-font-record);
   font-size: var(--ha-t-ui);
   justify-content: center;

@@ -1,0 +1,33 @@
+{%- comment -%}
+  Hartwick Atelier — the short code for a size value.
+  Aloha, 23 September 2026: "when we include additional sizes, such as Extra
+  Small, please ensure it's labeled as 'xs' and positioned before the 's'
+  option." Products arrive with the size spelt out ("Extra Small") or as a
+  code ("S"); the picker shows the code, and snippets/product-variant-options
+  uses the same code to put the sizes in size order. The variant's own value
+  is untouched — only what the visitor reads changes.
+
+  Accepts: value (string). Outputs the code, or the value unchanged when it
+  is not a size word (S/M, One size, 28, …).
+{%- endcomment -%}
+{%- liquid
+  assign v = value | downcase | strip | replace: '-', ' ' | replace: '  ', ' '
+  case v
+    when 'xxs', 'extra extra small', 'xx small', '2xs'
+      echo 'XXS'
+    when 'xs', 'extra small', 'x small'
+      echo 'XS'
+    when 's', 'small'
+      echo 'S'
+    when 'm', 'medium'
+      echo 'M'
+    when 'l', 'large'
+      echo 'L'
+    when 'xl', 'extra large', 'x large'
+      echo 'XL'
+    when 'xxl', 'extra extra large', 'xx large', '2xl'
+      echo 'XXL'
+    else
+      echo value
+  endcase
+-%}

@@ -22,8 +22,65 @@
 -%}
 {%- liquid
   assign longest_value = 0
+
+  # Hartwick, 23 Sept 2026 (Aloha): sizes read as codes and run in size
+  # order — XS before S whatever order the product lists them in. The values
+  # are visited by their original index (input ids and Luxe's variant script
+  # are unchanged); only the order they are drawn in and the label move.
+  # Values that are not size words keep their place, after the sized ones.
+  assign value_order = ''
+  assign is_size = false
+  assign option_lc = option.name | downcase
+  if option_lc contains 'size'
+    assign is_size = true
+  endif
+  if is_size
+    for rank in (1..8)
+      for v in option.values
+        capture code
+          render 'ha-size-code', value: v
+        endcapture
+        case code
+          when 'XXS'
+            assign r = 1
+          when 'XS'
+            assign r = 2
+          when 'S'
+            assign r = 3
+          when 'M'
+            assign r = 4
+          when 'L'
+            assign r = 5
+          when 'XL'
+            assign r = 6
+          when 'XXL'
+            assign r = 7
+          else
+            assign r = 8
+        endcase
+        if r == rank
+          assign value_order = value_order | append: forloop.index0 | append: ','
+        endif
+      endfor
+    endfor
+  else
+    for v in option.values
+      assign value_order = value_order | append: forloop.index0 | append: ','
+    endfor
+  endif
+  assign value_order = value_order | split: ','
 -%}
-{%- for value in option.values -%}
+{%- for idx_s in value_order -%}
+  {%- liquid
+    assign idx = idx_s | plus: 0
+    assign value = option.values[idx]
+    assign value_label = value
+    if is_size
+      capture value_label
+        render 'ha-size-code', value: value
+      endcapture
+    endif
+  -%}
   {%- liquid
     assign option_disabled = true
     if value.available
@@ -32,7 +89,7 @@
   -%}
 
   {%- capture input_id -%}
-    {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+    {{ section.id }}-{{ option.position }}-{{ idx -}}
   {%- endcapture -%}
 
   {%- capture input_name -%}
@@ -79,7 +136,7 @@
           {{ value.variant.featured_media | image_url: width: 120 | image_tag: loading: 'lazy' }}
         </div>
       {% endif %}
-      <span class="variant-label--text">{{ value }}</span>
+      <span class="variant-label--text">{{ value_label }}</span>
       {{ label_unavailable }}
     </label>
     {% if thumbnail_variants contains option.name and show_variant_images and selector_order == 1 %}</div>{% endif %}
@@ -102,9 +159,9 @@
       {{ input_dataset }}
     >
       {% if option_disabled -%}
-        {{- 'products.product.value_unavailable' | t: option_value: value -}}
+        {{- 'products.product.value_unavailable' | t: option_value: value_label -}}
       {%- else -%}
-        {{- value -}}
+        {{- value_label -}}
       {%- endif %}
     </option>
   {% endif %}
