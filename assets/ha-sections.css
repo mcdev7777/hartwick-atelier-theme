@@ -5236,12 +5236,14 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    artboard's binding shows, and the rings across it. */
 .ha-home-hero__frames--bound { position: relative; gap: 3px; background: var(--ha-field-dark); }
 .ha-home-hero__rings { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
-.ha-home-hero__ring { position: absolute; width: clamp(9rem, 9.2vw, 14rem); height: auto; left: 49%; transform: translateX(-50%); filter: drop-shadow(0 2px 3px rgba(11, 6, 3, 0.45)); }
+/* Aloha's ring: holes 246 apart on 290, sized so they land where the drawn
+   ring's did (108 on 140). The artwork carries its own shading. */
+.ha-home-hero__ring { position: absolute; width: clamp(8.2rem, 8.36vw, 12.7rem); height: auto; left: 49%; transform: translateX(-50%); }
 .ha-home-hero__ring--1 { top: 24%; }
 .ha-home-hero__ring--2 { top: 74%; }
 /* Stacked frames: the seam is horizontal, so the rings turn with it. */
 @media screen and (max-width: 749px) {
-  .ha-home-hero--phone-stack .ha-home-hero__ring { left: auto; top: 50%; transform: translate(-50%, -50%) rotate(90deg); width: clamp(8rem, 24vw, 10rem); }
+  .ha-home-hero--phone-stack .ha-home-hero__ring { left: auto; top: 50%; transform: translate(-50%, -50%) rotate(90deg); width: clamp(7.3rem, 21.8vw, 9.1rem); }
   .ha-home-hero--phone-stack .ha-home-hero__ring--1 { left: 25%; }
   .ha-home-hero--phone-stack .ha-home-hero__ring--2 { left: 75%; }
   /* The rings reach ~45px above the seam; the headline on the upper frame
@@ -6027,17 +6029,20 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
   background: var(--ha-binding-bar);
   --ha-ring-w: clamp(2.2rem, 2.78vw, 4rem);         /* 40 on 1440 */
 }
-/* The ring's upper hole sits 44px above the bar (1.1 ring-widths); the
-   drawing's hole centre is 18 of its 40 units from the top. */
+/* Aloha's ring, upright. Its holes are 246 apart on 290 and must stay
+   4.6 ring-widths apart (184 on 1440), so the image is 1.03 ring-widths
+   wide; the upper hole, 22 of 290 down it, sits 1.1 ring-widths (44px)
+   above the bar. The artwork carries its own shading. */
 .ha-home-binding__ring {
   position: absolute;
-  top: calc(var(--ha-ring-w) * -1.55);
-  width: var(--ha-ring-w);
+  top: calc(var(--ha-ring-w) * -1.51);
+  width: calc(var(--ha-ring-w) * 1.03);
   height: auto;
   transform: translateX(-50%);
-  filter: drop-shadow(0 1px 2px rgba(11, 6, 3, 0.35));
   pointer-events: none;
 }
+/* "Above only" (a photograph below): the lower hole is trimmed off. */
+.ha-home-binding--top .ha-home-binding__ring { clip-path: inset(0 0 12% 0); }
 .ha-home-binding__ring--1 { left: 8.2%; }   /* 118 / 1440 */
 .ha-home-binding__ring--2 { left: 50%; }
 .ha-home-binding__ring--3 { left: 91.8%; }  /* 1326 / 1440 */
