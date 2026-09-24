@@ -14,7 +14,7 @@
 {%- endcomment -%}
 
 {%- unless current_tags -%}
-<section class="ha-jnl ha-jnl-lead">
+<section class="ha-jnl ha-jnl-lead" style="--ha-jnl-button-ink: {{ section.settings.button_ink }};">
   <div class="ha-jnl-wrap">
     <div class="ha-jnl-lead__grid">
       <div class="ha-jnl-lead__story">
@@ -88,7 +88,8 @@
     { "type": "text", "id": "visit_kicker", "label": "Kicker", "default": "Visiting the atelier" },
     { "type": "textarea", "id": "visit_heading", "label": "Heading", "default": "Private appointments in Esporles,\nMallorca." },
     { "type": "text", "id": "visit_text", "label": "Button text", "default": "Enquire about a visit" },
-    { "type": "url", "id": "visit_url", "label": "Button link" }
+    { "type": "url", "id": "visit_url", "label": "Button link" },
+    { "type": "color", "id": "button_ink", "label": "Button text colour", "default": "#E9E4D8" }
   ],
   "presets": [{ "name": "HA — Journal: lead story" }]
 }

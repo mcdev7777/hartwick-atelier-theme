@@ -7190,13 +7190,13 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   margin-top: calc(52 * var(--u));
   padding: 0 calc(26 * var(--u));
   background: var(--ha-inkstone);
-  color: var(--ha-chalk-blue);
-  font-size: max(1.1rem, calc(13 * var(--u)));
+  color: var(--ha-jnl-button-ink, #E9E4D8);   /* the Journal's warm ink, as on the band */
+  font-size: var(--ha-t-button);
   letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
 }
-a.ha-jnl-button { color: var(--ha-chalk-blue); }
+a.ha-jnl-button { color: var(--ha-jnl-button-ink, #E9E4D8); }
 .ha-jnl-button--inert { cursor: default; }
 
 /* --- two notes ------------------------------------------------------------------ */
