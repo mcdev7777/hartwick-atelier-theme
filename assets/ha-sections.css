@@ -6845,7 +6845,7 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 
 /* --- the oval and the rings ---------------------------------------------- */
 .ha-marks .ha-mark-host { position: relative; }
-.ha-marks .ha-mark-word, .ha-marks .ha-mark-label { position: relative; display: inline-block; }
+.ha-marks .ha-mark-word { position: relative; display: inline-block; }
 .ha-marks .ha-mark {
   position: absolute;
   left: 50%;
@@ -6861,16 +6861,25 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   mask-composite: intersect;
   transition: opacity 240ms ease;
 }
-/* Rings: round the whole label, wider than it and a little taller, as her
-   "LEARN FROM THE MASTERS" sketch — the ruled lines run through the ring. */
+/* Rings: round the WORDS, measured by ha-marks.js (--ha-tx/-ty centre,
+   --ha-tw/-th size), not round the element — a button or ruled link is often
+   wider than its label. In proportion to the words: 12% wider plus a margin
+   each side, and never flatter than 5:1, so a short word gets a snug ring
+   and a long label a ring that still reads as a ring. The fallbacks are
+   only for the instant before the first measurement. */
 .ha-marks .ha-mark--ring {
-  width: calc(100% + 2.2em);
-  aspect-ratio: 5 / 1;       /* long labels keep a ring's shape, not a squashed line */
-  min-height: 2.8em;
+  left: var(--ha-tx, 50%);
+  top: var(--ha-ty, 50%);
+  width: calc(var(--ha-tw, 100%) * 1.12 + 1.6em);
+  height: max(calc(var(--ha-th, 1.2em) + 1.5em), calc((var(--ha-tw, 100%) * 1.12 + 1.6em) / 5));
 }
 .ha-marks .ha-mark--ring-1 { --ha-mark-img: var(--ha-mark-ring-1); --ha-mark-from: 290deg; }
 .ha-marks .ha-mark--ring-2 { --ha-mark-img: var(--ha-mark-ring-2); --ha-mark-from: 250deg; }
-.ha-marks .ha-home__ruled > .ha-mark--ring { width: calc(100% + 3.2em); height: calc(100% + 1.8em); aspect-ratio: auto; }
+.ha-marks .ha-home__ruled > .ha-mark--ring {
+  /* Her "LEARN FROM THE MASTERS" sketch: the ring runs out through both rules. */
+  width: calc(var(--ha-tw, 100%) * 1.1 + 3.4em);
+  height: max(5.4em, calc((var(--ha-tw, 100%) * 1.1 + 3.4em) / 4.2));
+}
 /* The oval: round one word, as her "EXPLORE THE COMPLETE INDEX" sketch. */
 .ha-marks .ha-mark--oval {
   --ha-mark-img: var(--ha-mark-oval);

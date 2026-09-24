@@ -37,11 +37,9 @@
     '.hdr-nav-primary-level-ul > li > a', '.ha-util', '.hdr-st-item-cart .cart-icon--bubble',
     '.ha-footer__links a', '.ha-bag__action', '.ha-suggest__go', '.ha-suggest__stay',
     '.ha-reg-form__submit--outline', '.ha-circle__signin', '.ha-bag-empty__cta',
-    'a.ha-jnl-cats__link'
+    'a.ha-jnl-cats__link', '.nav-ul--primary > li > a', '.ha-util-row'
   ].join(',');
-  // Full-width rows (the phone menu, REGION / THE CIRCLE in it): the ring
-  // goes round the label's words, not round the whole row.
-  var RING_LABEL = '.nav-ul--primary > li > a, .ha-util-row';
+  var LABEL_ONLY = '.ha-util-row';
   var CORNER = '.ha-home__corner-mark, .ha-mst__corner, .ha-clothing__corner';
   // Links that take the oval without ever having had a corner mark: the
   // Journal's (Aloha, 23 Sept: "replace '>' to the circle icons").
@@ -71,32 +69,55 @@
     // (Size guide sits absolutely in its row) keeps its own positioning.
     if (getComputedStyle(el).position === 'static') el.classList.add('ha-mark-host');
     el.setAttribute('data-ha-mark', 'ring');
+    fit(el);
   }
 
-  function firstText(el) {
-    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+  // A ring goes round the WORDS, not round the element. Links and buttons
+  // are often wider than what they say — a ruled button with its label at
+  // the left, a padded menu item, a full-width row, a boxed button — and a
+  // ring sized to the box sat off-centre or ran far past the words (Ivan,
+  // 23 Sept: "the drawn circles don't fit the button width"). So the words'
+  // own box is measured and handed to the CSS as --ha-tx / --ha-ty (centre,
+  // from the link's padding edge) and --ha-tw / --ha-th (size); the CSS
+  // draws the ring in proportion to them. Measured again just before a ring
+  // is drawn, so it is right after a resize or a late web font.
+  function fit(el) {
+    var m = el.querySelector('.ha-mark--ring');
+    if (!m) return;
+    var host = m.parentNode;
+    var l = 1e9, r = -1e9, t = 1e9, b = -1e9;
+    var walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
         return /\S/.test(n.nodeValue) && !n.parentNode.closest('.ha-mark, .visually-hidden') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
       }
     });
-    return walker.nextNode();
+    // A row with a label at one end and a value at the other (REGION …
+    // US / USD in the phone menu) is ringed on its label alone.
+    var firstOnly = el.matches(LABEL_ONLY);
+    var range = document.createRange(), n;
+    while ((n = walker.nextNode())) {
+      range.selectNodeContents(n);
+      var rects = range.getClientRects();
+      for (var i = 0; i < rects.length; i++) {
+        var q = rects[i];
+        if (!q.width) continue;
+        if (q.left < l) l = q.left;
+        if (q.right > r) r = q.right;
+        if (q.top < t) t = q.top;
+        if (q.bottom > b) b = q.bottom;
+      }
+      if (firstOnly && r > l) break;
+    }
+    if (r <= l) return;          // hidden, or no words: keep the CSS fallback
+    var box = host.getBoundingClientRect();
+    m.style.setProperty('--ha-tx', ((l + r) / 2 - box.left - host.clientLeft).toFixed(1) + 'px');
+    m.style.setProperty('--ha-ty', ((t + b) / 2 - box.top - host.clientTop).toFixed(1) + 'px');
+    m.style.setProperty('--ha-tw', (r - l).toFixed(1) + 'px');
+    m.style.setProperty('--ha-th', (b - t).toFixed(1) + 'px');
   }
 
-  function ringLabel(el) {
-    var t = firstText(el);
-    if (!t) return;
-    var label = t.parentNode !== el && t.parentNode.childNodes.length === 1 ? t.parentNode : null;
-    if (!label) {
-      label = document.createElement('span');
-      t.parentNode.replaceChild(label, t);
-      label.appendChild(t);
-    }
-    label.classList.add('ha-mark-label');
-    var n = random && Math.random() < 0.5 ? 2 : 1;
-    var s = span('ha-mark--ring ha-mark--ring-' + n);
-    vary(s, 3);
-    label.appendChild(s);
-    el.setAttribute('data-ha-mark', 'ring');
+  function fitAll() {
+    document.querySelectorAll('[data-ha-mark="ring"]').forEach(fit);
   }
 
   // The last word of the link's own text, wrapped so the oval can sit on it.
@@ -142,9 +163,6 @@
     document.querySelectorAll(OVAL).forEach(function (el) {
       if (!el.hasAttribute('data-ha-mark')) oval(el);
     });
-    document.querySelectorAll(RING_LABEL).forEach(function (el) {
-      if (!el.hasAttribute('data-ha-mark')) ringLabel(el);
-    });
     document.querySelectorAll(RING).forEach(function (el) {
       if (el.hasAttribute('data-ha-mark') || !el.textContent.trim()) return;
       ring(el);
@@ -163,11 +181,20 @@
     el._haMarkTimer = setTimeout(function () { el.classList.remove('is-marking'); }, 1400);
   }
 
+  // Measure the words the moment a ring is about to be drawn.
+  function fitFrom(e) {
+    var el = e.target.closest && e.target.closest('[data-ha-mark="ring"]');
+    if (el) fit(el);
+  }
+  document.addEventListener('pointerover', fitFrom, { passive: true });
+  document.addEventListener('focusin', fitFrom);
+
   document.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse') return;
     var el = e.target.closest && e.target.closest('[data-ha-mark]');
     if (!el) return;
     touched = el; touchedAt = Date.now();
+    if (el.getAttribute('data-ha-mark') === 'ring') fit(el);
     play(el);
   }, { passive: true });
 
@@ -190,6 +217,14 @@
   });
 
   scan();
+  // Rings that stay drawn (the Journal's current section) are re-measured
+  // once the web fonts have loaded and whenever the page is resized.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+  var resizing = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizing);
+    resizing = setTimeout(fitAll, 150);
+  });
   var pending = 0;
   new MutationObserver(function () {
     if (pending) return;
