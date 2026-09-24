@@ -6929,7 +6929,8 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
    negative z-index paints above the background and below everything in it,
    whatever positioning the content uses.
    ========================================================================== */
-.ha-grain-block { position: relative; isolation: isolate; }
+:where(.ha-grain-block) { position: relative; }   /* zero specificity: an absolutely placed block keeps its position */
+.ha-grain-block { isolation: isolate; }
 .ha-grain-block::before {
   content: "";
   position: absolute;
@@ -6939,6 +6940,12 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   background: var(--ha-grain-tile) 0 0 / 320px 320px repeat;
   opacity: var(--ha-grain-strength, 0.19);
 }
+/* On a photograph the sheet has to sit over the picture, not under it. */
+.ha-grain-block--over::before { z-index: 1; }
+/* An outline button is page ground at rest; the grain arrives with its fill. */
+.ha-reg-form__submit--outline.ha-grain-block::before { opacity: 0; transition: opacity 160ms ease; }
+.ha-reg-form__submit--outline.ha-grain-block:hover::before,
+.ha-reg-form__submit--outline.ha-grain-block:focus-visible::before { opacity: var(--ha-grain-strength, 0.19); }
 @media print { .ha-grain-block::before { display: none; } }
 
 /* ==========================================================================

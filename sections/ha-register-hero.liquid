@@ -28,7 +28,7 @@
   assign card_url = section.settings.card_link
 -%}
 
-<section class="ha-home ha-reg ha-reg-hero" aria-labelledby="ha-reg-hero-title">
+<section class="ha-home ha-reg ha-reg-hero ha-grain-block" aria-labelledby="ha-reg-hero-title">
   <div class="ha-wrap">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard, for her to confirm." -%}
 
@@ -53,7 +53,7 @@
       {%- if left_url != blank -%}</a>{%- else -%}</div>{%- endif -%}
 
       <div class="ha-reg-envelope__body">
-        <div class="ha-reg-envelope__card">
+        <div class="ha-reg-envelope__card ha-grain-block">
           {%- if section.settings.show_mark -%}
             <img class="ha-reg-envelope__mark" src="{{ 'ha-house-symbol-white.png' | asset_url }}" width="1867" height="1867" alt="" loading="eager">
           {%- endif -%}

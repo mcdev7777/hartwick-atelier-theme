@@ -74,7 +74,7 @@
 
   {%- comment -%} ---------- HERO: the wide photograph, the framed inset ---------- {%- endcomment -%}
   <header class="ha-mst__hero{% if inset %} ha-mst__hero--inset{% endif %}">
-    <figure class="ha-mst__hero-figure ha-figure{% unless hero %} ha-figure--empty{% endunless %}">
+    <figure class="ha-mst__hero-figure ha-figure ha-grain-block ha-grain-block--over{% unless hero %} ha-figure--empty{% endunless %}">
       {%- if hero -%}
         {{ hero | image_url: width: 2800 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1500, 2000, 2800', alt: section.settings.hero_alt, class: 'ha-mst__hero-img', style: hero_focus }}
       {%- else -%}

@@ -167,7 +167,7 @@
 {%- if has_identity or show_tool or section.settings.show_slot -%}
 <section class="ha-section ha-section--field-peat ha-masterfeat{% if photo != blank %} ha-masterfeat--photo{% endif %}{% if show_tool %} ha-masterfeat--tool{% elsif has_identity == false %} ha-masterfeat--slot{% endif %}"{% if tool != blank %} data-tool="{{ tool.settings.anchor | escape }}"{% endif %}>
   {%- if photo != blank -%}
-    <div class="ha-masterfeat__media">
+    <div class="ha-masterfeat__media ha-grain-block ha-grain-block--over">
       {{ photo
         | image_url: width: 2800
         | image_tag:
