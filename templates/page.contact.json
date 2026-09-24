@@ -7,8 +7,101 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
+/*
+ * Hartwick Atelier — CONTACT (/pages/contact-us), 24 September 2026, from
+ * Aloha's contact artboard: Get in touch (CONTACT with a dye-spot O, the ways
+ * to write), the ring bar, Visit the showroom (her photograph stack, by
+ * appointment with Angela). Grain over the page at 30% (Page grain), the
+ * rings and pictures above it. Luxe's contact form and the Media Contacts
+ * block that were here are kept below, switched off; the artboard has
+ * neither. Every word is Aloha's. Build note: docs/contact-page-build.md.
+ * Redrawn the same day (Hartwick_Contact_Editable.pdf): her grey paper under
+ * both bands and a transparent menu, Chalk Blue type, the photographs turned,
+ * "Mallorca / Serra de Tramuntana", no caption.
+ */
 {
   "sections": {
+    "get_in_touch": {
+      "type": "ha-contact-intro",
+      "blocks": {
+        "studio": {
+          "type": "detail",
+          "settings": {
+            "label": "Appointments / Wholesale / Press",
+            "line": "",
+            "value": "contact@hartwickatelier.com",
+            "link": "mailto:contact@hartwickatelier.com"
+          }
+        },
+        "angela": {
+          "type": "detail",
+          "settings": {
+            "label": "Angela Hartwick",
+            "line": "Founder",
+            "value": "angela@hartwickatelier.com",
+            "link": "mailto:angela@hartwickatelier.com"
+          }
+        },
+        "instagram": {
+          "type": "detail",
+          "settings": {
+            "label": "Instagram",
+            "line": "",
+            "value": "@worldofhartwickatelier",
+            "link": "https://www.instagram.com/worldofhartwickatelier"
+          }
+        }
+      },
+      "block_order": [
+        "studio",
+        "angela",
+        "instagram"
+      ],
+      "settings": {
+        "eyebrow_left": "Hartwick Atelier / Correspondence",
+        "eyebrow_right": "01 / Get in touch",
+        "heading": "Contact",
+        "spot_image": "shopify://shop_images/HA_CONTACT_DYE_SPOT_PEACH.png",
+        "spot_letter": 2,
+        "intro": "A question about a piece.\nA visit to the Atelier.\nWrite to us.",
+        "foot_left": "Cloth. People. Correspondence.",
+        "foot_right": "Mallorca / and elsewhere",
+        "show_placeholder_note": true,
+        "paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg",
+        "grain": true
+      }
+    },
+    "binding": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": true,
+        "grain": true,
+        "placement": "contact",
+        "holes": "both"
+      }
+    },
+    "visit": {
+      "type": "ha-contact-visit",
+      "settings": {
+        "anchor": "visit",
+        "eyebrow_left": "02 / Visit the showroom",
+        "eyebrow_right": "Mallorca / Serra de Tramuntana",
+        "heading": "Visiting Mallorca?",
+        "subheading": "See the collection in person.",
+        "image": "shopify://shop_images/HA_CONTACT_SHOWROOM_STACK.png",
+        "image_alt": "Photographs of the showroom laid one over another: a rail of clothes hung from a pole before a mirror, a chair beside it",
+        "aside_heading": "By appointment,\nwith Angela",
+        "body": "<p>Book a private visit to our showroom in Mallorca. Meet Angela, feel the fabrics and see the handwork up close, with time to try on pieces and find what works for you.</p>",
+        "label": "To arrange your visit",
+        "line": "Email us with your preferred dates.",
+        "button_text": "Request an appointment",
+        "button_link": "mailto:contact@hartwickatelier.com?subject=Showroom%20visit",
+        "caption": "",
+        "show_placeholder_note": true,
+        "paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_LOWER.jpg",
+        "grain": true
+      }
+    },
     "main": {
       "type": "main-page",
       "disabled": true,
@@ -55,7 +148,8 @@
         "bottom_border": false,
         "border_width": "normal",
         "border_color": "dark"
-      }
+      },
+      "disabled": true
     },
     "form": {
       "type": "contact-form",
@@ -67,7 +161,8 @@
         "form_padding_bottom": 0,
         "padding_top": 50,
         "padding_bottom": 100
-      }
+      },
+      "disabled": true
     },
     "rich_text_hCYrtU": {
       "type": "rich-text",
@@ -106,10 +201,14 @@
         "bottom_border": false,
         "border_width": "normal",
         "border_color": "dark"
-      }
+      },
+      "disabled": true
     }
   },
   "order": [
+    "get_in_touch",
+    "binding",
+    "visit",
     "main",
     "rich_text_7zH9qn",
     "form",

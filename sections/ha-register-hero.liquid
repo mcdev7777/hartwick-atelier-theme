@@ -17,6 +17,11 @@
 
   The band: Angela, 24 September — keep the purple (#502F37, Theme settings
   > Correspondence band) rather than the artboard's brown, with the grain.
+  Later the same day ("Hartwick_The_Register [Recovered]"): the band is her
+  wine paper photograph (`paper`), running up under a transparent menu
+  (header "Transparent on these pages"); the words moved up their sheets,
+  "Read." / "By invitation." in Junicode Cond Italic, THE REGISTER in
+  Junicode Cond Medium, the side line in Chalk Blue.
 
   Every position and size is a percentage of the photograph, measured off
   the artboard (the envelope 590 wide on 1440), so the words stay on their
@@ -31,7 +36,7 @@
   assign right_url = section.settings.right_link
 -%}
 
-<section class="ha-home ha-reg ha-reg-page ha-reg-hero ha-grain-block" aria-labelledby="ha-reg-hero-title">
+<section class="ha-home ha-reg ha-reg-page ha-reg-hero{% if section.settings.grain %} ha-grain-block{% endif %}{% if section.settings.paper %} ha-reg-hero--paper{% endif %}"{% if section.settings.paper %} style="--ha-reg-paper: url({{ section.settings.paper | image_url: width: 2400 }});"{% endif %} aria-labelledby="ha-reg-hero-title">
   <div class="ha-wrap">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard, for her to confirm." -%}
 
@@ -89,7 +94,9 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
-    { "type": "paragraph", "content": "Band colour: Theme settings > Hartwick — Material Archive > Correspondence band. Grain: Theme settings > Grain on dark blocks > Register page grain." },
+    { "type": "paragraph", "content": "Band colour: Theme settings > Hartwick — Material Archive > Correspondence band. Grain: Theme settings > Grain on dark blocks > Page grain." },
+    { "type": "image_picker", "id": "paper", "label": "Paper photograph", "info": "Aloha's wine paper (24 September), laid under the whole band and the transparent menu. Empty = the Correspondence band colour." },
+    { "type": "checkbox", "id": "grain", "label": "Grain", "default": true },
     { "type": "image_picker", "id": "image", "label": "Envelope photograph", "info": "Aloha's open envelope, cut out on a transparent ground. The words below sit on its sheets at fixed positions: a different photograph needs them re-measured." },
     { "type": "text", "id": "image_alt", "label": "Photograph alt text", "default": "An open glassine envelope holding two of the Atelier's papers: a handmade sheet flecked with petals and a folded, dyed pink sheet" },
     { "type": "text", "id": "heading", "label": "Page title", "default": "The Register", "info": "On the envelope's front. Set in capitals by the style." },

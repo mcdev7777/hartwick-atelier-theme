@@ -34,6 +34,10 @@
  * the Circle's quiet line; the Circle button filled; binding bars under the
  * opening (rings) and above Your correspondence; her full Paris-room frame;
  * the whole page grained at 30%. Build note: docs/register-page-build.md.
+ * Later, "Hartwick_The_Register [Recovered]": her wine paper photograph under
+ * the opening and a transparent menu; the words moved up their sheets in
+ * Junicode Cond; the card's photograph moved up under its thread and seal;
+ * the dye spot beside the Circle's first paragraph.
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
  * ------------------------------------------------------------
@@ -43,6 +47,8 @@
     "opening": {
       "type": "ha-register-hero",
       "settings": {
+        "paper": "shopify://shop_images/HA_REGISTER_PAPER_WINE.jpg",
+        "grain": true,
         "image": "shopify://shop_images/HA_REGISTER_ENVELOPE_OPEN.png",
         "image_alt": "An open glassine envelope holding two of the Atelier's papers: a handmade sheet flecked with petals and a folded, dyed pink sheet",
         "heading": "The Register",

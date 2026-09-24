@@ -11,8 +11,9 @@
   full name, the email the invitation went to, a note — with "Your reply goes
   to the Atelier team for confirmation." and the wine button.
   24 September (FinalHartwick_The_Register): a spot of the Atelier's yellow
-  dye sits beside the quiet line (a picture setting, decorative), and the
-  button is filled like Join The Register's, no longer outlined.
+  dye (a picture setting, decorative), and the button is filled like Join
+  The Register's, no longer outlined. Later the same day ("[Recovered]"):
+  the spot moved up beside the first paragraph, the quiet line beneath.
 
   ══════════════════════════════════════════════════════════════════════════
   ⚠️  TERMINOLOGY. Framework v3 — the top of the source-of-truth hierarchy —
@@ -52,13 +53,10 @@
         {%- if section.settings.heading != blank -%}
           <h2 id="ha-reg-circle-title" class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
         {%- endif -%}
-        {%- if section.settings.body != blank -%}
-          <div class="ha-home__prose ha-narrate" style="margin-top: 1.6rem;">{{ section.settings.body }}</div>
-        {%- endif -%}
-        {%- if section.settings.quiet != blank or section.settings.spot_image -%}
-          <div class="ha-reg-circle__quiet-row">
-            {%- if section.settings.quiet != blank -%}
-              <div class="ha-home__prose ha-reg__quiet ha-narrate">{{ section.settings.quiet }}</div>
+        {%- if section.settings.body != blank or section.settings.spot_image -%}
+          <div class="ha-reg-circle__spot-row">
+            {%- if section.settings.body != blank -%}
+              <div class="ha-home__prose ha-narrate">{{ section.settings.body }}</div>
             {%- endif -%}
             {%- if section.settings.spot_image -%}
               {{
@@ -68,6 +66,9 @@
               }}
             {%- endif -%}
           </div>
+        {%- endif -%}
+        {%- if section.settings.quiet != blank -%}
+          <div class="ha-home__prose ha-reg__quiet ha-narrate ha-reg-circle__quiet">{{ section.settings.quiet }}</div>
         {%- endif -%}
       </div>
 
@@ -159,7 +160,7 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "A personal connection." },
     { "type": "richtext", "id": "body", "label": "Text", "default": "<p>A small group of founding friends whose connection to Hartwick grows through wearing, conversation and shared experience.</p>" },
     { "type": "richtext", "id": "quiet", "label": "Quiet line", "default": "<p>Membership begins with a personal invitation. It is separate from joining The Register.</p>" },
-    { "type": "image_picker", "id": "spot_image", "label": "Dye spot", "info": "Aloha's spot of yellow dye beside the quiet line, cut out on a transparent ground. Decorative: no alt text is read." },
+    { "type": "image_picker", "id": "spot_image", "label": "Dye spot", "info": "Aloha's spot of yellow dye beside the first paragraph, cut out on a transparent ground. Decorative: no alt text is read." },
     { "type": "header", "content": "Right column" },
     { "type": "text", "id": "aside_eyebrow", "label": "Eyebrow", "default": "Already received an invitation?" },
     { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Respond to the Atelier." },

@@ -155,13 +155,13 @@
       {
         "type": "range",
         "id": "ha_grain_register",
-        "label": "Register page grain",
+        "label": "Page grain (Register, Contact)",
         "min": 0,
         "max": 60,
         "step": 1,
         "unit": "%",
         "default": 30,
-        "info": "The Register page (Aloha, 24 September): the same grain over the whole page, the purple band and the paper alike, but not over the photographs. 0 = none on that page."
+        "info": "The Register and Contact pages (Aloha, 24 September): the same grain over the whole page, the bands and the paper alike, with the photographs and the metal rings above it. 0 = none on those pages."
       },
       {
         "type": "header",

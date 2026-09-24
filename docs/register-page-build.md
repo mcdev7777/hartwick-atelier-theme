@@ -141,3 +141,20 @@ bar was not built).
 
 Pushed to the CLI dev theme #190959223083 and Hartwik - Dev #190886576427
 (sections, CSS, tokens, schema, then the template). Verified at 1440 and 375.
+
+## 24 September 2026, later — "Hartwick_The_Register [Recovered].pdf"
+
+Read with pymupdf (1440 × 3490). Changes from the version before:
+
+| Her PDF | Built |
+|---|---|
+| The opening band is her **wine paper photograph** (2868 × 1998), running up under the menu; no grain tile over it (the photograph is the texture) | New `paper` picker on the opening → `HA_REGISTER_PAPER_WINE.jpg`, `cover`. The grain stays at 30% (a **Grain** switch on the section), as on the contact page |
+| Menu transparent over it, wine hairline, dark words, dark House symbol | The header setting is now **Transparent on these pages** (`ha_trans_pages`, "contact, the-register"), replacing the contact-only switch. Ink colour and black symbol as on the homepage. The header keeps a class, `.ha-trans`, so the pages add the menu's height to their top padding without jumping when Luxe fills the bar on scroll |
+| The words moved up their sheets and tilt more: The Dispatch (36.12%, 11.05%) −3.35°, Read. (37.34, 16.53); The Circle (61.42, 36.52) +3.67°, By invitation. (60.64, 43.8); THE REGISTER (49.36, 69.95) | Built to those percentages. Measured on the page: within 5 px of hers |
+| Read. / By invitation. in **Junicode Italic Condensed** (27.7 / 20.8); THE REGISTER in **Junicode Cond Medium**; labels Porter Medium 9, widely tracked; side line Porter Medium 11 in Chalk Blue, ending 51 above the envelope's foot | Two new static cuts from the brand folder's variable originals: `ha-junicode-cond-italic.woff2` (wght 400, wdth 75) and `ha-junicode-cond-medium.woff2` (wght 500, wdth 75), 56–57 KB, added to `scripts/make-journal-fonts.py` and `snippets/ha-fonts.liquid`. They load only on this page |
+| The Register card's photograph moved up 26; its words, thread and seal stayed where they were | Positions re-measured against the photograph: words 38.2% down, gap 3.2cqw, the line in Cond Italic; thread and seal at 72.8% |
+| The yellow dye spot moved up beside the Circle's first paragraph (530–721, from 31 above it); the quiet line follows beneath | New markup: the paragraph and the spot share a row, and the quiet line comes after |
+| Everything else (Join, the forms, the correspondence band, the bars and rings) | Unchanged |
+
+Her header items (a yellow spot behind THE CIRCLE, and globe and translate icons) are in this
+artboard too. They're site-wide, so they're not built. Asked.

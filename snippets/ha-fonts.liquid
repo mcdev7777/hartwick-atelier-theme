@@ -139,6 +139,21 @@
     font-style: normal;
     font-display: swap;
   }
+  {%- comment -%} The Register page's envelope (24 September): Cond Medium and Cond Italic. {%- endcomment -%}
+  @font-face {
+    font-family: "Junicode Cond";
+    src: url({{ 'ha-junicode-cond-medium.woff2' | asset_url }}) format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Junicode Cond";
+    src: url({{ 'ha-junicode-cond-italic.woff2' | asset_url }}) format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
   @font-face {
     font-family: "Noto Sans Mono Condensed";
     src: url({{ 'ha-noto-mono-cond-bold.woff2' | asset_url }}) format("woff2");

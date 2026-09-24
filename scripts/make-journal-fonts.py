@@ -52,6 +52,12 @@ noto = codepoints("ha-noto-mono-cond.woff2")
 vf = FONTS / "Junicode/VAR/JunicodeVF-Roman.ttf"
 build(vf, "ha-junicode-cond.woff2", junicode, axes={"wght": 400, "wdth": 75, "ENLA": 0})
 build(vf, "ha-junicode-semicond-semibold.woff2", junicode, axes={"wght": 600, "wdth": 87.5, "ENLA": 0})
+# The Register page (Aloha, 24 September, "Hartwick_The_Register [Recovered]"):
+# the words on her envelope photograph — "Read." / "By invitation." in
+# Junicode Italic Condensed, THE REGISTER in Junicode Cond Medium.
+build(vf, "ha-junicode-cond-medium.woff2", junicode, axes={"wght": 500, "wdth": 75, "ENLA": 0})
+vfi = FONTS / "Junicode/VAR/JunicodeVF-Italic.ttf"
+build(vfi, "ha-junicode-cond-italic.woff2", codepoints("ha-junicode-italic.woff2"), axes={"wght": 400, "wdth": 75, "ENLA": 0})
 mono = FONTS / "NOTO SANS MONO/Untitled folder"
 build(mono / "NotoSansMono_Condensed-Bold.ttf", "ha-noto-mono-cond-bold.woff2", noto)
 build(mono / "NotoSansMono-Medium.ttf", "ha-noto-mono-medium.woff2", noto)

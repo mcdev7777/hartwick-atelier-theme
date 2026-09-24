@@ -16,9 +16,12 @@
   The ring is Aloha's own artwork, stood upright (assets/ha-ring-upright.svg,
   24 September 2026), with both punched holes drawn in it. "Above only"
   trims the lower hole off.
+  24 September 2026, her final homepage header: under the opening the rings
+  are drawn in towards the cards — "Ring placement: Inset". The contact
+  page (same day) grains the bar too, rings above the grain ("Grain").
 {%- endcomment -%}
 
-<div class="ha-home-binding{% if section.settings.rings %} ha-home-binding--rings{% endif %}{% if section.settings.holes == 'top' %} ha-home-binding--top{% endif %}" aria-hidden="true">
+<div class="ha-home-binding{% if section.settings.rings %} ha-home-binding--rings{% endif %}{% if section.settings.holes == 'top' %} ha-home-binding--top{% endif %}{% if section.settings.placement == 'inset' %} ha-home-binding--inset{% endif %}{% if section.settings.placement == 'contact' %} ha-home-binding--contact{% endif %}{% if section.settings.grain %} ha-page-grain ha-grain-block{% endif %}" aria-hidden="true">
   {%- if section.settings.rings -%}
     {%- for i in (1..3) -%}
       <img class="ha-home-binding__ring ha-home-binding__ring--{{ i }}" src="{{ 'ha-ring-upright.svg' | asset_url }}" width="55" height="290" alt="" loading="lazy">
@@ -34,6 +37,15 @@
   "settings": [
     { "type": "paragraph", "content": "The dark bar Aloha draws between homepage sections (23 September 2026). Colour: Theme settings > Hartwick — Material Archive > Binding bar." },
     { "type": "checkbox", "id": "rings", "label": "Binder rings", "default": true },
+    { "type": "checkbox", "id": "grain", "label": "Grain on the bar", "default": false, "info": "Page grain strength (Theme settings). The rings stay above it." },
+    {
+      "type": "select", "id": "placement", "label": "Ring placement", "default": "wide",
+      "options": [
+        { "value": "wide", "label": "Wide: 118 / 722 / 1326 on 1440 (23 Sep)" },
+        { "value": "inset", "label": "Inset: 249 / 722 / 1239 on 1440 (24 Sep)" },
+        { "value": "contact", "label": "Contact: 225 / 720 / 1212 on 1440" }
+      ]
+    },
     {
       "type": "select", "id": "holes", "label": "Punched holes", "default": "both",
       "options": [

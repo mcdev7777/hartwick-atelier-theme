@@ -5491,7 +5491,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    settings > Register page grain): the purple band and the paper alike. The
    photographs sit above the sheet, so they stay clean, as on her artboard;
    the binding bars between the sections are not grained there either. */
-.ha-reg-page { --ha-grain-strength: var(--ha-grain-register); }
+.ha-reg-page, .ha-page-grain { --ha-grain-strength: var(--ha-grain-register); }
 
 /* --- 01  The opening: purple band, the envelope photograph, its words ----- */
 /* Measured off FinalHartwick_The_Register (24 September): band 930 on 1440;
@@ -5499,6 +5499,16 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    bar, whose rings reach 60 up into it. */
 .ha-reg-hero { background: var(--ha-field-correspondence); color: var(--ha-text-invert); border-bottom: 0; }
 .ha-reg-hero > .ha-wrap { padding-top: clamp(3.2rem, 3.5vw, 5rem); padding-bottom: clamp(6.4rem, 6vw, 8.6rem); }
+/* "[Recovered]", 24 September: her wine paper photograph under the band, and
+   under the menu, which is transparent on this page (header setting
+   "Transparent on these pages"; .ha-trans stays on the header while it is
+   set, so the padding holds when Luxe fills the bar on scroll). The
+   envelope's top sits 46 below her 74 bar. */
+.ha-reg-hero.ha-reg-hero--paper { background: var(--ha-field-correspondence) var(--ha-reg-paper) center / cover no-repeat; }
+body:has(#SiteHeader.ha-trans) .ha-reg-hero > .ha-wrap { padding-top: calc(var(--site-header-height-mobile, 6rem) + clamp(2.4rem, 3.2vw, 4.6rem)); }
+@media screen and (min-width: 990px) {
+  body:has(#SiteHeader.ha-trans) .ha-reg-hero > .ha-wrap { padding-top: calc(var(--site-header-height-desktop, 8rem) + clamp(2.4rem, 3.2vw, 4.6rem)); }
+}
 .ha-reg-letter { position: relative; width: min(84vw, 59rem); margin: 0 auto; }
 @media screen and (min-width: 750px) { .ha-reg-letter { width: min(41vw, 59rem); } }
 /* Everything on the photograph is placed in percentages of it (1600 × 2157),
@@ -5514,14 +5524,15 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-reg-letter__words { position: static; margin: 0; }
 .ha-reg-letter .ha-reg-letter__label,
 .ha-reg-letter .ha-reg-letter__word { position: absolute; z-index: 1; transform: translate(-50%, -50%) rotate(var(--tilt, 0deg)); white-space: nowrap; line-height: 1; color: var(--ha-text); }
-.ha-reg-letter__label { font-size: clamp(0.8rem, 1.75cqw, var(--ha-t-meta)); letter-spacing: var(--ha-track-meta); text-transform: uppercase; font-weight: 300; }
-.ha-reg-letter__word { font-size: min(var(--ha-t-h2), 3.4cqw); font-style: italic; font-weight: 300; }
-.ha-reg-letter__words--dispatch { --tilt: -2.2deg; }
-.ha-reg-letter__words--dispatch .ha-reg-letter__label { left: 36.45%; top: 13.45%; }
-.ha-reg-letter__words--dispatch .ha-reg-letter__word { left: 37.6%; top: 19.2%; }
-.ha-reg-letter__words--circle { --tilt: 3.4deg; }
-.ha-reg-letter__words--circle .ha-reg-letter__label { left: 61.7%; top: 39.6%; }
-.ha-reg-letter__words--circle .ha-reg-letter__word { left: 60.9%; top: 47%; }
+.ha-reg-letter__label { font-size: clamp(0.8rem, 1.53cqw, var(--ha-t-meta)); font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; }
+.ha-reg-letter__word { font-family: "Junicode Cond", var(--ha-font-narrate), serif; font-size: min(var(--ha-t-h2), 3.53cqw); font-style: italic; font-weight: 400; }
+.ha-reg-letter__words--dispatch .ha-reg-letter__word { font-size: min(var(--ha-t-h1), 4.69cqw); }
+.ha-reg-letter__words--dispatch { --tilt: -3.35deg; }
+.ha-reg-letter__words--dispatch .ha-reg-letter__label { left: 36.12%; top: 11.05%; }
+.ha-reg-letter__words--dispatch .ha-reg-letter__word { left: 37.34%; top: 16.53%; }
+.ha-reg-letter__words--circle { --tilt: 3.67deg; }
+.ha-reg-letter__words--circle .ha-reg-letter__label { left: 61.42%; top: 36.52%; }
+.ha-reg-letter__words--circle .ha-reg-letter__word { left: 60.64%; top: 43.8%; }
 a.ha-reg-letter__words::before { content: ""; position: absolute; z-index: 2; }
 a.ha-reg-letter__words--dispatch::before { left: 3%; top: 1%; width: 63%; height: 26%; }
 a.ha-reg-letter__words--circle::before { left: 30%; top: 27%; width: 64%; height: 33%; }
@@ -5530,9 +5541,9 @@ a.ha-reg-letter__words:focus-visible .ha-reg-letter__word { text-decoration: und
 a.ha-reg-letter__words:focus-visible { outline: none; }
 a.ha-reg-letter__words:focus-visible::before { outline: 2px solid var(--ha-text); outline-offset: -4px; }
 /* The page's title, on the envelope's front in the band's colour. */
-.ha-reg-letter__title { position: absolute; left: 52.3%; top: 72.8%; z-index: 1; margin: 0; transform: translate(-50%, -50%); white-space: nowrap; font-size: min(var(--ha-t-h1), 4.4cqw); line-height: 1; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; color: var(--ha-field-correspondence); }
+.ha-reg-letter__title { position: absolute; left: 49.36%; top: 69.95%; z-index: 1; margin: 0; transform: translate(-50%, -50%); white-space: nowrap; font-family: "Junicode Cond", var(--ha-font-narrate), serif; font-size: min(var(--ha-t-h1), 4.69cqw); line-height: 1; text-transform: uppercase; letter-spacing: 0; font-weight: 500; color: var(--ha-field-correspondence); }
 /* "Hartwick Atelier / Correspondence" runs up the envelope's right side. */
-.ha-reg-letter__side { position: absolute; left: calc(100% + 0.3rem); bottom: 3.6%; margin: 0; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); text-transform: uppercase; font-weight: 300; line-height: 1; }
+.ha-reg-letter__side { position: absolute; left: calc(100% + 0.3rem); bottom: 6.5%; margin: 0; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-size: var(--ha-t-ui); font-weight: 500; letter-spacing: var(--ha-track-meta); text-transform: uppercase; line-height: 1; }
 
 /* --- shared: two columns, the page's forms ------------------------------- */
 .ha-reg__grid { display: grid; gap: 4.8rem; }
@@ -5548,16 +5559,22 @@ a.ha-reg-letter__words:focus-visible::before { outline: 2px solid var(--ha-text)
 .ha-reg-note { position: relative; container-type: inline-size; width: min(100%, 30rem); margin: 3.2rem 0 0; }
 .ha-reg-note__img { display: block; width: 100%; height: auto; }
 .ha-reg-note .ha-figure--empty { aspect-ratio: 1583 / 1947; display: grid; place-items: center; }
-.ha-reg-note__words { position: absolute; left: 50.2%; top: 30.5%; z-index: 1; transform: translateX(-50%); display: grid; justify-items: center; gap: 3.1cqw; white-space: nowrap; text-align: center; color: var(--ha-text-invert); }
-.ha-reg-note__title { font-size: min(var(--ha-t-h2), 6.5cqw); line-height: 1; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; }
-.ha-reg-note__line { font-size: clamp(0.9rem, 3.3cqw, var(--ha-t-label)); line-height: 1.2; font-style: italic; font-weight: 300; }
-.ha-reg-note .ha-reg-note__thread { display: block; position: absolute; left: 3.4%; right: 3.4%; top: 65.7%; height: max(1px, 0.35cqw); background: rgba(var(--ha-peat-rgb), 0.85); box-shadow: 0 max(1px, 0.3cqw) 0 rgba(var(--ha-peat-rgb), 0.35); transform: rotate(1.2deg); }
-.ha-reg-note .ha-reg-note__seal { display: grid; place-items: center; position: absolute; left: 56.4%; top: 65.6%; width: 11.3%; aspect-ratio: 1; border-radius: 50%; background: var(--ha-field-dark); box-shadow: 0 1px 2px rgba(var(--ha-peat-rgb), 0.35); transform: translate(-50%, -50%); }
+.ha-reg-note__words { position: absolute; left: 50%; top: 38.2%; z-index: 1; transform: translateX(-50%); display: grid; justify-items: center; gap: 3.2cqw; white-space: nowrap; text-align: center; color: var(--ha-text-invert); }
+.ha-reg-note__title { font-size: min(var(--ha-t-h2), 5.54cqw); line-height: 1; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; }
+.ha-reg-note__line { font-family: "Junicode Cond", var(--ha-font-narrate), serif; font-size: clamp(0.9rem, 3.42cqw, var(--ha-t-label)); line-height: 1.2; font-style: italic; font-weight: 400; }
+.ha-reg-note .ha-reg-note__thread { display: block; position: absolute; left: 3.19%; right: 3.55%; top: 72.8%; height: max(1px, 0.35cqw); background: rgba(var(--ha-peat-rgb), 0.85); box-shadow: 0 max(1px, 0.3cqw) 0 rgba(var(--ha-peat-rgb), 0.35); transform: rotate(1.2deg); }
+.ha-reg-note .ha-reg-note__seal { display: grid; place-items: center; position: absolute; left: 56.29%; top: 72.8%; width: 11.28%; aspect-ratio: 1; border-radius: 50%; background: var(--ha-field-dark); box-shadow: 0 1px 2px rgba(var(--ha-peat-rgb), 0.35); transform: translate(-50%, -50%); }
 .ha-reg-note__seal img { display: block; width: 44%; height: auto; opacity: 0.85; }
 /* The Circle: a spot of the Atelier's yellow dye beside the quiet line
    (190 wide on 1440, centred on the line). */
-.ha-reg-circle__quiet-row { display: flex; align-items: center; gap: clamp(1.6rem, 2.4vw, 3.4rem); margin-top: 3.2rem; }
-.ha-reg-circle__quiet-row .ha-reg__quiet { flex: 0 1 37rem; min-width: 0; }
+/* "[Recovered]": the spot sits beside the first paragraph, 59 to its right,
+   and runs on into the gutter; the quiet line follows beneath. */
+.ha-reg-circle__spot-row { display: flex; align-items: flex-start; gap: clamp(1.6rem, 4.1vw, 5.9rem); margin-top: clamp(2.4rem, 3.1vw, 4.5rem); }
+.ha-reg-circle__spot-row > .ha-home__prose { flex: 0 1 42rem; min-width: 0; }
+/* The spot starts 31 above the paragraph (on 1440); the quiet line follows
+   just under the spot. */
+.ha-reg-circle__spot-row > .ha-reg-circle__spot { margin-top: calc(-1 * clamp(1.2rem, 2.2vw, 3.1rem)); }
+.ha-reg-circle__quiet { margin-top: 0.4rem; }
 .ha-reg-circle__spot { flex: none; display: block; width: clamp(9rem, 13.2vw, 19rem); height: auto; }
 /* The binding rings under the opening hang 117 below the bar on 1440; the
    Join band starts its words 169 below it, clear of the lower holes. */
@@ -5568,7 +5585,7 @@ a.ha-reg-letter__words:focus-visible::before { outline: 2px solid var(--ha-text)
   .ha-reg-note { margin-left: clamp(0rem, 7.4vw, 10.6rem); }
   /* The spot runs on into the gutter, as drawn, so the quiet line keeps
      its measure beside it. */
-  .ha-reg-circle__quiet-row { margin-right: calc(-0.6 * clamp(4.8rem, 12vw, 22rem)); }
+  .ha-reg-circle__spot-row { margin-right: calc(-0.6 * clamp(4.8rem, 12vw, 22rem)); }
 }
 
 /* The Register page form: mono uppercase label, one rule, the same states as
@@ -5636,6 +5653,86 @@ a.ha-reg-letter__words:focus-visible::before { outline: 2px solid var(--ha-text)
 }
 @media (prefers-reduced-motion: reduce) {
   .ha-reg-form__field, .ha-reg-form__submit { transition: none; }
+}
+
+/* ==========================================================================
+   THE CONTACT PAGE — Aloha's contact artboard, 24 September 2026, as she
+   redrew it the same day (Hartwick_Contact_Editable.pdf, 1440 × 2200).
+   Two bands bound by the ring bar, each on her grey paper photograph (the
+   `paper` setting) under a transparent menu, the page grain over both at
+   30% with the photographs and rings above it. Measured off her PDF: labels
+   in Porter at 56 from the edge; CONTACT, Junicode SemiCond SemiBold in
+   Chalk Blue, 45 → 1224; the ways to write in a 398 column from 909, ruled
+   in peat; the photographs 555 wide from 133, turned 5.3° anticlockwise;
+   the text column 471 from 804; Chalk Blue button 306 × 53, wine words.
+   Type keeps the 22 September role sizes (her artboard is drawn larger),
+   except the word CONTACT, which is a drawing across the page.
+   ========================================================================== */
+.ha-contact { background: var(--ha-page-ground); color: var(--ha-text); }
+.ha-contact-visit { background: var(--ha-field-sand); }
+.ha-contact.ha-contact--paper { background: var(--ha-page-ground) var(--ha-contact-paper) center / cover no-repeat; }
+.ha-contact__wrap { padding-inline: clamp(2rem, 3.9vw, 5.6rem); }
+/* The first band starts at the top of the page, under the transparent menu. */
+.ha-contact-intro > .ha-contact__wrap { padding-top: clamp(2.4rem, 3.7vw, 5.3rem); padding-bottom: clamp(3.2rem, 4.2vw, 6rem); }
+/* Her labels sit 118 under the bar; our rings hang 141 below it, so they
+   start just clear of the rings. */
+.ha-contact-visit > .ha-contact__wrap { padding-top: clamp(8.8rem, 10.6vw, 15.2rem); padding-bottom: clamp(6rem, 8vw, 11.4rem); }
+body:has(#SiteHeader.ha-trans) .ha-contact-intro > .ha-contact__wrap { padding-top: calc(var(--site-header-height-mobile, 6rem) + clamp(2.4rem, 3.7vw, 5.3rem)); }
+@media screen and (min-width: 990px) {
+  body:has(#SiteHeader.ha-trans) .ha-contact-intro > .ha-contact__wrap { padding-top: calc(var(--site-header-height-desktop, 8rem) + clamp(2.4rem, 3.7vw, 5.3rem)); }
+}
+.ha-contact__row { display: flex; justify-content: space-between; align-items: baseline; gap: 2rem; font-size: var(--ha-t-label); letter-spacing: 0.04em; font-weight: 300; text-transform: uppercase; }
+.ha-contact__row p { margin: 0; }
+.ha-contact__row--foot { margin-top: clamp(4.8rem, 6.6vw, 9.6rem); }
+
+/* CONTACT, its O a spot of dye (201 × 207 on caps 190; it sits 15 below
+   the baseline). */
+.ha-contact .ha-contact__word { margin: clamp(2.4rem, 6.4vw, 9.2rem) 0 0; font-family: "Junicode SemiCond", var(--ha-font-narrate), serif; font-size: 18.83vw; line-height: 0.74; font-weight: 600; letter-spacing: 0; text-transform: uppercase; white-space: nowrap; color: var(--ha-chalk-blue); }
+.ha-contact__word-drawn { display: block; }
+.ha-contact__spot { display: inline-block; height: 0.753em; width: auto; margin: 0 0.012em; vertical-align: -0.055em; }
+
+/* Get in touch: three lines at the left, the ways to write at the right. */
+.ha-contact-intro__grid { display: grid; gap: 4rem; margin-top: clamp(3.2rem, 2.7vw, 3.9rem); }
+.ha-contact-intro__lines { margin: 0; font-size: var(--ha-t-hero); line-height: 1.28; font-weight: 300; }
+.ha-contact-intro__list { list-style: none; margin: 0; padding: 0; }
+.ha-contact-intro__item { padding-bottom: clamp(1.6rem, 2vw, 2.8rem); margin-bottom: clamp(2.4rem, 3.1vw, 4.4rem); border-bottom: 1px solid var(--ha-peat-fibre); }
+.ha-contact-intro__item:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+.ha-contact .ha-contact-intro__label { margin: 0 0 clamp(1.2rem, 1.4vw, 2rem); font-size: var(--ha-t-label); letter-spacing: 0.04em; font-weight: 300; text-transform: uppercase; }
+.ha-contact-intro__line { margin: 0 0 clamp(0.8rem, 1.2vw, 1.6rem); font-size: var(--ha-t-h2); font-weight: 300; }
+.ha-contact .ha-contact-intro__value { display: inline-block; margin: 0; font-size: var(--ha-t-h2); line-height: 1.3; font-weight: 300; color: var(--ha-chalk-blue); text-decoration: none; overflow-wrap: anywhere; transition: color 160ms ease; }
+/* Chalk Blue on the grey paper is quiet: on hover and focus the address
+   takes the ink, and its rule does too (the ruled-row idiom). */
+.ha-contact a.ha-contact-intro__value:hover, .ha-contact a.ha-contact-intro__value:focus-visible { color: var(--ha-text); }
+.ha-contact a.ha-contact-intro__value:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+/* Visit the showroom. */
+.ha-contact-visit__head { margin-top: clamp(1.6rem, 1.8vw, 2.6rem); }
+.ha-contact-visit__heading { margin: 0; font-size: var(--ha-t-hero); line-height: 1.1; font-weight: 300; color: var(--ha-chalk-blue); }
+.ha-contact-visit__sub { margin: 0.8rem 0 0; font-size: var(--ha-t-h1); font-style: italic; font-weight: 600; color: var(--ha-field-correspondence); }
+.ha-contact-visit__grid { display: grid; gap: 4rem; margin-top: clamp(3.2rem, 4.6vw, 6.6rem); }
+.ha-contact-visit__figure { margin: 0; width: min(88%, 46rem); transform: rotate(-5.33deg); }
+.ha-contact-visit__img { display: block; width: 100%; height: auto; }
+.ha-contact-visit__figure .ha-figure--empty { aspect-ratio: 1400 / 1749; display: grid; place-items: center; }
+.ha-contact-visit__aside-heading { margin: 0; font-size: var(--ha-t-hero); line-height: 1.2; font-weight: 300; color: var(--ha-chalk-blue); }
+.ha-contact-visit__body { margin-top: clamp(2.4rem, 3.5vw, 5rem); font-size: var(--ha-t-intro); line-height: 1.3; color: var(--ha-peat-fibre); }
+.ha-contact-visit__body p { margin: 0 0 1em; }
+.ha-contact-visit__body p:last-child { margin-bottom: 0; }
+.ha-contact-visit__arrange { margin-top: clamp(3.2rem, 5.3vw, 7.6rem); padding-top: clamp(2.4rem, 3.3vw, 4.7rem); border-top: 1px solid var(--ha-field-correspondence); }
+.ha-contact-visit__line { margin: 0 0 clamp(2.4rem, 3.2vw, 4.6rem); font-size: var(--ha-t-h2); font-weight: 300; }
+.ha-contact .ha-contact-visit__button { display: inline-flex; align-items: center; justify-content: center; min-height: 5.3rem; min-width: min(100%, 30.6rem); padding: 0 3.2rem; border: 1px solid var(--ha-peat-fibre); background: var(--ha-chalk-blue); color: var(--ha-field-correspondence); font-size: var(--ha-t-label); font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; transition: background-color 160ms ease, color 160ms ease; }
+.ha-contact .ha-contact-visit__button:hover { background: var(--ha-field-correspondence); color: var(--ha-chalk-blue); }
+.ha-contact .ha-contact-visit__button:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 3px; }
+.ha-contact-visit__caption { margin: clamp(3.2rem, 3.4vw, 4.8rem) 0 0; font-size: var(--ha-t-label); letter-spacing: 0.04em; font-weight: 300; text-transform: uppercase; }
+
+@media screen and (min-width: 990px) {
+  .ha-contact-intro__grid { grid-template-columns: minmax(0, 1fr) 27.6vw 5.4vw; column-gap: 0; align-items: start; }
+  .ha-contact-intro__list { grid-column: 2; }
+  .ha-contact-visit__grid { grid-template-columns: 5.3vw 38.5vw 8.1vw 32.7vw; gap: 0; align-items: start; }
+  .ha-contact-visit__figure { grid-column: 2; width: 100%; }
+  .ha-contact-visit__aside { grid-column: 4; padding-top: clamp(2.4rem, 6.2vw, 8.9rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ha-contact .ha-contact-intro__value, .ha-contact .ha-contact-visit__button { transition: none; }
 }
 
 /* ==========================================================================
@@ -6071,6 +6168,14 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 .ha-home-binding__ring--1 { left: 8.2%; }   /* 118 / 1440 */
 .ha-home-binding__ring--2 { left: 50%; }
 .ha-home-binding__ring--3 { left: 91.8%; }  /* 1326 / 1440 */
+/* "Inset" — her final homepage header, 24 September: the rings drawn in
+   towards the cards, at 249 / 722 / 1239 on 1440. */
+.ha-home-binding--inset .ha-home-binding__ring--1 { left: 17.3%; }
+.ha-home-binding--inset .ha-home-binding__ring--2 { left: 50.1%; }
+.ha-home-binding--inset .ha-home-binding__ring--3 { left: 86%; }
+/* "Contact" — her contact page, 24 September: 225 / 720 / 1212 on 1440. */
+.ha-home-binding--contact .ha-home-binding__ring--1 { left: 15.6%; }
+.ha-home-binding--contact .ha-home-binding__ring--3 { left: 84.2%; }
 
 /* --- 01  The opening note ----------------------------------------------- */
 /* Artboard: the panel runs from under the header to the bar, 1008 tall on
@@ -6093,14 +6198,69 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 .ha-home-note--opening .ha-home-note__body p:last-child { margin-bottom: 0; }
 .ha-home-note--opening .ha-home-note__tagline { margin: clamp(4rem, 6.2vw, 9rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: 300; }
 
+/* The homepage's transparent menu bar (Luxe "Transparent on homepage", colour
+   "inherit"), laid over Aloha's collage: the words take the ink, and so must
+   the House symbol — Luxe swaps in the white one over any transparent bar,
+   which would vanish on her grey paper. */
+#SiteHeader.hdr-trans-hp.ha-trans-ink .header--logo-inverted { display: none; }
+#SiteHeader.hdr-trans-hp.ha-trans-ink .header--logo-std { display: block; }
+
+/* --- 01  The opening photograph (24 September) ---------------------------- */
+/* Aloha's collage, 2296 × 1837 (ratio 1.2499). The glassine sheet lies over
+   10.57–71.71% of its width and 28.84–83.21% of its height; the words sit
+   on it, 9% in from its left edge, set left, as she placed them.
+   Phone first: the picture whole, the words beneath it on the paper panel. */
+.ha-home-note--photograph { border-bottom: 0; background: var(--ha-paper-panel); }
+.ha-home-note--photograph .ha-home-note__photo { display: block; width: 100%; height: auto; }
+.ha-home-note--photograph .ha-figure--empty.ha-home-note__photo { aspect-ratio: 2296 / 1837; display: grid; place-items: center; }
+.ha-home-note--photograph .ha-home-note__sheet { padding: clamp(4rem, 8vw, 6.4rem) var(--ha-gutter, 2rem) clamp(5.6rem, 10vw, 8rem); }
+.ha-home-note--photograph .ha-home-note__inner { max-width: 34em; margin: 0; justify-items: start; text-align: left; }
+.ha-home-note--photograph .ha-home-note__head { text-align: left; }
+.ha-home-note--photograph .ha-home__heading { text-transform: uppercase; letter-spacing: 0.02em; }
+.ha-home-note--photograph .ha-home-note__body { text-align: left; max-width: none; margin: clamp(2.4rem, 3.4vw, 4.8rem) 0 0; }
+.ha-home-note--photograph .ha-home-note__body p { margin: 0 0 1.2em; }
+.ha-home-note--photograph .ha-home-note__body p:last-child { margin-bottom: 0; }
+.ha-home-note--photograph .ha-home-note__tagline { margin: clamp(2.4rem, 3.4vw, 4.8rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: 300; }
+@media screen and (min-width: 990px) {
+  /* Her final header (24 September): the picture starts at the very top of
+     the page, under the transparent menu bar, and the band runs 1080 on
+     1440 (75% of the width) down to the binding bar, the picture's last 6%
+     cut. The sheet's text starts 86 below the sheet's top edge and 95 in
+     from its left edge, as she placed it. */
+  .ha-home-note--photograph .ha-home-note__stage {
+    --r: 1.2499;
+    position: relative;
+    overflow: hidden;
+    container-type: size;
+    height: 75vw;
+  }
+  .ha-home-note--photograph .ha-home-note__photo { position: absolute; left: 0; top: 0; width: 100%; }
+  .ha-home-note--photograph .ha-home-note__sheet {
+    position: absolute;
+    left: 10.57cqw;
+    width: 61.14cqw;
+    top: calc(28.84cqw / var(--r));
+    height: calc(54.37cqw / var(--r));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 6cqw 0 0 6.6cqw;
+  }
+  .ha-home-note--photograph .ha-home-note__inner { max-width: 32.3cqw; }
+  .ha-home-note--photograph .ha-home-note__body { margin-top: 4.4cqw; }
+  .ha-home-note--photograph .ha-home-note__tagline { margin-top: 3.6cqw; }
+}
+
 /* --- 03  The story cards -------------------------------------------------- */
 .ha-home-stories--cards { border-bottom: 0; }
 .ha-home-stories--cards > .ha-wrap {
-  padding: clamp(2rem, 2.5vw, 3.6rem) clamp(1.6rem, 2.1vw, 3rem) clamp(3.2rem, 3.8vw, 5.4rem);
+  padding: clamp(2rem, 2.5vw, 3.6rem) clamp(1.6rem, 2.85vw, 4.1rem) clamp(3.2rem, 3.8vw, 5.4rem);
 }
 .ha-home-stories--cards .ha-home-stories__grid { margin-top: 0; gap: 4.8rem; }
 @media screen and (min-width: 750px) {
-  .ha-home-stories--cards .ha-home-stories__grid { margin-top: 0; column-gap: clamp(1.6rem, 2.2vw, 3.2rem); }
+  /* Her final homepage (24 September): cards 428 wide, 36 apart, 41 in from
+     each side on 1440 — drawn in from the 23 September 30 / 31. */
+  .ha-home-stories--cards .ha-home-stories__grid { margin-top: 0; column-gap: clamp(1.6rem, 2.5vw, 3.6rem); }
 }
 /* the paper tab: 200 above the photograph on a 440 card, the label near its
    foot. Two classes: an unlabelled tab is an empty <div> (Luxe div:empty). */

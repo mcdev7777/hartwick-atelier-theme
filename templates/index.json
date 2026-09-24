@@ -18,6 +18,11 @@
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
  * ------------------------------------------------------------
+ *
+ * 24 September 2026 — Aloha's "FINAL HOMEPAGE HEADER": the note section's
+ * style is Photograph, her collage (HA_HOMEPAGE_HEADER_COLLAGE.jpg, turned
+ * upright from her file) with the same words on its glassine sheet. The copy
+ * is still the 23 September text ("Waiting on copy for text").
  */
 {
   "sections": {
@@ -48,7 +53,9 @@
     "note": {
       "type": "ha-home-note",
       "settings": {
-        "style": "opening",
+        "style": "photograph",
+        "image": "shopify://shop_images/HA_HOMEPAGE_HEADER_COLLAGE.jpg",
+        "image_alt": "A cream shirt on a wooden hanger against a stone wall, the photograph clipped to a sheet of paper with a sheet of glassine laid over it",
         "eyebrow": "01 / The Product Experience",
         "heading": "Made to be worn.",
         "body": "<p>The feel of handwoven cloth. The weight of a silver bangle. The small differences you notice when a piece becomes part of your everyday life.</p><p>Hartwick Atelier brings together clothing, silk scarves, fine jewellery and yoga mats. The collection begins with material and use, and with the Masters whose knowledge gives each piece its character.</p>",
@@ -62,7 +69,8 @@
       "type": "ha-home-binding",
       "settings": {
         "rings": true,
-        "holes": "both"
+        "holes": "both",
+        "placement": "inset"
       }
     },
     "stories": {

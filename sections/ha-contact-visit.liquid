@@ -1,0 +1,119 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — CONTACT PAGE 02 / VISIT THE SHOWROOM.
+  Aloha's contact artboard, 24 September 2026.
+
+  On the sand ground: two record-voice lines ("02 / Visit the showroom",
+  "Esporles / Serra de Tramuntana"), "Visiting Mallorca?" with "See the
+  collection in person." beneath; at the left her stack of showroom
+  photographs (one picture, cut out on a transparent ground), at the right
+  "By appointment, / with Angela.", a paragraph, a rule, "To arrange your
+  visit", "Email us with your preferred dates." and a Loden Moss button;
+  a record-voice caption at the foot ("Editorial image / Showroom photograph
+  to follow" — her own note that the showroom photograph is still to come).
+
+  The button is an email link by default (mailto: contact@, subject
+  "Showroom visit"), as her line says "Email us". Any link can be set.
+
+  Grain: `.ha-page-grain`, as on the section above; the photographs sit
+  above it.
+
+  24 September, her second version: her grey paper photograph under the
+  band; the heading and "By appointment" in Chalk Blue, the line beneath in
+  Junicode SemiBold Italic, wine; the photographs larger and turned 5.3°
+  anticlockwise; a wine rule; the button Chalk Blue with wine words; no
+  caption.
+{%- endcomment -%}
+
+<section id="{{ section.settings.anchor | default: 'visit' }}" class="ha-contact ha-contact-visit{% if section.settings.grain %} ha-page-grain ha-grain-block{% endif %}{% if section.settings.paper %} ha-contact--paper{% endif %}"{% if section.settings.paper %} style="--ha-contact-paper: url({{ section.settings.paper | image_url: width: 2400 }});"{% endif %} aria-labelledby="ha-contact-visit-title">
+  <div class="ha-contact__wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's contact artboard; the showroom photograph is to follow." -%}
+
+    {%- if section.settings.eyebrow_left != blank or section.settings.eyebrow_right != blank -%}
+      <div class="ha-contact__row ha-identify">
+        <p>{{ section.settings.eyebrow_left }}</p>
+        <p>{{ section.settings.eyebrow_right }}</p>
+      </div>
+    {%- endif -%}
+
+    <div class="ha-contact-visit__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 id="ha-contact-visit-title" class="ha-contact-visit__heading ha-narrate">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="ha-contact-visit__sub ha-narrate">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ha-contact-visit__grid">
+      <figure class="ha-contact-visit__figure">
+        {%- if section.settings.image -%}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag: class: 'ha-contact-visit__img', loading: 'lazy', sizes: '(min-width: 990px) 32vw, 86vw', widths: '400, 600, 800, 1000, 1400', alt: section.settings.image_alt
+          }}
+        {%- else -%}
+          <span class="ha-figure ha-figure--empty ha-contact-visit__img"><span class="ha-figure__label ha-record">02 / The showroom</span></span>
+        {%- endif -%}
+      </figure>
+
+      <div class="ha-contact-visit__aside">
+        {%- if section.settings.aside_heading != blank -%}
+          <h3 class="ha-contact-visit__aside-heading ha-narrate">{{ section.settings.aside_heading | escape | newline_to_br }}</h3>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="ha-contact-visit__body ha-narrate">{{ section.settings.body }}</div>
+        {%- endif -%}
+        {%- if section.settings.label != blank or section.settings.line != blank or section.settings.button_text != blank -%}
+          <div class="ha-contact-visit__arrange">
+            {%- if section.settings.label != blank -%}
+              <p class="ha-contact-intro__label ha-identify">{{ section.settings.label }}</p>
+            {%- endif -%}
+            {%- if section.settings.line != blank -%}
+              <p class="ha-contact-visit__line ha-narrate">{{ section.settings.line }}</p>
+            {%- endif -%}
+            {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
+              <a class="ha-contact-visit__button ha-identify{% if section.settings.grain %} ha-grain-block{% endif %}" href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.caption != blank -%}
+      <p class="ha-contact-visit__caption ha-identify">{{ section.settings.caption }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Contact: Showroom",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "visit", "info": "Links elsewhere point at #this." },
+    { "type": "text", "id": "eyebrow_left", "label": "Top line, left", "default": "02 / Visit the showroom" },
+    { "type": "text", "id": "eyebrow_right", "label": "Top line, right", "default": "Esporles / Serra de Tramuntana" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Visiting Mallorca?" },
+    { "type": "text", "id": "subheading", "label": "Line beneath", "default": "See the collection in person." },
+    { "type": "image_picker", "id": "image", "label": "Photographs", "info": "Aloha's stack of showroom photographs, cut out on a transparent ground." },
+    { "type": "text", "id": "image_alt", "label": "Alt text", "default": "Photographs of the showroom laid one over another: a rail of clothes hung from a pole before a mirror, a chair beside it" },
+    { "type": "textarea", "id": "aside_heading", "label": "Right: heading", "default": "By appointment,\nwith Angela.", "info": "A new line breaks the heading there." },
+    { "type": "richtext", "id": "body", "label": "Right: text", "default": "<p>Book a private visit to our showroom in Mallorca. Meet Angela, feel the fabrics and see the handwork up close, with time to try on pieces and find what works for you.</p>" },
+    { "type": "text", "id": "label", "label": "Label", "default": "To arrange your visit" },
+    { "type": "text", "id": "line", "label": "Line", "default": "Email us with your preferred dates." },
+    { "type": "text", "id": "button_text", "label": "Button", "default": "Request an appointment" },
+    { "type": "text", "id": "button_link", "label": "Button links to", "default": "mailto:contact@hartwickatelier.com?subject=Showroom%20visit", "info": "mailto:… opens an email; a page address works too." },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Editorial image / Showroom photograph to follow" },
+    { "type": "header", "content": "Ground" },
+    { "type": "image_picker", "id": "paper", "label": "Paper photograph", "info": "Aloha's grey paper (24 September), laid under the whole band. Empty = the page ground." },
+    { "type": "checkbox", "id": "grain", "label": "Grain", "default": true, "info": "Page grain strength (Theme settings). The photographs stay above it." },
+    { "type": "header", "content": "Provisional content" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — Contact: Showroom" }]
+}
+{% endschema %}

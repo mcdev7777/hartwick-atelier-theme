@@ -29,13 +29,24 @@
   that: the paper panel, eyebrow and heading as one block centred on the
   page, the paragraphs set left in a centred column, the tagline in italic.
   "Founder note" is the 19 September layout, kept for Angela's note.
+
+  Aloha, 24 September 2026 ("FINAL HOMEPAGE HEADER"): the photograph is
+  chosen — her collage of a shirt on a hanger against a stone wall, clipped
+  to a sheet of paper, with a sheet of glassine laid over its left side. The
+  same words sit on the glassine ("Waiting on copy for text. but for now
+  just use whats there"). Style "Photograph" draws it: on a desktop the
+  picture fills the band and the text is placed on the glassine, in
+  percentages of the picture, so it stays on the sheet at any width; on a
+  phone the sheet is too small to hold two paragraphs, so the picture comes
+  first and the words follow on the paper panel beneath it.
 {%- endcomment -%}
 
 {%- assign note_style = section.settings.style | default: 'founder' -%}
 <section class="ha-home ha-home-note ha-home-note--{{ note_style }}">
-  <div class="ha-wrap">
+  <div class="{% if note_style == 'photograph' %}ha-home-note__frame{% else %}ha-wrap{% endif %}">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — proposed founder copy awaiting Angela; the signature is a typeset stand-in, not her real signature.' -%}
 
+    {%- capture note_inner -%}
     <div class="ha-home-note__inner">
       <div class="ha-home-note__head">
         {%- if section.settings.eyebrow != blank -%}
@@ -76,6 +87,24 @@
         <p class="ha-home-note__caption ha-identify">{{ section.settings.caption }}</p>
       {%- endif -%}
     </div>
+    {%- endcapture -%}
+
+    {%- if note_style == 'photograph' -%}
+      <div class="ha-home-note__stage">
+        {%- if section.settings.image -%}
+          {{
+            section.settings.image
+            | image_url: width: 2296
+            | image_tag: class: 'ha-home-note__photo', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1440, 1800, 2296', alt: section.settings.image_alt
+          }}
+        {%- else -%}
+          <span class="ha-figure ha-figure--empty ha-home-note__photo"><span class="ha-figure__label ha-record">01 / The opening photograph</span></span>
+        {%- endif -%}
+        <div class="ha-home-note__sheet">{{ note_inner }}</div>
+      </div>
+    {%- else -%}
+      {{ note_inner }}
+    {%- endif -%}
   </div>
 </section>
 
@@ -88,11 +117,14 @@
     {
       "type": "select", "id": "style", "label": "Style", "default": "founder",
       "options": [
+        { "value": "photograph", "label": "Photograph (24 Sep homepage)" },
         { "value": "opening", "label": "Opening (23 Sep homepage)" },
         { "value": "founder", "label": "Founder note (19 Sep)" }
       ],
-      "info": "Opening: a paper panel filling the first screen, the heading in capitals, paragraphs set left, an italic tagline."
+      "info": "Photograph: Aloha's collage fills the band and the text sits on its glassine sheet (on a phone, beneath it). Opening: a paper panel filling the first screen, the heading in capitals, paragraphs set left, an italic tagline."
     },
+    { "type": "image_picker", "id": "image", "label": "Photograph (Photograph style)", "info": "Aloha's collage. The text is placed on its glassine sheet at fixed positions: a different picture needs them re-measured." },
+    { "type": "text", "id": "image_alt", "label": "Photograph alt text", "default": "A cream shirt on a wooden hanger against a stone wall, the photograph clipped to a sheet of paper with a sheet of glassine laid over it" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A note from Hartwick" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The work begins with people." },
     { "type": "richtext", "id": "body", "label": "Statement", "default": "<p>I choose pieces for the way they are made and the people behind them. The cloth, the handwork and the small differences matter. Hartwick Atelier brings that work together, with time to understand where it comes from and how it can become part of everyday life.</p>" },
