@@ -6834,9 +6834,14 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   width: 3.8rem !important;          /* the old arrow's hover growth is dropped: one size */
   height: 1rem;
   background: currentColor;
-  -webkit-mask: var(--ha-mark-arrow) center / 100% 100% no-repeat, linear-gradient(90deg, #000 var(--ha-wipe), transparent calc(var(--ha-wipe) + 4%));
+  /* The sweep is the TOP mask layer and her drawing the one beneath: WebKit
+     composites a layer only inside its own painted area, so with the
+     drawing on top the sweep showed through along the drawing's edges as a
+     hairline box in Safari (Ivan, 23 Sept, "Read the Journal"). The sweep
+     covers the whole box, so on top it composites everywhere. */
+  -webkit-mask: linear-gradient(90deg, #000 var(--ha-wipe), transparent calc(var(--ha-wipe) + 4%)), var(--ha-mark-arrow) center / 100% 100% no-repeat;
   -webkit-mask-composite: source-in;
-  mask: var(--ha-mark-arrow) center / 100% 100% no-repeat, linear-gradient(90deg, #000 var(--ha-wipe), transparent calc(var(--ha-wipe) + 4%));
+  mask: linear-gradient(90deg, #000 var(--ha-wipe), transparent calc(var(--ha-wipe) + 4%)), var(--ha-mark-arrow) center / 100% 100% no-repeat;
   mask-composite: intersect;
   flex: none;
   transition: none;
@@ -6855,9 +6860,11 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   background: currentColor;
   opacity: 0;
   transform: translate(-50%, -50%) rotate(var(--ha-mark-turn, 0deg)) scaleX(var(--ha-mark-flip, 1));
-  -webkit-mask: var(--ha-mark-img) center / 100% 100% no-repeat, conic-gradient(from var(--ha-mark-from, 280deg), #000 var(--ha-draw), transparent 0);
+  /* Sweep on top, drawing beneath — see the arrow above: the other order
+     leaves a hairline box round every ring in Safari. */
+  -webkit-mask: conic-gradient(from var(--ha-mark-from, 280deg), #000 var(--ha-draw), transparent 0), var(--ha-mark-img) center / 100% 100% no-repeat;
   -webkit-mask-composite: source-in;
-  mask: var(--ha-mark-img) center / 100% 100% no-repeat, conic-gradient(from var(--ha-mark-from, 280deg), #000 var(--ha-draw), transparent 0);
+  mask: conic-gradient(from var(--ha-mark-from, 280deg), #000 var(--ha-draw), transparent 0), var(--ha-mark-img) center / 100% 100% no-repeat;
   mask-composite: intersect;
   transition: opacity 240ms ease;
 }
