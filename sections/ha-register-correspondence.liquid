@@ -11,10 +11,10 @@
   01 / The Dispatch, 02 / Releases & Reserve, 03 / Atelier evenings. Each
   column is a block: label, title, one sentence. The numbers count themselves.
 
-  The photograph exists only in the artboard, with the three columns baked
-  into its lower third; the provisional file is the frame cut above them
-  (2.2:1), so Aloha's original — the Paris room, the frame with the table —
-  is asked for. The band takes the picture's own proportion on desktop, held
+  The photograph: her full Paris-room frame, table and floor included, taken
+  from the FinalHartwick_The_Register PDF on 24 September (1862 × 1241 —
+  soft at full width on a retina screen; a larger original is welcome). It
+  replaced the 21 September cut above the baked-in columns. The band takes the picture's own proportion on desktop, held
   between a floor and the media cap; on a phone the columns follow the
   picture on the ground, where three stacked columns over a small picture
   would be neither.
@@ -39,7 +39,7 @@
   assign scrim = section.settings.scrim | divided_by: 100.0
 -%}
 
-<section class="ha-home ha-reg ha-reg-corr{% if section.settings.overlay %} ha-reg-corr--overlay{% endif %}" aria-labelledby="ha-reg-corr-title" style="--ha-reg-corr-ratio: {{ ratio }}; --ha-reg-corr-scrim: {{ scrim }};">
+<section class="ha-home ha-reg ha-reg-page ha-reg-corr ha-grain-block{% if section.settings.overlay %} ha-reg-corr--overlay{% endif %}" aria-labelledby="ha-reg-corr-title" style="--ha-reg-corr-ratio: {{ ratio }}; --ha-reg-corr-scrim: {{ scrim }};">
   <div class="ha-wrap">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard; the photograph is the artboard's frame cut above its type, pending her original." -%}
 

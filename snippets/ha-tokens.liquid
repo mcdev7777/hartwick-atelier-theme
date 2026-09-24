@@ -69,7 +69,7 @@
     /* The Register page (Aloha, 21 September 2026): a wine band and an
        envelope in paper. Peat's channels are exposed so the envelope's folds
        can be shaded with rgba() over whatever paper colour is set. */
-    --ha-field-correspondence: {{ settings.ha_correspondence_field | default: '#512F38' }};
+    --ha-field-correspondence: {{ settings.ha_correspondence_field | default: '#502F37' }};
     --ha-paper:         {{ settings.ha_paper | default: '#EEE8D4' }};
     --ha-peat-rgb:      {{ peat_r }}, {{ peat_g }}, {{ peat_b }};
     /* Aloha's remade homepage (23 September 2026): the opening and the story
@@ -91,6 +91,7 @@
        the layer strength multiplies that, as her 32% layer did. */
     --ha-grain-tile: url("{{ 'ha-grain-block.svg' | asset_url }}");
     --ha-grain-strength: {{ settings.ha_grain_block | default: 32 | times: 0.6 | divided_by: 100.0 }};
+    --ha-grain-register: {{ settings.ha_grain_register | default: 30 | times: 0.6 | divided_by: 100.0 }};
 
     /* --- tint system (100 / 66 / 33 / 0 against white) --- */
     --ha-soot-66: rgb({{ soot_r | times: 0.66 | plus: 86.7 | round }}, {{ soot_g | times: 0.66 | plus: 86.7 | round }}, {{ soot_b | times: 0.66 | plus: 86.7 | round }});

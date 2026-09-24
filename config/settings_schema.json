@@ -153,6 +153,17 @@
         "info": "32% = her layer on the artboard. 0 = no grain anywhere."
       },
       {
+        "type": "range",
+        "id": "ha_grain_register",
+        "label": "Register page grain",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "%",
+        "default": 30,
+        "info": "The Register page (Aloha, 24 September): the same grain over the whole page, the purple band and the paper alike, but not over the photographs. 0 = none on that page."
+      },
+      {
         "type": "header",
         "content": "Correspondence — The Register page"
       },
@@ -164,7 +175,8 @@
         "type": "color",
         "id": "ha_correspondence_field",
         "label": "Correspondence band",
-        "default": "#512F38"
+        "default": "#502F37",
+        "info": "The Register page's opening band and its two buttons, and the homepage Register band. #502F37: Angela, 24 September, keep the purple."
       },
       {
         "type": "color",

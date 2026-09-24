@@ -2,11 +2,16 @@
 
 {%- comment -%}
   Hartwick Atelier — THE REGISTER PAGE 02 / JOIN THE CORRESPONDENCE.
-  Aloha's Hartwick_The_Register artboard, 21 September 2026.
+  Aloha's Hartwick_The_Register artboard, 21 September 2026; the card
+  remade from her FinalHartwick_The_Register artboard, 24 September.
 
   Two columns on the page ground. Left: an eyebrow, the heading, a lead line
-  and the Register card (a picture — the artboard's own card artwork until a
-  photograph of the printed card replaces it through the picker). Right: an
+  and the Register card — her photograph of a sheet of the Atelier's dyed
+  paper in a glassine envelope, with THE REGISTER and "Correspondence from
+  the Atelier." laid on the dyed sheet as live text, and the thread and seal
+  she drew across the envelope (a dark disc with the House symbol). Every
+  position is a percentage of the photograph, measured off the artboard (the
+  envelope 301 wide on 1440). Right: an
   eyebrow, "Join The Register.", one paragraph and the form — email, first
   name (optional), the consent line, a privacy note and the wine button.
 
@@ -27,7 +32,7 @@
   wording must itself name Hartwick Atelier is for Christina.
 {%- endcomment -%}
 
-<section id="{{ section.settings.anchor | default: 'join-the-register' }}" class="ha-home ha-reg ha-reg-join" aria-labelledby="ha-reg-join-title">
+<section id="{{ section.settings.anchor | default: 'join-the-register' }}" class="ha-home ha-reg ha-reg-page ha-reg-join ha-grain-block" aria-labelledby="ha-reg-join-title">
   <div class="ha-wrap">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard, for her to confirm." -%}
 
@@ -37,23 +42,37 @@
           <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="ha-home__heading ha-narrate">{{ section.settings.heading }}</h2>
+          <h2 class="ha-home__heading ha-narrate">{{ section.settings.heading | escape | newline_to_br }}</h2>
         {%- endif -%}
         {%- if section.settings.lead != blank -%}
           <div class="ha-home__lead ha-narrate" style="margin-top: 2.4rem;">{{ section.settings.lead }}</div>
         {%- endif -%}
         {%- if section.settings.show_card -%}
-          <div class="ha-reg__card">
+          <figure class="ha-reg__card ha-reg-note">
             {%- if section.settings.card_image -%}
               {{
                 section.settings.card_image
                 | image_url: width: 1200
-                | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 28vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: section.settings.card_alt
+                | image_tag: class: 'ha-reg-note__img', loading: 'lazy', sizes: '(min-width: 990px) 30rem, 70vw', widths: '400, 600, 800, 1000, 1200', alt: section.settings.card_alt
               }}
             {%- else -%}
-              <span class="ha-figure ha-figure--empty"><span class="ha-figure__label ha-record">01 / The Register card</span></span>
+              <span class="ha-figure ha-figure--empty ha-reg-note__img"><span class="ha-figure__label ha-record">01 / The Register card</span></span>
             {%- endif -%}
-          </div>
+            {%- if section.settings.card_title != blank or section.settings.card_line != blank -%}
+              <figcaption class="ha-reg-note__words">
+                {%- if section.settings.card_title != blank -%}
+                  <span class="ha-reg-note__title ha-narrate">{{ section.settings.card_title }}</span>
+                {%- endif -%}
+                {%- if section.settings.card_line != blank -%}
+                  <span class="ha-reg-note__line ha-narrate">{{ section.settings.card_line }}</span>
+                {%- endif -%}
+              </figcaption>
+            {%- endif -%}
+            {%- if section.settings.show_seal -%}
+              <span class="ha-reg-note__thread" aria-hidden="true"></span>
+              <span class="ha-reg-note__seal" aria-hidden="true"><img src="{{ 'ha-house-symbol-white.png' | asset_url }}" width="1867" height="1867" alt="" loading="lazy"></span>
+            {%- endif -%}
+          </figure>
         {%- endif -%}
       </div>
 
@@ -151,11 +170,14 @@
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "join-the-register", "info": "Links elsewhere point at #this." },
     { "type": "header", "content": "Left column" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the correspondence" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Cloth. People. The work in between." },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Cloth. People.\nThe work in between.", "info": "A new line breaks the heading there, as the artboard does." },
     { "type": "richtext", "id": "lead", "label": "Lead", "default": "<p>The story continues beyond the piece.</p>" },
     { "type": "checkbox", "id": "show_card", "label": "Show the Register card", "default": true },
-    { "type": "image_picker", "id": "card_image", "label": "Card picture", "info": "The artboard's card artwork until a photograph of the printed card replaces it." },
-    { "type": "text", "id": "card_alt", "label": "Card alt text", "default": "The Register card: the House symbol, The Register, Correspondence from the Atelier, a band with the Atelier's seal, Hartwick Atelier" },
+    { "type": "image_picker", "id": "card_image", "label": "Card photograph", "info": "Aloha's dyed sheet in a glassine envelope, cut out on a transparent ground. The words, thread and seal sit on it at fixed positions: a different photograph needs them re-measured." },
+    { "type": "text", "id": "card_alt", "label": "Card alt text", "default": "A sheet of the Atelier's grey dyed paper in a glassine envelope, tied with a thread and sealed with the House symbol" },
+    { "type": "text", "id": "card_title", "label": "Card title", "default": "The Register", "info": "Set in capitals by the style." },
+    { "type": "text", "id": "card_line", "label": "Card line", "default": "Correspondence from the Atelier." },
+    { "type": "checkbox", "id": "show_seal", "label": "Thread and seal", "default": true },
     { "type": "header", "content": "Right column" },
     { "type": "text", "id": "aside_eyebrow", "label": "Eyebrow", "default": "The Dispatch / Email correspondence" },
     { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Join The Register." },

@@ -6,8 +6,8 @@
  * built — Ivan: "ignore the odd header and footer" — the site's own carry on.
  * Build note: docs/register-page-build.md.
  *
- * Four sections: the opening (wine band, the envelope drawn in CSS, the
- * title), Join the correspondence (the Register form), The Circle by
+ * Four sections and two binding bars: the opening (purple band, the
+ * envelope photograph, the title on it), Join the correspondence (the Register form), The Circle by
  * invitation (a reply form behind a switch — Framework v3 records no public
  * Circle form; Christina to settle), Your correspondence (statement,
  * photograph, three columns).
@@ -17,13 +17,23 @@
  * is a link. Both flagged to Aloha. Reserve is named in her copy and nothing
  * of it is built (Phase 2).
  *
- * Pictures: the Register card and the room photograph exist only in the
- * artboard and were cut from it (HA_REGISTER_*_ARTBOARD); the photograph is
- * cut above the type baked into its lower third, so her original frame is
- * asked for.
+ * Pictures (24 September): Aloha's own cut-outs from her zip —
+ * HA_REGISTER_ENVELOPE_OPEN, HA_REGISTER_CARD_ENVELOPE,
+ * HA_REGISTER_DYE_SPOT_YELLOW — and the full Paris-room frame taken from
+ * her PDF (HA_REGISTER_ROOM_PARIS, 1862 wide; a larger original welcome).
+ * The 21 September artboard cuts (HA_REGISTER_*_ARTBOARD) are retired.
  *
  * The page record (title The Register, handle the-register, template
  * the-register) was created by API on 21 September 2026.
+ * ------------------------------------------------------------
+ * 24 September 2026 — Aloha's FinalHartwick_The_Register: the opening is
+ * her photograph of the Atelier's own papers in a glassine envelope, the
+ * words live on the sheets ("turn them into simple invitations"); the band
+ * stays purple #502F37 with the grain (Angela). The Register card is her dyed
+ * sheet in its envelope with a thread and seal; a spot of yellow dye beside
+ * the Circle's quiet line; the Circle button filled; binding bars under the
+ * opening (rings) and above Your correspondence; her full Paris-room frame;
+ * the whole page grained at 30%. Build note: docs/register-page-build.md.
  * ------------------------------------------------------------
  * NOTE: this file is also written by the Shopify theme editor.
  * ------------------------------------------------------------
@@ -33,13 +43,10 @@
     "opening": {
       "type": "ha-register-hero",
       "settings": {
+        "image": "shopify://shop_images/HA_REGISTER_ENVELOPE_OPEN.png",
+        "image_alt": "An open glassine envelope holding two of the Atelier's papers: a handmade sheet flecked with petals and a folded, dyed pink sheet",
+        "heading": "The Register",
         "eyebrow": "Hartwick Atelier / Correspondence",
-        "heading": "The Register.",
-        "show_mark": true,
-        "card_title": "The Register",
-        "card_line": "A letter from the Atelier.",
-        "card_label": "Open to all",
-        "card_link": "/pages/the-register#join-the-register",
         "left_label": "The Dispatch",
         "left_word": "Read.",
         "left_link": "/pages/the-register#join-the-register",
@@ -49,16 +56,26 @@
         "show_placeholder_note": true
       }
     },
+    "binding_rings": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": true,
+        "holes": "both"
+      }
+    },
     "join": {
       "type": "ha-register-join",
       "settings": {
         "anchor": "join-the-register",
         "eyebrow": "Join the correspondence",
-        "heading": "Cloth. People. The work in between.",
+        "heading": "Cloth. People.\nThe work in between.",
         "lead": "<p>The story continues beyond the piece.</p>",
         "show_card": true,
-        "card_image": "shopify://shop_images/HA_REGISTER_CARD_ARTBOARD.png",
-        "card_alt": "The Register card: the House symbol, The Register, Correspondence from the Atelier, a band with the Atelier's seal, Hartwick Atelier",
+        "card_image": "shopify://shop_images/HA_REGISTER_CARD_ENVELOPE.png",
+        "card_alt": "A sheet of the Atelier's grey dyed paper in a glassine envelope, tied with a thread and sealed with the House symbol",
+        "card_title": "The Register",
+        "card_line": "Correspondence from the Atelier.",
+        "show_seal": true,
         "aside_eyebrow": "The Dispatch / Email correspondence",
         "aside_heading": "Join The Register.",
         "body": "<p>Notes on materials, Masters and work in progress. Sent when there is something worth sharing.</p>",
@@ -87,6 +104,7 @@
         "heading": "A personal connection.",
         "body": "<p>A small group of founding friends whose connection to Hartwick grows through wearing, conversation and shared experience.</p>",
         "quiet": "<p>Membership begins with a personal invitation. It is separate from joining The Register.</p>",
+        "spot_image": "shopify://shop_images/HA_REGISTER_DYE_SPOT_YELLOW.png",
         "aside_eyebrow": "Already received an invitation?",
         "aside_heading": "Respond to the Atelier.",
         "show_form": true,
@@ -106,6 +124,13 @@
         "msg_submitting": "One moment…",
         "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com.",
         "show_placeholder_note": true
+      }
+    },
+    "binding_bar": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": false,
+        "holes": "both"
       }
     },
     "correspondence": {
@@ -136,11 +161,15 @@
           }
         }
       },
-      "block_order": ["dispatch", "releases", "evenings"],
+      "block_order": [
+        "dispatch",
+        "releases",
+        "evenings"
+      ],
       "settings": {
         "eyebrow": "Your correspondence",
         "statement": "<p>The Register is our open email list. The Dispatch is the letter we send to it. The Circle remains a personal, invitation-only relationship.</p>",
-        "image": "shopify://shop_images/HA_REGISTER_ROOM_PARIS_ARTBOARD.jpg",
+        "image": "shopify://shop_images/HA_REGISTER_ROOM_PARIS.jpg",
         "image_alt": "A woman in a white shirt and blue ikat trousers standing by a long wooden table in a panelled Paris room, a glass chandelier above",
         "overlay": true,
         "scrim": 55,
@@ -148,5 +177,12 @@
       }
     }
   },
-  "order": ["opening", "join", "circle", "correspondence"]
+  "order": [
+    "opening",
+    "binding_rings",
+    "join",
+    "circle",
+    "binding_bar",
+    "correspondence"
+  ]
 }

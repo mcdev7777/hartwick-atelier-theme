@@ -109,3 +109,35 @@ column · photograph 1340 × 933 (1.44) · columns' rule at 63% of its height.
   (invalid email → message; valid email without consent → consent message)
   without a submission; no horizontal overflow at 1440 or 375; `theme check`
   clean on every touched file.
+
+## 24 September 2026 — FinalHartwick_The_Register
+
+Aloha's zip (`Temp Files`): the artboard PDF (1440 × 3490), her cut-outs
+`Theregistryenvelope.png`, `Registryenvelope2.png`, `SH_CIRCLES_02.pdf.png`
+and `Grain (1).png` (the same grain as the Journal's: grey at 60% alpha).
+"These are actual dye and paper we use at Hartwick. So it's only wise we turn
+them into simple invitations." Angela: keep the purple, not the artboard's
+brown, with the grain.
+
+| Change | Where |
+|---|---|
+| The opening is her envelope photograph (`HA_REGISTER_ENVELOPE_OPEN.png`, 590 wide on 1440, centred). Live words on the sheets, tilted with them: The Dispatch / Read. on the petal sheet (−2.2°), The Circle / By invitation. on the dyed sheet (+3.4°), both linking down the page; the h1 THE REGISTER on the envelope's front in the band colour; "Hartwick Atelier / Correspondence" up its right side. The CSS-drawn envelope, its card and the separate "THE REGISTER." heading are gone. | `ha-register-hero` |
+| Band #502F37 (the artboard's button colour, which Angela calls "our purple"); `ha_correspondence_field` default changed from #512F38. Neither dev theme stored its own value. | settings schema, tokens |
+| Grain over the whole page at 30%, on the band and the paper, not over the photographs or the binding bars, as in the PDF (three tiles at `/ca .29`). New setting **Register page grain** (default 30) → `--ha-grain-register`, applied by `.ha-reg-page`. | settings schema, CSS |
+| Binding bar with rings under the opening; a plain bar above Your correspondence (`ha-home-binding` ×2). Join's top padding clears the rings' lower holes (169 on 1440). | template, CSS |
+| Register card: her dyed sheet in glassine (`HA_REGISTER_CARD_ENVELOPE.png`) with THE REGISTER / "Correspondence from the Atelier." as live text, and the thread and seal she drew (peat line, dark disc with the House symbol). | `ha-register-join` |
+| "Cloth. People. / The work in between." breaks as drawn: the heading is a textarea, a new line breaks it. | `ha-register-join` |
+| The Circle: a spot of yellow dye (`HA_REGISTER_DYE_SPOT_YELLOW.png`, 190 on 1440) beside the quiet line, running on into the gutter; the reply button filled wine like Join's (was outlined). | `ha-register-circle` |
+| Your correspondence: her full Paris-room frame, table and floor included, from the PDF (`HA_REGISTER_ROOM_PARIS.jpg`, 1862 × 1241, 1.5). Soft on a retina screen at full width; a larger original is welcome. | template |
+
+Positions of the words, thread and seal are percentages of each photograph,
+measured off the PDF; the type holds the role sizes until the photograph is
+too small, then scales with it (`cqw`). A different photograph needs them
+re-measured (said in the pickers' info).
+
+Kept from 21 September: "makers" → "Masters" (twice), the shade under the
+three columns, the site's own header and footer (the artboard's brown header
+bar was not built).
+
+Pushed to the CLI dev theme #190959223083 and Hartwik - Dev #190886576427
+(sections, CSS, tokens, schema, then the template). Verified at 1440 and 375.

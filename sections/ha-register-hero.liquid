@@ -2,92 +2,84 @@
 
 {%- comment -%}
   Hartwick Atelier — THE REGISTER PAGE 01 / THE OPENING.
-  Aloha's Hartwick_The_Register artboard, 21 September 2026.
+  Aloha's FinalHartwick_The_Register artboard, 24 September 2026.
 
-  A wine band ("Correspondence band" in Theme settings > Hartwick — Material
-  Archive), an eyebrow, an envelope opened flat, and the page's title in
-  capitals. The envelope is drawn in CSS rather than cut from the artboard,
-  so its words are live text — the flaps read The Dispatch / Read. and
-  The Circle / By invitation., the card on the body carries the House symbol,
-  THE REGISTER, A letter from the Atelier. and OPEN TO ALL — and its paper
-  and the band follow the theme settings when the palette is finalised.
-  Proportions are the artboard's own (flaps 257 × 330, body 476 × 482, top
-  flap 178 tall, card 446 × 304 on a 990 envelope) as percentages, so the
-  drawing scales with the page; on a phone the body takes the full width and
-  the two side flaps sit beneath it as a pair.
+  Her photograph of an open glassine envelope, the Atelier's own papers in
+  it ("These are actual dye and paper we use at Hartwick. So it's only
+  wise we turn them into simple invitations."): the petal sheet reads
+  The Dispatch / Read., the folded dyed sheet The Circle / By invitation.,
+  and the envelope's front carries the page's title, THE REGISTER, in the
+  band's colour. The words are live text laid on the photograph at her
+  positions and tilted with each sheet, so they can be edited here; each
+  sheet may link down the page (the template points them at Join The
+  Register and The Circle). "Hartwick Atelier / Correspondence" runs up
+  the envelope's right-hand side.
 
-  Each flap and the card's label may link — the defaults point down this page
-  to Join The Register and to The Circle — or stand as words when the link
-  setting is empty. Terminology (CLAUDE.md): The Circle is by invitation and
-  the flap says exactly that; nothing here offers a route in.
+  The band: Angela, 24 September — keep the purple (#502F37, Theme settings
+  > Correspondence band) rather than the artboard's brown, with the grain.
+
+  Every position and size is a percentage of the photograph, measured off
+  the artboard (the envelope 590 wide on 1440), so the words stay on their
+  sheets at any width. The type holds the site's role sizes until the
+  photograph is too small for them, then shrinks with it.
+  Terminology (CLAUDE.md): The Circle is by invitation and the sheet says
+  exactly that; nothing here offers a route in.
 {%- endcomment -%}
 
 {%- liquid
   assign left_url = section.settings.left_link
   assign right_url = section.settings.right_link
-  assign card_url = section.settings.card_link
 -%}
 
-<section class="ha-home ha-reg ha-reg-hero ha-grain-block" aria-labelledby="ha-reg-hero-title">
+<section class="ha-home ha-reg ha-reg-page ha-reg-hero ha-grain-block" aria-labelledby="ha-reg-hero-title">
   <div class="ha-wrap">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's Register artboard, for her to confirm." -%}
 
-    {%- if section.settings.eyebrow != blank -%}
-      <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
-    {%- endif -%}
+    <div class="ha-reg-letter">
+      <div class="ha-reg-letter__photo">
+        {%- if section.settings.image -%}
+          {{-
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag: class: 'ha-reg-letter__img', loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 750px) 41vw, 82vw', widths: '400, 600, 800, 1000, 1200, 1600', alt: section.settings.image_alt
+          -}}
+        {%- else -%}
+          <span class="ha-figure ha-figure--empty ha-reg-letter__img"><span class="ha-figure__label ha-record">01 / The envelope</span></span>
+        {%- endif -%}
 
-    <div class="ha-reg-envelope">
-      <div class="ha-reg-envelope__top" aria-hidden="true"></div>
-
-      {%- if left_url != blank -%}
-        <a class="ha-reg-envelope__side ha-reg-envelope__side--left" href="{{ left_url }}">
-      {%- else -%}
-        <div class="ha-reg-envelope__side ha-reg-envelope__side--left">
-      {%- endif -%}
-          {%- if section.settings.left_label != blank -%}
-            <span class="ha-reg-envelope__side-label ha-identify">{{ section.settings.left_label }}</span>
-          {%- endif -%}
-          {%- if section.settings.left_word != blank -%}
-            <span class="ha-reg-envelope__side-word ha-narrate">{{ section.settings.left_word }}</span>
-          {%- endif -%}
-      {%- if left_url != blank -%}</a>{%- else -%}</div>{%- endif -%}
-
-      <div class="ha-reg-envelope__body">
-        <div class="ha-reg-envelope__card ha-grain-block">
-          {%- if section.settings.show_mark -%}
-            <img class="ha-reg-envelope__mark" src="{{ 'ha-house-symbol-white.png' | asset_url }}" width="1867" height="1867" alt="" loading="eager">
-          {%- endif -%}
-          {%- if section.settings.card_title != blank -%}
-            <p class="ha-reg-envelope__card-title ha-narrate">{{ section.settings.card_title }}</p>
-          {%- endif -%}
-          {%- if section.settings.card_line != blank -%}
-            <p class="ha-reg-envelope__card-line ha-narrate">{{ section.settings.card_line }}</p>
-          {%- endif -%}
-          {%- if section.settings.card_label != blank -%}
-            {%- if card_url != blank -%}
-              <a class="ha-reg-envelope__card-label ha-identify" href="{{ card_url }}">{{ section.settings.card_label }}</a>
-            {%- else -%}
-              <span class="ha-reg-envelope__card-label ha-identify">{{ section.settings.card_label }}</span>
+        {%- if left_url != blank -%}
+          <a class="ha-reg-letter__words ha-reg-letter__words--dispatch" href="{{ left_url }}">
+        {%- else -%}
+          <p class="ha-reg-letter__words ha-reg-letter__words--dispatch">
+        {%- endif -%}
+            {%- if section.settings.left_label != blank -%}
+              <span class="ha-reg-letter__label ha-identify">{{ section.settings.left_label }}</span>
             {%- endif -%}
-          {%- endif -%}
-        </div>
+            {%- if section.settings.left_word != blank -%}
+              <span class="ha-reg-letter__word ha-narrate">{{ section.settings.left_word }}</span>
+            {%- endif -%}
+        {%- if left_url != blank -%}</a>{%- else -%}</p>{%- endif -%}
+
+        {%- if right_url != blank -%}
+          <a class="ha-reg-letter__words ha-reg-letter__words--circle" href="{{ right_url }}">
+        {%- else -%}
+          <p class="ha-reg-letter__words ha-reg-letter__words--circle">
+        {%- endif -%}
+            {%- if section.settings.right_label != blank -%}
+              <span class="ha-reg-letter__label ha-identify">{{ section.settings.right_label }}</span>
+            {%- endif -%}
+            {%- if section.settings.right_word != blank -%}
+              <span class="ha-reg-letter__word ha-narrate">{{ section.settings.right_word }}</span>
+            {%- endif -%}
+        {%- if right_url != blank -%}</a>{%- else -%}</p>{%- endif -%}
+
+        <h1 id="ha-reg-hero-title" class="ha-reg-letter__title ha-narrate">{{ section.settings.heading | default: page.title }}</h1>
       </div>
 
-      {%- if right_url != blank -%}
-        <a class="ha-reg-envelope__side ha-reg-envelope__side--right" href="{{ right_url }}">
-      {%- else -%}
-        <div class="ha-reg-envelope__side ha-reg-envelope__side--right">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-reg-letter__side ha-identify">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
-          {%- if section.settings.right_label != blank -%}
-            <span class="ha-reg-envelope__side-label ha-identify">{{ section.settings.right_label }}</span>
-          {%- endif -%}
-          {%- if section.settings.right_word != blank -%}
-            <span class="ha-reg-envelope__side-word ha-narrate">{{ section.settings.right_word }}</span>
-          {%- endif -%}
-      {%- if right_url != blank -%}</a>{%- else -%}</div>{%- endif -%}
     </div>
-
-    <h1 id="ha-reg-hero-title" class="ha-reg-hero__title ha-narrate">{{ section.settings.heading | default: page.title }}</h1>
   </div>
 </section>
 
@@ -97,22 +89,19 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Hartwick Atelier / Correspondence" },
-    { "type": "text", "id": "heading", "label": "Page title", "default": "The Register.", "info": "Set in capitals by the style." },
-    { "type": "header", "content": "The card" },
-    { "type": "checkbox", "id": "show_mark", "label": "Show the House symbol", "default": true },
-    { "type": "text", "id": "card_title", "label": "Title", "default": "The Register" },
-    { "type": "text", "id": "card_line", "label": "Line", "default": "A letter from the Atelier." },
-    { "type": "text", "id": "card_label", "label": "Label", "default": "Open to all" },
-    { "type": "url", "id": "card_link", "label": "Label links to", "info": "Leave empty for a plain label. The default points down the page to Join The Register." },
-    { "type": "header", "content": "Left flap" },
+    { "type": "paragraph", "content": "Band colour: Theme settings > Hartwick — Material Archive > Correspondence band. Grain: Theme settings > Grain on dark blocks > Register page grain." },
+    { "type": "image_picker", "id": "image", "label": "Envelope photograph", "info": "Aloha's open envelope, cut out on a transparent ground. The words below sit on its sheets at fixed positions: a different photograph needs them re-measured." },
+    { "type": "text", "id": "image_alt", "label": "Photograph alt text", "default": "An open glassine envelope holding two of the Atelier's papers: a handmade sheet flecked with petals and a folded, dyed pink sheet" },
+    { "type": "text", "id": "heading", "label": "Page title", "default": "The Register", "info": "On the envelope's front. Set in capitals by the style." },
+    { "type": "text", "id": "eyebrow", "label": "Side line", "default": "Hartwick Atelier / Correspondence", "info": "Runs up the envelope's right-hand side." },
+    { "type": "header", "content": "The petal sheet" },
     { "type": "text", "id": "left_label", "label": "Label", "default": "The Dispatch" },
     { "type": "text", "id": "left_word", "label": "Word", "default": "Read." },
-    { "type": "url", "id": "left_link", "label": "Links to", "info": "Leave empty for a plain flap." },
-    { "type": "header", "content": "Right flap" },
+    { "type": "url", "id": "left_link", "label": "Links to", "info": "Leave empty for plain words." },
+    { "type": "header", "content": "The dyed sheet" },
     { "type": "text", "id": "right_label", "label": "Label", "default": "The Circle" },
     { "type": "text", "id": "right_word", "label": "Word", "default": "By invitation." },
-    { "type": "url", "id": "right_link", "label": "Links to", "info": "Leave empty for a plain flap." },
+    { "type": "url", "id": "right_link", "label": "Links to", "info": "Leave empty for plain words." },
     { "type": "header", "content": "Provisional content" },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
   ],
