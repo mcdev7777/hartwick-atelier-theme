@@ -2619,7 +2619,9 @@ body.lx-template--product .magnify-icon:focus-visible {
 .ha-continue__more:hover .ha-pdp__arrow { width: 4rem; }
 .ha-continue__pieces { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 3.2rem; align-content: start; }
 .ha-continue__piece-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1.2rem; border-top: 1px solid var(--ha-rule); padding-top: 1rem; }
-.ha-continue__piece-name { font-size: var(--ha-t-label); letter-spacing: var(--ha-track-label); text-transform: uppercase; color: inherit; text-decoration: none; }
+/* A product name is a title (role 04/05, Junicode Light), not a record row —
+   typed case, the Expression row's size, as on the collection cards. */
+.ha-continue__piece-name { font-size: var(--ha-t-expression); letter-spacing: 0; text-transform: none; color: inherit; text-decoration: none; }
 a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-offset: 0.3rem; }
 .ha-continue__piece-price { font-size: var(--ha-t-meta); font-variant-numeric: lining-nums tabular-nums; }
 .ha-continue__piece-expr { font-size: var(--ha-t-meta); color: var(--ha-text-quiet); margin: 0.6rem 0 0; }
@@ -7828,4 +7830,59 @@ a.ha-jnl-button { color: var(--ha-jnl-button-ink, #E9E4D8); }
   font-weight: var(--ha-role-pull-weight);
   letter-spacing: 0;
   text-transform: none;
+}
+
+
+/* ==========================================================================
+   PHONES — review at 375px, 24 September 2026 (Ivan: "some are looks ugly
+   on mobile mode … fix them"). Layout and spacing only; sizes stay the
+   22 September table.
+   ========================================================================== */
+
+/* Photo captions over pictures: a soft shadow so Chalk Blue stays legible
+   on pale photographs, and room between lines when a narrow picture makes
+   the caption wrap (The Circle's gathering grid). */
+.ha-figure__label { line-height: 1.45; text-shadow: 0 1px 10px rgba(11, 6, 3, 0.55); }
+
+@media screen and (max-width: 989px) {
+  /* Homepage: the binder rings hang ~7rem into the Masters band; start its
+     words below them rather than through them. */
+  .ha-home-masters__grid { padding-top: calc(var(--ha-section-y, 4.8rem) + 5.6rem); }
+
+  /* The Register box stacked: heading, paragraph and button as one group,
+     not two blocks a screen apart. */
+  .ha-register--form-link .ha-register__grid { gap: 2.4rem; }
+  .ha-register--form-link .ha-register__submit--link { margin-top: 2.4rem; }
+
+  /* The opening's paragraphs: her wide desktop gap reads as a break on a phone. */
+  .ha-home-note--photograph .ha-home-note__body p { margin-bottom: 1.4em; }
+
+  /* The collection's in-page menu scrolls sideways on a phone; fade its right
+     edge so a cut-off word reads as "more this way", not as a mistake. */
+  .ha-clothing__nav-list {
+    -webkit-mask-image: linear-gradient(to right, #000 82%, transparent);
+            mask-image: linear-gradient(to right, #000 82%, transparent);
+  }
+
+  /* Product page: the care rows follow the production record directly — no
+     empty ruled band between them. */
+  .ha-living--bare > .ha-wrap { padding-top: 0; }
+  .ha-living--bare .ha-living__rows > .accordion:first-child,
+  .ha-living--bare .ha-living__rows > .accordion:first-child .accordion-title { border-top: 0; }
+
+  /* The Circle's gathering photographs are narrow on a phone and their floors
+     pale, so their captions sank into the picture. A soft wash at the foot of
+     each keeps the caption readable without a box around it. */
+  .ha-cfeature__media .ha-figure::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 42%;
+    background: linear-gradient(to bottom, rgba(11, 6, 3, 0), rgba(11, 6, 3, 0.5));
+    pointer-events: none;
+  }
+  .ha-cfeature__media .ha-figure__label { z-index: 1; letter-spacing: 0.08em; }
+
+  /* Contact: the two-line labels either side of the page were set solid. */
+  .ha-contact .ha-contact__row { line-height: 1.35; column-gap: 1.6rem; }
 }

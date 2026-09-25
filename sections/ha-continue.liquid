@@ -75,14 +75,14 @@
                 {%- render 'ha-figure', image: piece.featured_media.preview_image, label: block.settings.ph_image_label, class: 'ha-continue__figure ha-continue__figure--piece', sizes: '(min-width: 990px) 20vw, 50vw', alt: p_alt -%}
               </a>
               <div class="ha-continue__piece-row">
-                <a class="ha-continue__piece-name ha-record" href="{{ piece.url }}">{{ p_style }}</a>
+                <a class="ha-continue__piece-name ha-narrate" href="{{ piece.url }}">{{ p_style }}</a>
                 {%- if piece.price != blank -%}<span class="ha-continue__piece-price ha-record">{{ piece.price | money }}</span>{%- endif -%}
               </div>
               {%- if p_expr != blank -%}<p class="ha-continue__piece-expr ha-narrate">{{ p_expr }}</p>{%- endif -%}
             {%- else -%}
               {%- render 'ha-figure', label: block.settings.ph_image_label, class: 'ha-continue__figure ha-continue__figure--piece' -%}
               <div class="ha-continue__piece-row">
-                <span class="ha-continue__piece-name ha-record">{{ block.settings.ph_name }}</span>
+                <span class="ha-continue__piece-name ha-narrate">{{ block.settings.ph_name }}</span>
                 {%- if block.settings.ph_price != blank -%}<span class="ha-continue__piece-price ha-record">{{ block.settings.ph_price }}</span>{%- endif -%}
               </div>
               {%- if block.settings.ph_expression != blank -%}<p class="ha-continue__piece-expr ha-narrate">{{ block.settings.ph_expression }}</p>{%- endif -%}
