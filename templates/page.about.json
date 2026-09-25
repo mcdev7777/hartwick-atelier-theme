@@ -218,8 +218,7 @@
     "life": {
       "type": "ha-about-life",
       "settings": {
-        "paper": "shopify://shop_images/HA_ABOUT_PAPER_GREY_LIFE_29.jpg",
-        "grain": false,
+        "grain": true,
         "eyebrow": "A life across places",
         "label": "Founder",
         "name": "Angela Hartwick",
@@ -325,8 +324,7 @@
         "m8"
       ],
       "settings": {
-        "paper": "shopify://shop_images/HA_ABOUT_PAPER_GREY_JOURNEY_29.jpg",
-        "grain": false,
+        "grain": true,
         "heading": "A JOURNEY INTO THE HOUSE",
         "show_placeholder_note": true
       }
@@ -343,8 +341,7 @@
     "work_ahead": {
       "type": "ha-about-work",
       "settings": {
-        "paper": "shopify://shop_images/HA_ABOUT_PAPER_GREY_WORK_29.jpg",
-        "grain": false,
+        "grain": true,
         "image": "shopify://shop_images/HA_ABOUT_WORK_PIECES.png",
         "image_alt": "Two prints, one over the other: Angela seated by a window, and a table spread with photographs, letters and a cassette",
         "eyebrow": "The work ahead",

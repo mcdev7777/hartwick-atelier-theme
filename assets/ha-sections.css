@@ -8064,8 +8064,14 @@ body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .h
 .ha-abo .ha-abo__sub { margin: 1.1em 0 0; font-size: var(--ha-t-intro); line-height: 1.25; font-style: italic; color: #fff; }
 .ha-abo .ha-placeholder-note { color: #fff; }
 
-/* --- the grey paper bands ------------------------------------------------ */
-.ha-about-band { background: #E9E4D8 var(--ha-about-paper, none) center / cover no-repeat; color: var(--ha-text); }
+/* --- the grey bands ------------------------------------------------------ */
+/* Ivan, 25 September: the grain here read harsher than on The Register, which
+   is the reference. Her grey paper photograph carried its own heavy noise
+   (twice the Register's), so the bands are now her grey as a flat colour —
+   #DAD6CC, the tone her artboard renders at — under the same grain as The
+   Register (the tile at Page grain strength, .ha-page-grain). A paper can
+   still be picked per band. */
+.ha-about-band { background: #DAD6CC var(--ha-about-paper, none) center / cover no-repeat; color: var(--ha-text); }
 
 /* --- 02  A life across places --------------------------------------------- */
 .ha-abl .ha-abl__wrap { padding: 6.1vw 0 4.4vw; text-align: center; }
@@ -8161,3 +8167,4 @@ body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .h
 .ha-jnl, .ha-jnl-lead, .ha-jnl-notes,
 .lx-template--blog :is(.ha-section, .ha-home),
 .lx-template--article :is(.ha-section, .ha-home) { border-bottom: 0; }
+
