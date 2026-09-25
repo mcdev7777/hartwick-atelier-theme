@@ -571,11 +571,10 @@
 
 .article-card__title,
 .article-card .card__heading {
-  font-family: var(--ha-font-identify);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-family: var(--ha-role-text);
+  letter-spacing: 0;
   font-size: var(--ha-t-h3);
-  font-weight: 500;
+  font-weight: var(--ha-role-text-weight);
 }
 
 .article-card__excerpt,
@@ -602,7 +601,8 @@
 .newsletter-form__field-wrapper .field__label { color: inherit; }
 
 .newsletter-form__button {
-  font-family: var(--ha-font-identify);
+  font-family: var(--ha-role-record);
+  font-weight: var(--ha-role-record-weight);
   text-transform: uppercase;
   letter-spacing: 0.14em;
 }
@@ -1076,7 +1076,7 @@
    on the page by a distance. */
 .lx-template--product .product-form__submit {
   border-radius: 0;
-  font-family: var(--ha-font-identify);
+  font-family: var(--ha-role-record);
   font-size: var(--ha-t-ui);
   letter-spacing: 0.16em;
   min-height: 52px;
@@ -1727,11 +1727,10 @@
    card title is not sized as a product name. */
 .lx-template--product .related-products .card-product-title-h3,
 .lx-template--product .related-products .card-product-title-h3 a {
-  font-family: var(--ha-font-identify);
+  font-family: var(--ha-role-text);
   font-size: var(--ha-t-expression);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-weight: var(--ha-role-text-weight);
+  letter-spacing: 0;
   text-decoration: none;
 }
 
@@ -2038,11 +2037,12 @@ body.lx-template--product .magnify-icon:focus-visible {
 .ha-pdp__record-link:hover .ha-pdp__arrow { width: 4rem; }
 
 .ha-pdp__fit { margin-top: 4rem; }
+/* A section label within the page — role 02, Porter Light (24 Sep 2026). */
 .ha-pdp__fit-title {
-  font-size: var(--ha-t-h3);
+  font-size: var(--ha-t-label);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin: 0 0 1.2rem;
+  margin: 0 0 1.6rem;
 }
 .ha-pdp__fit p {
   font-size: var(--ha-t-meta);
@@ -2306,7 +2306,7 @@ body.lx-template--product .magnify-icon:focus-visible {
 .ha-pdp .product-buy-buttons-wrapper { margin-top: 2.4rem; }
 .ha-pdp .product-form__submit {
   border-radius: 0;
-  font-family: var(--ha-font-identify);
+  font-family: var(--ha-role-record);
   font-size: var(--ha-t-ui);
   letter-spacing: 0.16em;
   min-height: var(--ha-buy-h, 44px);
@@ -2687,7 +2687,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   display: block;
   width: 100%;
   min-height: 56px;
-  font-family: var(--ha-font-identify);
+  font-family: var(--ha-role-record);
   font-size: var(--ha-t-ui);
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3033,7 +3033,8 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .lx-template--product .product-form__submit,
 .ha-pdp .product-form__submit,
 .ha-appointment__submit {
-  font-family: var(--ha-font-identify) !important;
+  font-family: var(--ha-role-record) !important;
+  font-weight: var(--ha-role-record-weight);
 }
 
 
@@ -3095,6 +3096,33 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   .ha-footer__col--mark { justify-self: center; align-self: center; }
   .ha-footer__col--right { justify-self: end; }
   .ha-footer__links--right { justify-content: flex-end; text-align: right; }
+}
+
+/* THE ROW — Aloha's final homepage, 24 September 2026. Measured at 1440:
+   wordmark 206 wide, centred, 33 below the band's top; the links 90 below
+   it on one line from 142 to 1298, spread evenly; the copyright line 42
+   beneath, at the left edge of the links. Porter Medium 10 for both. */
+.ha-footer.ha-footer--row .ha-footer__inner {
+  display: block;
+  padding: 3.2rem var(--ha-gutter) 4rem;
+}
+@media screen and (min-width: 990px) {
+  .ha-footer.ha-footer--row .ha-footer__inner { padding: 3.3rem 9.8vw 4.4rem; }
+}
+.ha-footer--row .ha-footer__mark { width: fit-content; margin: 0 auto; }
+.ha-footer--row .ha-footer__mark .ha-wordmark { width: 206px; }
+.ha-footer--row .ha-footer__links--row {
+  justify-content: center;
+  gap: 1.6rem 2.8rem;
+  margin: 3.6rem 0 0;
+  line-height: var(--ha-t-lh-footer);
+}
+@media screen and (min-width: 990px) {
+  .ha-footer--row .ha-footer__links--row { justify-content: space-between; flex-wrap: nowrap; gap: 2.4rem; }
+}
+.ha-footer--row .ha-footer__copy { margin-top: 3.2rem; font-size: var(--ha-t-footer); letter-spacing: 0.04em; text-align: center; }
+@media screen and (min-width: 990px) {
+  .ha-footer--row .ha-footer__copy { margin-top: 2.6rem; text-align: left; }
 }
 
 /* Anchor target for footer and menu links into The Register. The offset clears
@@ -3251,13 +3279,14 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-abhero__title {
   margin: 0 0 1.6rem;
   font-size: var(--ha-t-h2);
-  letter-spacing: 0.16em;
-  font-weight: 400;
+  letter-spacing: 0.02em;
+  font-weight: var(--ha-role-text-weight);
   color: var(--ha-page-ground);
 }
 .ha-abhero__subline {
   margin: 0;
   font-style: italic;
+  font-weight: var(--ha-role-pull-weight);
   font-size: var(--ha-t-intro);
   line-height: 1.35;
   color: var(--ha-page-ground);
@@ -3309,10 +3338,10 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   text-align: center;
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
   gap: 0.8rem 2.4rem;
-  font-weight: 400;
+  font-weight: var(--ha-role-label-weight);
 }
 .ha-founder__label { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
-.ha-founder__name .ha-identify { font-size: var(--ha-t-h2); letter-spacing: 0.14em; }
+.ha-founder__name .ha-narrate { font-size: var(--ha-t-h2); letter-spacing: 0.02em; }
 
 .ha-founder__lead {
   text-align: center;
@@ -3363,7 +3392,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 /* --- numbered columns, journey dressing ---------------------------------- */
 .ha-ccols--journey .ha-ccols__head { grid-template-columns: 1fr; margin-bottom: clamp(3.2rem, 6vw, 5.6rem); }
-.ha-ccols__heading--identify { margin: 0; font-size: var(--ha-t-h2); letter-spacing: 0.12em; font-weight: 400; }
+.ha-ccols__heading--identify { margin: 0; font-size: var(--ha-t-h2); letter-spacing: 0.02em; font-weight: var(--ha-role-text-weight); }
 .ha-ccols--journey .ha-ccols__row { border-top: 0; }
 .ha-ccols--journey .ha-ccols__col { border-bottom: 0; padding: 0 0 3.2rem; }
 .ha-ccols--journey .ha-wrap { padding-bottom: 4.8rem; }
@@ -3375,7 +3404,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   padding-bottom: 1.6rem;
   border-bottom: 1px solid var(--ha-text);
 }
-.ha-ccols__col-heading--identify { font-size: var(--ha-t-ui); letter-spacing: 0.16em; font-weight: 400; margin: 2.4rem 0 2rem; }
+.ha-ccols__col-heading--identify { font-size: var(--ha-t-h3); letter-spacing: 0.02em; font-weight: var(--ha-role-text-weight); margin: 2.4rem 0 2rem; }
 .ha-ccols--journey .ha-ccols__body { color: var(--ha-text); max-width: 34ch; font-size: var(--ha-t-body); }
 
 @media screen and (min-width: 990px) {
@@ -3389,7 +3418,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-feature__grid { display: grid; }
 .ha-feature__figure { aspect-ratio: 4 / 5; }
 .ha-feature__text { padding: var(--ha-section-y) var(--ha-gutter); }
-.ha-feature__heading { margin: 0 0 3.2rem; font-size: var(--ha-t-h2); letter-spacing: 0.12em; line-height: 1.2; font-weight: 400; }
+.ha-feature__heading { margin: 0 0 3.2rem; font-size: var(--ha-t-h2); letter-spacing: 0.02em; line-height: 1.2; font-weight: var(--ha-role-text-weight); }
 .ha-feature__body { max-width: 52ch; }
 .ha-feature__cta { margin: 4rem 0 0; }
 
@@ -4545,7 +4574,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-clothing__lots-grid { display: grid; gap: 1.2rem; padding-top: 2.4rem; padding-bottom: 2.4rem; }
 .ha-clothing__lots-label { margin: 0; font-size: var(--ha-t-label); letter-spacing: 0.12em; }
 .ha-clothing__lots-grid > * { min-width: 0; }
-.ha-clothing__lots-line { font-family: var(--ha-font-narrate); font-style: italic; font-size: var(--ha-t-intro); line-height: 1.35; margin: 0 0 1.2rem; max-width: min(52ch, 100%); overflow-wrap: anywhere; }
+.ha-clothing__lots-line { font-family: var(--ha-role-pull); font-style: italic; font-weight: var(--ha-role-pull-weight); font-size: var(--ha-t-intro); line-height: 1.35; margin: 0 0 1.2rem; max-width: min(52ch, 100%); overflow-wrap: anywhere; }
 .ha-clothing__head-grid > *, .ha-clothing__cat-grid > *, .ha-clothing__feature-grid > *, .ha-clothing__onward-grid > * { min-width: 0; }
 .ha-clothing__lots-toggle { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 44px; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
 .ha-clothing__lots-toggle::-webkit-details-marker { display: none; }
@@ -4629,7 +4658,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-clothing__onward-grid { display: grid; gap: 2.4rem; padding-top: 3.2rem; padding-bottom: 4rem; }
 .ha-clothing__onward-label { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
 .ha-clothing__onward-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.2rem 4rem; }
-.ha-clothing__onward-link { font-size: var(--ha-t-h2); text-decoration: none; color: var(--ha-text); min-height: 44px; display: inline-block; }
+.ha-clothing__onward-link { font-size: var(--ha-t-intro); text-decoration: none; color: var(--ha-text); min-height: 44px; display: inline-block; }
 .ha-clothing__onward-link:hover, .ha-clothing__onward-link:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
 @media screen and (min-width: 990px) {
   .ha-clothing__onward-grid { grid-template-columns: 22rem 1fr; align-items: baseline; }
@@ -4661,7 +4690,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    Sizes are off the 1440 artboard: title cap height 36px (Junicode's cap is
    0.666 em, so 54px), directory headings cap 20px (30px), intro 23px. */
 .ha-idx__title { margin: 0; font-size: var(--ha-t-hero); text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.05; font-weight: 300; color: var(--ha-text-invert); }
-.ha-idx__intro { margin: 0; font-style: italic; font-weight: 300; font-size: var(--ha-t-intro); line-height: 1.35; max-width: 34ch; }
+.ha-idx__intro { margin: 0; font-style: italic; font-weight: var(--ha-role-pull-weight); font-size: var(--ha-t-intro); line-height: 1.35; max-width: 34ch; }
 .ha-idx__rule { border: 0; border-top: 1px solid rgba(233, 243, 255, 0.45); margin: 2.4rem 0 1.6rem; }
 .ha-idx__dir-labels { display: flex; justify-content: space-between; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.9; margin: 0 0 2rem; }
 .ha-idx__dir { display: grid; gap: 2.4rem; }
@@ -4778,7 +4807,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 /* Product page: the Fit sentence is prose, not a record line; Related Works'
    head stacks instead of squeezing the link beside the eyebrow. */
-.ha-pdp__fit .ha-pdp__fit-body { text-transform: none; letter-spacing: 0; }
+.ha-pdp__fit .ha-pdp__fit-body { text-transform: none; letter-spacing: 0; font-size: var(--ha-t-detail); line-height: 1.45; color: var(--ha-text); margin: 0.8rem 0 1.2rem; }
 @media screen and (max-width: 749px) {
   .ha-related__head { flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-bottom: 2rem; }
 }
@@ -4903,7 +4932,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* --- introduction: one H1, the line, three columns ------------------------ */
 .ha-mst__intro-inner { padding-top: 3.2rem; }
 .ha-mst__title { margin: 0; font-size: var(--ha-t-hero); line-height: 1; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; color: var(--ha-mst-ink); }
-.ha-mst__subline { margin: 1.6rem 0 0; font-size: var(--ha-t-h3); letter-spacing: 0.14em; color: var(--ha-text); }
+.ha-mst__subline { margin: 1.6rem 0 0; font-size: var(--ha-t-intro); letter-spacing: 0.14em; color: var(--ha-text); }
 .ha-mst__columns { display: grid; gap: 3.2rem; margin-top: 4rem; }
 .ha-mst__col { min-width: 0; }
 .ha-mst__col--symbol { display: grid; grid-template-columns: minmax(0, 1fr) 8rem; column-gap: 2.4rem; align-items: start; }
@@ -4916,7 +4945,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 @media screen and (min-width: 990px) {
   .ha-mst__intro-inner { padding-top: 4rem; padding-bottom: 8rem; }
   .ha-mst__title { font-size: var(--ha-t-hero); }
-  .ha-mst__subline { margin-top: 2rem; font-size: var(--ha-t-h3); }
+  .ha-mst__subline { margin-top: 2rem; font-size: var(--ha-t-intro); }
   /* Columns begin 253px below the photograph, under the 233px hang of the inset. */
   .ha-mst__columns { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(3.2rem, 5vw, 8rem); margin-top: 7.2rem; }
 }
@@ -5007,7 +5036,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* The quotation in Inkstone, the brand's blue-black — Ivan, 18 September:
    "the quote needs to be in our blue colour #2D2E38". The headings keep the
    Cutch Resin thread; the quotation is the one voice that changes register. */
-.ha-mst__quote-text { margin: 0; font-style: italic; font-weight: 300; font-size: var(--ha-t-h2); line-height: 1.3; color: var(--ha-inkstone); }
+.ha-mst__quote-text { margin: 0; font-style: italic; font-weight: var(--ha-role-pull-weight); font-size: var(--ha-t-h2); line-height: 1.3; color: var(--ha-inkstone); }
 .ha-mst__quote-cite { margin-top: 1.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
 @media screen and (min-width: 990px) {
   .ha-mst__tiles { gap: 2.2rem; }
@@ -5208,7 +5237,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    collections." and "A record of the making." hold one line. */
 @media screen and (min-width: 990px) and (max-width: 1199px) {
   .ha-home__heading { font-size: var(--ha-t-h1); }
-  .ha-home-masters .ha-home__heading { font-size: var(--ha-t-h1); }
+  .ha-home-masters .ha-home__heading { font-size: var(--ha-t-h2); }
 }
 
 /* --- 01  The opening ----------------------------------------------------- */
@@ -5301,12 +5330,18 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-home-story__empty { display: grid; place-items: center; }
 .ha-home-story__text { margin-top: 1.6rem; border-top: 1px solid var(--ha-rule); padding-top: 1.6rem; }
 .ha-home-story__num { margin: 0 0 1.6rem; font-size: var(--ha-t-meta); letter-spacing: 0.04em; color: var(--ha-text-quiet); }
-.ha-home-story__title { margin: 0 0 1.2rem; font-style: italic; font-weight: 300; font-size: var(--ha-t-h2); line-height: 1.2; }
+.ha-home-story__title { margin: 0 0 1.2rem; font-style: italic; font-weight: var(--ha-role-pull-weight); font-size: var(--ha-t-h3); line-height: 1.2; }
 .ha-home-story__body { margin: 0 0 3.2rem; max-width: 36ch; }
 /* §07: a print marked monochrome shows its colour on hover and focus. */
 .ha-home-story--mono .ha-home-story__img { filter: grayscale(1); transition: filter 220ms ease; }
 .ha-home-story--mono:hover .ha-home-story__img, .ha-home-story--mono:focus-within .ha-home-story__img { filter: none; }
 @media (hover: none) { .ha-home-story--mono .ha-home-story__img { filter: none; } }
+/* Her own mono print over the colour file: no filter, the top layer fades. */
+.ha-home-story__print:has(.ha-home-story__img--mono) { position: relative; }
+.ha-home-story--own-mono .ha-home-story__img { filter: none; }
+.ha-home-story--own-mono .ha-home-story__img--mono { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 320ms ease; }
+.ha-home-story--own-mono:hover .ha-home-story__img--mono,
+.ha-home-story--own-mono:focus-within .ha-home-story__img--mono { opacity: 0; }
 @media screen and (min-width: 750px) {
   .ha-home-stories__title-row { gap: 4rem; }
   .ha-home-stories__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(3.2rem, 6.25vw, 9rem); margin-top: 4.8rem; }
@@ -5316,6 +5351,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* --- 04  Collection Index feature --------------------------------------- */
 .ha-home-index__grid { display: grid; gap: 4rem; }
 .ha-home-index__subline { margin-top: 2rem; max-width: 20em; }
+@media screen and (min-width: 990px) { .ha-home-index__subline { max-width: none; white-space: nowrap; } }
 .ha-home-index__list { list-style: none; margin: 3.2rem 0 0; padding: 0; }
 /* The four rows, 43px pitch on the artboard: mono uppercase on a hairline,
    the hairline answering hover, focus and the pictured row. */
@@ -5334,7 +5370,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-home-index__figure { display: block; overflow: hidden; background: var(--ha-placeholder-field); }
 .ha-home-index__frame--tall .ha-home-index__figure { aspect-ratio: 332 / 602; }
 .ha-home-index__frame--small .ha-home-index__figure { aspect-ratio: 236 / 276; }
-.ha-home-index__frame--wide .ha-home-index__figure { aspect-ratio: 540 / 400; }
+.ha-home-index__frame--wide .ha-home-index__figure { aspect-ratio: 546 / 364; }
 .ha-home-index__img { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter 220ms ease; }
 .ha-home-index__empty { display: grid; place-items: center; height: 100%; }
 /* §07: colour on hover and keyboard focus; a finger sees the file as supplied. */
@@ -5406,7 +5442,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-home-masters__grid { position: relative; z-index: 1; display: grid; gap: 3.2rem; }
 .ha-home-masters__lead, .ha-home-masters__directory, .ha-home-masters__aside { text-shadow: 0 1px 14px rgba(11, 6, 3, 0.45); }
 /* One line on the artboard: 40px against the page's 44. */
-.ha-home-masters .ha-home__heading { font-size: var(--ha-t-h1); }
+.ha-home-masters .ha-home__heading { font-size: var(--ha-t-h2); }
 .ha-home-masters__eyebrow { margin: 0 0 2rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
 .ha-home-masters__subline { margin-top: 1.6rem; max-width: 24em; }
 .ha-home-masters__list-label { margin: 0 0 1.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.85; }
@@ -5415,7 +5451,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    case as the artboard draws them (Khadi, Gota Patti, Banaras brocade are
    names, not labels). No rule under these rows, so the underline is the
    hover; the pictured row simply holds full ink. */
-.ha-home-masters__link { display: inline-block; font-family: var(--ha-font-record); font-weight: 400; text-transform: none; letter-spacing: 0.02em; font-size: var(--ha-t-body); line-height: 1.55; padding: 0.2rem 0; color: inherit; text-decoration: none; opacity: 0.86; }
+.ha-home-masters__link { display: inline-block; font-family: var(--ha-role-record); font-weight: var(--ha-role-record-weight); text-transform: none; letter-spacing: 0; font-size: var(--ha-t-intro); line-height: 1.55; padding: 0.2rem 0; color: inherit; text-decoration: none; opacity: 0.86; }
 .ha-home-masters__link:hover, .ha-home-masters__link:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; opacity: 1; }
 .ha-home-masters__link.is-active { opacity: 1; }
 .ha-home-masters__link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
@@ -5433,6 +5469,13 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-home-journal__grid { display: grid; gap: 4rem; }
 .ha-home-journal__print { max-width: 42rem; }
 .ha-home-journal__img, .ha-home-journal__empty { aspect-ratio: 4 / 3; }
+.ha-home-journal__print.ha-home__print--own-mat { max-width: 47rem; }
+/* Her Into Pieces sheet (24 Sep) is wider than the old print: the text starts
+   at 647 on 1440, the sheet runs 98–567. */
+@media screen and (min-width: 1200px) {
+  .ha-home-journal__grid:has(.ha-home__print--own-mat) { grid-template-columns: 550fr 743fr; column-gap: 4.7rem; }
+}
+.ha-home-journal__print.ha-home__print--own-mat .ha-home-journal__img { aspect-ratio: auto; height: auto; }
 .ha-home-journal__body { margin: 2.4rem 0 3.2rem; max-width: 26em; }
 @media screen and (min-width: 750px) {
   .ha-home-journal__grid { grid-template-columns: 1fr 1.5fr; column-gap: clamp(4rem, 5vw, 7.2rem); align-items: center; }
@@ -5453,7 +5496,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-register--form-line .ha-register__field { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 2.4rem; border: 0; border-bottom: 1px solid rgba(233, 243, 255, 0.55); padding: 0 0 0.6rem; margin: 0 0 1.6rem; transition: border-color 160ms ease; }
 .ha-register--form-line .ha-register__label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .ha-register--form-line .ha-register__input { padding: 1rem 0; min-height: 44px; }
-.ha-register--form-line .ha-register__input::placeholder { font-family: var(--ha-font-identify); text-transform: uppercase; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.9; }
+.ha-register--form-line .ha-register__input::placeholder { font-family: var(--ha-role-record); text-transform: uppercase; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.9; }
 /* Text, not the solid block the boxed form draws (specificity over the
    light-field flip at .ha-register:not(...) .ha-register__submit). */
 .ha-register.ha-register--form-line .ha-register__submit--inline { margin: 0; padding: 1rem 0; min-height: 44px; width: auto; display: inline-block; background: none; color: inherit; border: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; opacity: 1; }
@@ -5606,7 +5649,7 @@ a.ha-reg-letter__words:focus-visible::before { outline: 2px solid var(--ha-text)
 .ha-reg-form__note { margin: 0 0 2.4rem; font-size: var(--ha-t-meta); letter-spacing: 0.02em; line-height: 1.6; color: var(--ha-text-quiet); }
 .ha-reg-form__note p { margin: 0; }
 .ha-reg-form__note a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
-.ha-reg-form__submit { display: inline-block; min-width: 100%; min-height: 5.6rem; padding: 0 3.2rem; border: 1px solid var(--ha-field-correspondence); background: var(--ha-field-correspondence); color: var(--ha-text-invert); font-family: var(--ha-font-identify); font-size: var(--ha-t-ui); letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: opacity 160ms ease; }
+.ha-reg-form__submit { display: inline-block; min-width: 100%; min-height: 5.6rem; padding: 0 3.2rem; border: 1px solid var(--ha-field-correspondence); background: var(--ha-field-correspondence); color: var(--ha-text-invert); font-family: var(--ha-role-record); font-weight: var(--ha-role-record-weight); font-size: var(--ha-t-ui); letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: opacity 160ms ease; }
 .ha-reg-form__submit:hover { opacity: 0.88; }
 .ha-reg-form__submit:focus-visible { outline: 2px solid var(--ha-text); outline-offset: 3px; }
 @media screen and (min-width: 560px) { .ha-reg-form__submit { min-width: 32rem; } }
@@ -5708,7 +5751,7 @@ body:has(#SiteHeader.ha-trans) .ha-contact-intro > .ha-contact__wrap { padding-t
 /* Visit the showroom. */
 .ha-contact-visit__head { margin-top: clamp(1.6rem, 1.8vw, 2.6rem); }
 .ha-contact-visit__heading { margin: 0; font-size: var(--ha-t-hero); line-height: 1.1; font-weight: 300; color: var(--ha-chalk-blue); }
-.ha-contact-visit__sub { margin: 0.8rem 0 0; font-size: var(--ha-t-h1); font-style: italic; font-weight: 600; color: var(--ha-field-correspondence); }
+.ha-contact-visit__sub { margin: 0.8rem 0 0; font-size: var(--ha-t-h1); font-style: italic; font-weight: var(--ha-role-pull-weight); color: var(--ha-field-correspondence); }
 .ha-contact-visit__grid { display: grid; gap: 4rem; margin-top: clamp(3.2rem, 4.6vw, 6.6rem); }
 .ha-contact-visit__figure { margin: 0; width: min(88%, 46rem); transform: rotate(-5.33deg); }
 .ha-contact-visit__img { display: block; width: 100%; height: auto; }
@@ -5807,7 +5850,6 @@ h6, .h6 { line-height: var(--ha-t-lh-label); }
 .ha-mst__panel-body, .ha-mst__row-summary,
 .ha-mst-film__transcript-body,
 .ha-provenance__note-body, .ha-provenance__note-body.ha-narrate,
-.ha-home-masters__link,
 .ha-appointment__status,
 .ha-policies__body table,
 .article-card__excerpt, .article-card .card__excerpt,
@@ -5820,8 +5862,9 @@ h6, .h6 { line-height: var(--ha-t-lh-label); }
      nominal size the mono sets a visibly tighter line. The tracking below is
      what keeps 13px of Noto from reading as a data table when it is carrying a
      paragraph. It is deliberately small — the record voice's own 0.02em, not
-     the 0.14em that labels take. */
-  letter-spacing: 0.02em;
+     the 0.14em that labels take. 24 September: body is Junicode Light again,
+     which is set untracked. */
+  letter-spacing: 0;
   /* Body copy is sentence case in every voice. .ha-record uppercases, and a
      paragraph that inherited that would be unreadable. */
   text-transform: none;
@@ -6196,7 +6239,7 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 .ha-home-note--opening .ha-home-note__body { text-align: left; max-width: 31em; margin-top: clamp(3.2rem, 4.9vw, 7rem); }
 .ha-home-note--opening .ha-home-note__body p { margin: 0 0 1.4em; }
 .ha-home-note--opening .ha-home-note__body p:last-child { margin-bottom: 0; }
-.ha-home-note--opening .ha-home-note__tagline { margin: clamp(4rem, 6.2vw, 9rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: 300; }
+.ha-home-note--opening .ha-home-note__tagline { margin: clamp(4rem, 6.2vw, 9rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: var(--ha-role-pull-weight); }
 
 /* The homepage's transparent menu bar (Luxe "Transparent on homepage", colour
    "inherit"), laid over Aloha's collage: the words take the ink, and so must
@@ -6216,11 +6259,16 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 .ha-home-note--photograph .ha-home-note__sheet { padding: clamp(4rem, 8vw, 6.4rem) var(--ha-gutter, 2rem) clamp(5.6rem, 10vw, 8rem); }
 .ha-home-note--photograph .ha-home-note__inner { max-width: 34em; margin: 0; justify-items: start; text-align: left; }
 .ha-home-note--photograph .ha-home-note__head { text-align: left; }
-.ha-home-note--photograph .ha-home__heading { text-transform: uppercase; letter-spacing: 0.02em; }
+/* Casing comes from the copy, not from CSS (Aloha, 24 September 2026: "Please
+   don't automatically transform all Junicode headings to uppercase in CSS") —
+   the heading is typed in capitals in the template. On the artboard it is the
+   h3 step (27), below the section titles. */
+.ha-home-note--photograph .ha-home__heading { font-size: var(--ha-t-h3); letter-spacing: 0.02em; }
 .ha-home-note--photograph .ha-home-note__body { text-align: left; max-width: none; margin: clamp(2.4rem, 3.4vw, 4.8rem) 0 0; }
-.ha-home-note--photograph .ha-home-note__body p { margin: 0 0 1.2em; }
+.ha-home-note--photograph .ha-home-note__body { font-size: var(--ha-t-body); }
+.ha-home-note--photograph .ha-home-note__body p { margin: 0 0 3em; }
 .ha-home-note--photograph .ha-home-note__body p:last-child { margin-bottom: 0; }
-.ha-home-note--photograph .ha-home-note__tagline { margin: clamp(2.4rem, 3.4vw, 4.8rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: 300; }
+.ha-home-note--photograph .ha-home-note__tagline { margin: clamp(2.4rem, 3.4vw, 4.8rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: var(--ha-role-pull-weight); }
 @media screen and (min-width: 990px) {
   /* Her final header (24 September): the picture starts at the very top of
      the page, under the transparent menu bar, and the band runs 1080 on
@@ -6271,7 +6319,7 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
   padding: 0 6.4% 10%;
   background: var(--ha-paper-panel);
 }
-.ha-home-story__label { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); font-weight: 300; }
+.ha-home-story__label { margin: 0; font-size: var(--ha-t-label); letter-spacing: 0.04em; }
 /* the photograph, full width of the card, no mat; the tab runs on over its
    top quarter as a translucent sheet (her 150 of 591, at 76%) */
 .ha-home-stories--cards .ha-home-story__print { width: 100%; margin: 0; padding: 0; background: none; box-shadow: none; }
@@ -6300,8 +6348,105 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 }
 .ha-home-stories--cards .ha-home-story__text > .ha-home__ruled { align-self: flex-end; min-width: 0; padding-left: 1.2rem; padding-right: 1.2rem; text-align: center; }
 
+/* Glassine sleeves — the final homepage (24 September 2026). Built on the
+   Cards layout above; only the tab, the photograph and the sheet over them
+   change. Proportions from her artboard at 1440 (card 440). */
+.ha-home-stories--sleeve .ha-home-story { position: relative; }
+.ha-home-stories--sleeve .ha-home-story::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 440 / 639;
+  background: var(--ha-card-sleeve) center / 100% 100% no-repeat;
+  opacity: 0.59;
+  z-index: 1;
+  pointer-events: none;
+}
+.ha-home-stories--sleeve .ha-home-story__tab {
+  position: relative;
+  z-index: 2;
+  aspect-ratio: 440 / 182;
+  align-items: flex-start;
+  padding: 25.2% 6.6% 0;
+  background: none;
+}
+.ha-home-stories--sleeve .ha-home-story__label { color: var(--ha-chalk-blue); }
+.ha-home-stories--sleeve .ha-home-story__print { width: 97.5%; margin: 0 auto; }
+.ha-home-stories--sleeve .ha-home-story__print::before { display: none; }
+.ha-home-stories--sleeve .ha-home-story__img,
+.ha-home-stories--sleeve .ha-home-story__empty { aspect-ratio: 429 / 574; }
+.ha-home-stories--sleeve .ha-home-story__text { position: relative; z-index: 2; }
+.ha-home-stories--sleeve .ha-home-story__num { font-size: var(--ha-t-label); color: var(--ha-text); }
+
 /* --- 08  The Register on the wine band ----------------------------------- */
 .ha-register.ha-register--field-correspondence { background: var(--ha-field-correspondence); }
+.ha-register.ha-register--field-correspondence .ha-eyebrow { color: var(--ha-bare-clay); }
+
+/* Final homepage (24 September 2026): the pull line alone on the left; the
+   Dispatch paragraph, justified, and one filled button on the right. The
+   button is Chalk Blue carrying the wine, as she draws it. */
+.ha-register__heading--pull { font-size: var(--ha-t-h2); line-height: 1.35; max-width: 16.5em; }
+/* her band is 270 tall at 1440: the eyebrow 48 below its top edge */
+.ha-register--form-link > .ha-wrap { padding-top: clamp(3.2rem, 3.4vw, 4.8rem); padding-bottom: clamp(4rem, 3.6vw, 5.2rem); }
+.ha-register--form-link .ha-register__body { max-width: none; }
+@media screen and (min-width: 990px) { .ha-register--form-link .ha-register__body { text-align: justify; hyphens: auto; } }
+.ha-register.ha-register--form-link .ha-register__submit--link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: min(100%, 26.6rem);
+  min-height: 4.5rem;
+  margin-top: 3.2rem;
+  padding: 0 3.2rem;
+  background: var(--ha-chalk-blue);
+  color: var(--ha-field-correspondence);
+  border: 0;
+  font-size: var(--ha-t-ui);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+.ha-register.ha-register--form-link .ha-register__submit--link:hover { opacity: 0.88; text-decoration: none; }
+.ha-register.ha-register--form-link .ha-register__submit--link:focus-visible { outline: 2px solid var(--ha-chalk-blue); outline-offset: 3px; }
+@media screen and (min-width: 990px) {
+  .ha-register--form-link .ha-register__grid { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+}
+
+/* THE REGISTER BOX — site-wide (Aloha, 24 September 2026). Her own faces for
+   this one band, set on purpose outside the five roles:
+     THE REGISTER   Porter Medium, small
+     the sentence   Junicode Exp Medium Italic
+     the Dispatch   Noto Sans Mono Regular (14 on the artboard, justified)
+     the button     Noto Sans Mono SemiBold
+   Three classes deep so the TYPE ROLES block cannot pull them back. */
+.ha-register.ha-register--site .ha-eyebrow { font-weight: 500; }
+.ha-register.ha-register--site h2.ha-pull {
+  font-family: "HA Figures", "Junicode Exp", var(--ha-font-narrate);
+  font-weight: 500;
+  font-style: italic;
+  font-size: var(--ha-t-h2);
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+.ha-register.ha-register--site .ha-register__body {
+  font-family: "Noto Sans Mono", var(--ha-font-record);
+  font-weight: 400;
+  font-size: var(--ha-t-ui);
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+.ha-register.ha-register--site .ha-register__submit--link {
+  font-family: "Noto Sans Mono", var(--ha-font-record);
+  font-weight: 600;
+}
+/* Her box sits 47px in from the page edge on 1440, the paragraph justified. */
+@media screen and (min-width: 990px) {
+  .ha-register.ha-register--site > .ha-wrap { padding-left: 3.3vw; padding-right: 4.4vw; }
+  .ha-register.ha-register--site .ha-register__body { text-align: justify; hyphens: manual; }
+}
 
 /* ==========================================================================
    SCROLLING  —  Ivan, 23 September 2026 (reference: niccolomiranda.com)
@@ -6388,22 +6533,54 @@ html.ha-scrollbar::-webkit-scrollbar { display: none; }
   font-weight: var(--ha-voice-chrome-weight);
   font-size: var(--ha-t-nav);
   line-height: var(--ha-t-lh-nav);
-  letter-spacing: var(--ha-track-ui);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
 }
-.header-bar .ha-util__value {
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.35em;
-  transition: text-decoration-color 150ms ease;
+/* Role 01: Porter Medium at rest, Porter Light on hover and while its drawer
+   is open (Aloha, 24 September 2026) — the weight is the hover, not a line. */
+.header-bar .ha-util:hover,
+.header-bar .ha-util:focus-visible,
+.header-bar .ha-util[aria-expanded="true"] { font-weight: var(--ha-voice-chrome-hover); }
+.header-bar .ha-util__icon { display: block; width: 1.5rem; height: 1.5rem; }
+
+/* THE CIRCLE's dye blotch (Aloha, 24 September 2026: "Dye blotch = The
+   Circle … subtle … not a button badge … no hover circle here either").
+   Her yellow spot sits behind the last letters, as in her reference: 27px on
+   a 12px label, centred a little right of the word's end and a hair low. It
+   is part of the ground, so it neither moves nor changes on hover. Any
+   element can carry it with .ha-circle-mark. */
+.ha-circle-mark { position: relative; isolation: isolate; }
+.ha-circle-mark::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: -0.55em;
+  width: 2.3em;
+  aspect-ratio: 128 / 119;
+  transform: translateY(-46%);
+  background: var(--ha-circle-blotch) center / contain no-repeat;
+  opacity: 0.9;
+  pointer-events: none;
 }
-.header-bar .ha-util:hover .ha-util__value,
-.header-bar .ha-util:focus-visible .ha-util__value,
-.header-bar .ha-util[aria-expanded="true"] .ha-util__value {
-  text-decoration-color: currentColor;
+.header-bar .ha-util--circle { overflow: visible; }
+
+/* The bar's side inset, from her reference: the menu starts ~53px in on
+   1440 and BAG ends as far from the right edge (Luxe's is 20px). */
+@media screen and (min-width: 990px) {
+  #SiteHeader .header-bar--left { padding-left: 3.7vw; }
+  #SiteHeader .header-bar--shopping-tools { padding-right: 3.7vw; }
 }
+
+/* BAG: "BAG" alone while it is empty, "BAG (2)" once something is in it. */
+#SiteHeader .cart-icon--bubble:has(.hdr-cart-count-empty) .ha-bag-paren,
+#SiteHeader .cart-icon--bubble:has(.hdr-cart-count-empty) .hdr-cart-count { display: none; }
+#SiteHeader .cart-icon--bubble .hdr-cart-count,
+#SiteHeader .cart-icon--bubble .hdr-cart-count-numb { display: inline; position: static; width: auto; height: auto; min-width: 0; padding: 0; margin: 0; background: none; color: inherit; border-radius: 0; line-height: inherit; font-size: inherit; }
+#SiteHeader .cart-icon--bubble .cart-bubble-label { margin-right: 0.45em; }
+#SiteHeader .cart-icon--bubble:has(.hdr-cart-count-empty) .cart-bubble-label { margin-right: 0; }
+.header-bar .ha-util:has(.ha-util__icon) { display: inline-flex; align-items: center; min-height: 44px; }
 
 /* BAG keeps Luxe's 15px lead-in, which would make its gap wider than the
    others'; with the row in front of it every gap is the menu's 26px. */
@@ -6826,8 +7003,8 @@ body .ha-bag__name {
   text-decoration-color: transparent;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.3em;
-  font-family: var(--ha-font-identify);
-  font-weight: 300;
+  font-family: var(--ha-role-text);
+  font-weight: var(--ha-role-text-weight);
   font-size: var(--ha-t-style);
   line-height: var(--ha-t-lh-style);
   letter-spacing: 0.06em;
@@ -7175,8 +7352,8 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 }
 .ha-jnl-meta--peat { color: var(--ha-jnl-peat); }
 .ha-jnl-kicker { font-size: var(--ha-t-label); line-height: var(--ha-t-lh-label); text-transform: uppercase; color: var(--ha-jnl-peat); }
-.ha-jnl-kicker--medium { font-family: "Noto Sans Mono", var(--ha-font-record); font-weight: 500; }
-.ha-jnl-kicker--semibold { font-family: "Noto Sans Mono", var(--ha-font-record); font-weight: 600; font-size: var(--ha-t-label); color: var(--ha-text); }
+.ha-jnl-kicker--medium { font-family: var(--ha-role-record); font-weight: var(--ha-role-record-weight); }
+.ha-jnl-kicker--semibold { font-family: var(--ha-role-record); font-weight: var(--ha-role-record-weight); font-size: var(--ha-t-label); color: var(--ha-text); }
 .ha-jnl-label {
   font-family: var(--ha-font-identify);
   font-weight: 300;
@@ -7219,8 +7396,8 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 }
 .ha-jnl-mast__meta-right { justify-self: end; text-align: right; }
 .ha-jnl-mast__name {
-  font-family: var(--ha-font-identify);
-  font-weight: 500;
+  font-family: var(--ha-role-label);
+  font-weight: var(--ha-role-label-weight);
   font-size: var(--ha-t-h3);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -7235,8 +7412,8 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 .ha-jnl-ticker:first-child { padding-left: calc(5 * var(--u)); }
 .ha-jnl-ticker + .ha-jnl-ticker { border-left: 1px solid var(--ha-jnl-rule); }
 .ha-jnl-ticker__kicker {
-  font-family: var(--ha-font-record);
-  font-weight: 700;
+  font-family: var(--ha-role-record);
+  font-weight: var(--ha-role-record-weight);
   font-size: var(--ha-t-label);
   line-height: var(--ha-t-lh-label);
   text-transform: uppercase;
@@ -7244,8 +7421,8 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 }
 .ha-jnl-ticker__title {
   margin-top: calc(18 * var(--u));
-  font-family: "Junicode Cond", var(--ha-font-narrate);
-  font-weight: 400;
+  font-family: var(--ha-role-text);
+  font-weight: var(--ha-role-text-weight);
   font-size: var(--ha-t-h3);
   line-height: var(--ha-t-lh-h3);
 }
@@ -7285,8 +7462,8 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   border-bottom: 1px solid var(--ha-jnl-rule);
 }
 .ha-jnl-strap__text {
-  font-family: "Noto Sans Mono", var(--ha-font-record);
-  font-weight: 600;
+  font-family: var(--ha-role-record);
+  font-weight: var(--ha-role-record-weight);
   font-size: var(--ha-t-label);
   line-height: var(--ha-t-lh-label);
   text-transform: uppercase;
@@ -7306,9 +7483,9 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-family: "Junicode SemiCond", var(--ha-font-narrate);
-  font-weight: 600;
-  font-size: var(--ha-t-nav);
+  font-family: var(--ha-role-record);
+  font-weight: var(--ha-role-record-weight);
+  font-size: var(--ha-t-ui);
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: inherit;
@@ -7583,4 +7760,75 @@ a.ha-jnl-button { color: var(--ha-jnl-button-ink, #E9E4D8); }
   .ha-jnl-voices .ha-jnl-wrap > * { margin-inline: 0; }
   .ha-jnl-voices__quote { padding: 2.4rem 2rem 2.4rem; }
   .ha-jnl-voices__more { padding: 2.4rem 2rem 0; border-left: 0; border-top: 1px solid var(--ha-jnl-rule); }
+}
+
+
+/* ==========================================================================
+   TYPE ROLES — Aloha's final typography system, 24 September 2026
+
+   "I want these roles established globally wherever possible rather than
+    styling individual sections independently."
+
+   The families and weights are tokens in snippets/ha-fonts.liquid
+   (--ha-role-*); this block is where they are applied, and it sits last in
+   the stylesheet so a role is not quietly overruled by an older section rule.
+
+     .ha-nav      01 Porter Medium — header and footer navigation;
+                  Porter Light on hover, focus and the current page
+     .ha-label    02 Porter Light  — section labels and index headings
+     .ha-eyebrow     (and every element named __eyebrow — they are all
+                     section labels, whatever voice they used to carry)
+     .ha-record   03 Noto Sans Mono Medium — links, CTAs, buttons,
+                  references, data. Numbers anywhere else are switched to
+                  it by the "HA Figures" face, not by markup.
+     .ha-narrate  04/05 Junicode Light — body, information and titles
+     .ha-pull     06 Junicode SemiBold Italic — pull lines, sparingly
+
+   Casing is not transformed here: "Please don't automatically transform all
+   Junicode headings to uppercase in CSS. The casing should follow the
+   supplied design/copy."
+   ========================================================================== */
+
+/* 01 — navigation */
+.ha-nav,
+.ha-nav a,
+.ha-nav button {
+  font-family: var(--ha-voice-chrome) !important;
+  font-weight: var(--ha-voice-chrome-weight);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ha-nav a:hover,
+.ha-nav a:focus-visible,
+.ha-nav a[aria-current="page"],
+.ha-nav button:hover,
+.ha-nav button:focus-visible { font-weight: var(--ha-voice-chrome-hover); text-decoration: none; }
+
+/* 02 — section labels */
+.ha-label,
+.ha-eyebrow,
+.ha-home__eyebrow,
+[class*="__eyebrow"] {
+  font-family: var(--ha-role-label) !important;
+  font-weight: var(--ha-role-label-weight);
+  font-style: normal;
+  font-size: var(--ha-t-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* 03 — links, actions, references, data */
+.ha-record { font-weight: var(--ha-role-record-weight); }
+
+/* 04 / 05 — editorial text and titles: .ha-narrate, snippets/ha-fonts.liquid.
+   Not restated here, because a pull line is .ha-narrate too and must keep
+   its 600. */
+
+/* 06 — editorial emphasis */
+.ha-pull {
+  font-family: var(--ha-role-pull);
+  font-style: italic;
+  font-weight: var(--ha-role-pull-weight);
+  letter-spacing: 0;
+  text-transform: none;
 }

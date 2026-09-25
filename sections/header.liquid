@@ -959,7 +959,13 @@
     {% render 'icon-header-cart',
     icon: cart_icon
     %}
-    {% if cart_icon == 'word' %}({% endif %}<div class="hdr-cart-count" id="cart-icon-bubble"><div class="hdr-cart-count-numb{% if cart.item_count == 0 %} hdr-cart-count-empty{% else %} hdr-cart-count-active{% endif %}">{{ cart.item_count }}</div></div>{% if cart_icon == 'word' %}){% endif %}
+    {%- comment -%}
+      Hartwick (Aloha, 24 September 2026): "BAG", and "BAG (2)" once something
+      is in it. The brackets are spans so ha-sections.css can hide them with the
+      count while the bag is empty; the count itself is still re-rendered by
+      Luxe's cart scripts through #cart-icon-bubble.
+    {%- endcomment -%}
+    {% if cart_icon == 'word' %}<span class="ha-bag-paren" aria-hidden="true">(</span>{% endif %}<div class="hdr-cart-count" id="cart-icon-bubble"><div class="hdr-cart-count-numb{% if cart.item_count == 0 %} hdr-cart-count-empty{% else %} hdr-cart-count-active{% endif %}">{{ cart.item_count }}</div></div>{% if cart_icon == 'word' %}<span class="ha-bag-paren" aria-hidden="true">)</span>{% endif %}
   </a>
   </div>
 

@@ -281,7 +281,8 @@
         "show_native_form": true,
         "contact_tag": "the-register",
         "register_source": "masters_page"
-      }
+      },
+      "disabled": true
     }
   },
   "order": [

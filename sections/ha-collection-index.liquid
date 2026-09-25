@@ -133,7 +133,7 @@
 
         {%- if section.settings.cta_text != blank and section.settings.lot_confirmed -%}
           <p class="ha-index__foot">
-            <a class="ha-link ha-identify" href="{{ section.settings.cta_link | default: section.settings.collection.url | default: '#' }}">
+            <a class="ha-link ha-record" href="{{ section.settings.cta_link | default: section.settings.collection.url | default: '#' }}">
               {{ section.settings.cta_text }}
             </a>
           </p>

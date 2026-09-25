@@ -105,7 +105,10 @@
           }
         }
       },
-      "block_order": ["p1", "p2"],
+      "block_order": [
+        "p1",
+        "p2"
+      ],
       "settings": {
         "field": "peat",
         "eyebrow": "The Principle",
@@ -118,12 +121,45 @@
     "journey": {
       "type": "ha-circle-columns",
       "blocks": {
-        "j1": { "type": "column", "settings": { "label": "", "heading": "Costume + Culture", "body": "<p>An early career in costume design and commercial styling developed Angela’s attention to traditional textiles and the stories held within them.</p>" } },
-        "j2": { "type": "column", "settings": { "label": "", "heading": "Image + Place", "body": "<p>Documentary filmmaking and cultural projects trained her eye on people, place and the responsibility of telling another person’s story accurately.</p>" } },
-        "j3": { "type": "column", "settings": { "label": "", "heading": "Wilderness + Material", "body": "<p>Life between cities and wilderness made the consequences of material choices impossible to treat as an abstract part of fashion.</p>" } },
-        "j4": { "type": "column", "settings": { "label": "", "heading": "Hartwick Atelier", "body": "<p>The house brings these strands together: design, provenance, natural systems and the living knowledge of the Masters.</p>" } }
+        "j1": {
+          "type": "column",
+          "settings": {
+            "label": "",
+            "heading": "Costume + Culture",
+            "body": "<p>An early career in costume design and commercial styling developed Angela’s attention to traditional textiles and the stories held within them.</p>"
+          }
+        },
+        "j2": {
+          "type": "column",
+          "settings": {
+            "label": "",
+            "heading": "Image + Place",
+            "body": "<p>Documentary filmmaking and cultural projects trained her eye on people, place and the responsibility of telling another person’s story accurately.</p>"
+          }
+        },
+        "j3": {
+          "type": "column",
+          "settings": {
+            "label": "",
+            "heading": "Wilderness + Material",
+            "body": "<p>Life between cities and wilderness made the consequences of material choices impossible to treat as an abstract part of fashion.</p>"
+          }
+        },
+        "j4": {
+          "type": "column",
+          "settings": {
+            "label": "",
+            "heading": "Hartwick Atelier",
+            "body": "<p>The house brings these strands together: design, provenance, natural systems and the living knowledge of the Masters.</p>"
+          }
+        }
       },
-      "block_order": ["j1", "j2", "j3", "j4"],
+      "block_order": [
+        "j1",
+        "j2",
+        "j3",
+        "j4"
+      ],
       "settings": {
         "layout": "journey",
         "field": "sand",
@@ -171,8 +207,19 @@
         "show_native_form": true,
         "contact_tag": "the-register",
         "register_source": "about_page"
-      }
+      },
+      "disabled": true
     }
   },
-  "order": ["main", "hero", "house", "founder", "principle", "journey", "quote", "work", "register"]
+  "order": [
+    "main",
+    "hero",
+    "house",
+    "founder",
+    "principle",
+    "journey",
+    "quote",
+    "work",
+    "register"
+  ]
 }

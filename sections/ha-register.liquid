@@ -32,7 +32,20 @@
   challenges server-side, so nothing is weakened.
 {%- endcomment -%}
 
-<section id="the-register" class="ha-section ha-section--dark ha-register ha-register--form-{{ section.settings.form_style | default: 'box' }}{% if section.settings.field == 'correspondence' %} ha-register--field-correspondence{% endif %}{% if section.settings.grain %} ha-grain-block{% endif %}">
+{%- comment -%}
+  SITE-WIDE (Aloha, 24 September 2026): "THE REGISTER BOX: Fixed on all
+  pages, except on The Register page." One instance lives in the footer group,
+  above the footer, with `site_wide` on; the per-template bands are disabled.
+  On the Register page itself it renders nothing — that page is the form.
+{%- endcomment -%}
+{%- liquid
+  assign ha_reg_skip = false
+  if section.settings.site_wide and template.name == 'page' and template.suffix == 'the-register'
+    assign ha_reg_skip = true
+  endif
+-%}
+{%- unless ha_reg_skip -%}
+<section id="the-register" class="ha-section ha-section--dark ha-register{% if section.settings.site_wide %} ha-register--site{% endif %} ha-register--form-{{ section.settings.form_style | default: 'box' }}{% if section.settings.field == 'correspondence' %} ha-register--field-correspondence{% endif %}{% if section.settings.grain %} ha-grain-block{% endif %}">
   <div class="ha-wrap">
     <div class="ha-register__grid">
       <div>
@@ -40,7 +53,7 @@
           <p class="ha-eyebrow ha-record">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="ha-display ha-narrate{% if section.settings.heading_style == 'caps' %} ha-register__heading--caps{% endif %}">{{ section.settings.heading }}</h2>
+          <h2 class="ha-display ha-narrate{% if section.settings.heading_style == 'caps' %} ha-register__heading--caps{% elsif section.settings.heading_style == 'pull' %} ha-pull ha-register__heading--pull{% endif %}">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- comment -%}
           WHERE THE INVITATION COPY SITS.
@@ -72,7 +85,17 @@
           {%- endcase -%}
         {%- endfor -%}
 
-        {%- if section.settings.show_native_form -%}
+        {%- comment -%}
+          THE BUTTON (Aloha's final homepage, 24 September 2026): the band
+          carries the Dispatch paragraph and one filled JOIN THE REGISTER
+          button, no field. The button goes to the form on the Register page,
+          so the homepage never holds a second, different signup.
+        {%- endcomment -%}
+        {%- if section.settings.form_style == 'link' -%}
+          <a class="ha-register__submit ha-register__submit--link ha-record" href="{{ section.settings.link_url | default: '/pages/the-register#join-the-register' }}">
+            {{- section.settings.link_text | default: 'Join The Register' -}}
+          </a>
+        {%- elsif section.settings.show_native_form -%}
           {%- form 'customer',
             class: 'ha-register__form newsletter-form',
             novalidate: 'novalidate',
@@ -126,7 +149,7 @@
                 rule can run beneath it; the boxed form keeps the button below.
               {%- endcomment -%}
               {%- if section.settings.form_style == 'line' -%}
-                <button type="submit" class="ha-register__submit ha-register__submit--inline ha-identify" name="commit">
+                <button type="submit" class="ha-register__submit ha-register__submit--inline ha-record" name="commit">
                   {{ 'newsletter.button_label' | t }}
                 </button>
               {%- endif -%}
@@ -150,7 +173,7 @@
             </label>
 
             {%- unless section.settings.form_style == 'line' -%}
-              <button type="submit" class="ha-register__submit ha-identify" name="commit">
+              <button type="submit" class="ha-register__submit ha-record" name="commit">
                 {{ 'newsletter.button_label' | t }}
               </button>
             {%- endunless -%}
@@ -173,6 +196,7 @@
     </div>
   </div>
 </section>
+{%- endunless -%}
 
 {% schema %}
 {
@@ -180,6 +204,7 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
+    { "type": "checkbox", "id": "site_wide", "label": "Site-wide Register box", "default": false, "info": "Aloha, 24 September 2026: on every page except the Register page, in her own faces — Porter Medium label, Junicode Exp Medium Italic sentence, Noto Sans Mono Regular paragraph, Noto Sans Mono SemiBold button. Use once, in the footer group." },
     { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "you@example.com" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Register" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Be first to receive what comes next." },
@@ -194,7 +219,8 @@
     },
     {
       "type": "select", "id": "heading_style", "label": "Heading", "default": "sentence",
-      "options": [ { "value": "sentence", "label": "As written" }, { "value": "caps", "label": "Uppercase (homepage artboard)" } ]
+      "options": [ { "value": "sentence", "label": "As written" }, { "value": "caps", "label": "Uppercase (19 Sep artboard)" }, { "value": "pull", "label": "Pull line (24 Sep homepage)" } ],
+      "info": "Pull line: Junicode SemiBold Italic, the editorial-emphasis role of the 24 September typography system."
     },
     {
       "type": "select", "id": "field", "label": "Band colour", "default": "dark",
@@ -204,9 +230,11 @@
     { "type": "checkbox", "id": "grain", "label": "Grain", "default": true, "info": "Aloha's grain layer on the band, on every Register band since 24 September. Strength: Theme settings > Hartwick — Material Archive > Grain on dark blocks." },
     {
       "type": "select", "id": "form_style", "label": "Form", "default": "box",
-      "info": "Box: the bordered field with the button beneath (Ivan, 3 September). Line: label left, Join The Register right, one rule under both (homepage artboard, 19 September).",
-      "options": [ { "value": "box", "label": "Boxed field" }, { "value": "line", "label": "One rule, button on the line" } ]
+      "info": "Box: the bordered field with the button beneath (Ivan, 3 September). Line: label left, Join The Register right, one rule under both (homepage artboard, 19 September). Button only: no field, one filled button to the Register page's form (final homepage, 24 September).",
+      "options": [ { "value": "box", "label": "Boxed field" }, { "value": "line", "label": "One rule, button on the line" }, { "value": "link", "label": "Button only, to the Register page" } ]
     },
+    { "type": "text", "id": "link_text", "label": "Button text (button only)", "default": "Join The Register" },
+    { "type": "url", "id": "link_url", "label": "Button link (button only)", "info": "Defaults to /pages/the-register#join-the-register." },
     { "type": "checkbox", "id": "show_native_form", "label": "Show the form", "default": true, "info": "This form posts to Klaviyo. Switch off only if a Klaviyo app block is carrying the form instead — never both." },
     { "type": "text", "id": "contact_tag", "label": "Customer tag (no-JS fallback only)", "default": "the-register" },
     { "type": "header", "content": "Klaviyo" },

@@ -25,7 +25,7 @@
 
     <div class="ha-home-journal__grid">
       <div class="ha-home-journal__media">
-        <div class="ha-home__print ha-home-journal__print">
+        <div class="ha-home__print ha-home-journal__print{% if section.settings.own_mat %} ha-home__print--own-mat{% endif %}">
           {%- if section.settings.image -%}
             {{
               section.settings.image
@@ -70,6 +70,7 @@
     { "type": "header", "content": "Print" },
     { "type": "image_picker", "id": "image", "label": "Photograph" },
     { "type": "text", "id": "image_alt", "label": "Alt text", "default": "Pattern pieces cut from brown paper, one labelled Angela" },
+    { "type": "checkbox", "id": "own_mat", "label": "Print carries its own paper and shadow", "default": false, "info": "For a cut-out on a transparent surround (Aloha's Into Pieces sheet, 24 September). The theme draws no mat and shows the file whole." },
     { "type": "header", "content": "Provisional content" },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
   ],

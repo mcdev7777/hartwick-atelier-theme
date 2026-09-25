@@ -351,7 +351,7 @@
 
         {%- if fit_a != blank or fit_b != blank or fit_body != blank -%}
           <div class="ha-pdp__fit">
-            <h2 class="ha-pdp__fit-title ha-narrate">{{ section.settings.fit_heading }}</h2>
+            <h2 class="ha-pdp__fit-title ha-label">{{ section.settings.fit_heading }}</h2>
             {%- if fit_a != blank -%}<p class="ha-record">{{ fit_a }}</p>{%- endif -%}
             {%- if fit_body != blank -%}<p class="ha-pdp__fit-body ha-body ha-narrate">{{ fit_body | newline_to_br }}</p>{%- endif -%}
             {%- if fit_b != blank -%}<p class="ha-record">{{ fit_b }}</p>{%- endif -%}

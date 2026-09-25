@@ -96,7 +96,7 @@
         </nav>
         <h1 class="ha-clothing__title ha-narrate">{{ section.settings.title | default: collection.title }}</h1>
         {%- if section.settings.back_text != blank -%}
-          <a class="ha-clothing__back ha-identify" href="{{ section.settings.back_url | default: routes.collections_url }}">{{ section.settings.back_text }}</a>
+          <a class="ha-clothing__back ha-record" href="{{ section.settings.back_url | default: routes.collections_url }}">{{ section.settings.back_text }}</a>
         {%- endif -%}
       </div>
       {%- if section.settings.intro != blank -%}
@@ -112,7 +112,7 @@
       <ul class="ha-clothing__nav-list" role="list">
         {%- for block in section.blocks -%}
           {%- if block.type == 'category' -%}
-            <li><a class="ha-clothing__nav-link ha-narrate" href="#{{ block.settings.anchor | default: block.id }}">{{ block.settings.heading }}</a></li>
+            <li><a class="ha-clothing__nav-link ha-record" href="#{{ block.settings.anchor | default: block.id }}">{{ block.settings.heading }}</a></li>
           {%- endif -%}
         {%- endfor -%}
       </ul>
@@ -159,7 +159,7 @@
             {%- if block.settings.heading != blank -%}<h2 class="ha-clothing__feature-heading ha-narrate">{{ block.settings.heading }}</h2>{%- endif -%}
             {%- if block.settings.body != blank -%}<div class="ha-clothing__feature-body ha-body ha-narrate">{{ block.settings.body }}</div>{%- endif -%}
             {%- if block.settings.link_text != blank -%}
-              <a class="ha-clothing__feature-link ha-identify" href="{{ block.settings.link_url | default: '#' }}">{{ block.settings.link_text }}<span class="ha-clothing__corner" aria-hidden="true"></span></a>
+              <a class="ha-clothing__feature-link ha-record" href="{{ block.settings.link_url | default: '#' }}">{{ block.settings.link_text }}<span class="ha-clothing__corner" aria-hidden="true"></span></a>
             {%- endif -%}
             {%- if block.settings.link_url == blank -%}
               {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'The feature link has no destination yet — bind the approved Masters / textile story.' -%}
@@ -188,7 +188,7 @@
                 works without a script; the script makes it smooth and hands
                 keyboard focus to the navigation.
               {%- endcomment -%}
-              <a class="ha-clothing__top ha-identify" href="#clothing-page" data-clothing-top>{{ section.settings.top_text }}<span class="ha-clothing__chev" aria-hidden="true"></span></a>
+              <a class="ha-clothing__top ha-record" href="#clothing-page" data-clothing-top>{{ section.settings.top_text }}<span class="ha-clothing__chev" aria-hidden="true"></span></a>
               {%- if block.settings.blurb != blank -%}<p class="ha-clothing__cat-blurb ha-narrate">{{ block.settings.blurb }}</p>{%- endif -%}
             </div>
           </div>
@@ -332,7 +332,7 @@
             {%- assign t = 'onward_' | append: i | append: '_text' -%}
             {%- assign u = 'onward_' | append: i | append: '_url' -%}
             {%- if section.settings[t] != blank -%}
-              <li><a class="ha-clothing__onward-link ha-narrate" href="{{ section.settings[u] | default: '#' }}">{{ section.settings[t] }}</a></li>
+              <li><a class="ha-clothing__onward-link ha-record" href="{{ section.settings[u] | default: '#' }}">{{ section.settings[t] }}</a></li>
             {%- endif -%}
           {%- endfor -%}
         </ul>

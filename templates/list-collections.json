@@ -103,7 +103,8 @@
         "show_native_form": true,
         "contact_tag": "the-register",
         "register_source": "collection_page"
-      }
+      },
+      "disabled": true
     },
     "index": {
       "type": "ha-index",

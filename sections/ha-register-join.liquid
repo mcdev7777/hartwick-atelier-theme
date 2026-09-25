@@ -141,7 +141,7 @@
               <div class="ha-reg-form__note ha-record">{{ section.settings.privacy_note }}</div>
             {%- endif -%}
 
-            <button type="submit" class="ha-reg-form__submit ha-identify ha-grain-block" name="commit">{{ section.settings.submit_text }}</button>
+            <button type="submit" class="ha-reg-form__submit ha-record ha-grain-block" name="commit">{{ section.settings.submit_text }}</button>
 
             {%- if form.errors -%}
               <p class="ha-reg-form__message ha-reg-form__message--server ha-record is-error" id="HaRegJoinError--{{ section.id }}" role="alert" style="margin-top: 1.6rem;">

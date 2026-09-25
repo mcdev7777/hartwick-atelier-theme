@@ -263,7 +263,7 @@
                       <p class="ha-mst__panel-credit ha-record"><span class="ha-mst__panel-credit-label">{{ section.settings.credit_label }}</span> {{ block.settings.credit }}</p>
                     {%- endif -%}
                     {%- if has_link -%}
-                      <a class="ha-mst__panel-link ha-identify" href="{{ block.settings.master_url }}"{% if block.settings.master_id != blank %} data-master-id="{{ block.settings.master_id | escape }}"{% endif %}>{{ block.settings.master_text }}<span class="ha-mst__corner" aria-hidden="true"></span></a>
+                      <a class="ha-mst__panel-link ha-record" href="{{ block.settings.master_url }}"{% if block.settings.master_id != blank %} data-master-id="{{ block.settings.master_id | escape }}"{% endif %}>{{ block.settings.master_text }}<span class="ha-mst__corner" aria-hidden="true"></span></a>
                     {%- endif -%}
                   </div>
                 </div>
@@ -316,7 +316,7 @@
       <div class="ha-mst__continue-text">
         {%- if section.settings.continue_body != blank -%}<div class="ha-body ha-narrate ha-mst__continue-body">{{ section.settings.continue_body }}</div>{%- endif -%}
         {%- if section.settings.continue_link_text != blank -%}
-          <a class="ha-mst__continue-link ha-identify" href="{{ section.settings.continue_link_url | default: '/blogs/news' }}" data-mst-journal>{{ section.settings.continue_link_text }}<span class="ha-mst__corner" aria-hidden="true"></span></a>
+          <a class="ha-mst__continue-link ha-record" href="{{ section.settings.continue_link_url | default: '/blogs/news' }}" data-mst-journal>{{ section.settings.continue_link_text }}<span class="ha-mst__corner" aria-hidden="true"></span></a>
         {%- endif -%}
       </div>
     </div>

@@ -320,29 +320,41 @@
       },
       {
         "type": "paragraph",
-        "content": "Aloha, 22 September 2026: \"Porter = major titles/product names. Junicode = editorial headings, Expressions, numbers and selected introductions. Noto Sans Mono Condensed = body copy, navigation, functional information, captions and data.\" Two of those rows move a voice, and each reverses an earlier decision of hers, so each is a switch rather than a rewrite. Both default to the 22 September table. Flagged to Aloha \u2014 if either was not intended, change it here, not in the code."
+        "content": "Aloha's final typography system, 24 September 2026 — five roles: PORTER MEDIUM navigation and permanent site UI (hover: Porter Light); PORTER LIGHT section labels and index headings; NOTO SANS MONO MEDIUM links, actions, references, data and ALL numbers; JUNICODE LIGHT editorial body copy, information and larger editorial titles; JUNICODE SEMIBOLD ITALIC editorial emphasis and pull lines. Both switches below default to it; the 22 September options are kept only as a way back."
       },
       {
         "type": "select",
         "id": "ha_body_voice",
         "label": "Body copy",
         "options": [
-          { "value": "record", "label": "Noto Sans Mono Condensed (Aloha, 22 Sep)" },
-          { "value": "narrate", "label": "Junicode (brand book)" }
+          {
+            "value": "narrate",
+            "label": "Junicode Light (Aloha, 24 Sep)"
+          },
+          {
+            "value": "record",
+            "label": "Noto Sans Mono (22 Sep table)"
+          }
         ],
-        "default": "record",
-        "info": "The brand book gave body copy to Junicode as the NARRATE voice. The 22 September table gives it to Noto Sans Mono Condensed at 13px. This also sets the typeface of every unstyled word in the theme \u2014 the cart, the account pages, forms and the cookie banner."
+        "default": "narrate",
+        "info": "Aloha's final typography system (24 September 2026) gives editorial body copy and information to Junicode Light. The 22 September option is kept as a way back. This also sets the typeface of every unstyled word in the theme — the cart, the account pages, forms and the cookie banner."
       },
       {
         "type": "select",
         "id": "ha_chrome_voice",
         "label": "Navigation and footer",
         "options": [
-          { "value": "record", "label": "Noto Sans Mono Condensed (Aloha, 22 Sep)" },
-          { "value": "identify", "label": "Porter Light (Aloha, 15 Sep)" }
+          {
+            "value": "identify",
+            "label": "Porter Medium, Light on hover (24 Sep)"
+          },
+          {
+            "value": "record",
+            "label": "Noto Sans Mono (22 Sep table)"
+          }
         ],
-        "default": "record",
-        "info": "The header and footer have run in Porter Light since Aloha's 15 September note (\"footer fonts in Porter - Light\"). Her 22 September table puts navigation and footer in Noto Sans Mono Condensed."
+        "default": "identify",
+        "info": "Aloha, 24 September 2026: Porter Medium is reserved for the permanent navigation and global utility areas — header and footer. Hover and selected state: Porter Light."
       },
       {
         "type": "header",
@@ -350,7 +362,7 @@
       },
       {
         "type": "paragraph",
-        "content": "Aloha, 22 September 2026 (\"web text sizes\"): \"We need to heavily decrease the sizes of our texts […] I want to tighten the typography across the entire site. […] Can we establish a consistent typography system across the theme rather than adjusting sections individually? […] The overall aim is smaller and calmer. Photography, spacing and information structure should create the hierarchy rather than oversized typography.\" Every size on the storefront now comes from the sliders below — the Hartwick sections, the Luxe header, footer, cart, product cards and account pages alike. Nothing is set section by section any more, so moving one slider moves that text category everywhere at once. Her table is the default for every slider; a page should deviate only where there is an intentional editorial reason."
+        "content": "Aloha, 24 September 2026: the approved homepage artboard (FinalHartwick_Homepage_Editorial) is \"the visual reference for how these roles relate to one another in scale and hierarchy\" across the whole website. The defaults below are measured from it at 1440px — Junicode body 19, intro 21, pull lines 28–30, titles 35–42, Noto links and buttons 14, navigation 12, section labels 11, captions 10. \"Font size does not change the role of the font.\" Every size on the storefront comes from these sliders — the Hartwick sections, the Luxe header, footer, cart, product cards and account pages alike — so moving one slider moves that text category everywhere at once. (The 22 September table was drawn for body copy in Noto Sans Mono Condensed at 13px; Junicode, with a smaller x-height, needs about 17px to read the same size.)"
       },
       {
         "type": "header",
@@ -361,10 +373,10 @@
         "id": "ha_t_hero_d",
         "label": "Hero / large editorial heading",
         "min": 18,
-        "max": 48,
+        "max": 64,
         "step": 1,
         "unit": "px",
-        "default": 32,
+        "default": 48,
         "info": "Aloha's table gives a range of 30–34px here; 32 is its centre. This is the largest type anywhere on the site — nothing above it, by design."
       },
       {
@@ -372,40 +384,40 @@
         "id": "ha_t_h1_d",
         "label": "Page title (H1)",
         "min": 16,
-        "max": 40,
+        "max": 56,
         "step": 1,
         "unit": "px",
-        "default": 26
+        "default": 42
       },
       {
         "type": "range",
         "id": "ha_t_h2_d",
         "label": "Section title (H2)",
         "min": 14,
-        "max": 32,
+        "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 20
+        "default": 35
       },
       {
         "type": "range",
         "id": "ha_t_h3_d",
         "label": "Editorial subheading (H3)",
         "min": 12,
-        "max": 24,
+        "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 16
+        "default": 28
       },
       {
         "type": "range",
         "id": "ha_t_intro_d",
         "label": "Editorial intro paragraph",
         "min": 11,
-        "max": 22,
+        "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 15,
+        "default": 21,
         "info": "The larger Junicode paragraph that opens a section. Ordinary body copy is the row below."
       },
       {
@@ -413,30 +425,30 @@
         "id": "ha_t_expression_d",
         "label": "Product Expression",
         "min": 10,
-        "max": 22,
+        "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 19
       },
       {
         "type": "range",
         "id": "ha_t_body_d",
         "label": "Body copy",
         "min": 10,
-        "max": 20,
+        "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 19
       },
       {
         "type": "range",
         "id": "ha_t_detail_d",
         "label": "Product details and bullets",
         "min": 9,
-        "max": 18,
+        "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 16
       },
       {
         "type": "range",
@@ -446,27 +458,37 @@
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 14
       },
       {
         "type": "range",
         "id": "ha_t_ui_d",
-        "label": "Navigation, links, buttons",
+        "label": "Links, CTAs and buttons",
+        "min": 9,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "ha_t_nav_d",
+        "label": "Navigation (Porter Medium)",
         "min": 9,
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 12
       },
       {
         "type": "range",
         "id": "ha_t_label_d",
-        "label": "Small labels (FOUNDER, ORIGIN)",
+        "label": "Section labels (Porter Light)",
         "min": 8,
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 10
+        "default": 11
       },
       {
         "type": "range",
@@ -486,7 +508,7 @@
         "max": 14,
         "step": 1,
         "unit": "px",
-        "default": 9,
+        "default": 10,
         "info": "The one 9px surface Aloha specified. It carries the copyright line and nothing else."
       },
       {
@@ -494,10 +516,10 @@
         "id": "ha_t_style_d",
         "label": "Product name (Style)",
         "min": 11,
-        "max": 28,
+        "max": 36,
         "step": 1,
         "unit": "px",
-        "default": 16,
+        "default": 24,
         "info": "Porter. Sits one step above the editorial subheading, not on the section-title line."
       },
       {
@@ -513,10 +535,10 @@
         "id": "ha_t_hero_m",
         "label": "Hero / large editorial heading",
         "min": 16,
-        "max": 40,
+        "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 28,
+        "default": 34,
         "info": "Her range is 26–30px; 28 is its centre."
       },
       {
@@ -524,70 +546,70 @@
         "id": "ha_t_h1_m",
         "label": "Page title (H1)",
         "min": 14,
-        "max": 34,
+        "max": 44,
         "step": 1,
         "unit": "px",
-        "default": 23
+        "default": 30
       },
       {
         "type": "range",
         "id": "ha_t_h2_m",
         "label": "Section title (H2)",
         "min": 12,
-        "max": 28,
+        "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 18
+        "default": 26
       },
       {
         "type": "range",
         "id": "ha_t_h3_m",
         "label": "Editorial subheading (H3)",
         "min": 11,
-        "max": 22,
+        "max": 32,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 22
       },
       {
         "type": "range",
         "id": "ha_t_intro_m",
         "label": "Editorial intro paragraph",
         "min": 11,
-        "max": 20,
+        "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 14
+        "default": 18
       },
       {
         "type": "range",
         "id": "ha_t_expression_m",
         "label": "Product Expression",
         "min": 10,
-        "max": 20,
+        "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 17
       },
       {
         "type": "range",
         "id": "ha_t_body_m",
         "label": "Body copy",
         "min": 10,
-        "max": 18,
+        "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 17
       },
       {
         "type": "range",
         "id": "ha_t_detail_m",
         "label": "Product details and bullets",
         "min": 9,
-        "max": 16,
+        "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 15
       },
       {
         "type": "range",
@@ -597,27 +619,37 @@
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 13
       },
       {
         "type": "range",
         "id": "ha_t_ui_m",
-        "label": "Navigation, links, buttons",
+        "label": "Links, CTAs and buttons",
         "min": 9,
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "ha_t_nav_m",
+        "label": "Navigation (Porter Medium)",
+        "min": 9,
+        "max": 16,
+        "step": 1,
+        "unit": "px",
+        "default": 12
       },
       {
         "type": "range",
         "id": "ha_t_label_m",
-        "label": "Small labels (FOUNDER, ORIGIN)",
+        "label": "Section labels (Porter Light)",
         "min": 8,
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 10
+        "default": 11
       },
       {
         "type": "range",
@@ -637,17 +669,17 @@
         "max": 14,
         "step": 1,
         "unit": "px",
-        "default": 9
+        "default": 10
       },
       {
         "type": "range",
         "id": "ha_t_style_m",
         "label": "Product name (Style)",
         "min": 11,
-        "max": 26,
+        "max": 30,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 20
       },
       {
         "type": "header",
@@ -657,11 +689,11 @@
         "type": "range",
         "id": "ha_t_body_lh",
         "label": "Body line height",
-        "min": 140,
+        "min": 110,
         "max": 180,
         "step": 5,
         "unit": "%",
-        "default": 160,
+        "default": 140,
         "info": "Aloha gave body copy a range of 1.55–1.65. The other line heights in her table are fixed per category and are set in snippets/ha-tokens.liquid."
       },
       {
@@ -721,6 +753,13 @@
         "info": "The countries and currencies are Shopify Markets (Settings > Markets). The header shows the current one, e.g. ES / EUR."
       },
       {
+        "type": "checkbox",
+        "id": "ha_util_icons",
+        "label": "Region and Language as icons",
+        "default": true,
+        "info": "Aloha's final header (24 September 2026): slim globe and translate marks instead of the codes (US / USD). Screen readers still hear the codes."
+      },
+      {
         "type": "text",
         "id": "ha_region_title",
         "label": "Drawer title",
@@ -758,7 +797,8 @@
         "type": "checkbox",
         "id": "ha_util_language_single",
         "label": "Show LANGUAGE while only one language is published",
-        "default": false
+        "default": true,
+        "info": "On by default since Aloha's final header (24 September 2026) shows the translate mark beside the globe. With one language published the drawer offers English only."
       },
       {
         "type": "text",
@@ -1137,7 +1177,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "\u26a0\ufe0f THE SIZES IN THIS GROUP NO LONGER DO ANYTHING. Aloha asked on 22 September 2026 for one typography system across the whole theme rather than sizes set section by section, so every size on the storefront \u2014 Luxe's own header, footer, cart, product cards and account pages included \u2014 is now driven from Hartwick \u2014 Material Archive > Type scale. The font pickers, letter spacing and text case below still apply; the pixel sliders are overridden. Change the type scale, not these."
+        "content": "⚠️ THE SIZES IN THIS GROUP NO LONGER DO ANYTHING. Aloha asked on 22 September 2026 for one typography system across the whole theme rather than sizes set section by section, so every size on the storefront — Luxe's own header, footer, cart, product cards and account pages included — is now driven from Hartwick — Material Archive > Type scale. The font pickers, letter spacing and text case below still apply; the pixel sliders are overridden. Change the type scale, not these."
       },
       {
         "type": "header",

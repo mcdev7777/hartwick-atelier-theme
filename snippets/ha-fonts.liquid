@@ -1,5 +1,10 @@
 {%- comment -%}
-  Hartwick Atelier — the three typographic voices.
+  Hartwick Atelier — the typographic voices.
+
+  CURRENT RULE: Aloha's final typography system, 24 September 2026 — five
+  roles, see "THE FIVE ROLES" below and docs/typography-roles-2026-09-24.md.
+  The history below is kept for the reasoning (Porter subset, licence risk).
+
   Source: BRANDING/Typography/"HA Typography Rules _ READ ME.pdf"
 
     IDENTIFY  Porter Medium              house name, headings, navigation   (uppercase A-Z only)
@@ -89,14 +94,13 @@
     font-style: italic;
     font-display: swap;
   }
-  @font-face {
-    font-family: "Noto Sans Mono Condensed";
-    src: url({{ 'ha-noto-mono-cond.woff2' | asset_url }}) format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
   {%- comment -%}
+    24 September 2026 — Aloha: "we are no longer using Noto sans mono Condensed
+    on our website, so replace all condensed to normal Noto Sans Mono." Its
+    three @font-face rules are gone; every Noto on the site is the normal width
+    (HA Mono / HA Figures below, and Noto Sans Mono SemiBold for BAG). The note
+    below is kept as history.
+
     RECORD MEDIUM. Noto Sans Mono Condensed is not a variable font here — it is
     a static instance, so weight 500 has to be a second file or the browser
     synthesises it (that synthesis is what made the footer policy links look
@@ -110,13 +114,6 @@
 
     Nothing else on the site uses it yet — .ha-record stays on 400.
   {%- endcomment -%}
-  @font-face {
-    font-family: "Noto Sans Mono Condensed";
-    src: url({{ 'ha-noto-mono-cond-medium.woff2' | asset_url }}) format("woff2");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
   {%- comment -%}
     THE JOURNAL (Aloha's artboard, 23 September 2026) sets its headline
     tickers in Junicode Cond, its section nav in Junicode SemiCond SemiBold,
@@ -155,13 +152,6 @@
     font-display: swap;
   }
   @font-face {
-    font-family: "Noto Sans Mono Condensed";
-    src: url({{ 'ha-noto-mono-cond-bold.woff2' | asset_url }}) format("woff2");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
     font-family: "Noto Sans Mono";
     src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
     font-weight: 500;
@@ -175,55 +165,159 @@
     font-style: normal;
     font-display: swap;
   }
+  {%- comment -%}
+    THE REGISTER BOX (Aloha, 24 September 2026), the one place she sets its
+    own faces: Porter Medium for THE REGISTER, "JUNICODE in Exp Medium Italic"
+    for the sentence, "NOTO SANS MONO in Regular" for the Dispatch paragraph,
+    Noto Sans Mono SemiBold for JOIN THE REGISTER. Cut from the brand
+    originals by scripts/make-journal-fonts.py. A browser only fetches a face
+    a page uses.
+  {%- endcomment -%}
+  @font-face {
+    font-family: "Junicode Exp";
+    src: url({{ 'ha-junicode-exp-medium-italic.woff2' | asset_url }}) format("woff2");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Noto Sans Mono";
+    src: url({{ 'ha-noto-mono-regular.woff2' | asset_url }}) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  {%- comment -%}
+    THE FINAL TYPOGRAPHY SYSTEM — Aloha, 24 September 2026.
+
+      01 PORTER MEDIUM            navigation / global UI (header + footer);
+                                  hover and selected state Porter Light
+      02 PORTER LIGHT             section labels / index headings
+      03 NOTO SANS MONO MEDIUM    links, CTAs, buttons, references, data,
+                                  and ALL numbers
+      04 JUNICODE LIGHT           editorial body and information
+      05 JUNICODE LIGHT           editorial headlines / display titles
+      06 JUNICODE SEMIBOLD ITALIC editorial emphasis / pull lines
+
+    "Once this is implemented, I'd like us to avoid introducing additional
+     font weights unless there is a specific reason."
+
+    Two faces below make the Noto rows mechanical rather than a matter of
+    remembering:
+
+    HA Mono — Noto Sans Mono Medium declared across the whole weight range.
+    Whatever weight a rule asks the record voice for (Luxe asks for 400, the
+    Journal build asked for 600 and 700), the browser has exactly one face
+    to give it, so the record voice cannot drift off Medium and is never
+    synthesised.
+
+    HA Figures — the same file restricted to the digits (and, for Porter, the
+    solidus). "If a number appears within text set in Porter or Junicode, the
+    number itself should still switch to Noto Sans Mono […] Please don't
+    allow the surrounding font to automatically determine the number font."
+    It sits at the front of the Junicode and Porter stacks, so a 1970 in a
+    Junicode paragraph or the 01 / in a Porter label is drawn in Noto Mono
+    Medium without anyone marking it up. `size-adjust` matches its cap
+    height to the voice around it (Junicode caps 0.663em, Porter 0.700em,
+    Noto 0.714em), so a figure does not stand taller than its capitals.
+    Declared italic as well, so a figure inside a pull line stays upright
+    Noto rather than a slanted synthesis of it.
+  {%- endcomment -%}
+  @font-face {
+    font-family: "HA Mono";
+    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Mono";
+    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Figures";
+    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    unicode-range: U+0030-0039;
+    size-adjust: 93%;
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Figures";
+    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    unicode-range: U+0030-0039;
+    size-adjust: 93%;
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Figures Porter";
+    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    unicode-range: U+0030-0039, U+002F;
+    size-adjust: 98%;
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
   :root {
-    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", {% endif %}"Junicode", Georgia, "Times New Roman", serif;
-    --ha-font-narrate:  "Junicode", Georgia, "Times New Roman", serif;
-    --ha-font-record:   "Noto Sans Mono Condensed", ui-monospace, "SF Mono", Menlo, monospace;
+    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", "HA Figures Porter", {% else %}"HA Figures", {% endif %}"Junicode", Georgia, "Times New Roman", serif;
+    --ha-font-narrate:  "HA Figures", "Junicode", Georgia, "Times New Roman", serif;
+    --ha-font-record:   "HA Mono", "Noto Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
     /* ==================================================================
-       WHICH VOICE CARRIES WHICH ROLE  —  Aloha, 22 September 2026
+       THE FIVE ROLES  —  Aloha, 24 September 2026 (final typography system)
 
-       Her "web text sizes" note restates the hierarchy with one row per text
-       category, and two of those rows move a voice:
+       One family and one weight per role. Sections name a ROLE, never a
+       family or a weight; the classes that carry them are at the foot of
+       assets/ha-sections.css ("TYPE ROLES"), where they have the last word.
 
-         Porter   — major titles and product names
-         Junicode — editorial headings, Expressions, numbers,
-                    selected introductions
-         Noto Sans Mono Condensed — BODY COPY, NAVIGATION, functional
-                    information, captions and data
+       Porter is only the permanent navigation and the section labels now.
+       Titles move to Junicode Light ("the distinction here is scale and
+       context, rather than changing typeface"), and the old identify voice
+       on buttons and links moves to Noto Sans Mono Medium.
 
-       Body copy and the navigation/footer chrome were both in other voices
-       until now: body copy in Junicode (the brand book's NARRATE role) and the
-       header and footer in Porter (Aloha's own 15 September note, "footer fonts
-       in Porter - Light"). Her table is the later instruction and is taken as
-       the direction, so both default to the record voice here.
-
-       Each is a single setting rather than a rewrite, because each reverses an
-       earlier decision of hers and a reversal should cost one click, not a
-       developer. Theme settings > Hartwick — Material Archive > Typography
-       voices. Flagged to Aloha.
+       This reverses the 22 September table's voice rows (body copy and
+       navigation in Noto Sans Mono Condensed) — the switches in Theme
+       settings > Typography voices now default to this system. The Noto
+       Condensed options are kept only as a way back.
        ================================================================== */
+    --ha-role-nav:           var(--ha-font-identify);   /* 01 Porter Medium */
+    --ha-role-nav-weight:    500;
+    --ha-role-nav-hover:     300;                         /*    hover: Porter Light */
+    --ha-role-label:         var(--ha-font-identify);   /* 02 Porter Light */
+    --ha-role-label-weight:  300;
+    --ha-role-record:        var(--ha-font-record);     /* 03 Noto Sans Mono Medium */
+    --ha-role-record-weight: 500;
+    --ha-role-text:          var(--ha-font-narrate);    /* 04 + 05 Junicode Light */
+    --ha-role-text-weight:   300;
+    --ha-role-pull:          var(--ha-font-narrate);    /* 06 Junicode SemiBold Italic */
+    --ha-role-pull-weight:   600;
+
     {%- liquid
-      assign body_voice = settings.ha_body_voice | default: 'record'
-      assign chrome_voice = settings.ha_chrome_voice | default: 'record'
+      assign body_voice = settings.ha_body_voice | default: 'narrate'
+      assign chrome_voice = settings.ha_chrome_voice | default: 'identify'
     -%}
-    {%- if body_voice == 'narrate' -%}
-    --ha-voice-body: var(--ha-font-narrate);
-    --ha-voice-body-weight: 300;
-    {%- else -%}
+    {%- if body_voice == 'record' -%}
     --ha-voice-body: var(--ha-font-record);
-    /* Noto Sans Mono Condensed ships here as two static instances, 400 and 500.
-       Asking a 400-only face for 300 is harmless (no lighter face is
-       synthesised, the browser serves the 400) but asking for it explicitly
-       states the intent and keeps the weight off the synthesis path. */
     --ha-voice-body-weight: 400;
-    {%- endif -%}
-    {%- if chrome_voice == 'identify' -%}
-    --ha-voice-chrome: var(--ha-font-identify);
-    --ha-voice-chrome-weight: 300;
     {%- else -%}
+    --ha-voice-body: var(--ha-role-text);
+    --ha-voice-body-weight: var(--ha-role-text-weight);
+    {%- endif -%}
+    {%- if chrome_voice == 'record' -%}
     --ha-voice-chrome: var(--ha-font-record);
     --ha-voice-chrome-weight: 400;
+    --ha-voice-chrome-hover: 400;
+    {%- else -%}
+    --ha-voice-chrome: var(--ha-role-nav);
+    --ha-voice-chrome-weight: var(--ha-role-nav-weight);
+    --ha-voice-chrome-hover: var(--ha-role-nav-hover);
     {%- endif -%}
 
     /* override Luxe's font_picker-generated families.
@@ -233,7 +327,10 @@
        cookie banner included. Pointing it at the body voice is what makes
        "Noto Sans Mono Condensed = body copy […] functional information" true
        across the whole theme rather than only in the Hartwick sections. */
-    --font-heading-family: var(--ha-font-identify);
+    /* Titles are Junicode Light (roles 04/05), so Luxe's headings are too. */
+    --font-heading-family: var(--ha-role-text);
+    --font-heading-weight: var(--ha-role-text-weight);
+    --font-heading-style: normal;
     --font-body-family:    var(--ha-voice-body);
     --font-accent-family:  var(--ha-font-record);
 
@@ -255,7 +352,7 @@
     /* Price is a record row in Aloha's table (12px, Noto), so it takes the
        record weight. It followed Junicode's 300 while prices were set in
        Junicode. */
-    --price-font-weight: 400;
+    --price-font-weight: var(--ha-role-record-weight);
   }
 
   /* No synthetic bold in any voice. The browser default for <strong> and <b>
@@ -283,8 +380,14 @@
      class. `.ha-identify` is our own opt-in marker, applied only where Porter is
      wanted, so making it authoritative is safe and fixes every current and
      future case at once rather than one button at a time. */
-  .ha-identify {
-    font-family: var(--ha-font-identify) !important;
+  /* 24 September 2026: .ha-identify is now role 02, the section label —
+     Porter LIGHT. Buttons, links and titles that used to carry it have moved
+     to .ha-record (Noto Sans Mono Medium) and .ha-narrate (Junicode Light);
+     what still carries it is a label. .ha-label is the role's own name. */
+  .ha-identify,
+  .ha-label {
+    font-family: var(--ha-role-label) !important;
+    font-weight: var(--ha-role-label-weight);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     line-height: 1;
@@ -310,19 +413,20 @@
      removes the synthesis entirely. */
   .ha-record {
     font-family: var(--ha-font-record);
-    font-weight: 400;
+    font-weight: var(--ha-role-record-weight);
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
   }
 
-  /* NAVIGATION. The typography rules made this an IDENTIFY surface ("house
-     identification, principal headings, navigation, collection titles") and it
-     ran in Porter until now; Aloha's 22 September table moves the navigation row
-     to Noto Sans Mono Condensed, so it follows --ha-voice-chrome and defaults
-     there. Luxe's base.css assigns --font-accent-family to .header-bar-inner
-     with !important; these selectors are more specific, so they win either way.
-     Buttons and other interface detail were already on RECORD. */
+  /* NAVIGATION — role 01, Porter Medium (Aloha, 24 September 2026: "reserved
+     for the permanent website navigation and global utility areas […]
+     Default state: Porter Medium. Hover / selected state: Porter Light.").
+     It follows --ha-voice-chrome so the 22 September Noto option remains one
+     setting away. Luxe's base.css assigns --font-accent-family to
+     .header-bar-inner with !important; these selectors are more specific, so
+     they win either way. Porter Light is 1.5% narrower than Medium (about a
+     pixel on COLLECTION at 12px), so the hover swap does not jog the bar. */
   .hdr-nav-primary-level-ul a,
   .nav-ul--primary a,
   .nav-ul--secondary a,
@@ -353,18 +457,47 @@
        Uppercasing every Porter surface guarantees a single face. Any label an
        editor types in mixed case is covered automatically. */
     text-transform: uppercase;
-    /* Porter Light, to match the footer (Aloha, 15 September 2026: "not too
-       big… a clean look"; the Medium read as bold beside it). The 300 face is
-       declared above; where Porter is not licensed Junicode carries 300 too.
-       Noto has no 300, so the token resolves to 400 on that voice. Luxe sets
-       the bar's weight with !important, hence the same here. */
+    /* Porter Medium at rest (role 01). Luxe sets the bar's weight with
+       !important, hence the same here. */
     font-weight: var(--ha-voice-chrome-weight) !important;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.04em;
     /* Aloha's table: navigation is 11px, line height 1.2. Luxe's header section
        sets its own sizes from section settings, which are set to match; this is
        the backstop for any nav surface the section does not name. */
     font-size: var(--ha-t-nav);
     line-height: var(--ha-t-lh-nav);
+  }
+  /* …and Porter Light on hover, keyboard focus and the current page. */
+  .hdr-nav-primary-level-ul a:hover,
+  .hdr-nav-primary-level-ul a:focus-visible,
+  .hdr-nav-primary-level-ul a[aria-current="page"],
+  .nav-ul--primary a:hover,
+  .nav-ul--primary a:focus-visible,
+  .nav-ul--primary a[aria-current="page"],
+  .nav-ul--secondary a:hover,
+  .nav-ul--secondary a:focus-visible,
+  .header-bar a[href*="/cart"]:hover,
+  .header-bar a[href*="/account"]:hover,
+  .header-bar--shopping-tools .hdr-st-item:hover,
+  .header-bar--shopping-tools .hdr-st-item:hover .hdr-st-item-label {
+    font-weight: var(--ha-voice-chrome-hover) !important;
+  }
+
+  /* BAG — the one deliberate exception in the bar (Aloha, 24 September 2026):
+     "The only font that is different from the rest is: NOTO SANS MONO →
+     Semibold", the normal-width Noto (the Condensed cut is retired). Same size
+     and tracking as the navigation; it does not change weight on hover. The
+     id makes it outrank the navigation rule above, which also matches it. */
+  #SiteHeader .hdr-st-item-cart,
+  #SiteHeader .hdr-st-item-cart .cart-icon--bubble,
+  #SiteHeader .hdr-st-item-cart .cart-icon--bubble *,
+  #SiteHeader .hdr-st-item-cart .cart-icon--bubble:hover,
+  #SiteHeader .hdr-st-item-cart .cart-icon--bubble:hover * {
+    font-family: "Noto Sans Mono", var(--ha-font-record) !important;
+    font-weight: 600 !important;
+    font-size: var(--ha-t-nav);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   /* Wordmark. Colour comes from `color` because the SVG paints with currentColor:

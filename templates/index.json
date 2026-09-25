@@ -23,6 +23,14 @@
  * style is Photograph, her collage (HA_HOMEPAGE_HEADER_COLLAGE.jpg, turned
  * upright from her file) with the same words on its glassine sheet. The copy
  * is still the 23 September text ("Waiting on copy for text").
+ *
+ * 24 September 2026 — Aloha: "FINAL HOMEPAGE APPROVED - Including bottom
+ * footer!!" (FinalHartwick_Homepage_Editorial [Recovered].pdf). Cards become
+ * glassine sleeves with her new prints (DSCF6885, 4R1A4457, DSCF6865, each
+ * with her own mono version where she sent one); the Index's wide frame is
+ * DSCF6909 turned as she turned it; the Journal print is her Into Pieces
+ * sheet, turned 90° as she placed it; The Register band is one pull line and a button to the Register
+ * page. Copy: what the artboard carries, until hers arrives.
  */
 {
   "sections": {
@@ -57,7 +65,7 @@
         "image": "shopify://shop_images/HA_HOMEPAGE_HEADER_COLLAGE.jpg",
         "image_alt": "A cream shirt on a wooden hanger against a stone wall, the photograph clipped to a sheet of paper with a sheet of glassine laid over it",
         "eyebrow": "01 / The Product Experience",
-        "heading": "Made to be worn.",
+        "heading": "MADE TO BE WORN.",
         "body": "<p>The feel of handwoven cloth. The weight of a silver bangle. The small differences you notice when a piece becomes part of your everyday life.</p><p>Hartwick Atelier brings together clothing, silk scarves, fine jewellery and yoga mats. The collection begins with material and use, and with the Masters whose knowledge gives each piece its character.</p>",
         "tagline": "Cloth. Handwork. Everyday life.",
         "signature_asset": "",
@@ -80,22 +88,23 @@
           "type": "story",
           "settings": {
             "label": "02 / Collection Index",
-            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_01_ATELIER_DSCF6858.jpg",
-            "alt": "The atelier: garments on a hanging rail beneath a gilt mirror, linen curtains drawn to one side",
+            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_01_ATELIER_DSCF6885.jpg",
+            "alt": "The atelier: a rust shirt and skirt hanging on an open wooden door beside a window and a dressing table",
             "own_mat": false,
             "mono": true,
             "title": "Cloth, considered.",
             "body": "<p>Apparel, silk scarves, fine jewellery and yoga mats. A collection shaped by material, purpose and the hand that makes it.</p>",
             "link_text": "Window shop",
-            "link_url": "/collections"
+            "link_url": "/collections",
+            "image_mono": "shopify://shop_images/HA_HOMEPAGE_CARD_01_ATELIER_DSCF6885_BW.jpg"
           }
         },
         "knowledge": {
           "type": "story",
           "settings": {
             "label": "03 / The Masters",
-            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_02_MASTERS_4R1A4427.jpg",
-            "alt": "A Master's hand carving a wooden printing block with a fine chisel",
+            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_02_MASTERS_4R1A4457.jpg",
+            "alt": "A Master's hand drawing thread from a spindle",
             "own_mat": false,
             "mono": true,
             "title": "Knowledge, kept in use.",
@@ -108,14 +117,15 @@
           "type": "story",
           "settings": {
             "label": "04 / Founder's Story",
-            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_03_FOUNDER_DSCF6865.jpg",
+            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_03_FOUNDER_DSCF6865_COLOUR.jpg",
             "alt": "A woman in a white shirt reflected in a gilt mirror between rails of clothing",
             "own_mat": false,
             "mono": true,
             "title": "Small Lots. Close attention.",
             "body": "<p>We work with independent makers through considered production. Each Lot records a shared period of making.</p>",
-            "link_text": "Read our story",
-            "link_url": "/pages/about-the-atelier"
+            "link_text": "Read our history",
+            "link_url": "/pages/about-the-atelier",
+            "image_mono": "shopify://shop_images/HA_HOMEPAGE_CARD_03_FOUNDER_DSCF6865_BW.jpg"
           }
         }
       },
@@ -125,7 +135,7 @@
         "lots"
       ],
       "settings": {
-        "style": "cards",
+        "style": "sleeve",
         "eyebrow": "",
         "heading": "",
         "show_placeholder_note": false
@@ -153,8 +163,12 @@
             "alt_small_a": "A rolled handwoven yoga mat resting on a stone wall",
             "image_small_b": "shopify://shop_images/HA_HOMEPAGE_INDEX_APPAREL_RING.jpg",
             "alt_small_b": "A hand wearing a gold step ring over a block-printed sleeve",
-            "image_wide": "shopify://shop_images/HA_HOMEPAGE_INDEX_APPAREL_CURTAINS.jpg",
-            "alt_wide": "Block-printed cloth hung at a window, light coming through, a white skirt between"
+            "image_wide": "shopify://shop_images/HA_HOMEPAGE_INDEX_FINESILK_DSCF6909.jpg",
+            "alt_wide": "A block-printed fine silk scarf, draped",
+            "caption_tall": "Apparel",
+            "caption_small_a": "Yoga",
+            "caption_small_b": "Fine Jewellery",
+            "caption_wide": "Fine Silk"
           }
         },
         "fine_silk": {
@@ -370,11 +384,12 @@
         "eyebrow": "The Journal",
         "heading": "Notes on material and making.",
         "body": "<p>A place for workshop visits, conversations and a closer look at the cloth. Follow the work as it develops.</p>",
-        "link_text": "Read the Journal",
+        "link_text": "Read the Journal Newspaper",
         "link_url": "/blogs/news",
-        "image": "shopify://shop_images/HA_HOMEPAGE_JOURNAL_PATTERN_PAPER.jpg",
-        "image_alt": "Pattern pieces cut from brown paper, one labelled Angela",
-        "show_placeholder_note": true
+        "image": "shopify://shop_images/HA_HOMEPAGE_JOURNAL_INTO_PIECES_TURNED.png",
+        "image_alt": "A sheet of watercolour dye swatches in greens, yellows, blues and browns, with pencilled notes",
+        "show_placeholder_note": true,
+        "own_mat": true
       }
     },
     "register": {
@@ -382,16 +397,19 @@
       "settings": {
         "email_placeholder": "Email address",
         "eyebrow": "The Register",
-        "heading": "Notes from the Atelier.",
-        "heading_style": "caps",
-        "form_style": "line",
-        "body": "<p>Materials, Masters and work in progress.</p>",
-        "body_position": "heading",
+        "heading": "Correspondence from the Atelier, when there is something worth sending.",
+        "heading_style": "pull",
+        "form_style": "link",
+        "body": "<p>The Dispatch carries production notes, material studies, conversations with Masters and considered notice of what the Atelier is making next.</p>",
+        "body_position": "form",
         "show_native_form": true,
         "contact_tag": "the-register",
         "register_source": "homepage_band",
-        "field": "dark"
-      }
+        "field": "correspondence",
+        "link_text": "Join The Register",
+        "link_url": "/pages/the-register#join-the-register"
+      },
+      "disabled": true
     }
   },
   "order": [

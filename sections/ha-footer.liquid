@@ -41,12 +41,73 @@
   endif
 -%}
 
-<footer class="ha-section ha-footer{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" role="contentinfo">
+{%- liquid
+  assign footer_layout = section.settings.layout | default: 'columns'
+-%}
+<footer class="ha-section ha-footer ha-footer--{{ footer_layout }}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" role="contentinfo">
+  {%- if footer_layout == 'row' -%}
+    {%- comment -%}
+      THE ROW (Aloha's final homepage, 24 September 2026 — "FINAL HOMEPAGE
+      APPROVED - Including bottom footer!!"): the wordmark centred at the top,
+      every link on one line beneath it spread across the page, then the
+      copyright line at the left. Left-column links come first, then the
+      right-column ones, then Policies and Cookie preferences, which is the
+      order she draws: COLLECTION … THE CIRCLE · ABOUT · CONTACT · INSTAGRAM ·
+      LINKEDIN · OUR POLICIES · COOKIE PREFERENCES.
+    {%- endcomment -%}
+    <div class="ha-wrap ha-footer__inner">
+      <a class="ha-footer__mark" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} — home">
+        {%- if on_dark -%}
+          {%- render 'ha-wordmark', class: 'ha-wordmark--invert' -%}
+        {%- else -%}
+          {%- render 'ha-wordmark' -%}
+        {%- endif -%}
+      </a>
+      <nav class="ha-footer__nav" aria-label="{{ section.settings.nav_label | escape }}">
+        <ul class="ha-footer__links ha-footer__links--row ha-nav" role="list">
+          {%- assign footer_columns = 'left,right' | split: ',' -%}
+          {%- for column in footer_columns -%}
+            {%- if column == 'left' and section.settings.menu != blank -%}
+              {%- for link in section.settings.menu.links -%}
+                <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              {%- for block in section.blocks -%}
+                {%- liquid
+                  assign href = block.settings.url
+                  if href == blank
+                    case block.settings.social
+                      when 'instagram'
+                        assign href = settings.social_instagram_link
+                      when 'linkedin'
+                        assign href = settings.social_linkedin_link
+                    endcase
+                  endif
+                -%}
+                {%- if block.settings.column == column and block.settings.label != blank -%}
+                  <li {{ block.shopify_attributes }}>
+                    <a href="{{ href | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}{% if href == request.path %} aria-current="page"{% endif %}>{{ block.settings.label }}</a>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if section.settings.show_policies -%}
+            <li><a href="{{ section.settings.policies_url | default: '/pages/policies' }}">{{ section.settings.policies_label | default: 'Policies' }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.show_cookie_preferences -%}
+            <li>{% render 'ha-cookie-preferences', label: section.settings.cookie_preferences_label %}</li>
+          {%- endif -%}
+        </ul>
+      </nav>
+      <p class="ha-footer__copy ha-nav">&copy; {{ shop.name }}</p>
+    </div>
+  {%- else -%}
   <div class="ha-wrap ha-footer__inner">
 
     <div class="ha-footer__col ha-footer__col--left">
       <nav class="ha-footer__nav" aria-label="{{ section.settings.nav_label | escape }}">
-        <ul class="ha-footer__links ha-identify" role="list">
+        <ul class="ha-footer__links ha-nav" role="list">
           {%- if section.settings.menu != blank -%}
             {%- for link in section.settings.menu.links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
@@ -62,7 +123,7 @@
           {%- endif -%}
         </ul>
       </nav>
-      <p class="ha-footer__copy ha-identify">&copy; {{ shop.name }}</p>
+      <p class="ha-footer__copy ha-nav">&copy; {{ shop.name }}</p>
     </div>
 
     <div class="ha-footer__col ha-footer__col--mark">
@@ -76,7 +137,7 @@
     </div>
 
     <div class="ha-footer__col ha-footer__col--right">
-      <ul class="ha-footer__links ha-footer__links--right ha-identify" role="list">
+      <ul class="ha-footer__links ha-footer__links--right ha-nav" role="list">
         {%- for block in section.blocks -%}
           {%- liquid
             assign href = block.settings.url
@@ -105,6 +166,7 @@
     </div>
 
   </div>
+  {%- endif -%}
 </footer>
 
 {% schema %}
@@ -114,6 +176,10 @@
   "class": "ha-section-wrapper",
   "max_blocks": 12,
   "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "default": "columns", "options": [
+      { "value": "row", "label": "Wordmark over one row of links (24 Sep)" },
+      { "value": "columns", "label": "Three columns (15 Sep)" }
+    ] },
     { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
       { "value": "page", "label": "Page ground" },
       { "value": "peat", "label": "Peat (dark)" },

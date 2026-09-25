@@ -46,7 +46,7 @@
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
           {%- if section.settings.layout == 'journey' -%}
-            <h2 class="ha-ccols__heading ha-ccols__heading--identify ha-identify">{{ section.settings.heading }}</h2>
+            <h2 class="ha-ccols__heading ha-ccols__heading--identify ha-narrate">{{ section.settings.heading }}</h2>
           {%- else -%}
             <h2 class="ha-display ha-narrate ha-ccols__heading">{{ section.settings.heading }}</h2>
           {%- endif -%}
@@ -70,7 +70,7 @@
             {%- if section.settings.layout == 'journey' -%}
               <p class="ha-ccols__num ha-narrate" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
               {%- if block.settings.heading != blank -%}
-                <h3 class="ha-ccols__col-heading ha-ccols__col-heading--identify ha-identify">{{ block.settings.heading }}</h3>
+                <h3 class="ha-ccols__col-heading ha-ccols__col-heading--identify ha-narrate">{{ block.settings.heading }}</h3>
               {%- endif -%}
               {%- if block.settings.body != blank -%}
                 <div class="ha-ccols__body ha-record ha-record--prose">{{ block.settings.body }}</div>

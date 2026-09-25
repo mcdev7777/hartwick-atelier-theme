@@ -37,10 +37,18 @@
   italic title, the paragraph set justified, and the ruled link on the
   right. Artboard: cards 440 wide with 32 between on 1440; tab 200 above
   the photograph plus 150 over it; photograph 427 x 591.
+
+  Aloha, 24 September 2026 (FINAL homepage, FinalHartwick_Homepage_Editorial):
+  style "Glassine sleeves". Each photograph sits in a glassine sleeve hung
+  from its ring — her own sleeve artwork (assets/ha-card-sleeve.png, cut from
+  the artboard, drawn there at 59% opacity), the label printed on the sleeve
+  in light type. Measured at 1440: card 440 wide; sleeve 440 x 639 from the
+  card top; photograph 429 x 574, inset 5.5 each side, starting 182 below the
+  sleeve top, so its lower fifth hangs out of the sleeve.
 {%- endcomment -%}
 
 {%- assign stories_style = section.settings.style | default: 'prints' -%}
-<section class="ha-home ha-home-stories ha-home-stories--{{ stories_style }}">
+<section class="ha-home ha-home-stories ha-home-stories--{{ stories_style }}{% if stories_style == 'sleeve' %} ha-home-stories--cards{% endif %}"{% if stories_style == 'sleeve' %} style="--ha-card-sleeve: url({{ 'ha-card-sleeve.png' | asset_url }});"{% endif %}>
   <div class="ha-wrap">
     {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — proposed copy for Aloha to confirm before launch.' -%}
 
@@ -68,8 +76,8 @@
             assign has_link = true
           endif
         -%}
-        <li class="ha-home-story{% if block.settings.mono %} ha-home-story--mono{% endif %}" {{ block.shopify_attributes }}>
-          {%- if stories_style == 'cards' -%}
+        <li class="ha-home-story{% if block.settings.mono %} ha-home-story--mono{% if block.settings.image_mono %} ha-home-story--own-mono{% endif %}{% endif %}" {{ block.shopify_attributes }}>
+          {%- if stories_style == 'cards' or stories_style == 'sleeve' -%}
             <div class="ha-home-story__tab">
               {%- if block.settings.label != blank -%}
                 <p class="ha-home-story__label ha-identify">{{ block.settings.label }}</p>
@@ -87,6 +95,19 @@
                   | image_url: width: 1200
                   | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 26vw, (min-width: 750px) 30vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: block.settings.alt, class: 'ha-home-story__img'
                 }}
+                {%- comment -%}
+                  Aloha's own black-and-white print (24 September 2026 — she sent
+                  each photograph in colour and in her mono conversion). Laid
+                  over the colour file and faded out on hover, instead of the
+                  theme greyscaling the colour file itself.
+                {%- endcomment -%}
+                {%- if block.settings.mono and block.settings.image_mono -%}
+                  {{
+                    block.settings.image_mono
+                    | image_url: width: 1200
+                    | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 26vw, (min-width: 750px) 30vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: '', class: 'ha-home-story__img ha-home-story__img--mono'
+                  }}
+                {%- endif -%}
               {%- else -%}
                 <span class="ha-figure ha-figure--empty ha-home-story__empty"><span class="ha-figure__label ha-record">{{ num }} / Photograph</span></span>
               {%- endif -%}
@@ -99,7 +120,7 @@
           <div class="ha-home-story__text">
             <p class="ha-home-story__num ha-record">{{ num }}</p>
             {%- if block.settings.title != blank -%}
-              <h3 class="ha-home-story__title ha-narrate">{{ block.settings.title }}</h3>
+              <h3 class="ha-home-story__title ha-narrate ha-pull">{{ block.settings.title }}</h3>
             {%- endif -%}
             {%- if block.settings.body != blank -%}
               <div class="ha-home-story__body ha-home__prose ha-narrate">{{ block.settings.body }}</div>
@@ -124,6 +145,7 @@
     {
       "type": "select", "id": "style", "label": "Style", "default": "prints",
       "options": [
+        { "value": "sleeve", "label": "Glassine sleeves (final homepage, 24 Sep)" },
         { "value": "cards", "label": "Cards (23 Sep homepage)" },
         { "value": "prints", "label": "Prints (19 Sep)" }
       ],
@@ -144,6 +166,7 @@
         { "type": "text", "id": "alt", "label": "Alt text" },
         { "type": "checkbox", "id": "own_mat", "label": "Print carries its own paper mat", "info": "For a cut-out supplied on its mat with a transparent surround. The theme then draws no mat of its own.", "default": false },
         { "type": "checkbox", "id": "mono", "label": "Show in monochrome, colour on hover", "default": true },
+        { "type": "image_picker", "id": "image_mono", "label": "Monochrome version (optional)", "info": "Aloha's own black-and-white print of the same photograph. Shown instead of the theme's greyscale, fading to the colour file on hover." },
         { "type": "text", "id": "title", "label": "Title", "default": "Cloth, considered." },
         { "type": "richtext", "id": "body", "label": "Text" },
         { "type": "text", "id": "link_text", "label": "Link text", "info": "Leave empty to keep the story as text until its destination exists." },

@@ -25,7 +25,21 @@
   <nav>
     <ul role="list" class="hdr-nav-primary-level-ul">
         {% for link in section.settings.main_menu.links %}
-          <li{% if link.links == blank and section.settings.menu_highlight_list contains link.title %} class="menu-item-special-highlight"{% endif %}{% if link.links != blank %} class="nav-desktop-li-dd-item{% if forloop.last %} last-item{% endif %}{% if section.settings.menu_highlight_list contains link.title %} menu-item-special-highlight{% endif %}"{% endif %}><a href="{{ link.url }}"{% if link.links != blank %} class="nav-desktop-dd-btn{% if section.settings.menu_dropdown_function == 'click' %} nav-desktop-dd-btn-clickable{% else %} nav-desktop-dd-btn-hover{% endif %}"{% endif %}>{{ link.title }}{% if link.links != blank and section.settings.dd_icon == 'arrow' %}{% render 'icon-caret' %}{% endif %}</a>
+          {%- comment -%}
+            Hartwick (Aloha, 24 Sep 2026): "Hover / selected: PORTER LIGHT" — the
+            section the visitor is in is marked, so ha-fonts.liquid can set it
+            Light. A path inside the link's own (e.g. /collections/apparel under
+            /collections) counts as selected too.
+          {%- endcomment -%}
+          {%- liquid
+            assign ha_nav_current = false
+            if link.current or link.child_current or link.active or link.child_active
+              assign ha_nav_current = true
+            elsif link.url != '/' and link.url != '#' and request.path contains link.url
+              assign ha_nav_current = true
+            endif
+          -%}
+          <li{% if link.links == blank and section.settings.menu_highlight_list contains link.title %} class="menu-item-special-highlight"{% endif %}{% if link.links != blank %} class="nav-desktop-li-dd-item{% if forloop.last %} last-item{% endif %}{% if section.settings.menu_highlight_list contains link.title %} menu-item-special-highlight{% endif %}"{% endif %}><a href="{{ link.url }}"{% if ha_nav_current %} aria-current="page"{% endif %}{% if link.links != blank %} class="nav-desktop-dd-btn{% if section.settings.menu_dropdown_function == 'click' %} nav-desktop-dd-btn-clickable{% else %} nav-desktop-dd-btn-hover{% endif %}"{% endif %}>{{ link.title }}{% if link.links != blank and section.settings.dd_icon == 'arrow' %}{% render 'icon-caret' %}{% endif %}</a>
           {% if link.links != blank %}
           {% assign dropdown_exists = true %}
           {% assign dd_menu_name = link.title | handleize %}

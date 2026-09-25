@@ -276,7 +276,7 @@
             assign cta_href = cta_href | default: section.settings.masters_page_url
             assign cta_href = cta_href | default: '#'
           -%}
-          <a class="ha-link ha-identify" href="{{ cta_href }}">{{ cta }}</a>
+          <a class="ha-link ha-record" href="{{ cta_href }}">{{ cta }}</a>
         {%- endif -%}
       </div>
     </div>

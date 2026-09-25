@@ -62,3 +62,11 @@ mono = FONTS / "NOTO SANS MONO/Untitled folder"
 build(mono / "NotoSansMono_Condensed-Bold.ttf", "ha-noto-mono-cond-bold.woff2", noto)
 build(mono / "NotoSansMono-Medium.ttf", "ha-noto-mono-medium.woff2", noto)
 build(mono / "NotoSansMono-SemiBold.ttf", "ha-noto-mono-semibold.woff2", noto)
+
+# The site-wide Register box (Aloha, 24 September 2026): "JUNICODE in Exp
+# Medium Italic" for its sentence, "NOTO SANS MONO in Regular" for the Dispatch
+# paragraph (JOIN THE REGISTER is the SemiBold above). Built with the others so
+# one run reproduces every cut; the Condensed cuts above are retired and no
+# longer referenced by the theme.
+build(vfi, "ha-junicode-exp-medium-italic.woff2", codepoints("ha-junicode-italic.woff2"), axes={"wght": 500, "wdth": 125, "ENLA": 0})
+build(mono / "NotoSansMono-Regular.ttf", "ha-noto-mono-regular.woff2", codepoints("ha-noto-mono-medium.woff2"))

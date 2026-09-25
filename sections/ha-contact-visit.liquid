@@ -75,7 +75,7 @@
               <p class="ha-contact-visit__line ha-narrate">{{ section.settings.line }}</p>
             {%- endif -%}
             {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
-              <a class="ha-contact-visit__button ha-identify{% if section.settings.grain %} ha-grain-block{% endif %}" href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
+              <a class="ha-contact-visit__button ha-record{% if section.settings.grain %} ha-grain-block{% endif %}" href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
             {%- endif -%}
           </div>
         {%- endif -%}

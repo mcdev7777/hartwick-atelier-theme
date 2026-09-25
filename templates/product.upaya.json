@@ -230,7 +230,8 @@
         "body": "<p>New pieces, the people who make them, and useful notes on materials, care and provenance.</p>",
         "show_native_form": true,
         "contact_tag": "the-register"
-      }
+      },
+      "disabled": true
     },
     "ha_wearer": {
       "type": "ha-wearer-note",

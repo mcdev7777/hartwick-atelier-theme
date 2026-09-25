@@ -82,7 +82,7 @@
 
         <div class="ha-home-index__foot">
           {%- if section.settings.cta_text != blank -%}
-            <a class="ha-home__corner ha-identify" href="{{ section.settings.cta_link | default: '/collections' }}">{{ section.settings.cta_text }}<span class="ha-home__corner-mark" aria-hidden="true"></span></a>
+            <a class="ha-home__corner ha-record" href="{{ section.settings.cta_link | default: '/collections' }}">{{ section.settings.cta_text }}<span class="ha-home__corner-mark" aria-hidden="true"></span></a>
           {%- endif -%}
           {%- if section.settings.note != blank -%}
             <div class="ha-home-index__note ha-home__lead ha-narrate">{{ section.settings.note }}</div>
@@ -111,7 +111,7 @@
                   <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">01 / To supply</span></span>
                 {%- endif -%}
               </span>
-              <span class="ha-home-index__caption ha-record">01 / {{ label }}</span>
+              <span class="ha-home-index__caption ha-record">01 / {{ block.settings.caption_tall | default: label }}</span>
             </a>
 
             <div class="ha-home-index__right">
@@ -124,7 +124,7 @@
                     <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">04 / To supply</span></span>
                   {%- endif -%}
                 </span>
-                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-record">04 / {{ label }}</span>
+                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-record">04 / {{ block.settings.caption_small_a | default: label }}</span>
               </a>
 
               <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--b" href="{{ url }}" aria-label="{{ cat | escape }}">
@@ -135,7 +135,7 @@
                     <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">03 / To supply</span></span>
                   {%- endif -%}
                 </span>
-                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-home-index__caption--after ha-record">03 / {{ label }}</span>
+                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-home-index__caption--after ha-record">03 / {{ block.settings.caption_small_b | default: label }}</span>
               </a>
 
               {%- comment -%} 02 — wide {%- endcomment -%}
@@ -147,7 +147,7 @@
                     <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">02 / To supply</span></span>
                   {%- endif -%}
                 </span>
-                <span class="ha-home-index__caption ha-record">02 / {{ label }}</span>
+                <span class="ha-home-index__caption ha-record">02 / {{ block.settings.caption_wide | default: label }}</span>
               </a>
             </div>
           </div>
@@ -185,12 +185,16 @@
         { "type": "header", "content": "Montage — four frames" },
         { "type": "image_picker", "id": "image_tall", "label": "01 / Tall" },
         { "type": "text", "id": "alt_tall", "label": "01 alt text" },
+        { "type": "text", "id": "caption_tall", "label": "01 caption", "info": "Empty: the caption label above. The final homepage (24 Sep) captions each frame of the opening montage with its own collection — 01 / Apparel, 02 / Fine Silk, 03 / Fine Jewellery, 04 / Yoga." },
         { "type": "image_picker", "id": "image_small_a", "label": "04 / Small, left" },
         { "type": "text", "id": "alt_small_a", "label": "04 alt text" },
+        { "type": "text", "id": "caption_small_a", "label": "04 caption" },
         { "type": "image_picker", "id": "image_small_b", "label": "03 / Small, right" },
         { "type": "text", "id": "alt_small_b", "label": "03 alt text" },
+        { "type": "text", "id": "caption_small_b", "label": "03 caption" },
         { "type": "image_picker", "id": "image_wide", "label": "02 / Wide" },
-        { "type": "text", "id": "alt_wide", "label": "02 alt text" }
+        { "type": "text", "id": "alt_wide", "label": "02 alt text" },
+        { "type": "text", "id": "caption_wide", "label": "02 caption" }
       ]
     }
   ],

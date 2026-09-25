@@ -68,8 +68,8 @@
               <h2 class="ha-idx__dir-heading ha-narrate"><span class="ha-idx__dir-num ha-record">{{ block.settings.number }}</span><a href="#{{ block.settings.anchor }}">{{ block.settings.heading }}</a></h2>
               <ul class="ha-idx__dir-list" role="list">
               {%- if block.settings.dir_mode == 'summary' -%}
-                <li><a class="ha-idx__dir-link ha-identify" href="#{{ block.settings.anchor }}">{{ block.settings.dir_summary }}</a></li>
-                {%- if block.settings.dir_second != blank -%}<li><a class="ha-idx__dir-link ha-idx__dir-link--quiet ha-identify" href="#{{ block.settings.anchor }}-formats">{{ block.settings.dir_second }}</a></li>{%- endif -%}
+                <li><a class="ha-idx__dir-link ha-record" href="#{{ block.settings.anchor }}">{{ block.settings.dir_summary }}</a></li>
+                {%- if block.settings.dir_second != blank -%}<li><a class="ha-idx__dir-link ha-idx__dir-link--quiet ha-record" href="#{{ block.settings.anchor }}-formats">{{ block.settings.dir_second }}</a></li>{%- endif -%}
               {%- endif -%}
           {%- elsif block.type == 'entry' -%}
             {%- assign g = nil -%}
@@ -77,7 +77,7 @@
             {%- if g.settings.dir_mode == 'entries' -%}
               {%- assign target = '#idx-' | append: block.settings.key -%}
               {%- if g.settings.dir_direct -%}{%- assign target = block.settings.url -%}{%- endif -%}
-              <li><a class="ha-idx__dir-link ha-identify" href="{{ target }}">{{ block.settings.name }}{% if block.settings.secondary != blank and g.settings.dir_show_secondary %} / {{ block.settings.secondary }}{% endif %}</a></li>
+              <li><a class="ha-idx__dir-link ha-record" href="{{ target }}">{{ block.settings.name }}{% if block.settings.secondary != blank and g.settings.dir_show_secondary %} / {{ block.settings.secondary }}{% endif %}</a></li>
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
@@ -104,7 +104,7 @@
               <p class="ha-idx__num ha-record">{{ block.settings.number }}</p>
               <h2 class="ha-idx__heading ha-narrate">{{ block.settings.heading }}</h2>
               {%- if block.settings.count_label != blank -%}<p class="ha-idx__count ha-record">{{ block.settings.count_label }}</p>{%- endif -%}
-              <a class="ha-idx__back ha-identify" href="#index">{{ section.settings.back_text }}<span class="ha-idx__chev" aria-hidden="true"></span></a>
+              <a class="ha-idx__back ha-record" href="#index">{{ section.settings.back_text }}<span class="ha-idx__chev" aria-hidden="true"></span></a>
               <ol class="ha-idx__index" role="list">
                 {%- for e in section.blocks -%}
                   {%- assign owner = nil -%}
@@ -113,7 +113,7 @@
                     <li class="ha-idx__index-item">
                       <a class="ha-idx__index-link" href="{{ e.settings.url | default: '#' }}" data-idx="{{ e.settings.key }}">
                         <span class="ha-idx__index-num ha-record">({{ e.settings.number }})</span>
-                        <span class="ha-idx__index-name ha-identify">{{ e.settings.name }}</span>
+                        <span class="ha-idx__index-name ha-record">{{ e.settings.name }}</span>
                         {%- if e.settings.secondary != blank -%}<span class="ha-idx__index-sec ha-record">{{ e.settings.secondary }}</span>{%- endif -%}
                       </a>
                     </li>
@@ -121,7 +121,7 @@
                 {%- endfor -%}
               </ol>
               {%- if block.settings.view_all_text != blank -%}
-                <a class="ha-idx__viewall ha-identify" href="{{ block.settings.view_all_url | default: '#' }}">{{ block.settings.view_all_text }}</a>
+                <a class="ha-idx__viewall ha-record" href="{{ block.settings.view_all_url | default: '#' }}">{{ block.settings.view_all_text }}</a>
               {%- endif -%}
             </div>
           </div>

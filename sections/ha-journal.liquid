@@ -42,7 +42,7 @@
               class: 'ha-journal__figure',
               sizes: '(min-width: 990px) 31vw, 100vw'
             -%}
-            <h3 class="ha-journal__title ha-identify">{{ block.settings.title }}</h3>
+            <h3 class="ha-journal__title ha-narrate">{{ block.settings.title }}</h3>
             {%- if block.settings.excerpt != blank -%}
               <p class="ha-journal__excerpt ha-narrate">{{ block.settings.excerpt }}</p>
             {%- endif -%}
@@ -66,7 +66,7 @@
                 sizes: '(min-width: 990px) 31vw, 100vw',
                 alt: article.image.alt
               -%}
-              <h3 class="ha-journal__title ha-identify">{{ card_title }}</h3>
+              <h3 class="ha-journal__title ha-narrate">{{ card_title }}</h3>
             </a>
             {%- if card_excerpt != blank -%}
               <p class="ha-journal__excerpt ha-narrate">{{ card_excerpt | strip_html | truncatewords: 18 }}</p>
@@ -78,7 +78,7 @@
 
     {%- if section.settings.cta_text != blank -%}
       <p class="ha-journal__foot">
-        <a class="ha-link ha-identify" href="{{ section.settings.blog.url | default: section.settings.cta_link | default: '#' }}">
+        <a class="ha-link ha-record" href="{{ section.settings.blog.url | default: section.settings.cta_link | default: '#' }}">
           {{ section.settings.cta_text }}
         </a>
       </p>

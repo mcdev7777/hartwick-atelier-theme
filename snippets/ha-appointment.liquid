@@ -71,7 +71,7 @@
 
 <div class="ha-pdp__appointment">
   <button
-    class="ha-link ha-identify ha-appointment__open"
+    class="ha-link ha-record ha-appointment__open"
     type="button"
     data-ha-appointment-open
     aria-haspopup="dialog"
@@ -86,7 +86,7 @@
         {%- if lot_label != blank -%}
           <p class="ha-appointment__eyebrow ha-record">{{ lot_label }}</p>
         {%- endif -%}
-        <h2 class="ha-appointment__title ha-identify" id="{{ dialog_id }}-title">{{ label }}</h2>
+        <h2 class="ha-appointment__title ha-narrate" id="{{ dialog_id }}-title">{{ label }}</h2>
         <p class="ha-appointment__subject ha-record">
           {{ style_name }}{% if mf.expression != blank %} &middot; {{ mf.expression }}{% endif %}
         </p>
@@ -208,7 +208,7 @@
           </p>
         </div>
 
-        <button class="ha-appointment__submit ha-identify" type="submit">Send request</button>
+        <button class="ha-appointment__submit ha-record" type="submit">Send request</button>
       {%- endif -%}
     {%- endform -%}
   </div>

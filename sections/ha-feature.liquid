@@ -37,7 +37,7 @@
       {%- endif -%}
 
       {%- if section.settings.heading != blank -%}
-        <h2 class="ha-feature__heading ha-identify">{{ section.settings.heading | newline_to_br }}</h2>
+        <h2 class="ha-feature__heading ha-narrate">{{ section.settings.heading | newline_to_br }}</h2>
       {%- endif -%}
 
       {%- if section.settings.body != blank -%}
@@ -46,7 +46,7 @@
 
       {%- if section.settings.cta_text != blank -%}
         <p class="ha-feature__cta">
-          <a class="ha-pill ha-identify" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a>
+          <a class="ha-pill ha-record" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a>
         </p>
       {%- endif -%}
     </div>

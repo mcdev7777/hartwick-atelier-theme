@@ -34,11 +34,16 @@
     '.ha-record__link', '.ha-mst__continue-link', '.ha-mst__panel-link',
     '.ha-pdp__size-guide', '.ha-pdp__record-link', '.ha-appointment__open',
     '.ha-row-link', '.ha-masterfeat__link', '.ha-related__all', '.ha-continue__more', '.ha-authorship__link',
-    '.hdr-nav-primary-level-ul > li > a', '.ha-util', '.hdr-st-item-cart .cart-icon--bubble',
-    '.ha-footer__links a', '.ha-bag__action', '.ha-suggest__go', '.ha-suggest__stay',
+    '.ha-bag__action', '.ha-suggest__go', '.ha-suggest__stay',
     '.ha-reg-form__submit--outline', '.ha-circle__signin', '.ha-bag-empty__cta',
-    'a.ha-jnl-cats__link', '.nav-ul--primary > li > a', '.ha-util-row'
+    'a.ha-jnl-cats__link'
   ].join(',');
+  // Aloha, 24 September 2026 (header, final direction): "NO pencil circles or
+  // circle animations in the header! I want to reserve the hand drawn
+  // circles/lines for links and referral moments within the actual pages."
+  // The header bar, the phone menu and the footer navigation are never marked,
+  // whatever selector above might match inside them.
+  var NEVER = '#SiteHeader, .header-drawer, menu-drawer, .nav-ul--primary, .ha-util-rows, .ha-footer';
   var LABEL_ONLY = '.ha-util-row';
   var CORNER = '.ha-home__corner-mark, .ha-mst__corner, .ha-clothing__corner';
   // Links that take the oval without ever having had a corner mark: the
@@ -164,7 +169,7 @@
       if (!el.hasAttribute('data-ha-mark')) oval(el);
     });
     document.querySelectorAll(RING).forEach(function (el) {
-      if (el.hasAttribute('data-ha-mark') || !el.textContent.trim()) return;
+      if (el.hasAttribute('data-ha-mark') || !el.textContent.trim() || el.closest(NEVER)) return;
       ring(el);
     });
   }

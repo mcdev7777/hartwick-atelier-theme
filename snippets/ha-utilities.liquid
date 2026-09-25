@@ -87,17 +87,34 @@
   {%- if show_region -%}
     <button type="button" class="hdr-st-item hdr-st-item-dto ha-util" data-ha-open="region" aria-haspopup="dialog" aria-controls="HaDrawer-region">
       <span class="visually-hidden">{{ settings.ha_region_title | default: 'Change your region' | escape }}. </span>
-      <span class="ha-util__value">{{ region_code }} / {{ region_currency }}</span>
+      {%- if settings.ha_util_icons -%}
+        {%- comment -%} Aloha, 24 Sep: a globe and a translate mark, drawn here as slim 0.9 line icons (her first pair were placeholders). {%- endcomment -%}
+        <svg class="ha-util__icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 1.5c-1.9 1.8-2.9 4-2.9 6.5s1 4.7 2.9 6.5M8 1.5c1.9 1.8 2.9 4 2.9 6.5s-1 4.7-2.9 6.5M1.5 8h13M2.6 4.6c1.6.6 3.4.9 5.4.9s3.8-.3 5.4-.9M2.6 11.4c1.6-.6 3.4-.9 5.4-.9s3.8.3 5.4.9"/></svg>
+        <span class="visually-hidden">{{ region_code }} / {{ region_currency }}</span>
+      {%- else -%}
+        <span class="ha-util__value">{{ region_code }} / {{ region_currency }}</span>
+      {%- endif -%}
     </button>
   {%- endif -%}
   {%- if show_language -%}
     <button type="button" class="hdr-st-item hdr-st-item-dto ha-util" data-ha-open="language" aria-haspopup="dialog" aria-controls="HaDrawer-language" lang="{{ localization.language.iso_code }}">
       <span class="visually-hidden">{{ settings.ha_language_title | default: 'Change language' | escape }}. </span>
-      <span class="ha-util__value">{{ language_code }}</span>
+      {%- if settings.ha_util_icons -%}
+        <svg class="ha-util__icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 3.6h7M5 1.5v2.1M7 3.6c-.6 2.9-2.4 5-5.3 6.2M3.2 5.6c.9 1.7 2.3 3 4.1 3.8M8.6 14.5l2.9-7.3 2.9 7.3M9.7 11.9h3.6"/></svg>
+        <span class="visually-hidden">{{ language_code }}</span>
+      {%- else -%}
+        <span class="ha-util__value">{{ language_code }}</span>
+      {%- endif -%}
     </button>
   {%- endif -%}
   {%- if show_circle -%}
-    <button type="button" class="hdr-st-item hdr-st-item-dto ha-util{% if circle_state == 'member' %} ha-util--member{% endif %}" data-ha-open="circle" aria-haspopup="dialog" aria-controls="HaDrawer-circle">
+    {%- comment -%}
+      THE CIRCLE's one graphic identifier (Aloha, 24 September 2026): "Dye
+      blotch = The Circle." Her yellow dye spot, the one beside The Circle on
+      the Register page, drawn behind the words — subtle, not a badge, never
+      animated. The same mark is available anywhere as .ha-circle-mark.
+    {%- endcomment -%}
+    <button type="button" class="hdr-st-item hdr-st-item-dto ha-util ha-util--circle ha-circle-mark{% if circle_state == 'member' %} ha-util--member{% endif %}" data-ha-open="circle" aria-haspopup="dialog" aria-controls="HaDrawer-circle">
       <span class="ha-util__value">{{ 'hartwick.utilities.circle' | t }}</span>
     </button>
   {%- endif -%}

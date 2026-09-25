@@ -231,7 +231,8 @@
         "show_native_form": true,
         "contact_tag": "the-register",
         "register_source": "journal"
-      }
+      },
+      "disabled": true
     }
   },
   "order": [
