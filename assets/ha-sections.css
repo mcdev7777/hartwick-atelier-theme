@@ -8036,3 +8036,102 @@ html body .ha-paper-head {
 body:has(.ha-register--site) #MainContent > .shopify-section:last-child > .ha-section,
 body:has(.ha-register--site) #MainContent > .shopify-section:last-child > .ha-home,
 body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .ha-section:last-child { border-bottom: 0; }
+
+
+/* ==========================================================================
+   ABOUT PAGE v2 — Aloha's FINAL_ABOUTPAGE_DESKTOP_EDITABLE.pdf, 25 September 2026
+   Pink paper opening with her envelope; three bands on her grey paper,
+   bound by two ring bars (ha-home-binding, placements About upper / lower);
+   the site-wide Register box and footer follow. Positions are measured on
+   her 1440 artboard and given in vw; type keeps the 22 September sizes
+   (her artboard is drawn larger), faces by role.
+   Sections: ha-about-opening / -life / -journey / -work.
+   ========================================================================== */
+.ha-home-binding--about .ha-home-binding__ring--1 { left: 13.68%; }        /* 197 */
+.ha-home-binding--about .ha-home-binding__ring--2 { left: 46.53%; }        /* 670 */
+.ha-home-binding--about .ha-home-binding__ring--3 { left: 82.22%; }        /* 1184 */
+.ha-home-binding--about-lower .ha-home-binding__ring--1 { left: 20.14%; }  /* 290 */
+.ha-home-binding--about-lower .ha-home-binding__ring--2 { left: 52.99%; }  /* 763 */
+.ha-home-binding--about-lower .ha-home-binding__ring--3 { left: 88.68%; }  /* 1277 */
+
+/* --- 01  Opening: 1440 × 900 from the top of the page, under the menu ----- */
+.ha-abo { background: #E8C3CC var(--ha-abo-paper, none) center / cover no-repeat; overflow: hidden; }
+.ha-abo .ha-abo__stage { display: block; position: relative; aspect-ratio: 1440 / 900; }
+/* the PDF's box for the turned envelope: -72 / -193, 1441 wide */
+.ha-abo .ha-abo__envelope { position: absolute; left: -5.007%; top: -21.41%; width: 100.08%; max-width: none; height: auto; pointer-events: none; }
+.ha-abo .ha-abo__text { position: absolute; left: 9.1%; bottom: 10.6%; z-index: 1; color: #fff; }
+.ha-abo .ha-abo__title { margin: 0; font-size: var(--ha-t-h1); line-height: var(--ha-t-lh-h1); font-weight: var(--ha-role-nav-weight); letter-spacing: 0.12em; color: #fff; }
+.ha-abo .ha-abo__sub { margin: 1.1em 0 0; font-size: var(--ha-t-intro); line-height: 1.25; font-style: italic; color: #fff; }
+.ha-abo .ha-placeholder-note { color: #fff; }
+
+/* --- the grey paper bands ------------------------------------------------ */
+.ha-about-band { background: #E9E4D8 var(--ha-about-paper, none) center / cover no-repeat; color: var(--ha-text); }
+
+/* --- 02  A life across places --------------------------------------------- */
+.ha-abl .ha-abl__wrap { padding: 6.1vw 0 4.4vw; text-align: center; }
+.ha-abl .ha-abl__eyebrow { margin: 0 0 clamp(3.2rem, 5.2vw, 7.5rem); padding-inline: 2rem; }
+.ha-abl .ha-abl__founder { display: flex; justify-content: center; align-items: baseline; flex-wrap: wrap; gap: 0.6rem 2.9vw; margin: 0 0 clamp(2.4rem, 3.3vw, 4.8rem); padding-inline: 2rem; }
+.ha-abl .ha-abl__role { font-size: var(--ha-t-label); }
+.ha-abl .ha-abl__name { font-size: var(--ha-t-h2); line-height: var(--ha-t-lh-h2); font-weight: var(--ha-role-nav-weight); letter-spacing: 0.1em; }
+.ha-abl .ha-abl__body { max-width: min(73.6vw, 50em); margin: 0 auto; padding-inline: 2rem; font-size: var(--ha-t-intro); line-height: var(--ha-t-lh-intro); text-align: justify; text-align-last: center; }
+.ha-abl .ha-abl__body p { margin: 0 0 1.3em; }
+.ha-abl .ha-abl__body p:last-child { margin-bottom: 0; }
+/* the collage: 954 wide from 225 on 1440 */
+.ha-abl .ha-abl__media { width: 66.26%; margin: 3.7vw 0 0 15.64%; }
+.ha-abl .ha-abl__img { display: block; width: 100%; height: auto; }
+
+/* --- 03  A journey into the House ----------------------------------------- */
+/* the heading 164 below the bar (clear of the rings), columns 280 wide, 58
+   apart, 73 from each side; --ha-abj-u is one artboard pixel, so a swatch is
+   drawn at the width Aloha placed it */
+.ha-abj { --ha-abj-u: calc(100vw / 1440); }
+.ha-abj .ha-abj__wrap { padding: 11.4vw 5.07vw 7.4vw; }
+.ha-abj .ha-abj__heading { margin: 0 0 3.2vw; font-size: var(--ha-t-h2); line-height: var(--ha-t-lh-h2); letter-spacing: 0.08em; }
+.ha-abj .ha-abj__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 4.03vw; row-gap: 5.9vw; margin: 0; padding: 0; list-style: none; }
+.ha-abj .ha-abj__item { display: flex; flex-direction: column; margin: 0; }
+.ha-abj .ha-abj__swatch { display: flex; align-items: center; justify-content: center; height: calc(var(--ha-abj-u) * 190); }
+.ha-abj .ha-abj__img { display: block; max-width: 100%; height: auto; }
+.ha-abj .ha-abj__num { margin: 4.4vw 0 0; padding-bottom: 2.6vw; border-bottom: 1px solid currentColor; font-size: var(--ha-t-h3); line-height: 1; }
+.ha-abj .ha-abj__title { margin: 3vw 0 0; letter-spacing: 0.12em; }
+.ha-abj .ha-abj__body { margin-top: 2.2vw; font-size: var(--ha-t-body); line-height: 1.45; text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
+.ha-abj .ha-abj__body p { margin: 0 0 1em; }
+.ha-abj .ha-abj__body p:last-child { margin-bottom: 0; }
+
+/* --- 04  The work ahead --------------------------------------------------- */
+/* prints 684 wide from 104; the column 450 wide from 863, 122 below the
+   prints' top edge; 172 above them to the bar */
+.ha-abw .ha-abw__grid { display: grid; grid-template-columns: 7.18vw 47.48vw 5.27vw 31.25vw 1fr; align-items: start; padding: 11.9vw 0 7.9vw; }
+.ha-abw .ha-abw__media { grid-column: 2; }
+.ha-abw .ha-abw__img { display: block; width: 100%; height: auto; }
+.ha-abw .ha-abw__text { grid-column: 4; margin-top: 8.5vw; }
+.ha-abw .ha-abw__eyebrow { margin: 0; }
+.ha-abw .ha-abw__heading { margin: 3.4vw 0 0; font-size: var(--ha-t-h1); line-height: 1.45; letter-spacing: 0.06em; }
+.ha-abw .ha-abw__body { margin-top: 3.4vw; font-size: var(--ha-t-body); line-height: 1.45; text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
+.ha-abw .ha-abw__body p { margin: 0 0 1.2em; }
+.ha-abw .ha-abw__body p:last-child { margin-bottom: 0; }
+.ha-abw .ha-abw__cta { margin: 4.6vw 0 0; }
+
+@media screen and (max-width: 989px) {
+  .ha-abj .ha-abj__list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.4rem; row-gap: 5.6rem; }
+  .ha-abj { --ha-abj-u: calc((100vw - 5.07vw * 2 - 2.4rem) / 2 / 280); }
+  .ha-abj .ha-abj__wrap { padding-top: 16rem; }
+  .ha-abj .ha-abj__num { margin-top: 2.4rem; padding-bottom: 1.4rem; }
+  .ha-abj .ha-abj__title { margin-top: 1.8rem; }
+  .ha-abj .ha-abj__body { margin-top: 1.2rem; }
+  .ha-abw .ha-abw__grid { grid-template-columns: 1fr; padding: 16rem 2rem 6rem; row-gap: 3.2rem; }
+  .ha-abw .ha-abw__media, .ha-abw .ha-abw__text { grid-column: 1; margin-top: 0; }
+  .ha-abw .ha-abw__heading, .ha-abw .ha-abw__body { margin-top: 2rem; }
+  .ha-abw .ha-abw__cta { margin-top: 2.8rem; }
+  .ha-abl .ha-abl__media { width: 90%; margin: 3.2rem auto 0; }
+  .ha-abl .ha-abl__wrap { padding: 5.6rem 0 12rem; }
+}
+@media screen and (max-width: 599px) {
+  .ha-abo .ha-abo__stage { aspect-ratio: 3 / 4; }
+  .ha-abo .ha-abo__envelope { left: -44%; top: -6%; width: 185%; }
+  .ha-abo .ha-abo__text { left: 2rem; right: 2rem; bottom: 2.8rem; }
+  .ha-abl .ha-abl__body { text-align: left; text-align-last: auto; }
+  .ha-abj .ha-abj__list { grid-template-columns: 1fr; row-gap: 4.8rem; }
+  .ha-abj .ha-abj__swatch { justify-content: flex-start; }
+  .ha-abj .ha-abj__body, .ha-abw .ha-abw__body { text-align: left; }
+}
+

@@ -36,7 +36,7 @@
         "header_internal_border_width": "full",
         "header_shadow_opacity": 0,
         "trans_hp": true,
-        "ha_trans_pages": "contact, the-register, the-masters",
+        "ha_trans_pages": "contact, the-register, the-masters, about",
         "trans_border_hide": false,
         "trans_header_color": "inherit",
         "backdrop_blur": false,

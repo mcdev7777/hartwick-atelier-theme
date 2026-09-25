@@ -19,9 +19,11 @@
   24 September 2026, her final homepage header: under the opening the rings
   are drawn in towards the cards — "Ring placement: Inset". The contact
   page (same day) grains the bar too, rings above the grain ("Grain").
+  25 September 2026, her About page: two more placements, About upper and
+  About lower (the same strip of rings, shifted 93 to the right).
 {%- endcomment -%}
 
-<div class="ha-home-binding{% if section.settings.rings %} ha-home-binding--rings{% endif %}{% if section.settings.holes == 'top' %} ha-home-binding--top{% endif %}{% if section.settings.placement == 'inset' %} ha-home-binding--inset{% endif %}{% if section.settings.placement == 'contact' %} ha-home-binding--contact{% endif %}{% if section.settings.grain %} ha-page-grain ha-grain-block{% endif %}" aria-hidden="true">
+<div class="ha-home-binding{% if section.settings.rings %} ha-home-binding--rings{% endif %}{% if section.settings.holes == 'top' %} ha-home-binding--top{% endif %}{% if section.settings.placement == 'inset' %} ha-home-binding--inset{% endif %}{% if section.settings.placement == 'contact' %} ha-home-binding--contact{% endif %}{% if section.settings.placement == 'about' %} ha-home-binding--about{% endif %}{% if section.settings.placement == 'about-lower' %} ha-home-binding--about-lower{% endif %}{% if section.settings.grain %} ha-page-grain ha-grain-block{% endif %}" aria-hidden="true">
   {%- if section.settings.rings -%}
     {%- for i in (1..3) -%}
       <img class="ha-home-binding__ring ha-home-binding__ring--{{ i }}" src="{{ 'ha-ring-upright.svg' | asset_url }}" width="55" height="290" alt="" loading="lazy">
@@ -43,7 +45,9 @@
       "options": [
         { "value": "wide", "label": "Wide: 118 / 722 / 1326 on 1440 (23 Sep)" },
         { "value": "inset", "label": "Inset: 249 / 722 / 1239 on 1440 (24 Sep)" },
-        { "value": "contact", "label": "Contact: 225 / 720 / 1212 on 1440" }
+        { "value": "contact", "label": "Contact: 225 / 720 / 1212 on 1440" },
+        { "value": "about", "label": "About, upper: 197 / 670 / 1184 on 1440" },
+        { "value": "about-lower", "label": "About, lower: 290 / 763 / 1277 on 1440" }
       ]
     },
     {

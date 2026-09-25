@@ -1,0 +1,62 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT 02, A life across places.
+  Aloha's About artboard, 25 September 2026: on her grey paper, a centred
+  label, FOUNDER beside ANGELA HARTWICK, three paragraphs in Angela's own
+  voice set justified with the last line centred, and her photograph
+  collage beneath (collage01.png, turned upright). A binding bar with rings
+  closes the band (a separate ha-home-binding section, placement About).
+{%- endcomment -%}
+
+<section class="ha-about-band ha-abl{% if section.settings.grain %} ha-page-grain ha-grain-block{% endif %}"{% if section.settings.paper %} style="--ha-about-paper: url({{ section.settings.paper | image_url: width: 2000 }});"{% endif %}>
+  <div class="ha-abl__wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's About artboard (25 Sep), for her to confirm." -%}
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ha-abl__eyebrow ha-label">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.name != blank -%}
+      <h2 class="ha-abl__founder">
+        {%- if section.settings.label != blank -%}<span class="ha-abl__role ha-label">{{ section.settings.label }}</span>{%- endif -%}
+        <span class="ha-abl__name ha-label">{{ section.settings.name }}</span>
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.body != blank -%}
+      <div class="ha-abl__body ha-narrate">{{ section.settings.body }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.image -%}
+      <div class="ha-abl__media">
+        {{- section.settings.image | image_url: width: 2400 | image_tag:
+          class: 'ha-abl__img',
+          loading: 'lazy',
+          sizes: '(min-width: 750px) 67vw, 100vw',
+          widths: '600, 900, 1200, 1600, 2000, 2400',
+          alt: section.settings.image_alt -}}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — About: Founder",
+  "tag": "section",
+  "class": "ha-about-band-section",
+  "settings": [
+    { "type": "image_picker", "id": "paper", "label": "Paper (background)" },
+    { "type": "checkbox", "id": "grain", "label": "Grain", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Label", "default": "A life across places" },
+    { "type": "text", "id": "label", "label": "Role", "default": "Founder" },
+    { "type": "text", "id": "name", "label": "Name", "default": "Angela Hartwick" },
+    { "type": "richtext", "id": "body", "label": "Paragraphs" },
+    { "type": "image_picker", "id": "image", "label": "Photograph collage", "info": "Transparent PNG; shown at its own shape." },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — About: Founder" }]
+}
+{% endschema %}

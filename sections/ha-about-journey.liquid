@@ -1,0 +1,73 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT 03, A journey into the House.
+  Aloha's About artboard, 25 September 2026: eight moments in two rows of
+  four (73 from each side, 280 wide, 58 apart on 1440). Each is a swatch of
+  the Atelier's dye (her SH_CIRCLES_02 sheet, placed at the size she drew
+  it), its number in the record voice, a hairline, a title and the text.
+  Numbers come from the block's position, so reordering renumbers.
+{%- endcomment -%}
+
+<section class="ha-about-band ha-abj{% if section.settings.grain %} ha-page-grain ha-grain-block{% endif %}"{% if section.settings.paper %} style="--ha-about-paper: url({{ section.settings.paper | image_url: width: 2000 }});"{% endif %}>
+  <div class="ha-abj__wrap">
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — Aloha's artboard cuts off moments 04–07 mid-sentence; they end at the last full sentence until she sends the rest." -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ha-abj__heading ha-narrate">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <ol class="ha-abj__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="ha-abj__item" {{ block.shopify_attributes }}>
+          <div class="ha-abj__swatch" aria-hidden="true">
+            {%- if block.settings.image -%}
+              {%- capture swatch_style -%}width: calc(var(--ha-abj-u) * {{ block.settings.swatch_w }});{%- endcapture -%}
+              {{- block.settings.image | image_url: width: 600 | image_tag:
+                class: 'ha-abj__img',
+                loading: 'lazy',
+                style: swatch_style,
+                widths: '300, 450, 600',
+                sizes: '(min-width: 990px) 17vw, 45vw',
+                alt: '' -}}
+            {%- endif -%}
+          </div>
+          <p class="ha-abj__num ha-record">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
+          {%- if block.settings.title != blank -%}
+            <h3 class="ha-abj__title ha-label">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.body != blank -%}
+            <div class="ha-abj__body ha-narrate">{{ block.settings.body }}</div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — About: Journey",
+  "tag": "section",
+  "class": "ha-about-band-section",
+  "settings": [
+    { "type": "image_picker", "id": "paper", "label": "Paper (background)" },
+    { "type": "checkbox", "id": "grain", "label": "Grain", "default": true },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A JOURNEY INTO THE HOUSE", "info": "Casing as typed." },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "moment",
+      "name": "Moment",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Dye swatch" },
+        { "type": "range", "id": "swatch_w", "label": "Swatch width (px on a 1440 page)", "min": 140, "max": 280, "step": 2, "default": 220 },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "richtext", "id": "body", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "HA — About: Journey" }]
+}
+{% endschema %}

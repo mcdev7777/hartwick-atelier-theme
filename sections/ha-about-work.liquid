@@ -1,0 +1,61 @@
+{%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT 04, The work ahead.
+  Aloha's About artboard, 25 September 2026: her "Into Pieces" pair of
+  prints (Angela at the window over a table of photographs) at the left,
+  104 from the page edge and 684 wide on 1440; at 863 a 450 column with the
+  label, the heading in capitals, two paragraphs and a ruled link. The
+  site-wide Register box follows it.
+{%- endcomment -%}
+
+<section class="ha-about-band ha-abw{% if section.settings.grain %} ha-page-grain ha-grain-block{% endif %}"{% if section.settings.paper %} style="--ha-about-paper: url({{ section.settings.paper | image_url: width: 2000 }});"{% endif %}>
+  <div class="ha-abw__grid">
+    <div class="ha-abw__media">
+      {%- if section.settings.image -%}
+        {{- section.settings.image | image_url: width: 1600 | image_tag:
+          class: 'ha-abw__img',
+          loading: 'lazy',
+          sizes: '(min-width: 750px) 48vw, 100vw',
+          widths: '600, 900, 1200, 1600',
+          alt: section.settings.image_alt -}}
+      {%- endif -%}
+    </div>
+    <div class="ha-abw__text">
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: "Placeholder — copy transcribed from Aloha's About artboard (25 Sep), for her to confirm." -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ha-abw__eyebrow ha-label">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ha-abw__heading ha-narrate">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="ha-abw__body ha-narrate">{{ section.settings.body }}</div>
+      {%- endif -%}
+      {%- if section.settings.cta_text != blank -%}
+        <p class="ha-abw__cta"><a class="ha-home__ruled ha-record" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a></p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — About: Work ahead",
+  "tag": "section",
+  "class": "ha-about-band-section",
+  "settings": [
+    { "type": "image_picker", "id": "paper", "label": "Paper (background)" },
+    { "type": "checkbox", "id": "grain", "label": "Grain", "default": true },
+    { "type": "image_picker", "id": "image", "label": "Photographs", "info": "Transparent PNG; shown at its own shape." },
+    { "type": "text", "id": "image_alt", "label": "Alt text" },
+    { "type": "text", "id": "eyebrow", "label": "Label", "default": "The work ahead" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "Casing as typed; a line break is kept." },
+    { "type": "richtext", "id": "body", "label": "Text" },
+    { "type": "text", "id": "cta_text", "label": "Link text" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
+  ],
+  "presets": [{ "name": "HA — About: Work ahead" }]
+}
+{% endschema %}

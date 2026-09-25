@@ -1,41 +1,27 @@
 /*
  * Hartwick Atelier — ABOUT
  *
- * Aloha's About-page wireframe, 15 September 2026, section by section:
+ * 25 September 2026 — Aloha's FINAL_ABOUTPAGE_DESKTOP_EDITABLE.pdf:
  *
- *   hero       ha-about-hero       two photographs, the title plate
- *   house      ha-statement        THE HOUSE — the centred opener
- *   founder    ha-founder          FOUNDER · ANGELA HARTWICK, two columns and a portrait
- *   principle  ha-principle        THE PRINCIPLE — the dark band
- *   journey    ha-circle-columns   A JOURNEY INTO THE HOUSE — four numbered columns (journey layout)
- *   quote      ha-statement        the centred line on the same sand band
- *   work       ha-feature          THE WORK AHEAD — photograph and pill button
- *   register   ha-register         THE REGISTER — the same form as everywhere else
+ *   opening        ha-about-opening   pink paper, the envelope, ABOUT HARTWICK
+ *   life           ha-about-life      A LIFE ACROSS PLACES — Founder, Angela in her own words, collage
+ *   binding_upper  ha-home-binding    rings at 197 / 670 / 1184
+ *   journey_v2     ha-about-journey   A JOURNEY INTO THE HOUSE — eight moments, dye swatches
+ *   binding_lower  ha-home-binding    rings at 290 / 763 / 1277
+ *   work_ahead     ha-about-work      THE WORK AHEAD — Into Pieces prints, ruled link
+ *   (the Register box and the footer are site-wide)
  *
- * ⚠️ PROVISIONAL. Every word is transcribed from the wireframe and none of it
- *    is approved for publication yet; each section shows its notice until it
- *    is switched off. Two sentences in the drawing are cut short and are NOT
- *    completed here — nothing may be invented (CLAUDE.md):
- *      · The House, after "…setters and goldsmiths." the drawing has "The
- *        material" and stops.
- *      · Founder, right column, after "The result is not nostalgia." the
- *        drawing has "It is a working model for how a modern fashion house
- *        can value the source of" and stops.
+ * The 15 September bands (hero … work, register) are kept below, switched off.
  *
- * ⚠️ PHOTOGRAPHS. The three pictures are cut from the wireframe drawing itself
- *    and ship inside the theme (assets/ha-about-*.jpg), because the re-edited
- *    originals had not arrived with it. Picking an image in any section
- *    replaces its stand-in at once.
+ * ⚠️ Her artboard cuts four journey texts mid-sentence (04 "…designing
+ *    contemporary kan-", 05 "…handed down through", 06 "…my dress for the
+ *    opening with", 07 "…made a full wom-"). Each ends at its last complete
+ *    sentence here; nothing is completed (CLAUDE.md). Build note:
+ *    docs/about-page-v2-2026-09-25.md.
  *
- * ⚠️ ADMIN, not theme: the page "About the Atelier" (handle about-the-atelier)
- *    must have its Theme template set to "about" for this file to apply.
+ * ⚠️ The page "About the Atelier" must use Theme template "about".
  *
- * ------------------------------------------------------------
- * NOTE: this file is also written by the Shopify theme editor. Shopify
- * validates a JSON template against each section's schema AS IT EXISTS ON THE
- * THEME when the template is uploaded, and silently drops any setting the
- * schema does not yet declare — push the sections before this file.
- * ------------------------------------------------------------
+ * Push the sections before this file (docs/…push gotchas).
  */
 {
   "sections": {
@@ -60,7 +46,8 @@
         "right_label": "01 / Angela in Mallorca",
         "right_asset": "ha-about-hero-right.jpg",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "house": {
       "type": "ha-statement",
@@ -72,7 +59,8 @@
         "heading_caps": true,
         "body": "<p>Hartwick Atelier brings together handspun and handwoven cloth, natural dyes, fine tailoring and jewellery made by Master weavers, printers, dyers, stonecutters, setters and goldsmiths.</p>",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "founder": {
       "type": "ha-founder",
@@ -87,7 +75,8 @@
         "image_label": "",
         "asset": "ha-about-founder.jpg",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "principle": {
       "type": "ha-principle",
@@ -116,7 +105,8 @@
         "cta_text": "Made by Masters",
         "cta_link": "/pages/the-masters",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "journey": {
       "type": "ha-circle-columns",
@@ -167,7 +157,8 @@
         "heading": "A journey into the House",
         "aside": "",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "quote": {
       "type": "ha-statement",
@@ -179,7 +170,8 @@
         "heading_caps": false,
         "body": "",
         "show_placeholder_note": false
-      }
+      },
+      "disabled": true
     },
     "work": {
       "type": "ha-feature",
@@ -195,7 +187,8 @@
         "image_label": "03 / Angela wearing Hartwick",
         "asset": "ha-about-work.jpg",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "register": {
       "type": "ha-register",
@@ -209,10 +202,168 @@
         "register_source": "about_page"
       },
       "disabled": true
+    },
+    "opening": {
+      "type": "ha-about-opening",
+      "settings": {
+        "paper": "shopify://shop_images/HA_ABOUT_PAPER_PINK.jpg",
+        "grain": true,
+        "envelope": "shopify://shop_images/HA_ABOUT_ENVELOPE.png",
+        "envelope_alt": "A glassine envelope of old photographs, a black-and-white print slipping from its top",
+        "heading": "About Hartwick",
+        "subline": "A house shaped by material, place and\nthe knowledge of the people who make.",
+        "show_placeholder_note": true
+      }
+    },
+    "life": {
+      "type": "ha-about-life",
+      "settings": {
+        "paper": "shopify://shop_images/HA_ABOUT_PAPER_GREY_LIFE_29.jpg",
+        "grain": false,
+        "eyebrow": "A life across places",
+        "label": "Founder",
+        "name": "Angela Hartwick",
+        "body": "<p>I’m naturally drawn to truly regenerative systems. Building an off-grid home in the Canadian wilderness that relies entirely on natural systems is the foundation of my work.</p><p>I develop concepts and strategies, and guide their practical application from production to storytelling across diverse cultural contexts.</p><p>Hartwick Creative, working in media, and Hartwick Atelier, working in handwoven natural clothing, are crossover ventures. They explore complex narratives of technology and cultural heritage, globalisation and localisation, opportunity and conservation.</p>",
+        "image": "shopify://shop_images/HA_ABOUT_COLLAGE_LIFE.png",
+        "image_alt": "Photographs laid one over another: Angela beside a motorcycle before a domed palace in Rajasthan, printed cloth behind",
+        "show_placeholder_note": true
+      }
+    },
+    "binding_upper": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": true,
+        "grain": true,
+        "placement": "about",
+        "holes": "both"
+      }
+    },
+    "journey_v2": {
+      "type": "ha-about-journey",
+      "blocks": {
+        "m1": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_01.png",
+            "swatch_w": 236,
+            "title": "New York, then Paris",
+            "body": "<p>My work in fashion started in New York City in the 90s as an assistant, first to a well-known costume designer, then to the owner of New York’s biggest fashion trade shows.</p><p>When I was hired as an assistant to a French movie star and moved to Paris, fashion became a language that I learned and loved to speak. From major fashion houses to movie sets amazing clothes became part of my everyday scene.</p>"
+          }
+        },
+        "m2": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_02.png",
+            "swatch_w": 212,
+            "title": "A first fashion book",
+            "body": "<p>In 2002, I spent a couple of months in Morocco shooting my first fashion book, styled with a mix of vintage finds, luxury pieces gifted to me in Paris, and streetwear from a trip to Japan.</p><p>It was a seminal project. I realised the narrative power of juxtaposing cultures through textiles and film.</p>"
+          }
+        },
+        "m3": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_03.png",
+            "swatch_w": 198,
+            "title": "Character, through wardrobe",
+            "body": "<p>In 2003, I became the lead costume designer for a French TV series. It was a huge job and I loved it.</p><p>We shot eight episodes concurrently with eight main characters. I loved developing those characters through wardrobe.</p>"
+          }
+        },
+        "m4": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_04.png",
+            "swatch_w": 222,
+            "title": "Dubai, in the making",
+            "body": "<p>In 2004, I moved to Dubai when it was defining itself on the global stage. We built sets for luxury hotels and restaurants when there were still so few.</p><p>We often shot four or five versions of commercials to reflect the nuances of wardrobe across the Middle East, North Africa and the GCC. I became a specialist in making every detail aspirational and culturally accurate.</p><p>I worked with an exceptional team of tailors from Varanasi, India. Their knowledge was a major influence.</p>"
+          }
+        },
+        "m5": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_05.png",
+            "swatch_w": 184,
+            "title": "India changes everything",
+            "body": "<p>In 2009, I moved to Mumbai. My work as a photographer and stylist took me all over India and across the region: Afghanistan, Pakistan, Sri Lanka and Nepal.</p><p>I started to understand the depth of handcraft in South Asian cultures. Histories of families, communities and regions; the riches of empires and Gandhi’s movement for Independence.</p>"
+          }
+        },
+        "m6": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_06.png",
+            "swatch_w": 182,
+            "title": "From Addis Ababa to Tribeca",
+            "body": "<p>My love for textiles and design as a language played a central role as I became a film director, making culture films around the world for clients such as Christie’s, Condé Nast and The New York Times.</p><p>In 2022, I made a film in Ethiopia about women skateboarders. I shot some of the most compelling scenes of my career as they skated through Addis Ababa in traditional handwoven white dresses.</p><p>The film premiered at Tribeca Film Festival in 2023.</p>"
+          }
+        },
+        "m7": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_07.png",
+            "swatch_w": 210,
+            "title": "The film became a collection",
+            "body": "<p>While researching my next film, on handwoven cloth, I spoke to monks and physicists about weaving as vibration, and to curators and anthropologists about cloth as the basis of human civilisation.</p>"
+          }
+        },
+        "m8": {
+          "type": "moment",
+          "settings": {
+            "image": "shopify://shop_images/HA_ABOUT_DYE_08.png",
+            "swatch_w": 204,
+            "title": "Hartwick Atelier",
+            "body": "<p>It has been a long and spectacular road to creating Hartwick Atelier, a fashion brand made by Masters of refined handcraft.</p><p>Every piece is finely tailored with handspun and handwoven fabrics. We design using heritage techniques and natural dyes, produced by hand with the rhythms of the sun, wind and rain.</p><p>This is an analogue love story that I am delighted and honoured to share with the world.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6",
+        "m7",
+        "m8"
+      ],
+      "settings": {
+        "paper": "shopify://shop_images/HA_ABOUT_PAPER_GREY_JOURNEY_29.jpg",
+        "grain": false,
+        "heading": "A JOURNEY INTO THE HOUSE",
+        "show_placeholder_note": true
+      }
+    },
+    "binding_lower": {
+      "type": "ha-home-binding",
+      "settings": {
+        "rings": true,
+        "grain": true,
+        "placement": "about-lower",
+        "holes": "both"
+      }
+    },
+    "work_ahead": {
+      "type": "ha-about-work",
+      "settings": {
+        "paper": "shopify://shop_images/HA_ABOUT_PAPER_GREY_WORK_29.jpg",
+        "grain": false,
+        "image": "shopify://shop_images/HA_ABOUT_WORK_PIECES.png",
+        "image_alt": "Two prints, one over the other: Angela seated by a window, and a table spread with photographs, letters and a cassette",
+        "eyebrow": "The work ahead",
+        "heading": "PROTECTING A PLACE\nFOR LIVING KNOWLEDGE",
+        "body": "<p>Angela wants Hartwick to help protect the place of Master craft within contemporary fashion: commissioning work at the pace it requires, maintaining provenance, giving workshops meaningful visibility and creating demand for skills that cannot be industrially replicated.</p><p>Protection does not mean freezing knowledge in the past. It means giving it a viable future, with the Master recognised as part of the authorship of every piece.</p>",
+        "cta_text": "Learn from the Masters",
+        "cta_link": "/pages/the-masters",
+        "show_placeholder_note": true
+      }
     }
   },
   "order": [
     "main",
+    "opening",
+    "life",
+    "binding_upper",
+    "journey_v2",
+    "binding_lower",
+    "work_ahead",
     "hero",
     "house",
     "founder",
