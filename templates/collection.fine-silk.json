@@ -111,7 +111,8 @@
         "onward_2_url": "/collections/fine-jewellery",
         "onward_3_text": "Yoga",
         "onward_3_url": "/collections/yoga",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "head_paper": "shopify://shop_images/HA_COLLECTION_HEADER_NAVY_PAPER.jpg"
       }
     },
     "register": {

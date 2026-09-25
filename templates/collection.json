@@ -24,7 +24,8 @@
         "txt_col": "#000000",
         "bg_col": "rgba(0,0,0,0)",
         "top_padding": 0,
-        "bottom_padding": 0
+        "bottom_padding": 0,
+        "ha_paper": "shopify://shop_images/HA_COLLECTION_HEADER_NAVY_PAPER.jpg"
       }
     },
     "navigation": {

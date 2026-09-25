@@ -35,6 +35,12 @@
 
 {%- liquid
   assign hero = section.settings.header_image
+  # Aloha, 24 September 2026: the Index opens on her navy paper instead of the
+  # loom photograph. A paper replaces the photograph when one is chosen.
+  assign paper = section.settings.header_paper
+  if paper
+    assign hero = false
+  endif
   assign hero_focus = '--ha-idx-focus: ' | append: section.settings.header_focus_x | append: '% ' | append: section.settings.header_focus_y | append: '%'
 -%}
 <script src="{{ 'ha-index.js' | asset_url }}" defer="defer"></script>
@@ -43,7 +49,7 @@
 <div class="ha-idx">
 
   {%- comment -%} ---------- HEADER + OPENING DIRECTORY ---------- {%- endcomment -%}
-  <header class="ha-idx__head{% if hero %} ha-idx__head--photo{% endif %}" id="index">
+  <header class="ha-idx__head{% if hero %} ha-idx__head--photo{% endif %}{% if paper %} ha-paper-head{% endif %}" id="index"{% if paper %} style="--ha-paper-bg: url({{ paper | image_url: width: 2400 }});"{% endif %}>
     {%- if hero -%}
       <div class="ha-idx__head-media" aria-hidden="true">
         {{ hero | image_url: width: 2800 | image_tag: loading: 'eager', sizes: '100vw', widths: '750, 1100, 1500, 2000, 2800', alt: '', class: 'ha-idx__head-img', style: hero_focus }}
@@ -174,6 +180,7 @@
   "settings": [
     { "type": "paragraph", "content": "The Collection Index (refined, 17 Sept 2026). Add a Group block per collection, then its Entry blocks beneath it. Each Entry is one name, one image, one destination." },
     { "type": "header", "content": "Header" },
+    { "type": "image_picker", "id": "header_paper", "label": "Paper background", "info": "Aloha, 24 September 2026: her navy paper, Chalk Blue type, the menu transparent over it. Replaces the photograph below when chosen." },
     { "type": "image_picker", "id": "header_image", "label": "Photograph" },
     { "type": "range", "id": "header_focus_x", "label": "Focus, horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
     { "type": "range", "id": "header_focus_y", "label": "Focus, vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },

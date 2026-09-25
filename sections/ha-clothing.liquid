@@ -88,7 +88,13 @@
 <div class="ha-clothing ha-clothing--touch-{{ section.settings.touch }}">
 
   {%- comment -%} ---------- HEAD ---------- {%- endcomment -%}
-  <header class="ha-section ha-clothing__head" id="clothing-page">
+  {%- comment -%}
+    Aloha, 24 September 2026: every collection page opens on her navy paper
+    with Chalk Blue type, the menu transparent over it (header.liquid,
+    "Transparent on collection pages"). Chosen per range in "Paper background".
+  {%- endcomment -%}
+  {%- assign head_paper = section.settings.head_paper -%}
+  <header class="ha-section ha-clothing__head{% if head_paper %} ha-paper-head{% endif %}" id="clothing-page"{% if head_paper %} style="--ha-paper-bg: url({{ head_paper | image_url: width: 2400 }});"{% endif %}>
     <div class="ha-wrap ha-clothing__head-grid">
       <div>
         <nav class="ha-clothing__crumbs ha-record" aria-label="Breadcrumb">
@@ -353,6 +359,7 @@
   "settings": [
     { "type": "paragraph", "content": "A range page — Apparel, Fine Silk, Fine Jewellery or Yoga. Apparel: one card per Style, from this collection's products and their Style records. Ranges without Style records: give each Category block a collection and it lists that collection's products, one card each. Nothing is typed here except headings and copy." },
     { "type": "header", "content": "Head" },
+    { "type": "image_picker", "id": "head_paper", "label": "Paper background", "info": "Aloha, 24 September 2026: her navy paper behind the head, Chalk Blue type, the menu transparent over it." },
     { "type": "text", "id": "crumb_collection", "label": "Breadcrumb: collection", "default": "Collection" },
     { "type": "text", "id": "crumb_leaf", "label": "Breadcrumb: this page", "default": "Apparel" },
     { "type": "text", "id": "title", "label": "Title", "default": "All Apparel" },

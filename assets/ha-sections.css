@@ -7559,13 +7559,21 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
   margin-top: calc(52 * var(--u));
   padding: 0 calc(26 * var(--u));
   background: var(--ha-inkstone);
-  color: var(--ha-jnl-button-ink, #E9E4D8);   /* the Journal's warm ink, as on the band */
+  /* Chalk Blue (Aloha, 25 September 2026: "needs to be in the colour e9f3ff
+     so we can see what it says"); it was the Journal's warm ink #E9E4D8. */
+  color: var(--ha-jnl-button-ink, var(--ha-chalk-blue));
   font-size: var(--ha-t-button);
   letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
 }
-a.ha-jnl-button { color: var(--ha-jnl-button-ink, #E9E4D8); }
+a.ha-jnl-button,
+a.ha-jnl-button:link,
+a.ha-jnl-button:visited,
+a.ha-jnl-button:hover,
+a.ha-jnl-button:focus-visible,
+a.ha-jnl-button .ha-mark-phrase,
+a.ha-jnl-button .ha-mark-word { color: var(--ha-jnl-button-ink, var(--ha-chalk-blue)); }
 .ha-jnl-button--inert { cursor: default; }
 
 /* --- two notes ------------------------------------------------------------------ */
@@ -7886,3 +7894,64 @@ a.ha-jnl-button { color: var(--ha-jnl-button-ink, #E9E4D8); }
   /* Contact: the two-line labels either side of the page were set solid. */
   .ha-contact .ha-contact__row { line-height: 1.35; column-gap: 1.6rem; }
 }
+
+
+/* ==========================================================================
+   COLLECTION PAGES ON NAVY PAPER — Aloha, 24 September 2026
+   "Background colour for replacing The Collection Index page … all of the
+    collection pages to have this background, w/ e9f3ff text colour inside
+    the header. And the menu bar also in e9f3ff with our white house logo at
+    the top."
+   .ha-paper-head is the page's opening block (the Index head, a range page's
+   head). The paper runs up under the transparent menu bar, so the block
+   starts below the bar's height; everything inside it takes Chalk Blue.
+   ========================================================================== */
+.ha-paper-head {
+  background: var(--ha-field-slate) var(--ha-paper-bg) center / cover no-repeat;
+  color: var(--ha-chalk-blue);
+  border-bottom: 0;
+  /* the ink tokens flip inside the paper, so quiet numbers and labels that
+     read soot-grey on the page ground read Chalk Blue here */
+  --ha-text: var(--ha-chalk-blue);
+  --ha-text-quiet: rgba(233, 243, 255, 0.72);
+  --ha-ink-title: var(--ha-chalk-blue);
+  --ha-rule: rgba(233, 243, 255, 0.22);
+}
+.ha-paper-head,
+.ha-paper-head a,
+.ha-paper-head .ha-clothing__crumbs,
+.ha-paper-head .ha-clothing__back,
+.ha-paper-head .ha-clothing__intro,
+.ha-paper-head .ha-idx__crumbs,
+.ha-paper-head .ha-idx__intro,
+.ha-paper-head .ha-idx__count,
+.ha-paper-head h1,
+.ha-paper-head .ha-clothing__title,
+.ha-paper-head .ha-idx__title { color: var(--ha-chalk-blue); }
+.ha-paper-head .ha-clothing__crumbs,
+.ha-paper-head .ha-idx__crumbs { opacity: 0.8; }
+body:has(#SiteHeader.ha-trans-light) .ha-paper-head { padding-top: var(--site-header-height-mobile, 6rem); }
+@media screen and (min-width: 990px) {
+  body:has(#SiteHeader.ha-trans-light) .ha-paper-head { padding-top: var(--site-header-height-desktop, 6rem); }
+}
+/* The Index head on a phone normally drops to the page ground under a photo
+   banner; on paper it stays on the paper. */
+.ha-idx__head.ha-paper-head { background: var(--ha-field-slate) var(--ha-paper-bg) center / cover no-repeat; color: var(--ha-chalk-blue); }
+
+/* The menu bar over the paper: Chalk Blue words and icons, the white House
+   symbol (Luxe's inverted logo), a Chalk Blue hairline. Only while the bar is
+   transparent — once Luxe makes it solid on scroll, the usual ink returns. */
+#SiteHeader.hdr-trans-hp.ha-trans-light { --site-header-transparent-color: 233, 243, 255; }
+#SiteHeader.hdr-trans-hp.ha-trans-light .header-bar-inner,
+#SiteHeader.hdr-trans-hp.ha-trans-light .header-bar-inner a,
+#SiteHeader.hdr-trans-hp.ha-trans-light .header-bar-inner button,
+#SiteHeader.hdr-trans-hp.ha-trans-light .ha-util { color: var(--ha-chalk-blue); }
+
+/* Luxe's own collection banner (every collection on the default template —
+   Shirts, Rings, Natural dye …) on the same paper. */
+.ha-coll-paper { padding-bottom: clamp(3.2rem, 4vw, 5.6rem); }
+.ha-coll-paper > * { padding-top: clamp(2.4rem, 3vw, 4rem); }
+.ha-coll-paper h1,
+.ha-coll-paper .collection-std-description,
+.ha-coll-paper .collection-banner-std-title,
+.ha-coll-paper .collection-title-bb { color: var(--ha-chalk-blue); }

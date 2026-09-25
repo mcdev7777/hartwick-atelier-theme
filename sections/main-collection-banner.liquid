@@ -64,7 +64,8 @@
 
 {% endstyle %}
 
-<div class="collection-banner-wrapper{% if section.settings.banner_layout != 'text-only' and collection.image == blank %} collection-banner--no-image{% endif %} section-index-{{ section.index }} collection-banner-{{ section.settings.banner_layout }} cbw-image-ratio--{{ section.settings.stacked_img_ratio }} text-width--{{ section.settings.text_width }}">
+{%- comment -%} HA, 24 September 2026 (Aloha): every collection page opens on her navy paper, Chalk Blue type, the menu transparent over it. {%- endcomment -%}
+<div{% if section.settings.ha_paper %} style="--ha-paper-bg: url({{ section.settings.ha_paper | image_url: width: 2400 }});"{% endif %} class="{% if section.settings.ha_paper %}ha-paper-head ha-coll-paper {% endif %}collection-banner-wrapper{% if section.settings.banner_layout != 'text-only' and collection.image == blank %} collection-banner--no-image{% endif %} section-index-{{ section.index }} collection-banner-{{ section.settings.banner_layout }} cbw-image-ratio--{{ section.settings.stacked_img_ratio }} text-width--{{ section.settings.text_width }}">
 
 {% if section.settings.banner_layout == 'split_banner' and collection.image %}
 
@@ -163,6 +164,12 @@
     {
       "type": "paragraph",
       "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "ha_paper",
+      "label": "HA — Paper background",
+      "info": "Aloha, 24 September 2026: her navy paper behind the collection title, Chalk Blue type, the menu transparent over it."
     },
     {
       "type": "header",

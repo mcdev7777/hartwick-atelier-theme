@@ -53,7 +53,8 @@
         "onward_2_url": "/collections/fine-silk",
         "onward_3_text": "Fine Jewellery",
         "onward_3_url": "/collections/fine-jewellery",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "head_paper": "shopify://shop_images/HA_COLLECTION_HEADER_NAVY_PAPER.jpg"
       }
     },
     "register": {

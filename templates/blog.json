@@ -118,7 +118,8 @@
         "visit_kicker": "Visiting the atelier",
         "visit_heading": "Private appointments in Esporles,\nMallorca.",
         "visit_text": "Enquire about a visit",
-        "visit_url": "/pages/contact-us"
+        "visit_url": "/pages/contact-us",
+        "button_ink": "#E9F3FF"
       }
     },
     "notes": {
