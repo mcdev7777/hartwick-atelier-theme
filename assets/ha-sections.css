@@ -8135,3 +8135,29 @@ body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .h
   .ha-abj .ha-abj__body, .ha-abw .ha-abw__body { text-align: left; }
 }
 
+
+/* ==========================================================================
+   BROWN DIVIDERS, SECOND PASS — Aloha, "changes to the site 2.pdf",
+   25 September 2026
+   "When we have a feature part, we don't need to place the brown thick line
+    border." A photograph band carries no divider above it or below it: the
+    Masters page's still/movement pair and its archive film ("At the printing
+    table"), the Master's tool on product pages, the collection pages' feature,
+    The Circle's feature. The section above a feature drops its lower edge.
+   "No brown line underneath the footer from the register": the last band on
+    a page never carries one; the site footer follows it.
+   The Journal: "NO BROWN LINES AT ALL … it's suppose to be a newspaper."
+   ========================================================================== */
+:is(.ha-mst__pair, .ha-mst__feature, .ha-masterfeat, .ha-clothing__feature, .ha-cfeature, .ha-feature) { border-bottom: 0; }
+/* the band above a feature, in the same section … */
+:is(.ha-section, .ha-home, .ha-mst__pair):has(+ :is(.ha-mst__pair, .ha-mst__feature, .ha-masterfeat, .ha-clothing__feature, .ha-cfeature, .ha-feature)) { border-bottom: 0; }
+/* … or in the section before it */
+.shopify-section:has(+ .shopify-section > :is(.ha-mst__pair, .ha-mst__feature, .ha-masterfeat, .ha-clothing__feature, .ha-cfeature, .ha-feature)) > :is(.ha-section, .ha-home),
+.shopify-section:has(+ .shopify-section > :is(.ha-mst__pair, .ha-mst__feature, .ha-masterfeat, .ha-clothing__feature, .ha-cfeature, .ha-feature)) > * > .ha-section:last-child { border-bottom: 0; }
+/* the last band before the footer, on every page */
+#MainContent > .shopify-section:last-child > :is(.ha-section, .ha-home),
+#MainContent > .shopify-section:last-child > * > .ha-section:last-child { border-bottom: 0; }
+/* the Journal */
+.ha-jnl, .ha-jnl-lead, .ha-jnl-notes,
+.lx-template--blog :is(.ha-section, .ha-home),
+.lx-template--article :is(.ha-section, .ha-home) { border-bottom: 0; }
