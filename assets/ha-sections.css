@@ -3404,7 +3404,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
   padding-bottom: 1.6rem;
   border-bottom: 1px solid var(--ha-text);
 }
-.ha-ccols__col-heading--identify { font-size: var(--ha-t-h3); letter-spacing: 0.02em; font-weight: var(--ha-role-text-weight); margin: 2.4rem 0 2rem; }
+.ha-ccols__col-heading--identify { font-size: var(--ha-t-ui); letter-spacing: 0.02em; font-weight: var(--ha-role-text-weight); margin: 2.4rem 0 2rem; }
 .ha-ccols--journey .ha-ccols__body { color: var(--ha-text); max-width: 34ch; font-size: var(--ha-t-body); }
 
 @media screen and (min-width: 990px) {
@@ -4658,7 +4658,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-clothing__onward-grid { display: grid; gap: 2.4rem; padding-top: 3.2rem; padding-bottom: 4rem; }
 .ha-clothing__onward-label { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
 .ha-clothing__onward-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.2rem 4rem; }
-.ha-clothing__onward-link { font-size: var(--ha-t-intro); text-decoration: none; color: var(--ha-text); min-height: 44px; display: inline-block; }
+.ha-clothing__onward-link { font-size: var(--ha-t-h2); text-decoration: none; color: var(--ha-text); min-height: 44px; display: inline-block; }
 .ha-clothing__onward-link:hover, .ha-clothing__onward-link:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
 @media screen and (min-width: 990px) {
   .ha-clothing__onward-grid { grid-template-columns: 22rem 1fr; align-items: baseline; }
@@ -4932,7 +4932,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* --- introduction: one H1, the line, three columns ------------------------ */
 .ha-mst__intro-inner { padding-top: 3.2rem; }
 .ha-mst__title { margin: 0; font-size: var(--ha-t-hero); line-height: 1; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 300; color: var(--ha-mst-ink); }
-.ha-mst__subline { margin: 1.6rem 0 0; font-size: var(--ha-t-intro); letter-spacing: 0.14em; color: var(--ha-text); }
+.ha-mst__subline { margin: 1.6rem 0 0; font-size: var(--ha-t-h3); letter-spacing: 0.14em; color: var(--ha-text); }
 .ha-mst__columns { display: grid; gap: 3.2rem; margin-top: 4rem; }
 .ha-mst__col { min-width: 0; }
 .ha-mst__col--symbol { display: grid; grid-template-columns: minmax(0, 1fr) 8rem; column-gap: 2.4rem; align-items: start; }
@@ -4945,7 +4945,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 @media screen and (min-width: 990px) {
   .ha-mst__intro-inner { padding-top: 4rem; padding-bottom: 8rem; }
   .ha-mst__title { font-size: var(--ha-t-hero); }
-  .ha-mst__subline { margin-top: 2rem; font-size: var(--ha-t-intro); }
+  .ha-mst__subline { margin-top: 2rem; font-size: var(--ha-t-h3); }
   /* Columns begin 253px below the photograph, under the 233px hang of the inset. */
   .ha-mst__columns { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(3.2rem, 5vw, 8rem); margin-top: 7.2rem; }
 }
@@ -5237,7 +5237,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    collections." and "A record of the making." hold one line. */
 @media screen and (min-width: 990px) and (max-width: 1199px) {
   .ha-home__heading { font-size: var(--ha-t-h1); }
-  .ha-home-masters .ha-home__heading { font-size: var(--ha-t-h2); }
+  .ha-home-masters .ha-home__heading { font-size: var(--ha-t-h1); }
 }
 
 /* --- 01  The opening ----------------------------------------------------- */
@@ -5330,7 +5330,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-home-story__empty { display: grid; place-items: center; }
 .ha-home-story__text { margin-top: 1.6rem; border-top: 1px solid var(--ha-rule); padding-top: 1.6rem; }
 .ha-home-story__num { margin: 0 0 1.6rem; font-size: var(--ha-t-meta); letter-spacing: 0.04em; color: var(--ha-text-quiet); }
-.ha-home-story__title { margin: 0 0 1.2rem; font-style: italic; font-weight: var(--ha-role-pull-weight); font-size: var(--ha-t-h3); line-height: 1.2; }
+.ha-home-story__title { margin: 0 0 1.2rem; font-style: italic; font-weight: var(--ha-role-pull-weight); font-size: var(--ha-t-h2); line-height: 1.2; }
 .ha-home-story__body { margin: 0 0 3.2rem; max-width: 36ch; }
 /* §07: a print marked monochrome shows its colour on hover and focus. */
 .ha-home-story--mono .ha-home-story__img { filter: grayscale(1); transition: filter 220ms ease; }
@@ -5351,7 +5351,6 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* --- 04  Collection Index feature --------------------------------------- */
 .ha-home-index__grid { display: grid; gap: 4rem; }
 .ha-home-index__subline { margin-top: 2rem; max-width: 20em; }
-@media screen and (min-width: 990px) { .ha-home-index__subline { max-width: none; white-space: nowrap; } }
 .ha-home-index__list { list-style: none; margin: 3.2rem 0 0; padding: 0; }
 /* The four rows, 43px pitch on the artboard: mono uppercase on a hairline,
    the hairline answering hover, focus and the pictured row. */
@@ -5442,7 +5441,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-home-masters__grid { position: relative; z-index: 1; display: grid; gap: 3.2rem; }
 .ha-home-masters__lead, .ha-home-masters__directory, .ha-home-masters__aside { text-shadow: 0 1px 14px rgba(11, 6, 3, 0.45); }
 /* One line on the artboard: 40px against the page's 44. */
-.ha-home-masters .ha-home__heading { font-size: var(--ha-t-h2); }
+.ha-home-masters .ha-home__heading { font-size: var(--ha-t-h1); }
 .ha-home-masters__eyebrow { margin: 0 0 2rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
 .ha-home-masters__subline { margin-top: 1.6rem; max-width: 24em; }
 .ha-home-masters__list-label { margin: 0 0 1.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); opacity: 0.85; }
@@ -5451,7 +5450,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    case as the artboard draws them (Khadi, Gota Patti, Banaras brocade are
    names, not labels). No rule under these rows, so the underline is the
    hover; the pictured row simply holds full ink. */
-.ha-home-masters__link { display: inline-block; font-family: var(--ha-role-record); font-weight: var(--ha-role-record-weight); text-transform: none; letter-spacing: 0; font-size: var(--ha-t-intro); line-height: 1.55; padding: 0.2rem 0; color: inherit; text-decoration: none; opacity: 0.86; }
+.ha-home-masters__link { display: inline-block; font-family: var(--ha-role-record); font-weight: var(--ha-role-record-weight); text-transform: none; letter-spacing: 0; font-size: var(--ha-t-body); line-height: 1.55; padding: 0.2rem 0; color: inherit; text-decoration: none; opacity: 0.86; }
 .ha-home-masters__link:hover, .ha-home-masters__link:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; opacity: 1; }
 .ha-home-masters__link.is-active { opacity: 1; }
 .ha-home-masters__link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
@@ -6261,11 +6260,9 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
 .ha-home-note--photograph .ha-home-note__head { text-align: left; }
 /* Casing comes from the copy, not from CSS (Aloha, 24 September 2026: "Please
    don't automatically transform all Junicode headings to uppercase in CSS") —
-   the heading is typed in capitals in the template. On the artboard it is the
-   h3 step (27), below the section titles. */
-.ha-home-note--photograph .ha-home__heading { font-size: var(--ha-t-h3); letter-spacing: 0.02em; }
+   the heading is typed in capitals in the template. */
+.ha-home-note--photograph .ha-home__heading { letter-spacing: 0.02em; }
 .ha-home-note--photograph .ha-home-note__body { text-align: left; max-width: none; margin: clamp(2.4rem, 3.4vw, 4.8rem) 0 0; }
-.ha-home-note--photograph .ha-home-note__body { font-size: var(--ha-t-body); }
 .ha-home-note--photograph .ha-home-note__body p { margin: 0 0 3em; }
 .ha-home-note--photograph .ha-home-note__body p:last-child { margin-bottom: 0; }
 .ha-home-note--photograph .ha-home-note__tagline { margin: clamp(2.4rem, 3.4vw, 4.8rem) 0 0; font-size: var(--ha-t-intro); font-style: italic; font-weight: var(--ha-role-pull-weight); }

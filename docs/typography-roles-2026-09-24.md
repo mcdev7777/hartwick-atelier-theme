@@ -49,32 +49,20 @@ The classes that apply them are the **TYPE ROLES** block at the very end of
 
 ### Type scale
 
-The sizes are re-measured from the approved artboard at 1440px, which Aloha
-named "the visual reference for how these roles relate to one another in
-scale and hierarchy":
+**Sizes are Aloha's 22 September table, unchanged.** For a few hours on
+24 September the scale was re-measured from the homepage artboard (body 19,
+titles 42, and so on). Ivan reversed that the same day: "if she only gave us
+the design image with big font sizes, don't accept the font sizes in the
+design image. we must follow the given font rules." None of her 24 September
+notes (type system, header, Register box) gives a size, so the 22 September
+numbers stand: body 13, intro 15, h1 26, h2 20, h3 16, links and buttons 11,
+navigation 11, labels and captions 10, legal 9. The section-level size bumps
+made to follow the artboard were undone as well.
 
-| Row | Desktop | Mobile |
-|---|---|---|
-| hero | 48 | 34 |
-| h1 (display title) | 42 | 30 |
-| h2 | 35 | 26 |
-| h3 / pull line | 28 | 22 |
-| intro | 21 | 18 |
-| body | 19 | 17 |
-| Expression | 19 | 17 |
-| detail | 16 | 15 |
-| price | 14 | 13 |
-| links / CTAs / buttons | 14 | 13 |
-| navigation (new row) | 12 | 12 |
-| section labels | 11 | 11 |
-| captions / meta | 10 | 10 |
-| legal | 10 | 10 |
-| Style (product name) | 24 | 20 |
-| body line height | 1.40 | |
-
-Aloha can still adjust each row from Theme settings > Hartwick > Type scale.
-Body copy went from 13px Noto to 19px Junicode. Junicode's x-height is 0.415em
-against Noto's 0.536em, so the new body reads only slightly larger than the old.
+Watch-out for Aloha: body copy is now Junicode Light (role 04) at her 13px.
+That table was drawn when body copy was Noto, and Junicode's small letters are
+about 20% shorter at the same size, so 13px Junicode reads small. Changing it
+is her decision; the Body copy slider in Theme settings is the place.
 
 ## Homepage changes
 
@@ -89,8 +77,7 @@ against Noto's 0.536em, so the new body reads only slightly larger than the old.
 - **Index**: the wide frame is DSCF6909, turned 90° counter-clockwise as she
   placed it. It is now 546:364. Each montage frame can carry its own caption
   (01 / Apparel · 04 / Yoga · 03 / Fine Jewellery · 02 / Fine Silk).
-- **Masters band**: the heading is now h2 (35). The list is Noto Mono Medium at
-  intro size. It still lists the Masters page techniques, not the artboard's
+- **Masters band**: the list is Noto Mono Medium. It still lists the Masters page techniques, not the artboard's
   role titles, which are not verified content.
 - **Journal**: her Into Pieces sheet, turned 90° counter-clockwise as placed,
   shown whole with its own shadow (the new `own_mat` option). The CTA reads
@@ -98,9 +85,8 @@ against Noto's 0.536em, so the new body reads only slightly larger than the old.
 - **Register band**: new form style **Button only**, a filled Chalk Blue
   button to `/pages/the-register#join-the-register`. New heading style **Pull
   line**. Copy is the artboard's.
-- **Opening**: the heading is the h3 step (27 on the artboard). It is typed in
-  capitals in the template rather than uppercased by CSS. Paragraphs are at
-  body size with her wider gap.
+- **Opening**: the heading is typed in capitals in the template rather than
+  uppercased by CSS. The paragraphs have her wider gap.
 - **Footer**: new layout **row**. The wordmark is centred above one line of
   links in her order, with © at the left. Links: Collection · The Masters ·
   The Journal · The Register · The Circle · About · Contact · Instagram ·

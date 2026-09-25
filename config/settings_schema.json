@@ -362,7 +362,7 @@
       },
       {
         "type": "paragraph",
-        "content": "Aloha, 24 September 2026: the approved homepage artboard (FinalHartwick_Homepage_Editorial) is \"the visual reference for how these roles relate to one another in scale and hierarchy\" across the whole website. The defaults below are measured from it at 1440px — Junicode body 19, intro 21, pull lines 28–30, titles 35–42, Noto links and buttons 14, navigation 12, section labels 11, captions 10. \"Font size does not change the role of the font.\" Every size on the storefront comes from these sliders — the Hartwick sections, the Luxe header, footer, cart, product cards and account pages alike — so moving one slider moves that text category everywhere at once. (The 22 September table was drawn for body copy in Noto Sans Mono Condensed at 13px; Junicode, with a smaller x-height, needs about 17px to read the same size.)"
+        "content": "Aloha, 22 September 2026 (\"web text sizes\"): \"We need to heavily decrease the sizes of our texts […] Can we establish a consistent typography system across the theme rather than adjusting sections individually? […] The overall aim is smaller and calmer.\" Her table is the default for every slider. Sizes change only when she writes new ones, never from measuring a design image (Ivan, 24 September 2026). Her 24 September typography system changed typefaces and weights, not sizes. Every size on the storefront comes from these sliders, so moving one slider moves that text category everywhere at once."
       },
       {
         "type": "header",
@@ -376,7 +376,7 @@
         "max": 64,
         "step": 1,
         "unit": "px",
-        "default": 48,
+        "default": 32,
         "info": "Aloha's table gives a range of 30–34px here; 32 is its centre. This is the largest type anywhere on the site — nothing above it, by design."
       },
       {
@@ -387,7 +387,7 @@
         "max": 56,
         "step": 1,
         "unit": "px",
-        "default": 42
+        "default": 26
       },
       {
         "type": "range",
@@ -397,7 +397,7 @@
         "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 35
+        "default": 20
       },
       {
         "type": "range",
@@ -407,7 +407,7 @@
         "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 28
+        "default": 16
       },
       {
         "type": "range",
@@ -417,7 +417,7 @@
         "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 21,
+        "default": 15,
         "info": "The larger Junicode paragraph that opens a section. Ordinary body copy is the row below."
       },
       {
@@ -428,7 +428,7 @@
         "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 19
+        "default": 13
       },
       {
         "type": "range",
@@ -438,7 +438,7 @@
         "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 19
+        "default": 13
       },
       {
         "type": "range",
@@ -448,7 +448,7 @@
         "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 16
+        "default": 12
       },
       {
         "type": "range",
@@ -458,7 +458,7 @@
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 14
+        "default": 12
       },
       {
         "type": "range",
@@ -468,7 +468,7 @@
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 14
+        "default": 11
       },
       {
         "type": "range",
@@ -478,7 +478,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 11
       },
       {
         "type": "range",
@@ -488,7 +488,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 10
       },
       {
         "type": "range",
@@ -508,7 +508,7 @@
         "max": 14,
         "step": 1,
         "unit": "px",
-        "default": 10,
+        "default": 9,
         "info": "The one 9px surface Aloha specified. It carries the copyright line and nothing else."
       },
       {
@@ -519,7 +519,7 @@
         "max": 36,
         "step": 1,
         "unit": "px",
-        "default": 24,
+        "default": 16,
         "info": "Porter. Sits one step above the editorial subheading, not on the section-title line."
       },
       {
@@ -538,7 +538,7 @@
         "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 34,
+        "default": 28,
         "info": "Her range is 26–30px; 28 is its centre."
       },
       {
@@ -549,7 +549,7 @@
         "max": 44,
         "step": 1,
         "unit": "px",
-        "default": 30
+        "default": 23
       },
       {
         "type": "range",
@@ -559,7 +559,7 @@
         "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 26
+        "default": 18
       },
       {
         "type": "range",
@@ -569,7 +569,7 @@
         "max": 32,
         "step": 1,
         "unit": "px",
-        "default": 22
+        "default": 15
       },
       {
         "type": "range",
@@ -579,7 +579,7 @@
         "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 18
+        "default": 14
       },
       {
         "type": "range",
@@ -589,7 +589,7 @@
         "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 17
+        "default": 12
       },
       {
         "type": "range",
@@ -599,7 +599,7 @@
         "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 17
+        "default": 13
       },
       {
         "type": "range",
@@ -609,7 +609,7 @@
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 12
       },
       {
         "type": "range",
@@ -619,7 +619,7 @@
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 12
       },
       {
         "type": "range",
@@ -629,7 +629,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 11
       },
       {
         "type": "range",
@@ -639,7 +639,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 11
       },
       {
         "type": "range",
@@ -649,7 +649,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 10
       },
       {
         "type": "range",
@@ -669,7 +669,7 @@
         "max": 14,
         "step": 1,
         "unit": "px",
-        "default": 10
+        "default": 9
       },
       {
         "type": "range",
@@ -679,7 +679,7 @@
         "max": 30,
         "step": 1,
         "unit": "px",
-        "default": 20
+        "default": 15
       },
       {
         "type": "header",
@@ -693,7 +693,7 @@
         "max": 180,
         "step": 5,
         "unit": "%",
-        "default": 140,
+        "default": 160,
         "info": "Aloha gave body copy a range of 1.55–1.65. The other line heights in her table are fixed per category and are set in snippets/ha-tokens.liquid."
       },
       {

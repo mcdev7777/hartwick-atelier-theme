@@ -156,25 +156,16 @@
 
 
     /* ==================================================================
-       TYPE SCALE  —  re-measured 24 September 2026 from Aloha's approved
-       homepage (FinalHartwick_Homepage_Editorial), which she set as "the
-       visual reference for how these roles relate to one another in scale and
-       hierarchy" across the entire website, alongside her five-role system
-       (snippets/ha-fonts.liquid, "THE FIVE ROLES").
-
-       Desktop defaults, from the artboard at 1440:
-         title h1 42 · h2 35 · h3 / pull line 28 · intro 21 · body 19 ·
-         links, CTAs, buttons 14 · price 14 · navigation 12 ·
-         section labels 11 · captions 10 · legal 10
-       The rows the homepage does not show (hero, Expression, detail, Style)
-       keep their place in the ladder. Body copy moved from Noto Sans Mono
-       Condensed 13 to Junicode Light 19: Junicode's x-height is 0.415em
-       against Noto's 0.536em, so 19px of Junicode reads only a little larger
-       than the 13px of Noto it replaces.
-
-       Everything below this paragraph describes the 22 September table and is
-       kept for the mechanism (one token per row, no multipliers, the Luxe
-       bridge), which is unchanged. Its font assignments are superseded.
+       TYPE SCALE — Aloha's 22 September table is the size rule, and it still
+       stands. The 24 September changes (the five roles, the header and the
+       Register box) set typefaces and weights only; she gave no new sizes
+       with them. On 24 September the scale was briefly re-measured from her
+       final homepage artboard. Ivan reversed that the same day: "if she only
+       gave us the design image with big font sizes, don't accept the font
+       sizes in the design image. we must follow the given font rules."
+       Sizes change only when she writes new ones. The one new row since
+       22 September is navigation, --ha-t-nav, which is a slider of its own
+       and defaults to her 11.
 
        ---------------------------------------------------------------------
        TYPE SCALE  —  Aloha, 22 September 2026 ("web text sizes")
@@ -226,25 +217,25 @@
        ================================================================== */
 
     /* --- display: Porter ------------------------------------------------ */
-    --ha-t-hero:       {{ settings.ha_t_hero_m       | default: 34 | divided_by: 10.0 }}rem;
-    --ha-t-h1:         {{ settings.ha_t_h1_m         | default: 30 | divided_by: 10.0 }}rem;
-    --ha-t-h2:         {{ settings.ha_t_h2_m         | default: 26 | divided_by: 10.0 }}rem;
+    --ha-t-hero:       {{ settings.ha_t_hero_m       | default: 28 | divided_by: 10.0 }}rem;
+    --ha-t-h1:         {{ settings.ha_t_h1_m         | default: 23 | divided_by: 10.0 }}rem;
+    --ha-t-h2:         {{ settings.ha_t_h2_m         | default: 18 | divided_by: 10.0 }}rem;
     /* --- editorial: Junicode -------------------------------------------- */
-    --ha-t-h3:         {{ settings.ha_t_h3_m         | default: 22 | divided_by: 10.0 }}rem;
-    --ha-t-intro:      {{ settings.ha_t_intro_m      | default: 18 | divided_by: 10.0 }}rem;
-    --ha-t-expression: {{ settings.ha_t_expression_m | default: 17 | divided_by: 10.0 }}rem;
+    --ha-t-h3:         {{ settings.ha_t_h3_m         | default: 15 | divided_by: 10.0 }}rem;
+    --ha-t-intro:      {{ settings.ha_t_intro_m      | default: 14 | divided_by: 10.0 }}rem;
+    --ha-t-expression: {{ settings.ha_t_expression_m | default: 12 | divided_by: 10.0 }}rem;
     /* --- record: Noto Sans Mono (normal width since 24 Sep) ------------ */
-    --ha-t-body:       {{ settings.ha_t_body_m       | default: 17 | divided_by: 10.0 }}rem;
-    --ha-t-detail:     {{ settings.ha_t_detail_m     | default: 15 | divided_by: 10.0 }}rem;
-    --ha-t-price:      {{ settings.ha_t_price_m      | default: 13 | divided_by: 10.0 }}rem;
-    --ha-t-ui:         {{ settings.ha_t_ui_m         | default: 13 | divided_by: 10.0 }}rem;
-    --ha-t-label:      {{ settings.ha_t_label_m      | default: 11 | divided_by: 10.0 }}rem;
+    --ha-t-body:       {{ settings.ha_t_body_m       | default: 13 | divided_by: 10.0 }}rem;
+    --ha-t-detail:     {{ settings.ha_t_detail_m     | default: 12 | divided_by: 10.0 }}rem;
+    --ha-t-price:      {{ settings.ha_t_price_m      | default: 12 | divided_by: 10.0 }}rem;
+    --ha-t-ui:         {{ settings.ha_t_ui_m         | default: 11 | divided_by: 10.0 }}rem;
+    --ha-t-label:      {{ settings.ha_t_label_m      | default: 10 | divided_by: 10.0 }}rem;
     --ha-t-meta:       {{ settings.ha_t_meta_m       | default: 10 | divided_by: 10.0 }}rem;
-    --ha-t-legal:      {{ settings.ha_t_legal_m      | default: 10  | divided_by: 10.0 }}rem;
+    --ha-t-legal:      {{ settings.ha_t_legal_m      | default: 9  | divided_by: 10.0 }}rem;
     /* The product name is a Porter surface and sits on its own row in the
        table (16 / 15), one step above H3 rather than on the H2 line. */
-    --ha-t-style:      {{ settings.ha_t_style_m      | default: 20 | divided_by: 10.0 }}rem;
-    --ha-t-nav:        {{ settings.ha_t_nav_m        | default: 12 | divided_by: 10.0 }}rem;
+    --ha-t-style:      {{ settings.ha_t_style_m      | default: 15 | divided_by: 10.0 }}rem;
+    --ha-t-nav:        {{ settings.ha_t_nav_m        | default: 11 | divided_by: 10.0 }}rem;
 
     /* Roles the table names separately but sizes identically to a row above.
        They are aliases rather than sliders so the two can never drift apart
@@ -254,7 +245,7 @@
     /* navigation is its own row since 24 September (Porter Medium 12) */
     --ha-t-button:         var(--ha-t-ui);          /* button text         11 */
     --ha-t-accordion:      var(--ha-t-ui);          /* accordion headings  11 */
-    --ha-t-footer:         var(--ha-t-meta);        /* footer links (Porter Medium, 10 on the artboard) */
+    --ha-t-footer:         var(--ha-t-ui);          /* footer links/body   11 */
     --ha-t-footer-heading: var(--ha-t-label);       /* footer headings     10 */
 
     /* --- line heights, per her table ------------------------------------
@@ -280,7 +271,7 @@
        one most worth being able to nudge, so it stays a slider. It used to be
        a LENGTH in px, consumed as `calc(--ha-t-body-lh / --ha-t-body)`; it is
        a plain ratio now, and those calc() call sites have been replaced. */
-    --ha-t-body-lh:    {{ settings.ha_t_body_lh | default: 140 | divided_by: 100.0 }};
+    --ha-t-body-lh:    {{ settings.ha_t_body_lh | default: 160 | divided_by: 100.0 }};
 
     /* Tracking travels with size: the record voice needs it, a 32px display
        heading does not. Declared here so a section never invents its own. */
@@ -291,21 +282,21 @@
 
   @media screen and (min-width: 990px) {
     :root {
-      --ha-t-hero:       {{ settings.ha_t_hero_d       | default: 48 | divided_by: 10.0 }}rem;
-      --ha-t-h1:         {{ settings.ha_t_h1_d         | default: 42 | divided_by: 10.0 }}rem;
-      --ha-t-h2:         {{ settings.ha_t_h2_d         | default: 35 | divided_by: 10.0 }}rem;
-      --ha-t-h3:         {{ settings.ha_t_h3_d         | default: 28 | divided_by: 10.0 }}rem;
-      --ha-t-intro:      {{ settings.ha_t_intro_d      | default: 21 | divided_by: 10.0 }}rem;
-      --ha-t-expression: {{ settings.ha_t_expression_d | default: 19 | divided_by: 10.0 }}rem;
-      --ha-t-body:       {{ settings.ha_t_body_d       | default: 19 | divided_by: 10.0 }}rem;
-      --ha-t-detail:     {{ settings.ha_t_detail_d     | default: 16 | divided_by: 10.0 }}rem;
-      --ha-t-price:      {{ settings.ha_t_price_d      | default: 14 | divided_by: 10.0 }}rem;
-      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 14 | divided_by: 10.0 }}rem;
-      --ha-t-label:      {{ settings.ha_t_label_d      | default: 11 | divided_by: 10.0 }}rem;
+      --ha-t-hero:       {{ settings.ha_t_hero_d       | default: 32 | divided_by: 10.0 }}rem;
+      --ha-t-h1:         {{ settings.ha_t_h1_d         | default: 26 | divided_by: 10.0 }}rem;
+      --ha-t-h2:         {{ settings.ha_t_h2_d         | default: 20 | divided_by: 10.0 }}rem;
+      --ha-t-h3:         {{ settings.ha_t_h3_d         | default: 16 | divided_by: 10.0 }}rem;
+      --ha-t-intro:      {{ settings.ha_t_intro_d      | default: 15 | divided_by: 10.0 }}rem;
+      --ha-t-expression: {{ settings.ha_t_expression_d | default: 13 | divided_by: 10.0 }}rem;
+      --ha-t-body:       {{ settings.ha_t_body_d       | default: 13 | divided_by: 10.0 }}rem;
+      --ha-t-detail:     {{ settings.ha_t_detail_d     | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-price:      {{ settings.ha_t_price_d      | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 11 | divided_by: 10.0 }}rem;
+      --ha-t-label:      {{ settings.ha_t_label_d      | default: 10 | divided_by: 10.0 }}rem;
       --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 10 | divided_by: 10.0 }}rem;
-      --ha-t-legal:      {{ settings.ha_t_legal_d      | default: 10  | divided_by: 10.0 }}rem;
-      --ha-t-style:      {{ settings.ha_t_style_d      | default: 24 | divided_by: 10.0 }}rem;
-      --ha-t-nav:        {{ settings.ha_t_nav_d        | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-legal:      {{ settings.ha_t_legal_d      | default: 9  | divided_by: 10.0 }}rem;
+      --ha-t-style:      {{ settings.ha_t_style_d      | default: 16 | divided_by: 10.0 }}rem;
+      --ha-t-nav:        {{ settings.ha_t_nav_d        | default: 11 | divided_by: 10.0 }}rem;
     }
   }
 
@@ -329,34 +320,34 @@
   {%- endcomment -%}
   :root {
     /* body copy — 13px */
-    --font-body-base-size-mobile:  {{ settings.ha_t_body_m   | default: 17 }}px;
-    --font-body-base-size-tablet:  {{ settings.ha_t_body_d   | default: 19 }}px;
-    --font-body-base-size-desktop: {{ settings.ha_t_body_d   | default: 19 }}px;
-    --base-line-height: {{ settings.ha_t_body_lh | default: 140 | divided_by: 100.0 }};
+    --font-body-base-size-mobile:  {{ settings.ha_t_body_m   | default: 13 }}px;
+    --font-body-base-size-tablet:  {{ settings.ha_t_body_d   | default: 13 }}px;
+    --font-body-base-size-desktop: {{ settings.ha_t_body_d   | default: 13 }}px;
+    --base-line-height: {{ settings.ha_t_body_lh | default: 160 | divided_by: 100.0 }};
 
     /* interface text — 11px. Luxe's "small" and "micro" steps are the label
        and caption row, 10px. */
-    --font-ui-size-mobile:        {{ settings.ha_t_ui_m    | default: 13 }}px;
-    --font-ui-size-desktop:       {{ settings.ha_t_ui_d    | default: 14 }}px;
-    --font-ui-size-small-mobile:  {{ settings.ha_t_label_m | default: 11 }}px;
-    --font-ui-size-small-desktop: {{ settings.ha_t_label_d | default: 11 }}px;
-    --font-size-micro-mobile:     {{ settings.ha_t_label_m | default: 11 }}px;
-    --font-size-micro-desktop:    {{ settings.ha_t_label_d | default: 11 }}px;
+    --font-ui-size-mobile:        {{ settings.ha_t_ui_m    | default: 11 }}px;
+    --font-ui-size-desktop:       {{ settings.ha_t_ui_d    | default: 11 }}px;
+    --font-ui-size-small-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-ui-size-small-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-size-micro-mobile:     {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-size-micro-desktop:    {{ settings.ha_t_label_d | default: 10 }}px;
 
     /* captions and metadata — 10px */
     --font-caption-size-mobile:  {{ settings.ha_t_meta_m | default: 10 }}px;
     --font-caption-size-desktop: {{ settings.ha_t_meta_d | default: 10 }}px;
 
     /* product badges — a label */
-    --font-size-product-badge-mobile:  {{ settings.ha_t_label_m | default: 11 }}px;
-    --font-size-product-badge-desktop: {{ settings.ha_t_label_d | default: 11 }}px;
+    --font-size-product-badge-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-size-product-badge-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
 
     /* cart and dialogs are functional information — 12px */
-    --font-size-cart-drawer-mobile:  {{ settings.ha_t_detail_m | default: 15 }}px;
-    --font-size-cart-drawer-desktop: {{ settings.ha_t_detail_d | default: 16 }}px;
-    --dialog-title-size-mobile:  {{ settings.ha_t_h3_m | default: 22 }}px;
-    --dialog-title-size-tablet:  {{ settings.ha_t_h3_d | default: 28 }}px;
-    --dialog-title-size-desktop: {{ settings.ha_t_h3_d | default: 28 }}px;
+    --font-size-cart-drawer-mobile:  {{ settings.ha_t_detail_m | default: 12 }}px;
+    --font-size-cart-drawer-desktop: {{ settings.ha_t_detail_d | default: 12 }}px;
+    --dialog-title-size-mobile:  {{ settings.ha_t_h3_m | default: 15 }}px;
+    --dialog-title-size-tablet:  {{ settings.ha_t_h3_d | default: 16 }}px;
+    --dialog-title-size-desktop: {{ settings.ha_t_h3_d | default: 16 }}px;
 
     /* FORM FIELDS ARE THE ONE DELIBERATE EXCEPTION on mobile. iOS Safari zooms
        the page whenever a focused input is under 16px, and the zoom does not
@@ -365,43 +356,43 @@
        body size on everything else. The same reason is why the Hartwick form
        rules read `max(var(--ha-t-body), 1.6rem)`. */
     --font-form-placeholder-size-mobile:  16px;
-    --font-form-placeholder-size-desktop: {{ settings.ha_t_body_d | default: 19 }}px;
+    --font-form-placeholder-size-desktop: {{ settings.ha_t_body_d | default: 13 }}px;
 
     /* buttons — 11px, line height 1 */
-    --buttons-font-size-mobile:  {{ settings.ha_t_ui_m | default: 13 }}px;
-    --buttons-font-size-desktop: {{ settings.ha_t_ui_d | default: 14 }}px;
+    --buttons-font-size-mobile:  {{ settings.ha_t_ui_m | default: 11 }}px;
+    --buttons-font-size-desktop: {{ settings.ha_t_ui_d | default: 11 }}px;
 
     /* Luxe's heading ladder. h1–h3 are Aloha's rows. h4 takes the intro size,
        h5 the body size and h6 the label size, which is where Luxe's own
        templates use them (h6 is Luxe's uppercase eyebrow). h0/hxl/hxxl are
        Luxe's oversize display steps — every one of them collapses onto the
        hero row, because the table has no size above it. */
-    --font-h1-size-mobile:  {{ settings.ha_t_h1_m | default: 30 }}px;
-    --font-h1-size-tablet:  {{ settings.ha_t_h1_d | default: 42 }}px;
-    --font-h1-size-desktop: {{ settings.ha_t_h1_d | default: 42 }}px;
-    --font-h2-size-mobile:  {{ settings.ha_t_h2_m | default: 26 }}px;
-    --font-h2-size-tablet:  {{ settings.ha_t_h2_d | default: 35 }}px;
-    --font-h2-size-desktop: {{ settings.ha_t_h2_d | default: 35 }}px;
-    --font-h3-size-mobile:  {{ settings.ha_t_h3_m | default: 22 }}px;
-    --font-h3-size-tablet:  {{ settings.ha_t_h3_d | default: 28 }}px;
-    --font-h3-size-desktop: {{ settings.ha_t_h3_d | default: 28 }}px;
-    --font-h4-size-mobile:  {{ settings.ha_t_intro_m | default: 18 }}px;
-    --font-h4-size-tablet:  {{ settings.ha_t_intro_d | default: 21 }}px;
-    --font-h4-size-desktop: {{ settings.ha_t_intro_d | default: 21 }}px;
-    --font-h5-size-mobile:  {{ settings.ha_t_body_m | default: 17 }}px;
-    --font-h5-size-tablet:  {{ settings.ha_t_body_d | default: 19 }}px;
-    --font-h5-size-desktop: {{ settings.ha_t_body_d | default: 19 }}px;
-    --font-h6-size-mobile:  {{ settings.ha_t_label_m | default: 11 }}px;
-    --font-h6-size-tablet:  {{ settings.ha_t_label_d | default: 11 }}px;
-    --font-h6-size-desktop: {{ settings.ha_t_label_d | default: 11 }}px;
-    --font-h0-size-mobile:   {{ settings.ha_t_hero_m | default: 34 }}px;
-    --font-h0-size-tablet:   {{ settings.ha_t_hero_d | default: 48 }}px;
-    --font-h0-size-desktop:  {{ settings.ha_t_hero_d | default: 48 }}px;
-    --font-hxl-size-mobile:  {{ settings.ha_t_hero_m | default: 34 }}px;
-    --font-hxl-size-tablet:  {{ settings.ha_t_hero_d | default: 48 }}px;
-    --font-hxl-size-desktop: {{ settings.ha_t_hero_d | default: 48 }}px;
-    --font-hxxl-size-mobile:  {{ settings.ha_t_hero_m | default: 34 }}px;
-    --font-hxxl-size-tablet:  {{ settings.ha_t_hero_d | default: 48 }}px;
-    --font-hxxl-size-desktop: {{ settings.ha_t_hero_d | default: 48 }}px;
+    --font-h1-size-mobile:  {{ settings.ha_t_h1_m | default: 23 }}px;
+    --font-h1-size-tablet:  {{ settings.ha_t_h1_d | default: 26 }}px;
+    --font-h1-size-desktop: {{ settings.ha_t_h1_d | default: 26 }}px;
+    --font-h2-size-mobile:  {{ settings.ha_t_h2_m | default: 18 }}px;
+    --font-h2-size-tablet:  {{ settings.ha_t_h2_d | default: 20 }}px;
+    --font-h2-size-desktop: {{ settings.ha_t_h2_d | default: 20 }}px;
+    --font-h3-size-mobile:  {{ settings.ha_t_h3_m | default: 15 }}px;
+    --font-h3-size-tablet:  {{ settings.ha_t_h3_d | default: 16 }}px;
+    --font-h3-size-desktop: {{ settings.ha_t_h3_d | default: 16 }}px;
+    --font-h4-size-mobile:  {{ settings.ha_t_intro_m | default: 14 }}px;
+    --font-h4-size-tablet:  {{ settings.ha_t_intro_d | default: 15 }}px;
+    --font-h4-size-desktop: {{ settings.ha_t_intro_d | default: 15 }}px;
+    --font-h5-size-mobile:  {{ settings.ha_t_body_m | default: 13 }}px;
+    --font-h5-size-tablet:  {{ settings.ha_t_body_d | default: 13 }}px;
+    --font-h5-size-desktop: {{ settings.ha_t_body_d | default: 13 }}px;
+    --font-h6-size-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
+    --font-h6-size-tablet:  {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-h6-size-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-h0-size-mobile:   {{ settings.ha_t_hero_m | default: 28 }}px;
+    --font-h0-size-tablet:   {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-h0-size-desktop:  {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxl-size-mobile:  {{ settings.ha_t_hero_m | default: 28 }}px;
+    --font-hxl-size-tablet:  {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxl-size-desktop: {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxxl-size-mobile:  {{ settings.ha_t_hero_m | default: 28 }}px;
+    --font-hxxl-size-tablet:  {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-hxxl-size-desktop: {{ settings.ha_t_hero_d | default: 32 }}px;
   }
 {% endstyle %}
