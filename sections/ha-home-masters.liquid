@@ -30,7 +30,8 @@
   The Masters page.
 
   Every photograph on this band is shown monochrome, as the artboard draws
-  it. The scrim is a setting: the artboard has none and its type disappears
+  it, and switches to colour while the pointer is over the band (Aloha, 25
+  September 2026); touch screens show the colour. The scrim is a setting: the artboard has none and its type disappears
   into the white cloth at the top left, so the default carries a light one.
 {%- endcomment -%}
 
@@ -139,7 +140,7 @@
     { "type": "select", "id": "bg_ratio", "label": "Band proportion", "default": "2", "options": [
       { "value": "2.4", "label": "Shallow (12:5)" }, { "value": "2", "label": "As drawn (2:1)" }, { "value": "1.7778", "label": "16:9" }, { "value": "1.5", "label": "3:2" }
     ] },
-    { "type": "checkbox", "id": "mono", "label": "Monochrome", "default": true },
+    { "type": "checkbox", "id": "mono", "label": "Monochrome, colour on hover", "default": true, "info": "Off: always in colour." },
     { "type": "range", "id": "scrim", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Scrim", "default": 40, "info": "The artboard has none; some is needed for the type over the white cloth." }
   ],
   "blocks": [

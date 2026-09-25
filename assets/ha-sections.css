@@ -5447,7 +5447,14 @@ body:has(#SiteHeader.ha-trans) .ha-mst__hero-figure--paper { box-sizing: content
 .ha-home-masters__layer { position: absolute; inset: 0; opacity: 0; transition: opacity 360ms ease; }
 .ha-home-masters__layer.is-active { opacity: 1; }
 .ha-home-masters__img { width: 100%; height: 100%; object-fit: cover; object-position: var(--ha-home-masters-focal, 50% 50%); display: block; }
-.ha-home-masters--mono .ha-home-masters__img { filter: grayscale(1); }
+/* Aloha, 25 September 2026 — the colour switch: monochrome at rest, the
+   colour arrives while the pointer is over the band or a technique has
+   keyboard focus (the house idiom of the Apparel cards and story prints).
+   A touch screen has no hover, so it shows the colour. */
+.ha-home-masters--mono .ha-home-masters__img { filter: grayscale(1); transition: filter 700ms ease; }
+.ha-home-masters--mono .ha-home-masters__inner:hover .ha-home-masters__img,
+.ha-home-masters--mono .ha-home-masters__inner:focus-within .ha-home-masters__img { filter: grayscale(0); }
+@media (hover: none) { .ha-home-masters--mono .ha-home-masters__img { filter: grayscale(0); } }
 /* Peat rather than black, heavier at the left where the reading copy sits. */
 /* Luxe's base.css hides every empty <div> (div:empty { display: none }),
    which is exactly what a scrim is; two classes outrank it. */
@@ -5476,7 +5483,7 @@ body:has(#SiteHeader.ha-trans) .ha-mst__hero-figure--paper { box-sizing: content
   .ha-home-masters__directory { padding-top: clamp(4rem, 7vw, 10rem); }
   .ha-home-masters__aside { justify-self: end; padding-top: clamp(4rem, 7vw, 10rem); }
 }
-@media (prefers-reduced-motion: reduce) { .ha-home-masters__layer { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .ha-home-masters__layer, .ha-home-masters__img { transition: none; } }
 @media (prefers-contrast: more) { .ha-home-masters__scrim { background: rgba(11, 6, 3, 0.85); } }
 
 /* --- 07  The Journal ----------------------------------------------------- */

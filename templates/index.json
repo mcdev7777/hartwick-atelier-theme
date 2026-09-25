@@ -103,14 +103,15 @@
           "type": "story",
           "settings": {
             "label": "03 / The Masters",
-            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_02_MASTERS_4R1A4457.jpg",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_SPOOL_COLOUR_4R1A4457.jpg",
             "alt": "A Master's hand drawing thread from a spindle",
             "own_mat": false,
             "mono": true,
             "title": "Knowledge, kept in use.",
             "body": "<p>A technique continues through the people who practise it. We want the work and the knowledge behind it to be seen.</p>",
             "link_text": "Learn from the Masters",
-            "link_url": "/pages/the-masters"
+            "link_url": "/pages/the-masters",
+            "image_mono": "shopify://shop_images/HA_HOMEPAGE_CARD_02_MASTERS_4R1A4457.jpg"
           }
         },
         "lots": {
@@ -374,7 +375,7 @@
         "bg_focus_x": 50,
         "bg_focus_y": 30,
         "bg_ratio": "2",
-        "mono": false,
+        "mono": true,
         "scrim": 40
       }
     },
