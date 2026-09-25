@@ -8168,3 +8168,53 @@ body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .h
 .lx-template--blog :is(.ha-section, .ha-home),
 .lx-template--article :is(.ha-section, .ha-home) { border-bottom: 0; }
 
+
+/* ==========================================================================
+   PHONES, SECOND REVIEW — 25 September 2026 (Ivan: "check the responsiveness
+   on the mobile mode again in the whole website … fix them all"). Checked at
+   375 × 812 on every template. Layout, spacing and legibility only; sizes stay
+   the 22 September table.
+   ========================================================================== */
+@media screen and (max-width: 989px) {
+  /* Captions laid over photographs (every ha-figure: The Circle's cards, the
+     collection feature, …) sank into pale pictures. A soft wash at the foot of
+     the picture keeps the words readable; the Circle feature had its own. */
+  .ha-figure:has(> .ha-figure__label)::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 42%;
+    background: linear-gradient(to bottom, rgba(11, 6, 3, 0), rgba(11, 6, 3, 0.5));
+    pointer-events: none;
+  }
+  .ha-figure > .ha-figure__label { z-index: 1; }
+
+  /* Collection pages: the in-page menu's links sat at the top of their 44px
+     touch height, hard against the brown bar above. Centre them in it. */
+  .ha-clothing__nav-link { display: inline-flex; align-items: center; }
+
+  /* Product pages: the fixed Select-a-size bar covered the foot of the footer
+     (the © line) at the end of the page. Pad the page by the bar's height. */
+  body:has(.ha-pdp__rail--buy.sticky-buy-buttons) { padding-bottom: calc(44px + (var(--page-margin-mobile, 2rem) * 2) + 1px); }
+
+  /* Contact: the small lines either side of the ring bar touched the rings. */
+  .ha-contact-intro > .ha-contact__wrap { padding-bottom: 6.4rem; }
+  .ha-contact-visit > .ha-contact__wrap { padding-top: 11.2rem; }
+
+  /* About: the journey's last lines ran into the rings of the bar below it. */
+  .ha-abj .ha-abj__wrap { padding-bottom: 7.2rem; }
+  /* About: Angela's paragraphs were held to a narrow centred column. */
+  .ha-abl .ha-abl__body { max-width: none; }
+}
+@media screen and (max-width: 749px) {
+  /* The Masters: her yellow paper was a 4:3 block of empty colour above the
+     title on a phone. A shallower band, the photograph still hanging over it. */
+  .ha-mst__hero-figure--paper { aspect-ratio: 2 / 1; }
+}
+@media screen and (max-width: 599px) {
+  /* About: the envelope ran across the title and its first print was cut at
+     the left edge. A taller band, the envelope smaller and higher, clear of
+     the words. */
+  .ha-abo .ha-abo__stage { aspect-ratio: 3 / 4; }
+  .ha-abo .ha-abo__envelope { left: -12%; top: 2%; width: 126%; }
+}
