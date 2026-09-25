@@ -370,11 +370,11 @@
         "masters_page_url": "/pages/the-masters",
         "cta_text": "View the collection pieces",
         "cta_link": "/collections",
-        "bg_image": "shopify://shop_images/HARTWICK_MASTERS_CHARKHA_HANDS_4R1A4525.jpg",
+        "bg_image": "shopify://shop_images/HARTWICK_MASTERS_SPOOL_COLOUR_4R1A4457.jpg",
         "bg_focus_x": 50,
-        "bg_focus_y": 50,
+        "bg_focus_y": 30,
         "bg_ratio": "2",
-        "mono": true,
+        "mono": false,
         "scrim": 40
       }
     },

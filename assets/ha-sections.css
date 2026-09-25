@@ -4922,6 +4922,14 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 .ha-mst__hero { position: relative; }
 .ha-mst__hero-figure { height: min(38.4vw, var(--ha-media-cap)); min-height: 24rem; background: var(--ha-field-sand, #E5E1D6); }
 .ha-mst__hero-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--ha-mst-focus, 50% 50%); display: block; }
+/* Aloha, 25 September 2026: her yellow paper in place of the photograph,
+   running up under the transparent menu; the band keeps its height below
+   the bar. */
+.ha-mst__hero-figure--paper { background: #B2AA72 var(--ha-mst-paper) center / cover no-repeat; }
+body:has(#SiteHeader.ha-trans) .ha-mst__hero-figure--paper { box-sizing: content-box; padding-top: var(--site-header-height-mobile, 6rem); }
+@media screen and (min-width: 990px) {
+  body:has(#SiteHeader.ha-trans) .ha-mst__hero-figure--paper { padding-top: var(--site-header-height-desktop, 8rem); }
+}
 .ha-mst__hero-label { position: absolute; left: var(--ha-gutter); bottom: 1.6rem; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-invert); text-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.45); }
 /* Mounted like a print: a hairline frame and a narrow mat of the page ground. */
 .ha-mst__inset { margin: 0; padding: 0.4rem; background: var(--ha-page-ground); border: 1px solid var(--ha-rule); box-shadow: 0 1.2rem 3.2rem rgba(11, 6, 3, 0.12); }

@@ -57,6 +57,7 @@
 
 {%- liquid
   assign hero = section.settings.hero_image
+  assign hero_paper = section.settings.hero_paper
   assign hero_focus = '--ha-mst-focus: ' | append: section.settings.hero_focus_x | append: '% ' | append: section.settings.hero_focus_y | append: '%'
   assign inset = section.settings.inset_image
   assign still = section.settings.still_image
@@ -74,8 +75,14 @@
 
   {%- comment -%} ---------- HERO: the wide photograph, the framed inset ---------- {%- endcomment -%}
   <header class="ha-mst__hero{% if inset %} ha-mst__hero--inset{% endif %}">
+    {%- comment -%} Aloha, 25 September 2026: the header is her yellow paper (b2aa72) alone, no photograph; the menu is transparent over it (header setting "Transparent on these pages"). {%- endcomment -%}
+    {%- if hero_paper -%}
+    <figure class="ha-mst__hero-figure ha-mst__hero-figure--paper ha-figure ha-grain-block ha-grain-block--over" style="--ha-mst-paper: url('{{ hero_paper | image_url: width: 2800 }}')">
+    {%- else -%}
     <figure class="ha-mst__hero-figure ha-figure ha-grain-block ha-grain-block--over{% unless hero %} ha-figure--empty{% endunless %}">
-      {%- if hero -%}
+    {%- endif -%}
+      {%- if hero_paper -%}
+      {%- elsif hero -%}
         {{ hero | image_url: width: 2800 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1500, 2000, 2800', alt: section.settings.hero_alt, class: 'ha-mst__hero-img', style: hero_focus }}
       {%- else -%}
         <span class="ha-mst__empty ha-record">{{ empty_text }}</span>
@@ -345,6 +352,7 @@
     { "type": "text", "id": "empty_text", "label": "Empty media reads", "default": "To supply" },
 
     { "type": "header", "content": "Hero" },
+    { "type": "image_picker", "id": "hero_paper", "label": "Paper (replaces the photograph)", "info": "When set, the header is this paper alone and the photograph is not shown." },
     { "type": "image_picker", "id": "hero_image", "label": "Wide photograph" },
     { "type": "text", "id": "hero_alt", "label": "Alt text", "default": "Warp threads stretched on a handloom" },
     { "type": "range", "id": "hero_focus_x", "label": "Focus, horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
