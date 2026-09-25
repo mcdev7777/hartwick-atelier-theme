@@ -233,7 +233,7 @@
                     </figure>
                     <h3 class="ha-clothing__name ha-narrate">{%- render 'ha-style-name', name: sname -%}</h3>
                     {%- if expr != blank -%}<p class="ha-clothing__expr ha-narrate">{{ expr }}</p>{%- endif -%}
-                    <p class="ha-clothing__lot ha-record">{% if lot != blank %}{{ section.settings.lot_label }} {{ lot }}{% else %}{{ section.settings.lot_placeholder }}{% endif %}</p>
+                    {%- comment -%} Aloha, 25 Sep 2026: "For now, we're not using LOT [Number] on the Collection page … please simply remove it." Kept behind show_lot for when the Lot system returns. {%- endcomment -%}{%- if section.settings.show_lot -%}<p class="ha-clothing__lot ha-record">{% if lot != blank %}{{ section.settings.lot_label }} {{ lot }}{% else %}{{ section.settings.lot_placeholder }}{% endif %}</p>{%- endif -%}
                     <p class="ha-clothing__meta ha-record">{{ section.settings.view_text }}</p>
                   </a>
                 </li>
@@ -313,7 +313,7 @@
                   </figure>
                   <h3 class="ha-clothing__name ha-narrate">{%- render 'ha-style-name', name: sname -%}</h3>
                   {%- if expr != blank -%}<p class="ha-clothing__expr ha-narrate">{{ expr }}</p>{%- endif -%}
-                  <p class="ha-clothing__lot ha-record">{% if lot != blank %}{{ section.settings.lot_label }} {{ lot }}{% else %}{{ section.settings.lot_placeholder }}{% endif %}</p>
+                  {%- comment -%} Aloha, 25 Sep 2026: "For now, we're not using LOT [Number] on the Collection page … please simply remove it." Kept behind show_lot for when the Lot system returns. {%- endcomment -%}{%- if section.settings.show_lot -%}<p class="ha-clothing__lot ha-record">{% if lot != blank %}{{ section.settings.lot_label }} {{ lot }}{% else %}{{ section.settings.lot_placeholder }}{% endif %}</p>{%- endif -%}
                   <p class="ha-clothing__meta ha-record">{% if count > 1 %}{{ count | prepend: '0' | slice: -2, 2 }} {{ section.settings.count_text }} / {% endif %}{{ section.settings.view_text }}</p>
                 </a>
               </li>
@@ -375,6 +375,7 @@
     { "type": "text", "id": "lots_note", "label": "Expanded note", "default": "Dates, quantities and access windows appear only when confirmed." },
     { "type": "header", "content": "Cards" },
     { "type": "text", "id": "lot_label", "label": "Lot label", "default": "Lot" },
+    { "type": "checkbox", "id": "show_lot", "label": "Show the Lot line on cards", "default": false, "info": "Off (Aloha, 25 September 2026): the Lot system is to be revisited; the line is removed from the cards for this version." },
     { "type": "text", "id": "lot_placeholder", "label": "Lot not yet confirmed reads", "default": "Lot [number]" },
     { "type": "text", "id": "count_text", "label": "Count text", "default": "fabric expressions" },
     { "type": "text", "id": "view_text", "label": "Link text", "default": "View piece" },

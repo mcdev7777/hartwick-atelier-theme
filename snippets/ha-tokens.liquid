@@ -77,6 +77,13 @@
        bar with binder rings. */
     --ha-paper-panel:   {{ settings.ha_paper_panel | default: '#EEECE2' }};
     --ha-binding-bar:   {{ settings.ha_binding_bar | default: '#392B24' }};
+    /* The divider (Aloha, 25 September 2026): "Whenever a dividing line runs
+       across a section of the website, please replace the thin rule with the
+       thicker brown line we've established" — the binding bar's own colour and
+       thickness (16 on 1440). Rules inside a section (list rows, tables,
+       ruled buttons) stay hairlines. */
+    --ha-divider-w:     clamp(0.8rem, 1.11vw, 1.6rem);
+    --ha-divider:       var(--ha-divider-w) solid var(--ha-binding-bar);
     --ha-scrollbar-thumb: {{ settings.ha_scrollbar_color | default: '#69645F' }};
     /* Aloha's pencil marks (23 September 2026) — alpha masks cut from her
        sheet by scripts/make-pencil-marks.py; ha-sections.css "PENCIL MARKS". */
@@ -90,6 +97,13 @@
        ha-sections.css ".ha-grain-block". Her image is grey at 60% alpha;
        the layer strength multiplies that, as her 32% layer did. */
     --ha-grain-tile: url("{{ 'ha-grain-block.svg' | asset_url }}");
+    /* The same tile with the Register page's 30% baked in (0.18 = 30% of her
+       60%-alpha grain), for the site-wide grain (Aloha, 25 September 2026:
+       "apply the grain layer as a background across EVERY section of the
+       website, following the same treatment already used on The Register
+       page"). Baked into the file because a background image cannot take an
+       opacity; ha-sections.css "GRAIN EVERYWHERE". */
+    --ha-grain-page: url("{{ 'ha-grain-page.svg' | asset_url }}");
     /* The Circle's mark (Aloha, 24 September 2026: "Dye blotch = The Circle"):
        her yellow dye spot, 128px WebP with transparency. */
     --ha-circle-blotch: url("{{ 'ha-circle-blotch.webp' | asset_url }}");

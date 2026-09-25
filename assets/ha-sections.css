@@ -83,7 +83,7 @@
 .ha-section {
   background: var(--ha-page-ground);
   color: var(--ha-text);
-  border-bottom: 1px solid var(--ha-rule);
+  border-bottom: var(--ha-divider);   /* the thick brown divider, 25 Sep */
 }
 
 /* --- field colours (Wireframe 04) --------------------------------------
@@ -3055,7 +3055,8 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    ========================================================================== */
 
 .ha-footer:not([class*="ha-section--field-"]) { background: var(--ha-page-ground); }
-.ha-footer { border-top: 1px solid var(--ha-rule); border-bottom: 0; }
+/* No rule over the footer: the Register box (or, on the Register page, its last section's brown divider) already closes the page above it. */
+.ha-footer { border-top: 0; border-bottom: 0; }
 
 .ha-footer__inner {
   display: grid;
@@ -4558,7 +4559,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* --- category navigation, sticky below the site header ------------------ */
 .ha-clothing__nav {
   position: sticky; top: var(--ha-clothing-header); z-index: 5;
-  background: var(--ha-page-ground); border-top: 1px solid var(--ha-rule); border-bottom: 1px solid var(--ha-rule);
+  background: var(--ha-page-ground); border-top: var(--ha-divider); border-bottom: var(--ha-divider);
 }
 .ha-clothing__nav-grid { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.8rem 2.4rem; padding-top: 1.6rem; padding-bottom: 1.6rem; }
 .ha-clothing__nav-label { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
@@ -4572,7 +4573,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 
 /* --- Made in Lots --------------------------------------------------------- */
-.ha-clothing__lots { border-bottom: 1px solid var(--ha-rule); }
+.ha-clothing__lots { border-bottom: var(--ha-divider); }
 .ha-clothing__lots-grid { display: grid; gap: 1.2rem; padding-top: 2.4rem; padding-bottom: 2.4rem; }
 .ha-clothing__lots-label { margin: 0; font-size: var(--ha-t-label); letter-spacing: 0.12em; }
 .ha-clothing__lots-grid > * { min-width: 0; }
@@ -4592,7 +4593,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 
 /* --- a category: rail + grid --------------------------------------------- */
-.ha-clothing__cat { border-bottom: 1px solid var(--ha-rule); }
+.ha-clothing__cat { border-bottom: var(--ha-divider); }
 .ha-clothing__cat-grid { display: grid; gap: 2.4rem; }
 .ha-clothing__rail-inner { display: grid; gap: 1.2rem; }
 .ha-clothing__cat-num { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
@@ -4638,7 +4639,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 @media screen and (min-width: 990px) and (max-height: 620px) { .ha-clothing__rail { position: static; } }
 
 /* --- Made by Masters feature --------------------------------------------- */
-.ha-clothing__feature { border-bottom: 1px solid var(--ha-rule); }
+.ha-clothing__feature { border-bottom: var(--ha-divider); }
 .ha-clothing__feature-grid { display: grid; gap: 2.4rem; }
 .ha-clothing__feature-figure { aspect-ratio: 4 / 5; }
 .ha-clothing__feature-figure img { filter: grayscale(1); transition: filter 700ms ease; }
@@ -4657,14 +4658,18 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 
 /* --- onward ---------------------------------------------------------------- */
 .ha-clothing__onward { border-bottom: 0; }
-.ha-clothing__onward-grid { display: grid; gap: 2.4rem; padding-top: 3.2rem; padding-bottom: 4rem; }
+/* Aloha, 25 September 2026: the onward links "feel slightly oversized …
+   reduce their size so they sit more quietly" — set exactly as the page's
+   own EXPLORE menu near the top, which she called "perfect": the same size,
+   tracking, spacing and label column. */
+.ha-clothing__onward-grid { display: grid; gap: 0.8rem 2.4rem; padding-top: 1.6rem; padding-bottom: 1.6rem; }
 .ha-clothing__onward-label { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
-.ha-clothing__onward-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.2rem 4rem; }
-.ha-clothing__onward-link { font-size: var(--ha-t-h2); text-decoration: none; color: var(--ha-text); min-height: 44px; display: inline-block; }
+.ha-clothing__onward-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem 2.8rem; }
+.ha-clothing__onward-link { display: inline-block; font-size: var(--ha-t-ui); text-transform: uppercase; letter-spacing: 0.04em; color: var(--ha-ink-title); text-decoration: none; min-height: 44px; line-height: 44px; }
 .ha-clothing__onward-link:hover, .ha-clothing__onward-link:focus-visible { text-decoration: underline; text-underline-offset: 0.4rem; }
 @media screen and (min-width: 990px) {
   .ha-clothing__onward-grid { grid-template-columns: 22rem 1fr; align-items: baseline; }
-  .ha-clothing__onward-list { justify-content: space-around; }
+  .ha-clothing__onward-list { gap: 0.4rem clamp(2.4rem, 5vw, 8rem); }
 }
 
 /* ==========================================================================
@@ -4736,7 +4741,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 @media (hover: none) { .ha-idx__dir-link { min-height: 44px; } }
 
 /* --- a group: rail + cards ---------------------------------------------- */
-.ha-idx__group { border-bottom: 1px solid var(--ha-rule); scroll-margin-top: var(--ha-idx-header); }
+.ha-idx__group { border-bottom: var(--ha-divider); scroll-margin-top: var(--ha-idx-header); }
 .ha-idx__group-grid { display: grid; gap: 2.4rem; }
 .ha-idx__group-grid > * { min-width: 0; }
 .ha-idx__rail-inner { display: grid; gap: 1.2rem; align-content: start; }
@@ -4953,7 +4958,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 
 /* --- still and movement: two square panels, edge to edge ------------------ */
-.ha-mst__pair { border-bottom: 1px solid var(--ha-rule); }
+.ha-mst__pair { border-bottom: var(--ha-divider); }
 .ha-mst__pair-grid { display: grid; }
 .ha-mst__still, .ha-mst__movement { margin: 0; min-width: 0; }
 /* width: 100% because a grid item with an aspect-ratio does not stretch; the
@@ -5118,7 +5123,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 
 /* --- from the archive: the wide film, then The work continues ------------- */
-.ha-mst__feature { border-bottom: 1px solid var(--ha-rule); }
+.ha-mst__feature { border-bottom: var(--ha-divider); }
 .ha-mst__continue { border-bottom: 0; }
 /* The foot of the page. Its bottom air used to come from the notice wrap
    beneath it; with the notices off (20 September) the grid carries it. */
@@ -5189,7 +5194,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
    ========================================================================== */
 
 /* --- shared ------------------------------------------------------------- */
-.ha-home { background: var(--ha-page-ground); color: var(--ha-text); border-bottom: 1px solid var(--ha-rule); }
+.ha-home { background: var(--ha-page-ground); color: var(--ha-text); border-bottom: var(--ha-divider); }
 /* The artboard sits its sections 60–70px apart; the site's 88 was drawn for
    the product page's air, so this page takes four-fifths of it. */
 .ha-home > .ha-wrap { padding-top: calc(var(--ha-section-y) * 0.8); padding-bottom: calc(var(--ha-section-y) * 0.8); }
@@ -7438,20 +7443,29 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 .ha-jnl-band {
   display: grid;
   place-items: center;
-  padding-block: calc(56 * var(--u));
+  padding-block: calc(34 * var(--u)) calc(26 * var(--u));
   margin-top: calc(25 * var(--u));
   background: var(--ha-jnl-band);
   color: var(--ha-jnl-band-ink);
   overflow: hidden;
 }
+/* Aloha, 25 September 2026: "Please make sure THE JOURNAL is displayed at a
+   larger scale, as shown in the reference image … a clear editorial title
+   rather than a smaller section label." In her reference the title spans
+   ~92% of the band. THE JOURNAL in Junicode Light is 6.98em wide with this
+   tracking, so 13% of the band's width sets it at her scale on any screen
+   (about 180px on 1440, 48px on a phone). Her explicit instruction, so it
+   stands outside the type table. */
+.ha-jnl-band { container-type: inline-size; }
 .ha-jnl-band__title {
   font-family: var(--ha-font-narrate);
   font-weight: 300;
-  font-size: var(--ha-t-hero);
-  line-height: var(--ha-t-lh-hero);
+  font-size: 13cqw;
+  line-height: 1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   white-space: nowrap;
+  margin: 0;
 }
 .ha-jnl-strap {
   display: grid;
@@ -7495,7 +7509,7 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 .ha-jnl-cats__link--empty { cursor: default; }
 
 /* --- lead story ---------------------------------------------------------------- */
-.ha-jnl-lead { border-bottom: 1px solid var(--ha-jnl-rule); }
+.ha-jnl-lead { border-bottom: var(--ha-divider); }
 .ha-jnl-lead .ha-jnl-wrap { position: relative; }
 .ha-jnl-lead__grid { display: grid; grid-template-columns: 924fr 446fr; }
 .ha-jnl-lead__story { padding: calc(41 * var(--u)) calc(52 * var(--u)) calc(58 * var(--u)) calc(5 * var(--u)); }
@@ -7577,7 +7591,7 @@ a.ha-jnl-button .ha-mark-word { color: var(--ha-jnl-button-ink, var(--ha-chalk-b
 .ha-jnl-button--inert { cursor: default; }
 
 /* --- two notes ------------------------------------------------------------------ */
-.ha-jnl-notes { border-bottom: 1px solid var(--ha-jnl-rule); }
+.ha-jnl-notes { border-bottom: var(--ha-divider); }
 .ha-jnl-notes__grid { display: grid; grid-template-columns: 689fr 681fr; padding-block: calc(22 * var(--u)) calc(26 * var(--u)); }
 .ha-jnl-note { display: flex; flex-direction: column; padding: calc(16 * var(--u)) calc(36 * var(--u)) 0 calc(5 * var(--u)); }
 .ha-jnl-note + .ha-jnl-note { padding-left: calc(34 * var(--u)); padding-right: 0; border-left: 1px solid var(--ha-jnl-rule); }
@@ -7955,3 +7969,55 @@ body:has(#SiteHeader.ha-trans-light) .ha-paper-head { padding-top: var(--site-he
 .ha-coll-paper .collection-std-description,
 .ha-coll-paper .collection-banner-std-title,
 .ha-coll-paper .collection-title-bb { color: var(--ha-chalk-blue); }
+
+
+/* ==========================================================================
+   GRAIN EVERYWHERE + THE BROWN DIVIDER — Aloha, 25 September 2026
+   ("changes to the site.pdf")
+
+   "Please apply the grain layer as a background across EVERY section of the
+    website, following the same treatment already used on The Register page."
+
+   The Register page lays her grain tile over each section's ground at 30%,
+   under the content, so photographs stay clean. Site-wide, that is a second
+   background image on the page and on every block that paints its own
+   ground: the tile with 30% baked in (--ha-grain-page, ha-grain-page.svg),
+   layered over the block's own colour. A background paints beneath every
+   picture in the block, which is exactly the Register page's result, without
+   a pseudo-element (several of these blocks already use theirs). Blocks that
+   already carry the grain (.ha-grain-block — the Register and Contact pages,
+   the dark Journal and Principle bands, the Register box) are left alone, so
+   nothing is grained twice.
+   ========================================================================== */
+html body {
+  background-image: var(--ha-grain-page);
+  background-size: 320px 320px;
+  background-repeat: repeat;
+}
+html body .ha-section:not(.ha-grain-block),
+html body .ha-home:not(.ha-grain-block),
+html body .ha-clothing__nav,
+html body .ha-jnl-lead,
+html body .ha-jnl-notes,
+html body #SiteHeader:not(.hdr-trans-hp) .header-bar-inner {
+  background-image: var(--ha-grain-page);
+  background-size: 320px 320px;
+  background-repeat: repeat;
+}
+/* The navy paper heads keep their paper, with the grain over it. */
+html body .ha-paper-head {
+  background-image: var(--ha-grain-page), var(--ha-paper-bg);
+  background-size: 320px 320px, cover;
+  background-repeat: repeat, no-repeat;
+  background-position: 0 0, center;
+}
+
+/* The brown divider is a section's lower edge. Where the next thing down is
+   already a brown binding bar, or the page ends in the site-wide Register
+   box, a second bar would only double it. */
+.shopify-section:has(+ .shopify-section .ha-home-binding) > .ha-section,
+.shopify-section:has(+ .shopify-section .ha-home-binding) > .ha-home,
+.shopify-section:has(+ .shopify-section .ha-home-binding) > * > .ha-section { border-bottom: 0; }
+body:has(.ha-register--site) #MainContent > .shopify-section:last-child > .ha-section,
+body:has(.ha-register--site) #MainContent > .shopify-section:last-child > .ha-home,
+body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .ha-section:last-child { border-bottom: 0; }
