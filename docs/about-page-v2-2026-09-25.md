@@ -26,12 +26,9 @@ The 15 Sep bands are still in `templates/page.about.json`, switched off.
 
 - `HA_ABOUT_PAPER_PINK.jpg`, `HA_ABOUT_ENVELOPE.png`, `HA_ABOUT_COLLAGE_LIFE.png`,
   `HA_ABOUT_WORK_PIECES.png`, `HA_ABOUT_DYE_01…08.png`
-- Grey bands, revised later on 25 Sep (Ivan: the grain looked harsher than on The
-  Register, which is the reference): at first they used her grey paper at 29%
-  (`HA_ABOUT_PAPER_GREY_*_29.jpg`). Measured, that paper was nearly twice as grainy
-  as the Register's (8.0 against 4.1, high-pass RMS). The bands are now flat #DAD6CC,
-  the tone her artboard renders at, under the same grain as The Register: the grain
-  tile at Page grain strength (0.18). The `_29` files are still in Files but unused.
+- Grey bands: after two revisions on 25 Sep they now use The Register's ground
+  (#F3F0E7) and grain (0.18), the standing site-wide rule. Her artboard's grey paper
+  was layout reference only. The `HA_ABOUT_PAPER_GREY_*` files are in Files but unused.
 - The dye swatches come from the PDF at about 300px, so they're slightly soft on
   retina screens.
 

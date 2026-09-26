@@ -98,7 +98,6 @@
         "button_link": "mailto:contact@hartwickatelier.com?subject=Showroom%20visit",
         "caption": "",
         "show_placeholder_note": true,
-        "paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_LOWER.jpg",
         "grain": true
       }
     },

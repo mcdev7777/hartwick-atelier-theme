@@ -8065,13 +8065,10 @@ body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .h
 .ha-abo .ha-placeholder-note { color: #fff; }
 
 /* --- the grey bands ------------------------------------------------------ */
-/* Ivan, 25 September: the grain here read harsher than on The Register, which
-   is the reference. Her grey paper photograph carried its own heavy noise
-   (twice the Register's), so the bands are now her grey as a flat colour —
-   #DAD6CC, the tone her artboard renders at — under the same grain as The
-   Register (the tile at Page grain strength, .ha-page-grain). A paper can
-   still be picked per band. */
-.ha-about-band { background: #DAD6CC var(--ha-about-paper, none) center / cover no-repeat; color: var(--ha-text); }
+/* The Register's ground and grain, like every band on the site (25 September:
+   "use The Register page as the fixed reference for the background colour and
+   grain treatment"). Her artboard's grey paper was layout reference only. */
+.ha-about-band { background: var(--ha-page-ground) var(--ha-about-paper, none) center / cover no-repeat; color: var(--ha-text); }
 
 /* --- 02  A life across places --------------------------------------------- */
 .ha-abl .ha-abl__wrap { padding: 6.1vw 0 4.4vw; text-align: center; }
@@ -8218,3 +8215,30 @@ body:has(.ha-register--site) #MainContent > .shopify-section:last-child > * > .h
   .ha-abo .ha-abo__stage { aspect-ratio: 3 / 4; }
   .ha-abo .ha-abo__envelope { left: -12%; top: 2%; width: 126%; }
 }
+
+
+/* ==========================================================================
+   ONE GROUND, ONE GRAIN — Aloha, 25 September 2026
+   "Background colour + grain: consistent across all pages and sections, using
+    The Register as the reference. Header: can retain its own established
+    background treatment. The Journal: the intentional exception."
+   The Register's treatment is the page ground (--ha-page-ground, #F3F0E7) with
+   the grain tile at Page grain strength (0.18). A wireframe's background is
+   reference only. The page openings keep their papers (Register wine, About
+   pink, Masters yellow, collection navy, Contact grey, the homepage opening).
+   ========================================================================== */
+/* Grain blocks everywhere take The Register's strength (the Register box was
+   0.192); the Journal keeps its own. */
+.ha-grain-block:not(.ha-jnl, .ha-jnl *) { --ha-grain-strength: var(--ha-grain-register); }
+/* Contact, Visit the showroom: on the ground now, not the grey paper, so its
+   Chalk Blue headings (drawn for the paper) take the ink. */
+.ha-contact-visit { background: var(--ha-page-ground); }
+.ha-contact-visit:not(.ha-contact--paper) :is(.ha-contact-visit__heading, .ha-contact-visit__aside-heading) { color: var(--ha-ink-title, var(--ha-text)); }
+/* Luxe sections that paint the ground themselves (the FAQ's collapsible rows)
+   covered the page grain; give them the same grain. */
+html body #MainContent .section-container[class*="collapsible_content"] {
+  background-image: var(--ha-grain-page);
+  background-size: 320px 320px;
+  background-repeat: repeat;
+}
+
