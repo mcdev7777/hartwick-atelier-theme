@@ -8242,3 +8242,73 @@ html body #MainContent .section-container[class*="collapsible_content"] {
   background-repeat: repeat;
 }
 
+
+/* ==========================================================================
+   THE MASTERS, 26 SEPTEMBER LAYOUT — Aloha's MASTERS.pdf (screenshots of the
+   site, rearranged). Section setting Layout: 26 September. Measured on her
+   1440 board; type keeps the role sizes. Backgrounds follow The Register
+   (ground + grain); the opening keeps its yellow paper (a header).
+   ========================================================================== */
+.ha-home-binding--masters .ha-home-binding__ring--1 { left: 16.6%; }   /* 239 */
+.ha-home-binding--masters .ha-home-binding__ring--2 { left: 49.4%; }   /* 711 */
+.ha-home-binding--masters .ha-home-binding__ring--3 { left: 85.1%; }   /* 1225 */
+/* the bars sit between the page's own parts, so no divider doubles them */
+.ha-mst > :is(.ha-section, .ha-mst__hero):has(+ .ha-mst__bar) { border-bottom: 0; }
+
+/* --- 01  The opening: yellow paper, the quotation, MADE BY MASTERS -------- */
+.ha-mst .ha-mst__hero26 { display: block; position: relative; height: 56.7vw; max-height: none; min-height: 0; aspect-ratio: auto; background-color: #B2AA72; }
+.ha-mst__hero26-quote { position: absolute; left: 8%; right: 8%; top: 35.4%; text-align: center; color: var(--ha-field-correspondence); }
+.ha-mst__hero26 .ha-mst__hero26-label,
+.ha-mst__hero26 .ha-mst__hero26-cite { margin: 0; letter-spacing: 0.12em; color: var(--ha-field-correspondence); }
+.ha-mst__hero26-bq { margin: 3.4vw 0 0; }
+.ha-mst__hero26-text { margin: 0; font-size: var(--ha-t-h1); line-height: 1.3; color: var(--ha-field-correspondence); }
+.ha-mst__hero26 .ha-mst__hero26-cite { display: block; margin-top: 3.2vw; }
+.ha-mst__hero26-title { position: absolute; left: 56.25%; right: 4%; bottom: 6.3%; color: #fff; }
+.ha-mst__hero26 .ha-mst__hero26-h1 { margin: 0; font-size: var(--ha-t-h1); line-height: var(--ha-t-lh-h1); font-weight: var(--ha-role-nav-weight); letter-spacing: 0.12em; color: #fff; }
+.ha-mst__hero26-sub { margin: 0.9em 0 0; font-size: var(--ha-t-intro); font-style: italic; line-height: 1.3; color: #fff; }
+
+/* --- 02  The knowledge behind the work ------------------------------------- */
+/* label 185 below the bar at 130; columns 280 wide from 133 / 496 / 859; each
+   swatch at its drawn size and offset; the collage (visible 270–680) beside
+   the text column (756–1294); a yellow swatch (1115, 180 wide) hangs from the
+   third ring. Measured off the rendered board, not the PDF's text layer. */
+.ha-mst__knowledge { position: relative; }
+.ha-mst__knowledge-spot { position: absolute; top: 2vw; left: 77.4%; width: 12.5vw; margin: 0; z-index: 1; pointer-events: none; }
+.ha-mst__knowledge-spot img { display: block; width: 100%; height: auto; }
+.ha-mst .ha-mst__knowledge-inner { padding: 12.8vw 9.03vw 9.2vw; max-width: none; }
+.ha-mst__knowledge .ha-mst__knowledge-label { margin: 0; font-weight: var(--ha-role-nav-weight); }
+.ha-mst__knowledge-cols { display: grid; grid-template-columns: repeat(3, 19.44vw); column-gap: 5.76vw; margin-top: 3.9vw; }
+.ha-mst__kcol-label { margin: 0; font-size: var(--ha-t-h3); line-height: 1.2; letter-spacing: 0.12em; color: var(--ha-mst-ink); }
+.ha-mst__kcol-body { margin-top: 2vw; font-size: var(--ha-t-body); line-height: 1.45; text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
+.ha-mst__kcol-body p { margin: 0; }
+.ha-mst__kcol-spot { margin: 1.6vw 0 0; }
+.ha-mst__kcol-spot img { display: block; width: 100%; height: auto; }
+.ha-mst__kcol--1 .ha-mst__kcol-spot { width: 11.3vw; margin-left: 1.67vw; }
+.ha-mst__kcol--2 .ha-mst__kcol-spot { width: 11vw; margin-left: 4.93vw; }
+.ha-mst__kcol--3 .ha-mst__kcol-spot { width: 9.3vw; margin-left: 7.2vw; }
+.ha-mst__story { display: grid; grid-template-columns: 9.72vw 28.5vw 5.28vw 37.4vw; align-items: center; margin-top: 4.5vw; }
+.ha-mst__story-figure { grid-column: 2; margin: 0; }
+.ha-mst__story-img { display: block; width: 100%; height: auto; }
+.ha-mst__story-body { grid-column: 4; font-size: var(--ha-t-intro); line-height: var(--ha-t-lh-intro); text-align: justify; text-align-last: center; color: var(--ha-mst-ink); }
+.ha-mst__story-body p { margin: 0 0 1.4em; }
+.ha-mst__story-body p:last-child { margin-bottom: 0; }
+
+@media screen and (max-width: 989px) {
+  .ha-mst .ha-mst__hero26 { height: auto; aspect-ratio: auto; padding-bottom: 4rem; }
+  .ha-mst__hero26-quote, .ha-mst__hero26-title { position: static; }
+  .ha-mst__hero26-quote { padding: 6.4rem 2rem 0; }
+  .ha-mst__hero26-title { padding: 6.4rem 2rem 0; }
+  .ha-mst__hero26-bq { margin-top: 2rem; }
+  .ha-mst__hero26 .ha-mst__hero26-cite { margin-top: 2rem; }
+  .ha-mst__hero26-text br { display: none; }
+  .ha-mst__knowledge-spot { left: auto; right: 5vw; width: 26vw; }
+  .ha-mst .ha-mst__knowledge-inner { padding: 12rem 2rem 7.2rem; }
+  .ha-mst__knowledge-cols { grid-template-columns: 1fr; row-gap: 4rem; margin-top: 3.2rem; }
+  .ha-mst__kcol-body { margin-top: 1.2rem; text-align: left; }
+  .ha-mst__kcol-spot { margin-top: 2rem; }
+  .ha-mst__kcol--1 .ha-mst__kcol-spot, .ha-mst__kcol--2 .ha-mst__kcol-spot, .ha-mst__kcol--3 .ha-mst__kcol-spot { width: 32vw; margin-left: 0; }
+  .ha-mst__story { grid-template-columns: 1fr; row-gap: 3.2rem; margin-top: 4.8rem; }
+  .ha-mst__story-figure, .ha-mst__story-body { grid-column: 1; }
+  .ha-mst__story-figure { width: 80%; justify-self: center; }
+  .ha-mst__story-body { text-align: left; text-align-last: auto; }
+}

@@ -111,3 +111,29 @@ template — Hartwik - Dev and the CLI dev theme.
   their Transcript disclosure carries a description instead (brief §4).
 - Master credits, names, locations: none published; fields exist, empty.
 - Symbols: slots exist, empty, per Aloha.
+
+## 26 September 2026 — Aloha's new order (MASTERS.pdf)
+
+She rearranged the page using screenshots of the site. Section setting **Layout:
+26 September**. The 18 September order is one click away.
+
+1. **Opening:** yellow paper (header treatment) with the khadi quotation centred.
+   **MADE BY MASTERS** is the H1, at the lower right in white, with "Plants, Minerals.
+   Sunlight. Rainfall. Time" beneath it. Then a ring bar (placement `masters`,
+   239/711/1225).
+2. **The knowledge behind the work:** the three columns (labels now in capitals as
+   drawn), each with a dye swatch (the columns' symbol slots). Her yellow swatch hangs
+   from the third ring. Her collage (`HA_MASTERS_COLLAGE_BLOCKPRINT.png`) sits beside
+   three new paragraphs, verbatim. Then a plain bar.
+3. The glossary, then a ring bar straight onto the still and the film (no gap).
+4. At the printing table. The work continues. Then the site-wide Register band.
+
+The three small archive tiles aren't in her order, so they aren't shown in this
+layout (the blocks are kept). Backgrounds follow The Register; see
+`hartwick-one-ground-one-grain`.
+
+**For Aloha:** her new paragraphs say "artisans" and "the name of the artisan"
+(Framework v3: *the Masters*). "Every Hartwick piece ships with … the name of the
+artisan who made it" is a promise the product records can't keep yet, because the
+Master fields are empty. The subline reads "Plants, Minerals. Sunlight." (comma, then
+full stops), kept as she typed it.

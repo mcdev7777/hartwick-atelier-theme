@@ -72,7 +72,7 @@
 <script src="{{ 'ha-masters.js' | asset_url }}" defer="defer"></script>
 
 <div class="ha-mst ha-mst--ink-{{ ink }}" id="the-masters" data-mst data-mst-muted="{{ section.settings.start_muted }}">
-
+  {%- capture p_hero -%}
   {%- comment -%} ---------- HERO: the wide photograph, the framed inset ---------- {%- endcomment -%}
   <header class="ha-mst__hero{% if inset %} ha-mst__hero--inset{% endif %}">
     {%- comment -%} Aloha, 25 September 2026: the header is her yellow paper (b2aa72) alone, no photograph; the menu is transparent over it (header setting "Transparent on these pages"). {%- endcomment -%}
@@ -97,7 +97,8 @@
       </figure>
     {%- endif -%}
   </header>
-
+  {%- endcapture -%}
+  {%- capture p_intro -%}
   {%- comment -%} ---------- INTRODUCTION: one H1, the line, three columns ---------- {%- endcomment -%}
   <section class="ha-section ha-mst__intro" aria-labelledby="ha-mst-title">
     <div class="ha-wrap ha-mst__intro-inner">
@@ -127,7 +128,8 @@
       </div>
     </div>
   </section>
-
+  {%- endcapture -%}
+  {%- capture p_pair -%}
   {%- comment -%} ---------- STILL AND MOVEMENT ----------
     Two figures. On a phone each caption sits under its own image; from 750px
     the figures become `display: contents` so the two frames share one row
@@ -174,7 +176,8 @@
       </figure>
     </div>
   </section>
-
+  {%- endcapture -%}
+  {%- capture p_archive -%}
   {%- comment -%} ---------- ARCHIVE TILES AND THE QUOTATION ---------- {%- endcomment -%}
   <section class="ha-section ha-mst__archive" aria-labelledby="ha-mst-quote-label">
     <div class="ha-wrap ha-mst__archive-inner">
@@ -209,7 +212,8 @@
       </blockquote>
     </div>
   </section>
-
+  {%- endcapture -%}
+  {%- capture p_glossary -%}
   {%- comment -%} ---------- THE GLOSSARY OF HERITAGE TECHNIQUES ---------- {%- endcomment -%}
   <section class="ha-section ha-mst__glossary" id="glossary" aria-labelledby="ha-mst-glossary-title">
     <div class="ha-wrap">
@@ -288,7 +292,8 @@
       {%- endif -%}
     </div>
   </section>
-
+  {%- endcapture -%}
+  {%- capture p_feature -%}
   {%- comment -%} ---------- FROM THE HARTWICK ARCHIVE: the wide film ---------- {%- endcomment -%}
   <section class="ha-mst__feature" aria-label="{{ section.settings.feature_title | escape }}">
     {%- render 'ha-masters-film',
@@ -312,7 +317,8 @@
       sizes: '100vw'
     -%}
   </section>
-
+  {%- endcapture -%}
+  {%- capture p_continue -%}
   {%- comment -%} ---------- THE WORK CONTINUES ---------- {%- endcomment -%}
   <section class="ha-section ha-mst__continue" aria-labelledby="ha-mst-continue-title">
     <div class="ha-wrap ha-mst__continue-grid{% if section.settings.continue_image %} ha-mst__continue-grid--image{% endif %}">
@@ -331,6 +337,87 @@
       {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: section.settings.placeholder_text -%}
     </div>
   </section>
+  {%- endcapture -%}
+
+  {%- comment -%} ========== 26 SEPTEMBER 2026 — Aloha's new order ==========
+    Her Masters board (Temp Files/MASTERS.pdf) rearranged the page from
+    screenshots of the site: the yellow paper opening now carries the khadi
+    quotation and MADE BY MASTERS; beneath the first ring bar, THE KNOWLEDGE
+    BEHIND THE WORK (the three columns, each with a dye swatch, a swatch
+    hanging from the rings) and her collage beside three paragraphs; a plain
+    bar; the glossary; a ring bar straight onto the still and the film; the
+    printing table; The work continues. The three small archive tiles are not
+    on her board (Layout: 18 September brings them back).
+  {%- endcomment -%}
+  {%- capture p_hero26 -%}
+  <header class="ha-mst__hero ha-mst__hero--sep26">
+    <div class="ha-mst__hero-figure ha-mst__hero-figure--paper ha-mst__hero26 ha-page-grain ha-grain-block"{% if hero_paper %} style="--ha-mst-paper: url('{{ hero_paper | image_url: width: 2800 }}')"{% endif %}>
+      <div class="ha-mst__hero26-quote">
+        {%- if section.settings.quote_label != blank -%}<p class="ha-mst__hero26-label ha-label">{{ section.settings.quote_label }}</p>{%- endif -%}
+        <blockquote class="ha-mst__hero26-bq">
+          <p class="ha-mst__hero26-text ha-pull">{{ section.settings.quote | newline_to_br }}</p>
+          {%- if section.settings.quote_cite != blank -%}<footer class="ha-mst__hero26-cite ha-label">{{ section.settings.quote_cite }}</footer>{%- endif -%}
+        </blockquote>
+      </div>
+      <div class="ha-mst__hero26-title">
+        <h1 id="ha-mst-title" class="ha-mst__hero26-h1 ha-label">{{ section.settings.heading }}</h1>
+        {%- if section.settings.subline != blank -%}<p class="ha-mst__hero26-sub ha-narrate">{{ section.settings.subline }}</p>{%- endif -%}
+      </div>
+    </div>
+  </header>
+  {%- endcapture -%}
+
+  {%- capture p_rings -%}
+  <div class="ha-home-binding-section ha-mst__bar"><div class="ha-home-binding ha-home-binding--rings ha-home-binding--masters ha-page-grain ha-grain-block" aria-hidden="true">
+    {%- for i in (1..3) -%}<img class="ha-home-binding__ring ha-home-binding__ring--{{ i }}" src="{{ 'ha-ring-upright.svg' | asset_url }}" width="55" height="290" alt="" loading="lazy">{%- endfor -%}
+  </div></div>
+  {%- endcapture -%}
+  {%- capture p_bar -%}
+  <div class="ha-home-binding-section ha-mst__bar"><div class="ha-home-binding ha-page-grain ha-grain-block" aria-hidden="true"></div></div>
+  {%- endcapture -%}
+
+  {%- capture p_knowledge -%}
+  <section class="ha-section ha-mst__knowledge" aria-labelledby="ha-mst-knowledge-title">
+    {%- if section.settings.knowledge_spot -%}
+      <figure class="ha-mst__knowledge-spot" aria-hidden="true">{{ section.settings.knowledge_spot | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, 30vw', widths: '300, 450, 600', alt: '' }}</figure>
+    {%- endif -%}
+    <div class="ha-wrap ha-mst__knowledge-inner">
+      <h2 id="ha-mst-knowledge-title" class="ha-mst__knowledge-label ha-label">{{ section.settings.knowledge_label }}</h2>
+      <div class="ha-mst__knowledge-cols">
+        {%- for i in (1..3) -%}
+          {%- assign k_label = 'col' | append: i | append: '_label' -%}
+          {%- assign k_body = 'col' | append: i | append: '_body' -%}
+          {%- assign k_symbol = 'col' | append: i | append: '_symbol' -%}
+          {%- if section.settings[k_body] != blank -%}
+            <div class="ha-mst__kcol ha-mst__kcol--{{ i }}">
+              {%- if section.settings[k_label] != blank -%}<h3 class="ha-mst__kcol-label ha-narrate">{{ section.settings[k_label] }}</h3>{%- endif -%}
+              <div class="ha-mst__kcol-body ha-narrate">{{ section.settings[k_body] }}</div>
+              {%- if section.settings[k_symbol] -%}
+                <figure class="ha-mst__kcol-spot" aria-hidden="true">{{ section.settings[k_symbol] | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 16vw, 40vw', widths: '240, 360, 480', alt: '' }}</figure>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.story_image or section.settings.story_body != blank -%}
+        <div class="ha-mst__story">
+          {%- if section.settings.story_image -%}
+            <figure class="ha-mst__story-figure">{{ section.settings.story_image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 37vw, 90vw', widths: '600, 900, 1200', alt: section.settings.story_alt, class: 'ha-mst__story-img' }}</figure>
+          {%- endif -%}
+          {%- if section.settings.story_body != blank -%}
+            <div class="ha-mst__story-body ha-narrate">{{ section.settings.story_body }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+  {%- endcapture -%}
+
+  {%- if section.settings.layout == 'sep26' -%}
+    {{ p_hero26 }}{{ p_rings }}{{ p_knowledge }}{{ p_bar }}{{ p_glossary }}{{ p_rings }}{{ p_pair }}{{ p_feature }}{{ p_continue }}
+  {%- else -%}
+    {{ p_hero }}{{ p_intro }}{{ p_pair }}{{ p_archive }}{{ p_glossary }}{{ p_feature }}{{ p_continue }}
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -345,6 +432,10 @@
       { "value": "resin", "label": "Cutch Resin (as the artboard draws it)" },
       { "value": "peat", "label": "Peat (as the Clothing pages)" }
     ], "info": "Confirm against the editable artwork — the brief says not to assume the Clothing colour applies here." },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "brief", "options": [
+      { "value": "brief", "label": "18 September (the build brief)" },
+      { "value": "sep26", "label": "26 September (Aloha's new order)" }
+    ], "info": "26 September: the quotation and MADE BY MASTERS on the paper, the knowledge band with swatches and her collage, ring bars between." },
     { "type": "checkbox", "id": "start_muted", "label": "Films start muted (sound on request)", "default": true },
     { "type": "text", "id": "transcript_label", "label": "Transcript disclosure reads", "default": "Transcript" },
     { "type": "text", "id": "close_text", "label": "Close control reads", "default": "Close" },
@@ -374,6 +465,13 @@
     { "type": "richtext", "id": "col3_body", "label": "Column 3", "default": "<p>Each handcrafted piece in the collection is a glimpse into the rich history, intricate process, and generations of skill that have gone into its creation.</p>" },
     { "type": "image_picker", "id": "col3_symbol", "label": "Column 3 symbol (optional)" },
 
+    { "type": "header", "content": "Knowledge band (26 September layout)" },
+    { "type": "text", "id": "knowledge_label", "label": "Label", "default": "The knowledge behind the work" },
+    { "type": "image_picker", "id": "knowledge_spot", "label": "Swatch hanging from the rings" },
+    { "type": "paragraph", "content": "The three columns and their swatches are the Introduction's columns and symbols." },
+    { "type": "image_picker", "id": "story_image", "label": "Collage" },
+    { "type": "text", "id": "story_alt", "label": "Collage alt text" },
+    { "type": "richtext", "id": "story_body", "label": "Text beside the collage" },
     { "type": "header", "content": "Still and movement — the still" },
     { "type": "text", "id": "pair_aria", "label": "Group name for screen readers", "default": "Still and movement" },
     { "type": "image_picker", "id": "still_image", "label": "Photograph" },

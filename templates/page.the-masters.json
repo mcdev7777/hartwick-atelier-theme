@@ -10,6 +10,15 @@
  * NOTE: this file is also written by the Shopify theme editor.
  * ------------------------------------------------------------
  */
+/*
+ * 26 September 2026 — Aloha's MASTERS.pdf: Layout "26 September" (the section
+ * setting). The paper opening carries the khadi quotation and MADE BY MASTERS;
+ * the knowledge band has her swatches and collage with three new paragraphs;
+ * ring bars between; the three archive tiles are not in her order. Her words
+ * are verbatim. Flagged: "artisan" twice in the new paragraphs (Framework:
+ * the Masters), and "the name of the artisan who made it" is a promise the
+ * product records do not yet keep (Master fields are empty).
+ */
 {
   "sections": {
     "main": {
@@ -218,20 +227,20 @@
         "credit_label": "Master",
         "empty_text": "To supply",
         "hero_paper": "shopify://shop_images/HA_MASTERS_HEADER_PAPER.jpg",
-            "hero_image": "shopify://shop_images/HARTWICK_MASTERS_LOOM_WARP_4R1A4467.jpg",
+        "hero_image": "shopify://shop_images/HARTWICK_MASTERS_LOOM_WARP_4R1A4467.jpg",
         "hero_alt": "Warp threads on a handloom, rust and ochre",
         "hero_focus_x": 50,
         "hero_focus_y": 50,
         "hero_label": "",
         "inset_image": "shopify://shop_images/HARTWICK_MASTERS_BLOCK_IN_HAND_BW_4R1A4412.jpg",
         "inset_alt": "A carver's hand holding the finished Hartwick Atelier printing block",
-        "heading": "The Masters",
-        "subline": "The people. The knowledge. The work.",
-        "col1_label": "The cloth",
+        "heading": "Made by Masters",
+        "subline": "Plants, Minerals. Sunlight. Rainfall. Time",
+        "col1_label": "THE CLOTH",
         "col1_body": "<p>Textile History dates back to the beginning of human civilization. Hartwick Atelier specializes in hand spun and handwoven fabrics, natural and ayurvedic dyes, and exquisite heritage handwork.</p>",
-        "col2_label": "The knowledge",
+        "col2_label": "THE KNOWLEDGE",
         "col2_body": "<p>These artisanal techniques rely on rare knowledge and the natural cycles of the sun, wind and rain.</p>",
-        "col3_label": "The handwork",
+        "col3_label": "THE HANDWORK",
         "col3_body": "<p>Each handcrafted piece in the collection is a glimpse into the rich history, intricate process, and generations of skill that have gone into its creation.</p>",
         "pair_aria": "Still and movement",
         "still_image": "shopify://shop_images/HARTWICK_MASTERS_SPINNER_HANDS_4R1A4494.jpg",
@@ -269,7 +278,16 @@
         "continue_link_text": "Read the Journal",
         "continue_link_url": "/blogs/news",
         "show_placeholder_note": true,
-        "placeholder_text": "Provisional: photographs from the Masters shoot supplied by Aloha; the weaving and printing films, and the glossary copy, await Angela's review."
+        "placeholder_text": "Provisional: photographs from the Masters shoot supplied by Aloha; the weaving and printing films, and the glossary copy, await Angela's review.",
+        "layout": "sep26",
+        "col1_symbol": "shopify://shop_images/HA_MASTERS_DYE_CLOTH.png",
+        "col2_symbol": "shopify://shop_images/HA_MASTERS_DYE_KNOWLEDGE.png",
+        "col3_symbol": "shopify://shop_images/HA_MASTERS_DYE_HANDWORK.png",
+        "knowledge_label": "The knowledge behind the work",
+        "knowledge_spot": "shopify://shop_images/HA_MASTERS_DYE_HANGING_YELLOW.png",
+        "story_image": "shopify://shop_images/HA_MASTERS_COLLAGE_BLOCKPRINT.png",
+        "story_alt": "Photographs laid one over another: a printer pressing a carved block onto cloth on a long table, over sheets of green and earth-red paper",
+        "story_body": "<p>Masters hold knowledge developed over centuries in alignment with the natural world, with dyes drawn from plants and minerals and processes governed by sunlight, rainfall and time. This knowledge is held in families, communities and the hands of each Master.</p><p>We are concerned with the environmental and human costs of industrial textile production. Handspun, handwoven and natural-dye fabrics connect us to artisans, often in communities with a direct connection to the agricultural production of the fibres and deep, generational handcraft knowledge.</p><p>What we put on our bodies has consequences for the planet and the people who make it. Every Hartwick piece ships with its Lot number, its Origin story, and the name of the artisan who made it.</p>"
       }
     },
     "register": {
