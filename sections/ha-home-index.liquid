@@ -43,13 +43,29 @@
     /collections — the Collection Index.
 {%- endcomment -%}
 
+{%- comment -%}
+  YOGA HIDDEN (29 September 2026, Ivan): while Theme settings > Show Yoga is
+  off, a category whose link goes to a yoga collection is skipped — its row
+  and its montage — and the Apparel montage's frame 04 (her rolled yoga mat,
+  captioned Yoga) shows the block's "while Yoga is hidden" picture instead.
+  Nothing is removed from the template; ticking Show Yoga restores it all.
+{%- endcomment -%}
 {%- liquid
+  assign hide_yoga = true
+  if settings.ha_show_yoga
+    assign hide_yoga = false
+  endif
   assign first_key = ''
   for block in section.blocks
-    if forloop.first
+    assign block_url = block.settings.url | downcase
+    if hide_yoga and block_url contains 'yoga'
+      continue
+    endif
+    if first_key == ''
       assign first_key = block.id
     endif
   endfor
+  assign row_n = 0
 -%}
 
 <section class="ha-home ha-home-index" aria-labelledby="ha-home-index-title">
@@ -71,9 +87,12 @@
 
         <ol class="ha-home-index__list" role="list">
           {%- for block in section.blocks -%}
+            {%- assign block_url = block.settings.url | downcase -%}
+            {%- if hide_yoga and block_url contains 'yoga' -%}{%- continue -%}{%- endif -%}
+            {%- assign row_n = row_n | plus: 1 -%}
             <li class="ha-home-index__row" {{ block.shopify_attributes }}>
               <a class="ha-home-index__link ha-record" href="{{ block.settings.url | default: '#' }}" data-pair-for="{{ block.id }}">
-                <span class="ha-home-index__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="ha-home-index__num">{{ row_n | prepend: '0' | slice: -2, 2 }}</span>
                 <span class="ha-home-index__name">{{ block.settings.name }}</span>
               </a>
             </li>
@@ -93,14 +112,28 @@
       <div class="ha-home-index__panels">
         {%- for block in section.blocks -%}
           {%- liquid
+            assign block_url = block.settings.url | downcase
+            if hide_yoga and block_url contains 'yoga'
+              continue
+            endif
             assign cat = block.settings.name
             assign url = block.settings.url | default: '#'
             assign label = block.settings.caption_label | default: cat
+
+            assign small_a = block.settings.image_small_a
+            assign small_a_alt = block.settings.alt_small_a
+            assign small_a_caption = block.settings.caption_small_a | default: label
+            assign small_a_words = block.settings.caption_small_a | append: ' ' | append: block.settings.alt_small_a | downcase
+            if hide_yoga and small_a_words contains 'yoga' and block.settings.image_small_a_noyoga
+              assign small_a = block.settings.image_small_a_noyoga
+              assign small_a_alt = block.settings.alt_small_a_noyoga
+              assign small_a_caption = block.settings.caption_small_a_noyoga | default: label
+            endif
           -%}
           <div
             class="ha-home-index__montage"
             data-pair-panel="{{ block.id }}"
-            {% if forloop.first %}data-pair-default{% else %}hidden{% endif %}
+            {% if block.id == first_key %}data-pair-default{% else %}hidden{% endif %}
           >
             {%- comment -%} 01 — tall {%- endcomment -%}
             <a class="ha-home-index__frame ha-home-index__frame--tall" href="{{ url }}" aria-label="{{ cat | escape }}">
@@ -118,13 +151,13 @@
               {%- comment -%} 04 and 03 — the two small frames, captions set vertically beside them {%- endcomment -%}
               <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--a" href="{{ url }}" aria-label="{{ cat | escape }}">
                 <span class="ha-home-index__figure">
-                  {%- if block.settings.image_small_a -%}
-                    {{ block.settings.image_small_a | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: block.settings.alt_small_a, class: 'ha-home-index__img' }}
+                  {%- if small_a -%}
+                    {{ small_a | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: small_a_alt, class: 'ha-home-index__img' }}
                   {%- else -%}
                     <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">04 / To supply</span></span>
                   {%- endif -%}
                 </span>
-                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-record">04 / {{ block.settings.caption_small_a | default: label }}</span>
+                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-record">04 / {{ small_a_caption }}</span>
               </a>
 
               <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--b" href="{{ url }}" aria-label="{{ cat | escape }}">
@@ -189,6 +222,9 @@
         { "type": "image_picker", "id": "image_small_a", "label": "04 / Small, left" },
         { "type": "text", "id": "alt_small_a", "label": "04 alt text" },
         { "type": "text", "id": "caption_small_a", "label": "04 caption" },
+        { "type": "image_picker", "id": "image_small_a_noyoga", "label": "04 while Yoga is hidden", "info": "Used instead of frame 04 when that frame is a Yoga picture and Theme settings > Show Yoga is off." },
+        { "type": "text", "id": "alt_small_a_noyoga", "label": "04 description while Yoga is hidden" },
+        { "type": "text", "id": "caption_small_a_noyoga", "label": "04 caption while Yoga is hidden" },
         { "type": "image_picker", "id": "image_small_b", "label": "03 / Small, right" },
         { "type": "text", "id": "alt_small_b", "label": "03 alt text" },
         { "type": "text", "id": "caption_small_b", "label": "03 caption" },

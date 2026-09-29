@@ -168,6 +168,9 @@
             "alt_wide": "A block-printed fine silk scarf, draped",
             "caption_tall": "Apparel",
             "caption_small_a": "Yoga",
+            "image_small_a_noyoga": "shopify://shop_images/HA_HOMEPAGE_INDEX_APPAREL_CURTAINS.jpg",
+            "alt_small_a_noyoga": "Block-printed cloth hung at a window, light coming through, a white skirt between",
+            "caption_small_a_noyoga": "Apparel",
             "caption_small_b": "Fine Jewellery",
             "caption_wide": "Fine Silk"
           }

@@ -166,6 +166,7 @@
         },
         "column_iBTU8D": {
           "type": "column",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Yoga_83955a94-3b1a-4c52-884c-c9a062539910.jpg",
             "title": "UPAYA Collection",

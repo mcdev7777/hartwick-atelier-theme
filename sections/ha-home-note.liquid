@@ -59,7 +59,7 @@
       </div>
 
       {%- if section.settings.body != blank -%}
-        <div class="ha-home-note__body ha-home__lead ha-narrate">{{ section.settings.body }}</div>
+        <div class="ha-home-note__body ha-home__lead ha-narrate">{%- render 'ha-yoga-copy', text: section.settings.body -%}</div>
       {%- endif -%}
 
       {%- if section.settings.tagline != blank -%}

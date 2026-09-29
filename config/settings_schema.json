@@ -205,6 +205,13 @@
       },
       {
         "type": "checkbox",
+        "id": "ha_show_yoga",
+        "label": "Show Yoga",
+        "default": false,
+        "info": "Off since 29 September 2026 (Ivan): every Yoga link, card, picture and mention is hidden, not removed — the homepage index row and montage, the Collection index group, the range pages' onward link, /collections/yoga, the press page column, and \"and yoga mats\" in the copy. Tick to bring it all back."
+      },
+      {
+        "type": "checkbox",
         "id": "ha_porter_licensed",
         "label": "Porter webfont licence confirmed",
         "default": false

@@ -3,6 +3,18 @@
 
 {% assign show_products_heading = true %}
 
+{%- comment -%}
+  Hartwick, 29 September 2026: while Theme settings > Show Yoga is off, the
+  yoga collections are left out of the suggestions (their pages redirect to
+  the Collection Index; see snippets/ha-yoga-redirect).
+{%- endcomment -%}
+{%- assign ha_collections_shown = 0 -%}
+{%- for collection in predictive_search.resources.collections -%}
+  {%- assign ha_handle = collection.handle | downcase -%}
+  {%- unless settings.ha_show_yoga -%}{%- if ha_handle contains 'yoga' -%}{%- continue -%}{%- endif -%}{%- endunless -%}
+  {%- assign ha_collections_shown = ha_collections_shown | plus: 1 -%}
+{%- endfor -%}
+
 {%- if predictive_search.performed -%}
 <div id="predictive-search-results" class="predictive-search-results">
 
@@ -10,7 +22,7 @@
 <div class="predictive-search-no-results-message">{{ 'templates.search.no_results' | t: terms: predictive_search.terms }}</div>
 {%- endif -%}
     
-{%- if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 -%}
+{%- if predictive_search.resources.queries.size > 0 or ha_collections_shown > 0 -%}
   <div class="predictive-search-queries-content">
   <div class="predictive-search-category-heading">
     <h3 id="predictive-search-queries">{{- 'templates.search.suggestions' | t -}}</h3>
@@ -41,6 +53,8 @@
         </li>
       {%- endfor -%}
       {%- for collection in predictive_search.resources.collections -%}
+        {%- assign ha_handle = collection.handle | downcase -%}
+        {%- unless settings.ha_show_yoga -%}{%- if ha_handle contains 'yoga' -%}{%- continue -%}{%- endif -%}{%- endunless -%}
         <li
           id="predictive-search-option-collection-{{ forloop.index }}"
           class="predictive-search__list-item"

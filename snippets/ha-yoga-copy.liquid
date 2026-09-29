@@ -1,0 +1,17 @@
+{%- comment -%}
+  Hartwick Atelier — copy with Yoga hidden (29 September 2026, Ivan: "hide all
+  yoga-related parts … don't remove them").
+
+  Prints `text` as written while Theme settings > Show Yoga is on. While it is
+  off, the one phrase that names yoga in the range list is read without it:
+  "silk scarves, fine jewellery and yoga mats" → "silk scarves and fine
+  jewellery". The setting itself is never edited, so ticking Show Yoga brings
+  the original sentence back word for word.
+{%- endcomment -%}
+{%- liquid
+  assign out = text
+  unless settings.ha_show_yoga
+    assign out = out | replace: 'silk scarves, fine jewellery and yoga mats', 'silk scarves and fine jewellery'
+  endunless
+  echo out
+-%}

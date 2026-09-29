@@ -42,6 +42,28 @@
     assign hero = false
   endif
   assign hero_focus = '--ha-idx-focus: ' | append: section.settings.header_focus_x | append: '% ' | append: section.settings.header_focus_y | append: '%'
+
+  # YOGA HIDDEN (29 September 2026, Ivan): while Theme settings > Show Yoga is
+  # off, a Yoga group (heading, anchor or layout naming yoga) is skipped with
+  # every entry under it, and so is any entry linking to a yoga collection.
+  # The blocks stay in the template; ticking Show Yoga restores them.
+  assign hidden_ids = '|'
+  unless settings.ha_show_yoga
+    assign in_yoga = false
+    for b in section.blocks
+      if b.type == 'group'
+        assign g_words = b.settings.heading | append: ' ' | append: b.settings.anchor | append: ' ' | append: b.settings.layout | downcase
+        assign in_yoga = false
+        if g_words contains 'yoga'
+          assign in_yoga = true
+        endif
+      endif
+      assign b_url = b.settings.url | downcase
+      if in_yoga or b_url contains 'yoga'
+        assign hidden_ids = hidden_ids | append: b.id | append: '|'
+      endif
+    endfor
+  endunless
 -%}
 <script src="{{ 'ha-index.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'ha-collection-categories.js' | asset_url }}" defer="defer"></script>
@@ -60,13 +82,15 @@
       <nav class="ha-idx__crumbs ha-record" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">{{ shop.name }}</a><span aria-hidden="true"> / </span><span>{{ section.settings.crumb }}</span></nav>
       <div class="ha-idx__title-row">
         <h1 class="ha-idx__title ha-narrate">{{ section.settings.heading }}</h1>
-        {%- if section.settings.intro != blank -%}<p class="ha-idx__intro ha-narrate">{{ section.settings.intro }}</p>{%- endif -%}
+        {%- if section.settings.intro != blank -%}<p class="ha-idx__intro ha-narrate">{%- render 'ha-yoga-copy', text: section.settings.intro -%}</p>{%- endif -%}
       </div>
       <hr class="ha-idx__rule">
       <div class="ha-idx__dir-labels ha-record"><span>{{ section.settings.dir_label }}</span>{% if section.settings.dir_count != blank %}<span>{{ section.settings.dir_count }}</span>{% endif %}</div>
       <nav class="ha-idx__dir" aria-label="{{ section.settings.dir_label }}">
         {%- assign gi = 0 -%}
         {%- for block in section.blocks -%}
+          {%- assign bkey = '|' | append: block.id | append: '|' -%}
+          {%- if hidden_ids contains bkey -%}{%- continue -%}{%- endif -%}
           {%- if block.type == 'group' -%}
             {%- if gi > 0 -%}</ul></div>{%- endif -%}
             {%- assign gi = gi | plus: 1 -%}
@@ -95,6 +119,8 @@
   {%- comment -%} ---------- THE FOUR SECTIONS ---------- {%- endcomment -%}
   {%- assign open = false -%}
   {%- for block in section.blocks -%}
+    {%- assign bkey = '|' | append: block.id | append: '|' -%}
+    {%- if hidden_ids contains bkey -%}{%- continue -%}{%- endif -%}
     {%- if block.type == 'group' -%}
       {%- if open -%}
             </ul>
@@ -115,6 +141,8 @@
                 {%- for e in section.blocks -%}
                   {%- assign owner = nil -%}
                   {%- for b2 in section.blocks -%}{%- if b2.type == 'group' -%}{%- assign owner = b2 -%}{%- endif -%}{%- if b2.id == e.id -%}{%- break -%}{%- endif -%}{%- endfor -%}
+                  {%- assign ekey = '|' | append: e.id | append: '|' -%}
+                  {%- if e.type == 'entry' and owner.id == block.id and hidden_ids contains ekey -%}{%- continue -%}{%- endif -%}
                   {%- if e.type == 'entry' and owner.id == block.id -%}
                     <li class="ha-idx__index-item">
                       <a class="ha-idx__index-link" href="{{ e.settings.url | default: '#' }}" data-idx="{{ e.settings.key }}">

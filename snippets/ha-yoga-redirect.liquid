@@ -1,0 +1,19 @@
+{%- comment -%}
+  Hartwick Atelier — Yoga hidden (29 September 2026, Ivan: "hide all
+  yoga-related parts so that users can't see them. don't remove them").
+
+  Rendered in <head>. While Theme settings > Show Yoga is off, a yoga
+  collection page (/collections/yoga and the other yoga collections) sends
+  the visitor on to the Collection Index and asks search engines not to
+  index it. The page, its template and its collection are untouched; ticking
+  Show Yoga brings it straight back. Never in the theme editor, so the
+  template can still be opened and edited there.
+{%- endcomment -%}
+{%- unless settings.ha_show_yoga or request.design_mode -%}
+  {%- assign yoga_handle = collection.handle | downcase -%}
+  {%- if template.name == 'collection' and yoga_handle contains 'yoga' -%}
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="refresh" content="0; url={{ routes.collections_url }}">
+    <script>window.location.replace({{ routes.collections_url | json }});</script>
+  {%- endif -%}
+{%- endunless -%}
