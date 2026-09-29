@@ -4559,7 +4559,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 /* --- category navigation, sticky below the site header ------------------ */
 .ha-clothing__nav {
   position: sticky; top: var(--ha-clothing-header); z-index: 5;
-  background: var(--ha-page-ground); border-top: var(--ha-divider); border-bottom: var(--ha-divider);
+  background: var(--ha-page-ground); border-top: 0; border-bottom: 0;   /* no brown lines on the range pages — Ivan, 29 Sep */
 }
 .ha-clothing__nav-grid { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.8rem 2.4rem; padding-top: 1.6rem; padding-bottom: 1.6rem; }
 .ha-clothing__nav-label { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); color: var(--ha-text-quiet); }
@@ -4573,7 +4573,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 
 /* --- Made in Lots --------------------------------------------------------- */
-.ha-clothing__lots { border-bottom: var(--ha-divider); }
+.ha-clothing__lots { border-bottom: 0; }
 .ha-clothing__lots-grid { display: grid; gap: 1.2rem; padding-top: 2.4rem; padding-bottom: 2.4rem; }
 .ha-clothing__lots-label { margin: 0; font-size: var(--ha-t-label); letter-spacing: 0.12em; }
 .ha-clothing__lots-grid > * { min-width: 0; }
@@ -4593,7 +4593,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 
 /* --- a category: rail + grid --------------------------------------------- */
-.ha-clothing__cat { border-bottom: var(--ha-divider); }
+.ha-clothing__cat { border-bottom: 0; }
 .ha-clothing__cat-grid { display: grid; gap: 2.4rem; }
 .ha-clothing__rail-inner { display: grid; gap: 1.2rem; }
 .ha-clothing__cat-num { margin: 0; font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-meta); }
@@ -4639,7 +4639,7 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 @media screen and (min-width: 990px) and (max-height: 620px) { .ha-clothing__rail { position: static; } }
 
 /* --- Made by Masters feature --------------------------------------------- */
-.ha-clothing__feature { border-bottom: var(--ha-divider); }
+.ha-clothing__feature { border-bottom: 0; }
 .ha-clothing__feature-grid { display: grid; gap: 2.4rem; }
 .ha-clothing__feature-figure { aspect-ratio: 4 / 5; }
 .ha-clothing__feature-figure img { filter: grayscale(1); transition: filter 700ms ease; }
