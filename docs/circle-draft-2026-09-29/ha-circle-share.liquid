@@ -1,0 +1,213 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("THE CIRCLE, 29 SEPTEMBER"). {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE CIRCLE / SHARED WITH THE ATELIER. Members only.
+  Aloha's Final_Hartwick_About_The_Circle.pdf, page 6; notes on page 7:
+
+    "Private upload destination with validation, size limits and progress.
+     Review screen shows files, credits and chosen permission before final
+     submission. Success: 'Received by the Atelier. Pending review.' Never
+     auto-publish. Record consent and support removal requests."
+
+  ⚠ THE FILES NEED SOMEWHERE PRIVATE TO GO, and a theme cannot provide it:
+  Shopify's storefront forms carry no files, and Klaviyo takes none. Her
+  notes leave the choice of app to Ivan ("confirm … the app approach before
+  build"). Until one is chosen:
+    - the dark box holds the theme's own file picker, which validates type
+      and size and lists what was chosen, and REVIEW MY SUBMISSION shows
+      files, credit, "uploading as" and the permission, as she asked;
+    - the final SEND stays disabled and says the upload service is not
+      connected (`upload_ready` off). Nothing is sent anywhere.
+  When an upload app is installed, its app block goes into this section and
+  replaces the theme's picker in the dark box; switch `upload_ready` on only
+  once the app's destination is private and records the consent.
+
+  Permission is one choice (radio), drawn as her squares: "Choose one." The
+  authorisation box is required before review. Nothing is ever posted
+  automatically.
+{%- endcomment -%}
+
+{%- liquid
+  assign circle_member = false
+  if customer
+    assign circle_status = customer.metafields.hartwick.circle_status.value | strip | downcase
+    if circle_status == 'approved'
+      assign circle_member = true
+    endif
+  endif
+  assign show_form = circle_member
+  if request.design_mode
+    assign show_form = true
+  endif
+
+  assign uses = section.settings.use_options | newline_to_br | split: '<br />'
+  assign whos = section.settings.who_options | newline_to_br | split: '<br />'
+  assign sid = section.id
+  assign back_url = section.settings.back_url | default: '/pages/the-circle'
+  assign has_app = false
+  for block in section.blocks
+    if block.type == '@app'
+      assign has_app = true
+    endif
+  endfor
+-%}
+
+<section class="ha-section ha-cform ha-cshare" aria-labelledby="HaCshareTitle-{{ sid }}">
+  {%- if show_form -%}
+  <form class="ha-wrap ha-cform__wrap" novalidate
+    data-ha-cshare
+    data-ready="{% if section.settings.upload_ready %}true{% else %}false{% endif %}"
+    data-max-mb="{{ section.settings.max_mb }}"
+    data-msg-type="{{ section.settings.msg_type | escape }}"
+    data-msg-size="{{ section.settings.msg_size | escape }}"
+    data-msg-nofiles="{{ section.settings.msg_nofiles | escape }}"
+    data-msg-use="{{ section.settings.msg_use | escape }}"
+    data-msg-authorise="{{ section.settings.msg_authorise | escape }}"
+    data-msg-success="{{ section.settings.msg_success | escape }}">
+
+    {%- if section.settings.crumb != blank -%}<p class="ha-cform__crumb ha-record">{{ section.settings.crumb }}</p>{%- endif -%}
+
+    <div class="ha-cshare__edit" data-ha-share-edit>
+      <h1 id="HaCshareTitle-{{ sid }}" class="ha-cform__title ha-narrate" tabindex="-1">{{ section.settings.heading }}</h1>
+      {%- if section.settings.sub != blank -%}<p class="ha-cform__sub ha-cshare__sub ha-narrate">{{ section.settings.sub }}</p>{%- endif -%}
+
+      <div class="ha-cform__row ha-cshare__row">
+        <p class="ha-cform__rowlabel ha-record">{{ section.settings.files_label }}</p>
+        <div class="ha-cform__rowbody">
+          <div class="ha-cshare__drop" data-ha-drop>
+            {%- if has_app -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == '@app' -%}{% render block %}{%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              <p class="ha-cshare__drop-title ha-narrate" id="HaCshareDrop-{{ sid }}">{{ section.settings.drop_text }}</p>
+              <label class="ha-cshare__choose ha-record">
+                <input class="ha-cshare__file" type="file" name="files" multiple accept="{{ section.settings.accept | escape }}" data-ha-files aria-describedby="HaCshareDrop-{{ sid }} HaCshareLimits-{{ sid }}">
+                <span>{{ section.settings.choose_text }}</span>
+              </label>
+              <ul class="ha-cshare__list ha-record" data-ha-file-list role="list" hidden></ul>
+              {%- if section.settings.limits_text != blank -%}
+                <p class="ha-cshare__limits ha-record" id="HaCshareLimits-{{ sid }}">{{ section.settings.limits_text | replace: '[max]', section.settings.max_mb }}</p>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          <fieldset class="ha-cform__field ha-cshare__who">
+            <legend class="ha-cform__fieldlabel ha-record">{{ section.settings.who_label }}</legend>
+            <div class="ha-cshare__who-options">
+              {%- for option in whos -%}
+                {%- assign o = option | strip -%}
+                {%- if o != blank -%}
+                  <label class="ha-cform__choice ha-narrate"><input type="radio" name="uploading_as" value="{{ o | escape }}"{% if forloop.first %} checked{% endif %}><span>{{ o }}</span></label>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </fieldset>
+          <label class="ha-cform__field">
+            <span class="ha-cform__fieldlabel ha-record">{{ section.settings.credit_label }}</span>
+            <input class="ha-cform__input ha-narrate" type="text" name="credit" autocomplete="off">
+          </label>
+        </div>
+      </div>
+
+      <fieldset class="ha-cform__row ha-cshare__row">
+        <legend class="ha-cform__rowlabel ha-record">{{ section.settings.use_label }}</legend>
+        <div class="ha-cform__rowbody">
+          <div class="ha-cform__choices ha-cform__choices--stack" role="radiogroup" aria-label="{{ section.settings.use_label | escape }}">
+            {%- for option in uses -%}
+              {%- assign o = option | strip -%}
+              {%- if o != blank -%}
+                <label class="ha-cform__choice ha-narrate"><input type="radio" name="permission" value="{{ o | escape }}"><span>{{ o }}</span></label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- if section.settings.use_note != blank -%}<p class="ha-cform__note ha-narrate">{{ section.settings.use_note }}</p>{%- endif -%}
+          <label class="ha-cform__choice ha-cshare__authorise ha-narrate"><input type="checkbox" name="authorised" value="yes" data-ha-authorise><span>{{ section.settings.authorise_text }}</span></label>
+        </div>
+      </fieldset>
+
+      <div class="ha-cform__bar">
+        <a class="ha-cform__back ha-record" href="{{ back_url }}">{{ section.settings.back_text }}</a>
+        <div class="ha-cform__bar-end">
+          <button type="button" class="ha-cform__primary ha-record" data-ha-review>{{ section.settings.review_text }}</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ha-cshare__review" data-ha-share-review hidden>
+      <h2 class="ha-cform__title ha-narrate" tabindex="-1" data-ha-review-heading>{{ section.settings.review_heading }}</h2>
+      <dl class="ha-cshare__summary">
+        <div><dt class="ha-record">{{ section.settings.files_label }}</dt><dd class="ha-narrate" data-ha-sum="files"></dd></div>
+        <div><dt class="ha-record">{{ section.settings.who_label }}</dt><dd class="ha-narrate" data-ha-sum="uploading_as"></dd></div>
+        <div><dt class="ha-record">{{ section.settings.credit_label }}</dt><dd class="ha-narrate" data-ha-sum="credit"></dd></div>
+        <div><dt class="ha-record">{{ section.settings.use_label }}</dt><dd class="ha-narrate" data-ha-sum="permission"></dd></div>
+      </dl>
+      <div class="ha-cform__bar">
+        <button type="button" class="ha-cform__back ha-record" data-ha-edit>{{ section.settings.edit_text }}</button>
+        <div class="ha-cform__bar-end">
+          <button type="submit" class="ha-cform__primary ha-record" data-ha-send{% unless section.settings.upload_ready %} disabled aria-disabled="true"{% endunless %}>{{ section.settings.send_text }}</button>
+        </div>
+      </div>
+      {%- unless section.settings.upload_ready -%}
+        <p class="ha-cform__status ha-record">{{ section.settings.not_ready_text }}</p>
+      {%- endunless -%}
+    </div>
+
+    <p class="ha-cform__status ha-record" data-ha-status role="status" aria-live="polite" tabindex="-1" hidden></p>
+  </form>
+  {%- else -%}
+    {%- render 'ha-circle-gate', crumb: section.settings.crumb, text: section.settings.gate_text, back_url: back_url, back_text: section.settings.gate_back_text -%}
+  {%- endif -%}
+</section>
+
+<script src="{{ 'ha-circle.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "HA — Circle: share",
+  "tag": "div",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "Members only: shown to customers whose Circle status is Approved (and in this editor). ⚠ Files need a private upload service (an app). Until one is added here and 'Upload service connected' is on, members can choose and review files but not send them." },
+    { "type": "text", "id": "crumb", "label": "Reference line", "default": "The Circle / Shared with the Atelier" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Hartwick, as you wear it." },
+    { "type": "text", "id": "sub", "label": "Line beneath", "default": "Share a photograph or film with us. You or your representative can send it straight to the Hartwick team." },
+    { "type": "header", "content": "01 / Files" },
+    { "type": "text", "id": "files_label", "label": "Row label", "default": "01 / Your photographs & films" },
+    { "type": "text", "id": "drop_text", "label": "In the box", "default": "Drop your files here" },
+    { "type": "text", "id": "choose_text", "label": "Button", "default": "Choose files" },
+    { "type": "text", "id": "accept", "label": "File types accepted", "default": "image/jpeg,image/png,image/heic,image/heif,video/mp4,video/quicktime", "info": "Browser file types, comma separated." },
+    { "type": "range", "id": "max_mb", "label": "Largest file", "min": 10, "max": 500, "step": 10, "unit": "MB", "default": 200 },
+    { "type": "text", "id": "limits_text", "label": "Limits line", "default": "JPG, PNG, HEIC, MP4 or MOV · up to [max] MB each", "info": "[max] is replaced by the largest file size." },
+    { "type": "text", "id": "who_label", "label": "Uploading as, label", "default": "Uploading as" },
+    { "type": "textarea", "id": "who_options", "label": "Uploading as, choices", "default": "Myself\nMy representative" },
+    { "type": "text", "id": "credit_label", "label": "Credit field", "default": "Piece worn / photographer credit / social handle (optional)" },
+    { "type": "header", "content": "02 / Permission" },
+    { "type": "text", "id": "use_label", "label": "Row label", "default": "02 / How may we use it?" },
+    { "type": "textarea", "id": "use_options", "label": "Choices", "info": "One per line; one must be chosen.", "default": "Private review only. Please ask before sharing.\nI allow use on Hartwick’s organic Instagram and LinkedIn posts." },
+    { "type": "text", "id": "use_note", "label": "Note", "default": "Choose one. Paid advertising or other uses need separate permission. Nothing is posted automatically." },
+    { "type": "text", "id": "authorise_text", "label": "Authorisation", "default": "I have permission to share these files and authorise my selected use." },
+    { "type": "header", "content": "Buttons and review" },
+    { "type": "text", "id": "back_text", "label": "Back", "default": "Back to the Circle" },
+    { "type": "url", "id": "back_url", "label": "Back link", "info": "About The Circle, if left empty." },
+    { "type": "text", "id": "review_text", "label": "Review", "default": "Review my submission" },
+    { "type": "text", "id": "review_heading", "label": "Review heading", "default": "Review my submission" },
+    { "type": "text", "id": "edit_text", "label": "Edit", "default": "Edit" },
+    { "type": "text", "id": "send_text", "label": "Send", "default": "Send to the Atelier" },
+    { "type": "checkbox", "id": "upload_ready", "label": "Upload service connected", "default": false, "info": "Only once an upload app with a private destination is in place." },
+    { "type": "text", "id": "not_ready_text", "label": "While not connected", "default": "Placeholder — the upload service is not connected yet, so nothing can be sent." },
+    { "type": "header", "content": "Messages" },
+    { "type": "text", "id": "msg_success", "label": "Received", "default": "Received by the Atelier. Pending review." },
+    { "type": "text", "id": "msg_nofiles", "label": "No files", "default": "Please choose at least one photograph or film." },
+    { "type": "text", "id": "msg_type", "label": "Wrong type", "default": "This file type cannot be sent:" },
+    { "type": "text", "id": "msg_size", "label": "Too large", "default": "This file is larger than the limit:" },
+    { "type": "text", "id": "msg_use", "label": "No permission chosen", "default": "Please choose how we may use your files." },
+    { "type": "text", "id": "msg_authorise", "label": "Not authorised", "default": "Please confirm you have permission to share these files." },
+    { "type": "header", "content": "For visitors who are not members" },
+    { "type": "richtext", "id": "gate_text", "label": "Text", "default": "<p>The Circle is by invitation. Already invited? Sign in with the email address linked to your invitation.</p>" },
+    { "type": "text", "id": "gate_back_text", "label": "Link back", "default": "Back to the Circle" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "HA — Circle: share" }]
+}
+{% endschema %}

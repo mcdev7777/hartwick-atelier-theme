@@ -393,9 +393,22 @@
     </div>
 
     {%- comment -%} ---------- MEDIA RAIL (scrolls) ---------- {%- endcomment -%}
+    {%- comment -%}
+      1 October 2026 (Ivan's fix list, 8: "limit to 3 images to be shown in
+      the first section"): the rail shows the first `media_limit` pictures
+      (default 3); the rest stay on the product for the sections below and
+      for the Lot record. Dots, readout and count follow the limit.
+    {%- endcomment -%}
+    {%- liquid
+      assign media_limit = section.settings.media_limit | default: 3
+      assign media_count = product.media.size
+      if media_count > media_limit
+        assign media_count = media_limit
+      endif
+    -%}
     <div class="ha-pdp__media">
-      {%- if product.media.size > 0 -%}
-        <ha-media-rail class="ha-pdp__rail-media" data-count="{{ product.media.size }}">
+      {%- if media_count > 0 -%}
+        <ha-media-rail class="ha-pdp__rail-media" data-count="{{ media_count }}">
           {%- comment -%}
             Position markers, one per frame, drawn over the image's right edge
             (V2). They sit BEFORE the frames so they can be sticky: a sticky
@@ -405,16 +418,16 @@
             only way to jump within it without a mouse wheel. Each carries the
             accessible name the brief asks for: "Show image 2 of 3".
           {%- endcomment -%}
-          {%- if product.media.size > 1 -%}
+          {%- if media_count > 1 -%}
             <ol class="ha-pdp__dots" aria-label="{{ section.settings.dots_label }}">
-              {%- for media in product.media -%}
+              {%- for media in product.media limit: media_count -%}
                 <li>
                   <button
                     type="button"
                     class="ha-pdp__dot"
                     data-frame="{{ section.id }}-frame-{{ forloop.index }}"
                     aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
-                    aria-label="{{ section.settings.dot_label | replace: '[n]', forloop.index | replace: '[total]', product.media.size }}"
+                    aria-label="{{ section.settings.dot_label | replace: '[n]', forloop.index | replace: '[total]', media_count }}"
                   ></button>
                 </li>
               {%- endfor -%}
@@ -429,7 +442,7 @@
             document flow and the attributes are inert.
           {%- endcomment -%}
           <div class="ha-pdp__frames" role="region" aria-label="{{ section.settings.dots_label }}" tabindex="0" aria-roledescription="carousel">
-            {%- for media in product.media -%}
+            {%- for media in product.media limit: media_count -%}
               <figure class="ha-pdp__frame" id="{{ section.id }}-frame-{{ forloop.index }}">
                 {%- if media.media_type == 'image' -%}
                   {%- assign frame_loading = 'lazy' -%}
@@ -480,9 +493,9 @@
             hint disappears after the first scroll (script) and is never shown
             for a single image.
           {%- endcomment -%}
-          {%- if product.media.size > 1 -%}
+          {%- if media_count > 1 -%}
             <div class="ha-pdp__readout ha-record" aria-hidden="true">
-              <span class="ha-pdp__count" data-count-of="{{ product.media.size }}">01 / {{ product.media.size | prepend: '0' | slice: -2, 2 }}</span>
+              <span class="ha-pdp__count" data-count-of="{{ media_count }}">01 / {{ media_count | prepend: '0' | slice: -2, 2 }}</span>
               <span class="ha-pdp__scroll-hint">{{ section.settings.scroll_hint }}<span class="ha-pdp__scroll-arrow" aria-hidden="true">&darr;</span></span>
             </div>
             <p class="visually-hidden" aria-live="polite" data-count-live></p>
@@ -667,6 +680,7 @@
     { "type": "checkbox", "id": "enable_sticky_buttons", "label": "Sticky Add to Bag (mobile)", "default": true, "info": "Required by the mobile brief. Pins the buy form to the bottom of the viewport below 990px." },
     { "type": "checkbox", "id": "sticky_buttons_border", "label": "Hairline above the sticky bar", "default": true },
     { "type": "checkbox", "id": "enable_sticky_buttons_desktop", "label": "Sticky Add to Bag (desktop)", "default": false },
+    { "type": "range", "id": "media_limit", "label": "Pictures in the first section", "min": 1, "max": 12, "step": 1, "default": 3, "info": "Ivan, 1 October 2026: three. The product's other pictures stay available to the sections below." },
     { "type": "select", "id": "gallery_aspect_ratio", "label": "Variant image ratio", "options": [{ "value": "portrait-4x6", "label": "Portrait 2:3" }, { "value": "portrait", "label": "Portrait 4:5" }, { "value": "square", "label": "Square" }], "default": "portrait-4x6" }
   ],
   "blocks": [

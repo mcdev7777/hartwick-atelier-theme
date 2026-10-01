@@ -1,0 +1,111 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("ABOUT THE CIRCLE, 30 SEPTEMBER"). {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT THE CIRCLE 03: The Collectors, and a note on
+  membership. Aloha's About The Circle artboard, 30 September 2026.
+
+  Her photograph on the left; THE COLLECTORS, "Known through what we share.",
+  the paragraph, "Already invited? …" and MEMBER SIGN IN (Chalk Blue, an ink
+  hairline) on the right. Then a hairline and A NOTE ON MEMBERSHIP.
+
+  The Circle is reached by invitation only — there is no request form on
+  this page (her design has none; the 4 September request section is
+  disabled in the template, not deleted). Note 02: signing in grants nothing
+  by itself; a member is a customer whose Circle status (customer metafield
+  hartwick.circle_status) is Approved, the same test as the header's Circle
+  drawer. So a signed-in member sees a link to their own pages instead of
+  the sign-in button (once `member_url` is set — the members' pages come
+  with the invitation form); a signed-in customer who is not a member still
+  sees the words. The login screen itself is a later phase (note 01).
+{%- endcomment -%}
+
+{%- liquid
+  assign circle_member = false
+  if customer
+    assign circle_status = customer.metafields.hartwick.circle_status.value | strip | downcase
+    if circle_status == 'approved'
+      assign circle_member = true
+    endif
+  endif
+-%}
+
+<section class="ha-section ha-cmembers" aria-labelledby="HaCmembers-{{ section.id }}">
+  <div class="ha-wrap ha-cmembers__wrap">
+    <div class="ha-cmembers__grid">
+      <div class="ha-cmembers__media">
+        {%- if section.settings.image -%}
+          {%- assign focus_style = 'object-position: 50% ' | append: section.settings.focus_y | append: '%;' -%}
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'ha-cmembers__img',
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 38vw, 100vw',
+              widths: '600, 900, 1200, 1600',
+              alt: section.settings.image_alt,
+              style: focus_style
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'ha-cmembers__img ha-cmembers__img--placeholder' }}
+        {%- endif -%}
+      </div>
+      <div class="ha-cmembers__text">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-cmembers__eyebrow ha-label">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 id="HaCmembers-{{ section.id }}" class="ha-cmembers__heading ha-narrate">{{ section.settings.heading }}</h2>
+        {%- if section.settings.body != blank -%}
+          <div class="ha-cmembers__body ha-narrate">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if circle_member -%}
+          {%- if section.settings.member_url != blank -%}
+            <a class="ha-cmembers__button ha-record" href="{{ section.settings.member_url }}">{{ section.settings.member_text }}</a>
+          {%- endif -%}
+        {%- else -%}
+          {%- if section.settings.signin_body != blank -%}
+            <div class="ha-cmembers__signin-body ha-narrate">{{ section.settings.signin_body }}</div>
+          {%- endif -%}
+          {%- unless customer -%}
+            {%- if shop.customer_accounts_enabled -%}
+              <a class="ha-cmembers__button ha-record" href="{{ routes.account_login_url }}">{{ section.settings.signin_text }}</a>
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <div class="ha-cmembers__note">
+        <p class="ha-cmembers__note-label ha-label">{{ section.settings.note_label }}</p>
+        <div class="ha-cmembers__note-text ha-narrate">{{ section.settings.note }}</div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Circle: collectors",
+  "tag": "div",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photograph" },
+    { "type": "text", "id": "image_alt", "label": "Photograph description", "default": "Gold rings and a pendant worn with a white linen shirt" },
+    { "type": "range", "id": "focus_y", "label": "Photograph, vertical focus", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 15 },
+    { "type": "text", "id": "eyebrow", "label": "Label", "default": "The Collectors" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Known through what we share." },
+    { "type": "richtext", "id": "body", "label": "Text", "default": "<p>The Circle grows through personal invitations from Hartwick. It brings together friends and collectors with a shared interest in cloth, handwork and the people behind each piece.</p>" },
+    { "type": "richtext", "id": "signin_body", "label": "Line above sign in", "default": "<p>Already invited? Sign in with the email address linked to your invitation.</p>" },
+    { "type": "text", "id": "signin_text", "label": "Sign in button", "default": "Member sign in" },
+    { "type": "header", "content": "For a signed-in member", "info": "Shown instead of sign in when the customer's Circle status is Approved." },
+    { "type": "text", "id": "member_text", "label": "Button", "default": "Collector preferences" },
+    { "type": "url", "id": "member_url", "label": "Link" },
+    { "type": "header", "content": "A note on membership" },
+    { "type": "text", "id": "note_label", "label": "Label", "default": "A note on membership" },
+    { "type": "richtext", "id": "note", "label": "Text", "default": "<p>The Circle is by invitation. Joining The Register gives you The Dispatch; it does not create Circle membership.</p>" }
+  ],
+  "presets": [{ "name": "HA — Circle: collectors" }]
+}
+{% endschema %}

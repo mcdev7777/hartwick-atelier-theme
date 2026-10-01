@@ -293,7 +293,8 @@
       "settings": {
         "field": "page",
         "eyebrow": "",
-        "heading": ""
+        "heading": "",
+        "paper": "shopify://shop_images/HA_CIRCLE_HEADER_PAPER_GREY.jpg"
       }
     },
     "ha_continue": {

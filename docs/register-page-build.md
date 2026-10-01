@@ -158,3 +158,25 @@ Read with pymupdf (1440 × 3490). Changes from the version before:
 
 Her header items (a yellow spot behind THE CIRCLE, and globe and translate icons) are in this
 artboard too. They're site-wide, so they're not built. Asked.
+
+## 1 October 2026 — Aloha's updated Register page
+
+Source: `drive-download-20261001T040213Z-1-001.zip` (two artboard screenshots,
+`Into Pieces -.png`, `Into Pieces - 09.png`, square wax-seal mockup).
+
+- **Opening:** `HA_REGISTER_ENVELOPE_GLASSINE.png` (mauve glassine; her faint
+  white glow, alpha < 31, stripped — it doesn't show in her screenshot). Back
+  grey card = The Circle / By Invitation (Chalk Blue), front yellow card = The
+  Dispatch / Read (ink); upright Junicode, ±2° with each card. Classes are now
+  `--left` / `--right` (by place, not by name). No title on the envelope: h1
+  visually hidden (`show_title`).
+- **Join:** card = `HA_REGISTER_CARD_GLASSINE.png`; "The story continues beyond
+  the piece." printed on the yellow card (pull line), lead under the heading
+  emptied; seal = `HA_REGISTER_SEAL_SQUARE.png` (`seal_image`), drawn thread +
+  disc retired. "Join The Register" without full stop. Button olive #B1AA79
+  with ink hairline (`button_style`, wine still available).
+- **Join → Circle:** hairline across the content instead of the brown divider.
+- **Circle:** "Respond to Hartwick"; form column from the page's middle.
+- **Kept, flag to Aloha:** her paragraph says "makers"; the page keeps
+  "Masters" (terminology rule). Type sizes stay the role table (hers are drawn
+  larger); the Register paragraph stays Junicode, not her mono.

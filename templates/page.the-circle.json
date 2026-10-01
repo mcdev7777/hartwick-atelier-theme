@@ -1,4 +1,17 @@
 /*
+ * ============================================================
+ * 30 SEPTEMBER 2026 — ABOUT THE CIRCLE. Aloha's new artboard for this page
+ * (the page before a member signs in) replaces the 4 September layout:
+ * invite (opening + her envelopes photograph + wax seal, 30 Sep evening) /
+ * within (three benefits) / members
+ * (The Collectors, MEMBER SIGN IN, a note on membership). Her design has no
+ * request form. The 4 September sections below are DISABLED, not deleted,
+ * so they can come back in one click. The letter behind the seal, the
+ * questionnaire and the upload step are the invitation form, which waits for
+ * its updated design; until then the seal leads down to "Within the Circle".
+ * The notes on the 4 September layout that follow are kept for the record.
+ * ============================================================
+ *
  * Hartwick Atelier — THE CIRCLE
  *
  * Aloha, 4 September 2026: "please add The Circle as a public page at
@@ -65,7 +78,8 @@
         "show_placeholder_note": true,
         "image": "shopify://shop_images/HartwickAtelier-Event-London.jpg",
         "height": 92
-      }
+      },
+      "disabled": true
     },
     "holds": {
       "type": "ha-circle-columns",
@@ -115,7 +129,8 @@
         "heading": "Access built around knowledge, not urgency.",
         "aside": "<p>This is not a points programme or a route to constant promotion. It is a quieter way to stay close to the collection, the Masters and the practical life of each garment.</p>",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "gatherings": {
       "type": "ha-circle-feature",
@@ -133,7 +148,8 @@
         "image_one": "shopify://shop_images/HartwickAtelier-Event-Paris.jpg",
         "image_two": "shopify://shop_images/002_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
         "image_three": "shopify://shop_images/001_ATELIER_7_89-Theme_Film.jpg"
-      }
+      },
+      "disabled": true
     },
     "how": {
       "type": "ha-circle-columns",
@@ -173,7 +189,8 @@
         "eyebrow": "How it works",
         "heading": "A personal exchange.",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "notes": {
       "type": "ha-journal",
@@ -217,7 +234,8 @@
         "post_limit": 3,
         "cta_text": "Read the note",
         "show_placeholder_note": true
-      }
+      },
+      "disabled": true
     },
     "request": {
       "type": "ha-circle-request",
@@ -274,7 +292,8 @@
         "image_label": "01 / Portrait · Object · Place",
         "show_placeholder_note": true,
         "image": "shopify://shop_images/HartwickAtelier-About-Angela.jpg"
-      }
+      },
+      "disabled": true
     },
     "details": {
       "type": "ha-living",
@@ -318,7 +337,8 @@
         "field": "page",
         "eyebrow": "The details",
         "heading": "Questions, answered plainly."
-      }
+      },
+      "disabled": true
     },
     "register": {
       "type": "ha-register",
@@ -332,9 +352,84 @@
         "register_source": "circle_page"
       },
       "disabled": true
+    },
+    "invite": {
+      "type": "ha-circle-invite",
+      "settings": {
+        "crumb": "Hartwick Atelier / By personal invitation",
+        "title": "THE CIRCLE",
+        "intro": "A private circle of collectors, connected through Angela and the pieces they choose to live with.",
+        "meta": "Private accessories / Personal attention / Shared stories",
+        "seal_text": "Break the seal",
+        "seal_url": "#within-the-circle",
+        "image": "shopify://shop_images/HA_CIRCLE_ENVELOPES.png",
+        "image_alt": "Two wine-coloured envelopes with grey linings, one sealed with the gold Hartwick seal",
+        "seal_image": "shopify://shop_images/HA_CIRCLE_SEAL.png",
+        "seal_x": 35.5,
+        "seal_y": 48,
+        "seal_w": 39,
+        "seal_turn": 12,
+        "show_seal_text": false,
+        "paper": "shopify://shop_images/HA_CIRCLE_HEADER_PAPER_GREY.jpg"
+      }
+    },
+    "within": {
+      "type": "ha-circle-within",
+      "settings": {
+        "anchor": "within-the-circle",
+        "crumb": "01 / Within the Circle",
+        "heading": "A closer connection to Hartwick"
+      },
+      "blocks": {
+        "pieces": {
+          "type": "column",
+          "settings": {
+            "title": "Pieces for the Circle",
+            "body": "<p>Pouches and tote bags, available for members to purchase. A private selection outside the public collection.</p>"
+          }
+        },
+        "approach": {
+          "type": "column",
+          "settings": {
+            "title": "A more personal approach",
+            "body": "<p>Tell us what you wear, what you collect and how you would like to hear from us. Share only what feels useful.</p>"
+          }
+        },
+        "life": {
+          "type": "column",
+          "settings": {
+            "title": "Your life in Hartwick",
+            "body": "<p>Send photographs or films of the pieces you wear. You or your representative can share them directly for review.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "pieces",
+        "approach",
+        "life"
+      ]
+    },
+    "members": {
+      "type": "ha-circle-members",
+      "settings": {
+        "image": "shopify://shop_images/HA_JOURNAL_INSTAGRAM_JEWELLERY.jpg",
+        "image_alt": "Gold rings and chains with green stones, worn with a white shirt",
+        "focus_y": 35,
+        "eyebrow": "The Collectors",
+        "heading": "Known through what we share",
+        "body": "<p>The Circle grows through personal invitations from Hartwick. It brings together friends and collectors with a shared interest in cloth, handwork and the people behind each piece.</p>",
+        "signin_body": "<p>Already invited? Sign in with the email address linked to your invitation.</p>",
+        "signin_text": "Member sign in",
+        "member_text": "Collector preferences",
+        "note_label": "A note on membership",
+        "note": "<p>The Circle is by invitation. Joining The Register gives you The Dispatch; it does not create Circle membership.</p>"
+      }
     }
   },
   "order": [
+    "invite",
+    "within",
+    "members",
     "hero",
     "holds",
     "gatherings",

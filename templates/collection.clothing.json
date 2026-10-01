@@ -27,7 +27,7 @@
           "type": "feature",
           "settings": {
             "eyebrow": "Made by Masters / The cloth",
-            "heading": "From yarn to cloth.",
+            "heading": "From yarn to cloth",
             "body": "<p>Much of this collection begins with cotton khadi: yarn spun by hand, then woven on a handloom. Across plain cloth, stripes and checks, spinning and weaving give each fabric its particular texture.</p>",
             "link_text": "Explore handspinning & handweaving",
             "link_url": "/pages/the-masters#khadi",
@@ -110,7 +110,7 @@
         "onward_3_text": "Yoga",
         "onward_3_url": "/collections/yoga",
         "show_placeholder_note": true,
-        "head_paper": "shopify://shop_images/HA_COLLECTION_HEADER_NAVY_PAPER.jpg"
+        "head_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg"
       }
     },
     "register": {

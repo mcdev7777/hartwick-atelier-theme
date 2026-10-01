@@ -230,12 +230,17 @@
        Type scale, so the scale stays Aloha's to re-tune without a developer.
        ================================================================== */
 
+    /* 1 October 2026 (Ivan's fix list, 3: "title fonts need to be a little
+       bigger and stronger"): the four title rows up one step — desktop hero
+       32→36, h1 26→30, h2 20→23, h3 16→18; phone 28→30, 23→25, 18→20, 15→16.
+       Stronger: titles in Junicode Regular (400), the rule at the end of
+       ha-sections.css ("TITLES, 1 OCTOBER"). Body copy stays Light. */
     /* --- display: Porter ------------------------------------------------ */
-    --ha-t-hero:       {{ settings.ha_t_hero_m       | default: 28 | divided_by: 10.0 }}rem;
-    --ha-t-h1:         {{ settings.ha_t_h1_m         | default: 23 | divided_by: 10.0 }}rem;
-    --ha-t-h2:         {{ settings.ha_t_h2_m         | default: 18 | divided_by: 10.0 }}rem;
+    --ha-t-hero:       {{ settings.ha_t_hero_m       | default: 30 | divided_by: 10.0 }}rem;
+    --ha-t-h1:         {{ settings.ha_t_h1_m         | default: 25 | divided_by: 10.0 }}rem;
+    --ha-t-h2:         {{ settings.ha_t_h2_m         | default: 20 | divided_by: 10.0 }}rem;
     /* --- editorial: Junicode -------------------------------------------- */
-    --ha-t-h3:         {{ settings.ha_t_h3_m         | default: 15 | divided_by: 10.0 }}rem;
+    --ha-t-h3:         {{ settings.ha_t_h3_m         | default: 16 | divided_by: 10.0 }}rem;
     --ha-t-intro:      {{ settings.ha_t_intro_m      | default: 14 | divided_by: 10.0 }}rem;
     --ha-t-expression: {{ settings.ha_t_expression_m | default: 12 | divided_by: 10.0 }}rem;
     /* --- record: Noto Sans Mono (normal width since 24 Sep) ------------ */
@@ -294,23 +299,28 @@
     --ha-track-ui:    0.14em;
   }
 
+  /* 1 October 2026 (Ivan: "on the desktop mode, make the current whole
+     fonts a little bit bigger, really little bigger, and keep the current
+     font sizes on the mobile mode"): every desktop row +1px — hero 37, h1 31,
+     h2 24, h3 19, intro 16, expression 14, body 14, detail 13, price 13,
+     ui 12, label 11, meta 11, legal 10, style 17, nav 12. Phone rows as they were. */
   @media screen and (min-width: 990px) {
     :root {
-      --ha-t-hero:       {{ settings.ha_t_hero_d       | default: 32 | divided_by: 10.0 }}rem;
-      --ha-t-h1:         {{ settings.ha_t_h1_d         | default: 26 | divided_by: 10.0 }}rem;
-      --ha-t-h2:         {{ settings.ha_t_h2_d         | default: 20 | divided_by: 10.0 }}rem;
-      --ha-t-h3:         {{ settings.ha_t_h3_d         | default: 16 | divided_by: 10.0 }}rem;
-      --ha-t-intro:      {{ settings.ha_t_intro_d      | default: 15 | divided_by: 10.0 }}rem;
-      --ha-t-expression: {{ settings.ha_t_expression_d | default: 13 | divided_by: 10.0 }}rem;
-      --ha-t-body:       {{ settings.ha_t_body_d       | default: 13 | divided_by: 10.0 }}rem;
-      --ha-t-detail:     {{ settings.ha_t_detail_d     | default: 12 | divided_by: 10.0 }}rem;
-      --ha-t-price:      {{ settings.ha_t_price_d      | default: 12 | divided_by: 10.0 }}rem;
-      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 11 | divided_by: 10.0 }}rem;
-      --ha-t-label:      {{ settings.ha_t_label_d      | default: 10 | divided_by: 10.0 }}rem;
-      --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 10 | divided_by: 10.0 }}rem;
-      --ha-t-legal:      {{ settings.ha_t_legal_d      | default: 9  | divided_by: 10.0 }}rem;
-      --ha-t-style:      {{ settings.ha_t_style_d      | default: 16 | divided_by: 10.0 }}rem;
-      --ha-t-nav:        {{ settings.ha_t_nav_d        | default: 11 | divided_by: 10.0 }}rem;
+      --ha-t-hero:       {{ settings.ha_t_hero_d       | default: 37 | divided_by: 10.0 }}rem;
+      --ha-t-h1:         {{ settings.ha_t_h1_d         | default: 31 | divided_by: 10.0 }}rem;
+      --ha-t-h2:         {{ settings.ha_t_h2_d         | default: 24 | divided_by: 10.0 }}rem;
+      --ha-t-h3:         {{ settings.ha_t_h3_d         | default: 19 | divided_by: 10.0 }}rem;
+      --ha-t-intro:      {{ settings.ha_t_intro_d      | default: 16 | divided_by: 10.0 }}rem;
+      --ha-t-expression: {{ settings.ha_t_expression_d | default: 14 | divided_by: 10.0 }}rem;
+      --ha-t-body:       {{ settings.ha_t_body_d       | default: 14 | divided_by: 10.0 }}rem;
+      --ha-t-detail:     {{ settings.ha_t_detail_d     | default: 13 | divided_by: 10.0 }}rem;
+      --ha-t-price:      {{ settings.ha_t_price_d      | default: 13 | divided_by: 10.0 }}rem;
+      --ha-t-ui:         {{ settings.ha_t_ui_d         | default: 12 | divided_by: 10.0 }}rem;
+      --ha-t-label:      {{ settings.ha_t_label_d      | default: 11 | divided_by: 10.0 }}rem;
+      --ha-t-meta:       {{ settings.ha_t_meta_d       | default: 11 | divided_by: 10.0 }}rem;
+      --ha-t-legal:      {{ settings.ha_t_legal_d      | default: 10  | divided_by: 10.0 }}rem;
+      --ha-t-style:      {{ settings.ha_t_style_d      | default: 17 | divided_by: 10.0 }}rem;
+      --ha-t-nav:        {{ settings.ha_t_nav_d        | default: 12 | divided_by: 10.0 }}rem;
     }
   }
 
@@ -335,33 +345,33 @@
   :root {
     /* body copy — 13px */
     --font-body-base-size-mobile:  {{ settings.ha_t_body_m   | default: 13 }}px;
-    --font-body-base-size-tablet:  {{ settings.ha_t_body_d   | default: 13 }}px;
-    --font-body-base-size-desktop: {{ settings.ha_t_body_d   | default: 13 }}px;
+    --font-body-base-size-tablet:  {{ settings.ha_t_body_d   | default: 14 }}px;
+    --font-body-base-size-desktop: {{ settings.ha_t_body_d   | default: 14 }}px;
     --base-line-height: {{ settings.ha_t_body_lh | default: 160 | divided_by: 100.0 }};
 
     /* interface text — 11px. Luxe's "small" and "micro" steps are the label
        and caption row, 10px. */
     --font-ui-size-mobile:        {{ settings.ha_t_ui_m    | default: 11 }}px;
-    --font-ui-size-desktop:       {{ settings.ha_t_ui_d    | default: 11 }}px;
+    --font-ui-size-desktop:       {{ settings.ha_t_ui_d    | default: 12 }}px;
     --font-ui-size-small-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
-    --font-ui-size-small-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-ui-size-small-desktop: {{ settings.ha_t_label_d | default: 11 }}px;
     --font-size-micro-mobile:     {{ settings.ha_t_label_m | default: 10 }}px;
-    --font-size-micro-desktop:    {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-size-micro-desktop:    {{ settings.ha_t_label_d | default: 11 }}px;
 
     /* captions and metadata — 10px */
     --font-caption-size-mobile:  {{ settings.ha_t_meta_m | default: 10 }}px;
-    --font-caption-size-desktop: {{ settings.ha_t_meta_d | default: 10 }}px;
+    --font-caption-size-desktop: {{ settings.ha_t_meta_d | default: 11 }}px;
 
     /* product badges — a label */
     --font-size-product-badge-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
-    --font-size-product-badge-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
+    --font-size-product-badge-desktop: {{ settings.ha_t_label_d | default: 11 }}px;
 
     /* cart and dialogs are functional information — 12px */
     --font-size-cart-drawer-mobile:  {{ settings.ha_t_detail_m | default: 12 }}px;
-    --font-size-cart-drawer-desktop: {{ settings.ha_t_detail_d | default: 12 }}px;
-    --dialog-title-size-mobile:  {{ settings.ha_t_h3_m | default: 15 }}px;
-    --dialog-title-size-tablet:  {{ settings.ha_t_h3_d | default: 16 }}px;
-    --dialog-title-size-desktop: {{ settings.ha_t_h3_d | default: 16 }}px;
+    --font-size-cart-drawer-desktop: {{ settings.ha_t_detail_d | default: 13 }}px;
+    --dialog-title-size-mobile:  {{ settings.ha_t_h3_m | default: 16 }}px;
+    --dialog-title-size-tablet:  {{ settings.ha_t_h3_d | default: 19 }}px;
+    --dialog-title-size-desktop: {{ settings.ha_t_h3_d | default: 19 }}px;
 
     /* FORM FIELDS ARE THE ONE DELIBERATE EXCEPTION on mobile. iOS Safari zooms
        the page whenever a focused input is under 16px, and the zoom does not
@@ -370,43 +380,43 @@
        body size on everything else. The same reason is why the Hartwick form
        rules read `max(var(--ha-t-body), 1.6rem)`. */
     --font-form-placeholder-size-mobile:  16px;
-    --font-form-placeholder-size-desktop: {{ settings.ha_t_body_d | default: 13 }}px;
+    --font-form-placeholder-size-desktop: {{ settings.ha_t_body_d | default: 14 }}px;
 
     /* buttons — 11px, line height 1 */
     --buttons-font-size-mobile:  {{ settings.ha_t_ui_m | default: 11 }}px;
-    --buttons-font-size-desktop: {{ settings.ha_t_ui_d | default: 11 }}px;
+    --buttons-font-size-desktop: {{ settings.ha_t_ui_d | default: 12 }}px;
 
     /* Luxe's heading ladder. h1–h3 are Aloha's rows. h4 takes the intro size,
        h5 the body size and h6 the label size, which is where Luxe's own
        templates use them (h6 is Luxe's uppercase eyebrow). h0/hxl/hxxl are
        Luxe's oversize display steps — every one of them collapses onto the
        hero row, because the table has no size above it. */
-    --font-h1-size-mobile:  {{ settings.ha_t_h1_m | default: 23 }}px;
-    --font-h1-size-tablet:  {{ settings.ha_t_h1_d | default: 26 }}px;
-    --font-h1-size-desktop: {{ settings.ha_t_h1_d | default: 26 }}px;
-    --font-h2-size-mobile:  {{ settings.ha_t_h2_m | default: 18 }}px;
-    --font-h2-size-tablet:  {{ settings.ha_t_h2_d | default: 20 }}px;
-    --font-h2-size-desktop: {{ settings.ha_t_h2_d | default: 20 }}px;
-    --font-h3-size-mobile:  {{ settings.ha_t_h3_m | default: 15 }}px;
-    --font-h3-size-tablet:  {{ settings.ha_t_h3_d | default: 16 }}px;
-    --font-h3-size-desktop: {{ settings.ha_t_h3_d | default: 16 }}px;
+    --font-h1-size-mobile:  {{ settings.ha_t_h1_m | default: 25 }}px;
+    --font-h1-size-tablet:  {{ settings.ha_t_h1_d | default: 31 }}px;
+    --font-h1-size-desktop: {{ settings.ha_t_h1_d | default: 31 }}px;
+    --font-h2-size-mobile:  {{ settings.ha_t_h2_m | default: 20 }}px;
+    --font-h2-size-tablet:  {{ settings.ha_t_h2_d | default: 24 }}px;
+    --font-h2-size-desktop: {{ settings.ha_t_h2_d | default: 24 }}px;
+    --font-h3-size-mobile:  {{ settings.ha_t_h3_m | default: 16 }}px;
+    --font-h3-size-tablet:  {{ settings.ha_t_h3_d | default: 19 }}px;
+    --font-h3-size-desktop: {{ settings.ha_t_h3_d | default: 19 }}px;
     --font-h4-size-mobile:  {{ settings.ha_t_intro_m | default: 14 }}px;
-    --font-h4-size-tablet:  {{ settings.ha_t_intro_d | default: 15 }}px;
-    --font-h4-size-desktop: {{ settings.ha_t_intro_d | default: 15 }}px;
+    --font-h4-size-tablet:  {{ settings.ha_t_intro_d | default: 16 }}px;
+    --font-h4-size-desktop: {{ settings.ha_t_intro_d | default: 16 }}px;
     --font-h5-size-mobile:  {{ settings.ha_t_body_m | default: 13 }}px;
-    --font-h5-size-tablet:  {{ settings.ha_t_body_d | default: 13 }}px;
-    --font-h5-size-desktop: {{ settings.ha_t_body_d | default: 13 }}px;
+    --font-h5-size-tablet:  {{ settings.ha_t_body_d | default: 14 }}px;
+    --font-h5-size-desktop: {{ settings.ha_t_body_d | default: 14 }}px;
     --font-h6-size-mobile:  {{ settings.ha_t_label_m | default: 10 }}px;
-    --font-h6-size-tablet:  {{ settings.ha_t_label_d | default: 10 }}px;
-    --font-h6-size-desktop: {{ settings.ha_t_label_d | default: 10 }}px;
-    --font-h0-size-mobile:   {{ settings.ha_t_hero_m | default: 28 }}px;
-    --font-h0-size-tablet:   {{ settings.ha_t_hero_d | default: 32 }}px;
-    --font-h0-size-desktop:  {{ settings.ha_t_hero_d | default: 32 }}px;
-    --font-hxl-size-mobile:  {{ settings.ha_t_hero_m | default: 28 }}px;
-    --font-hxl-size-tablet:  {{ settings.ha_t_hero_d | default: 32 }}px;
-    --font-hxl-size-desktop: {{ settings.ha_t_hero_d | default: 32 }}px;
-    --font-hxxl-size-mobile:  {{ settings.ha_t_hero_m | default: 28 }}px;
-    --font-hxxl-size-tablet:  {{ settings.ha_t_hero_d | default: 32 }}px;
-    --font-hxxl-size-desktop: {{ settings.ha_t_hero_d | default: 32 }}px;
+    --font-h6-size-tablet:  {{ settings.ha_t_label_d | default: 11 }}px;
+    --font-h6-size-desktop: {{ settings.ha_t_label_d | default: 11 }}px;
+    --font-h0-size-mobile:   {{ settings.ha_t_hero_m | default: 30 }}px;
+    --font-h0-size-tablet:   {{ settings.ha_t_hero_d | default: 37 }}px;
+    --font-h0-size-desktop:  {{ settings.ha_t_hero_d | default: 37 }}px;
+    --font-hxl-size-mobile:  {{ settings.ha_t_hero_m | default: 30 }}px;
+    --font-hxl-size-tablet:  {{ settings.ha_t_hero_d | default: 37 }}px;
+    --font-hxl-size-desktop: {{ settings.ha_t_hero_d | default: 37 }}px;
+    --font-hxxl-size-mobile:  {{ settings.ha_t_hero_m | default: 30 }}px;
+    --font-hxxl-size-tablet:  {{ settings.ha_t_hero_d | default: 37 }}px;
+    --font-hxxl-size-desktop: {{ settings.ha_t_hero_d | default: 37 }}px;
   }
 {% endstyle %}

@@ -13,6 +13,9 @@
  * 24 September 2026 — Aloha: "THE REGISTER BOX: Fixed on all pages, except on
  * The Register page." The band moved here from the templates (theirs are
  * disabled, settings kept) with site_wide on.
+ *
+ * 1 October 2026 — Aloha: the wine paper from the team in India under every
+ * Register band (`paper` = HA_REGISTER_BLOCK_PAPER_WINE.jpg).
  */
 {
   "name": "t:sections.footer.name",
@@ -136,7 +139,8 @@
         "field": "correspondence",
         "link_text": "Join The Register",
         "link_url": "/pages/the-register#join-the-register",
-        "site_wide": true
+        "site_wide": true,
+        "paper": "shopify://shop_images/HA_REGISTER_BLOCK_PAPER_WINE.jpg"
       }
     }
   },

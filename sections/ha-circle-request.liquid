@@ -66,6 +66,17 @@
 
   The Circle constraint is unchanged: landing on `Circle Requests` records that
   access was requested. Nothing here, and no flow, may read as acceptance.
+
+  --- 28 SEPTEMBER: AN EVENT, NOT A SUBSCRIPTION ----------------------------
+  Aloha's invitation logic: this is the INVITATION REQUEST ("express
+  interest"). The form now records the Klaviyo event `Circle Invitation
+  Request` instead of joining the double-opt-in `Circle Requests` list, so the
+  visitor receives only "We've received your note" — no confirm-subscription
+  email, no marketing consent, nothing added to The Register. Name, city,
+  interests and note travel as event properties for Angela's alert. The
+  consent box, if set, is now an acknowledgement for this request only.
+  Angela approves by setting the customer's Circle status to Approved in
+  Admin; that, not this form, is what sends the invitation.
 {%- endcomment -%}
 
 {%- liquid
@@ -129,7 +140,7 @@
           data-nocaptcha: 'true',
           data-ha-klaviyo: '',
           data-company-id: settings.ha_klaviyo_company_id,
-          data-list-id: settings.ha_klaviyo_circle_list,
+          data-klaviyo-event: 'Circle Invitation Request',
           data-source: section.settings.register_source,
           data-msg-invalid: section.settings.msg_invalid,
           data-msg-consent: section.settings.msg_consent,

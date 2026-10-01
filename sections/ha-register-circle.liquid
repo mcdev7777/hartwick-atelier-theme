@@ -7,7 +7,8 @@
   Two columns on the page ground. Left: "The Circle / By invitation", the
   heading, one paragraph and a quieter second one ("Membership begins with a
   personal invitation. It is separate from joining The Register."). Right:
-  "Already received an invitation?", "Respond to the Atelier.", and a form —
+  "Already received an invitation?", "Respond to the Atelier." (1 October:
+  "Respond to Hartwick"), and a form —
   full name, the email the invitation went to, a note — with "Your reply goes
   to the Atelier team for confirmation." and the wine button.
   24 September (FinalHartwick_The_Register): a spot of the Atelier's yellow
@@ -28,13 +29,17 @@
       v3 answer. Until Christina decides, the page shows Aloha's design.
   ══════════════════════════════════════════════════════════════════════════
 
-  What reaches the CRM: the same Klaviyo path as the Circle request
-  (assets/ha-klaviyo-form.js, the Circle list from theme settings), with its
-  own `register_source` and its own tag, so a reply to an invitation is never
-  confused with a request for one. The full name travels as the profile's
-  first name and as a `full_name` property; the note as `invitation_note`.
-  Nothing here, and no flow, may read as acceptance: the success line says
-  the reply has been received, and a person answers it.
+  What reaches the CRM (28 September 2026, Aloha's invitation logic): this is
+  the INVITATION RESPONSE. assets/ha-klaviyo-form.js records the Klaviyo event
+  `Circle Invitation Response` — not a list subscription, no marketing consent
+  — with full_name, invitation_note and register_source as event properties
+  (the full name is also split into the profile's first and last name).
+  The Klaviyo flow on that event alerts the Atelier and then checks the
+  profile's Shopify Tags for `circle-approved`: approved → WELCOME TO THE
+  CIRCLE; not approved → "We've received your note", and Angela decides.
+  So the form itself grants nothing: membership is the customer's Circle
+  status in Admin (see snippets/ha-utilities.liquid). The invitation email's
+  ACCEPT INVITATION button links here: /pages/the-register#the-circle.
 
   No consent box is drawn on the artboard: a reply to an invitation the
   Atelier sent is a response to its own correspondence, not a subscription.
@@ -88,7 +93,7 @@
             data-nocaptcha: 'true',
             data-ha-klaviyo: '',
             data-company-id: settings.ha_klaviyo_company_id,
-            data-list-id: settings.ha_klaviyo_circle_list,
+            data-klaviyo-event: 'Circle Invitation Response',
             data-source: section.settings.register_source,
             data-msg-invalid: section.settings.msg_invalid,
             data-msg-consent: section.settings.msg_consent,
@@ -163,7 +168,7 @@
     { "type": "image_picker", "id": "spot_image", "label": "Dye spot", "info": "Aloha's spot of yellow dye beside the first paragraph, cut out on a transparent ground. Decorative: no alt text is read." },
     { "type": "header", "content": "Right column" },
     { "type": "text", "id": "aside_eyebrow", "label": "Eyebrow", "default": "Already received an invitation?" },
-    { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Respond to the Atelier." },
+    { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Respond to Hartwick" },
     {
       "type": "header",
       "content": "The reply form",

@@ -25,7 +25,13 @@
     assign bare = true
   endif
 -%}
-<section class="ha-section ha-living{% if bare %} ha-living--bare{% endif %}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}">
+{%- comment -%}
+  1 October 2026 (Ivan's fix list, 11): on the product page this block — Care
+  & Repair, Shipping & Returns — sits on the blue-grey paper of the Circle's
+  envelope section (`paper`, HA_CIRCLE_HEADER_PAPER_GREY.jpg), with no brown
+  divider above or below it.
+{%- endcomment -%}
+<section class="ha-section ha-living{% if bare %} ha-living--bare{% endif %}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}{% if section.settings.paper %} ha-living--paper{% endif %}"{% if section.settings.paper %} style="--ha-living-paper: url({{ section.settings.paper | image_url: width: 2400 }});"{% endif %}>
   <div class="ha-wrap ha-living__grid">
     {%- unless bare -%}
     <div class="ha-living__lead">
@@ -62,6 +68,7 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
+    { "type": "image_picker", "id": "paper", "label": "Paper photograph", "info": "The Circle's blue-grey paper on the product page (1 October 2026). Empty = the field colour below." },
     { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
       { "value": "page", "label": "Page ground" }, { "value": "white", "label": "White" },
       { "value": "peat", "label": "Peat (dark)" }, { "value": "clay", "label": "Clay" },

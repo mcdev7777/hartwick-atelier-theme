@@ -14,13 +14,17 @@
     "main": {
       "type": "main-page",
       "disabled": true,
-      "settings": { "content_width": "page-width-narrow", "padding_top": 100, "padding_bottom": 100 }
+      "settings": {
+        "content_width": "page-width-narrow",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
     },
     "policies": {
       "type": "ha-policies",
       "settings": {
         "eyebrow": "Policies",
-        "heading": "The terms on which we work.",
+        "heading": "The terms on which we work",
         "intro": "",
         "title_shipping": "Shipping",
         "title_refund": "Returns & Refunds",
@@ -29,5 +33,8 @@
       }
     }
   },
-  "order": ["main", "policies"]
+  "order": [
+    "main",
+    "policies"
+  ]
 }

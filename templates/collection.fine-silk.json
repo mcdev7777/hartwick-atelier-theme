@@ -37,7 +37,7 @@
           "type": "feature",
           "settings": {
             "eyebrow": "Made by Masters / The print",
-            "heading": "Block printed by hand.",
+            "heading": "Block printed by hand",
             "body": "<p>The printer places a carved wooden block onto the cloth, then repeats the impression to build the pattern. Each colour is applied in its own pass. Small variations in placement and colour are part of this hand process.</p>",
             "link_text": "Explore block printing",
             "link_url": "/pages/the-masters#block-printed-by-hand",
@@ -112,7 +112,7 @@
         "onward_3_text": "Yoga",
         "onward_3_url": "/collections/yoga",
         "show_placeholder_note": true,
-        "head_paper": "shopify://shop_images/HA_COLLECTION_HEADER_NAVY_PAPER.jpg"
+        "head_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg"
       }
     },
     "register": {

@@ -24,7 +24,7 @@
           "type": "headline",
           "settings": {
             "kicker": "01 / Now open",
-            "title": "A place in Esporles.",
+            "title": "A place in Esporles",
             "line": "The showroom opens for private appointments."
           }
         },
@@ -32,7 +32,7 @@
           "type": "headline",
           "settings": {
             "kicker": "02 / October",
-            "title": "Getting ready for India.",
+            "title": "Getting ready for India",
             "line": "Angela prepares to meet with the Masters."
           }
         },
@@ -40,7 +40,7 @@
           "type": "headline",
           "settings": {
             "kicker": "03 / Back from",
-            "title": "New York Fashion Week.",
+            "title": "New York Fashion Week",
             "line": "Angela returns. A new entry for the Journal."
           }
         },
@@ -131,7 +131,7 @@
             "kicker": "02 / Field notes / Looking ahead",
             "image": "shopify://shop_images/HA_JOURNAL_INDIA_BLOCK_WORKSHOP.jpg",
             "caption": "From the Hartwick craft archive",
-            "heading": "India, before departure.",
+            "heading": "India, before departure",
             "body": "Angela heads to India in October to meet with the Masters. Ahead of the visit, a look at the places, materials and handwork that inform her thinking.",
             "link_text": "Read the India note",
             "link_url": ""
@@ -143,7 +143,7 @@
             "kicker": "03 / Field notes / Recently returned",
             "panel_title": "New York\nFashion week",
             "caption": "Angela’s notes / Photography to follow",
-            "heading": "Back from New York.",
+            "heading": "Back from New York",
             "body": "Angela has returned from New York Fashion Week. Her observations and photographs will form a new entry in the Journal.",
             "link_text": "Read the New York note",
             "link_url": ""
@@ -164,7 +164,7 @@
           "settings": {
             "image": "shopify://shop_images/HA_JOURNAL_INSTAGRAM_JEWELLERY.jpg",
             "kicker": "01 / Instagram",
-            "title": "A closer look.",
+            "title": "A closer look",
             "link_text": "View Instagram",
             "link_source": "instagram"
           }
@@ -174,7 +174,7 @@
           "settings": {
             "image": "shopify://shop_images/HA_JOURNAL_WORKING_TABLE_CARVING.jpg",
             "kicker": "02 / Creative projects",
-            "title": "At the working table.",
+            "title": "At the working table",
             "note": "Project preview / Content to follow",
             "link_source": "custom"
           }
@@ -197,7 +197,7 @@
       ],
       "settings": {
         "kicker": "The Atelier noticeboard",
-        "heading": "Between stories.",
+        "heading": "Between stories",
         "intro": "Short updates, creative projects and\nconversations from across the table.",
         "band_colour": "#25231F",
         "band_ink": "#E9E4D8"
@@ -238,11 +238,11 @@
   },
   "order": [
     "masthead",
+    "voices",
     "entries",
     "lead",
     "notes",
     "board",
-    "voices",
     "register"
   ]
 }

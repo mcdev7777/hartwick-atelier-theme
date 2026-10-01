@@ -1,0 +1,57 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("ABOUT THE CIRCLE, 30 SEPTEMBER"). {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT THE CIRCLE 02: 01 / Within the Circle.
+  Aloha's About The Circle artboard, 30 September 2026: the reference line,
+  "A closer connection to the Atelier." and three numbered columns (blocks),
+  the number drawn from the column's place. A hairline closes it, as drawn;
+  no brown divider. On a phone the columns stack (note 05).
+{%- endcomment -%}
+
+<section id="{{ section.settings.anchor | default: 'within-the-circle' }}" class="ha-section ha-cwithin" aria-labelledby="HaCwithin-{{ section.id }}">
+  <div class="ha-wrap ha-cwithin__wrap">
+    {%- if section.settings.crumb != blank -%}
+      <p class="ha-cwithin__crumb ha-record">{{ section.settings.crumb }}</p>
+    {%- endif -%}
+    <h2 id="HaCwithin-{{ section.id }}" class="ha-cwithin__heading ha-narrate">{{ section.settings.heading }}</h2>
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="ha-cwithin__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="ha-cwithin__item" {{ block.shopify_attributes }}>
+            <p class="ha-cwithin__num ha-record" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
+            <h3 class="ha-cwithin__title ha-narrate">{{ block.settings.title }}</h3>
+            {%- if block.settings.body != blank -%}
+              <div class="ha-cwithin__body ha-narrate">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Circle: within",
+  "tag": "div",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "within-the-circle", "info": "The letter's button points here for visitors." },
+    { "type": "text", "id": "crumb", "label": "Reference line", "default": "01 / Within the Circle" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A closer connection to the Atelier." }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "richtext", "id": "body", "label": "Text" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "HA — Circle: within" }]
+}
+{% endschema %}

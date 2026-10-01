@@ -1,0 +1,148 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("THE CIRCLE, 29 SEPTEMBER"). {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT THE CIRCLE 01: the opening and the invitation.
+  Aloha's Final_Hartwick_About_The_Circle.pdf, 29 September 2026, pages 1–2.
+
+  The opening: HARTWICK ATELIER / BY PERSONAL INVITATION, THE CIRCLE, and her
+  line on the right. Beneath it the envelope — Inkstone body, Chalk Blue flap,
+  the gold seal. Page 7 (Ivan's notes): "The seal opens a letter in place; it
+  is not an authentication gate. Existing members can go directly to sign
+  in." So BREAK THE SEAL is a real button (aria-expanded, aria-controls). The
+  flap lifts, the envelope gives way and Angela's letter (page 2) stands in
+  the same place; focus moves to it. CLOSE INVITATION puts the envelope back.
+  Reduced motion: no lift, no fade.
+
+  The envelope is drawn, not a picture: her artboard's own geometry (1312 ×
+  643 on the 1440 board, flap 375 deep, the seal's scalloped edge and two
+  rings taken from the PDF's vector paths), so it stays sharp at any width.
+  Its small words follow the type roles, not the faces she drew them in.
+
+  EXPLORE THE CIRCLE: to the members' own pages for a member (Circle status
+  Approved, the same test as the header's Circle drawer), otherwise down the
+  page to "Within the Circle". Without JavaScript the letter is simply
+  shown beneath the envelope.
+{%- endcomment -%}
+
+{%- liquid
+  assign circle_member = false
+  if customer
+    assign circle_status = customer.metafields.hartwick.circle_status.value | strip | downcase
+    if circle_status == 'approved'
+      assign circle_member = true
+    endif
+  endif
+
+  assign explore_url = section.settings.explore_url_guest | default: '#within-the-circle'
+  if circle_member and section.settings.explore_url_member != blank
+    assign explore_url = section.settings.explore_url_member
+  endif
+  assign sid = section.id
+-%}
+
+<section class="ha-section ha-cinv" data-ha-cinv aria-labelledby="HaCinvTitle-{{ sid }}">
+  <div class="ha-wrap ha-cinv__head">
+    <div class="ha-cinv__head-main">
+      {%- if section.settings.crumb != blank -%}
+        <p class="ha-cinv__crumb ha-record">{{ section.settings.crumb }}</p>
+      {%- endif -%}
+      <h1 id="HaCinvTitle-{{ sid }}" class="ha-cinv__title ha-narrate">{{ section.settings.title }}</h1>
+    </div>
+    <div class="ha-cinv__head-aside">
+      {%- if section.settings.intro != blank -%}
+        <p class="ha-cinv__intro ha-narrate">{{ section.settings.intro }}</p>
+      {%- endif -%}
+      {%- if section.settings.meta != blank -%}
+        <p class="ha-cinv__meta ha-label">{{ section.settings.meta }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="ha-wrap ha-cinv__body">
+    <div class="ha-cinv__stage" data-ha-cinv-stage>
+      <div class="ha-cinv__envelope" data-ha-cinv-envelope>
+        <div class="ha-cinv__env-body" aria-hidden="true"></div>
+        <svg class="ha-cinv__env-lines" viewBox="0 0 1312 643" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M0 628 L656 174 M1312 628 L656 174" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/>
+        </svg>
+        <div class="ha-cinv__flap" aria-hidden="true"></div>
+        {%- if section.settings.env_left != blank -%}<p class="ha-cinv__env-note ha-cinv__env-note--left ha-label" aria-hidden="true">{{ section.settings.env_left }}</p>{%- endif -%}
+        {%- if section.settings.env_right != blank -%}<p class="ha-cinv__env-note ha-cinv__env-note--right ha-label" aria-hidden="true">{{ section.settings.env_right }}</p>{%- endif -%}
+
+        <button type="button" class="ha-cinv__seal" data-ha-cinv-open aria-expanded="false" aria-controls="HaCinvLetter-{{ sid }}">
+          <svg class="ha-cinv__seal-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false">
+            <g transform="matrix(1 0 0 -1 159.17 80)">
+              <path d="M0 0L1.459-5.641L-2.229-10.809L-5.221-15.719L-4.33-21.461L-5.44-26.84L-9.682-30.941L-11.17-36.16L-10.83-42.699L-14.49-46.988L-20.182-49.5L-23.139-54.109L-26.08-58.961L-31.959-60.422L-37.221-62.191L-40.1-67.672L-44.119-71.859L-50.029-72.109L-55.139-73.941L-59.729-77.988L-65.42-77.988L-71.272-75.191L-76.51-76.262L-81.92-78.789L-87.279-77.121L-92.42-75.148L-98.369-77L-104.201-77.039L-108.381-72.289L-112.721-68.789L-118.498-68.129L-122.869-64.789L-125.529-59.328L-130.451-56.949L-136.811-55.66L-139.932-50.98L-141.639-45.391L-146.139-41.852L-149.842-37.57L-149.248-31.199L-149.76-25.691L-154.158-21.5L-156.408-16.422L-155.26-10.691L-156.842-5.43L-160.08 0L-158.451 5.539L-154.619 10.602L-154.65 16.039L-154.932 21.719L-151.15 26.199L-148.279 30.77L-149.041 37.148L-147.529 42.719L-142.209 45.801L-138.529 49.809L-136.479 55.34L-131.51 58.129L-125.369 59.129L-121.951 63.43L-118.908 68.82L-113.49 70.359L-108.029 71.441L-103.799 75.809L-98.67 78.191L-92.549 75.879L-87.092 75.359L-81.9 78.211L-76.44 78.078L-71.24 75.43L-65.69 76.449L-59.6 78.469L-54.631 75.512L-50.389 71.238L-44.842 70.379L-39.592 68.559L-36.611 63.09L-32.818 59.32L-26.471 58.531L-21.799 55.398L-19.83 49.789L-15.932 45.949L-10.85 42.691L-9.818 36.879L-10.35 30.641L-6.979 26.281L-3.311 21.75L-3.74 16.031L-3.342 10.66L0.58 5.578Z" fill="#A68A49" stroke="#795F39" stroke-width="3"/>
+            </g>
+            <circle cx="80" cy="80" r="68.64" fill="none" stroke="#DCC789" stroke-width="4"/>
+            <circle cx="80" cy="80" r="61.62" fill="none" stroke="#806332" stroke-width="2"/>
+            <text x="80" y="80" dy="0.34em" text-anchor="middle" class="ha-cinv__seal-letter">[ H ]</text>
+          </svg>
+          <span class="ha-cinv__seal-label ha-record">{{ section.settings.seal_text }}</span>
+        </button>
+
+        {%- if section.settings.env_foot != blank -%}<p class="ha-cinv__env-foot ha-label" aria-hidden="true">{{ section.settings.env_foot }}</p>{%- endif -%}
+      </div>
+
+      <div class="ha-cinv__letter" id="HaCinvLetter-{{ sid }}" data-ha-cinv-letter role="region" aria-label="{{ section.settings.letter_heading | escape }}">
+        <div class="ha-cinv__paper">
+          {%- if section.settings.letter_label != blank -%}
+            <p class="ha-cinv__letter-label ha-label">{{ section.settings.letter_label }}</p>
+          {%- endif -%}
+          <h2 class="ha-cinv__letter-heading ha-narrate" tabindex="-1" data-ha-cinv-focus>{{ section.settings.letter_heading }}</h2>
+          <div class="ha-cinv__letter-body ha-narrate">{{ section.settings.letter_body }}</div>
+          <div class="ha-cinv__letter-foot">
+            {%- if section.settings.explore_text != blank -%}
+              <a class="ha-cinv__explore ha-record" href="{{ explore_url }}" data-ha-cinv-explore>{{ section.settings.explore_text }}</a>
+            {%- endif -%}
+            {%- if section.settings.signoff != blank -%}
+              <p class="ha-cinv__signoff ha-record">{{ section.settings.signoff }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ha-cinv__controls" data-ha-cinv-controls>
+      <button type="button" class="ha-cinv__close ha-record" data-ha-cinv-close aria-controls="HaCinvLetter-{{ sid }}">{{ section.settings.close_text }}</button>
+      {%- unless customer -%}
+        {%- if section.settings.signin_text != blank and shop.customer_accounts_enabled -%}
+          <a class="ha-cinv__signin ha-record" href="{{ routes.account_login_url }}">{{ section.settings.signin_text }}</a>
+        {%- endif -%}
+      {%- endunless -%}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'ha-circle.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "HA — Circle: invitation",
+  "tag": "div",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Opening" },
+    { "type": "text", "id": "crumb", "label": "Reference line", "default": "Hartwick Atelier / By personal invitation" },
+    { "type": "text", "id": "title", "label": "Title", "default": "THE CIRCLE" },
+    { "type": "textarea", "id": "intro", "label": "Line on the right", "default": "A private circle of collectors, connected through Angela and the pieces they choose to live with." },
+    { "type": "text", "id": "meta", "label": "Label beneath it", "default": "Private accessories / Personal attention / Shared stories" },
+    { "type": "header", "content": "The envelope" },
+    { "type": "text", "id": "env_left", "label": "Flap, left", "default": "To the collectors of Hartwick Atelier" },
+    { "type": "text", "id": "env_right", "label": "Flap, right", "default": "A personal note" },
+    { "type": "text", "id": "seal_text", "label": "Seal button", "default": "Break the seal" },
+    { "type": "text", "id": "env_foot", "label": "Line at the foot", "default": "An invitation to know us a little better" },
+    { "type": "header", "content": "The letter", "info": "Opened in place by the seal. Aloha's page 2." },
+    { "type": "text", "id": "letter_label", "label": "Label", "default": "To our collectors" },
+    { "type": "text", "id": "letter_heading", "label": "Heading", "default": "Welcome a little closer." },
+    { "type": "richtext", "id": "letter_body", "label": "Letter", "default": "<p>The pieces we make become part of other people’s lives. The Circle is a way of staying in touch with those lives, and with the people who wear and collect our work.</p><p>Within it, you can explore private accessories, tell us a little about your preferences and share photographs with the Atelier.</p>" },
+    { "type": "text", "id": "explore_text", "label": "Button", "default": "Explore the Circle" },
+    { "type": "url", "id": "explore_url_member", "label": "Button link for members", "info": "Where a member (Circle status Approved) goes: the Collector preferences page." },
+    { "type": "text", "id": "explore_url_guest", "label": "Button link for everyone else", "default": "#within-the-circle", "info": "An anchor on this page or a link." },
+    { "type": "text", "id": "signoff", "label": "Signed", "default": "Angela Hartwick" },
+    { "type": "text", "id": "close_text", "label": "Close", "default": "Close invitation" },
+    { "type": "text", "id": "signin_text", "label": "Sign in link", "default": "Already a member? Sign in", "info": "Shown to visitors who are not signed in." }
+  ],
+  "presets": [{ "name": "HA — Circle: invitation" }]
+}
+{% endschema %}

@@ -38,10 +38,18 @@
   300px of scroll Luxe makes it solid again with the usual ink.
 {%- endcomment -%}
 {% assign ha_trans_light = false %}
+{%- comment -%}
+  1 October 2026 (Ivan's fix list, 18): the collection pages open on the
+  homepage's pale grey paper instead of the navy, so the menu over them is
+  ink with the dark House symbol. "Light words on collection pages" brings
+  the Chalk Blue bar back for a dark paper.
+{%- endcomment -%}
 {% if section.settings.ha_trans_collections %}
   {% if template.name == 'collection' or template.name == 'list-collections' %}
     {% assign header_transparent = true %}
-    {% assign ha_trans_light = true %}
+    {% if section.settings.ha_trans_collections_light %}
+      {% assign ha_trans_light = true %}
+    {% endif %}
   {% endif %}
 {% endif %}
 {% if template.name == 'page' and template.suffix != blank and section.settings.ha_trans_pages != blank %}
@@ -1737,8 +1745,15 @@ if (searchclosebutton) {
       "type": "checkbox",
       "id": "ha_trans_collections",
       "label": "Transparent on collection pages",
-      "info": "HA (Aloha, 24 Sep): the Collection Index and every collection page open on her navy paper; the menu runs over it in Chalk Blue with the white House symbol.",
+      "info": "HA (Aloha, 24 Sep): the Collection Index and every collection page open on her paper and the menu runs over it.",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "ha_trans_collections_light",
+      "label": "Light words on collection pages",
+      "info": "Chalk Blue menu and the white House symbol, for a dark paper (the navy, 24 Sep). Off since 1 October: the pale grey paper takes the ink.",
+      "default": false
     },
     {
       "type": "checkbox",

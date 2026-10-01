@@ -30,6 +30,16 @@
  * AFTER SUCCESS the browser is tied to the profile with klaviyo.identify(), so
  * the product views that follow attach to the person. The embedded form did
  * this silently; here it has to be explicit.
+ *
+ * EVENT MODE (28 September 2026, The Circle). A form carrying
+ * `data-klaviyo-event="…"` is not a subscription: it records that event on the
+ * profile through the client events endpoint — no list, no double opt-in, no
+ * marketing consent — and Klaviyo flows triggered on that metric send the
+ * replies and alert the Atelier. This is what keeps The Circle separate from
+ * The Register: a Circle request or reply never subscribes anyone. Everything
+ * the form collects travels as event properties, so nothing on the profile
+ * (register_source included) is overwritten. A consent box, if the section
+ * draws one, still has to be ticked, but it records no marketing consent.
  */
 (function () {
   'use strict';
@@ -38,6 +48,7 @@
   window.__haKlaviyoForm = true;
 
   var ENDPOINT = 'https://a.klaviyo.com/client/subscriptions/';
+  var EVENT_ENDPOINT = 'https://a.klaviyo.com/client/events/';
   var REVISION = '2025-04-15';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -88,6 +99,32 @@
     });
     if (interests.length) props.circle_interests = interests;
 
+    var eventName = form.getAttribute('data-klaviyo-event');
+    if (eventName) {
+      var person = { email: email.trim() };
+      var given = first.trim();
+      var family = last.trim();
+      // A single "Full name" field arrives in first_name; split it so the
+      // welcome can say "Dear Jane" rather than "Dear Jane Smith".
+      if (given && !family && props.full_name) {
+        var parts = given.split(/\s+/);
+        given = parts.shift();
+        family = parts.join(' ');
+      }
+      if (given) { person.first_name = given; props.first_name = given; }
+      if (family) { person.last_name = family; props.last_name = family; }
+      return {
+        data: {
+          type: 'event',
+          attributes: {
+            properties: props,
+            metric: { data: { type: 'metric', attributes: { name: eventName } } },
+            profile: { data: { type: 'profile', attributes: person } }
+          }
+        }
+      };
+    }
+
     var attrs = {
       email: email.trim(),
       properties: props,
@@ -113,8 +150,10 @@
   function wire(form) {
     var company = form.getAttribute('data-company-id');
     var listId = form.getAttribute('data-list-id');
-    // Without both there is nowhere to send it; let Shopify's form do its job.
-    if (!company || !listId || !window.fetch) return;
+    var isEvent = !!form.getAttribute('data-klaviyo-event');
+    // Without somewhere to send it, let Shopify's form do its job.
+    if (!company || (!listId && !isEvent) || !window.fetch) return;
+    var endpoint = isEvent ? EVENT_ENDPOINT : ENDPOINT;
 
     var button = form.querySelector('button[type="submit"]');
     var emailField = form.querySelector('input[name="contact[email]"]');
@@ -140,7 +179,7 @@
       setState(form, 'submitting', text(form, 'submitting'), false);
       if (button) { button.disabled = true; button.setAttribute('aria-busy', 'true'); }
 
-      fetch(ENDPOINT + '?company_id=' + encodeURIComponent(company), {
+      fetch(endpoint + '?company_id=' + encodeURIComponent(company), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/vnd.api+json',

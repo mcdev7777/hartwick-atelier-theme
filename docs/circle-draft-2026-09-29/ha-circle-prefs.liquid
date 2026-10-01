@@ -1,0 +1,235 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("THE CIRCLE, 29 SEPTEMBER"). {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — THE CIRCLE / COLLECTOR PREFERENCES. Members only.
+  Aloha's Final_Hartwick_About_The_Circle.pdf, pages 3–5; notes on page 7:
+
+    "Display one step at a time in the same panel. Back retains answers; all
+     preference questions are optional. Save only on explicit submission.
+     Show saving, saved and retry states. No full-page scroll hijacking."
+
+  One form, three fieldsets; assets/ha-circle.js shows one at a time, moves
+  focus to the step's heading, and keeps every answer when going back. SKIP
+  FOR NOW moves on without touching that step's answers; on the last step it
+  returns to The Circle without saving. Nothing is sent until SAVE
+  PREFERENCES. Without JavaScript all three steps show at once and the save
+  button is the only way out, which still honours "explicit submission".
+
+  WHERE IT GOES. Klaviyo, as the event `Circle Preferences Saved` on the
+  member's own profile (the signed-in customer's email, written by Liquid —
+  the member never types it), every answer an event property. The same
+  client events endpoint the Circle forms use (assets/ha-klaviyo-form.js):
+  no list, no consent, nothing added to The Register ("Newsletter
+  preferences are managed separately."). A representative's name and email
+  travel only as properties of this event, and only when given.
+
+  THE DOOR. Liquid renders the questions only for a member (Circle status
+  Approved) and in the theme editor; everyone else gets snippets/ha-circle-gate.
+{%- endcomment -%}
+
+{%- liquid
+  assign circle_member = false
+  if customer
+    assign circle_status = customer.metafields.hartwick.circle_status.value | strip | downcase
+    if circle_status == 'approved'
+      assign circle_member = true
+    endif
+  endif
+  assign show_form = circle_member
+  if request.design_mode
+    assign show_form = true
+  endif
+
+  assign interests = section.settings.interests | newline_to_br | split: '<br />'
+  assign fits = section.settings.fit_options | newline_to_br | split: '<br />'
+  assign contacts = section.settings.contact_options | newline_to_br | split: '<br />'
+  assign sid = section.id
+  assign back_url = section.settings.back_url | default: '/pages/the-circle'
+-%}
+
+<section class="ha-section ha-cform ha-cprefs" aria-labelledby="HaCprefsTitle-{{ sid }}-1">
+  {%- if show_form -%}
+  <form class="ha-wrap ha-cform__wrap" novalidate
+    data-ha-cprefs
+    data-company-id="{{ settings.ha_klaviyo_company_id | escape }}"
+    data-email="{{ customer.email | escape }}"
+    data-first-name="{{ customer.first_name | escape }}"
+    data-last-name="{{ customer.last_name | escape }}"
+    data-event="{{ section.settings.event_name | escape }}"
+    data-back-url="{{ back_url | escape }}"
+    data-msg-saving="{{ section.settings.msg_saving | escape }}"
+    data-msg-saved="{{ section.settings.msg_saved | escape }}"
+    data-msg-error="{{ section.settings.msg_error | escape }}"
+    data-msg-email="{{ section.settings.msg_email | escape }}">
+
+    {%- if section.settings.crumb != blank -%}<p class="ha-cform__crumb ha-record">{{ section.settings.crumb }}</p>{%- endif -%}
+    {%- if section.settings.eyebrow != blank -%}<p class="ha-cform__eyebrow ha-label">{{ section.settings.eyebrow }}</p>{%- endif -%}
+
+    <div class="ha-cform__heads">
+      <div class="ha-cform__head" data-ha-step-head="1">
+        <h1 id="HaCprefsTitle-{{ sid }}-1" class="ha-cform__title ha-narrate" tabindex="-1">{{ section.settings.s1_heading }}</h1>
+        {%- if section.settings.s1_sub != blank -%}<p class="ha-cform__sub ha-narrate">{{ section.settings.s1_sub }}</p>{%- endif -%}
+      </div>
+      <div class="ha-cform__head" data-ha-step-head="2">
+        <h2 class="ha-cform__title ha-narrate" tabindex="-1">{{ section.settings.s2_heading }}</h2>
+        {%- if section.settings.s2_sub != blank -%}<p class="ha-cform__sub ha-narrate">{{ section.settings.s2_sub }}</p>{%- endif -%}
+      </div>
+      <div class="ha-cform__head" data-ha-step-head="3">
+        <h2 class="ha-cform__title ha-narrate" tabindex="-1">{{ section.settings.s3_heading }}</h2>
+        {%- if section.settings.s3_sub != blank -%}<p class="ha-cform__sub ha-narrate">{{ section.settings.s3_sub }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    <div class="ha-cprefs__progress" aria-hidden="true">
+      <span class="ha-cprefs__bar" data-ha-bar="1"></span>
+      <span class="ha-cprefs__bar" data-ha-bar="2"></span>
+      <span class="ha-cprefs__bar" data-ha-bar="3"></span>
+    </div>
+    <div class="ha-cprefs__count">
+      <p class="ha-record" data-ha-step-count>01 / 03</p>
+      {%- if section.settings.optional_text != blank -%}<p class="ha-label">{{ section.settings.optional_text }}</p>{%- endif -%}
+    </div>
+
+    <fieldset class="ha-cform__row ha-cprefs__step" data-ha-step="1">
+      <legend class="ha-cform__rowlabel ha-record">{{ section.settings.s1_label }}</legend>
+      <div class="ha-cform__rowbody">
+        <p class="ha-cform__question ha-narrate" id="HaCprefsQ1-{{ sid }}">{{ section.settings.s1_question }}</p>
+        <div class="ha-cform__choices ha-cform__choices--two" role="group" aria-labelledby="HaCprefsQ1-{{ sid }}">
+          {%- for option in interests -%}
+            {%- assign o = option | strip -%}
+            {%- if o != blank -%}
+              <label class="ha-cform__choice ha-narrate"><input type="checkbox" name="interests" value="{{ o | escape }}"><span>{{ o }}</span></label>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="ha-cform__row ha-cprefs__step" data-ha-step="2">
+      <legend class="ha-cform__rowlabel ha-record">{{ section.settings.s2_label }}</legend>
+      <div class="ha-cform__rowbody">
+        <p class="ha-cform__fieldlabel ha-record" id="HaCprefsFit-{{ sid }}">{{ section.settings.fit_label }}</p>
+        <div class="ha-cform__choices ha-cform__choices--three ha-cform__choices--ruled" role="radiogroup" aria-labelledby="HaCprefsFit-{{ sid }}">
+          {%- for option in fits -%}
+            {%- assign o = option | strip -%}
+            {%- if o != blank -%}
+              <label class="ha-cform__choice ha-narrate"><input type="radio" name="fit" value="{{ o | escape }}"><span>{{ o }}</span></label>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <label class="ha-cform__field">
+          <span class="ha-cform__fieldlabel ha-record">{{ section.settings.returns_label }}</span>
+          <input class="ha-cform__input ha-narrate" type="text" name="returns_to" autocomplete="off">
+        </label>
+        <label class="ha-cform__field">
+          <span class="ha-cform__fieldlabel ha-record">{{ section.settings.else_label }}</span>
+          <input class="ha-cform__input ha-narrate" type="text" name="anything_else" autocomplete="off">
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="ha-cform__row ha-cprefs__step" data-ha-step="3">
+      <legend class="ha-cform__rowlabel ha-record">{{ section.settings.s3_label }}</legend>
+      <div class="ha-cform__rowbody">
+        <div class="ha-cform__choices ha-cform__choices--two" role="radiogroup" aria-label="{{ section.settings.s3_heading | escape }}">
+          {%- for option in contacts -%}
+            {%- assign o = option | strip -%}
+            {%- if o != blank -%}
+              <label class="ha-cform__choice ha-narrate"><input type="radio" name="contact_method" value="{{ o | escape }}"><span>{{ o }}</span></label>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <div class="ha-cform__pair">
+          <label class="ha-cform__field">
+            <span class="ha-cform__fieldlabel ha-record">{{ section.settings.name_label }}</span>
+            <input class="ha-cform__input ha-narrate" type="text" name="preferred_name" autocomplete="nickname">
+          </label>
+          <label class="ha-cform__field">
+            <span class="ha-cform__fieldlabel ha-record">{{ section.settings.city_label }}</span>
+            <input class="ha-cform__input ha-narrate" type="text" name="city_time_zone" autocomplete="address-level2">
+          </label>
+          <label class="ha-cform__field">
+            <span class="ha-cform__fieldlabel ha-record">{{ section.settings.rep_name_label }}</span>
+            <input class="ha-cform__input ha-narrate" type="text" name="representative_name" autocomplete="off">
+          </label>
+          <label class="ha-cform__field">
+            <span class="ha-cform__fieldlabel ha-record">{{ section.settings.rep_email_label }}</span>
+            <input class="ha-cform__input ha-narrate" type="email" name="representative_email" autocomplete="off" autocapitalize="off" autocorrect="off">
+          </label>
+        </div>
+        {%- if section.settings.s3_note != blank -%}<p class="ha-cform__note ha-narrate">{{ section.settings.s3_note }}</p>{%- endif -%}
+      </div>
+    </fieldset>
+
+    <div class="ha-cform__bar">
+      <a class="ha-cform__back ha-record" href="{{ back_url }}" data-ha-back>{{ section.settings.back_text }}</a>
+      <div class="ha-cform__bar-end">
+        <button type="button" class="ha-cform__skip ha-record" data-ha-skip>{{ section.settings.skip_text }}</button>
+        <button type="button" class="ha-cform__primary ha-record" data-ha-next>{{ section.settings.continue_text }}</button>
+        <button type="submit" class="ha-cform__primary ha-record" data-ha-save>{{ section.settings.save_text }}</button>
+      </div>
+    </div>
+    <p class="ha-cform__status ha-record" data-ha-status role="status" aria-live="polite" tabindex="-1" hidden></p>
+    {%- if section.settings.foot != blank -%}<p class="ha-cform__foot ha-record">{{ section.settings.foot }}</p>{%- endif -%}
+  </form>
+  {%- else -%}
+    {%- render 'ha-circle-gate', crumb: section.settings.crumb, text: section.settings.gate_text, back_url: back_url, back_text: section.settings.gate_back_text -%}
+  {%- endif -%}
+</section>
+
+<script src="{{ 'ha-circle.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "HA — Circle: preferences",
+  "tag": "div",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "Members only: shown to customers whose Circle status is Approved (and in this editor). Saved to Klaviyo as an event on the member's profile." },
+    { "type": "text", "id": "crumb", "label": "Reference line", "default": "The Circle / Collector preferences" },
+    { "type": "text", "id": "eyebrow", "label": "Label", "default": "Your details, at your pace" },
+    { "type": "text", "id": "optional_text", "label": "Beside the step count", "default": "Optional questions" },
+    { "type": "header", "content": "Step 1" },
+    { "type": "text", "id": "s1_heading", "label": "Heading", "default": "What draws your eye?" },
+    { "type": "text", "id": "s1_sub", "label": "Line beneath", "default": "A few details help us make our correspondence and suggestions more useful to you." },
+    { "type": "text", "id": "s1_label", "label": "Step label", "default": "01 / Your interests" },
+    { "type": "text", "id": "s1_question", "label": "Question", "default": "Which pieces would you like to hear about?" },
+    { "type": "textarea", "id": "interests", "label": "Choices", "info": "One per line.", "default": "Clothing\nFine silk\nFine jewellery\nYoga mats\nPouches & totes\nThe Masters and their work" },
+    { "type": "header", "content": "Step 2" },
+    { "type": "text", "id": "s2_heading", "label": "Heading", "default": "How do you like to wear it?" },
+    { "type": "text", "id": "s2_sub", "label": "Line beneath", "default": "Tell us about the details you notice when choosing a piece." },
+    { "type": "text", "id": "s2_label", "label": "Step label", "default": "02 / Your preferences" },
+    { "type": "text", "id": "fit_label", "label": "Fit question", "default": "How do you like your clothes to fit?" },
+    { "type": "textarea", "id": "fit_options", "label": "Fit choices", "info": "One per line; one may be chosen.", "default": "Relaxed\nCloser to the body\nIt depends on the piece" },
+    { "type": "text", "id": "returns_label", "label": "Field", "default": "Colours, fabrics or pieces you return to" },
+    { "type": "text", "id": "else_label", "label": "Field", "default": "Anything else that would help us?" },
+    { "type": "header", "content": "Step 3" },
+    { "type": "text", "id": "s3_heading", "label": "Heading", "default": "How shall we stay in touch?" },
+    { "type": "text", "id": "s3_sub", "label": "Line beneath", "default": "Choose the most useful way for the Atelier to respond to personal enquiries." },
+    { "type": "text", "id": "s3_label", "label": "Step label", "default": "03 / Your contact" },
+    { "type": "textarea", "id": "contact_options", "label": "Choices", "info": "One per line; one may be chosen.", "default": "Contact me directly\nThrough my representative" },
+    { "type": "text", "id": "name_label", "label": "Field", "default": "Preferred name" },
+    { "type": "text", "id": "city_label", "label": "Field", "default": "City / time zone" },
+    { "type": "text", "id": "rep_name_label", "label": "Field", "default": "Representative name, if relevant" },
+    { "type": "text", "id": "rep_email_label", "label": "Field", "default": "Representative email, if relevant" },
+    { "type": "text", "id": "s3_note", "label": "Note", "default": "Please add a representative only with their permission. Newsletter preferences are managed separately." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "back_text", "label": "Back", "default": "Back" },
+    { "type": "url", "id": "back_url", "label": "Back from the first step", "info": "About The Circle, if left empty." },
+    { "type": "text", "id": "skip_text", "label": "Skip", "default": "Skip for now" },
+    { "type": "text", "id": "continue_text", "label": "Continue", "default": "Continue" },
+    { "type": "text", "id": "save_text", "label": "Save", "default": "Save preferences" },
+    { "type": "text", "id": "foot", "label": "Line at the foot", "default": "Visible to the Atelier team. You can update your answers later." },
+    { "type": "header", "content": "Saving" },
+    { "type": "text", "id": "event_name", "label": "Klaviyo event", "default": "Circle Preferences Saved" },
+    { "type": "text", "id": "msg_saving", "label": "While saving", "default": "Saving…" },
+    { "type": "text", "id": "msg_saved", "label": "Saved", "default": "Saved. Thank you." },
+    { "type": "text", "id": "msg_error", "label": "Could not save", "default": "This could not be saved. Please try again." },
+    { "type": "text", "id": "msg_email", "label": "Representative email not valid", "default": "Please check the representative's email address." },
+    { "type": "header", "content": "For visitors who are not members" },
+    { "type": "richtext", "id": "gate_text", "label": "Text", "default": "<p>The Circle is by invitation. Already invited? Sign in with the email address linked to your invitation.</p>" },
+    { "type": "text", "id": "gate_back_text", "label": "Link back", "default": "Back to the Circle" }
+  ],
+  "presets": [{ "name": "HA — Circle: preferences" }]
+}
+{% endschema %}

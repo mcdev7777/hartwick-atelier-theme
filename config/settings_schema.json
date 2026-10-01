@@ -383,7 +383,7 @@
         "max": 64,
         "step": 1,
         "unit": "px",
-        "default": 32,
+        "default": 37,
         "info": "Aloha's table gives a range of 30–34px here; 32 is its centre. This is the largest type anywhere on the site — nothing above it, by design."
       },
       {
@@ -394,7 +394,7 @@
         "max": 56,
         "step": 1,
         "unit": "px",
-        "default": 26
+        "default": 31
       },
       {
         "type": "range",
@@ -404,7 +404,7 @@
         "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 20
+        "default": 24
       },
       {
         "type": "range",
@@ -414,7 +414,7 @@
         "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 16
+        "default": 19
       },
       {
         "type": "range",
@@ -424,7 +424,7 @@
         "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 15,
+        "default": 16,
         "info": "The larger Junicode paragraph that opens a section. Ordinary body copy is the row below."
       },
       {
@@ -435,7 +435,7 @@
         "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 14
       },
       {
         "type": "range",
@@ -445,7 +445,7 @@
         "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 14
       },
       {
         "type": "range",
@@ -455,7 +455,7 @@
         "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 13
       },
       {
         "type": "range",
@@ -465,7 +465,7 @@
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 13
       },
       {
         "type": "range",
@@ -475,7 +475,7 @@
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 12
       },
       {
         "type": "range",
@@ -485,7 +485,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 12
       },
       {
         "type": "range",
@@ -495,7 +495,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 10
+        "default": 11
       },
       {
         "type": "range",
@@ -505,7 +505,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 10
+        "default": 11
       },
       {
         "type": "range",
@@ -515,7 +515,7 @@
         "max": 14,
         "step": 1,
         "unit": "px",
-        "default": 9,
+        "default": 10,
         "info": "The one 9px surface Aloha specified. It carries the copyright line and nothing else."
       },
       {
@@ -526,7 +526,7 @@
         "max": 36,
         "step": 1,
         "unit": "px",
-        "default": 16,
+        "default": 17,
         "info": "Porter. Sits one step above the editorial subheading, not on the section-title line."
       },
       {
@@ -545,7 +545,7 @@
         "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 28,
+        "default": 30,
         "info": "Her range is 26–30px; 28 is its centre."
       },
       {
@@ -556,7 +556,7 @@
         "max": 44,
         "step": 1,
         "unit": "px",
-        "default": 23
+        "default": 25
       },
       {
         "type": "range",
@@ -566,7 +566,7 @@
         "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 18
+        "default": 20
       },
       {
         "type": "range",
@@ -576,7 +576,7 @@
         "max": 32,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 16
       },
       {
         "type": "range",
@@ -829,11 +829,8 @@
         "default": true
       },
       {
-        "type": "text",
-        "id": "ha_circle_tag",
-        "label": "Circle member customer tag",
-        "default": "circle-member",
-        "info": "Signing in unlocks the member space only for customers carrying this exact tag (Customers > customer > Tags). A purchase never does. Build the Circle segment on the same tag."
+        "type": "paragraph",
+        "content": "Membership: signing in unlocks the member space only for customers whose Circle status is Approved (Customers > customer > Metafields > Circle status). A tag, a purchase or joining The Register never does."
       },
       {
         "type": "text",
@@ -865,6 +862,12 @@
         "id": "ha_circle_about_url",
         "label": "Secondary link",
         "info": "Empty uses the page with the handle the-circle."
+      },
+      {
+        "type": "image_picker",
+        "id": "ha_circle_drawer_paper",
+        "label": "Circle panel paper",
+        "info": "The photograph behind the Circle panel (1 October 2026: the Circle page's blue-grey paper). Empty uses HA_CIRCLE_HEADER_PAPER_GREY.jpg from Files."
       },
       {
         "type": "text",

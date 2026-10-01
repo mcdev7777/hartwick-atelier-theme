@@ -49,17 +49,18 @@
       "settings": {
         "paper": "shopify://shop_images/HA_REGISTER_PAPER_WINE.jpg",
         "grain": true,
-        "image": "shopify://shop_images/HA_REGISTER_ENVELOPE_OPEN.png",
-        "image_alt": "An open glassine envelope holding two of the Atelier's papers: a handmade sheet flecked with petals and a folded, dyed pink sheet",
+        "image": "shopify://shop_images/HA_REGISTER_ENVELOPE_GLASSINE.png",
+        "image_alt": "An open mauve glassine envelope holding a grey card and a yellow card",
         "heading": "The Register",
         "eyebrow": "Hartwick Atelier / Correspondence",
-        "left_label": "The Dispatch",
-        "left_word": "Read.",
-        "left_link": "/pages/the-register#join-the-register",
-        "right_label": "The Circle",
-        "right_word": "By invitation.",
-        "right_link": "/pages/the-register#the-circle",
-        "show_placeholder_note": true
+        "left_label": "The Circle",
+        "left_word": "By Invitation",
+        "left_link": "/pages/the-register#the-circle",
+        "right_label": "The Dispatch",
+        "right_word": "Read",
+        "right_link": "/pages/the-register#join-the-register",
+        "show_placeholder_note": true,
+        "show_title": false
       }
     },
     "binding_rings": {
@@ -75,15 +76,15 @@
         "anchor": "join-the-register",
         "eyebrow": "Join the correspondence",
         "heading": "Cloth. People.\nThe work in between.",
-        "lead": "<p>The story continues beyond the piece.</p>",
+        "lead": "",
         "show_card": true,
-        "card_image": "shopify://shop_images/HA_REGISTER_CARD_ENVELOPE.png",
-        "card_alt": "A sheet of the Atelier's grey dyed paper in a glassine envelope, tied with a thread and sealed with the House symbol",
-        "card_title": "The Register",
-        "card_line": "Correspondence from the Atelier.",
+        "card_image": "shopify://shop_images/HA_REGISTER_CARD_GLASSINE.png",
+        "card_alt": "A yellow card in a mauve glassine envelope, sealed with the gold Hartwick seal",
+        "card_title": "",
+        "card_line": "The story continues beyond the piece.",
         "show_seal": true,
         "aside_eyebrow": "The Dispatch / Email correspondence",
-        "aside_heading": "Join The Register.",
+        "aside_heading": "Join The Register",
         "body": "<p>Notes on materials, Masters and work in progress. Sent when there is something worth sharing.</p>",
         "show_form": true,
         "label_email": "Email address *",
@@ -99,7 +100,9 @@
         "msg_submitting": "One moment…",
         "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
         "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com.",
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "seal_image": "shopify://shop_images/HA_REGISTER_SEAL_SQUARE.png",
+        "button_style": "olive"
       }
     },
     "circle": {
@@ -107,12 +110,12 @@
       "settings": {
         "anchor": "the-circle",
         "eyebrow": "The Circle / By invitation",
-        "heading": "A personal connection.",
+        "heading": "A personal connection",
         "body": "<p>A small group of founding friends whose connection to Hartwick grows through wearing, conversation and shared experience.</p>",
         "quiet": "<p>Membership begins with a personal invitation. It is separate from joining The Register.</p>",
         "spot_image": "shopify://shop_images/HA_REGISTER_DYE_SPOT_YELLOW.png",
         "aside_eyebrow": "Already received an invitation?",
-        "aside_heading": "Respond to the Atelier.",
+        "aside_heading": "Respond to Hartwick",
         "show_form": true,
         "label_name": "Full name *",
         "label_email": "Email used for your invitation *",
@@ -146,7 +149,7 @@
           "type": "column",
           "settings": {
             "label": "The Dispatch",
-            "title": "A closer look at the work.",
+            "title": "A closer look at the work",
             "body": "<p>Letters on cloth, Masters and the knowledge behind each piece.</p>"
           }
         },
@@ -154,7 +157,7 @@
           "type": "column",
           "settings": {
             "label": "Releases & Reserve",
-            "title": "Know what is coming.",
+            "title": "Know what is coming",
             "body": "<p>First notice of each Release and details of your early Reserve access.</p>"
           }
         },
@@ -162,7 +165,7 @@
           "type": "column",
           "settings": {
             "label": "Atelier evenings",
-            "title": "Time for conversation.",
+            "title": "Time for conversation",
             "body": "<p>Invitations to selected gatherings around cloth, craft and the people involved.</p>"
           }
         }

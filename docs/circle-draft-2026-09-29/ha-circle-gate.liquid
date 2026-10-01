@@ -1,0 +1,33 @@
+{%- comment -%}
+  Hartwick Atelier — the door of a member's page (The Circle, 29 September 2026).
+
+  Rendered by ha-circle-prefs and ha-circle-share INSTEAD of their content
+  when the visitor is not a member. Liquid runs on Shopify's server, so a
+  non-member's page never contains the form: this is not a menu being hidden
+  (Aloha's page 7: "Hiding a menu is insufficient"). A member is a customer
+  whose Circle status (customer metafield hartwick.circle_status) is Approved
+  — the same test as the header's Circle drawer. An account alone grants
+  nothing.
+
+  The words are hers, from the About The Circle page.
+
+  Accepts:
+  - crumb: the page's reference line
+  - text: richtext shown to the visitor
+  - back_url / back_text: the way back to About The Circle
+{%- endcomment -%}
+
+<div class="ha-wrap ha-cgate">
+  {%- if crumb != blank -%}<p class="ha-cgate__crumb ha-record">{{ crumb }}</p>{%- endif -%}
+  <div class="ha-cgate__text ha-narrate">{{ text | default: '<p>The Circle is by invitation. Already invited? Sign in with the email address linked to your invitation.</p>' }}</div>
+  <div class="ha-cgate__actions">
+    {%- unless customer -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="ha-cmembers__button ha-record" href="{{ routes.account_login_url }}">{{ signin_text | default: 'Member sign in' }}</a>
+      {%- endif -%}
+    {%- endunless -%}
+    {%- if back_url != blank -%}
+      <a class="ha-cgate__back ha-record" href="{{ back_url }}">{{ back_text | default: 'Back to the Circle' }}</a>
+    {%- endif -%}
+  </div>
+</div>

@@ -27,6 +27,15 @@
   the artboard (the envelope 590 wide on 1440), so the words stay on their
   sheets at any width. The type holds the site's role sizes until the
   photograph is too small for them, then shrinks with it.
+  1 October 2026 (Aloha, "the updated register page"): a new photograph —
+  a mauve glassine envelope holding a grey card at the back (The Circle /
+  By Invitation, in Chalk Blue) and a yellow card in front (The Dispatch /
+  Read, in ink). The words are upright Junicode now, not the Cond italic,
+  and the envelope's front carries no title: the page's h1 stays for screen
+  readers (`show_title` puts it back on the envelope). The sheets are named
+  by place — left (the back sheet) and right (the front sheet) — so the
+  next photograph does not need new class names.
+
   Terminology (CLAUDE.md): The Circle is by invitation and the sheet says
   exactly that; nothing here offers a route in.
 {%- endcomment -%}
@@ -53,9 +62,9 @@
         {%- endif -%}
 
         {%- if left_url != blank -%}
-          <a class="ha-reg-letter__words ha-reg-letter__words--dispatch" href="{{ left_url }}">
+          <a class="ha-reg-letter__words ha-reg-letter__words--left" href="{{ left_url }}">
         {%- else -%}
-          <p class="ha-reg-letter__words ha-reg-letter__words--dispatch">
+          <p class="ha-reg-letter__words ha-reg-letter__words--left">
         {%- endif -%}
             {%- if section.settings.left_label != blank -%}
               <span class="ha-reg-letter__label ha-identify">{{ section.settings.left_label }}</span>
@@ -66,9 +75,9 @@
         {%- if left_url != blank -%}</a>{%- else -%}</p>{%- endif -%}
 
         {%- if right_url != blank -%}
-          <a class="ha-reg-letter__words ha-reg-letter__words--circle" href="{{ right_url }}">
+          <a class="ha-reg-letter__words ha-reg-letter__words--right" href="{{ right_url }}">
         {%- else -%}
-          <p class="ha-reg-letter__words ha-reg-letter__words--circle">
+          <p class="ha-reg-letter__words ha-reg-letter__words--right">
         {%- endif -%}
             {%- if section.settings.right_label != blank -%}
               <span class="ha-reg-letter__label ha-identify">{{ section.settings.right_label }}</span>
@@ -78,7 +87,7 @@
             {%- endif -%}
         {%- if right_url != blank -%}</a>{%- else -%}</p>{%- endif -%}
 
-        <h1 id="ha-reg-hero-title" class="ha-reg-letter__title ha-narrate">{{ section.settings.heading | default: page.title }}</h1>
+        <h1 id="ha-reg-hero-title" class="{% if section.settings.show_title %}ha-reg-letter__title ha-narrate{% else %}visually-hidden{% endif %}">{{ section.settings.heading | default: page.title }}</h1>
       </div>
 
       {%- if section.settings.eyebrow != blank -%}
@@ -98,16 +107,17 @@
     { "type": "image_picker", "id": "paper", "label": "Paper photograph", "info": "Aloha's wine paper (24 September), laid under the whole band and the transparent menu. Empty = the Correspondence band colour." },
     { "type": "checkbox", "id": "grain", "label": "Grain", "default": true },
     { "type": "image_picker", "id": "image", "label": "Envelope photograph", "info": "Aloha's open envelope, cut out on a transparent ground. The words below sit on its sheets at fixed positions: a different photograph needs them re-measured." },
-    { "type": "text", "id": "image_alt", "label": "Photograph alt text", "default": "An open glassine envelope holding two of the Atelier's papers: a handmade sheet flecked with petals and a folded, dyed pink sheet" },
-    { "type": "text", "id": "heading", "label": "Page title", "default": "The Register", "info": "On the envelope's front. Set in capitals by the style." },
+    { "type": "text", "id": "image_alt", "label": "Photograph alt text", "default": "An open mauve glassine envelope holding a grey card and a yellow card" },
+    { "type": "text", "id": "heading", "label": "Page title", "default": "The Register", "info": "The page's h1." },
+    { "type": "checkbox", "id": "show_title", "label": "Show the title on the envelope's front", "default": false, "info": "Off: read by screen readers only, as in Aloha's 1 October design." },
     { "type": "text", "id": "eyebrow", "label": "Side line", "default": "Hartwick Atelier / Correspondence", "info": "Runs up the envelope's right-hand side." },
-    { "type": "header", "content": "The petal sheet" },
-    { "type": "text", "id": "left_label", "label": "Label", "default": "The Dispatch" },
-    { "type": "text", "id": "left_word", "label": "Word", "default": "Read." },
+    { "type": "header", "content": "The back sheet (left)" },
+    { "type": "text", "id": "left_label", "label": "Label", "default": "The Circle" },
+    { "type": "text", "id": "left_word", "label": "Word", "default": "By Invitation" },
     { "type": "url", "id": "left_link", "label": "Links to", "info": "Leave empty for plain words." },
-    { "type": "header", "content": "The dyed sheet" },
-    { "type": "text", "id": "right_label", "label": "Label", "default": "The Circle" },
-    { "type": "text", "id": "right_word", "label": "Word", "default": "By invitation." },
+    { "type": "header", "content": "The front sheet (right)" },
+    { "type": "text", "id": "right_label", "label": "Label", "default": "The Dispatch" },
+    { "type": "text", "id": "right_word", "label": "Word", "default": "Read" },
     { "type": "url", "id": "right_link", "label": "Links to", "info": "Leave empty for plain words." },
     { "type": "header", "content": "Provisional content" },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }

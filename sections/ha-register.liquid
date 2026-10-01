@@ -38,6 +38,13 @@
   above the footer, with `site_wide` on; the per-template bands are disabled.
   On the Register page itself it renders nothing — that page is the form.
 {%- endcomment -%}
+{%- comment -%}
+  1 October 2026 (Aloha): "One of our team members in India suggests we use
+  this for every background on the register block." `paper` lays that wine
+  paper photograph under the band (cover, centred — the darker middle of the
+  sheet behind the words, its lighter edges at the band's ends), over the
+  band colour, with the grain layer on top as before.
+{%- endcomment -%}
 {%- liquid
   assign ha_reg_skip = false
   if section.settings.site_wide and template.name == 'page' and template.suffix == 'the-register'
@@ -45,7 +52,7 @@
   endif
 -%}
 {%- unless ha_reg_skip -%}
-<section id="the-register" class="ha-section ha-section--dark ha-register{% if section.settings.site_wide %} ha-register--site{% endif %} ha-register--form-{{ section.settings.form_style | default: 'box' }}{% if section.settings.field == 'correspondence' %} ha-register--field-correspondence{% endif %}{% if section.settings.grain %} ha-grain-block{% endif %}">
+<section id="the-register" class="ha-section ha-section--dark ha-register{% if section.settings.site_wide %} ha-register--site{% endif %} ha-register--form-{{ section.settings.form_style | default: 'box' }}{% if section.settings.field == 'correspondence' %} ha-register--field-correspondence{% endif %}{% if section.settings.grain %} ha-grain-block{% endif %}{% if section.settings.paper %} ha-register--paper{% endif %}"{% if section.settings.paper %} style="--ha-register-paper: url({{ section.settings.paper | image_url: width: 2000 }});"{% endif %}>
   <div class="ha-wrap">
     <div class="ha-register__grid">
       <div>
@@ -227,6 +234,7 @@
       "info": "Aloha's remade homepage (23 September 2026) sets The Register on the wine of the Register page.",
       "options": [ { "value": "dark", "label": "Dark field (peat)" }, { "value": "correspondence", "label": "Correspondence (wine)" } ]
     },
+    { "type": "image_picker", "id": "paper", "label": "Paper photograph", "info": "1 October 2026: the wine paper the team in India suggested for every Register band (HA_REGISTER_BLOCK_PAPER_WINE.jpg), laid under the band at cover size. Empty = the band colour above." },
     { "type": "checkbox", "id": "grain", "label": "Grain", "default": true, "info": "Aloha's grain layer on the band, on every Register band since 24 September. Strength: Theme settings > Hartwick — Material Archive > Grain on dark blocks." },
     {
       "type": "select", "id": "form_style", "label": "Form", "default": "box",

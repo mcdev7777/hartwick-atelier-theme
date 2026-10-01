@@ -35,17 +35,35 @@ that browser. Tested by switching to France from a US connection.
 
 ## The Circle — how membership works
 
-Membership is a **customer tag**, default `circle-member` (Theme settings >
-Hartwick — Header utilities). Signing in unlocks the member drawer only for a
-customer carrying that exact tag, so a purchase never does. It is deliberately not
-`Circle: Requested Access` or `Circle: Invitation reply`, the tags the two public
-Circle forms write. Build the Circle **segment** on the same tag for The Dispatch
-and invitations.
+**Changed 28 September 2026** (Aloha's invitation/approval logic). Membership is
+the customer metafield **Circle status** (`hartwick.circle_status`, choices
+Approved / Removed), set by Angela on the customer page in Admin. Signing in
+unlocks the member drawer only when it reads **Approved**. It used to be the tag
+`circle-member`; that was dropped because any storefront customer form can post
+`contact[tags]`, so a visitor could have tagged themselves. A metafield can only
+be written from Admin.
+
+The rest of the chain:
+
+- Segment **The Circle – Approved** (`metafields.hartwick.circle_status = 'Approved'`).
+- Shopify Flow: *Customer joined segment* → add tag `circle-approved`; *left
+  segment* → remove it. The tag exists only so Klaviyo sees approval (Shopify
+  Tags); it grants nothing on the site.
+- The Circle page form (INVITATION REQUEST) records the Klaviyo event
+  `Circle Invitation Request`; the Circle form on The Register page (INVITATION
+  RESPONSE) records `Circle Invitation Response`. Events, not list
+  subscriptions: no double opt-in, no marketing consent, nothing joins The
+  Register. The old double-opt-in `Circle Requests` list is no longer written.
+- Klaviyo flows (built in Klaviyo, not the theme): approval → invitation (or
+  welcome, if they already replied); response → alert + welcome if approved,
+  else "We've received your note"; request → alert + "We've received your note".
+  Email drafts: `Circle 1 – Invitation`, `Circle 2 – Welcome`, `Circle 3 – Thank you`.
+- The invitation's ACCEPT INVITATION links to `/pages/the-register#the-circle`.
 
 MEMBER SIGN IN opens Shopify's hosted sign-in (new customer accounts). That page
 shows no "Create account" either — it asks for an email and sends a code — but
 **anyone who enters an email gets a customer account**. That account is not
-membership, because the tag gates the Circle space, so Aloha's rule holds. Only
+membership, because Circle status gates the Circle space, so Aloha's rule holds. Only
 the hosted page's look is outside the theme (Admin > Settings > Customer accounts:
 logo and colours).
 

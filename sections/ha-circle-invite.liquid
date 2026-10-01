@@ -1,0 +1,114 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("ABOUT THE CIRCLE, 30 SEPTEMBER"). {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — ABOUT THE CIRCLE 01: the opening and the envelope.
+  Aloha's About The Circle artboard, 30 September 2026 (the page before a
+  member signs in), with Ivan's build notes.
+
+  The opening: HARTWICK ATELIER / BY PERSONAL INVITATION, THE CIRCLE, and her
+  line on the right. Beneath it her envelopes (Aloha, 30 September, "The new
+  envelope I've created for The Circle"): two wine envelopes photographed on
+  a transparent ground, so they sit on the page's own ground and grain, and
+  her gold wax seal with the House symbol on the front flap. The seal is a
+  separate picture laid over the photograph (position, size and turn are
+  settings, in % of the photograph) because it is the thing you press.
+  The drawn Inkstone envelope and its small words are retired; her new
+  design has no words on or around the envelopes. The label stays for
+  screen readers and can be shown with `show_seal_text`.
+
+  1 October 2026 (Aloha: "can you place this background and change the
+  colours"): the opening sits on her grey paper (`paper`,
+  HA_CIRCLE_HEADER_PAPER_GREY.jpg — light at the edges, darker under the
+  envelopes), running up under the transparent menu like the other paper
+  openings (header "Transparent on these pages" includes the-circle). THE
+  CIRCLE and her line on the right are Chalk Blue, the line set as a pull
+  line (Junicode SemiBold Italic); the two small labels stay ink.
+
+  THE SEAL. Note 01: "The seal opens a letter in place; it is not an
+  authentication gate." The letter belongs to the invitation form, whose
+  updated design is still to come (Ivan, 30 September), so it is not built
+  here. Until it is, the seal is a plain link down the page to "Within the
+  Circle" (`seal_url`), so it never is a control that does nothing. When the letter is built, the seal becomes a real labelled button
+  (note 05) that opens it in this same place.
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+
+<section class="ha-section ha-cinv{% if section.settings.paper %} ha-cinv--paper{% endif %}"{% if section.settings.paper %} style="--ha-paper-bg: url({{ section.settings.paper | image_url: width: 2400 }});"{% endif %} aria-labelledby="HaCinvTitle-{{ sid }}">
+  <div class="ha-cinv__wrap">
+    <div class="ha-cinv__head">
+      <div class="ha-cinv__head-main">
+        {%- if section.settings.crumb != blank -%}
+          <p class="ha-cinv__crumb ha-record">{{ section.settings.crumb }}</p>
+        {%- endif -%}
+        <h1 id="HaCinvTitle-{{ sid }}" class="ha-cinv__title ha-narrate">{{ section.settings.title }}</h1>
+      </div>
+      <div class="ha-cinv__head-aside">
+        {%- if section.settings.intro != blank -%}
+          <p class="ha-cinv__intro ha-narrate ha-pull">{{ section.settings.intro }}</p>
+        {%- endif -%}
+        {%- if section.settings.meta != blank -%}
+          <p class="ha-cinv__meta ha-label">{{ section.settings.meta }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ha-cinv__stage">
+      {%- if section.settings.image -%}
+        {{
+          section.settings.image
+          | image_url: width: 2200
+          | image_tag:
+            class: 'ha-cinv__img',
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '(min-width: 990px) 79vw, 120vw',
+            widths: '750, 1100, 1500, 2200',
+            alt: section.settings.image_alt
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'ha-cinv__img ha-cinv__img--placeholder' }}
+      {%- endif -%}
+
+      {%- liquid
+        assign seal_w = section.settings.seal_w | divided_by: 10.0
+        assign seal_style = '--ha-cinv-seal-x: ' | append: section.settings.seal_x | append: '%; --ha-cinv-seal-y: ' | append: section.settings.seal_y | append: '%; --ha-cinv-seal-w: ' | append: seal_w | append: '%; --ha-cinv-seal-turn: ' | append: section.settings.seal_turn | append: 'deg;'
+      -%}
+      <a class="ha-cinv__seal" href="{{ section.settings.seal_url | default: '#within-the-circle' }}" style="{{ seal_style }}">
+        {%- if section.settings.seal_image -%}
+          {{ section.settings.seal_image | image_url: width: 320 | image_tag: class: 'ha-cinv__seal-img', loading: 'eager', sizes: '(min-width: 990px) 4vw, 12vw', widths: '120, 200, 320', alt: '' }}
+        {%- endif -%}
+        <span class="{% unless section.settings.show_seal_text %}visually-hidden{% else %}ha-cinv__seal-label ha-record{% endunless %}">{{ section.settings.seal_text }}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Circle: invitation",
+  "tag": "div",
+  "class": "ha-section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Opening" },
+    { "type": "text", "id": "crumb", "label": "Reference line", "default": "Hartwick Atelier / By personal invitation" },
+    { "type": "text", "id": "title", "label": "Title", "default": "THE CIRCLE" },
+    { "type": "textarea", "id": "intro", "label": "Line on the right", "default": "A private circle of collectors, connected through Angela and the pieces they choose to live with." },
+    { "type": "text", "id": "meta", "label": "Label beneath it", "default": "Private accessories / Personal attention / Shared stories" },
+    { "type": "image_picker", "id": "paper", "label": "Paper photograph", "info": "Aloha's grey paper (1 October), under the whole opening and the transparent menu. Empty = the page ground." },
+    { "type": "header", "content": "The envelopes" },
+    { "type": "image_picker", "id": "image", "label": "Photograph", "info": "Aloha's envelopes, 30 September: HA_CIRCLE_ENVELOPES.png (transparent, sits on the page ground)." },
+    { "type": "text", "id": "image_alt", "label": "Photograph description", "default": "Two wine-coloured envelopes with grey linings, one sealed with the gold Hartwick seal" },
+    { "type": "header", "content": "The seal", "info": "The seal is the link, placed over the front envelope's flap. Positions are % of the photograph." },
+    { "type": "image_picker", "id": "seal_image", "label": "Seal", "info": "HA_CIRCLE_SEAL.png" },
+    { "type": "range", "id": "seal_x", "label": "Centre, across", "min": 15, "max": 60, "step": 0.5, "unit": "%", "default": 35.5 },
+    { "type": "range", "id": "seal_y", "label": "Centre, down", "min": 25, "max": 70, "step": 0.5, "unit": "%", "default": 48 },
+    { "type": "range", "id": "seal_w", "label": "Width (tenths of %)", "min": 20, "max": 120, "step": 1, "default": 39, "info": "39 = 3.9% of the photograph's width, as she placed it." },
+    { "type": "range", "id": "seal_turn", "label": "Turn", "min": -30, "max": 30, "step": 1, "unit": "°", "default": 12 },
+    { "type": "text", "id": "seal_text", "label": "Seal label", "default": "Break the seal", "info": "Read out by screen readers; shown only when ticked below." },
+    { "type": "checkbox", "id": "show_seal_text", "label": "Show the label beneath the envelopes", "default": false },
+    { "type": "text", "id": "seal_url", "label": "Seal link", "default": "#within-the-circle", "info": "Until the letter is built the seal leads down the page. An anchor on this page or a link." }
+  ],
+  "presets": [{ "name": "HA — Circle: invitation" }]
+}
+{% endschema %}

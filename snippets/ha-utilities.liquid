@@ -33,15 +33,20 @@
 
   THE CIRCLE is membership, not account administration. Three states:
     guest       her words, MEMBER SIGN IN, ABOUT THE CIRCLE. No Create Account.
-    member      signed in AND carrying the Circle tag (Theme settings) —
-                the private space. Tag, not purchase: "normal customers aren't
+    member      signed in AND Circle status = Approved — the private space.
+                Approval, not purchase: "normal customers aren't
                 automatically treated as Circle members simply because they
                 have purchased something."
-    customer    signed in without the tag: told plainly that membership is by
+    customer    signed in without approval: told plainly that membership is by
                 invitation, and given their orders.
-  A tag rather than a segment because the theme can read a tag at render
-  time and cannot read a segment; the Circle segment for The Dispatch and
-  invitations is built on the same tag in Admin.
+
+  28 September 2026 (Aloha's invitation/approval logic): membership is the
+  customer metafield hartwick.circle_status, set to "Approved" by Angela in
+  Admin. NOT a tag: any storefront customer form can post contact[tags], so a
+  visitor could have given themselves the old `circle-member` tag. A metafield
+  can only be written from Admin. The segment "The Circle – Approved" is built
+  on it, and Shopify Flow mirrors it to the tag `circle-approved` for Klaviyo —
+  that tag sends emails and grants nothing here.
 {%- endcomment -%}
 {%- liquid
   assign part = part | default: 'bar'
@@ -62,17 +67,13 @@
   assign region_currency = localization.country.currency.iso_code | upcase
   assign language_code = localization.language.iso_code | split: '-' | first | upcase
 
-  assign circle_tag = settings.ha_circle_tag | default: 'circle-member' | strip | downcase
   assign circle_state = 'guest'
   if customer
     assign circle_state = 'customer'
-    for tag in customer.tags
-      assign t = tag | strip | downcase
-      if t == circle_tag
-        assign circle_state = 'member'
-        break
-      endif
-    endfor
+    assign circle_status = customer.metafields.hartwick.circle_status.value | strip | downcase
+    if circle_status == 'approved'
+      assign circle_state = 'member'
+    endif
   endif
 
   assign circle_about_url = settings.ha_circle_about_url
@@ -225,7 +226,20 @@
 
   {%- comment -%} THE CIRCLE {%- endcomment -%}
   {%- if show_circle -%}
-  <div id="HaDrawer-circle" class="ha-drawer ha-drawer--circle" data-ha-drawer="circle" data-circle-state="{{ circle_state }}" hidden>
+  {%- comment -%}
+    1 October 2026 (Ivan's fix list, 15: "on the circle popup window,
+    replace the background with the blue color image"): the panel sits on
+    the Circle page's blue-grey paper — Theme settings > Circle panel paper,
+    or the file itself when that is empty.
+  {%- endcomment -%}
+  {%- liquid
+    if settings.ha_circle_drawer_paper
+      assign circle_paper = settings.ha_circle_drawer_paper | image_url: width: 1400
+    else
+      assign circle_paper = 'HA_CIRCLE_HEADER_PAPER_GREY.jpg' | file_img_url: '1400x'
+    endif
+  -%}
+  <div id="HaDrawer-circle" class="ha-drawer ha-drawer--circle ha-drawer--paper" data-ha-drawer="circle" data-circle-state="{{ circle_state }}" style="--ha-drawer-paper: url({{ circle_paper }});" hidden>
     <div class="ha-drawer__overlay" data-ha-close></div>
     <div class="ha-drawer__inner" role="dialog" aria-modal="true" aria-labelledby="HaDrawer-circle-title" tabindex="-1">
       <div class="ha-drawer__head">

@@ -22,6 +22,15 @@
   one that worked. `novalidate` and `data-nocaptcha` for the same reasons as
   there. With JS off it is Shopify's own form and the sync catches it.
 
+  1 October 2026 (Aloha, "the updated register page"): the card is a new
+  photograph — a yellow card in a mauve glassine envelope — with "The story
+  continues beyond the piece." printed on the yellow card (a pull line; the
+  lead under the heading is emptied in the template, since the line moved
+  onto the card) and her square gold wax seal on the envelope's front (an
+  image, `seal_image`; the drawn thread and dark disc are retired). The
+  heading "Join The Register" drops its full stop; the button is her olive
+  (`button_style`: olive), the wine one stays available.
+
   Terminology (CLAUDE.md): The Register is public and free to join; every
   call to action here says Join The Register. The Dispatch is what it
   receives. Nothing on this form touches The Circle.
@@ -64,13 +73,12 @@
                   <span class="ha-reg-note__title ha-narrate">{{ section.settings.card_title }}</span>
                 {%- endif -%}
                 {%- if section.settings.card_line != blank -%}
-                  <span class="ha-reg-note__line ha-narrate">{{ section.settings.card_line }}</span>
+                  <span class="ha-reg-note__line ha-narrate ha-pull">{{ section.settings.card_line }}</span>
                 {%- endif -%}
               </figcaption>
             {%- endif -%}
-            {%- if section.settings.show_seal -%}
-              <span class="ha-reg-note__thread" aria-hidden="true"></span>
-              <span class="ha-reg-note__seal" aria-hidden="true"><img src="{{ 'ha-house-symbol-white.png' | asset_url }}" width="1867" height="1867" alt="" loading="lazy"></span>
+            {%- if section.settings.show_seal and section.settings.seal_image -%}
+              {{ section.settings.seal_image | image_url: width: 320 | image_tag: class: 'ha-reg-note__wax', loading: 'lazy', sizes: '5rem', widths: '120, 200, 320', alt: '' }}
             {%- endif -%}
           </figure>
         {%- endif -%}
@@ -141,7 +149,7 @@
               <div class="ha-reg-form__note ha-record">{{ section.settings.privacy_note }}</div>
             {%- endif -%}
 
-            <button type="submit" class="ha-reg-form__submit ha-record ha-grain-block" name="commit">{{ section.settings.submit_text }}</button>
+            <button type="submit" class="ha-reg-form__submit{% if section.settings.button_style == 'olive' %} ha-reg-form__submit--olive{% endif %} ha-record ha-grain-block" name="commit">{{ section.settings.submit_text }}</button>
 
             {%- if form.errors -%}
               <p class="ha-reg-form__message ha-reg-form__message--server ha-record is-error" id="HaRegJoinError--{{ section.id }}" role="alert" style="margin-top: 1.6rem;">
@@ -175,12 +183,13 @@
     { "type": "checkbox", "id": "show_card", "label": "Show the Register card", "default": true },
     { "type": "image_picker", "id": "card_image", "label": "Card photograph", "info": "Aloha's dyed sheet in a glassine envelope, cut out on a transparent ground. The words, thread and seal sit on it at fixed positions: a different photograph needs them re-measured." },
     { "type": "text", "id": "card_alt", "label": "Card alt text", "default": "A sheet of the Atelier's grey dyed paper in a glassine envelope, tied with a thread and sealed with the House symbol" },
-    { "type": "text", "id": "card_title", "label": "Card title", "default": "The Register", "info": "Set in capitals by the style." },
-    { "type": "text", "id": "card_line", "label": "Card line", "default": "Correspondence from the Atelier." },
-    { "type": "checkbox", "id": "show_seal", "label": "Thread and seal", "default": true },
+    { "type": "text", "id": "card_title", "label": "Card title", "info": "Optional. Set in capitals by the style." },
+    { "type": "text", "id": "card_line", "label": "Card line", "default": "The story continues beyond the piece.", "info": "On the yellow card, as a pull line." },
+    { "type": "checkbox", "id": "show_seal", "label": "Wax seal", "default": true },
+    { "type": "image_picker", "id": "seal_image", "label": "Wax seal picture", "info": "Aloha's square gold seal (HA_REGISTER_SEAL_SQUARE.png), on the envelope's front." },
     { "type": "header", "content": "Right column" },
     { "type": "text", "id": "aside_eyebrow", "label": "Eyebrow", "default": "The Dispatch / Email correspondence" },
-    { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Join The Register." },
+    { "type": "text", "id": "aside_heading", "label": "Heading", "default": "Join The Register" },
     { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Notes on materials, Masters and work in progress. Sent when there is something worth sharing.</p>" },
     { "type": "header", "content": "The form" },
     { "type": "checkbox", "id": "show_form", "label": "Show the form", "default": true, "info": "Posts to Klaviyo's Register list, as the homepage band does." },
@@ -197,6 +206,7 @@
       "default": "<p>Read our <a href=\"/policies/privacy-policy\">Privacy Policy</a>. Unsubscribe at any time.</p>"
     },
     { "type": "text", "id": "submit_text", "label": "Button", "default": "Join The Register" },
+    { "type": "select", "id": "button_style", "label": "Button colour", "options": [{ "value": "olive", "label": "Olive (Aloha, 1 October)" }, { "value": "wine", "label": "Wine" }], "default": "olive" },
     { "type": "text", "id": "contact_tag", "label": "Customer tag (no-JS fallback only)", "default": "the-register" },
     {
       "type": "text", "id": "register_source", "label": "Klaviyo source", "default": "register_page",
