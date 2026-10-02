@@ -8697,3 +8697,37 @@ body:has(#SiteHeader.ha-trans:not(.ha-trans-light)) .ha-paper-head { padding-top
 @media screen and (min-width: 990px) {
   body:has(#SiteHeader.ha-trans:not(.ha-trans-light)) .ha-paper-head { padding-top: var(--site-header-height-desktop, 6rem); }
 }
+
+
+/* ==========================================================================
+   COLLECTION HEADS IN WINE, 1 OCTOBER — Ivan: "all of the collection text
+   colours in the header #502F37". Everything inside the collection heads
+   (the four range pages, the Collection Index, Luxe's collection banner):
+   reference line, title, intro, links, the Index's category lists, and the
+   quiet tones and hairlines derived from the ink. The site menu above them
+   keeps the ink.
+   ========================================================================== */
+.ha-paper-head,
+.ha-idx__head.ha-paper-head {
+  color: var(--ha-field-correspondence);
+  --ha-text: var(--ha-field-correspondence);
+  --ha-text-quiet: color-mix(in srgb, var(--ha-field-correspondence) 78%, transparent);
+  --ha-ink-title: var(--ha-field-correspondence);
+  --ha-rule: color-mix(in srgb, var(--ha-field-correspondence) 22%, transparent);
+}
+.ha-paper-head,
+.ha-paper-head a,
+.ha-paper-head .ha-clothing__crumbs,
+.ha-paper-head .ha-clothing__back,
+.ha-paper-head .ha-clothing__intro,
+.ha-paper-head .ha-idx__crumbs,
+.ha-paper-head .ha-idx__intro,
+.ha-paper-head .ha-idx__count,
+.ha-paper-head h1,
+.ha-paper-head .ha-clothing__title,
+.ha-paper-head .ha-idx__title,
+.ha-paper-head :is(p, span, li, h2, h3, .ha-record, .ha-label, .ha-narrate),
+.ha-coll-paper h1,
+.ha-coll-paper .collection-std-description,
+.ha-coll-paper .collection-banner-std-title,
+.ha-coll-paper .collection-title-bb { color: var(--ha-field-correspondence); }
