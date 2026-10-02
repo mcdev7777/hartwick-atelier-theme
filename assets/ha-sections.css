@@ -3128,6 +3128,16 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 @media screen and (min-width: 1200px) {
   .ha-footer--row .ha-footer__links--row { justify-content: space-between; flex-wrap: nowrap; gap: 2.4rem; }
 }
+/* 2 October: the links are 13px Porter now (her nav size), 973px of words
+   against 1158 of row at 1440. A link never breaks inside itself; the row
+   is one line from 1400 and wraps, centred, below that. */
+.ha-footer--row .ha-footer__links--row > * { white-space: nowrap; }
+@media screen and (min-width: 990px) and (max-width: 1399px) {
+  .ha-footer--row .ha-footer__links--row { justify-content: center; flex-wrap: wrap; gap: 1.6rem 2.4rem; }
+}
+@media screen and (min-width: 1400px) {
+  .ha-footer--row .ha-footer__links--row { gap: 1.6rem; }
+}
 .ha-footer--row .ha-footer__copy { margin-top: 3.2rem; font-size: var(--ha-t-footer); letter-spacing: 0.04em; text-align: center; }
 @media screen and (min-width: 990px) {
   .ha-footer--row .ha-footer__copy { margin-top: 2.6rem; text-align: left; }
@@ -6451,23 +6461,23 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
    Three classes deep so the TYPE ROLES block cannot pull them back. */
 .ha-register.ha-register--site .ha-eyebrow { font-weight: 500; }
 .ha-register.ha-register--site h2.ha-pull {
-  font-family: "HA Figures", "Junicode Exp", var(--ha-font-narrate);
-  font-weight: 500;
+  font-family: var(--ha-role-pull);
+  font-weight: var(--ha-role-pull-weight);
   font-style: italic;
   font-size: var(--ha-t-h2);
   line-height: 1.35;
   letter-spacing: 0;
 }
 .ha-register.ha-register--site .ha-register__body {
-  font-family: "Noto Sans Mono", var(--ha-font-record);
-  font-weight: 400;
+  font-family: var(--ha-role-text);
+  font-weight: var(--ha-role-text-weight);
   font-size: var(--ha-t-ui);
   line-height: 1.5;
   letter-spacing: 0;
 }
 .ha-register.ha-register--site .ha-register__submit--link {
-  font-family: "Noto Sans Mono", var(--ha-font-record);
-  font-weight: 600;
+  font-family: var(--ha-role-action);
+  font-weight: var(--ha-role-action-weight);
 }
 /* Her box sits 47px in from the page edge on 1440, the paragraph justified. */
 @media screen and (min-width: 990px) {
@@ -8519,9 +8529,9 @@ html body :is(h1, h2, h3):not(.ha-pull, .ha-label, .ha-identify, .ha-eyebrow, .h
    6  The envelopes a little smaller: 78.44vw → 70vw, the same centre.
    7  The numbers over the three column titles three times their size.
    ========================================================================== */
-html body .ha-cinv .ha-cinv__title { font-size: clamp(4rem, 5vw, 7.2rem); line-height: 1; font-weight: 500 !important; letter-spacing: 0.02em; }
+html body .ha-cinv .ha-cinv__title { font-size: var(--ha-t-hero); line-height: 1; letter-spacing: 0; }   /* 2 October: Troja, the hero row (77 on her board) */
 .ha-cinv .ha-cinv__stage { width: 70vw; margin-left: 11.04vw; }
-.ha-cwithin .ha-cwithin__num { font-size: calc(var(--ha-t-meta) * 3); line-height: 1; }
+.ha-cwithin .ha-cwithin__num { font-size: var(--ha-t-num); line-height: 1; }   /* 2 October: the numbers row */
 @media screen and (max-width: 989px) {
   .ha-cinv .ha-cinv__stage { width: 100vw; margin-left: -2rem; }
 }
@@ -8630,7 +8640,7 @@ html body .ha-living.ha-living--paper {
    its own figures. The 01–08 numbers over the columns stay mono.
    ========================================================================== */
 html body .ha-abj .ha-abj__body,
-html body .ha-abj .ha-abj__body * { font-family: "Junicode", Georgia, "Times New Roman", serif !important; }
+html body .ha-abj .ha-abj__body * { font-family: var(--ha-font-text) !important; }   /* 2 October: the paragraph's own face is Typewriter, figures included */
 
 
 /* ==========================================================================
@@ -8731,3 +8741,130 @@ body:has(#SiteHeader.ha-trans:not(.ha-trans-light)) .ha-paper-head { padding-top
 .ha-coll-paper .collection-std-description,
 .ha-coll-paper .collection-banner-std-title,
 .ha-coll-paper .collection-title-bb { color: var(--ha-field-correspondence); }
+
+
+/* ==========================================================================
+   TYPE ROLES, 2 OCTOBER — Aloha and Angela, "Website font rules", with the
+   About The Circle artboard as the reference ("please be very literal with
+   the font roles"). Faces and sizes: snippets/ha-fonts.liquid ("THE
+   TYPOGRAPHY OF 2 OCTOBER") and snippets/ha-tokens.liquid. This block sits
+   last so it has the final word over every older section rule.
+
+     1 Troja            every display heading: h1–h3 and anything named
+                        __title / __heading, as her artboard sets PIECES FOR
+                        THE CIRCLE and KNOWN THROUGH WHAT WE SHARE in Troja
+     2 Porter           menu, labels and eyebrows (Medium, as drawn), buttons
+                        and text links
+     3 Typewriter       information; running paragraphs at 82% opacity, on
+                        her 20pt leading for 17pt
+     4 Typewriter Bold  standalone numbers (__num), full strength
+     5 Junicode Italic  pull lines and notes (.ha-pull, and any italic in the
+                        Typewriter voice, by the HA Text italic face)
+
+   Casing is left to the copy, as before. Left in their drawn faces: the
+   Register envelope's lettering, the CONTACT word, the landing page, and
+   the bag in the menu bar (Noto Sans Mono SemiBold, locked 24 September).
+   ========================================================================== */
+
+/* 1 — Troja */
+html body :is(h1, h2, h3, .h0, .h1, .h2, .h3, [class*="__title"], [class*="__heading"], .ha-jnl-display):not(.ha-pull, .ha-label, .ha-identify, .ha-record, .ha-eyebrow, .ha-home__eyebrow, [class*="__eyebrow"], [class*="-title-h3"], .ha-home-story__title, .ha-clothing__name, .ha-mst__row-head, .ha-contact__word, .ha-reg-letter__title, .ha-abl__founder, .visually-hidden, #SiteHeader *, .ha-nav *, footer *, .ha-landing *) {
+  font-family: var(--ha-role-title) !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  letter-spacing: 0.005em;
+}
+
+/* 2 — Porter: labels take Medium (the TYPE ROLES block above reads the
+   weight token); buttons and text links */
+html body :is(a.ha-record, button.ha-record, .ha-record > a, .button, button.button, [class*="__cta"], [class*="__submit"], .shopify-payment-button__button--unbranded):not(#SiteHeader *, .ha-nav *) {
+  font-family: var(--ha-role-action) !important;
+  font-weight: var(--ha-role-action-weight) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 3 — Typewriter paragraphs at 82%, her leading. Opacity, as she set it,
+   rather than a colour, so a paragraph keeps whatever ink its section gives
+   it (white on a photograph, wine on a collection head). */
+html body #MainContent :is(p, .rte li):not(.ha-label, .ha-identify, .ha-eyebrow, [class*="__eyebrow"], .ha-record, .ha-pull, .ha-placeholder-note, [class*="__title"], [class*="__heading"], [class*="__num"], [class*="__cta"], [class*="price"], .ha-landing *, .ha-reg-letter *, .ha-reg-note *, :is(p, .rte li, h1, h2, h3, a, button) *) {
+  opacity: 0.82;
+  line-height: var(--ha-t-body-lh);
+}
+html body .ha-register--site .ha-register__body,
+html body .ha-drawer p:not(.ha-label, .ha-eyebrow, [class*="__eyebrow"], .ha-pull, [class*="__title"]) { opacity: 0.82; }
+
+/* 2 — breadcrumbs and reference lines over a title ("PRIVATE ACCESSORIES /
+   PERSONAL ATTENTION / SHARED STORIES", "01 / WITHIN THE CIRCLE") tell the
+   visitor where they are: Porter Medium, the figures Typewriter by the
+   HA Figures Porter face */
+html body [class*="__crumb"]:not([class*="__crumbs-"]),
+html body [class*="__crumbs"] {
+  font-family: var(--ha-role-label) !important;
+  font-weight: var(--ha-role-label-weight);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* 4 — standalone numbers: Typewriter Bold at full strength */
+html body [class*="__num"]:not([class*="__nums"]) {
+  font-family: var(--ha-role-number) !important;
+  font-style: normal;
+  opacity: 1;
+}
+
+/* 5 — Junicode SemiBold Italic notes */
+html body .ha-pull,
+html body .ha-pull *,
+html body .ha-cmembers__signin-body,
+html body .ha-cmembers__signin-body * {
+  font-family: var(--ha-role-pull) !important;
+  font-style: italic;
+  font-weight: var(--ha-role-pull-weight);
+}
+
+
+/* The Circle page, as drawn on the reference: the titles in capitals, and
+   KNOWN THROUGH WHAT WE SHARE at the card-title size, not the section's. */
+html body :is(.ha-cinv__title, .ha-cwithin__heading, .ha-cwithin__title, .ha-cmembers__heading) { text-transform: uppercase; }
+html body .ha-cmembers .ha-cmembers__heading { font-size: var(--ha-t-h3); line-height: var(--ha-t-lh-h3); }
+
+/* Main page titles that were set in Porter (About, the Masters opening, the
+   founder's name): Troja now, "the main title moment on each page". The
+   page titles take the hero row; the founder's name stays a section title. */
+html body :is(.ha-abo__title, .ha-mst__hero26-h1, .ha-abl__name) {
+  font-family: var(--ha-role-title) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.005em !important;   /* their Porter tracking (0.1–0.12em) does not carry over */
+}
+html body .ha-abo .ha-abo__title,
+html body .ha-mst__hero26-h1 { font-size: var(--ha-t-hero); line-height: 1; }
+html body .ha-abl .ha-abl__name { font-size: var(--ha-t-h2); }
+
+/* Product names in a collection grid are collection information, not
+   titles: Typewriter (Luxe asks for its heading family here). */
+html body .card-product-title-h3,
+html body .card-product-title-h3 * {
+  font-family: var(--ha-role-text) !important;
+  font-weight: var(--ha-role-text-weight) !important;
+  letter-spacing: 0;
+}
+
+/* The homepage index heading sits in a 306px column: at the h1 row
+   COLLECTIONS broke inside the word. Section-title size, scaled to the
+   column, and never broken mid-word. */
+html body .ha-home-index .ha-home__heading { font-size: min(var(--ha-t-h2), 2.4vw); overflow-wrap: normal; word-break: normal; hyphens: manual; }
+@media screen and (max-width: 989px) {
+  html body .ha-home-index .ha-home__heading { font-size: var(--ha-t-h2); }
+}
+
+/* The Register opening's two cards ("By invitation", "Read") are lettering
+   on her drawn envelope: kept in the Junicode they were drawn in. */
+html body .ha-reg-letter .ha-reg-letter__word { font-family: "Junicode", Georgia, serif !important; font-weight: 300; }
+
+/* Product page: the Expression line under the name and the introduction
+   were one block of Typewriter once both were 17px; a line of air between
+   them, and the introduction (text straight in the block, no <p>) at the
+   paragraphs' 82%. */
+html body .ha-pdp .ha-pdp__material { margin-bottom: 1.4rem; }
+html body .ha-pdp .ha-pdp__intro { opacity: 0.82; }

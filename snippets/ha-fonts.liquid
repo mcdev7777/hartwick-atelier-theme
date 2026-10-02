@@ -256,19 +256,107 @@
     font-style: italic;
     font-display: swap;
   }
+  {%- comment -%}
+    2 October 2026: numbers are Typewriter now (Aloha's role 4), so the
+    figures that drop into a Porter label (the 01 / of 01 / WITHIN THE
+    CIRCLE) come from the typrighter file. Porter caps 0.700em, typrighter
+    0.750em, hence 93%.
+  {%- endcomment -%}
   @font-face {
     font-family: "HA Figures Porter";
-    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
     unicode-range: U+0030-0039, U+002F;
-    size-adjust: 98%;
+    size-adjust: 93%;
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  {%- comment -%}
+    THE TYPOGRAPHY OF 2 OCTOBER 2026 — Aloha and Angela, "Website font rules",
+    with the About The Circle artboard as the reference for scale. It replaces
+    the 24 September roles across the whole site:
+
+      1 TROJA PRO          large page titles (and, as her artboard draws it,
+                           every display heading: section and card titles)
+      2 PORTER             navigation, menu, small labels, section tags,
+                           structural headings; buttons, as drawn
+      3 TYPEWRITER         information: body, descriptions, product copy,
+                           stories, material notes, prices and data,
+                           at 82% opacity in running paragraphs
+      4 TYPEWRITER BOLD    standalone numbering only (01, 02, 03)
+      5 JUNICODE ITALIC    small personal notes, asides, invitations, emphasis
+
+    Files, from her drive folder (Latin subsets, scripts not kept — rebuild
+    with pyftsubset from the originals in docs/typography-2026-10-02/):
+      ha-troja.woff2                 GC Troja Pro Regular (Glyphonic)
+      ha-typewriter.woff2            typrighter Bold (Jadugar Design Studio)
+      ha-junicode-semibold-italic    Junicode SemiBold Italic (SIL OFL)
+
+    ⚠️ LICENCE. Troja and typrighter are commercial desktop fonts. Neither
+    file carries a web licence, and a webfont is downloadable by design.
+    They are served here, on the unpublished theme, because the client
+    sent them for this purpose. A web licence is needed before launch.
+    Same position as Porter (risk R1).
+
+    typrighter supplies ONE weight, Bold. "Typewriter" (paragraphs) and
+    "Typewriter Bold" (numbers) are therefore the same file, distinguished
+    as she drew them: paragraphs at 82% opacity, numbers at full strength.
+    Each face is declared over the whole weight range so that no rule, Luxe's
+    included, can make the browser synthesise a heavier or lighter version.
+
+    HA Text is the information voice. Its italic slot is Junicode SemiBold
+    Italic — typrighter has no italic, and her italic is always Junicode —
+    so an <em>, or any italic line in the body voice, becomes role 5 without
+    markup. typrighter has no en or em dash, ellipsis or à/è/ñ; those
+    characters fall through to Noto Sans Mono, next in the stack.
+  {%- endcomment -%}
+  @font-face {
+    font-family: "HA Troja";
+    src: url({{ 'ha-troja.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Text";
+    src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Text";
+    src: url({{ 'ha-junicode-semibold-italic.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Note";
+    src: url({{ 'ha-junicode-semibold-italic.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Note";
+    src: url({{ 'ha-junicode-semibold-italic.woff2' | asset_url }}) format("woff2");
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
   }
   :root {
-    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", "HA Figures Porter", {% else %}"HA Figures", {% endif %}"Junicode", Georgia, "Times New Roman", serif;
-    --ha-font-narrate:  "HA Figures", "Junicode", Georgia, "Times New Roman", serif;
-    --ha-font-record:   "HA Mono", "Noto Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    /* 2 October 2026 — see THE TYPOGRAPHY OF 2 OCTOBER above. The three old
+       voice names keep working: narrate and record are Typewriter now, and
+       identify is Porter with Typewriter figures and Typewriter behind it. */
+    --ha-font-title:    "HA Troja", "Junicode", Georgia, "Times New Roman", serif;
+    --ha-font-text:     "HA Text", "Noto Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --ha-font-note:     "HA Note", "Junicode", Georgia, "Times New Roman", serif;
+    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", "HA Figures Porter", {% endif %}"HA Text", "Noto Sans Mono", ui-monospace, monospace;
+    --ha-font-narrate:  var(--ha-font-text);
+    --ha-font-record:   var(--ha-font-text);
+    --ha-font-mono:     "HA Mono", "Noto Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
     /* ==================================================================
        THE FIVE ROLES  —  Aloha, 24 September 2026 (final typography system)
@@ -287,31 +375,38 @@
        settings > Typography voices now default to this system. The Noto
        Condensed options are kept only as a way back.
        ================================================================== */
-    --ha-role-nav:           var(--ha-font-identify);   /* 01 Porter Medium */
+    /* 2 October 2026: the role names stay, their faces follow her new rules. */
+    --ha-role-title:         var(--ha-font-title);      /* 1 Troja */
+    --ha-role-nav:           var(--ha-font-identify);   /* 2 Porter Medium (menu bar unchanged) */
     --ha-role-nav-weight:    500;
-    --ha-role-nav-hover:     300;                         /*    hover: Porter Light */
-    --ha-role-label:         var(--ha-font-identify);   /* 02 Porter Light */
-    --ha-role-label-weight:  300;
-    --ha-role-record:        var(--ha-font-record);     /* 03 Noto Sans Mono Medium */
-    --ha-role-record-weight: 500;
-    --ha-role-text:          var(--ha-font-narrate);    /* 04 + 05 Junicode Light */
-    --ha-role-text-weight:   300;
-    --ha-role-pull:          var(--ha-font-narrate);    /* 06 Junicode SemiBold Italic */
+    --ha-role-nav-hover:     300;                         /*   hover: Porter Light */
+    --ha-role-label:         var(--ha-font-identify);   /* 2 Porter Medium, as her labels are drawn */
+    --ha-role-label-weight:  500;
+    --ha-role-action:        var(--ha-font-identify);   /* 2 Porter Medium: buttons and text links */
+    --ha-role-action-weight: 500;
+    --ha-role-record:        var(--ha-font-text);       /* 3 Typewriter: data, prices, references */
+    --ha-role-record-weight: 700;
+    --ha-role-text:          var(--ha-font-text);       /* 3 Typewriter: body and information */
+    --ha-role-text-weight:   700;
+    --ha-role-number:        var(--ha-font-text);       /* 4 Typewriter Bold: standalone numbers */
+    --ha-role-pull:          var(--ha-font-note);       /* 5 Junicode SemiBold Italic */
     --ha-role-pull-weight:   600;
+    /* her paragraphs are the Typewriter at 82% opacity */
+    --ha-text-alpha:         82%;
 
     {%- liquid
       assign body_voice = settings.ha_body_voice | default: 'narrate'
       assign chrome_voice = settings.ha_chrome_voice | default: 'identify'
     -%}
     {%- if body_voice == 'record' -%}
-    --ha-voice-body: var(--ha-font-record);
+    --ha-voice-body: var(--ha-font-mono);
     --ha-voice-body-weight: 400;
     {%- else -%}
     --ha-voice-body: var(--ha-role-text);
     --ha-voice-body-weight: var(--ha-role-text-weight);
     {%- endif -%}
     {%- if chrome_voice == 'record' -%}
-    --ha-voice-chrome: var(--ha-font-record);
+    --ha-voice-chrome: var(--ha-font-mono);
     --ha-voice-chrome-weight: 400;
     --ha-voice-chrome-hover: 400;
     {%- else -%}
@@ -328,11 +423,12 @@
        "Noto Sans Mono Condensed = body copy […] functional information" true
        across the whole theme rather than only in the Hartwick sections. */
     /* Titles are Junicode Light (roles 04/05), so Luxe's headings are too. */
-    --font-heading-family: var(--ha-role-text);
-    --font-heading-weight: var(--ha-role-text-weight);
+    --font-heading-family: var(--ha-role-title);
+    --font-heading-weight: 400;
     --font-heading-style: normal;
     --font-body-family:    var(--ha-voice-body);
-    --font-accent-family:  var(--ha-font-record);
+    /* Luxe gives buttons the accent family with !important: Porter, role 2 */
+    --font-accent-family:  var(--ha-role-action);
 
     /* Luxe derives these from the old Swiss 721 font picker (weight 400).
        The brand book set Junicode body copy and editorial display at Medium;

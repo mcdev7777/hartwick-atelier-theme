@@ -93,6 +93,12 @@
   body.ha-landing-body { background: {{ ground }}; }
 
   .ha-landing {
+    /* 2 October 2026: the site moved to Troja / Porter / Typewriter, but the
+       landing page is its own earlier design and stays exempt, so it keeps
+       the faces it was drawn with. */
+    --ha-font-narrate:  "Junicode", Georgia, "Times New Roman", serif;
+    --ha-font-record:   var(--ha-font-mono);
+    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", {% endif %}"Junicode", Georgia, serif;
     --ha-landing-ink: {{ ink }};
     --ha-landing-ground: {{ ground }};
     --ha-landing-rule: {{ rule }};
