@@ -27,11 +27,11 @@
     statement   hartwick.cloth_statement -> derived from yarn + weave
                 ("Handspun yarn. A handwoven cloth."), which is factual and
                 built only from facts that exist -> nothing
-    photographs hartwick.cloth_details (file list; the image's alt is its
-                caption) -> the old site's custom.featured_photo, then the
-                product's own media after the first — with the caption from
-                each image's alt text. Repeated crops are what the brief warns
-                against, so this fallback is marked provisional on the page.
+    photographs the product's own gallery, in gallery order from the first
+                image, up to the Photographs setting — Aloha, 4 Oct 2026: she
+                orders them in the product's Media. Caption = the image's alt
+                text. (hartwick.cloth_details and custom.featured_photo are
+                no longer read here.)
     composition hartwick.fibre_ratio -> "[Confirm]"
     record      the variant SKU -> "[Confirm]" (no old product carries a SKU)
 
@@ -98,12 +98,7 @@
     assign composition = confirm
   endif
 
-  # --- the photographs ---------------------------------------------------
-  assign provisional = false
-  assign details = mf.cloth_details.value
-  if details == blank
-    assign provisional = true
-  endif
+  # --- the photographs: the gallery, in its order ------------------------
   assign max = section.settings.max_images
 -%}
 
@@ -129,33 +124,15 @@
         script they are still a legible numbered list of what is shown.
       {%- endcomment -%}
       {%- capture index_items -%}
-        {%- if details != blank -%}
-          {%- comment -%}
-            Tab 03 gives each photograph an index label ("Cloth surface") and
-            a caption ("SURFACE / HANDWOVEN MATKA SILK"). The image's alt
-            text is the label; hartwick.cloth_captions is the list of
-            captions in the same order.
-          {%- endcomment -%}
-          {%- for img in details limit: max -%}
-            {%- assign cap = img.alt | default: section.settings.ph_caption -%}
-            <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ forloop.index }}" aria-controls="{{ section.id }}-detail-{{ forloop.index }}"><span class="ha-cloth__index-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
-          {%- endfor -%}
-        {%- else -%}
-          {%- assign n = 0 -%}
-          {%- if cf.featured_photo.value != blank -%}
-            {%- assign n = n | plus: 1 -%}
-            {%- assign cap = cf.featured_photo.value.alt | default: section.settings.ph_caption -%}
-            <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ n }}" aria-controls="{{ section.id }}-detail-{{ n }}"><span class="ha-cloth__index-num">{{ n | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
-          {%- endif -%}
-          {%- for media in product.media offset: 1 -%}
-            {%- if n >= max -%}{%- break -%}{%- endif -%}
-            {%- if media.media_type != 'image' -%}{%- continue -%}{%- endif -%}
-            {%- assign n = n | plus: 1 -%}
-            {%- assign cap = media.alt -%}
-            {%- if cap == blank or cap == product.title -%}{%- assign cap = section.settings.ph_caption -%}{%- endif -%}
-            <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ n }}" aria-controls="{{ section.id }}-detail-{{ n }}"><span class="ha-cloth__index-num">{{ n | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
-          {%- endfor -%}
-        {%- endif -%}
+        {%- assign n = 0 -%}
+        {%- for media in product.media -%}
+          {%- if n >= max -%}{%- break -%}{%- endif -%}
+          {%- if media.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+          {%- assign n = n | plus: 1 -%}
+          {%- assign cap = media.alt -%}
+          {%- if cap == blank or cap == product.title -%}{%- assign cap = section.settings.ph_caption -%}{%- endif -%}
+          <li><button type="button" class="ha-cloth__index-item ha-record" data-cloth-target="{{ section.id }}-detail-{{ n }}" aria-controls="{{ section.id }}-detail-{{ n }}"><span class="ha-cloth__index-num">{{ n | prepend: '0' | slice: -2, 2 }}</span><span>{{ cap }}</span></button></li>
+        {%- endfor -%}
       {%- endcapture -%}
 
       {%- if index_items contains '<li>' -%}
@@ -177,30 +154,15 @@
 
     <div class="ha-cloth__figures">
       {%- capture figures -%}
-        {%- if details != blank -%}
-          {%- assign captions = mf.cloth_captions.value -%}
-          {%- for img in details limit: max -%}
-            {%- assign label = img.alt | default: section.settings.ph_caption -%}
-            {%- assign i0 = forloop.index0 -%}
-            {%- assign cap = captions[i0] | default: label -%}
-            {%- render 'ha-cloth-figure', image: img, index: forloop.index, caption: cap, alt: label, section_id: section.id -%}
-          {%- endfor -%}
-        {%- else -%}
-          {%- assign n = 0 -%}
-          {%- if cf.featured_photo.value != blank -%}
-            {%- assign n = n | plus: 1 -%}
-            {%- assign cap = cf.featured_photo.value.alt | default: section.settings.ph_caption -%}
-            {%- render 'ha-cloth-figure', image: cf.featured_photo.value, index: n, caption: cap, section_id: section.id -%}
-          {%- endif -%}
-          {%- for media in product.media offset: 1 -%}
-            {%- if n >= max -%}{%- break -%}{%- endif -%}
-            {%- if media.media_type != 'image' -%}{%- continue -%}{%- endif -%}
-            {%- assign n = n | plus: 1 -%}
-            {%- assign cap = media.alt -%}
-            {%- if cap == blank or cap == product.title -%}{%- assign cap = section.settings.ph_caption -%}{%- endif -%}
-            {%- render 'ha-cloth-figure', image: media.preview_image, index: n, caption: cap, section_id: section.id -%}
-          {%- endfor -%}
-        {%- endif -%}
+        {%- assign n = 0 -%}
+        {%- for media in product.media -%}
+          {%- if n >= max -%}{%- break -%}{%- endif -%}
+          {%- if media.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+          {%- assign n = n | plus: 1 -%}
+          {%- assign cap = media.alt -%}
+          {%- if cap == blank or cap == product.title -%}{%- assign cap = section.settings.ph_caption -%}{%- endif -%}
+          {%- render 'ha-cloth-figure', image: media.preview_image, index: n, caption: cap, section_id: section.id -%}
+        {%- endfor -%}
       {%- endcapture -%}
       {%- if figures contains '<figure' -%}
         {{ figures }}
@@ -216,12 +178,6 @@
     </div>
   {%- endif -%}
 
-  {%- if provisional -%}
-    <div class="ha-wrap ha-cloth__note">
-      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
-        text: 'Provisional — detail photographs are the product’s own gallery images until dedicated weave, button, collar and seam photographs are supplied (hartwick.cloth_details).' -%}
-    </div>
-  {%- endif -%}
 </section>
 
 <script src="{{ 'ha-cloth.js' | asset_url }}" defer></script>
@@ -232,7 +188,7 @@
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
-    { "type": "paragraph", "content": "The Cloth / Material Record (V2 design, 16 Sept 2026). Heading, statement, composition and reference read the product's records; the index and photographs come from hartwick.cloth_details, or the product's own images until those exist." },
+    { "type": "paragraph", "content": "The Cloth / Material Record (V2 design, 16 Sept 2026). Heading, statement, composition and reference read the product's records; the index and photographs are the product's gallery images, in gallery order — reorder them in the product's Media." },
     { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
       { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" }
     ] },

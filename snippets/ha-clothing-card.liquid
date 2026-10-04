@@ -1,0 +1,29 @@
+{%- comment -%}
+  One garment card on a range or sub-collection page (sections/ha-clothing).
+  hero = the product pictured and linked; sname = the name printed; count =
+  the Expressions sharing the Style (blank or 1 prints no count); ss = the
+  section's settings, for its labels.
+{%- endcomment -%}
+{%- capture expr -%}{%- render 'ha-product-fact', product: hero, field: 'expression' -%}{%- endcapture -%}
+{%- assign expr = expr | strip -%}
+{%- assign lot = hero.metafields.hartwick.lot.value.number_roman.value | default: hero.metafields.hartwick.lot.value.number_roman -%}
+{%- assign alt = hero.featured_media.alt | default: sname -%}
+{%- if expr != blank -%}{%- assign alt = sname | append: ', ' | append: expr -%}{%- endif -%}
+<li class="ha-clothing__card">
+  <a class="ha-clothing__link" href="{{ hero.url }}" aria-label="{{ sname | escape }}{% if expr != blank %}, {{ expr | escape }}{% endif %} — {{ ss.view_text | escape }}">
+    <figure class="ha-clothing__figure{% unless hero.featured_media %} ha-figure--empty{% endunless %}">
+      {%- if hero.featured_media -%}
+        {{ hero.featured_media.preview_image
+          | image_url: width: 1200
+          | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 26vw, (min-width: 750px) 45vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: alt, class: 'ha-clothing__img' }}
+      {%- else -%}
+        <span class="ha-clothing__empty ha-record">{{ ss.image_slot_text }}</span>
+      {%- endif -%}
+    </figure>
+    <h3 class="ha-clothing__name ha-narrate">{%- render 'ha-style-name', name: sname -%}</h3>
+    {%- if expr != blank -%}<p class="ha-clothing__expr ha-narrate">{{ expr }}</p>{%- endif -%}
+    {%- comment -%} Aloha, 25 Sep 2026: "For now, we're not using LOT [Number] on the Collection page … please simply remove it." Kept behind show_lot for when the Lot system returns. {%- endcomment -%}
+    {%- if ss.show_lot -%}<p class="ha-clothing__lot ha-record">{% if lot != blank %}{{ ss.lot_label }} {{ lot }}{% else %}{{ ss.lot_placeholder }}{% endif %}</p>{%- endif -%}
+    <p class="ha-clothing__meta ha-record">{% if count > 1 %}{{ count | prepend: '0' | slice: -2, 2 }} {{ ss.count_text }} / {% endif %}{{ ss.view_text }}</p>
+  </a>
+</li>

@@ -8868,3 +8868,26 @@ html body .ha-reg-letter .ha-reg-letter__word { font-family: "Junicode", Georgia
    paragraphs' 82%. */
 html body .ha-pdp .ha-pdp__material { margin-bottom: 1.4rem; }
 html body .ha-pdp .ha-pdp__intro { opacity: 0.82; }
+
+/* Sub-collection pages (collection.json, 4 Oct 2026): one category, no rail —
+   the grid takes the full width, four across on a wide screen. */
+@media screen and (min-width: 990px) {
+  .ha-clothing__cat--solo .ha-clothing__cat-grid { grid-template-columns: 1fr; }
+  .ha-clothing__cat--solo .ha-clothing__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+
+/* ==========================================================================
+   PRODUCT BUTTON IN BROWN, 4 OCTOBER — Ivan: the "Select a size" button in
+   brown #3B2E25, like the homepage buttons. One colour from the first, so it
+   stays brown when it turns into Add to Bag (his 1 October note: no colour
+   change on choosing a size). The chosen size keeps the wine.
+   ========================================================================== */
+html body .ha-pdp .product-form__submit,
+html body .ha-pdp .product-form__submit:not([disabled]),
+html body .ha-pdp.ha-pdp--size-unset .product-form__submit[disabled],
+html body .ha-pdp .product-form__submit[disabled],
+html body .lx-template--product .product-form__submit:not([disabled]) {
+  background: #3B2E25 !important;
+  border-color: #3B2E25 !important;
+}

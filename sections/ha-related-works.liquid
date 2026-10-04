@@ -92,6 +92,35 @@
     endfor
   endif
 
+  # 4. Still short (jewellery and silk carry no fibre or Style record, so
+  #    step 3 finds nothing): other photographed pieces of the same
+  #    collection — the same form (Rings, Petit Squares …). 4 Oct 2026: the
+  #    row printed "Image to select" boxes on most jewellery pages.
+  #    The narrowest collection the piece belongs to (Rings, not Drop One).
+  assign form = nil
+  for pc in product.collections
+    if pc.products_count > 1
+      if form == nil or pc.products_count < form.products_count
+        assign form = pc
+      endif
+    endif
+  endfor
+  if list.size < max and form != nil
+    for c in form.products limit: 50
+      if list.size >= max
+        break
+      endif
+      assign key = ',' | append: c.handle | append: ','
+      assign picks_c = picks | append: ','
+      if c.handle == product.handle or picks_c contains key or c.featured_media == blank
+        continue
+      endif
+      assign picks = picks | append: ',' | append: c.handle
+      assign list = picks | remove_first: ',' | split: ','
+      assign derived = true
+    endfor
+  endif
+
   assign collection_url = routes.all_products_collection_url
   if product.collections.first != blank
     assign collection_url = product.collections.first.url

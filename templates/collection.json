@@ -1,69 +1,60 @@
 /*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
+ * Hartwick Atelier — SUB-COLLECTION (the default collection template).
+ * Skirts, Shirts, Rings, Petit Squares … — every collection without its own
+ * range template. 4 October 2026: replaces Luxe's banner + product grid (the
+ * old site's look) with the range page's own head, paper and cards
+ * (ha-clothing), one card per product of the page's collection.
  */
 {
   "sections": {
-    "banner": {
-      "type": "main-collection-banner",
+    "clothing": {
+      "type": "ha-clothing",
+      "blocks": {
+        "pieces": {
+          "type": "category",
+          "settings": {
+            "heading": "",
+            "anchor": "pieces",
+            "blurb": "",
+            "this_collection": true,
+            "categories": "",
+            "include": "",
+            "exclude": ""
+          }
+        }
+      },
+      "block_order": [
+        "pieces"
+      ],
       "settings": {
-        "banner_layout": "split_banner",
-        "banner_height": "default",
-        "banner_width": "none",
-        "txt_alignment": "center",
-        "title_size": "h2",
-        "description_size": "text-body",
-        "cards_img_ratio": "fit",
-        "cards_img_position": "left",
-        "image_padding": "page_margin",
-        "txt_col": "#000000",
-        "bg_col": "rgba(0,0,0,0)",
-        "top_padding": 0,
-        "bottom_padding": 0,
-        "ha_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg"
-      }
-    },
-    "navigation": {
-      "type": "main-collection-sub-navigation",
-      "disabled": true,
-      "settings": {
-        "menu": "",
-        "alignment": "center",
-        "menu_style": "list",
-        "image_ratio": "landscape",
-        "padding_top": 60,
-        "padding_bottom": 0
-      }
-    },
-    "product-grid": {
-      "type": "main-collection-product-grid",
-      "settings": {
-        "products_per_page": 48,
-        "section_margins": "page-width",
-        "grid_spacing_horizontal": "normal",
-        "grid_spacing_vertical": "normal",
-        "columns_mobile": "1",
-        "columns_tablet": 3,
-        "columns_desktop": 3,
-        "enable_creative_layouts": false,
-        "enable_filtering": false,
-        "enable_sorting": true,
-        "show_price": false,
-        "show_vendor": false,
-        "enable_quick_add": false,
-        "padding_top": 0,
-        "padding_bottom": 80
+        "crumb_collection": "Collection",
+        "back_text": "Back to the Collection Index",
+        "back_url": "/collections",
+        "view_text": "View piece",
+        "top_text": "Back to top",
+        "touch": "colour",
+        "count_text": "fabric expressions",
+        "lot_label": "Lot",
+        "lot_placeholder": "Lot [number]",
+        "head_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg",
+        "crumb_leaf": "",
+        "title": "",
+        "intro": "",
+        "nav_label": "",
+        "lots_line": "",
+        "show_lot": false,
+        "onward_label": "Continue through the collection",
+        "onward_1_text": "Apparel",
+        "onward_1_url": "/collections/apparel",
+        "onward_2_text": "Fine Silk",
+        "onward_2_url": "/collections/fine-silk",
+        "onward_3_text": "Fine Jewellery",
+        "onward_3_url": "/collections/fine-jewellery",
+        "show_placeholder_note": false
       }
     }
   },
   "order": [
-    "banner",
-    "navigation",
-    "product-grid"
+    "clothing"
   ]
 }
