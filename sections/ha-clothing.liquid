@@ -70,6 +70,7 @@
       var nav = document.querySelector('.ha-clothing__nav-link');
       if (nav) window.setTimeout(function () { nav.focus({ preventScroll: true }); }, reduce ? 0 : 400);
       if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+      crumb();
     });
     // The sticky category navigation can run to two lines on a range with
     // long category names (Fine Silk). Its measured height feeds the anchor
@@ -79,6 +80,25 @@
       var nav = document.querySelector('.ha-clothing__nav');
       if (page && nav) page.style.setProperty('--ha-clothing-nav-h', nav.offsetHeight + 'px');
     }
+    // 4 October 2026: a sub-collection lives at its anchor here
+    // (/collections/apparel#shirts, snippets/ha-range-url). Opened at one,
+    // or moved to one by the category links, the breadcrumb reads
+    // Collection / Apparel / Shirts.
+    function crumb() {
+      var box = document.querySelector('[data-clothing-crumb]');
+      if (!box) return;
+      var id = decodeURIComponent((location.hash || '').slice(1));
+      var cat = id && document.getElementById(id);
+      var head = cat && cat.classList.contains('ha-clothing__cat') ? cat.querySelector('.ha-clothing__cat-heading') : null;
+      if (head) {
+        box.querySelector('[data-clothing-crumb-name]').textContent = head.textContent.trim();
+        box.hidden = false;
+      } else {
+        box.hidden = true;
+      }
+    }
+    window.addEventListener('hashchange', crumb);
+    if (document.readyState !== 'loading') crumb(); else document.addEventListener('DOMContentLoaded', crumb);
     window.addEventListener('load', measureNav);
     window.addEventListener('resize', measureNav);
     if (document.readyState !== 'loading') measureNav(); else document.addEventListener('DOMContentLoaded', measureNav);
@@ -98,7 +118,7 @@
     <div class="ha-wrap ha-clothing__head-grid">
       <div>
         <nav class="ha-clothing__crumbs ha-record" aria-label="Breadcrumb">
-          <a href="{{ routes.root_url }}">{{ shop.name }}</a><span aria-hidden="true"> / </span><a href="{{ routes.collections_url }}">{{ section.settings.crumb_collection }}</a><span aria-hidden="true"> / </span><span>{{ section.settings.crumb_leaf | default: collection.title }}</span>
+          <a href="{{ routes.root_url }}">{{ shop.name }}</a><span aria-hidden="true"> / </span><a href="{{ routes.collections_url }}">{{ section.settings.crumb_collection }}</a><span aria-hidden="true"> / </span><a class="ha-clothing__crumb-range" href="{{ collection.url }}" data-clothing-top>{{ section.settings.crumb_leaf | default: collection.title }}</a><span class="ha-clothing__crumb-cat" data-clothing-crumb hidden><span aria-hidden="true"> / </span><span data-clothing-crumb-name></span></span>
         </nav>
         <h1 class="ha-clothing__title ha-narrate">{{ section.settings.title | default: collection.title }}</h1>
         {%- if section.settings.back_text != blank -%}

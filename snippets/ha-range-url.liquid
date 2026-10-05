@@ -1,0 +1,61 @@
+{%- comment -%}
+  Hartwick Atelier — SUB-COLLECTION -> ITS PLACE ON THE RANGE PAGE.
+  4 October 2026, Ivan: "when users are going to visit the page of 'shirts',
+  the navigation must be like collection/apparel/shirts so that it can lead
+  to our new style page." Shirts, Skirts, Rings, Petit Squares … are not
+  pages of their own: each is a section of its range page (Apparel, Fine
+  Silk, Fine Jewellery), reached at its anchor.
+
+  Pass `handle` (a collection handle) or `url` (any link). Prints the range
+  page address with its anchor, or — for `url` — the link unchanged when it
+  is not a sub-collection. Read by snippets/ha-range-redirect (an old
+  address is sent on), sections/ha-index (the Collection Index links) and
+  sections/ha-clothing (the breadcrumb). The anchors are the category
+  blocks' own, set on collection.clothing / fine-silk / fine-jewellery.
+{%- endcomment -%}
+{%- liquid
+  assign h = handle
+  if h == blank and url != blank
+    assign u = url | split: '#' | first | split: '?' | first
+    if u contains '/collections/'
+      assign h = u | split: '/collections/' | last | split: '/' | first
+    endif
+  endif
+  assign out = ''
+  case h
+    when 'skirts'
+      assign out = '/collections/apparel#skirts'
+    when 'shirts'
+      assign out = '/collections/apparel#shirts'
+    when 'trousers'
+      assign out = '/collections/apparel#trousers'
+    when 'dresses', 'coats'
+      assign out = '/collections/apparel#dresses-and-coats'
+    when 'loungewear'
+      assign out = '/collections/apparel#loungewear'
+    when 'dupatta-oversize-scarves'
+      assign out = '/collections/fine-silk#oversized-dupattas'
+    when 'classic-stoles-scarves'
+      assign out = '/collections/fine-silk#classic-stoles'
+    when 'large-squares'
+      assign out = '/collections/fine-silk#large-squares'
+    when 'medium-square-scarves'
+      assign out = '/collections/fine-silk#medium-squares'
+    when 'petit-square-scarves'
+      assign out = '/collections/fine-silk#petit-squares'
+    when 'earrings'
+      assign out = '/collections/fine-jewellery#earrings'
+    when 'rings'
+      assign out = '/collections/fine-jewellery#rings'
+    when 'bangles-and-bracelets'
+      assign out = '/collections/fine-jewellery#bangles-and-bracelets'
+    when 'necklaces-and-pendants'
+      assign out = '/collections/fine-jewellery#necklaces-and-pendants'
+    when 'handwoven-yoga-mats', 'ayurvedic-yoga-mats'
+      assign out = '/collections/yoga#yoga-mats'
+  endcase
+  if out == blank and url != blank
+    assign out = url
+  endif
+  echo out
+-%}

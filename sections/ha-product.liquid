@@ -283,7 +283,26 @@
               visitor came from; otherwise the product's own first
               collection; the typed fallback only when it belongs to none.
             {%- endcomment -%}
-            {%- if collection.title != blank -%}
+            {%- comment -%}
+              4 October 2026 (Ivan): the path runs through the range page —
+              COLLECTION / APPAREL / SHIRTS — and SHIRTS leads to its section
+              there (snippets/ha-range-url), never to a page of its own.
+            {%- endcomment -%}
+            {%- assign crumb_sub = nil -%}
+            {%- assign crumb_sub_url = '' -%}
+            {%- for pc in product.collections -%}
+              {%- capture pc_to -%}{%- render 'ha-range-url', handle: pc.handle -%}{%- endcapture -%}
+              {%- assign pc_to = pc_to | strip -%}
+              {%- if pc_to != blank -%}{%- assign crumb_sub = pc -%}{%- assign crumb_sub_url = pc_to -%}{%- break -%}{%- endif -%}
+            {%- endfor -%}
+            {%- if crumb_sub != nil -%}
+              {%- assign crumb_range_handle = crumb_sub_url | split: '#' | first | split: '/collections/' | last -%}
+              {%- assign crumb_range = collections[crumb_range_handle] -%}
+              <span aria-hidden="true"> / </span>
+              <a href="{{ crumb_range.url }}">{{ crumb_range.title }}</a>
+              <span aria-hidden="true"> / </span>
+              <a href="{{ crumb_sub_url }}">{{ crumb_sub.title }}</a>
+            {%- elsif collection.title != blank -%}
               <span aria-hidden="true"> / </span>
               <a href="{{ collection.url }}">{{ collection.title }}</a>
             {%- elsif product.collections.first != blank -%}
@@ -496,7 +515,7 @@
           {%- if media_count > 1 -%}
             <div class="ha-pdp__readout ha-record" aria-hidden="true">
               <span class="ha-pdp__count" data-count-of="{{ media_count }}">01 / {{ media_count | prepend: '0' | slice: -2, 2 }}</span>
-              <span class="ha-pdp__scroll-hint">{{ section.settings.scroll_hint }}<span class="ha-pdp__scroll-arrow" aria-hidden="true">&darr;</span></span>
+              <span class="ha-pdp__scroll-hint">{{ section.settings.scroll_hint }}<span class="ha-pdp__scroll-arrow" aria-hidden="true"></span></span>
             </div>
             <p class="visually-hidden" aria-live="polite" data-count-live></p>
           {%- endif -%}

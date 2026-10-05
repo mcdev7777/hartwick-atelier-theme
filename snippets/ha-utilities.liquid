@@ -145,6 +145,19 @@
   {%- endif -%}
 
 {%- when 'panels' -%}
+  {%- comment -%}
+    4 October 2026 (Ivan): "any side page pop-up" — the Bag, the phone menu,
+    Region, Language, the Circle — on the Circle panel's light blue-grey
+    paper. One variable for all of them, set here once per page.
+  {%- endcomment -%}
+  {%- liquid
+    if settings.ha_circle_drawer_paper
+      assign ha_panel_paper = settings.ha_circle_drawer_paper | image_url: width: 1400
+    else
+      assign ha_panel_paper = 'HA_CIRCLE_HEADER_PAPER_GREY.jpg' | file_img_url: '1400x'
+    endif
+  -%}
+  <style>:root { --ha-panel-paper: url({{ ha_panel_paper }}); }</style>
   <script src="{{ 'ha-utilities.js' | asset_url }}" defer="defer"></script>
 
   {%- comment -%} REGION {%- endcomment -%}

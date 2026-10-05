@@ -163,7 +163,7 @@
     "predictive_search_show_articles": false,
     "predictive_search_show_pages": false,
     "price_font_weight": "normal",
-    "currency_code_enabled": true,
+    "currency_code_enabled": false,
     "date_format": "%b %d",
     "gift_card_logo_width": 90,
     "gift_card_image": "shopify://shop_images/HartwickAtelier-Press-MediaLibrary.jpg",

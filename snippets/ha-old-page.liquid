@@ -1,0 +1,31 @@
+{%- comment -%}
+  Hartwick Atelier — OLD-SITE PAGES (4 October 2026, Ivan: "some pages are
+  still using the old pages from old website though there are new design").
+
+  Given a page handle, prints where that page now lives, or nothing. Read by
+  snippets/ha-old-pages-redirect (the visit is sent on) and by the search
+  sections (the page is left out of results). The pages themselves are not
+  deleted or unpublished — remove a line here and the page shows again.
+
+    story, copy-of-the-collection, slow-fashion   -> About the Atelier
+        (slow-fashion still holds Luxe's demo copy, "Talk about your brand")
+    heritage-craft, materials-process (empty)     -> The Masters
+    faq (Luxe's demo "Collapsible row" only)      -> Policies
+    press, the AW24 press release and media
+    library, events (the autumn 2024 launch)      -> Contact (press line)
+
+  Kept as they are: size-guide (linked from every product page, already in
+  the Hartwick style) and data-sharing-opt-out (the legal privacy page).
+{%- endcomment -%}
+{%- liquid
+  case handle
+    when 'story', 'copy-of-the-collection', 'slow-fashion'
+      echo '/pages/about-the-atelier'
+    when 'heritage-craft', 'materials-process'
+      echo '/pages/the-masters'
+    when 'faq'
+      echo '/pages/policies'
+    when 'press', 'hartwick-atelier-autumn-2024-press-release', 'hartwick-atelier-autumn-2024-media-library', 'events'
+      echo '/pages/contact-us'
+  endcase
+-%}

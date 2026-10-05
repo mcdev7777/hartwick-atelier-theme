@@ -169,6 +169,11 @@
                 role="list"
               >
                 {%- for item in search.results -%}
+                  {%- comment -%} Old-site pages (snippets/ha-old-page) are left out of the results. {%- endcomment -%}
+                  {%- if item.object_type == 'page' -%}
+                    {%- capture ha_old_to -%}{%- render 'ha-old-page', handle: item.handle -%}{%- endcapture -%}
+                    {%- assign ha_old_to = ha_old_to | strip -%}{%- if ha_old_to != blank -%}{%- continue -%}{%- endif -%}
+                  {%- endif -%}
                   {% assign lazy_load = false %}
                   {%- if forloop.index > 2 -%}
                     {%- assign lazy_load = true -%}

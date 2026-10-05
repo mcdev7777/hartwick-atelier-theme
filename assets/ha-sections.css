@@ -8881,7 +8881,9 @@ html body .ha-pdp .ha-pdp__intro { opacity: 0.82; }
    PRODUCT BUTTON IN BROWN, 4 OCTOBER — Ivan: the "Select a size" button in
    brown #3B2E25, like the homepage buttons. One colour from the first, so it
    stays brown when it turns into Add to Bag (his 1 October note: no colour
-   change on choosing a size). The chosen size keeps the wine.
+   change on choosing a size). Later the same day: every brown (wine) filled
+   control on the product page takes it too — the chosen size and the
+   private-appointment form's Send request.
    ========================================================================== */
 html body .ha-pdp .product-form__submit,
 html body .ha-pdp .product-form__submit:not([disabled]),
@@ -8890,4 +8892,157 @@ html body .ha-pdp .product-form__submit[disabled],
 html body .lx-template--product .product-form__submit:not([disabled]) {
   background: #3B2E25 !important;
   border-color: #3B2E25 !important;
+}
+html body .ha-pdp .product-form__input input[type='radio']:checked + label,
+html body .ha-appointment__submit {
+  background: #3B2E25 !important;
+  border-color: #3B2E25 !important;
+}
+
+
+/* ==========================================================================
+   MADE IN LOTS NOTE IN JUNICODE ITALIC, 4 OCTOBER — Ivan: on the homepage the
+   "Questions about a Lot, a piece, or how it was made? We're here to answer
+   them." line in Junicode Italic, the one Junicode cut in use (role 5). It
+   is the bold run in the section's text (Aloha sets it bold in the editor),
+   so bold there reads as the note, not as heavier Typewriter.
+   ========================================================================== */
+html body .ha-home-lots__body :is(strong, b) {
+  font-family: var(--ha-role-pull) !important;
+  font-style: italic;
+  font-weight: var(--ha-role-pull-weight) !important;
+  letter-spacing: 0;
+}
+
+
+/* ==========================================================================
+   NO BLACK AND WHITE, 4 OCTOBER — Angela: no black-and-white switch; she
+   wants the photographs in colour. Every grayscale-at-rest treatment is
+   switched off here, in one place, until next year's photography: the
+   range and sub-collection cards and their Masters feature, the Collection
+   Index, the category tiles, the homepage index, stories and Masters band,
+   and the Masters page inset and film posters. To bring it back, delete
+   this block — the original rules above are untouched.
+   ========================================================================== */
+html body :is(
+  .ha-clothing__img,
+  .ha-clothing__feature-figure img,
+  .ha-idx__img,
+  .ha-idx__editorial-img,
+  .ha-cats__figure img,
+  .ha-home-index__img,
+  .ha-home-story__img,
+  .ha-home-masters__img,
+  .ha-mst__inset-img,
+  .ha-mst-film__poster
+) {
+  filter: none !important;
+}
+
+
+/* ==========================================================================
+   THE CLOTH, MORE THAN FOUR PHOTOGRAPHS, 4 OCTOBER — Aloha: every picture
+   the opening does not show. The first four keep the stagger; the rest run
+   on beneath it in pairs, the left one large, the right one small and
+   dropped, as the second row of the stagger is.
+   ========================================================================== */
+@media screen and (min-width: 990px) {
+  .ha-cloth__figures > .ha-cloth__figure:nth-child(n+5):nth-child(odd) { grid-column: 1; }
+  .ha-cloth__figures > .ha-cloth__figure:nth-child(n+5):nth-child(even) { grid-column: 2; align-self: start; padding-top: 18%; }
+}
+
+
+/* ==========================================================================
+   COLLECTION INDEX HEAD IN INK, 4 OCTOBER — Ivan: the wine (1 October,
+   COLLECTION HEADS IN WINE above) does not sit with the Index page's head,
+   so the Index alone goes back to the site's ink (soot black): reference
+   line, title, intro and the category lists. The range and sub-collection
+   heads keep the wine.
+   ========================================================================== */
+html body .ha-idx__head.ha-paper-head {
+  color: var(--ha-soot-black);
+  --ha-text: var(--ha-soot-black);
+  --ha-text-quiet: var(--ha-soot-66);
+  --ha-ink-title: var(--ha-soot-black);
+  --ha-rule: color-mix(in srgb, var(--ha-soot-black) 14%, transparent);
+}
+html body .ha-idx__head.ha-paper-head :is(a, h1, h2, h3, p, span, li, .ha-idx__crumbs, .ha-idx__title, .ha-idx__intro, .ha-idx__count, .ha-record, .ha-label, .ha-narrate) {
+  color: var(--ha-soot-black);
+}
+
+
+/* ==========================================================================
+   NO NOTO SANS MONO, 4 OCTOBER — Ivan: no Noto anywhere on the site (the
+   faces themselves are repointed to typrighter in snippets/ha-fonts). The
+   homepage Masters band's "Explore the handwork" label in typrighter Bold so
+   it reads clearly on the dark photograph. The product page's "Scroll to
+   explore" arrow was a ↓ character, which none of the brand fonts carry
+   (the browser drew it in a system font): it is a drawn chevron now.
+   ========================================================================== */
+html body .ha-home-masters__list-label {
+  font-family: var(--ha-font-text) !important;
+  font-weight: 700 !important;
+  opacity: 1;
+}
+.ha-pdp__scroll-arrow {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-0.15em) rotate(45deg);
+}
+
+
+/* ==========================================================================
+   EVERY SIDE PANEL ON THE BLUE PAPER, 4 OCTOBER — Ivan: "the bag side page
+   in the light paper blue background. Any side page pop-up should have
+   this." The Circle panel's paper (1 October, above), now behind every
+   panel that slides in: the Bag, the phone menu, Region, Language, the
+   Circle, Luxe's location selector and the search filters. The paper is
+   --ha-panel-paper (snippets/ha-utilities); the grain lies over it and the
+   parts that painted the page ground (the Bag's footer, the menu's close
+   button) go clear so the paper runs through.
+   ========================================================================== */
+html body :is(
+  .ha-drawer__inner,
+  #mobNavDrawer,
+  #locSelectorPanel,
+  .mobile-facets__inner
+) {
+  background-color: #C9CBC8 !important;
+  background-image: var(--ha-grain-page), var(--ha-panel-paper) !important;
+  background-size: 320px 320px, cover !important;
+  background-repeat: repeat, no-repeat !important;
+  background-position: 0 0, center top !important;
+}
+html body :is(
+  .ha-bag__footer,
+  .drawer__footer,
+  .header-nav-drawer-close-button,
+  #mobNavDrawer .header-nav-drawer-header,
+  .mobile-facets__header,
+  .mobile-facets__footer
+) {
+  background: transparent !important;
+}
+
+
+/* ==========================================================================
+   THE CLOTH IN PROPORTION, 4 OCTOBER — Ivan: the material statement under
+   HANDSPUN COTTON KHADI was set at the h2 row (24px) and the "Look closer"
+   line at h3 (19px), against 14px for every other description on the
+   product page. Both now read at the body size, like the explanation
+   beneath and the opening's own copy; the statement keeps full strength so
+   it still leads.
+   ========================================================================== */
+html body .ha-cloth .ha-cloth__statement,
+html body .ha-cloth .ha-cloth__closer-line {
+  font-size: var(--ha-t-body) !important;
+  line-height: var(--ha-t-body-lh) !important;
+  max-width: 34ch;
+}
+html body .ha-cloth .ha-cloth__statement { margin-top: 2rem; opacity: 1; }
+@media screen and (max-width: 989px) {
+  html body .ha-cloth .ha-cloth__statement { max-width: none; }
 }

@@ -1,0 +1,17 @@
+{%- comment -%}
+  Rendered in <head>. A sub-collection address (/collections/shirts …) sends
+  the visitor to its section of the range page (/collections/apparel#shirts)
+  — snippets/ha-range-url holds the map. Never in the theme editor, so the
+  collection template can still be opened there.
+{%- endcomment -%}
+{%- if template.name == 'collection' and request.design_mode == false and collection.handle != blank -%}
+  {%- capture ha_range_to -%}{%- render 'ha-range-url', handle: collection.handle -%}{%- endcapture -%}
+  {%- assign ha_range_to = ha_range_to | strip -%}
+  {%- if ha_range_to != blank -%}
+    {%- assign ha_range_page = ha_range_to | split: '#' | first -%}
+    <link rel="canonical" href="{{ shop.url }}{{ ha_range_page }}">
+    <meta name="robots" content="noindex, follow">
+    <meta http-equiv="refresh" content="0; url={{ ha_range_to }}">
+    <script>window.location.replace({{ ha_range_to | json }});</script>
+  {%- endif -%}
+{%- endif -%}

@@ -153,14 +153,14 @@
   }
   @font-face {
     font-family: "Noto Sans Mono";
-    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    src: url({{ 'ha-typewriter-regular.woff2' | asset_url }}) format("woff2");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: "Noto Sans Mono";
-    src: url({{ 'ha-noto-mono-semibold.woff2' | asset_url }}) format("woff2");
+    src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -182,7 +182,7 @@
   }
   @font-face {
     font-family: "Noto Sans Mono";
-    src: url({{ 'ha-noto-mono-regular.woff2' | asset_url }}) format("woff2");
+    src: url({{ 'ha-typewriter-regular.woff2' | asset_url }}) format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -226,21 +226,28 @@
   {%- endcomment -%}
   @font-face {
     font-family: "HA Mono";
-    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
-    font-weight: 100 900;
+    src: url({{ 'ha-typewriter-regular.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 599;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: "HA Mono";
-    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
+    font-weight: 600 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "HA Mono";
+    src: url({{ 'ha-typewriter-regular.woff2' | asset_url }}) format("woff2");
     font-weight: 100 900;
     font-style: italic;
     font-display: swap;
   }
   @font-face {
     font-family: "HA Figures";
-    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
     unicode-range: U+0030-0039;
     size-adjust: 93%;
     font-weight: 100 900;
@@ -249,7 +256,7 @@
   }
   @font-face {
     font-family: "HA Figures";
-    src: url({{ 'ha-noto-mono-medium.woff2' | asset_url }}) format("woff2");
+    src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
     unicode-range: U+0030-0039;
     size-adjust: 93%;
     font-weight: 100 900;
@@ -309,7 +316,14 @@
     Italic — typrighter has no italic, and her italic is always Junicode —
     so an <em>, or any italic line in the body voice, becomes role 5 without
     markup. typrighter has no en or em dash, ellipsis or à/è/ñ; those
-    characters fall through to Noto Sans Mono, next in the stack.
+    characters fall through to Junicode, next in the stack.
+
+    NO NOTO, 4 OCTOBER 2026 (Ivan): "make sure no Noto Sans Mono is placed
+    in the website". Every face still NAMED Noto Sans Mono, HA Mono or HA
+    Figures above now loads the typrighter files (Regular below 600, Bold
+    from 600; figures Bold), so no rule — Luxe's, a section's or a template
+    setting's — can draw Noto, and the stacks fall back to Junicode. The
+    ha-noto-mono-*.woff2 assets are no longer requested.
   {%- endcomment -%}
   @font-face {
     font-family: "HA Troja";
@@ -351,12 +365,12 @@
        voice names keep working: narrate and record are Typewriter now, and
        identify is Porter with Typewriter figures and Typewriter behind it. */
     --ha-font-title:    "HA Troja", "Junicode", Georgia, "Times New Roman", serif;
-    --ha-font-text:     "HA Text", "Noto Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --ha-font-text:     "HA Text", "Junicode", ui-monospace, "SF Mono", Menlo, monospace;
     --ha-font-note:     "HA Note", "Junicode", Georgia, "Times New Roman", serif;
-    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", "HA Figures Porter", {% endif %}"HA Text", "Noto Sans Mono", ui-monospace, monospace;
+    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", "HA Figures Porter", {% endif %}"HA Text", "Junicode", ui-monospace, monospace;
     --ha-font-narrate:  var(--ha-font-text);
     --ha-font-record:   var(--ha-font-text);
-    --ha-font-mono:     "HA Mono", "Noto Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --ha-font-mono:     "HA Mono", "Junicode", ui-monospace, "SF Mono", Menlo, monospace;
 
     /* ==================================================================
        THE FIVE ROLES  —  Aloha, 24 September 2026 (final typography system)

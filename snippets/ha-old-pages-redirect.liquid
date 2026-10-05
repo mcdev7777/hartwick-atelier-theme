@@ -1,0 +1,18 @@
+{%- comment -%}
+  Rendered in <head>. An old-site page (snippets/ha-old-page lists them)
+  sends the visitor on to its new-design page and asks search engines not
+  to index it. Never in the theme editor, so the page can still be opened
+  there. For a permanent fix, unpublish the page in Shopify admin and add a
+  URL redirect (Online Store > Navigation > URL redirects) — Shopify only
+  applies those to addresses that no longer exist.
+{%- endcomment -%}
+{%- if template.name == 'page' and request.design_mode == false -%}
+  {%- capture ha_old_to -%}{%- render 'ha-old-page', handle: page.handle -%}{%- endcapture -%}
+  {%- assign ha_old_to = ha_old_to | strip -%}
+  {%- if ha_old_to != blank -%}
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="{{ shop.url }}{{ ha_old_to }}">
+    <meta http-equiv="refresh" content="0; url={{ ha_old_to }}">
+    <script>window.location.replace({{ ha_old_to | json }});</script>
+  {%- endif -%}
+{%- endif -%}

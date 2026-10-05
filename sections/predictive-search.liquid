@@ -157,6 +157,8 @@
   </div>
   <ul role="listbox" class="predictive-search-list" aria-labelledby="predictive-search-pages">
     {%- for page in predictive_search.resources.pages -%}
+      {%- capture ha_old_to -%}{%- render 'ha-old-page', handle: page.handle -%}{%- endcapture -%}
+      {%- assign ha_old_to = ha_old_to | strip -%}{%- if ha_old_to != blank -%}{%- continue -%}{%- endif -%}
       <li role="option" class="predictive-search-page-list">
         <a href="{{ page.url }}">
           <span>{{ page.title }}</span>

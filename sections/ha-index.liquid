@@ -106,7 +106,7 @@
             {%- for b2 in section.blocks -%}{%- if b2.type == 'group' -%}{%- assign g = b2 -%}{%- endif -%}{%- if b2.id == block.id -%}{%- break -%}{%- endif -%}{%- endfor -%}
             {%- if g.settings.dir_mode == 'entries' -%}
               {%- assign target = '#idx-' | append: block.settings.key -%}
-              {%- if g.settings.dir_direct -%}{%- assign target = block.settings.url -%}{%- endif -%}
+              {%- if g.settings.dir_direct -%}{%- capture target -%}{%- render 'ha-range-url', url: block.settings.url -%}{%- endcapture -%}{%- endif -%}
               <li><a class="ha-idx__dir-link ha-record" href="{{ target }}">{{ block.settings.name }}{% if block.settings.secondary != blank and g.settings.dir_show_secondary %} / {{ block.settings.secondary }}{% endif %}</a></li>
             {%- endif -%}
           {%- endif -%}
@@ -145,7 +145,7 @@
                   {%- if e.type == 'entry' and owner.id == block.id and hidden_ids contains ekey -%}{%- continue -%}{%- endif -%}
                   {%- if e.type == 'entry' and owner.id == block.id -%}
                     <li class="ha-idx__index-item">
-                      <a class="ha-idx__index-link" href="{{ e.settings.url | default: '#' }}" data-idx="{{ e.settings.key }}">
+                      {%- capture e_url -%}{%- render 'ha-range-url', url: e.settings.url -%}{%- endcapture -%}<a class="ha-idx__index-link" href="{{ e_url | strip | default: '#' }}" data-idx="{{ e.settings.key }}">
                         <span class="ha-idx__index-num ha-record">({{ e.settings.number }})</span>
                         <span class="ha-idx__index-name ha-record">{{ e.settings.name }}</span>
                         {%- if e.settings.secondary != blank -%}<span class="ha-idx__index-sec ha-record">{{ e.settings.secondary }}</span>{%- endif -%}
@@ -172,7 +172,7 @@
       {%- assign alt = block.settings.alt | default: block.settings.name -%}
       {%- assign card_focus = '--ha-idx-focus: ' | append: block.settings.focus_x | append: '% ' | append: block.settings.focus_y | append: '%' -%}
               <li class="ha-idx__card ha-idx__card--{{ block.settings.shape }}" id="idx-{{ block.settings.key }}" {{ block.shopify_attributes }}>
-                <a class="ha-idx__card-link" href="{{ block.settings.url | default: '#' }}" data-idx="{{ block.settings.key }}" aria-label="{{ block.settings.name | escape }}{% if block.settings.secondary != blank %}, {{ block.settings.secondary | escape }}{% endif %}">
+                {%- capture c_url -%}{%- render 'ha-range-url', url: block.settings.url -%}{%- endcapture -%}<a class="ha-idx__card-link" href="{{ c_url | strip | default: '#' }}" data-idx="{{ block.settings.key }}" aria-label="{{ block.settings.name | escape }}{% if block.settings.secondary != blank %}, {{ block.settings.secondary | escape }}{% endif %}">
                   <figure class="ha-idx__figure{% unless img %} ha-figure--empty{% endunless %}">
                     {%- if img -%}
                       {{ img | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 34vw, (min-width: 750px) 50vw, 100vw', widths: '400, 600, 800, 1000, 1400', alt: alt, class: 'ha-idx__img', style: card_focus }}
