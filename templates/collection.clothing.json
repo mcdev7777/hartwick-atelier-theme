@@ -1,12 +1,10 @@
 /*
- * Hartwick Atelier — ALL CLOTHING (the Apparel collection).
- * Aloha's "All Apparel & LOT" build brief and artboard, 17 September 2026.
- * Assigned to the `apparel` collection as its template. One card per Style,
- * grouped by the category blocks; the Made by Masters feature sits between
- * Skirts and Shirts as drawn; the Jasmine Dress (Dress 002) and Blossom
- * Shorts (Shorts 006) in Loungewear as the brief proposes.
  * ------------------------------------------------------------
- * NOTE: this file is also written by the Shopify theme editor.
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
 {
@@ -20,20 +18,24 @@
             "heading": "Skirts",
             "anchor": "skirts",
             "blurb": "Pleats, borders and the movement of cloth.",
-            "categories": "Skirt"
+            "this_collection": false,
+            "collection": "",
+            "categories": "Skirt",
+            "include": "",
+            "exclude": ""
           }
         },
         "masters": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/003_HARTWICK_ATELIER_HANDWOVEN_NATURAL_KHADI_TOKYO_4R1A6861.jpg",
+            "image_alt": "Handspun, handwoven cotton khadi, close",
+            "image_label": "Cloth detail / to supply",
             "eyebrow": "Made by Masters / The cloth",
             "heading": "From yarn to cloth",
             "body": "<p>Much of this collection begins with cotton khadi: yarn spun by hand, then woven on a handloom. Across plain cloth, stripes and checks, spinning and weaving give each fabric its particular texture.</p>",
             "link_text": "Explore handspinning & handweaving",
-            "link_url": "/pages/the-masters#khadi",
-            "image_label": "Cloth detail / to supply",
-            "image": "shopify://shop_images/HartwickAtelier-TokyoKhadi-01.jpg",
-            "image_alt": "Handspun, handwoven cotton khadi, close"
+            "link_url": "/pages/the-masters#khadi"
           }
         },
         "shirts": {
@@ -42,7 +44,11 @@
             "heading": "Shirts",
             "anchor": "shirts",
             "blurb": "Shapes to wear on their own or in layers.",
-            "categories": "Shirt"
+            "this_collection": false,
+            "collection": "",
+            "categories": "Shirt",
+            "include": "",
+            "exclude": ""
           }
         },
         "trousers": {
@@ -51,7 +57,11 @@
             "heading": "Trousers",
             "anchor": "trousers",
             "blurb": "Straight, wide and relaxed silhouettes.",
-            "categories": "Trouser"
+            "this_collection": false,
+            "collection": "",
+            "categories": "Trouser",
+            "include": "",
+            "exclude": ""
           }
         },
         "dresses": {
@@ -60,7 +70,10 @@
             "heading": "Dresses & Coats",
             "anchor": "dresses-and-coats",
             "blurb": "Pieces to wear whole or layer over separates.",
+            "this_collection": false,
+            "collection": "",
             "categories": "Dress, Coat",
+            "include": "",
             "exclude": "Jasmine Dress"
           }
         },
@@ -70,8 +83,11 @@
             "heading": "Loungewear",
             "anchor": "loungewear",
             "blurb": "Easy shapes for slower hours.",
-            "categories": "Robe, Kaftan, PJ, Shorts",
-            "include": "Jasmine Dress"
+            "this_collection": false,
+            "collection": "",
+            "categories": "Robe, Kaftan, PJ, Shorts, Scarf",
+            "include": "Jasmine Dress",
+            "exclude": ""
           }
         }
       },
@@ -84,6 +100,7 @@
         "lounge"
       ],
       "settings": {
+        "head_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg",
         "crumb_collection": "Collection",
         "crumb_leaf": "Apparel",
         "title": "All Apparel",
@@ -97,10 +114,13 @@
         "lots_more": "<p>We release apparel in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details, available sizes and whether it is ready to send or available to pre-order.</p>",
         "lots_note": "Dates, quantities and access windows appear only when confirmed.",
         "lot_label": "Lot",
+        "show_lot": false,
         "lot_placeholder": "Lot [number]",
         "count_text": "fabric expressions",
         "view_text": "View piece",
         "top_text": "Back to top",
+        "image_slot_text": "Photograph to supply",
+        "none_text": "No pieces in this category yet.",
         "touch": "colour",
         "onward_label": "Continue through the collection",
         "onward_1_text": "Fine Silk",
@@ -109,22 +129,35 @@
         "onward_2_url": "/collections/fine-jewellery",
         "onward_3_text": "Yoga",
         "onward_3_url": "/collections/yoga",
-        "show_placeholder_note": true,
-        "head_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg"
+        "show_placeholder_note": true
       }
     },
     "register": {
       "type": "ha-register",
+      "disabled": true,
       "settings": {
+        "site_wide": false,
+        "email_placeholder": "you@example.com",
         "eyebrow": "The Register",
         "heading": "Notes from the Atelier.",
         "body": "<p>Materials, makers and work in progress.</p>",
         "body_position": "form",
+        "heading_style": "sentence",
+        "field": "dark",
+        "grain": true,
+        "form_style": "box",
+        "link_text": "Join The Register",
+        "link_url": "",
         "show_native_form": true,
         "contact_tag": "the-register",
-        "register_source": "collection_page"
-      },
-      "disabled": true
+        "register_source": "collection_page",
+        "consent_text": "<p>Yes, add me to The Register. Hartwick Atelier may write to me with The Dispatch and news of each Release. I can leave at any time.</p>",
+        "msg_invalid": "Please enter a valid email address.",
+        "msg_consent": "Please tick the box to join.",
+        "msg_submitting": "One moment…",
+        "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
+        "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com."
+      }
     }
   },
   "order": [

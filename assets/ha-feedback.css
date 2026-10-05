@@ -1,0 +1,52 @@
+/*
+ * Hartwick Atelier — Friends & Family feedback page (sections/ha-feedback.liquid).
+ * Loaded by that section only. Fields, labels, messages and the button are
+ * The Register's form (.ha-reg-form__* in ha-sections.css); this file adds the
+ * single-column page, the 1–5 scale and the multi-line answer.
+ */
+.ha-feedback__inner { max-width: 64rem; margin: 0 auto; }
+.ha-feedback__intro { margin-top: 2.4rem; max-width: 52rem; }
+.ha-feedback__form { margin-top: 4rem; }
+
+@media screen and (min-width: 750px) {
+  .ha-feedback__who { display: grid; grid-template-columns: 1fr 1fr; column-gap: 3.2rem; }
+}
+
+/* A question is a fieldset drawn like a field: label on top, rule beneath. */
+.ha-feedback__q { padding-bottom: 1.6rem; }
+.ha-feedback__q legend { float: left; width: 100%; padding: 0 0 1.2rem; }
+.ha-feedback__q legend + * { clear: left; }
+
+/* 1–5: five square boxes, the number in the record voice. */
+.ha-feedback__scale { display: flex; gap: 0.8rem; }
+.ha-feedback__point { position: relative; flex: 0 0 auto; cursor: pointer; }
+.ha-feedback__point input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.ha-feedback__point span {
+  display: flex; align-items: center; justify-content: center;
+  width: 4.4rem; height: 4.4rem;
+  border: 1px solid var(--ha-rule);
+  font-size: var(--ha-t-ui);
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+.ha-feedback__point:hover span { border-color: currentColor; }
+.ha-feedback__point input:checked + span { background: var(--ha-text); border-color: var(--ha-text); color: var(--ha-page-ground); }
+.ha-feedback__point input:focus-visible + span { outline: 2px solid var(--ha-text); outline-offset: 2px; }
+.ha-feedback__ends {
+  display: flex; justify-content: space-between; gap: 1.6rem;
+  max-width: calc(5 * 4.4rem + 4 * 0.8rem);
+  margin: 0.8rem 0 0;
+  font-size: var(--ha-t-meta); letter-spacing: 0.02em; color: var(--ha-text-quiet);
+}
+
+.ha-feedback__options { display: grid; gap: 0; }
+.ha-feedback__options .ha-reg-form__check { margin: 0; }
+
+/* A required question left empty, after Send. */
+.ha-feedback__q[data-ha-missed] { border-bottom-color: var(--ha-cutch-resin); }
+.ha-feedback__q[data-ha-missed] legend, .ha-feedback__q[data-ha-missed] label.ha-reg-form__label { color: var(--ha-cutch-resin); }
+
+.ha-feedback__textarea { min-height: 9.6rem; resize: vertical; line-height: 1.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-feedback__point span { transition: none; }
+}

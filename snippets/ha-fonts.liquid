@@ -78,6 +78,22 @@
     font-style: normal;
     font-display: swap;
   }
+  {%- comment -%}
+    2 October 2026 (Ivan): "I can't recognize @ easily. pls make it bigger
+    like the other letters." Porter is cut to A–Z, so the @ in an email
+    address fell through to the Typewriter, whose @ is a lowercase-height
+    sign. This adds Porter Medium's own @ (cap height, like the letters) as
+    its own face, limited to that one character: the A–Z rule for the main
+    Porter files is unchanged, and only an @ ever draws from it.
+  {%- endcomment -%}
+  @font-face {
+    font-family: "HA Porter At";
+    src: url({{ 'ha-porter-at.woff2' | asset_url }}) format("woff2");
+    unicode-range: U+0040;
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
   {%- endif -%}
 
   @font-face {
@@ -151,20 +167,6 @@
     font-style: italic;
     font-display: swap;
   }
-  @font-face {
-    font-family: "Noto Sans Mono";
-    src: url({{ 'ha-typewriter-regular.woff2' | asset_url }}) format("woff2");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Noto Sans Mono";
-    src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-  }
   {%- comment -%}
     THE REGISTER BOX (Aloha, 24 September 2026), the one place she sets its
     own faces: Porter Medium for THE REGISTER, "JUNICODE in Exp Medium Italic"
@@ -178,13 +180,6 @@
     src: url({{ 'ha-junicode-exp-medium-italic.woff2' | asset_url }}) format("woff2");
     font-weight: 500;
     font-style: italic;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Noto Sans Mono";
-    src: url({{ 'ha-typewriter-regular.woff2' | asset_url }}) format("woff2");
-    font-weight: 400;
-    font-style: normal;
     font-display: swap;
   }
 
@@ -306,10 +301,10 @@
     sent them for this purpose. A web licence is needed before launch.
     Same position as Porter (risk R1).
 
-    typrighter supplies ONE weight, Bold. "Typewriter" (paragraphs) and
-    "Typewriter Bold" (numbers) are therefore the same file, distinguished
-    as she drew them: paragraphs at 82% opacity, numbers at full strength.
-    Each face is declared over the whole weight range so that no rule, Luxe's
+    typrighter first came in ONE weight, Bold, so text and numbers shared
+    it. Since the Regular arrived (later on 2 October) text is Regular and
+    numbers Bold; see HA Text below. Paragraphs stay at 82% opacity. The
+    faces between them cover the whole weight range so that no rule, Luxe's
     included, can make the browser synthesise a heavier or lighter version.
 
     HA Text is the information voice. Its italic slot is Junicode SemiBold
@@ -324,6 +319,11 @@
     from 600; figures Bold), so no rule — Luxe's, a section's or a template
     setting's — can draw Noto, and the stacks fall back to Junicode. The
     ha-noto-mono-*.woff2 assets are no longer requested.
+
+    Later on 4 October (Ivan, "remove all noto-sans-mono in the whole
+    website"): the faces NAMED Noto Sans Mono are gone too, the BAG takes the
+    Typewriter Bold by --ha-font-record at 600, and the six ha-noto-mono-*
+    files are deleted from the theme. Nothing on the site can name Noto.
   {%- endcomment -%}
   @font-face {
     font-family: "HA Troja";
@@ -332,10 +332,24 @@
     font-style: normal;
     font-display: swap;
   }
+  {%- comment -%}
+    2 October, later: Aloha sent the thinner cut, typrighter V1 Regular
+    ("I have placed a thinner version for typrighter font … when we have
+    info"). That is her rule 3, TYPEWRITER, for information; the Bold stays
+    for rule 4, standalone numbers. One family, two faces by weight:
+    100–599 Regular (every text role asks 400), 600–900 Bold (__num asks 700).
+  {%- endcomment -%}
+  @font-face {
+    font-family: "HA Text";
+    src: url({{ 'ha-typewriter-regular.woff2' | asset_url }}) format("woff2");
+    font-weight: 100 599;
+    font-style: normal;
+    font-display: swap;
+  }
   @font-face {
     font-family: "HA Text";
     src: url({{ 'ha-typewriter.woff2' | asset_url }}) format("woff2");
-    font-weight: 100 900;
+    font-weight: 600 900;
     font-style: normal;
     font-display: swap;
   }
@@ -367,7 +381,7 @@
     --ha-font-title:    "HA Troja", "Junicode", Georgia, "Times New Roman", serif;
     --ha-font-text:     "HA Text", "Junicode", ui-monospace, "SF Mono", Menlo, monospace;
     --ha-font-note:     "HA Note", "Junicode", Georgia, "Times New Roman", serif;
-    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", "HA Figures Porter", {% endif %}"HA Text", "Junicode", ui-monospace, monospace;
+    --ha-font-identify: {% if settings.ha_porter_licensed %}"Porter", "HA Porter At", "HA Figures Porter", {% endif %}"HA Text", "Junicode", ui-monospace, monospace;
     --ha-font-narrate:  var(--ha-font-text);
     --ha-font-record:   var(--ha-font-text);
     --ha-font-mono:     "HA Mono", "Junicode", ui-monospace, "SF Mono", Menlo, monospace;
@@ -382,11 +396,11 @@
        Porter is only the permanent navigation and the section labels now.
        Titles move to Junicode Light ("the distinction here is scale and
        context, rather than changing typeface"), and the old identify voice
-       on buttons and links moves to Noto Sans Mono Medium.
+       on buttons and links moves to the mono (now Typewriter) Medium.
 
        This reverses the 22 September table's voice rows (body copy and
-       navigation in Noto Sans Mono Condensed) — the switches in Theme
-       settings > Typography voices now default to this system. The Noto
+       navigation in the condensed mono (retired)) — the switches in Theme
+       settings > Typography voices now default to this system. The the mono
        Condensed options are kept only as a way back.
        ================================================================== */
     /* 2 October 2026: the role names stay, their faces follow her new rules. */
@@ -399,10 +413,11 @@
     --ha-role-action:        var(--ha-font-identify);   /* 2 Porter Medium: buttons and text links */
     --ha-role-action-weight: 500;
     --ha-role-record:        var(--ha-font-text);       /* 3 Typewriter: data, prices, references */
-    --ha-role-record-weight: 700;
+    --ha-role-record-weight: 400;
     --ha-role-text:          var(--ha-font-text);       /* 3 Typewriter: body and information */
-    --ha-role-text-weight:   700;
+    --ha-role-text-weight:   400;
     --ha-role-number:        var(--ha-font-text);       /* 4 Typewriter Bold: standalone numbers */
+    --ha-role-number-weight: 700;
     --ha-role-pull:          var(--ha-font-note);       /* 5 Junicode SemiBold Italic */
     --ha-role-pull-weight:   600;
     /* her paragraphs are the Typewriter at 82% opacity */
@@ -434,7 +449,7 @@
        --font-body-family is the family every unmarked word on the site
        inherits — Luxe's cart, account pages, forms, facets, cards and the
        cookie banner included. Pointing it at the body voice is what makes
-       "Noto Sans Mono Condensed = body copy […] functional information" true
+       "the condensed mono (retired) = body copy […] functional information" true
        across the whole theme rather than only in the Hartwick sections. */
     /* Titles are Junicode Light (roles 04/05), so Luxe's headings are too. */
     --font-heading-family: var(--ha-role-title);
@@ -455,11 +470,11 @@
        part of this rule.
 
        The body weight now follows the body voice: 300 while Junicode carries
-       body copy, 400 once Noto does. */
+       body copy, 400 once the mono does. */
     --font-body-weight: var(--ha-voice-body-weight);
     --font-body-weight-bold: var(--ha-voice-body-weight);
     --font-body-style: normal;
-    /* Price is a record row in Aloha's table (12px, Noto), so it takes the
+    /* Price is a record row in Aloha's table (12px, the mono), so it takes the
        record weight. It followed Junicode's 300 while prices were set in
        Junicode. */
     --price-font-weight: var(--ha-role-record-weight);
@@ -468,7 +483,7 @@
   /* No synthetic bold in any voice. The browser default for <strong> and <b>
      is "bolder", which lifts Junicode Light (300) to 400 — that is what put the
      shipping note's opening sentence a weight above its paragraph — and which
-     makes the browser fake a bold for Noto, whose 700 is not loaded. Emphasis
+     makes the browser fake a bold for the mono, whose 700 is not loaded. Emphasis
      keeps its parent's weight everywhere; italic remains the emphasis available
      in Junicode. Shopify's cookie-consent banner sets its own heading bold,
      hence the id-qualified override. */
@@ -492,7 +507,7 @@
      future case at once rather than one button at a time. */
   /* 24 September 2026: .ha-identify is now role 02, the section label —
      Porter LIGHT. Buttons, links and titles that used to carry it have moved
-     to .ha-record (Noto Sans Mono Medium) and .ha-narrate (Junicode Light);
+     to .ha-record (the mono (now Typewriter) Medium) and .ha-narrate (Junicode Light);
      what still carries it is a label. .ha-label is the role's own name. */
   .ha-identify,
   .ha-label {
@@ -515,7 +530,7 @@
 
   /* RECORD — brand book: uppercase labels, tabular numerals, left aligned.
 
-     `font-weight: 400` is explicit because Noto Sans Mono Condensed ships in
+     `font-weight: 400` is explicit because the condensed mono (retired) ships in
      ONE weight here and Luxe's `--font-body-weight` asks for 500. Asking a
      400-only face for 500 makes the browser synthesise bold, which it does
      unevenly from run to run — that is why the footer policy links looked like
@@ -532,7 +547,7 @@
   /* NAVIGATION — role 01, Porter Medium (Aloha, 24 September 2026: "reserved
      for the permanent website navigation and global utility areas […]
      Default state: Porter Medium. Hover / selected state: Porter Light.").
-     It follows --ha-voice-chrome so the 22 September Noto option remains one
+     It follows --ha-voice-chrome so the 22 September the mono option remains one
      setting away. Luxe's base.css assigns --font-accent-family to
      .header-bar-inner with !important; these selectors are more specific, so
      they win either way. Porter Light is 1.5% narrower than Medium (about a
@@ -594,8 +609,8 @@
   }
 
   /* BAG — the one deliberate exception in the bar (Aloha, 24 September 2026):
-     "The only font that is different from the rest is: NOTO SANS MONO →
-     Semibold", the normal-width Noto (the Condensed cut is retired). Same size
+     "The only font that is different from the rest is: THE MONO (NOW TYPEWRITER) →
+     Semibold", the normal-width mono (the Condensed cut is retired). Same size
      and tracking as the navigation; it does not change weight on hover. The
      id makes it outrank the navigation rule above, which also matches it. */
   #SiteHeader .hdr-st-item-cart,
@@ -603,7 +618,7 @@
   #SiteHeader .hdr-st-item-cart .cart-icon--bubble *,
   #SiteHeader .hdr-st-item-cart .cart-icon--bubble:hover,
   #SiteHeader .hdr-st-item-cart .cart-icon--bubble:hover * {
-    font-family: "Noto Sans Mono", var(--ha-font-record) !important;
+    font-family: var(--ha-font-record) !important;
     font-weight: 600 !important;
     font-size: var(--ha-t-nav);
     letter-spacing: 0.04em;

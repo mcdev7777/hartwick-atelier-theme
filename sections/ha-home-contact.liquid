@@ -1,0 +1,115 @@
+{%- comment -%} Styles live in assets/ha-sections.css ("HOMEPAGE CONTACT"), loaded once in layout/theme.liquid. {%- endcomment -%}
+
+{%- comment -%}
+  Hartwick Atelier — HOMEPAGE / CONTACT. Ivan, 2 October 2026: "I want to
+  add a contact info on the homepage too somewhere."
+
+  A short band before the site-wide Register box. The heading, intro and
+  details on the left; on the right, the ways to write (one block per row,
+  label + linked value) and the showroom invitation with its button.
+
+  Every default is taken from the Contact page (templates/page.contact.json
+  on Hartwik - Dev, 2 October): its "01 / Get in touch" heading, its intro
+  lines, the three contact rows (Appointments / Wholesale / Press, Angela
+  Hartwick, Instagram), and the showroom section's "Mallorca / Serra de
+  Tramuntana", "By appointment, with Angela" and "Request an appointment"
+  mailto. Nothing here is new copy; if the Contact page changes, change
+  these to match.
+{%- endcomment -%}
+
+<section class="ha-home ha-home-contact" aria-labelledby="ha-home-contact-title">
+  <div class="ha-wrap">
+    <div class="ha-home-contact__grid">
+      <div class="ha-home-contact__head">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ha-home__eyebrow ha-identify">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="ha-home-contact-title" class="ha-home-contact__heading ha-narrate">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="ha-home-contact__intro ha-narrate">{{ section.settings.intro | newline_to_br }}</p>
+        {%- endif -%}
+        {%- if section.settings.page_link_text != blank -%}
+          <a class="ha-home-contact__page" href="{{ section.settings.page_link | default: '/pages/contact-us' }}">{{ section.settings.page_link_text }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="ha-home-contact__detail">
+        {%- if section.blocks.size > 0 -%}
+          <dl class="ha-home-contact__rows">
+            {%- for block in section.blocks -%}
+              <div class="ha-home-contact__row" {{ block.shopify_attributes }}>
+                <dt class="ha-home-contact__label ha-label">{{ block.settings.label }}{% if block.settings.line != blank %} <span class="ha-home-contact__line">/ {{ block.settings.line }}</span>{% endif %}</dt>
+                <dd class="ha-home-contact__value">
+                  {%- if block.settings.link != blank -%}
+                    <a href="{{ block.settings.link }}"{% if block.settings.link contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ block.settings.value }}</a>
+                  {%- else -%}
+                    {{ block.settings.value }}
+                  {%- endif -%}
+                </dd>
+              </div>
+            {%- endfor -%}
+          </dl>
+        {%- endif -%}
+
+        {%- if section.settings.visit_label != blank or section.settings.visit_text != blank -%}
+          <div class="ha-home-contact__visit">
+            {%- if section.settings.visit_label != blank -%}
+              <p class="ha-home-contact__label ha-label">{{ section.settings.visit_label }}</p>
+            {%- endif -%}
+            {%- if section.settings.visit_text != blank -%}
+              <p class="ha-home-contact__visit-text ha-narrate">{{ section.settings.visit_text | newline_to_br }}</p>
+            {%- endif -%}
+            {%- if section.settings.button_text != blank -%}
+              <a class="ha-home__ruled ha-record" href="{{ section.settings.button_link | default: 'mailto:contact@hartwickatelier.com?subject=Showroom%20visit' }}">{{ section.settings.button_text }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "HA — Home: Contact",
+  "tag": "section",
+  "class": "ha-section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Contact" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get in touch" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "A question about a piece.\nA visit to the Atelier.\nWrite to us." },
+    { "type": "text", "id": "page_link_text", "label": "Contact page link text", "default": "Contact page" },
+    { "type": "url", "id": "page_link", "label": "Contact page link", "info": "Empty: /pages/contact-us." },
+    { "type": "header", "content": "Showroom" },
+    { "type": "text", "id": "visit_label", "label": "Label", "default": "Mallorca / Serra de Tramuntana" },
+    { "type": "textarea", "id": "visit_text", "label": "Text", "default": "By appointment, with Angela.\nEmail us with your preferred dates." },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Request an appointment" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Empty: an email to contact@hartwickatelier.com, subject Showroom visit (as the Contact page)." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Contact row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "line", "label": "Second label (optional)" },
+        { "type": "text", "id": "value", "label": "Value" },
+        { "type": "url", "id": "link", "label": "Link (mailto:, https://)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HA — Home: Contact",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Appointments / Wholesale / Press", "value": "contact@hartwickatelier.com", "link": "mailto:contact@hartwickatelier.com" } },
+        { "type": "row", "settings": { "label": "Angela Hartwick", "line": "Founder", "value": "angela@hartwickatelier.com", "link": "mailto:angela@hartwickatelier.com" } },
+        { "type": "row", "settings": { "label": "Instagram", "value": "@worldofhartwickatelier", "link": "https://www.instagram.com/worldofhartwickatelier" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -340,7 +340,7 @@
           },
           {
             "value": "record",
-            "label": "Noto Sans Mono (22 Sep table)"
+            "label": "Typewriter (record voice)"
           }
         ],
         "default": "narrate",
@@ -357,7 +357,7 @@
           },
           {
             "value": "record",
-            "label": "Noto Sans Mono (22 Sep table)"
+            "label": "Typewriter (record voice)"
           }
         ],
         "default": "identify",
@@ -383,7 +383,7 @@
         "max": 96,
         "step": 1,
         "unit": "px",
-        "default": 77,
+        "default": 37,
         "info": "Aloha's table gives a range of 30–34px here; 32 is its centre. This is the largest type anywhere on the site — nothing above it, by design."
       },
       {
@@ -394,7 +394,7 @@
         "max": 56,
         "step": 1,
         "unit": "px",
-        "default": 51
+        "default": 31
       },
       {
         "type": "range",
@@ -404,7 +404,7 @@
         "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 36
+        "default": 24
       },
       {
         "type": "range",
@@ -414,7 +414,7 @@
         "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 24
+        "default": 19
       },
       {
         "type": "range",
@@ -424,7 +424,7 @@
         "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 18,
+        "default": 16,
         "info": "The larger Junicode paragraph that opens a section. Ordinary body copy is the row below."
       },
       {
@@ -435,7 +435,7 @@
         "max": 28,
         "step": 1,
         "unit": "px",
-        "default": 17
+        "default": 14
       },
       {
         "type": "range",
@@ -445,7 +445,7 @@
         "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 17
+        "default": 14
       },
       {
         "type": "range",
@@ -455,7 +455,7 @@
         "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 13
       },
       {
         "type": "range",
@@ -465,7 +465,7 @@
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 13
       },
       {
         "type": "range",
@@ -475,7 +475,7 @@
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 12
       },
       {
         "type": "range",
@@ -485,7 +485,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 12
       },
       {
         "type": "range",
@@ -495,7 +495,7 @@
         "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 21
+        "default": 33
       },
       {
         "type": "range",
@@ -505,7 +505,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 11
       },
       {
         "type": "range",
@@ -515,7 +515,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 11
       },
       {
         "type": "range",
@@ -525,7 +525,7 @@
         "max": 14,
         "step": 1,
         "unit": "px",
-        "default": 11,
+        "default": 10,
         "info": "The one 9px surface Aloha specified. It carries the copyright line and nothing else."
       },
       {
@@ -536,7 +536,7 @@
         "max": 36,
         "step": 1,
         "unit": "px",
-        "default": 24,
+        "default": 17,
         "info": "Porter. Sits one step above the editorial subheading, not on the section-title line."
       },
       {
@@ -555,7 +555,7 @@
         "max": 48,
         "step": 1,
         "unit": "px",
-        "default": 40,
+        "default": 30,
         "info": "Her range is 26–30px; 28 is its centre."
       },
       {
@@ -566,7 +566,7 @@
         "max": 44,
         "step": 1,
         "unit": "px",
-        "default": 32
+        "default": 25
       },
       {
         "type": "range",
@@ -576,7 +576,7 @@
         "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 26
+        "default": 20
       },
       {
         "type": "range",
@@ -586,7 +586,7 @@
         "max": 32,
         "step": 1,
         "unit": "px",
-        "default": 19
+        "default": 16
       },
       {
         "type": "range",
@@ -596,7 +596,7 @@
         "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 16
+        "default": 14
       },
       {
         "type": "range",
@@ -606,7 +606,7 @@
         "max": 24,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 12
       },
       {
         "type": "range",
@@ -616,7 +616,7 @@
         "max": 22,
         "step": 1,
         "unit": "px",
-        "default": 15
+        "default": 13
       },
       {
         "type": "range",
@@ -626,7 +626,7 @@
         "max": 20,
         "step": 1,
         "unit": "px",
-        "default": 13
+        "default": 12
       },
       {
         "type": "range",
@@ -636,7 +636,7 @@
         "max": 18,
         "step": 1,
         "unit": "px",
-        "default": 14
+        "default": 12
       },
       {
         "type": "range",
@@ -646,7 +646,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 12
+        "default": 11
       },
       {
         "type": "range",
@@ -666,7 +666,7 @@
         "max": 36,
         "step": 1,
         "unit": "px",
-        "default": 18
+        "default": 30
       },
       {
         "type": "range",
@@ -676,7 +676,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 10
       },
       {
         "type": "range",
@@ -686,7 +686,7 @@
         "max": 16,
         "step": 1,
         "unit": "px",
-        "default": 11
+        "default": 10
       },
       {
         "type": "range",
@@ -696,7 +696,7 @@
         "max": 14,
         "step": 1,
         "unit": "px",
-        "default": 10
+        "default": 9
       },
       {
         "type": "range",
@@ -706,7 +706,7 @@
         "max": 30,
         "step": 1,
         "unit": "px",
-        "default": 19
+        "default": 15
       },
       {
         "type": "header",
@@ -718,9 +718,9 @@
         "label": "Body line height",
         "min": 110,
         "max": 180,
-        "step": 1,
+        "step": 5,
         "unit": "%",
-        "default": 118,
+        "default": 160,
         "info": "Aloha gave body copy a range of 1.55–1.65. The other line heights in her table are fixed per category and are set in snippets/ha-tokens.liquid."
       },
       {

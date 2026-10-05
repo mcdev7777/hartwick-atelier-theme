@@ -40,6 +40,12 @@
  * the form collects travels as event properties, so nothing on the profile
  * (register_source included) is overwritten. A consent box, if the section
  * draws one, still has to be ticked, but it records no marketing consent.
+ *
+ * QUESTIONNAIRES (1 October 2026, Friends & Family feedback). Radios and
+ * checkboxes count only when ticked (ticked boxes sharing a key become a
+ * list). A `[data-ha-question]` wrapper adds that question and its answer to
+ * `answers` / `answers_text`; a `[data-ha-required]` one must be answered
+ * before sending (`data-msg-required`). Forms without these are unchanged.
  */
 (function () {
   'use strict';
@@ -77,6 +83,21 @@
     } catch (e) { /* tracking is never allowed to break the form */ }
   }
 
+  function isChoice(el) {
+    return el.type === 'radio' || el.type === 'checkbox';
+  }
+
+  // The answer inside one [data-ha-question]: ticked values joined, or the text.
+  function answerOf(q) {
+    var vals = [];
+    q.querySelectorAll('[data-klaviyo-prop]').forEach(function (el) {
+      if (isChoice(el) && !el.checked) return;
+      var v = (el.value || '').trim();
+      if (v) vals.push(v);
+    });
+    return vals.join(', ');
+  }
+
   function collect(form) {
     var email = (form.querySelector('input[name="contact[email]"]') || {}).value || '';
     var first = (form.querySelector('input[name="contact[first_name]"]') || {}).value || '';
@@ -88,9 +109,25 @@
 
     form.querySelectorAll('[data-klaviyo-prop]').forEach(function (el) {
       var key = el.getAttribute('data-klaviyo-prop');
+      if (isChoice(el) && !el.checked) return;
       var val = (el.value || '').trim();
-      if (key && val) props[key] = val;
+      if (!key || !val) return;
+      // Ticked boxes sharing a key arrive as a list; everything else as text.
+      if (el.type === 'checkbox') (props[key] = props[key] || []).push(val);
+      else props[key] = val;
     });
+
+    // Questionnaires (the Friends & Family feedback page): every question in
+    // page order, with its answer, as a list and as plain lines — so a Klaviyo
+    // alert can print the lot without naming each question.
+    var answers = [];
+    form.querySelectorAll('[data-ha-question]').forEach(function (q) {
+      answers.push({ question: q.getAttribute('data-ha-question'), answer: answerOf(q) || '—' });
+    });
+    if (answers.length) {
+      props.answers = answers;
+      props.answers_text = answers.map(function (a) { return a.question + ': ' + a.answer; }).join('\n');
+    }
 
     var interests = [];
     form.querySelectorAll('input[data-circle-interest]:checked').forEach(function (box) {
@@ -159,6 +196,11 @@
     var emailField = form.querySelector('input[name="contact[email]"]');
     var consent = form.querySelector('input[data-ha-consent]');
 
+    form.addEventListener('change', function (event) {
+      var q = event.target.closest && event.target.closest('[data-ha-missed]');
+      if (q && answerOf(q)) q.removeAttribute('data-ha-missed');
+    });
+
     form.addEventListener('submit', function (event) {
       event.preventDefault();
 
@@ -173,6 +215,19 @@
       if (consent && !consent.checked) {
         setState(form, 'invalid', text(form, 'consent'), true);
         consent.focus();
+        return;
+      }
+
+      var missed = null;
+      form.querySelectorAll('[data-ha-required]').forEach(function (q) {
+        var empty = !answerOf(q);
+        q.toggleAttribute('data-ha-missed', empty);
+        if (empty && !missed) missed = q;
+      });
+      if (missed) {
+        setState(form, 'invalid', text(form, 'required'), true);
+        var first = missed.querySelector('input, textarea');
+        if (first) first.focus();
         return;
       }
 

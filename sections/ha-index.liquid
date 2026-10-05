@@ -94,12 +94,14 @@
           {%- if block.type == 'group' -%}
             {%- if gi > 0 -%}</ul></div>{%- endif -%}
             {%- assign gi = gi | plus: 1 -%}
+            {%- assign dir_hash = '#' | append: block.settings.anchor -%}
+            {%- assign dir_hash_formats = dir_hash | append: '-formats' -%}
             <div class="ha-idx__dir-col">
-              <h2 class="ha-idx__dir-heading ha-narrate"><span class="ha-idx__dir-num ha-record">{{ block.settings.number }}</span><a href="#{{ block.settings.anchor }}">{{ block.settings.heading }}</a></h2>
+              <h2 class="ha-idx__dir-heading ha-narrate"><span class="ha-idx__dir-num ha-record">{{ block.settings.number }}</span><a href="{{ block.settings.url | default: dir_hash }}">{{ block.settings.heading }}</a></h2>
               <ul class="ha-idx__dir-list" role="list">
               {%- if block.settings.dir_mode == 'summary' -%}
-                <li><a class="ha-idx__dir-link ha-record" href="#{{ block.settings.anchor }}">{{ block.settings.dir_summary }}</a></li>
-                {%- if block.settings.dir_second != blank -%}<li><a class="ha-idx__dir-link ha-idx__dir-link--quiet ha-record" href="#{{ block.settings.anchor }}-formats">{{ block.settings.dir_second }}</a></li>{%- endif -%}
+                <li><a class="ha-idx__dir-link ha-record" href="{{ block.settings.dir_summary_url | default: dir_hash }}">{{ block.settings.dir_summary }}</a></li>
+                {%- if block.settings.dir_second != blank -%}<li><a class="ha-idx__dir-link ha-idx__dir-link--quiet ha-record" href="{{ block.settings.dir_second_url | default: dir_hash_formats }}">{{ block.settings.dir_second }}</a></li>{%- endif -%}
               {%- endif -%}
           {%- elsif block.type == 'entry' -%}
             {%- assign g = nil -%}
@@ -243,9 +245,12 @@
           { "value": "entries", "label": "Each entry (jump to its card)" }, { "value": "summary", "label": "A summary line (jump to the section)" }
         ] },
         { "type": "checkbox", "id": "dir_show_secondary", "label": "Show the secondary descriptor in the directory", "default": false },
+        { "type": "url", "id": "url", "label": "Range page", "info": "Where the title in the directory goes. Empty = jump to this group below (4 October 2026: titles go to the range pages)." },
         { "type": "checkbox", "id": "dir_direct", "label": "Directory links go straight to the destination", "default": false, "info": "Yoga: the shopping link goes to the product page, not a card." },
         { "type": "text", "id": "dir_summary", "label": "Summary line", "default": "Silk scarves — seven formats" },
+        { "type": "url", "id": "dir_summary_url", "label": "Summary line link", "info": "Empty = jump to this group below." },
         { "type": "text", "id": "dir_second", "label": "Second line (jumps to the cards)", "default": "Explore silk formats" },
+        { "type": "url", "id": "dir_second_url", "label": "Second line link", "info": "Empty = jump to the format cards below." },
         { "type": "header", "content": "Editorial photograph (Fine Silk)" },
         { "type": "image_picker", "id": "editorial_image", "label": "Photograph" },
         { "type": "text", "id": "editorial_alt", "label": "Alt text" }

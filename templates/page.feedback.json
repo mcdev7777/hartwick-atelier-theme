@@ -1,0 +1,78 @@
+/*
+ * Hartwick Atelier — FRIENDS & FAMILY FEEDBACK, 1 October 2026.
+ *
+ * Page "Friends & Family Feedback", handle friends-and-family, template
+ * feedback. Reached only by the link in the Klaviyo invitation email: in no
+ * menu, hidden from search engines (seo.hidden). Answers become the Klaviyo
+ * event "Friends & Family Feedback"; a flow on that event emails Angela.
+ *
+ * ⚠️ THE QUESTIONS AND THE INTRODUCTION ARE PLACEHOLDERS until Christina sends
+ *    hers. They are blocks, so they are replaced in the theme editor.
+ *
+ * NOTE: this file is also written by the Shopify theme editor.
+ */
+{
+  "sections": {
+    "feedback": {
+      "type": "ha-feedback",
+      "blocks": {
+        "overall": {
+          "type": "scale",
+          "settings": {
+            "question": "Overall, how did the site feel to you?",
+            "low_label": "Not for me",
+            "high_label": "Loved it",
+            "required": true,
+            "key": "overall"
+          }
+        },
+        "pages": {
+          "type": "choice",
+          "settings": {
+            "question": "Which parts did you look at?",
+            "options": "The homepage\nThe pieces\nThe Masters\nThe Journal\nThe Register\nThe Circle",
+            "multiple": true,
+            "required": false,
+            "key": "pages_viewed"
+          }
+        },
+        "liked": {
+          "type": "text",
+          "settings": {
+            "question": "What stayed with you?",
+            "long": true,
+            "required": false,
+            "key": "liked"
+          }
+        },
+        "unclear": {
+          "type": "text",
+          "settings": {
+            "question": "Was anything unclear or hard to find?",
+            "long": true,
+            "required": false,
+            "key": "unclear"
+          }
+        },
+        "else": {
+          "type": "text",
+          "settings": {
+            "question": "Anything else you would like Angela to know?",
+            "long": true,
+            "required": false,
+            "key": "anything_else"
+          }
+        }
+      },
+      "block_order": ["overall", "pages", "liked", "unclear", "else"],
+      "settings": {
+        "eyebrow": "Friends & Family",
+        "heading": "Tell us what you think.",
+        "intro": "<p>Thank you for taking a first look. A few short questions; answer as many as you like.</p>",
+        "show_placeholder_note": true,
+        "placeholder_text": "Placeholder — questions and introduction to be replaced with Christina's."
+      }
+    }
+  },
+  "order": ["feedback"]
+}

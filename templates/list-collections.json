@@ -121,7 +121,8 @@
             "view_all_url": "/collections/apparel",
             "dir_mode": "entries",
             "dir_show_secondary": false,
-            "dir_direct": false
+            "dir_direct": true,
+            "url": "/collections/apparel"
           }
         },
         "e_1_01": {
@@ -130,7 +131,7 @@
             "key": "1-01",
             "number": "1/01",
             "name": "Skirts",
-            "url": "/collections/apparel#skirts",
+            "url": "/collections/skirts",
             "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg",
             "alt": "A handwoven khadi skirt with an ikat shirt",
             "shape": "tall",
@@ -144,7 +145,7 @@
             "key": "1-02",
             "number": "1/02",
             "name": "Shirts",
-            "url": "/collections/apparel#shirts",
+            "url": "/collections/shirts",
             "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_AMMAN_SHIRT.jpg",
             "alt": "A handwoven khadi shirt",
             "shape": "wide",
@@ -158,7 +159,7 @@
             "key": "1-03",
             "number": "1/03",
             "name": "Trousers",
-            "url": "/collections/apparel#trousers",
+            "url": "/collections/trousers",
             "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_PARIS_TROUSERS_KHADI_TWILL_AMMAN_SHIRT.jpg",
             "alt": "Handwoven khadi twill trousers",
             "shape": "wide",
@@ -186,7 +187,7 @@
             "key": "1-05",
             "number": "1/05",
             "name": "Loungewear",
-            "url": "/collections/apparel#loungewear",
+            "url": "/collections/loungewear",
             "image": "shopify://shop_images/001_HARTWICK_OKANAGAN_ROBE_SUMMERVINE_BLOCKPRINT.jpg",
             "alt": "A block-printed organic cotton robe",
             "shape": "wide",
@@ -208,7 +209,10 @@
             "dir_summary": "Silk scarves",
             "dir_second": "Explore silk formats",
             "editorial_image": "shopify://shop_images/196_HARTWICK_FINESILK_PETITSQUARE01_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-            "editorial_alt": "Block-printed fine silk in the studio"
+            "editorial_alt": "Block-printed fine silk in the studio",
+            "url": "/collections/fine-silk",
+            "dir_summary_url": "/collections/fine-silk",
+            "dir_second_url": "/collections/fine-silk#clothing-top"
           }
         },
         "e_2_01": {
@@ -328,7 +332,8 @@
             "view_all_url": "/collections/fine-jewellery",
             "dir_mode": "entries",
             "dir_show_secondary": false,
-            "dir_direct": false
+            "dir_direct": true,
+            "url": "/collections/fine-jewellery"
           }
         },
         "e_3_01": {
@@ -402,7 +407,8 @@
             "view_all_text": "",
             "dir_mode": "entries",
             "dir_show_secondary": false,
-            "dir_direct": true
+            "dir_direct": true,
+            "url": "/collections/yoga"
           }
         },
         "e_4_01": {

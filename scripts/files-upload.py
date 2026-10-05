@@ -21,7 +21,7 @@ def gql(q, v=None, mut=False):
     if mut: a.append("--allow-mutations")
     out = subprocess.run(a, capture_output=True, text=True).stdout
     i = out.find("{")
-    return json.loads(out[i:]) if i >= 0 else {}
+    return json.JSONDecoder().raw_decode(out[i:])[0] if i >= 0 else {}
 
 def existing_names():
     names, cursor = set(), None

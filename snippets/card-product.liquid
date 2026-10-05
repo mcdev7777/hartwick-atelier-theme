@@ -509,9 +509,19 @@
 <h3 class="card-product-title-h3 card-title-font-family-{{ settings.card_title_font }}">{{ card_product.title | escape }}{% if placeholder %}{{ 'onboarding.product_title' | t }}{% endif %}</h3>
 {% endif %}
 {% else %}
+{%- comment -%}
+  Hartwick, 4 October 2026: store titles read "Paris Trousers | Handwoven
+  Cotton Khadi Twill, Alabaster". The name stays the Troja title; the
+  Expression after the bar is its own line in the Typewriter (Regular), as
+  on the range pages (.ha-clothing__expr).
+{%- endcomment -%}
+{%- assign ha_title_parts = card_product.title | split: ' | ' -%}
 <h3 class="card-product-title-h3 card-title-font-size-{{ settings.card_title_font_size }} card-title-font-family-{{ settings.card_title_font }}">
-  {{ card_product.title | escape }}{% if placeholder %}{{ 'onboarding.product_title' | t }}{% endif %}
+  {% if ha_title_parts.size > 1 %}{{ ha_title_parts.first | escape }}{% else %}{{ card_product.title | escape }}{% endif %}{% if placeholder %}{{ 'onboarding.product_title' | t }}{% endif %}
 </h3>
+{%- if ha_title_parts.size > 1 -%}
+<p class="ha-card-expr ha-narrate">{{ card_product.title | remove_first: ha_title_parts.first | remove_first: ' | ' | escape }}</p>
+{%- endif -%}
 {% endif %}
 
 {% comment %}COLOR COUNT - POSITION TOP{% endcomment %}

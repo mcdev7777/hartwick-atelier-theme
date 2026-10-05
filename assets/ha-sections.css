@@ -2211,7 +2211,7 @@ body.lx-template--product .magnify-icon:focus-visible {
 }
 .ha-pdp__field-value--lead {
   font-family: var(--ha-font-narrate);
-  font-weight: 300; /* Junicode is always Light; .ha-record's 400 is for Noto */
+  font-weight: 300; /* Junicode is always Light; .ha-record's 400 is for the record voice */
   font-size: var(--ha-t-expression);
   letter-spacing: 0.01em;
   text-transform: none;
@@ -3127,16 +3127,6 @@ a.ha-continue__piece-name:hover { text-decoration: underline; text-underline-off
 }
 @media screen and (min-width: 1200px) {
   .ha-footer--row .ha-footer__links--row { justify-content: space-between; flex-wrap: nowrap; gap: 2.4rem; }
-}
-/* 2 October: the links are 13px Porter now (her nav size), 973px of words
-   against 1158 of row at 1440. A link never breaks inside itself; the row
-   is one line from 1400 and wraps, centred, below that. */
-.ha-footer--row .ha-footer__links--row > * { white-space: nowrap; }
-@media screen and (min-width: 990px) and (max-width: 1399px) {
-  .ha-footer--row .ha-footer__links--row { justify-content: center; flex-wrap: wrap; gap: 1.6rem 2.4rem; }
-}
-@media screen and (min-width: 1400px) {
-  .ha-footer--row .ha-footer__links--row { gap: 1.6rem; }
 }
 .ha-footer--row .ha-footer__copy { margin-top: 3.2rem; font-size: var(--ha-t-footer); letter-spacing: 0.04em; text-align: center; }
 @media screen and (min-width: 990px) {
@@ -5866,7 +5856,7 @@ h6, .h6 { line-height: var(--ha-t-lh-label); }
 
      Porter   — major titles and product names
      Junicode — editorial headings, Expressions, numbers, selected intros
-     Noto     — body copy, navigation, functional information, captions, data
+     Mono     — body copy, navigation, functional information, captions, data
 
    Junicode and Porter surfaces already carry .ha-narrate / .ha-identify in the
    markup and are untouched. What moves is BODY COPY, which was Junicode and is
@@ -5897,9 +5887,9 @@ h6, .h6 { line-height: var(--ha-t-lh-label); }
   font-family: var(--ha-voice-body);
   font-weight: var(--ha-voice-body-weight);
   line-height: var(--ha-t-body-lh);
-  /* Junicode is an old-style serif and Noto a condensed mono: at the same
+  /* Junicode is an old-style serif and the record voice a mono: at the same
      nominal size the mono sets a visibly tighter line. The tracking below is
-     what keeps 13px of Noto from reading as a data table when it is carrying a
+     what keeps 13px of mono from reading as a data table when it is carrying a
      paragraph. It is deliberately small — the record voice's own 0.02em, not
      the 0.14em that labels take. 24 September: body is Junicode Light again,
      which is set untracked. */
@@ -6456,8 +6446,8 @@ body .quantity__input { font-size: max(var(--ha-t-detail), 1.6rem); }
    this one band, set on purpose outside the five roles:
      THE REGISTER   Porter Medium, small
      the sentence   Junicode Exp Medium Italic
-     the Dispatch   Noto Sans Mono Regular (14 on the artboard, justified)
-     the button     Noto Sans Mono SemiBold
+     the Dispatch   the mono (now Typewriter) Regular (14 on the artboard, justified)
+     the button     the mono (now Typewriter) SemiBold
    Three classes deep so the TYPE ROLES block cannot pull them back. */
 .ha-register.ha-register--site .ha-eyebrow { font-weight: 500; }
 .ha-register.ha-register--site h2.ha-pull {
@@ -7365,7 +7355,7 @@ body cart-drawer .ha-bag__ctas .button { width: 100%; margin: 0; }
 
    Voices, as her file names them: Junicode Light (running text and display),
    Junicode Cond (headline tickers), Junicode SemiCond SemiBold (section nav),
-   Noto Sans Mono Condensed (labels; Bold for ticker kickers), Noto Sans Mono
+   the condensed mono (retired) (labels; Bold for ticker kickers), the mono (now Typewriter)
    Medium / SemiBold (a few kickers), Porter (masthead name, box labels).
    ========================================================================== */
 .ha-jnl {
@@ -7833,7 +7823,7 @@ a.ha-jnl-button .ha-mark-word { color: var(--ha-jnl-button-ink, var(--ha-chalk-b
      .ha-label    02 Porter Light  — section labels and index headings
      .ha-eyebrow     (and every element named __eyebrow — they are all
                      section labels, whatever voice they used to carry)
-     .ha-record   03 Noto Sans Mono Medium — links, CTAs, buttons,
+     .ha-record   03 the mono (now Typewriter) Medium — links, CTAs, buttons,
                   references, data. Numbers anywhere else are switched to
                   it by the "HA Figures" face, not by markup.
      .ha-narrate  04/05 Junicode Light — body, information and titles
@@ -8529,9 +8519,9 @@ html body :is(h1, h2, h3):not(.ha-pull, .ha-label, .ha-identify, .ha-eyebrow, .h
    6  The envelopes a little smaller: 78.44vw → 70vw, the same centre.
    7  The numbers over the three column titles three times their size.
    ========================================================================== */
-html body .ha-cinv .ha-cinv__title { font-size: var(--ha-t-hero); line-height: 1; letter-spacing: 0; }   /* 2 October: Troja, the hero row (77 on her board) */
+html body .ha-cinv .ha-cinv__title { font-size: clamp(4rem, 5vw, 7.2rem); line-height: 1; letter-spacing: 0.02em; }
 .ha-cinv .ha-cinv__stage { width: 70vw; margin-left: 11.04vw; }
-.ha-cwithin .ha-cwithin__num { font-size: var(--ha-t-num); line-height: 1; }   /* 2 October: the numbers row */
+.ha-cwithin .ha-cwithin__num { font-size: calc(var(--ha-t-meta) * 3); line-height: 1; }
 @media screen and (max-width: 989px) {
   .ha-cinv .ha-cinv__stage { width: 100vw; margin-left: -2rem; }
 }
@@ -8540,9 +8530,9 @@ html body .ha-cinv .ha-cinv__title { font-size: var(--ha-t-hero); line-height: 1
 /* ==========================================================================
    PRICES, 1 OCTOBER — Ivan's fix list, 9: "the currency font size and the
    value size must be the same". Luxe prints "$250.00 USD" in one span; the
-   digits took the HA Figures face (Noto Mono) and the "$" and "USD" fell
+   digits took the HA Figures face (the mono (now Typewriter)) and the "$" and "USD" fell
    through to Junicode, whose dollar sign is small. The whole price is data,
-   so the whole of it is Noto Sans Mono Medium (role 03), one size.
+   so the whole of it is the mono (now Typewriter) Medium (role 03), one size.
    ========================================================================== */
 html body .price .price-item,
 html body .price .price-item s,
@@ -8634,7 +8624,7 @@ html body .ha-living.ha-living--paper {
 /* ==========================================================================
    ABOUT, A JOURNEY INTO THE HOUSE — 1 October (Ivan's fix list, 14): "make
    the number font of years the same as the other letter font around it".
-   Every number on the site is Noto Mono by the HA Figures face at the front
+   Every number on the site is the mono (now Typewriter) by the HA Figures face at the front
    of the Junicode stack; in these eight paragraphs the years (1990s, 2002,
    2005…) are part of the sentence, so the paragraphs use Junicode alone —
    its own figures. The 01–08 numbers over the columns stay mono.
@@ -8763,7 +8753,7 @@ body:has(#SiteHeader.ha-trans:not(.ha-trans-light)) .ha-paper-head { padding-top
 
    Casing is left to the copy, as before. Left in their drawn faces: the
    Register envelope's lettering, the CONTACT word, the landing page, and
-   the bag in the menu bar (Noto Sans Mono SemiBold, locked 24 September).
+   the bag in the menu bar (the mono (now Typewriter) SemiBold, locked 24 September).
    ========================================================================== */
 
 /* 1 — Troja */
@@ -8788,7 +8778,6 @@ html body :is(a.ha-record, button.ha-record, .ha-record > a, .button, button.but
    it (white on a photograph, wine on a collection head). */
 html body #MainContent :is(p, .rte li):not(.ha-label, .ha-identify, .ha-eyebrow, [class*="__eyebrow"], .ha-record, .ha-pull, .ha-placeholder-note, [class*="__title"], [class*="__heading"], [class*="__num"], [class*="__cta"], [class*="price"], .ha-landing *, .ha-reg-letter *, .ha-reg-note *, :is(p, .rte li, h1, h2, h3, a, button) *) {
   opacity: 0.82;
-  line-height: var(--ha-t-body-lh);
 }
 html body .ha-register--site .ha-register__body,
 html body .ha-drawer p:not(.ha-label, .ha-eyebrow, [class*="__eyebrow"], .ha-pull, [class*="__title"]) { opacity: 0.82; }
@@ -8809,6 +8798,7 @@ html body [class*="__crumbs"] {
 /* 4 — standalone numbers: Typewriter Bold at full strength */
 html body [class*="__num"]:not([class*="__nums"]) {
   font-family: var(--ha-role-number) !important;
+  font-weight: var(--ha-role-number-weight) !important;
   font-style: normal;
   opacity: 1;
 }
@@ -8824,39 +8814,20 @@ html body .ha-cmembers__signin-body * {
 }
 
 
-/* The Circle page, as drawn on the reference: the titles in capitals, and
-   KNOWN THROUGH WHAT WE SHARE at the card-title size, not the section's. */
+/* The Circle page, as drawn on the reference: the titles in capitals. */
 html body :is(.ha-cinv__title, .ha-cwithin__heading, .ha-cwithin__title, .ha-cmembers__heading) { text-transform: uppercase; }
-html body .ha-cmembers .ha-cmembers__heading { font-size: var(--ha-t-h3); line-height: var(--ha-t-lh-h3); }
 
 /* Main page titles that were set in Porter (About, the Masters opening, the
-   founder's name): Troja now, "the main title moment on each page". The
-   page titles take the hero row; the founder's name stays a section title. */
+   founder's name): Troja now, "the main title moment on each page". Sizes
+   are their 1 October ones. */
 html body :is(.ha-abo__title, .ha-mst__hero26-h1, .ha-abl__name) {
   font-family: var(--ha-role-title) !important;
   font-weight: 400 !important;
   letter-spacing: 0.005em !important;   /* their Porter tracking (0.1–0.12em) does not carry over */
 }
-html body .ha-abo .ha-abo__title,
-html body .ha-mst__hero26-h1 { font-size: var(--ha-t-hero); line-height: 1; }
-html body .ha-abl .ha-abl__name { font-size: var(--ha-t-h2); }
 
-/* Product names in a collection grid are collection information, not
-   titles: Typewriter (Luxe asks for its heading family here). */
-html body .card-product-title-h3,
-html body .card-product-title-h3 * {
-  font-family: var(--ha-role-text) !important;
-  font-weight: var(--ha-role-text-weight) !important;
-  letter-spacing: 0;
-}
-
-/* The homepage index heading sits in a 306px column: at the h1 row
-   COLLECTIONS broke inside the word. Section-title size, scaled to the
-   column, and never broken mid-word. */
-html body .ha-home-index .ha-home__heading { font-size: min(var(--ha-t-h2), 2.4vw); overflow-wrap: normal; word-break: normal; hyphens: manual; }
-@media screen and (max-width: 989px) {
-  html body .ha-home-index .ha-home__heading { font-size: var(--ha-t-h2); }
-}
+/* (Product names in grids were Typewriter here until later on 2 October;
+   they are Troja now — see PRODUCT NAMES IN TROJA at the end.) */
 
 /* The Register opening's two cards ("By invitation", "Read") are lettering
    on her drawn envelope: kept in the Junicode they were drawn in. */
@@ -8868,6 +8839,282 @@ html body .ha-reg-letter .ha-reg-letter__word { font-family: "Junicode", Georgia
    paragraphs' 82%. */
 html body .ha-pdp .ha-pdp__material { margin-bottom: 1.4rem; }
 html body .ha-pdp .ha-pdp__intro { opacity: 0.82; }
+
+
+/* ==========================================================================
+   ALL LINKS IN PORTER — Aloha, 2 October (later): "The links are in the wrong
+   font on the collection page, all links must be in Porter." Every link on
+   the page and in the footer, and every word inside it, is Porter Medium:
+   the Collection Index list and its category cards, the product cards on
+   the range pages and on All products, title links, links inside a
+   paragraph. Capitals, because Porter is cut A–Z only; its figures and
+   slashes come from the Typewriter (HA Figures Porter). Images and the
+   pencil marks inside a link are untouched. The menu bar keeps its own
+   rules; the Register envelope's drawn words keep their Junicode.
+   ========================================================================== */
+html body :is(#MainContent, footer, .ha-drawer, .shopify-section-group-footer-group) a:not(.ha-reg-letter__words, .ha-clothing__name, .ha-index__name, .ha-related__name, .card-product-title-h3, .cart-item__product-title, .cart-notification-product__name, .cr-product-title, .predictive-search-card-product-title, .ha-product-name),
+html body :is(#MainContent, footer, .ha-drawer, .shopify-section-group-footer-group) a:not(.ha-reg-letter__words) :not(img, picture, source, svg, svg *, video, .ha-mark, .ha-mark *, .ha-clothing__name, .ha-index__name, .ha-related__name, .card-product-title-h3, .cart-item__product-title, .cart-notification-product__name, .cr-product-title, .predictive-search-card-product-title, .ha-product-name, :is(.ha-clothing__name, .ha-index__name, .ha-related__name, .card-product-title-h3, .cart-item__product-title, .cart-notification-product__name, .cr-product-title, .predictive-search-card-product-title, .ha-product-name) *) {
+  font-family: var(--ha-role-action) !important;
+  font-weight: var(--ha-role-action-weight) !important;
+  font-style: normal !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+
+/* ==========================================================================
+   PRODUCT NAMES AND THE CIRCLE IN TROJA — Aloha, 2 October (later still):
+   "All Page titles should be in Troja Font, as well as our product names,
+   and in the circle part. Make sure that the collection index product names
+   are also in Troja as this is a product name, and not in Typrighter."
+   Every place a product's name is printed: the range pages' cards, the
+   Collection Index rows, Luxe's product cards (All products, search,
+   recommendations, cart), the product page's related pieces, predictive
+   search. A name inside a link stays Troja (the links rule above leaves
+   .ha-product-name and these classes alone); the rest of the link
+   (Expression, VIEW PIECE) is Porter. The Circle panel's title is Troja too.
+   ========================================================================== */
+html body :is(.ha-clothing__name, .ha-index__name, .ha-related__name, .card-product-title-h3, .cart-item__product-title, .cart-notification-product__name, .cr-product-title, .predictive-search-card-product-title, .ha-pdp__title, .ha-product-name, .ha-circle__title),
+html body :is(.ha-clothing__name, .ha-index__name, .ha-related__name, .card-product-title-h3, .cart-item__product-title, .cart-notification-product__name, .cr-product-title, .predictive-search-card-product-title, .ha-pdp__title, .ha-product-name, .ha-circle__title) * {
+  font-family: var(--ha-role-title) !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  letter-spacing: 0.01em !important;
+}
+/* Names in capitals everywhere, as the product page title already is. */
+html body :is(.ha-clothing__name, .ha-index__name, .ha-related__name, .card-product-title-h3, .cart-item__product-title, .cart-notification-product__name, .cr-product-title, .predictive-search-card-product-title, .ha-pdp__title, .ha-product-name) { text-transform: uppercase; }
+
+/* Product page, origin record: five columns at the section-title size broke
+   CONSTRUCTION inside the word. The card-title size, never split mid-word. */
+html body .ha-provenance .ha-provenance__name { font-size: var(--ha-t-h3); overflow-wrap: normal; word-break: normal; hyphens: manual; }
+
+
+/* The Register's "01 / The Dispatch" is named __num but is a label (number
+   and words), like 01 / WITHIN THE CIRCLE: Porter, its figures Typewriter. */
+html body .ha-reg-corr .ha-reg-corr__num.ha-reg-corr__num {
+  font-family: var(--ha-role-label) !important;
+  font-weight: var(--ha-role-label-weight) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+
+/* ==========================================================================
+   THE BUTTON, 2 OCTOBER — Ivan: the homepage story links "more like
+   buttons", then "smaller, with the porter in medium weight … add the same
+   buttons to anywhere that has the old version, not too big again".
+   The old version is the ruled link, .ha-home__ruled (a hairline above and
+   below): the homepage stories, Lots and Journal, the About page's closing
+   link, and the new homepage Contact band. Every one is now this button:
+   the Correspondence wine with Chalk Blue letters, Porter Medium at the
+   label size, compact. Aloha's pencil ring still draws round it on hover;
+   the button itself only softens.
+   ========================================================================== */
+html body .ha-home__ruled,
+html body .ha-home-stories .ha-home-story__text > .ha-home__ruled {
+  display: inline-block;
+  min-width: 0;
+  padding: 0.95rem 1.7rem 0.85rem;
+  border: 1px solid var(--ha-field-correspondence);
+  background: var(--ha-field-correspondence);
+  color: var(--ha-chalk-blue) !important;   /* light letters in every state: Ivan, "must be white so that users can recognize it" */
+  -webkit-text-fill-color: var(--ha-chalk-blue);
+  font-size: var(--ha-t-label);
+  font-weight: 500 !important;    /* Porter Medium */
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+html body .ha-home__ruled:hover,
+html body .ha-home__ruled:focus-visible,
+html body .ha-home-stories .ha-home-story__text > .ha-home__ruled:hover,
+html body .ha-home-stories .ha-home-story__text > .ha-home__ruled:focus-visible {
+  border-color: var(--ha-field-correspondence);
+  color: var(--ha-chalk-blue) !important;
+  opacity: 0.88;
+}
+html body .ha-home__ruled:focus-visible { outline: 2px solid var(--ha-field-correspondence); outline-offset: 3px; }
+html body .ha-home__ruled:is(:visited, :active, :focus) { color: var(--ha-chalk-blue) !important; }
+/* the ring was sized for the tall ruled link; a little tighter on the button */
+.ha-marks .ha-home__ruled > .ha-mark--ring {
+  width: calc(var(--ha-tw, 100%) * 1.1 + 3em);
+  height: max(4.2em, calc((var(--ha-tw, 100%) * 1.1 + 3em) / 4.2));
+}
+
+/* Homepage story titles (Cloth, considered / Knowledge, kept in use / Small
+   Lots. Close attention.) — Ivan, 2 October: "make these titles in a small
+   Troja font". They were Junicode SemiBold Italic pull lines at the h2 row;
+   now Troja, upright, at the card-title row (19 desktop, 16 phone), casing
+   as written. */
+html body .ha-home-stories .ha-home-story__title.ha-pull,
+html body .ha-home-stories .ha-home-story__title.ha-pull * {
+  font-family: var(--ha-role-title) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.005em;
+}
+html body .ha-home-stories .ha-home-story__title { font-size: var(--ha-t-h3); line-height: var(--ha-t-lh-h3); }
+
+
+/* ==========================================================================
+   HOMEPAGE CONTACT, 2 OCTOBER — Ivan: "I want to add a contact info on the
+   homepage too somewhere." sections/ha-home-contact.liquid, the last band
+   before the Register box. Heading and intro on the left; the ruled rows
+   (label in Porter, address as a Porter link) and the showroom button on
+   the right. Sizes are the table's.
+   ========================================================================== */
+.ha-home-contact__grid { display: grid; gap: 3.2rem; }
+.ha-home-contact__heading { margin: 0; font-size: var(--ha-t-h1); line-height: var(--ha-t-lh-h1); }
+.ha-home-contact__intro { margin: 1.6rem 0 0; font-size: var(--ha-t-body); line-height: 1.6; }
+.ha-home-contact__page { display: inline-block; margin-top: 2rem; font-size: var(--ha-t-label); letter-spacing: 0.06em; color: inherit; text-decoration: none; border-bottom: 1px solid var(--ha-rule); padding-bottom: 0.3rem; transition: border-color 160ms ease; }
+.ha-home-contact__page:hover, .ha-home-contact__page:focus-visible { border-bottom-color: currentColor; }
+.ha-home-contact__rows { margin: 0; border-top: 1px solid var(--ha-rule); }
+.ha-home-contact__row { display: grid; gap: 0.6rem; padding: 1.4rem 0; border-bottom: 1px solid var(--ha-rule); }
+.ha-home-contact__label { margin: 0; font-size: var(--ha-t-label); line-height: var(--ha-t-lh-label); }
+.ha-home-contact__line { opacity: 0.72; }
+.ha-home-contact__value { margin: 0; font-size: var(--ha-t-ui); line-height: 1.3; overflow-wrap: anywhere; }
+.ha-home-contact__value a { color: inherit; text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-size: 0 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size 200ms ease; }
+.ha-home-contact__value a:hover, .ha-home-contact__value a:focus-visible { background-size: 100% 1px; }
+.ha-home-contact__visit { margin-top: 2.8rem; }
+.ha-home-contact__visit-text { margin: 0.8rem 0 1.8rem; font-size: var(--ha-t-body); line-height: 1.6; }
+@media screen and (min-width: 750px) {
+  .ha-home-contact__row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); align-items: baseline; gap: 2.4rem; }
+}
+@media screen and (min-width: 990px) {
+  .ha-home-contact__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); column-gap: clamp(4.8rem, 8.6vw, 12.4rem); align-items: start; }
+}
+
+
+
+/* ==========================================================================
+   FROM FIBRE TO GARMENT ON GREY PAPER, 4 OCTOBER — the product page's
+   Origin + Process record on its own paper photograph (cover, centred, grain
+   over it), and no brown divider: neither its own lower edge nor the one
+   above it.
+   ========================================================================== */
+html body .ha-provenance.ha-provenance--paper {
+  background-color: #D2D3D1;
+  background-image: var(--ha-grain-page), var(--ha-provenance-paper);
+  background-size: 320px 320px, cover;
+  background-repeat: repeat, no-repeat;
+  background-position: 0 0, center;
+  border-bottom: 0;
+  border-top: 0;
+}
+.shopify-section:has(+ .shopify-section .ha-provenance--paper) > .ha-section,
+.shopify-section:has(+ .shopify-section .ha-provenance--paper) > .ha-home,
+.shopify-section:has(+ .shopify-section .ha-provenance--paper) > * > .ha-section:last-child,
+.shopify-section:has(+ .shopify-section .ha-provenance--paper) .ha-section:last-of-type { border-bottom: 0; }
+
+
+/* ==========================================================================
+   THE CLOTH, WIDER TEXT, 4 OCTOBER — the Material Record's text (eyebrow,
+   title, statement, explanation) runs further across, to about 44% of the
+   page, and the main photograph gets smaller to make room. The Detail index
+   keeps the width it had (65% of the new column), and the small photograph
+   on the right keeps its place.
+   ========================================================================== */
+@media screen and (min-width: 990px) {
+  html body .ha-cloth__grid { grid-template-columns: 40fr 52fr; }
+  html body .ha-cloth__figures { grid-template-columns: 52fr 48fr; }
+  html body .ha-cloth__statement,
+  html body .ha-cloth__explanation { max-width: none; }
+  html body .ha-cloth__index { max-width: 65%; }
+}
+
+
+/* ==========================================================================
+   COLLECTION INDEX RANGE TITLES IN TROJA, 4 OCTOBER — Ivan: Apparel, Fine
+   Silk, Fine Jewellery on the Collection Index's grey paper head are titles,
+   so Troja. They are links, so the ALL LINKS IN PORTER rule caught them; the
+   id + doubled class here outranks it. Their numbers stay Typewriter.
+   ========================================================================== */
+html body #MainContent .ha-idx__dir-heading.ha-idx__dir-heading a,
+html body #MainContent .ha-idx__dir-heading.ha-idx__dir-heading a :not(.ha-mark, .ha-mark *, svg, svg *) {
+  font-family: var(--ha-role-title) !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+}
+/* Troja is wider than Porter: never split a word or the number. */
+html body .ha-idx__dir-heading, html body .ha-idx__dir-heading a { overflow-wrap: normal; word-break: normal; hyphens: manual; }
+html body .ha-idx__dir-num { white-space: nowrap; flex: none; }
+@media screen and (min-width: 750px) and (max-width: 1199px) {
+  html body .ha-idx__dir-heading { font-size: min(var(--ha-t-h2), 2.1vw); gap: 1.2rem; }
+}
+
+
+/* ==========================================================================
+   PRODUCT PAGE PRICE, 4 OCTOBER — Ivan: "the prices still need to be bigger…
+   3 sizes bigger, and the bold typrighter for the price". Three steps up the
+   scale from price (13 → 14 → 16 → 19 desktop; 12 → 13 → 14 → 16 phone) is
+   the h3 token. Weight 700 picks the typrighter Bold face of HA Text. Only
+   the product page's buy rail; card and cart prices keep --ha-t-price.
+   ========================================================================== */
+html body .ha-pdp__price .price,
+html body .ha-pdp__price .price * {
+  font-size: var(--ha-t-h3);
+  font-weight: 700;
+}
+html body .ha-pdp__price .price { line-height: 1.15; }
+
+
+/* ==========================================================================
+   HOMEPAGE BUTTONS IN BROWN, 4 OCTOBER — Ivan: the homepage's click links
+   in brown #3B2E25 (Window shop, the Masters, Read our history, Explore all
+   Apparel, the Journal, Request an appointment). Homepage only: the About
+   page's closing button keeps the wine.
+   ========================================================================== */
+html body.lx-template--index .ha-home__ruled,
+html body.lx-template--index .ha-home-stories .ha-home-story__text > .ha-home__ruled,
+html body.lx-template--index .ha-home__ruled:hover,
+html body.lx-template--index .ha-home__ruled:focus-visible {
+  background: #3B2E25;
+  border-color: #3B2E25;
+}
+html body.lx-template--index .ha-home__ruled:focus-visible { outline-color: #3B2E25; }
+
+
+/* ==========================================================================
+   EXPRESSION LINE IN THE TYPEWRITER, 4 OCTOBER — Ivan: on every collection
+   page the explanation under the name ("Handwoven Cotton Khadi Twill,
+   Alabaster") is typrighter, the light (Regular) cut, not Porter. It sits
+   inside the card link, so the ALL LINKS IN PORTER rule had caught it; the
+   id + tripled class outranks it. Range pages: .ha-clothing__expr. Luxe
+   product cards (Trousers, Skirts… and All products): .ha-card-expr, split
+   from the store title at " | " in snippets/card-product.liquid.
+   ========================================================================== */
+html body #MainContent .ha-clothing__expr.ha-clothing__expr.ha-clothing__expr,
+html body #MainContent .ha-card-expr.ha-card-expr.ha-card-expr {
+  font-family: var(--ha-font-narrate) !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+html body #MainContent .ha-card-expr.ha-card-expr.ha-card-expr {
+  margin: 0.4rem 0 0;
+  font-size: var(--ha-t-expression);
+  line-height: 1.3;
+}
+
+
+/* ==========================================================================
+   PRODUCT NAME BIGGER, 4 OCTOBER — Ivan: "the product name still needs to
+   be bigger so we can see clearly it's a product name". From the Style
+   token (17 / 15) to the h2 title token (24 / 20), so it stands clear of
+   the Expression line beneath it. Product page only.
+   ========================================================================== */
+html body .ha-pdp__title.ha-pdp__title {
+  font-size: var(--ha-t-h2);
+  line-height: 1.1;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
 
 /* Sub-collection pages (collection.json, 4 Oct 2026): one category, no rail —
    the grid takes the full width, four across on a wide screen. */
@@ -8953,12 +9200,16 @@ html body :is(
 
 
 /* ==========================================================================
-   COLLECTION INDEX HEAD IN INK, 4 OCTOBER — Ivan: the wine (1 October,
-   COLLECTION HEADS IN WINE above) does not sit with the Index page's head,
-   so the Index alone goes back to the site's ink (soot black): reference
-   line, title, intro and the category lists. The range and sub-collection
-   heads keep the wine.
+   COLLECTION HEADS IN INK, 4 OCTOBER — Ivan: the wine (1 October,
+   COLLECTION HEADS IN WINE above) goes; every collection head (the
+   Collection Index, the range pages, the sub-collections and Luxe's
+   collection banner) takes the site's ink, soot black: reference line,
+   title, intro, links and the Index's category lists. And the intro beside
+   the title runs wider, so its two sentences sit on two lines rather than
+   a narrow stack of four (the faces are monospaced, so 46ch is 46
+   letters: every intro on the range pages and the Index fits in two).
    ========================================================================== */
+html body .ha-paper-head,
 html body .ha-idx__head.ha-paper-head {
   color: var(--ha-soot-black);
   --ha-text: var(--ha-soot-black);
@@ -8966,13 +9217,21 @@ html body .ha-idx__head.ha-paper-head {
   --ha-ink-title: var(--ha-soot-black);
   --ha-rule: color-mix(in srgb, var(--ha-soot-black) 14%, transparent);
 }
-html body .ha-idx__head.ha-paper-head :is(a, h1, h2, h3, p, span, li, .ha-idx__crumbs, .ha-idx__title, .ha-idx__intro, .ha-idx__count, .ha-record, .ha-label, .ha-narrate) {
+html body .ha-paper-head :is(a, h1, h2, h3, p, span, li, .ha-clothing__crumbs, .ha-clothing__back, .ha-clothing__intro, .ha-clothing__title, .ha-idx__crumbs, .ha-idx__title, .ha-idx__intro, .ha-idx__count, .ha-record, .ha-label, .ha-narrate),
+html body .ha-coll-paper :is(h1, .collection-std-description, .collection-banner-std-title, .collection-title-bb) {
   color: var(--ha-soot-black);
+}
+@media screen and (min-width: 750px) {
+  html body .ha-clothing__intro,
+  html body .ha-idx__intro { max-width: 46ch; }
+}
+@media screen and (min-width: 990px) {
+  html body .ha-clothing__intro { margin-left: clamp(0rem, 6vw, 10rem); }
 }
 
 
 /* ==========================================================================
-   NO NOTO SANS MONO, 4 OCTOBER — Ivan: no Noto anywhere on the site (the
+   NO OLD MONO, 4 OCTOBER — Ivan: no old mono anywhere on the site (the
    faces themselves are repointed to typrighter in snippets/ha-fonts). The
    homepage Masters band's "Explore the handwork" label in typrighter Bold so
    it reads clearly on the dark photograph. The product page's "Scroll to
@@ -9046,3 +9305,111 @@ html body .ha-cloth .ha-cloth__statement { margin-top: 2rem; opacity: 1; }
 @media screen and (max-width: 989px) {
   html body .ha-cloth .ha-cloth__statement { max-width: none; }
 }
+
+
+/* ==========================================================================
+   OTHER EXPRESSIONS, 5 OCTOBER — the product page lists the Style's other
+   Expressions under the Expression row (sections/ha-product), so a Style
+   card's "04 fabric expressions" leads to all four. The names sit in the
+   Expression row's voice; a hairline under each brightens on hover (the
+   ruled-row idiom: the line changes, no second underline).
+   ========================================================================== */
+.ha-pdp__field--others { margin-top: 2.4rem; }
+.ha-pdp__expr-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.8rem; }
+.ha-pdp__expr-link {
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--ha-rule);
+  padding-bottom: 0.2rem;
+  transition: border-color 0.2s ease;
+}
+.ha-pdp__expr-link:hover,
+.ha-pdp__expr-link:focus-visible { border-bottom-color: currentColor; }
+
+
+/* ==========================================================================
+   THE OPENING ON A PHONE, 5 OCTOBER — Ivan: not the desktop collage with
+   its empty glassine sheet. Below 990px the collage is swapped out in the
+   markup (sections/ha-home-note): a phone photograph if one is picked,
+   shown whole above the words; otherwise nothing, and the words open the
+   page on the paper panel, clear of the transparent menu bar.
+   ========================================================================== */
+.ha-home-note__picture { display: contents; }
+@media screen and (max-width: 989px) {
+  .ha-home-note--phone-words .ha-home-note__picture { display: none; }
+  .ha-home-note--phone-words .ha-home-note__sheet {
+    padding-top: calc(var(--site-header-height-mobile, 6rem) + clamp(4rem, 10vw, 6.4rem));
+  }
+  .ha-home-note--phone-photo .ha-home-note__photo {
+    width: 100%;
+    height: auto;
+    max-height: 88svh;
+    object-fit: cover;
+  }
+}
+
+
+/* ==========================================================================
+   NUMBERS IN BOLD, 5 OCTOBER — Ivan: the 01 / 02 / 03 beside APPAREL, FINE
+   SILK, FINE JEWELLERY were the thin typrighter, "very very hard to read".
+   Role 4 (standalone numbers, Typewriter Bold) above matches "__num" only,
+   so every number named "__something-num" slipped through to the Regular.
+   These are those numbers: the Index directory and captions, the range
+   pages' category numbers, the Cloth and Masters pages' indexes and
+   captions, and the .ha-num beside a range title.
+   ========================================================================== */
+html body :is(.ha-idx__dir-num, .ha-idx__index-num, .ha-idx__caption-num, .ha-clothing__cat-num, .ha-cloth__index-num, .ha-cloth__caption-num, .ha-mst__row-num, .ha-mst__caption-num, .ha-num) {
+  font-family: var(--ha-role-number) !important;
+  font-weight: var(--ha-role-number-weight) !important;
+  font-style: normal;
+  opacity: 1;
+}
+
+
+/* ==========================================================================
+   NO COLOURED TEXT ON THE COLLECTION PAGES, 5 OCTOBER — Ivan: "we don't have
+   any colour for now for the text on all collection pages". The two browns
+   there go to the ink, soot black: Cutch Resin on the number beside a
+   piece's name (LARGE SQUARE 01) and on any range title's number, and the
+   title ink (#332820) on the category headings, the feature heading and
+   the Index's section headings. The quiet grey is the ink's own lighter
+   tint and stays; the white labels on photographs stay.
+   ========================================================================== */
+html body:is(.lx-template--collection, .lx-template--list-collections) :is(.ha-clothing, .ha-idx) {
+  --ha-ink-title: var(--ha-soot-black);
+}
+html body:is(.lx-template--collection, .lx-template--list-collections) :is(.ha-clothing, .ha-idx) :is(.ha-num, .ha-clothing__cat-heading, .ha-clothing__feature-heading, .ha-idx__heading, .ha-idx__dir-heading, .ha-idx__dir-heading a) {
+  color: var(--ha-soot-black);
+}
+/* …and the same number on the product pages (Ivan, 5 October): black. */
+html body:is(.lx-template--product) .ha-num { color: var(--ha-soot-black); }
+/* …and the number at the name's own size, on its baseline (Ivan, 5 October;
+   it was 0.72em, raised slightly). */
+html body .ha-num { font-size: 1em; vertical-align: baseline; }
+/* …and the quiet grey there goes to the ink too (Ivan, 5 October): labels,
+   "View piece", counts, category notes and the Index's references. */
+html body:is(.lx-template--collection, .lx-template--list-collections) :is(.ha-clothing, .ha-idx) {
+  --ha-text-quiet: var(--ha-soot-black);
+}
+html body:is(.lx-template--collection, .lx-template--list-collections) #MainContent :is(.ha-clothing, .ha-idx) :is(p, .rte li) { opacity: 1; }
+
+
+/* ==========================================================================
+   CONTACT PAGE ON THE HOMEPAGE'S SCALE, 5 OCTOBER — Ivan: "Our contact page
+   is HUGE! … cohesive like our homepage text size. The email address also
+   can be small." Every size here is now one of the site's role tokens, as
+   the homepage's own Get in touch band uses them: the CONTACT word at the
+   page-title size (THE COLLECTION INDEX), the visit heading at the section
+   heading size, the aside heading at the story-card title size, the lines
+   at the intro and body sizes, and the addresses at the homepage email
+   link's size. The tokens carry their own phone values.
+   ========================================================================== */
+html body .ha-contact .ha-contact__word { font-size: calc(var(--ha-t-hero) * 3); line-height: 0.9; margin-top: clamp(2.4rem, 3.2vw, 4rem); }
+html body .ha-contact-intro__lines { font-size: var(--ha-t-intro); line-height: var(--ha-t-lh-intro, 1.5); }
+html body .ha-contact-intro__line { font-size: var(--ha-t-body); }
+html body .ha-contact .ha-contact-intro__value { font-size: var(--ha-t-ui); overflow-wrap: normal; }
+html body .ha-contact-visit__heading { font-size: var(--ha-t-h1); }
+html body .ha-contact-visit__sub { font-size: var(--ha-t-intro); }
+html body .ha-contact-visit__aside-heading { font-size: var(--ha-t-h3); }
+html body .ha-contact-visit__line { font-size: var(--ha-t-body); }

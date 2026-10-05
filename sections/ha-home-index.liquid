@@ -129,6 +129,38 @@
               assign small_a_alt = block.settings.alt_small_a_noyoga
               assign small_a_caption = block.settings.caption_small_a_noyoga | default: label
             endif
+
+            # Each frame links where its caption says (Ivan, 5 October 2026:
+            # "make sure these links are directly connected to Loungewear,
+            # Fine Jewellery, Fine Silk"). A frame's own link setting wins;
+            # then the page its caption names; then the block's destination.
+            assign cap_tall = block.settings.caption_tall | default: label
+            assign cap_b = block.settings.caption_small_b | default: label
+            assign cap_wide = block.settings.caption_wide | default: label
+            assign frame_caps = cap_tall | append: '|' | append: small_a_caption | append: '|' | append: cap_b | append: '|' | append: cap_wide | split: '|'
+            assign frame_urls = ''
+            for fc in frame_caps
+              assign fcl = fc | downcase | strip
+              assign fu = url
+              case fcl
+                when 'apparel', 'clothing'
+                  assign fu = '/collections/apparel'
+                when 'fine silk', 'silk', 'silk scarves'
+                  assign fu = '/collections/fine-silk'
+                when 'fine jewellery', 'fine jewelry', 'jewellery', 'jewelry'
+                  assign fu = '/collections/fine-jewellery'
+                when 'loungewear'
+                  assign fu = '/collections/apparel#loungewear'
+                when 'yoga'
+                  assign fu = '/collections/yoga'
+              endcase
+              assign frame_urls = frame_urls | append: fu | append: '|'
+            endfor
+            assign frame_urls = frame_urls | split: '|'
+            assign url_tall = block.settings.url_tall | default: frame_urls[0]
+            assign url_a = block.settings.url_small_a | default: frame_urls[1]
+            assign url_b = block.settings.url_small_b | default: frame_urls[2]
+            assign url_wide = block.settings.url_wide | default: frame_urls[3]
           -%}
           <div
             class="ha-home-index__montage"
@@ -136,7 +168,7 @@
             {% if block.id == first_key %}data-pair-default{% else %}hidden{% endif %}
           >
             {%- comment -%} 01 — tall {%- endcomment -%}
-            <a class="ha-home-index__frame ha-home-index__frame--tall" href="{{ url }}" aria-label="{{ cat | escape }}">
+            <a class="ha-home-index__frame ha-home-index__frame--tall" href="{{ url_tall }}" aria-label="{{ cap_tall | escape }}">
               <span class="ha-home-index__figure">
                 {%- if block.settings.image_tall -%}
                   {{ block.settings.image_tall | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 24vw, (min-width: 750px) 40vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: block.settings.alt_tall, class: 'ha-home-index__img' }}
@@ -144,12 +176,12 @@
                   <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">01 / To supply</span></span>
                 {%- endif -%}
               </span>
-              <span class="ha-home-index__caption ha-record">01 / {{ block.settings.caption_tall | default: label }}</span>
+              <span class="ha-home-index__caption ha-record">01 / {{ cap_tall }}</span>
             </a>
 
             <div class="ha-home-index__right">
               {%- comment -%} 04 and 03 — the two small frames, captions set vertically beside them {%- endcomment -%}
-              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--a" href="{{ url }}" aria-label="{{ cat | escape }}">
+              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--a" href="{{ url_a }}" aria-label="{{ small_a_caption | escape }}">
                 <span class="ha-home-index__figure">
                   {%- if small_a -%}
                     {{ small_a | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: small_a_alt, class: 'ha-home-index__img' }}
@@ -160,7 +192,7 @@
                 <span class="ha-home-index__caption ha-home-index__caption--vertical ha-record">04 / {{ small_a_caption }}</span>
               </a>
 
-              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--b" href="{{ url }}" aria-label="{{ cat | escape }}">
+              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--b" href="{{ url_b }}" aria-label="{{ cap_b | escape }}">
                 <span class="ha-home-index__figure">
                   {%- if block.settings.image_small_b -%}
                     {{ block.settings.image_small_b | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: block.settings.alt_small_b, class: 'ha-home-index__img' }}
@@ -168,11 +200,11 @@
                     <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">03 / To supply</span></span>
                   {%- endif -%}
                 </span>
-                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-home-index__caption--after ha-record">03 / {{ block.settings.caption_small_b | default: label }}</span>
+                <span class="ha-home-index__caption ha-home-index__caption--vertical ha-home-index__caption--after ha-record">03 / {{ cap_b }}</span>
               </a>
 
               {%- comment -%} 02 — wide {%- endcomment -%}
-              <a class="ha-home-index__frame ha-home-index__frame--wide" href="{{ url }}" aria-label="{{ cat | escape }}">
+              <a class="ha-home-index__frame ha-home-index__frame--wide" href="{{ url_wide }}" aria-label="{{ cap_wide | escape }}">
                 <span class="ha-home-index__figure">
                   {%- if block.settings.image_wide -%}
                     {{ block.settings.image_wide | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 38vw, (min-width: 750px) 60vw, 100vw', widths: '400, 600, 800, 1000, 1200, 1600', alt: block.settings.alt_wide, class: 'ha-home-index__img' }}
@@ -180,7 +212,7 @@
                     <span class="ha-figure ha-figure--empty ha-home-index__empty"><span class="ha-figure__label ha-record">02 / To supply</span></span>
                   {%- endif -%}
                 </span>
-                <span class="ha-home-index__caption ha-record">02 / {{ block.settings.caption_wide | default: label }}</span>
+                <span class="ha-home-index__caption ha-record">02 / {{ cap_wide }}</span>
               </a>
             </div>
           </div>
@@ -218,19 +250,23 @@
         { "type": "header", "content": "Montage — four frames" },
         { "type": "image_picker", "id": "image_tall", "label": "01 / Tall" },
         { "type": "text", "id": "alt_tall", "label": "01 alt text" },
+        { "type": "url", "id": "url_tall", "label": "01 link", "info": "Empty: the page its caption names (Apparel, Fine Silk, Fine Jewellery, Loungewear, Yoga), else the Destination." },
         { "type": "text", "id": "caption_tall", "label": "01 caption", "info": "Empty: the caption label above. The final homepage (24 Sep) captions each frame of the opening montage with its own collection — 01 / Apparel, 02 / Fine Silk, 03 / Fine Jewellery, 04 / Yoga." },
         { "type": "image_picker", "id": "image_small_a", "label": "04 / Small, left" },
         { "type": "text", "id": "alt_small_a", "label": "04 alt text" },
         { "type": "text", "id": "caption_small_a", "label": "04 caption" },
+        { "type": "url", "id": "url_small_a", "label": "04 link", "info": "Empty: the page its caption names, else the Destination." },
         { "type": "image_picker", "id": "image_small_a_noyoga", "label": "04 while Yoga is hidden", "info": "Used instead of frame 04 when that frame is a Yoga picture and Theme settings > Show Yoga is off." },
         { "type": "text", "id": "alt_small_a_noyoga", "label": "04 description while Yoga is hidden" },
         { "type": "text", "id": "caption_small_a_noyoga", "label": "04 caption while Yoga is hidden" },
         { "type": "image_picker", "id": "image_small_b", "label": "03 / Small, right" },
         { "type": "text", "id": "alt_small_b", "label": "03 alt text" },
         { "type": "text", "id": "caption_small_b", "label": "03 caption" },
+        { "type": "url", "id": "url_small_b", "label": "03 link", "info": "Empty: the page its caption names, else the Destination." },
         { "type": "image_picker", "id": "image_wide", "label": "02 / Wide" },
         { "type": "text", "id": "alt_wide", "label": "02 alt text" },
-        { "type": "text", "id": "caption_wide", "label": "02 caption" }
+        { "type": "text", "id": "caption_wide", "label": "02 caption" },
+        { "type": "url", "id": "url_wide", "label": "02 link", "info": "Empty: the page its caption names, else the Destination." }
       ]
     }
   ],

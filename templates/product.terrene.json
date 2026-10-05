@@ -342,7 +342,8 @@
         "heading": "From Fibre to Garment",
         "ref_label": "Provenance",
         "show_status": true,
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "paper": "shopify://shop_images/HA_PRODUCT_PROVENANCE_PAPER_GREY.jpg"
       }
     },
     "ha_cloth": {

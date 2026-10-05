@@ -225,7 +225,7 @@
   assign construction_method = mf.construction_method
 -%}
 
-<section class="ha-section ha-provenance{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" id="origin-and-process">
+<section class="ha-section ha-provenance{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}{% if section.settings.paper %} ha-provenance--paper{% endif %}" id="origin-and-process"{% if section.settings.paper %} style="--ha-provenance-paper: url({{ section.settings.paper | image_url: width: 2400 }});"{% endif %}>
   <div class="ha-wrap">
     <div class="ha-provenance__head">
       <div>
@@ -330,6 +330,7 @@
     { "type": "select", "id": "field", "label": "Field colour", "default": "page", "options": [
       { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" }
     ] },
+    { "type": "image_picker", "id": "paper", "label": "Paper photograph", "info": "Grey paper behind the record, no brown dividers (4 October 2026). Empty = the field colour above." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Origin + Process" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "From Fibre to Garment" },
     { "type": "text", "id": "ref_label", "label": "Reference label", "default": "Provenance" },

@@ -305,7 +305,30 @@
               {%- if hero == nil -%}{%- assign hero = last_p -%}{%- endif -%}
               {%- assign sname = st.display_name.value | default: st.display_name -%}
               {%- assign cards = cards | plus: 1 -%}
-              {%- render 'ha-clothing-card', hero: hero, sname: sname, count: count, ss: section.settings -%}
+              {%- if section.settings.card_per_expression -%}
+                {%- comment -%}
+                  One card per Expression (Ivan, 5 October 2026: "I can't find
+                  this active product on the website"). The Style's hero comes
+                  first, then every other photographed product sharing the
+                  Style, so a Style's Expressions sit together in Style order.
+                  Each card names the Style with its Expression beneath, as the
+                  product title does. A Style with no photograph keeps its one
+                  placeholder card.
+                {%- endcomment -%}
+                {%- assign done = ',' | append: hero.handle | append: ',' -%}
+                {%- render 'ha-clothing-card', hero: hero, sname: sname, count: 1, ss: section.settings -%}
+                {%- for p2 in collection.products -%}
+                  {%- if p2.metafields.hartwick.style.value.system.handle != shandle -%}{%- continue -%}{%- endif -%}
+                  {%- if p2.featured_media == blank -%}{%- continue -%}{%- endif -%}
+                  {%- assign p2key = ',' | append: p2.handle | append: ',' -%}
+                  {%- if done contains p2key -%}{%- continue -%}{%- endif -%}
+                  {%- assign done = done | append: p2.handle | append: ',' -%}
+                  {%- assign cards = cards | plus: 1 -%}
+                  {%- render 'ha-clothing-card', hero: p2, sname: sname, count: 1, ss: section.settings -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- render 'ha-clothing-card', hero: hero, sname: sname, count: count, ss: section.settings -%}
+              {%- endif -%}
             {%- endfor -%}
             {%- endif -%}
             {%- if cards == 0 -%}
@@ -367,6 +390,7 @@
     { "type": "text", "id": "lots_note", "label": "Expanded note", "default": "Dates, quantities and access windows appear only when confirmed." },
     { "type": "header", "content": "Cards" },
     { "type": "text", "id": "lot_label", "label": "Lot label", "default": "Lot" },
+    { "type": "checkbox", "id": "card_per_expression", "label": "One card per Expression", "default": true, "info": "On (Ivan, 5 October 2026): every photographed piece has its own card, a Style's Expressions side by side. Off: one card per Style with an Expression count, as Aloha's 17 September artboard drew it." },
     { "type": "checkbox", "id": "show_lot", "label": "Show the Lot line on cards", "default": false, "info": "Off (Aloha, 25 September 2026): the Lot system is to be revisited; the line is removed from the cards for this version." },
     { "type": "text", "id": "lot_placeholder", "label": "Lot not yet confirmed reads", "default": "Lot [number]" },
     { "type": "text", "id": "count_text", "label": "Count text", "default": "fabric expressions" },

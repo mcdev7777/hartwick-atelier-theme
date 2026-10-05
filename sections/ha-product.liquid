@@ -544,6 +544,45 @@
           </div>
         {%- endif -%}
 
+        {%- comment -%}
+          OTHER EXPRESSIONS, 5 October 2026. The Apparel page shows one card
+          per Style ("04 fabric expressions"), so the other Expressions of a
+          Style were reachable from nowhere: the store had pieces the website
+          never showed. Every photographed product that shares this one's
+          hartwick.style is listed here, found through the collections this
+          product is in (a Style's Expressions share their category
+          collection). Unphotographed pieces stay out of public view, as on
+          the sub-collection pages.
+        {%- endcomment -%}
+        {%- assign style_key = product.metafields.hartwick.style.value.system.handle -%}
+        {%- if section.settings.show_other_expressions and style_key != blank -%}
+          {%- assign expr_seen = ',' | append: product.handle | append: ',' -%}
+          {%- capture other_expressions -%}
+            {%- for c in product.collections -%}
+              {%- for sib in c.products -%}
+                {%- assign sib_key = ',' | append: sib.handle | append: ',' -%}
+                {%- if expr_seen contains sib_key -%}{%- continue -%}{%- endif -%}
+                {%- if sib.metafields.hartwick.style.value.system.handle != style_key -%}{%- continue -%}{%- endif -%}
+                {%- if sib.featured_media == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign expr_seen = expr_seen | append: sib.handle | append: ',' -%}
+                {%- capture sib_name -%}{%- render 'ha-product-fact', product: sib, field: 'selector' -%}{%- endcapture -%}
+                {%- assign sib_name = sib_name | strip -%}
+                {%- if sib_name == blank -%}
+                  {%- capture sib_name -%}{%- render 'ha-product-fact', product: sib, field: 'expression' -%}{%- endcapture -%}
+                  {%- assign sib_name = sib_name | strip | default: sib.title -%}
+                {%- endif -%}
+                <li><a class="ha-pdp__expr-link ha-narrate" href="{{ sib.url }}">{{ sib_name }}</a></li>
+              {%- endfor -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- if other_expressions != blank -%}
+            <div class="ha-pdp__field ha-pdp__field--others">
+              <p class="ha-pdp__field-label ha-record">{{ section.settings.other_expressions_label }}</p>
+              <ul class="ha-pdp__expr-list" role="list">{{ other_expressions }}</ul>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+
         <div class="ha-pdp__size">
           {%- if section.settings.size_guide_page != blank -%}
             <a class="ha-pdp__size-guide ha-record" href="{{ section.settings.size_guide_page.url }}">Size guide</a>
@@ -655,6 +694,8 @@
 
     { "type": "header", "content": "Buy rail" },
     { "type": "text", "id": "expression_label", "label": "Expression label", "default": "Expression" },
+    { "type": "checkbox", "id": "show_other_expressions", "label": "List the Style's other Expressions", "default": true, "info": "Links to every photographed piece sharing this product's Style, under the Expression row." },
+    { "type": "text", "id": "other_expressions_label", "label": "Other Expressions label", "default": "Other expressions" },
     { "type": "text", "id": "availability_label", "label": "Availability label", "default": "Availability" },
     { "type": "checkbox", "id": "show_availability", "label": "Show live availability", "default": true, "info": "“Select a size”, then the chosen size's state. A recorded hartwick.availability_note always wins." },
     { "type": "text", "id": "availability_in_stock", "label": "Available reads", "default": "Available" },
