@@ -9448,3 +9448,6 @@ html body .ha-contact-visit__line { font-size: var(--ha-t-body); }
   .ha-policies__body th,
   .ha-policies__body td { min-width: 0; padding-right: 1rem; }
 }
+
+/* Honeypot (snippets/ha-honeypot.liquid): off-screen, not display:none — some bots skip hidden inputs. */
+.ha-hp { position: absolute !important; left: -10000px !important; top: auto; width: 1px; height: 1px; overflow: hidden; }

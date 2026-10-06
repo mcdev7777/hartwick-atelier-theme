@@ -114,6 +114,8 @@
 
             <p class="ha-reg-form__message ha-record" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
 
+            {%- render 'ha-honeypot', id: 'RegisterJoinHp', suffix: section.id -%}
+
             <div class="ha-reg-form__field">
               <label class="ha-reg-form__label ha-record" for="HaRegJoinEmail--{{ section.id }}">{{ section.settings.label_email }}</label>
               <input

@@ -126,6 +126,8 @@
             {%- endcomment -%}
             <p class="ha-register__message ha-record" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
 
+            {%- render 'ha-honeypot', id: 'RegisterHp', suffix: section.id -%}
+
             <div class="ha-register__field">
               <label class="ha-register__label ha-record" for="HaRegister--{{ section.id }}">
                 {{ 'newsletter.label' | t }}

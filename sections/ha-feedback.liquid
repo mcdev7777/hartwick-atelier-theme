@@ -66,6 +66,8 @@
 
         <p class="ha-reg-form__message ha-record" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
 
+        {%- render 'ha-honeypot', id: 'FeedbackHp' -%}
+
         {%- if form.posted_successfully? -%}
           <p class="ha-reg-form__message ha-reg-form__message--server ha-record" tabindex="-1" autofocus>{{ section.settings.msg_success }}</p>
         {%- elsif form.errors -%}

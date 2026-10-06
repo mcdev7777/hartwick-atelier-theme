@@ -1,0 +1,16 @@
+{%- comment -%}
+  A field no person sees or reaches: off-screen, out of the tab order, hidden
+  from screen readers, no autofill. Bots that fill every input fill this one,
+  and assets/ha-klaviyo-form.js then drops the submission (6 Oct 2026, after a
+  random-string Circle reply). Not named contact[…], so Shopify ignores it.
+{%- endcomment -%}
+{%- liquid
+  assign hp_id = id | default: 'ha-hp'
+  if suffix != blank
+    assign hp_id = hp_id | append: '-' | append: suffix
+  endif
+-%}
+<div class="ha-hp" aria-hidden="true">
+  <label for="{{ hp_id }}">Leave this empty</label>
+  <input id="{{ hp_id }}" type="text" name="ha_website" value="" tabindex="-1" autocomplete="off" data-ha-honeypot>
+</div>

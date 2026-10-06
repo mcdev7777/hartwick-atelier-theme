@@ -165,6 +165,8 @@
           {%- comment -%} Live region for the script's states; Shopify's own two below are the no-JS path. {%- endcomment -%}
           <p class="ha-crequest__note ha-record" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
 
+          {%- render 'ha-honeypot', id: 'CircleRequestHp' -%}
+
           {%- if form.posted_successfully? -%}
             <p class="ha-crequest__note ha-crequest__note--ok ha-record" tabindex="-1" autofocus>
               {{ section.settings.success_text | default: 'Thank you. Your request has been received.' }}

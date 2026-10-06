@@ -46,6 +46,13 @@
  * list). A `[data-ha-question]` wrapper adds that question and its answer to
  * `answers` / `answers_text`; a `[data-ha-required]` one must be answered
  * before sending (`data-msg-required`). Forms without these are unchanged.
+ *
+ * BOTS (6 October 2026, after a random-string Circle reply set off the Atelier
+ * alert). Every form renders snippets/ha-honeypot.liquid, a field no person
+ * sees. If it is filled, or the form is sent less than MIN_FILL_MS after the
+ * script wired it, nothing goes to Klaviyo and the form shows its normal
+ * success state, so the bot learns nothing. Pages without the field are
+ * unchanged apart from the timing check.
  */
 (function () {
   'use strict';
@@ -57,6 +64,7 @@
   var EVENT_ENDPOINT = 'https://a.klaviyo.com/client/events/';
   var REVISION = '2025-04-15';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var MIN_FILL_MS = 1500;
 
   function setState(form, state, message, isError) {
     form.setAttribute('data-state', state);
@@ -195,6 +203,8 @@
     var button = form.querySelector('button[type="submit"]');
     var emailField = form.querySelector('input[name="contact[email]"]');
     var consent = form.querySelector('input[data-ha-consent]');
+    var honeypot = form.querySelector('input[data-ha-honeypot]');
+    var wiredAt = Date.now();
 
     form.addEventListener('change', function (event) {
       var q = event.target.closest && event.target.closest('[data-ha-missed]');
@@ -203,6 +213,13 @@
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
+
+      // A bot: pretend it worked, send nothing.
+      if ((honeypot && honeypot.value) || Date.now() - wiredAt < MIN_FILL_MS) {
+        setState(form, 'success', text(form, 'success'), false);
+        form.reset();
+        return;
+      }
 
       var email = (emailField && emailField.value || '').trim();
       if (!EMAIL_RE.test(email)) {
