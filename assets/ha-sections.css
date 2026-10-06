@@ -9405,7 +9405,9 @@ html body:is(.lx-template--collection, .lx-template--list-collections) #MainCont
    at the intro and body sizes, and the addresses at the homepage email
    link's size. The tokens carry their own phone values.
    ========================================================================== */
-html body .ha-contact .ha-contact__word { font-size: calc(var(--ha-t-hero) * 3); line-height: 0.9; margin-top: clamp(2.4rem, 3.2vw, 4rem); }
+html body .ha-contact .ha-contact__word { font-size: min(calc(var(--ha-t-hero) * 3), 19vw); line-height: 0.9; margin-top: clamp(2.4rem, 3.2vw, 4rem); }
+/* the word never wraps, so on a phone it is held to the screen width (19vw,
+   about 71px at 375) or it runs off the right edge (5 October). */
 html body .ha-contact-intro__lines { font-size: var(--ha-t-intro); line-height: var(--ha-t-lh-intro, 1.5); }
 html body .ha-contact-intro__line { font-size: var(--ha-t-body); }
 html body .ha-contact .ha-contact-intro__value { font-size: var(--ha-t-ui); overflow-wrap: normal; }
@@ -9413,3 +9415,36 @@ html body .ha-contact-visit__heading { font-size: var(--ha-t-h1); }
 html body .ha-contact-visit__sub { font-size: var(--ha-t-intro); }
 html body .ha-contact-visit__aside-heading { font-size: var(--ha-t-h3); }
 html body .ha-contact-visit__line { font-size: var(--ha-t-body); }
+
+
+
+/* ==========================================================================
+   PHONES, THIRD REVIEW, 5 OCTOBER — every page and drawer at 375 and 320.
+   Nothing scrolled sideways at 375. At 320 three things did:
+   - a written-out web address in the policy text (shopify.com/legal/cookies,
+     globalprivacycontrol.org) is one unbreakable word and pushed the page
+     to 344px: addresses in running text may break anywhere;
+   - Shopify's data-sharing opt-out form holds its checkbox line on one row
+     (331px, Shopify sizes the label to its text): the line takes the
+     column's width and wraps;
+   - the shipping table's four columns asked for 336px and scrolled inside
+     itself: on a small phone the cells drop their 64px floor and close up,
+     so it fits.
+   And the product gallery: the second picture snapped flush to the screen
+   edge (snap to the scroller's box, not its padding): it now stops at the
+   gutter like the first.
+   ========================================================================== */
+:is(.ha-body, .rte, .shopify-policy__body, .ha-policies__body, .ha-policy-body) a { overflow-wrap: anywhere; }
+.pc--opt-out-form-container .pc--show-email-field { flex: 1 1 0%; min-width: 0; max-width: 100%; }
+.pc--show-email-field label { width: 100%; max-width: 100%; align-items: flex-start; }
+@media screen and (max-width: 989px) {
+  .ha-pdp__frames { scroll-padding-inline: var(--ha-gutter); }
+  /* A flex row stretches every frame to the tallest picture, so a shorter
+     one (a landscape or square jewellery shot) sat on a grey slab of the
+     placeholder field. Each frame now ends with its own picture, uncropped. */
+  .ha-pdp__frames { align-items: flex-start; }
+}
+@media screen and (max-width: 419px) {
+  .ha-policies__body th,
+  .ha-policies__body td { min-width: 0; padding-right: 1rem; }
+}
