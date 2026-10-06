@@ -7,29 +7,53 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  *
- * 24 September 2026 — Aloha's final homepage footer: layout "row" (the
- * wordmark over one line of links), links in her order.
- *
- * 24 September 2026 — Aloha: "THE REGISTER BOX: Fixed on all pages, except on
- * The Register page." The band moved here from the templates (theirs are
- * disabled, settings kept) with site_wide on.
- *
- * 1 October 2026 — Aloha: the wine paper from the team in India under every
- * Register band (`paper` = HA_REGISTER_BLOCK_PAPER_WINE.jpg).
+ * 6 October 2026 — Aloha: dark footer on her grey paper, logo and four
+ * columns (HARTWICK · DETAILS · SOCIAL · THE REGISTER), layout "ledger". The Register band above it is switched off (Ivan,
+ * 6 Oct): the footer carries the signup now.
  */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "register": {
+      "type": "ha-register",
+      "settings": {
+        "site_wide": true,
+        "email_placeholder": "Email address",
+        "eyebrow": "The Register",
+        "heading": "Correspondence from the Atelier, when there is something worth sending.",
+        "body": "<p>The Dispatch carries production notes, material studies, conversations with Masters and considered notice of what the Atelier is making next.</p>",
+        "body_position": "form",
+        "heading_style": "pull",
+        "field": "correspondence",
+        "paper": "shopify://shop_images/HA_REGISTER_BLOCK_PAPER_WINE.jpg",
+        "grain": true,
+        "form_style": "link",
+        "link_text": "Join The Register",
+        "link_url": "shopify://pages/the-register",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "footer",
+        "consent_text": "<p>Yes, add me to The Register. Hartwick Atelier may write to me with The Dispatch and news of each Release. I can leave at any time.</p>",
+        "msg_invalid": "Please enter a valid email address.",
+        "msg_consent": "Please tick the box to join.",
+        "msg_submitting": "One moment…",
+        "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
+        "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com."
+      },
+      "disabled": true
+    },
     "ha_footer": {
       "type": "ha-footer",
       "blocks": {
         "n1": {
           "type": "link",
           "settings": {
-            "label": "Collection",
+            "label": "Store",
             "url": "/collections",
-            "column": "left"
+            "column": "left",
+            "social": "none",
+            "new_tab": false
           }
         },
         "n2": {
@@ -37,7 +61,9 @@
           "settings": {
             "label": "The Masters",
             "url": "/pages/the-masters",
-            "column": "left"
+            "column": "left",
+            "social": "none",
+            "new_tab": false
           }
         },
         "n3": {
@@ -45,7 +71,9 @@
           "settings": {
             "label": "The Journal",
             "url": "/blogs/news",
-            "column": "left"
+            "column": "left",
+            "social": "none",
+            "new_tab": false
           }
         },
         "n5": {
@@ -53,7 +81,9 @@
           "settings": {
             "label": "The Register",
             "url": "/pages/the-register",
-            "column": "left"
+            "column": "left",
+            "social": "none",
+            "new_tab": false
           }
         },
         "n6": {
@@ -61,7 +91,9 @@
           "settings": {
             "label": "The Circle",
             "url": "/pages/the-circle",
-            "column": "left"
+            "column": "left",
+            "social": "none",
+            "new_tab": false
           }
         },
         "n4": {
@@ -69,7 +101,9 @@
           "settings": {
             "label": "About",
             "url": "/pages/about-the-atelier",
-            "column": "left"
+            "column": "left",
+            "social": "none",
+            "new_tab": false
           }
         },
         "l2": {
@@ -77,70 +111,75 @@
           "settings": {
             "label": "Contact",
             "url": "/pages/contact-us",
-            "column": "left"
+            "column": "details",
+            "social": "none",
+            "new_tab": false
           }
         },
         "l1": {
           "type": "link",
           "settings": {
             "label": "Instagram",
+            "url": "",
+            "column": "right",
             "social": "instagram",
-            "new_tab": true,
-            "column": "right"
+            "new_tab": true
           }
         },
         "l3": {
           "type": "link",
           "settings": {
             "label": "LinkedIn",
+            "url": "",
+            "column": "right",
             "social": "linkedin",
-            "new_tab": true,
-            "column": "right"
+            "new_tab": true
+          }
+        },
+        "d1": {
+          "type": "link",
+          "settings": {
+            "label": "Shipping & Returns",
+            "url": "/pages/policies#shipping-policy",
+            "column": "details",
+            "social": "none",
+            "new_tab": false
+          }
+        },
+        "d2": {
+          "type": "link",
+          "settings": {
+            "label": "Size Guide",
+            "url": "/pages/size-guide",
+            "column": "details",
+            "social": "none",
+            "new_tab": false
           }
         }
       },
       "block_order": [
         "n1",
+        "n4",
         "n2",
         "n3",
         "n5",
         "n6",
-        "n4",
+        "d1",
+        "d2",
         "l2",
         "l1",
         "l3"
       ],
       "settings": {
+        "layout": "ledger",
+        "field": "page",
+        "menu": "",
         "nav_label": "Footer",
         "show_policies": true,
-        "policies_label": "Our policies",
+        "policies_label": "Policies",
         "policies_url": "/pages/policies",
         "show_cookie_preferences": true,
-        "cookie_preferences_label": "Cookie preferences",
-        "field": "page",
-        "layout": "row"
-      }
-    },
-    "register": {
-      "type": "ha-register",
-      "blocks": {},
-      "block_order": [],
-      "settings": {
-        "email_placeholder": "Email address",
-        "eyebrow": "The Register",
-        "heading": "Correspondence from the Atelier, when there is something worth sending.",
-        "heading_style": "pull",
-        "form_style": "link",
-        "body": "<p>The Dispatch carries production notes, material studies, conversations with Masters and considered notice of what the Atelier is making next.</p>",
-        "body_position": "form",
-        "show_native_form": true,
-        "contact_tag": "the-register",
-        "register_source": "footer",
-        "field": "correspondence",
-        "link_text": "Join The Register",
-        "link_url": "/pages/the-register#join-the-register",
-        "site_wide": true,
-        "paper": "shopify://shop_images/HA_REGISTER_BLOCK_PAPER_WINE.jpg"
+        "cookie_preferences_label": "Cookie preferences"
       }
     }
   },

@@ -9451,3 +9451,102 @@ html body .ha-contact-visit__line { font-size: var(--ha-t-body); }
 
 /* Honeypot (snippets/ha-honeypot.liquid): off-screen, not display:none — some bots skip hidden inputs. */
 .ha-hp { position: absolute !important; left: -10000px !important; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+/* ==========================================================================
+   FOOTER — THE LEDGER (Aloha, 6 October 2026)
+   Dark ground ("for now in black") over her grey paper, the light Chalk Blue
+   logo at the left, then HARTWICK · DETAILS · SOCIAL · THE REGISTER in
+   columns. The ground and how much paper shows are section settings, sent
+   in as --ha-ledger-*; the colours are the theme tokens.
+   ========================================================================== */
+/* "html body .ha-section" so the site-wide grain rule does not replace the
+   paper; the paper is its own texture, so no grain on top. */
+html body .ha-section.ha-footer.ha-footer--ledger {
+  --ha-text: var(--ha-chalk-blue);
+  --ha-ledger-quiet: color-mix(in srgb, var(--ha-chalk-blue) 58%, transparent);
+  --ha-ledger-rule: color-mix(in srgb, var(--ha-chalk-blue) 32%, transparent);
+  color: var(--ha-chalk-blue);
+  background-color: var(--ha-ledger-ground, #000);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--ha-ledger-ground, #000) var(--ha-ledger-veil, 88%), transparent), color-mix(in srgb, var(--ha-ledger-ground, #000) var(--ha-ledger-veil, 88%), transparent)),
+    var(--ha-ledger-paper);
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+}
+.ha-footer.ha-footer--ledger .ha-footer__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem 2.4rem;
+  padding: 4.8rem var(--ha-gutter) 3.2rem;
+}
+.ha-footer--ledger .ha-footer__mark--ledger { grid-column: 1 / -1; width: fit-content; color: inherit; }
+.ha-footer--ledger .ha-footer__mark--ledger img { display: block; width: 168px; height: auto; }
+.ha-footer--ledger .ha-footer__cols { display: contents; }
+.ha-footer--ledger .ha-footer__col { display: grid; gap: 1.6rem; align-content: start; }
+.ha-footer--ledger .ha-footer__col--register { grid-column: 1 / -1; }
+.ha-footer--ledger .ha-footer__heading {
+  margin: 0; font-size: var(--ha-t-footer); line-height: var(--ha-t-lh-footer);
+  color: var(--ha-ledger-quiet);
+}
+.ha-footer--ledger .ha-footer__links--stack { display: grid; gap: 1.1rem; }
+.ha-footer--ledger .ha-footer__links a,
+.ha-footer--ledger .ha-footer__links button { color: var(--ha-chalk-blue); }
+.ha-footer--ledger .ha-footer__lede {
+  margin: 0; max-width: 34ch; font-size: var(--ha-t-meta); line-height: 1.6; color: var(--ha-chalk-blue);
+}
+.ha-footer--ledger .ha-footer__form { display: grid; gap: 1.2rem; max-width: 46rem; }
+.ha-footer--ledger .ha-footer__field {
+  display: flex; align-items: stretch;
+  border: 1px solid var(--ha-ledger-rule);
+}
+.ha-footer--ledger .ha-footer__field:focus-within { border-color: var(--ha-chalk-blue); }
+.ha-footer--ledger .ha-footer__input {
+  flex: 1 1 auto; min-width: 0; margin: 0; padding: 1.3rem 1.4rem;
+  background: transparent; border: 0; border-radius: 0; box-shadow: none;
+  color: var(--ha-chalk-blue); font-size: var(--ha-t-meta);
+}
+.ha-footer--ledger .ha-footer__input::placeholder { color: var(--ha-ledger-quiet); opacity: 1; }
+.ha-footer--ledger .ha-footer__input:focus { outline: none; }
+.ha-footer--ledger .ha-footer__submit {
+  flex: 0 0 auto; margin: 0; padding: 0 1.6rem; cursor: pointer;
+  background: var(--ha-chalk-blue); color: var(--ha-ledger-ground, #000);
+  border: 0; border-radius: 0; font-size: var(--ha-t-footer); white-space: nowrap;
+}
+.ha-footer--ledger .ha-footer__submit:focus-visible { outline: 1px solid var(--ha-chalk-blue); outline-offset: 3px; }
+.ha-footer--ledger .ha-footer__consent {
+  display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start;
+  font-size: var(--ha-t-legal); line-height: 1.6; color: var(--ha-ledger-quiet); cursor: pointer;
+}
+.ha-footer--ledger .ha-footer__consent input { margin: 0.2rem 0 0; accent-color: var(--ha-chalk-blue); }
+.ha-footer--ledger .ha-footer__message { margin: 0; font-size: var(--ha-t-meta); line-height: 1.6; color: var(--ha-chalk-blue); }
+.ha-footer--ledger .ha-footer__message.is-error { color: var(--ha-chalk-blue); text-decoration: underline; text-underline-offset: 0.3rem; }
+.ha-footer--ledger .ha-footer__base {
+  grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.2rem 2.4rem;
+  padding-top: 2.4rem; border-top: 1px solid var(--ha-ledger-rule);
+}
+.ha-footer--ledger .ha-footer__copy { color: var(--ha-ledger-quiet); font-size: var(--ha-t-legal); letter-spacing: 0.04em; }
+.ha-footer--ledger .ha-footer__base .ha-footer__links { font-size: var(--ha-t-legal); }
+.ha-footer--ledger .ha-footer__base .ha-footer__links button { color: var(--ha-ledger-quiet); }
+
+@media screen and (min-width: 750px) {
+  .ha-footer.ha-footer--ledger .ha-footer__inner {
+    grid-template-columns: repeat(3, max-content) minmax(26rem, 40rem);
+    column-gap: clamp(3.2rem, 5vw, 6.4rem);
+    justify-content: start;
+    padding: 5.6rem var(--ha-gutter) 3.6rem;
+  }
+  .ha-footer--ledger .ha-footer__col--register { grid-column: auto; }
+  .ha-footer--ledger .ha-footer__mark--ledger img { width: 206px; }
+}
+@media screen and (min-width: 990px) {
+  .ha-footer.ha-footer--ledger .ha-footer__inner { padding-left: 9.8vw; padding-right: 9.8vw; }
+}
+@media screen and (min-width: 1280px) {
+  .ha-footer.ha-footer--ledger .ha-footer__inner {
+    grid-template-columns: auto repeat(3, max-content) minmax(28rem, 40rem);
+    column-gap: clamp(4rem, 4.4vw, 8rem);
+  }
+  .ha-footer--ledger .ha-footer__mark--ledger { grid-column: auto; }
+  .ha-footer--ledger .ha-footer__base { margin-top: 2.4rem; }
+}

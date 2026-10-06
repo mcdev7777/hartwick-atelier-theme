@@ -44,6 +44,147 @@
 {%- liquid
   assign footer_layout = section.settings.layout | default: 'columns'
 -%}
+{%- if footer_layout == 'ledger' -%}
+  {%- comment -%}
+    THE LEDGER (Aloha, 6 October 2026): a dark footer on her grey paper —
+    "for now in black" — with the practical information in clear columns
+    after the logo: HARTWICK · DETAILS · SOCIAL · THE REGISTER. The logo is
+    her lighter cut in Chalk Blue (assets/ha-footer-wordmark.png), made for
+    this dark ground only; everywhere else keeps the SVG wordmark.
+
+    Links are the same blocks as the other layouts: Left → HARTWICK,
+    Details → DETAILS, Right → SOCIAL. Policies closes DETAILS; Cookie
+    preferences sits on the copyright line (a legal requirement beside the
+    banner, so it never disappears with a layout change).
+
+    The Register column is the site's Klaviyo form (assets/ha-klaviyo-form.js,
+    source "footer"), with the honeypot and the CASL consent box — the brief
+    names only the field and the button, but consent is not optional.
+    Button wording: "Join The Register" (Framework v3), not the brief's
+    "Sign the Register" — Ivan's call, 6 Oct; flagged to Aloha.
+  {%- endcomment -%}
+  {%- liquid
+    assign ledger_ground = section.settings.ledger_ground
+    if ledger_ground == blank or ledger_ground == 'rgba(0,0,0,0)'
+      assign ledger_ground = '#000000'
+    endif
+    if section.settings.ledger_paper != blank
+      assign ledger_paper = section.settings.ledger_paper | image_url: width: 2000
+    else
+      assign ledger_paper = 'ha-footer-paper.jpg' | asset_url
+    endif
+    assign ledger_veil = 100 | minus: section.settings.ledger_paper_strength
+  -%}
+  <footer class="ha-section ha-footer ha-footer--ledger" role="contentinfo"
+    style="--ha-ledger-ground: {{ ledger_ground }}; --ha-ledger-veil: {{ ledger_veil }}%; --ha-ledger-paper: url('{{ ledger_paper }}');">
+    <div class="ha-wrap ha-footer__inner">
+      <a class="ha-footer__mark ha-footer__mark--ledger" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} — home">
+        {%- if section.settings.ledger_logo != blank -%}
+          {{ section.settings.ledger_logo | image_url: width: 600 | image_tag: alt: '', width: 206, loading: 'lazy' }}
+        {%- else -%}
+          <img src="{{ 'ha-footer-wordmark.png' | asset_url }}" alt="" width="206" height="52" loading="lazy">
+        {%- endif -%}
+      </a>
+
+      <nav class="ha-footer__cols" aria-label="{{ section.settings.nav_label | escape }}">
+        {%- assign ledger_columns = 'left,details,right' | split: ',' -%}
+        {%- for column in ledger_columns -%}
+          {%- liquid
+            case column
+              when 'left'
+                assign col_heading = section.settings.ledger_heading_left
+              when 'details'
+                assign col_heading = section.settings.ledger_heading_details
+              when 'right'
+                assign col_heading = section.settings.ledger_heading_right
+            endcase
+          -%}
+          <div class="ha-footer__col ha-footer__col--{{ column }}">
+            {%- if col_heading != blank -%}<p class="ha-footer__heading ha-nav">{{ col_heading }}</p>{%- endif -%}
+            <ul class="ha-footer__links ha-footer__links--stack ha-nav" role="list">
+              {%- if column == 'left' and section.settings.menu != blank -%}
+                {%- for link in section.settings.menu.links -%}
+                  <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for block in section.blocks -%}
+                  {%- liquid
+                    assign href = block.settings.url
+                    if href == blank
+                      case block.settings.social
+                        when 'instagram'
+                          assign href = settings.social_instagram_link
+                        when 'linkedin'
+                          assign href = settings.social_linkedin_link
+                      endcase
+                    endif
+                  -%}
+                  {%- if block.settings.column == column and block.settings.label != blank -%}
+                    <li {{ block.shopify_attributes }}>
+                      <a href="{{ href | default: '#' }}"{% if block.settings.new_tab %} target="_blank" rel="noopener"{% endif %}{% if href == request.path %} aria-current="page"{% endif %}>{{ block.settings.label }}</a>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if column == 'details' and section.settings.show_policies -%}
+                <li><a href="{{ section.settings.policies_url | default: '/pages/policies' }}">{{ section.settings.policies_label | default: 'Policies' }}</a></li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endfor -%}
+      </nav>
+
+      <div class="ha-footer__col ha-footer__col--register" id="footer-register">
+        {%- if section.settings.ledger_heading_register != blank -%}<p class="ha-footer__heading ha-nav">{{ section.settings.ledger_heading_register }}</p>{%- endif -%}
+        {%- if section.settings.ledger_register_text != blank -%}<p class="ha-footer__lede ha-narrate">{{ section.settings.ledger_register_text }}</p>{%- endif -%}
+        {%- form 'customer',
+          id: 'FooterRegisterForm',
+          class: 'ha-footer__form',
+          novalidate: 'novalidate',
+          data-nocaptcha: 'true',
+          data-ha-klaviyo: '',
+          data-company-id: settings.ha_klaviyo_company_id,
+          data-list-id: settings.ha_klaviyo_register_list,
+          data-source: 'footer',
+          data-msg-invalid: section.settings.msg_invalid,
+          data-msg-consent: section.settings.msg_consent,
+          data-msg-submitting: section.settings.msg_submitting,
+          data-msg-success: section.settings.msg_success,
+          data-msg-error: section.settings.msg_error
+        -%}
+          <input type="hidden" name="contact[tags]" value="the-register">
+          <p class="ha-footer__message ha-narrate" data-ha-form-status tabindex="-1" role="status" aria-live="polite" hidden></p>
+
+          {%- render 'ha-honeypot', id: 'FooterRegisterHp' -%}
+
+          <div class="ha-footer__field">
+            <label class="visually-hidden" for="FooterRegisterEmail">{{ 'newsletter.label' | t }}</label>
+            <input id="FooterRegisterEmail" class="ha-footer__input ha-narrate" type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ 'newsletter.label' | t | escape }}" autocomplete="email" autocorrect="off" autocapitalize="off" aria-required="true" required>
+            <button type="submit" class="ha-footer__submit ha-nav" name="commit">{{ section.settings.ledger_button | default: 'Join The Register' }}</button>
+          </div>
+          <label class="ha-footer__consent ha-narrate">
+            <input type="checkbox" data-ha-consent required aria-required="true">
+            <span>{{ section.settings.consent_text | strip_html }}</span>
+          </label>
+
+          {%- if form.posted_successfully? -%}
+            <p class="ha-footer__message ha-narrate" role="status">{{ 'newsletter.success' | t }}</p>
+          {%- elsif form.errors -%}
+            <p class="ha-footer__message ha-narrate is-error" role="alert">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+        {%- endform -%}
+        <script src="{{ 'ha-klaviyo-form.js' | asset_url }}" defer></script>
+      </div>
+
+      <div class="ha-footer__base ha-nav">
+        <p class="ha-footer__copy">&copy; {{ shop.name }}</p>
+        {%- if section.settings.show_cookie_preferences -%}
+          <div class="ha-footer__links">{% render 'ha-cookie-preferences', label: section.settings.cookie_preferences_label %}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </footer>
+{%- else -%}
 <footer class="ha-section ha-footer ha-footer--{{ footer_layout }}{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}" role="contentinfo">
   {%- if footer_layout == 'row' -%}
     {%- comment -%}
@@ -168,6 +309,7 @@
   </div>
   {%- endif -%}
 </footer>
+{%- endif -%}
 
 {% schema %}
 {
@@ -177,6 +319,7 @@
   "max_blocks": 12,
   "settings": [
     { "type": "select", "id": "layout", "label": "Layout", "default": "columns", "options": [
+      { "value": "ledger", "label": "Logo and four columns, dark (6 Oct)" },
       { "value": "row", "label": "Wordmark over one row of links (24 Sep)" },
       { "value": "columns", "label": "Three columns (15 Sep)" }
     ] },
@@ -191,7 +334,25 @@
     { "type": "text", "id": "policies_label", "label": "Policies label", "default": "Policies" },
     { "type": "url", "id": "policies_url", "label": "Policies page", "info": "Defaults to /pages/policies." },
     { "type": "checkbox", "id": "show_cookie_preferences", "label": "Show the cookie preferences link", "default": true, "info": "Reopens the cookie banner from Settings > Customer privacy so a visitor can change their choice. Required alongside the banner in the UK, EEA and Canada." },
-    { "type": "text", "id": "cookie_preferences_label", "label": "Cookie preferences label", "default": "Cookie preferences" }
+    { "type": "text", "id": "cookie_preferences_label", "label": "Cookie preferences label", "default": "Cookie preferences" },
+    { "type": "header", "content": "Logo and four columns (6 Oct)" },
+    { "type": "paragraph", "content": "Used only by the layout \"Logo and four columns, dark\". Left links → first column, Details links → second, Right links → third." },
+    { "type": "color", "id": "ledger_ground", "label": "Ground colour", "default": "#000000", "info": "Aloha 6 Oct: black for now." },
+    { "type": "image_picker", "id": "ledger_paper", "label": "Paper", "info": "Empty = the grey paper Aloha supplied on 6 Oct." },
+    { "type": "range", "id": "ledger_paper_strength", "label": "Paper showing through", "min": 0, "max": 40, "step": 1, "unit": "%", "default": 12 },
+    { "type": "image_picker", "id": "ledger_logo", "label": "Logo", "info": "Empty = Aloha's light Chalk Blue logo of 6 Oct (dark ground only)." },
+    { "type": "text", "id": "ledger_heading_left", "label": "First column heading", "default": "Hartwick" },
+    { "type": "text", "id": "ledger_heading_details", "label": "Second column heading", "default": "Details" },
+    { "type": "text", "id": "ledger_heading_right", "label": "Third column heading", "default": "Social" },
+    { "type": "text", "id": "ledger_heading_register", "label": "Register column heading", "default": "The Register" },
+    { "type": "text", "id": "ledger_register_text", "label": "Register line", "default": "Correspondence from the Hartwick, when there is something worth sending" },
+    { "type": "text", "id": "ledger_button", "label": "Register button", "default": "Join The Register" },
+    { "type": "richtext", "id": "consent_text", "label": "Consent line", "default": "<p>Yes, add me to The Register. Hartwick Atelier may write to me with The Dispatch and news of each Release. I can leave at any time.</p>", "info": "Required to submit, never pre-ticked (CASL). Same wording as the Register section." },
+    { "type": "text", "id": "msg_invalid", "label": "Invalid email", "default": "Please enter a valid email address." },
+    { "type": "text", "id": "msg_consent", "label": "Consent not ticked", "default": "Please tick the box to join." },
+    { "type": "text", "id": "msg_submitting", "label": "While sending", "default": "One moment…" },
+    { "type": "text", "id": "msg_success", "label": "Success", "default": "Thank you. A confirmation is on its way — one click and you are on The Register." },
+    { "type": "text", "id": "msg_error", "label": "Service error", "default": "That did not go through. Please try again, or write to contact@hartwickatelier.com." }
   ],
   "blocks": [
     {
@@ -202,6 +363,7 @@
         { "type": "url", "id": "url", "label": "Link" },
         { "type": "select", "id": "column", "label": "Column", "default": "right", "options": [
           { "value": "left", "label": "Left (site pages)" },
+          { "value": "details", "label": "Details (four-column layout only)" },
           { "value": "right", "label": "Right (contact and social)" }
         ] },
         { "type": "select", "id": "social", "label": "Address from theme settings", "default": "none", "info": "Used when the Link above is empty. Theme settings > Social media.", "options": [
