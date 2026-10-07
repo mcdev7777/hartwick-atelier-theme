@@ -5431,6 +5431,19 @@ body:has(#SiteHeader.ha-trans) .ha-mst__hero-figure--paper { box-sizing: content
 @media (prefers-reduced-motion: reduce) {
   .ha-home-index__img, .ha-home-story__img, .ha-home__ruled, .ha-home-index__link, .ha-home-hero__cta { transition: none; }
 }
+/* Spotlight (Ivan, 6 October 2026): one montage; a hovered or focused row
+   lights the frame for its collection and fades the others. The row's name
+   grows a touch — Porter has no bold above the 500 the rows already use —
+   scaled from its left edge so nothing in the rail moves. */
+.ha-home-index__name { display: inline-block; transform-origin: left center; transition: transform 200ms ease; }
+.ha-home-index__link:hover .ha-home-index__name,
+.ha-home-index__link:focus-visible .ha-home-index__name,
+.ha-home-index__link.is-active .ha-home-index__name { transform: scale(1.12); }
+.ha-home-index__frame { transition: opacity 260ms ease; }
+.ha-home-index__grid.is-spotlit .ha-home-index__frame:not(.is-lit) { opacity: 0.22; }
+@media (prefers-reduced-motion: reduce) {
+  .ha-home-index__name, .ha-home-index__frame { transition: none; }
+}
 
 /* --- 05  Made in Lots ---------------------------------------------------- */
 .ha-home-lots__grid { display: grid; gap: 4rem; }

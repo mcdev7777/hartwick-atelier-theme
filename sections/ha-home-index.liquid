@@ -1,5 +1,5 @@
 {%- comment -%} Styles live in assets/ha-sections.css, loaded once in layout/theme.liquid. {%- endcomment -%}
-<script src="{{ 'ha-home-pair.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'ha-spotlight.js' | asset_url }}" defer="defer"></script>
 
 {%- comment -%}
   Hartwick Atelier — HOMEPAGE 04 / COLLECTION INDEX FEATURE.
@@ -26,10 +26,13 @@
   itself a link to the category, so keyboard focus reaches the photographs
   and §07's colour-on-hover works from the keyboard too.
 
-  Which row is selected is decided by assets/ha-home-pair.js — hover for a
-  mouse, focus for a keyboard, and nothing at all for a finger, which just
-  follows the link. A Category with no images falls back to the first
-  block's montage rather than a blank panel.
+  ONE MONTAGE, ROWS AS A SPOTLIGHT (Ivan, 6 October 2026): only the first
+  Category's montage is shown — the Apparel one, whose four frames are
+  captioned Apparel, Fine Silk, Fine Jewellery and Loungewear. The other
+  Categories give the rows only; their image settings are no longer drawn.
+  Hovering or focusing a row lights every frame in the row's collection —
+  Apparel lights Loungewear too — and fades the rest (assets/ha-spotlight.js); a finger just
+  follows the link. Leaving the row brings every frame back.
 
   Terminology: the range formerly labelled Clothing is Apparel (Aloha, 18
   September 2026). The artboard's "01 / CLOTHING" captions read
@@ -70,9 +73,9 @@
 
 <section class="ha-home ha-home-index" aria-labelledby="ha-home-index-title">
   <div class="ha-wrap">
-    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — the Apparel montage is the artboard’s; the Fine Silk, Fine Jewellery and Yoga sets are provisional picks from existing Hartwick photography until Aloha supplies theirs.' -%}
+    {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note, text: 'Placeholder — one montage, the Apparel set; hovering a row lights the frame captioned with that collection.' -%}
 
-    <ha-pair class="ha-home-index__grid" data-pair-active="{{ first_key }}">
+    <ha-spotlight class="ha-home-index__grid">
 
       <div class="ha-home-index__rail">
         {%- if section.settings.eyebrow != blank -%}
@@ -91,7 +94,7 @@
             {%- if hide_yoga and block_url contains 'yoga' -%}{%- continue -%}{%- endif -%}
             {%- assign row_n = row_n | plus: 1 -%}
             <li class="ha-home-index__row" {{ block.shopify_attributes }}>
-              <a class="ha-home-index__link ha-record" href="{{ block.settings.url | default: '#' }}" data-pair-for="{{ block.id }}">
+              <a class="ha-home-index__link ha-record" href="{{ block.settings.url | default: '#' }}" data-spot="{{ block.settings.url | default: '#' | escape }}">
                 <span class="ha-home-index__num">{{ row_n | prepend: '0' | slice: -2, 2 }}</span>
                 <span class="ha-home-index__name">{{ block.settings.name }}</span>
               </a>
@@ -113,7 +116,7 @@
         {%- for block in section.blocks -%}
           {%- liquid
             assign block_url = block.settings.url | downcase
-            if hide_yoga and block_url contains 'yoga'
+            if block.id != first_key
               continue
             endif
             assign cat = block.settings.name
@@ -162,13 +165,9 @@
             assign url_b = block.settings.url_small_b | default: frame_urls[2]
             assign url_wide = block.settings.url_wide | default: frame_urls[3]
           -%}
-          <div
-            class="ha-home-index__montage"
-            data-pair-panel="{{ block.id }}"
-            {% if block.id == first_key %}data-pair-default{% else %}hidden{% endif %}
-          >
+          <div class="ha-home-index__montage">
             {%- comment -%} 01 — tall {%- endcomment -%}
-            <a class="ha-home-index__frame ha-home-index__frame--tall" href="{{ url_tall }}" aria-label="{{ cap_tall | escape }}">
+            <a class="ha-home-index__frame ha-home-index__frame--tall" href="{{ url_tall }}" data-spot="{{ url_tall | escape }}" aria-label="{{ cap_tall | escape }}">
               <span class="ha-home-index__figure">
                 {%- if block.settings.image_tall -%}
                   {{ block.settings.image_tall | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 24vw, (min-width: 750px) 40vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: block.settings.alt_tall, class: 'ha-home-index__img' }}
@@ -181,7 +180,7 @@
 
             <div class="ha-home-index__right">
               {%- comment -%} 04 and 03 — the two small frames, captions set vertically beside them {%- endcomment -%}
-              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--a" href="{{ url_a }}" aria-label="{{ small_a_caption | escape }}">
+              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--a" href="{{ url_a }}" data-spot="{{ url_a | escape }}" aria-label="{{ small_a_caption | escape }}">
                 <span class="ha-home-index__figure">
                   {%- if small_a -%}
                     {{ small_a | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: small_a_alt, class: 'ha-home-index__img' }}
@@ -192,7 +191,7 @@
                 <span class="ha-home-index__caption ha-home-index__caption--vertical ha-record">04 / {{ small_a_caption }}</span>
               </a>
 
-              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--b" href="{{ url_b }}" aria-label="{{ cap_b | escape }}">
+              <a class="ha-home-index__frame ha-home-index__frame--small ha-home-index__frame--b" href="{{ url_b }}" data-spot="{{ url_b | escape }}" aria-label="{{ cap_b | escape }}">
                 <span class="ha-home-index__figure">
                   {%- if block.settings.image_small_b -%}
                     {{ block.settings.image_small_b | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 17vw, (min-width: 750px) 30vw, 50vw', widths: '300, 450, 600, 900', alt: block.settings.alt_small_b, class: 'ha-home-index__img' }}
@@ -204,7 +203,7 @@
               </a>
 
               {%- comment -%} 02 — wide {%- endcomment -%}
-              <a class="ha-home-index__frame ha-home-index__frame--wide" href="{{ url_wide }}" aria-label="{{ cap_wide | escape }}">
+              <a class="ha-home-index__frame ha-home-index__frame--wide" href="{{ url_wide }}" data-spot="{{ url_wide | escape }}" aria-label="{{ cap_wide | escape }}">
                 <span class="ha-home-index__figure">
                   {%- if block.settings.image_wide -%}
                     {{ block.settings.image_wide | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 38vw, (min-width: 750px) 60vw, 100vw', widths: '400, 600, 800, 1000, 1200, 1600', alt: block.settings.alt_wide, class: 'ha-home-index__img' }}
@@ -219,7 +218,7 @@
         {%- endfor -%}
       </div>
 
-    </ha-pair>
+    </ha-spotlight>
   </div>
 </section>
 
@@ -247,6 +246,7 @@
         { "type": "text", "id": "name", "label": "Name", "default": "Apparel" },
         { "type": "url", "id": "url", "label": "Destination", "info": "The confirmed range page — never an invented link." },
         { "type": "text", "id": "caption_label", "label": "Caption label", "info": "Printed after the frame number, e.g. 01 / Apparel. Empty: the name." },
+        { "type": "paragraph", "content": "Only the FIRST Category's montage is shown. Its frames light up when a row with the same link is hovered. The montage settings of the other Categories are not used." },
         { "type": "header", "content": "Montage — four frames" },
         { "type": "image_picker", "id": "image_tall", "label": "01 / Tall" },
         { "type": "text", "id": "alt_tall", "label": "01 alt text" },
