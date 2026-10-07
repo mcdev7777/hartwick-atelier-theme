@@ -1,23 +1,11 @@
 /*
- * Hartwick Atelier — THE MASTERS (/pages/the-masters)
- * Aloha's "The Masters: Build Brief for Ivan" and the founder's
- * Hartwick_The_Masters.png, 18 September 2026; confirmed by Angela.
- * One section (ha-masters) with eleven Technique blocks in the brief's
- * order and three Archive blocks, then the shared Register. Photographs
- * are from the Masters shoot Aloha supplied on 18 September (Files:
- * HARTWICK_MASTERS_*); the two films are the store's block-carving clips.
  * ------------------------------------------------------------
- * NOTE: this file is also written by the Shopify theme editor.
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-/*
- * 26 September 2026 — Aloha's MASTERS.pdf: Layout "26 September" (the section
- * setting). The paper opening carries the khadi quotation and MADE BY MASTERS;
- * the knowledge band has her swatches and collage with three new paragraphs;
- * ring bars between; the three archive tiles are not in her order. Her words
- * are verbatim. Flagged: "artisan" twice in the new paragraphs (Framework:
- * the Masters), and "the name of the artisan who made it" is a promise the
- * product records do not yet keep (Master fields are empty).
  */
 {
   "sections": {
@@ -26,6 +14,8 @@
       "disabled": true,
       "settings": {
         "content_width": "page-width-narrow",
+        "hdr_alignment": "center",
+        "heading_hide": false,
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -43,7 +33,16 @@
             "tagline": "Handspun and handwoven",
             "body": "<p>Khadi is cloth made from yarn spun by hand and woven on a handloom. Spinning and weaving both shape its character. Small variations in the yarn and weave record the work of the hands that made it.</p>",
             "image": "shopify://shop_images/HARTWICK_MASTERS_WEAVER_AT_LOOM_4R1A4504.jpg",
-            "alt": "A Master at work beside the handloom"
+            "alt": "A Master at work beside the handloom",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_hand_spun": {
@@ -56,7 +55,16 @@
             "tagline": "From fibre to yarn",
             "body": "<p>Natural fibres are drawn out and twisted together by hand to form a yarn. The spinner controls the thickness and twist as the fibre passes through their fingers. The yarn is then prepared for weaving.</p>",
             "image": "shopify://shop_images/HARTWICK_MASTERS_CHARKHA_4R1A4460.jpg",
-            "alt": "A charkha, the spinning wheel, standing in the yard"
+            "alt": "A charkha, the spinning wheel, standing in the yard",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_handwoven": {
@@ -69,7 +77,16 @@
             "tagline": "Working at the loom",
             "body": "<p>At the handloom, the weaver brings yarns together to make cloth. Preparing and arranging the yarn is part of the work, alongside the repeated movements of weaving. Different yarns and structures give the finished cloth its particular texture and drape.</p>",
             "image": "shopify://shop_images/HARTWICK_MASTERS_WARP_CLOSE_4R1A4475.jpg",
-            "alt": "Warp threads running into the loom, seen close"
+            "alt": "Warp threads running into the loom, seen close",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_block_printed_by_hand": {
@@ -82,7 +99,16 @@
             "tagline": "Layer by layer, colour by colour",
             "body": "<p>The printer places a carved wooden block onto the cloth, then repeats the impression to build the pattern. Each colour is applied in its own pass. Small variations in placement and colour are part of this hand process.</p>",
             "image": "shopify://shop_images/HARTWICK_MASTERS_BLOCK_FACE_4R1A4565.jpg",
-            "alt": "The raised printing face of a carved wooden block"
+            "alt": "The raised printing face of a carved wooden block",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_hand_carved_wooden_blocks": {
@@ -94,13 +120,18 @@
             "summary": "The pattern cut into wood, one block for each colour.",
             "tagline": "The tools behind the pattern",
             "body": "<p>A design is traced onto a prepared wooden block. Using small chisels, the carver removes the spaces around it, leaving the printing surface raised. A pattern with several colours needs a corresponding set of blocks, used together by the printer.</p>",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_CARVING_PATTERN_4R1A4442.jpg",
             "alt": "A carver cutting the pattern with a fine chisel",
             "video": "shopify://files/videos/HA LOGO 02 TRIMMED.mov",
             "caption": "Carving the Hartwick block. Silent film.",
             "film_title": "Carving a wooden printing block",
             "transcript": "<p>A silent film. The carver works a small chisel with a mallet, cutting away the ground around the raised design so that the lines of the pattern and the lettering of the Hartwick mark stand proud of the block. Finished blocks are stacked behind the work.</p>",
+            "captions": "",
             "date": "2024-12-02",
-            "image": "shopify://shop_images/HARTWICK_MASTERS_CARVING_PATTERN_4R1A4442.jpg"
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_natural_dye": {
@@ -113,7 +144,16 @@
             "tagline": "Colour from plants and minerals",
             "body": "<p>The original Hartwick archive describes dyes made with materials including indigo, turmeric, pomegranate, iron and clay. Preparing the colour and working it into the cloth require close attention to the material. Tonal variation gives the dyed fabric its individual character.</p>",
             "image": "shopify://shop_images/HARTWICK_MASTERS_DYED_BOBBINS_4R1A4528.jpg",
-            "alt": "Blue-dyed yarn wound on bobbins"
+            "alt": "Blue-dyed yarn wound on bobbins",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_ajrakh": {
@@ -124,7 +164,17 @@
             "title": "Ajrakh",
             "summary": "Resist printing, dyeing, washing and time.",
             "tagline": "Printing, dyeing, washing and rest",
-            "body": "<p>Ajrakh combines carved-block printing and resist-dyeing processes. Patterns are built through successive stages, with washing and resting between parts of the work. The archive shows colour preparation, printing and cloth drying outdoors: different moments within one extended process.</p>"
+            "body": "<p>Ajrakh combines carved-block printing and resist-dyeing processes. Patterns are built through successive stages, with washing and resting between parts of the work. The archive shows colour preparation, printing and cloth drying outdoors: different moments within one extended process.</p>",
+            "alt": "",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_ikat": {
@@ -137,7 +187,16 @@
             "tagline": "Tied and dyed before weaving",
             "body": "<p>In ikat, the pattern begins in the yarn. Selected areas are bound to resist the dye before the yarns are woven into cloth. The pattern emerges at the loom, bringing the work of dyeing and weaving together.</p>",
             "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg",
-            "alt": "A handwoven ikat shirt worn with a khadi skirt"
+            "alt": "A handwoven ikat shirt worn with a khadi skirt",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_gota_patti": {
@@ -150,7 +209,16 @@
             "tagline": "Applied and stitched by hand",
             "body": "<p>Gota Patti uses pieces of decorative ribbon applied to cloth and secured with stitching. The arrangement of these small elements builds the larger motif. Close-up photography and film can show the cutting, placement and detail of the handwork.</p>",
             "image": "shopify://shop_images/001_HARTWICK_HANDEMBROIDERY_VENICE_BELT_GOTAPATTI.jpg",
-            "alt": "A gota patti belt, ribbon applied and stitched by hand"
+            "alt": "A gota patti belt, ribbon applied and stitched by hand",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_jamdani": {
@@ -163,7 +231,16 @@
             "tagline": "Motifs within the weave",
             "body": "<p>Jamdani patterns are introduced by hand during weaving. The motifs are part of the cloth as it is made, rather than a print applied afterwards. A close view of the loom makes the relationship between the fine ground and the pattern visible.</p>",
             "image": "shopify://shop_images/006_HARTWICK_HANDWOVEN_PARIS_TROUSERS_KHADI_HANOI_SHIRT_JAMDANI.jpg",
-            "alt": "A handwoven jamdani shirt"
+            "alt": "A handwoven jamdani shirt",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "t_banaras_brocade": {
@@ -174,32 +251,54 @@
             "title": "Banaras brocade",
             "summary": "Decorative weaving, often in silk with zari threads.",
             "tagline": "Pattern through weaving",
-            "body": "<p>The Hartwick archive describes decorative brocade woven in Varanasi, often using coloured silks and zari threads. Additional pattern threads build the design within the weave. Show both the loom and the cloth closely, so the construction and surface can be understood.</p>"
+            "body": "<p>The Hartwick archive describes decorative brocade woven in Varanasi, often using coloured silks and zari threads. Additional pattern threads build the design within the weave. Show both the loom and the cloth closely, so the construction and surface can be understood.</p>",
+            "alt": "",
+            "caption": "",
+            "film_title": "",
+            "transcript": "",
+            "captions": "",
+            "date": "",
+            "credit": "",
+            "master_id": "",
+            "master_text": "",
+            "master_url": ""
           }
         },
         "a_carving": {
           "type": "archive",
           "settings": {
-            "video": "shopify://files/videos/HA LOGO BLOCK _ TRIMMED.mov",
+            "image": "shopify://shop_images/HARTWICK_MASTERS_CARVING_CHISEL_BW_4R1A4427.jpg",
             "alt": "A hand guiding a chisel across a printing block",
+            "video": "shopify://files/videos/HA LOGO BLOCK _ TRIMMED.mov",
             "title": "Carving the Hartwick block",
             "transcript": "<p>A silent film. A block carver taps a small chisel through the surface of a wooden block, cutting the ground away from the raised lines of the design.</p>",
-            "date": "2024-12-02",
-            "image": "shopify://shop_images/HARTWICK_MASTERS_CARVING_CHISEL_BW_4R1A4427.jpg"
+            "captions": "",
+            "credit": "",
+            "date": "2024-12-02"
           }
         },
         "a_blocks": {
           "type": "archive",
           "settings": {
             "image": "shopify://shop_images/HARTWICK_MASTERS_BLUE_WARP_4R1A4518.jpg",
-            "alt": "Blue warp threads stretched along a handloom"
+            "alt": "Blue warp threads stretched along a handloom",
+            "title": "",
+            "transcript": "",
+            "captions": "",
+            "credit": "",
+            "date": ""
           }
         },
         "a_print": {
           "type": "archive",
           "settings": {
             "image": "shopify://shop_images/HARTWICK_MASTERS_FINISHED_BLOCKS_BW_4R1A4617.jpg",
-            "alt": "The finished Hartwick Atelier printing blocks laid out with the carving tools"
+            "alt": "The finished Hartwick Atelier printing blocks laid out with the carving tools",
+            "title": "",
+            "transcript": "",
+            "captions": "",
+            "credit": "",
+            "date": ""
           }
         }
       },
@@ -221,6 +320,7 @@
       ],
       "settings": {
         "ink": "resin",
+        "layout": "sep26",
         "start_muted": true,
         "transcript_label": "Transcript",
         "close_text": "Close",
@@ -238,10 +338,18 @@
         "subline": "Plants, Minerals. Sunlight. Rainfall. Time",
         "col1_label": "THE CLOTH",
         "col1_body": "<p>Textile History dates back to the beginning of human civilization. Hartwick Atelier specializes in hand spun and handwoven fabrics, natural and ayurvedic dyes, and exquisite heritage handwork.</p>",
+        "col1_symbol": "shopify://shop_images/HA_MASTERS_DYE_CLOTH.png",
         "col2_label": "THE KNOWLEDGE",
         "col2_body": "<p>These artisanal techniques rely on rare knowledge and the natural cycles of the sun, wind and rain.</p>",
+        "col2_symbol": "shopify://shop_images/HA_MASTERS_DYE_KNOWLEDGE.png",
         "col3_label": "THE HANDWORK",
         "col3_body": "<p>Each handcrafted piece in the collection is a glimpse into the rich history, intricate process, and generations of skill that have gone into its creation.</p>",
+        "col3_symbol": "shopify://shop_images/HA_MASTERS_DYE_HANDWORK.png",
+        "knowledge_label": "The knowledge behind the work",
+        "knowledge_spot": "shopify://shop_images/HA_MASTERS_DYE_HANGING_YELLOW.png",
+        "story_image": "shopify://shop_images/IMG_8464_2.jpg",
+        "story_alt": "Photographs laid one over another: a printer pressing a carved block onto cloth on a long table, over sheets of green and earth-red paper",
+        "story_body": "<p>Masters hold knowledge developed over centuries in alignment with the natural world, with dyes drawn from plants and minerals and processes governed by sunlight, rainfall and time. This knowledge is held in families, communities and the hands of each Master.</p><p>We are concerned with the environmental and human costs of industrial textile production. Handspun, handwoven and natural-dye fabrics connect us to artisans, often in communities with a direct connection to the agricultural production of the fibres and deep, generational handcraft knowledge.</p><p>What we put on our bodies has consequences for the planet and the people who make it. Every Hartwick piece ships with its Lot number, its Origin story, and the name of the artisan who made it.</p>",
         "pair_aria": "Still and movement",
         "still_image": "shopify://shop_images/HARTWICK_MASTERS_SPINNER_HANDS_4R1A4494.jpg",
         "still_alt": "A spinner's hands drawing out the thread",
@@ -258,6 +366,10 @@
         "film_number": "02 / Handweaving",
         "film_caption": "A process in motion.",
         "film_title": "Handweaving at the loom",
+        "film_transcript": "",
+        "film_captions": "",
+        "film_credit": "",
+        "film_date": "",
         "quote_label": "The khadi spirit",
         "quote": "If we have the khadi spirit in us,\nwe would surround ourselves with simplicity\nin every walk of life",
         "quote_cite": "Mahatma Gandhi",
@@ -273,35 +385,45 @@
         "feature_eyebrow": "From the Hartwick archive",
         "feature_title": "At the printing table",
         "feature_sublabel": "Watch the Master at work",
+        "feature_transcript": "",
+        "feature_captions": "",
+        "feature_credit": "",
+        "feature_date": "",
         "continue_heading": "The work continues",
+        "continue_alt": "",
         "continue_body": "<p>Stories of the people, their materials and the knowledge they carry. Follow the work through the Journal.</p>",
         "continue_link_text": "Read the Journal",
         "continue_link_url": "/blogs/news",
         "show_placeholder_note": true,
-        "placeholder_text": "Provisional: photographs from the Masters shoot supplied by Aloha; the weaving and printing films, and the glossary copy, await Angela's review.",
-        "layout": "sep26",
-        "col1_symbol": "shopify://shop_images/HA_MASTERS_DYE_CLOTH.png",
-        "col2_symbol": "shopify://shop_images/HA_MASTERS_DYE_KNOWLEDGE.png",
-        "col3_symbol": "shopify://shop_images/HA_MASTERS_DYE_HANDWORK.png",
-        "knowledge_label": "The knowledge behind the work",
-        "knowledge_spot": "shopify://shop_images/HA_MASTERS_DYE_HANGING_YELLOW.png",
-        "story_image": "shopify://shop_images/HA_MASTERS_COLLAGE_BLOCKPRINT.png",
-        "story_alt": "Photographs laid one over another: a printer pressing a carved block onto cloth on a long table, over sheets of green and earth-red paper",
-        "story_body": "<p>Masters hold knowledge developed over centuries in alignment with the natural world, with dyes drawn from plants and minerals and processes governed by sunlight, rainfall and time. This knowledge is held in families, communities and the hands of each Master.</p><p>We are concerned with the environmental and human costs of industrial textile production. Handspun, handwoven and natural-dye fabrics connect us to artisans, often in communities with a direct connection to the agricultural production of the fibres and deep, generational handcraft knowledge.</p><p>What we put on our bodies has consequences for the planet and the people who make it. Every Hartwick piece ships with its Lot number, its Origin story, and the name of the artisan who made it.</p>"
+        "placeholder_text": "Provisional: photographs from the Masters shoot supplied by Aloha; the weaving and printing films, and the glossary copy, await Angela's review."
       }
     },
     "register": {
       "type": "ha-register",
+      "disabled": true,
       "settings": {
+        "site_wide": false,
+        "email_placeholder": "you@example.com",
         "eyebrow": "The Register",
         "heading": "Notes from the Atelier.",
         "body": "<p>Materials, Masters and work in progress.</p>",
         "body_position": "heading",
+        "heading_style": "sentence",
+        "field": "dark",
+        "grain": true,
+        "form_style": "box",
+        "link_text": "Join The Register",
+        "link_url": "",
         "show_native_form": true,
         "contact_tag": "the-register",
-        "register_source": "masters_page"
-      },
-      "disabled": true
+        "register_source": "masters_page",
+        "consent_text": "<p>Yes, add me to The Register. Hartwick Atelier may write to me with The Dispatch and news of each Release. I can leave at any time.</p>",
+        "msg_invalid": "Please enter a valid email address.",
+        "msg_consent": "Please tick the box to join.",
+        "msg_submitting": "One moment…",
+        "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
+        "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com."
+      }
     }
   },
   "order": [

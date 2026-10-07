@@ -1,11 +1,10 @@
 /*
- * Hartwick Atelier — FINE SILK (/collections/fine-silk)
- * Aloha, 18 September 2026: the same structure as the Apparel page; the
- * Masters knowledge for this range follows from her. Category blocks list
- * the range's sub-collections, one card per product, until Style records
- * exist for it.
  * ------------------------------------------------------------
- * NOTE: this file is also written by the Shopify theme editor.
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
 {
@@ -19,8 +18,11 @@
             "heading": "Oversized Dupattas",
             "anchor": "oversized-dupattas",
             "blurb": "The largest format, worn draped or wrapped.",
+            "this_collection": false,
             "collection": "dupatta-oversize-scarves",
-            "categories": ""
+            "categories": "",
+            "include": "",
+            "exclude": ""
           }
         },
         "stoles": {
@@ -29,21 +31,24 @@
             "heading": "Classic Stoles",
             "anchor": "classic-stoles",
             "blurb": "A long rectangle for the shoulders.",
+            "this_collection": false,
             "collection": "classic-stoles-scarves",
-            "categories": ""
+            "categories": "",
+            "include": "",
+            "exclude": ""
           }
         },
         "masters": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/IMG_3264.jpg",
+            "image_alt": "The raised printing face of a carved wooden block",
+            "image_label": "Print detail / to supply",
             "eyebrow": "Made by Masters / The print",
             "heading": "Block printed by hand",
             "body": "<p>The printer places a carved wooden block onto the cloth, then repeats the impression to build the pattern. Each colour is applied in its own pass. Small variations in placement and colour are part of this hand process.</p>",
             "link_text": "Explore block printing",
-            "link_url": "/pages/the-masters#block-printed-by-hand",
-            "image": "shopify://shop_images/HARTWICK_MASTERS_BLOCK_FACE_4R1A4565.jpg",
-            "image_alt": "The raised printing face of a carved wooden block",
-            "image_label": "Print detail / to supply"
+            "link_url": "/pages/the-masters#block-printed-by-hand"
           }
         },
         "large": {
@@ -52,8 +57,11 @@
             "heading": "Large Squares",
             "anchor": "large-squares",
             "blurb": "A generous square to fold or knot.",
+            "this_collection": false,
             "collection": "large-squares",
-            "categories": ""
+            "categories": "",
+            "include": "",
+            "exclude": ""
           }
         },
         "medium": {
@@ -62,8 +70,11 @@
             "heading": "Medium Squares",
             "anchor": "medium-squares",
             "blurb": "The square for the neck or the hair.",
+            "this_collection": false,
             "collection": "medium-square-scarves",
-            "categories": ""
+            "categories": "",
+            "include": "",
+            "exclude": ""
           }
         },
         "petit": {
@@ -72,8 +83,11 @@
             "heading": "Petit Squares",
             "anchor": "petit-squares",
             "blurb": "The smallest square, for the wrist or the bag.",
+            "this_collection": false,
             "collection": "petit-square-scarves",
-            "categories": ""
+            "categories": "",
+            "include": "",
+            "exclude": ""
           }
         }
       },
@@ -86,6 +100,7 @@
         "petit"
       ],
       "settings": {
+        "head_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg",
         "crumb_collection": "Collection",
         "crumb_leaf": "Fine Silk",
         "title": "Fine Silk",
@@ -99,10 +114,14 @@
         "lots_more": "<p>We release fine silk in numbered Lots. The Lot reference connects a piece to its cloth and making. Open a piece to see its Lot details and whether it is ready to send or available to pre-order.</p>",
         "lots_note": "Dates, quantities and access windows appear only when confirmed.",
         "lot_label": "Lot",
+        "card_per_expression": true,
+        "show_lot": false,
         "lot_placeholder": "Lot [number]",
         "count_text": "expressions",
         "view_text": "View piece",
         "top_text": "Back to top",
+        "image_slot_text": "Photograph to supply",
+        "none_text": "No pieces in this category yet.",
         "touch": "colour",
         "onward_label": "Continue through the collection",
         "onward_1_text": "Apparel",
@@ -111,22 +130,35 @@
         "onward_2_url": "/collections/fine-jewellery",
         "onward_3_text": "Yoga",
         "onward_3_url": "/collections/yoga",
-        "show_placeholder_note": true,
-        "head_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg"
+        "show_placeholder_note": true
       }
     },
     "register": {
       "type": "ha-register",
+      "disabled": true,
       "settings": {
+        "site_wide": false,
+        "email_placeholder": "you@example.com",
         "eyebrow": "The Register",
         "heading": "Notes from the Atelier.",
         "body": "<p>Materials, makers and work in progress.</p>",
         "body_position": "form",
+        "heading_style": "sentence",
+        "field": "dark",
+        "grain": true,
+        "form_style": "box",
+        "link_text": "Join The Register",
+        "link_url": "",
         "show_native_form": true,
         "contact_tag": "the-register",
-        "register_source": "collection_page"
-      },
-      "disabled": true
+        "register_source": "collection_page",
+        "consent_text": "<p>Yes, add me to The Register. Hartwick Atelier may write to me with The Dispatch and news of each Release. I can leave at any time.</p>",
+        "msg_invalid": "Please enter a valid email address.",
+        "msg_consent": "Please tick the box to join.",
+        "msg_submitting": "One moment…",
+        "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
+        "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com."
+      }
     }
   },
   "order": [

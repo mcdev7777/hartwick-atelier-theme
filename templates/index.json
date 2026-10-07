@@ -38,11 +38,12 @@
       "settings": {
         "style": "photograph",
         "image": "shopify://shop_images/HA_HOMEPAGE_HEADER_COLLAGE.jpg",
+        "phone_layout": "collage",
         "image_alt": "A cream shirt on a wooden hanger against a stone wall, the photograph clipped to a sheet of paper with a sheet of glassine laid over it",
         "eyebrow": "01 / The Product Experience",
         "heading": "MADE TO BE WORN",
         "body": "<p>The lightness of handspun cloth. The weight of solid silver and pure gold. The ease you feel when a piece becomes a part of how you move and who you are.</p><p>Hartwick Atelier collections bring together handwoven clothing, natural dye silks, and heritage fine jewellery. From raw material to fine finishing, each piece is a portrait of nature and human mastery.</p>",
-        "tagline": "Fine Handwork.Heirloom Quality. Everyday life.",
+        "tagline": "Fine Handwork. Heirloom Quality. Everyday life.",
         "signature_asset": "",
         "caption": "",
         "show_placeholder_note": false
@@ -64,10 +65,10 @@
           "type": "story",
           "settings": {
             "label": "02 / Collection Index",
-            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_01_ATELIER_DSCF6885.jpg",
+            "image": "shopify://shop_images/IMG_2922.jpg",
             "alt": "The atelier: a rust shirt and skirt hanging on an open wooden door beside a window and a dressing table",
             "own_mat": false,
-            "mono": true,
+            "mono": false,
             "image_mono": "shopify://shop_images/HA_HOMEPAGE_CARD_01_ATELIER_DSCF6885_BW.jpg",
             "title": "Cloth, considered",
             "body": "<p>Apparel, silk scarves, fine jewellery and yoga mats. A collection shaped by material, purpose and the hand that makes it.</p>",
@@ -79,14 +80,14 @@
           "type": "story",
           "settings": {
             "label": "03 / The Masters",
-            "image": "shopify://shop_images/HARTWICK_MASTERS_SPOOL_COLOUR_4R1A4457.jpg",
+            "image": "shopify://shop_images/IMG_6791-2.jpg",
             "alt": "A Master's hand drawing thread from a spindle",
             "own_mat": false,
-            "mono": true,
-            "image_mono": "shopify://shop_images/HA_HOMEPAGE_CARD_02_MASTERS_4R1A4457_BW_MATCHED.jpg",
+            "mono": false,
+            "image_mono": "shopify://shop_images/IMG_2990.jpg",
             "title": "Knowledge, kept in use",
             "body": "<p>A technique continues through the people who practise it. We want the work and the knowledge behind it to be seen.</p>",
-            "link_text": "Learn from the Masters",
+            "link_text": "from our Masters",
             "link_url": "/pages/the-masters"
           }
         },
@@ -94,10 +95,10 @@
           "type": "story",
           "settings": {
             "label": "04 / Founder's Story",
-            "image": "shopify://shop_images/HA_HOMEPAGE_CARD_03_FOUNDER_DSCF6865_COLOUR.jpg",
+            "image": "shopify://shop_images/IMG_7083.jpg",
             "alt": "A woman in a white shirt reflected in a gilt mirror between rails of clothing",
             "own_mat": false,
-            "mono": true,
+            "mono": false,
             "image_mono": "shopify://shop_images/HA_HOMEPAGE_CARD_03_FOUNDER_DSCF6865_BW_MATCHED.jpg",
             "title": "Small Lots. Close attention.",
             "body": "<p>We work with independent makers through considered production. Each Lot records a shared period of making.</p>",
@@ -136,21 +137,25 @@
             "name": "Apparel",
             "url": "/collections/apparel",
             "caption_label": "Apparel",
-            "image_tall": "shopify://shop_images/HA_HOMEPAGE_INDEX_APPAREL_ROBES.jpg",
+            "image_tall": "shopify://shop_images/IMG_2991.jpg",
             "alt_tall": "Block-printed robes hanging on a timber wall beside a chair and a striped bag",
+            "url_tall": "",
             "caption_tall": "Apparel",
             "image_small_a": "shopify://shop_images/HARTWICK_YOGA_MAT_ROLLED_IMG_5481.jpg",
             "alt_small_a": "A rolled handwoven yoga mat resting on a stone wall",
             "caption_small_a": "Yoga",
-            "image_small_a_noyoga": "shopify://shop_images/HA_HOMEPAGE_INDEX_APPAREL_CURTAINS.jpg",
+            "url_small_a": "",
+            "image_small_a_noyoga": "shopify://shop_images/IMG_3114.jpg",
             "alt_small_a_noyoga": "Block-printed cloth hung at a window, light coming through, a white skirt between",
-            "caption_small_a_noyoga": "Apparel",
-            "image_small_b": "shopify://shop_images/HA_HOMEPAGE_INDEX_APPAREL_RING.jpg",
+            "caption_small_a_noyoga": "LOUNGEWEAR",
+            "image_small_b": "shopify://shop_images/WhatsApp_Image_2026-10-04_at_11.15.07.jpg",
             "alt_small_b": "A hand wearing a gold step ring over a block-printed sleeve",
             "caption_small_b": "Fine Jewellery",
-            "image_wide": "shopify://shop_images/HA_HOMEPAGE_INDEX_FINESILK_DSCF6909.jpg",
+            "url_small_b": "",
+            "image_wide": "shopify://shop_images/088_HARTWICK_FINESILK_PETITSQUARE01_SCARF_NATURALDYE_BLOCKPRINT_108b3b82-fcb6-4125-ad7e-a7c5193b1ed3.jpg",
             "alt_wide": "A block-printed fine silk scarf, draped",
-            "caption_wide": "Fine Silk"
+            "caption_wide": "Fine Silk",
+            "url_wide": ""
           }
         },
         "fine_silk": {
@@ -159,20 +164,24 @@
             "name": "Fine Silk",
             "url": "/collections/fine-silk",
             "caption_label": "Fine Silk",
-            "image_tall": "shopify://shop_images/212_HARTWICK_FINESILK_DUPATTA_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+            "image_tall": "shopify://shop_images/DSCF6889.jpg",
             "alt_tall": "A block-printed fine silk dupatta worn down the back, walking through a cloister",
+            "url_tall": "",
             "caption_tall": "",
-            "image_small_a": "shopify://shop_images/100_HARTWICK_FINESILK_DUPATTA02_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+            "image_small_a": "shopify://shop_images/DSCF6913_a06876de-d90a-43ed-93d0-cab9974da028.jpg",
             "alt_small_a": "The printed border of a fine silk dupatta",
             "caption_small_a": "",
+            "url_small_a": "",
             "alt_small_a_noyoga": "",
             "caption_small_a_noyoga": "",
-            "image_small_b": "shopify://shop_images/105_HARTWICK_FINESILK_STOLE01_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+            "image_small_b": "shopify://shop_images/065_HARTWICK_FINESILK_MEDIUMSQUARE02_SCARF_NATURALDYE_BLOCKPRINT_e2d2aece-eb5a-48e3-98fa-3a0e0bd416e3.jpg",
             "alt_small_b": "A block-printed silk stole draped over carved stone",
             "caption_small_b": "",
-            "image_wide": "shopify://shop_images/224_HARTWICK_FINESILK_PETITSQUARE_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+            "url_small_b": "",
+            "image_wide": "shopify://shop_images/224_HARTWICK_FINESILK_PETITSQUARE_03_SCARF_NATURALDYE_BLOCKPRINT.jpg",
             "alt_wide": "A block-printed silk square pegged on a line against a stone wall",
-            "caption_wide": ""
+            "caption_wide": "",
+            "url_wide": ""
           }
         },
         "fine_jewellery": {
@@ -183,18 +192,22 @@
             "caption_label": "Fine Jewellery",
             "image_tall": "shopify://shop_images/006_HARTWICK_LIMINAL_RAJMAHAL_BANGLES_HANDWOVEN_SANTAFE_SHIRT_INLAY_NATDYE_LUCCA_TROUSERS.jpg",
             "alt_tall": "Rajmahal bangles worn at the wrist over a block-printed sleeve",
+            "url_tall": "",
             "caption_tall": "",
             "image_small_a": "shopify://shop_images/HartwickAtelier-StepRingRhodolite-01.jpg",
             "alt_small_a": "A gold step ring set with rhodolite, on slate",
             "caption_small_a": "",
+            "url_small_a": "",
             "alt_small_a_noyoga": "",
             "caption_small_a_noyoga": "",
             "image_small_b": "shopify://shop_images/HartwickAtelier-DropEarrings-01.jpg",
             "alt_small_b": "Emerald drop earrings hung from a leaf",
             "caption_small_b": "",
+            "url_small_b": "",
             "image_wide": "shopify://shop_images/IMG_8996.jpg",
             "alt_wide": "Two gold step rings on glass",
-            "caption_wide": ""
+            "caption_wide": "",
+            "url_wide": ""
           }
         },
         "yoga": {
@@ -205,18 +218,22 @@
             "caption_label": "Yoga",
             "image_tall": "shopify://shop_images/HARTWICK_YOGA_MATS_STACKED_IMG_5501.jpg",
             "alt_tall": "Rolled handwoven yoga mats in five colours, stacked",
+            "url_tall": "",
             "caption_tall": "",
             "image_small_a": "shopify://shop_images/HARTWICK_YOGA_MAT_ROLLED_IMG_5481.jpg",
             "alt_small_a": "A rolled handwoven yoga mat resting on a stone wall",
             "caption_small_a": "",
+            "url_small_a": "",
             "alt_small_a_noyoga": "",
             "caption_small_a_noyoga": "",
             "image_small_b": "shopify://shop_images/HartwickAtelier-CollectionHeader-Yoga.jpg",
             "alt_small_b": "A yellow handwoven yoga mat laid on rocks beside the sea",
             "caption_small_b": "",
+            "url_small_b": "",
             "image_wide": "shopify://shop_images/HARTWICK_YOGA_MATS_POOL_IMG_5328.jpg",
             "alt_wide": "Four handwoven yoga mats laid out beside a pool",
-            "caption_wide": ""
+            "caption_wide": "",
+            "url_wide": ""
           }
         }
       },
@@ -228,9 +245,9 @@
       ],
       "settings": {
         "eyebrow": "The Collection Index",
-        "heading": "Four collections",
+        "heading": "EXPLORE THE WORK",
         "subline": "<p>Find your way by material, form and use.</p>",
-        "cta_text": "Explore the complete Index",
+        "cta_text": "the complete Index",
         "cta_link": "/collections",
         "note": "<p>Each piece belongs to a Lot, a record of its making.</p>",
         "show_placeholder_note": true
@@ -241,9 +258,9 @@
       "settings": {
         "eyebrow": "Made in Lots",
         "heading": "A record of the making",
-        "body": "<p>A Lot is a numbered series of clothing. It brings together pieces that share a period of making and gives us a way to keep that work visible.</p>",
-        "link_text": "Explore all Apparel",
-        "link_url": "/collections/apparel",
+        "body": "<p>A Lot is a numbered series of clothing. It brings together pieces that share a period of making and gives us a way to keep that work visible.</p><p><strong>Questions about a Lot, a piece, or how it was made? We’re here to answer them.</strong></p>",
+        "link_text": "CONTACT HARTWICK",
+        "link_url": "shopify://pages/contact-us",
         "image": "shopify://shop_images/HA_HOMEPAGE_LOTS_HAWA_MAHAL_COLLAGE.png",
         "image_alt": "The pink façade of the Hawa Mahal in Jaipur, rows of carved windows, printed across two folded sheets",
         "own_mat": true,
@@ -386,7 +403,7 @@
         "eyebrow": "The Journal",
         "heading": "Notes on material and making",
         "body": "<p>A place for workshop visits, conversations and a closer look at the cloth. Follow the work as it develops.</p>",
-        "link_text": "Read the Journal Newspaper",
+        "link_text": "NEWS REPORT",
         "link_url": "/blogs/news",
         "image": "shopify://shop_images/HA_HOMEPAGE_JOURNAL_INTO_PIECES_TURNED.png",
         "image_alt": "A sheet of watercolour dye swatches in greens, yellows, blues and browns, with pencilled notes",
@@ -420,54 +437,6 @@
         "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
         "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com."
       }
-    },
-    "contact": {
-      "type": "ha-home-contact",
-      "blocks": {
-        "row_contact": {
-          "type": "row",
-          "settings": {
-            "label": "Appointments / Wholesale / Press",
-            "line": "",
-            "value": "contact@hartwickatelier.com",
-            "link": "mailto:contact@hartwickatelier.com"
-          }
-        },
-        "row_angela": {
-          "type": "row",
-          "settings": {
-            "label": "Angela Hartwick",
-            "line": "Founder",
-            "value": "angela@hartwickatelier.com",
-            "link": "mailto:angela@hartwickatelier.com"
-          }
-        },
-        "row_instagram": {
-          "type": "row",
-          "settings": {
-            "label": "Instagram",
-            "line": "",
-            "value": "@worldofhartwickatelier",
-            "link": "https://www.instagram.com/worldofhartwickatelier"
-          }
-        }
-      },
-      "block_order": [
-        "row_contact",
-        "row_angela",
-        "row_instagram"
-      ],
-      "settings": {
-        "eyebrow": "Contact",
-        "heading": "Get in touch",
-        "intro": "A question about a piece.\nA visit to the Atelier.\nWrite to us.",
-        "page_link_text": "Contact page",
-        "page_link": "/pages/contact-us",
-        "visit_label": "Mallorca / Serra de Tramuntana",
-        "visit_text": "By appointment, with Angela.\nEmail us with your preferred dates.",
-        "button_text": "Request an appointment",
-        "button_link": "mailto:contact@hartwickatelier.com?subject=Showroom%20visit"
-      }
     }
   },
   "order": [
@@ -481,7 +450,6 @@
     "binding_masters",
     "masters_index",
     "journal",
-    "contact",
     "register"
   ]
 }

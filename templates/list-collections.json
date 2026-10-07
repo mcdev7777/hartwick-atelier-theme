@@ -1,33 +1,439 @@
 /*
- * Hartwick Atelier — THE COLLECTION INDEX (/collections)
- * Refined to Aloha's Collection Index brief and artboard, 17 September 2026:
- * photographic header + opening directory, then Apparel / Fine Silk / Fine
- * Jewellery / Yoga sections, each a rail beside its image group; 17 numbered
- * entries, one name = one image = one destination. The 15 September category
- * tiles (`ha-collection-categories`) are kept, disabled, one toggle away.
  * ------------------------------------------------------------
- * NOTE: this file is also written by the Shopify theme editor.
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
 {
   "sections": {
-    "main": {
-      "type": "main-list-collections",
+    "index": {
+      "type": "ha-index",
+      "blocks": {
+        "g_clothing": {
+          "type": "group",
+          "settings": {
+            "number": "01",
+            "heading": "Apparel",
+            "count_label": "Five categories",
+            "anchor": "idx-clothing",
+            "layout": "clothing",
+            "view_all_text": "View all apparel",
+            "view_all_url": "/collections/apparel",
+            "dir_mode": "entries",
+            "dir_show_secondary": false,
+            "url": "/collections/apparel",
+            "dir_direct": true,
+            "dir_summary": "Silk scarves — seven formats",
+            "dir_summary_url": "",
+            "dir_second": "Explore silk formats",
+            "dir_second_url": "",
+            "editorial_alt": ""
+          }
+        },
+        "e_1_01": {
+          "type": "entry",
+          "settings": {
+            "key": "1-01",
+            "number": "1/01",
+            "name": "Skirts",
+            "secondary": "",
+            "note": "",
+            "url": "/collections/skirts",
+            "image": "shopify://shop_images/4R1A3788.jpg",
+            "alt": "A handwoven khadi skirt with an ikat shirt",
+            "focus_x": 50,
+            "focus_y": 40,
+            "shape": "tall"
+          }
+        },
+        "e_1_02": {
+          "type": "entry",
+          "settings": {
+            "key": "1-02",
+            "number": "1/02",
+            "name": "Shirts",
+            "secondary": "",
+            "note": "",
+            "url": "/collections/shirts",
+            "image": "shopify://shop_images/007_HARTWICK_ATELIER_HANDWOVEN_NATURAL_KHADI_TOKYO_4R1A6956.jpg",
+            "alt": "A handwoven khadi shirt",
+            "focus_x": 50,
+            "focus_y": 25,
+            "shape": "wide"
+          }
+        },
+        "e_1_03": {
+          "type": "entry",
+          "settings": {
+            "key": "1-03",
+            "number": "1/03",
+            "name": "Trousers",
+            "secondary": "",
+            "note": "",
+            "url": "/collections/trousers",
+            "image": "shopify://shop_images/4R1A3608.jpg",
+            "alt": "Handwoven khadi twill trousers",
+            "focus_x": 50,
+            "focus_y": 60,
+            "shape": "wide"
+          }
+        },
+        "e_1_04": {
+          "type": "entry",
+          "settings": {
+            "key": "1-04",
+            "number": "1/04",
+            "name": "Dresses & Coats",
+            "secondary": "",
+            "note": "",
+            "url": "/collections/apparel#dresses-and-coats",
+            "image": "shopify://shop_images/4R1A8369.jpg",
+            "alt": "A quilted handwoven ikat coat",
+            "focus_x": 50,
+            "focus_y": 30,
+            "shape": "wide"
+          }
+        },
+        "e_1_05": {
+          "type": "entry",
+          "settings": {
+            "key": "1-05",
+            "number": "1/05",
+            "name": "Loungewear",
+            "secondary": "",
+            "note": "",
+            "url": "/collections/loungewear",
+            "image": "shopify://shop_images/4R1A5497_3f78f88a-c8d0-4997-a1da-dfe60cee7add.jpg",
+            "alt": "A block-printed organic cotton robe",
+            "focus_x": 50,
+            "focus_y": 30,
+            "shape": "wide"
+          }
+        },
+        "g_silk": {
+          "type": "group",
+          "settings": {
+            "number": "02",
+            "heading": "Fine Silk",
+            "count_label": "Seven formats",
+            "anchor": "idx-silk",
+            "layout": "silk",
+            "view_all_text": "View all silk scarves",
+            "view_all_url": "/collections/fine-silk",
+            "dir_mode": "summary",
+            "dir_show_secondary": false,
+            "url": "/collections/fine-silk",
+            "dir_direct": false,
+            "dir_summary": "Silk scarves",
+            "dir_summary_url": "/collections/fine-silk",
+            "dir_second": "Explore silk formats",
+            "dir_second_url": "/collections/fine-silk#clothing-top",
+            "editorial_image": "shopify://shop_images/DSCF6911.jpg",
+            "editorial_alt": "Block-printed fine silk in the studio"
+          }
+        },
+        "e_2_01": {
+          "type": "entry",
+          "settings": {
+            "key": "2-01",
+            "number": "2/01",
+            "name": "Petit Square",
+            "secondary": "33 × 33 cm",
+            "note": "",
+            "url": "/collections/petit-square-scarves",
+            "image": "shopify://shop_images/IMG_0455.jpg",
+            "alt": "Petit Square, block-printed fine silk in natural dye",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "square"
+          }
+        },
+        "e_2_02": {
+          "type": "entry",
+          "settings": {
+            "key": "2-02",
+            "number": "2/02",
+            "name": "Rich Ribbon",
+            "secondary": "81 × 15 cm",
+            "note": "",
+            "url": "/collections/fine-silk",
+            "image": "shopify://shop_images/4R1A3698.jpg",
+            "alt": "Rich Ribbon, block-printed fine silk in natural dye",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "square"
+          }
+        },
+        "e_2_03": {
+          "type": "entry",
+          "settings": {
+            "key": "2-03",
+            "number": "2/03",
+            "name": "Medium Square",
+            "secondary": "75 × 75 cm",
+            "note": "",
+            "url": "/collections/medium-square-scarves",
+            "image": "shopify://shop_images/052_HARTWICK_FINESILK_MEDIUMSQUARE03_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+            "alt": "Medium Square, block-printed fine silk in natural dye",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "square"
+          }
+        },
+        "e_2_04": {
+          "type": "entry",
+          "settings": {
+            "key": "2-04",
+            "number": "2/04",
+            "name": "Large Square",
+            "secondary": "110 × 110 cm",
+            "note": "",
+            "url": "/collections/large-squares",
+            "image": "shopify://shop_images/DSCF6889.jpg",
+            "alt": "Large Square, block-printed fine silk in natural dye",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "square"
+          }
+        },
+        "e_2_05": {
+          "type": "entry",
+          "settings": {
+            "key": "2-05",
+            "number": "2/05",
+            "name": "Classic Stole",
+            "secondary": "200 × 55 cm",
+            "note": "",
+            "url": "/collections/classic-stoles-scarves",
+            "image": "shopify://shop_images/227_HARTWICK_FINESILK_STOLE_01_SCARF_NATURALDYE_BLOCKPRINT.jpg",
+            "alt": "Classic Stole, block-printed fine silk in natural dye",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "square"
+          }
+        },
+        "e_2_06": {
+          "type": "entry",
+          "settings": {
+            "key": "2-06",
+            "number": "2/06",
+            "name": "Shayla",
+            "secondary": "95 × 175 cm",
+            "note": "",
+            "url": "/collections/fine-silk",
+            "image": "shopify://shop_images/008_HARTWICK_ATELIER_FINESILK_NATURAL_DYE_SHAYLA4R1A6122.jpg",
+            "alt": "Shayla, block-printed fine silk in natural dye",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "square"
+          }
+        },
+        "e_2_07": {
+          "type": "entry",
+          "settings": {
+            "key": "2-07",
+            "number": "2/07",
+            "name": "Oversize Dupatta",
+            "secondary": "250 × 100 cm",
+            "note": "",
+            "url": "/collections/dupatta-oversize-scarves",
+            "image": "shopify://shop_images/124_HARTWICK_FINESILK_DUPATTA01_SCARF_NATURALDYE_BLOCKPRINT_0a7a944f-42cf-48eb-89ed-c08bcb0bda4f.jpg",
+            "alt": "Oversize Dupatta, block-printed fine silk in natural dye",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "square"
+          }
+        },
+        "g_jewellery": {
+          "type": "group",
+          "settings": {
+            "number": "03",
+            "heading": "Fine Jewellery",
+            "count_label": "Four categories",
+            "anchor": "idx-jewellery",
+            "layout": "jewellery",
+            "view_all_text": "View all jewellery",
+            "view_all_url": "/collections/fine-jewellery",
+            "dir_mode": "entries",
+            "dir_show_secondary": false,
+            "url": "/collections/fine-jewellery",
+            "dir_direct": true,
+            "dir_summary": "Silk scarves — seven formats",
+            "dir_summary_url": "",
+            "dir_second": "Explore silk formats",
+            "dir_second_url": "",
+            "editorial_alt": ""
+          }
+        },
+        "e_3_01": {
+          "type": "entry",
+          "settings": {
+            "key": "3-01",
+            "number": "3/01",
+            "name": "Rings",
+            "secondary": "Fingers",
+            "note": "",
+            "url": "/collections/rings",
+            "image": "shopify://shop_images/001CROP02_HARTWICK_LIMINAL_STEP_RINGS_23KGOLD_EMERALD_SILVER_RHODOLITE.jpg",
+            "alt": "Rings from the Liminal collection",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "wide"
+          }
+        },
+        "e_3_02": {
+          "type": "entry",
+          "settings": {
+            "key": "3-02",
+            "number": "3/02",
+            "name": "Earrings",
+            "secondary": "Ear",
+            "note": "",
+            "url": "/collections/earrings",
+            "image": "shopify://shop_images/001HARTWICK_LIMINAL_POLKI_DIAMOND_CITRINE_ARTDECO_EARRINGS.jpg",
+            "alt": "Earrings from the Liminal collection",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "wide"
+          }
+        },
+        "e_3_03": {
+          "type": "entry",
+          "settings": {
+            "key": "3-03",
+            "number": "3/03",
+            "name": "Bangles & Bracelets",
+            "secondary": "Wrist",
+            "note": "",
+            "url": "/collections/bangles-and-bracelets",
+            "image": "shopify://shop_images/HARTWICK_LIMINAL_SILVER_18KGOLD_EMERALD_ANATOLIAN_BRACELET_IMG_5775.jpg",
+            "alt": "Bangles & Bracelets from the Liminal collection",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "wide"
+          }
+        },
+        "e_3_04": {
+          "type": "entry",
+          "settings": {
+            "key": "3-04",
+            "number": "3/04",
+            "name": "Necklaces & Pendants",
+            "secondary": "Neck",
+            "note": "",
+            "url": "/collections/necklaces-and-pendants",
+            "image": "shopify://shop_images/HARTWICK_LIMINAL_EMERALD_BEADBOX_NECKLACE_IMG_5771.jpg",
+            "alt": "Necklaces & Pendants from the Liminal collection",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "wide"
+          }
+        },
+        "g_yoga": {
+          "type": "group",
+          "settings": {
+            "number": "04",
+            "heading": "Yoga",
+            "count_label": "Yoga mats",
+            "anchor": "idx-yoga",
+            "layout": "yoga",
+            "view_all_text": "",
+            "view_all_url": "",
+            "dir_mode": "entries",
+            "dir_show_secondary": false,
+            "url": "/collections/yoga",
+            "dir_direct": true,
+            "dir_summary": "Silk scarves — seven formats",
+            "dir_summary_url": "",
+            "dir_second": "Explore silk formats",
+            "dir_second_url": "",
+            "editorial_alt": ""
+          }
+        },
+        "e_4_01": {
+          "type": "entry",
+          "settings": {
+            "key": "4-01",
+            "number": "4/01",
+            "name": "Yoga mats",
+            "secondary": "",
+            "note": "For your practice.",
+            "url": "/collections/yoga",
+            "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Yoga.jpg",
+            "alt": "A handwoven yoga mat laid on rock",
+            "focus_x": 50,
+            "focus_y": 50,
+            "shape": "feature"
+          }
+        }
+      },
+      "block_order": [
+        "g_clothing",
+        "e_1_01",
+        "e_1_02",
+        "e_1_03",
+        "e_1_04",
+        "e_1_05",
+        "g_silk",
+        "e_2_01",
+        "e_2_02",
+        "e_2_03",
+        "e_2_04",
+        "e_2_05",
+        "e_2_06",
+        "e_2_07",
+        "g_jewellery",
+        "e_3_01",
+        "e_3_02",
+        "e_3_03",
+        "e_3_04",
+        "g_yoga",
+        "e_4_01"
+      ],
+      "settings": {
+        "header_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg",
+        "header_image": "shopify://shop_images/HartwickAtelier-Loom-Warp-4R1A4471.jpg",
+        "header_focus_x": 50,
+        "header_focus_y": 50,
+        "crumb": "Collection",
+        "heading": "The Collection Index",
+        "intro": "Apparel, silk scarves, fine jewellery and yoga mats. Find your way by category.",
+        "dir_label": "Explore the index",
+        "dir_count": "",
+        "back_text": "Back to index",
+        "empty_text": "Photograph to supply",
+        "show_placeholder_note": true,
+        "placeholder_text": "Provisional photographs from the store's own files until approved, correctly matched images are supplied; the header awaits the loom photograph."
+      }
+    },
+    "register": {
+      "type": "ha-register",
       "disabled": true,
       "settings": {
-        "title": "Collections",
-        "description": "",
-        "title_alignment": "center",
-        "sort": "alphabetical",
-        "card_layout": "stacked",
-        "card_heading_size": "h4",
-        "card_heading_position": "center",
-        "image_ratio": "portrait",
-        "media_radius_top_only": false,
-        "columns_mobile": "1",
-        "columns_desktop": 3,
-        "padding_top": 80,
-        "padding_bottom": 80
+        "site_wide": false,
+        "email_placeholder": "you@example.com",
+        "eyebrow": "The Register",
+        "heading": "Notes from the Atelier.",
+        "body": "<p>Materials, makers and work in progress.</p>",
+        "body_position": "form",
+        "heading_style": "sentence",
+        "field": "dark",
+        "grain": true,
+        "form_style": "box",
+        "link_text": "Join The Register",
+        "link_url": "",
+        "show_native_form": true,
+        "contact_tag": "the-register",
+        "register_source": "collection_page",
+        "consent_text": "<p>Yes, add me to The Register. Hartwick Atelier may write to me with The Dispatch and news of each Release. I can leave at any time.</p>",
+        "msg_invalid": "Please enter a valid email address.",
+        "msg_consent": "Please tick the box to join.",
+        "msg_submitting": "One moment…",
+        "msg_success": "Thank you. A confirmation is on its way — one click and you are on The Register.",
+        "msg_error": "That did not go through. Please try again, or write to contact@hartwickatelier.com."
       }
     },
     "categories": {
@@ -84,386 +490,33 @@
         "yoga",
         "jewellery"
       ],
+      "disabled": true,
       "settings": {
         "heading": "The Collection Index",
         "subline": "Apparel, Fine Silks, Fine Jewellery and Yoga",
         "touch_reveal": "scroll",
         "show_placeholder_note": true,
         "placeholder_text": "Provisional — photographs are the store's own files: Fine Silks and Fine Jewellery are the wireframe's frames, Apparel is the nearest frame from the same shoot, Yoga is a stand-in until the rolled-mat picture arrives"
-      },
-      "disabled": true
+      }
     },
-    "register": {
-      "type": "ha-register",
+    "main": {
+      "type": "main-list-collections",
+      "disabled": true,
       "settings": {
-        "eyebrow": "The Register",
-        "heading": "Notes from the Atelier.",
-        "body": "<p>Materials, makers and work in progress.</p>",
-        "body_position": "form",
-        "show_native_form": true,
-        "contact_tag": "the-register",
-        "register_source": "collection_page"
-      },
-      "disabled": true
-    },
-    "index": {
-      "type": "ha-index",
-      "blocks": {
-        "g_clothing": {
-          "type": "group",
-          "settings": {
-            "number": "01",
-            "heading": "Apparel",
-            "count_label": "Five categories",
-            "anchor": "idx-clothing",
-            "layout": "clothing",
-            "view_all_text": "View all apparel",
-            "view_all_url": "/collections/apparel",
-            "dir_mode": "entries",
-            "dir_show_secondary": false,
-            "dir_direct": true,
-            "url": "/collections/apparel"
-          }
-        },
-        "e_1_01": {
-          "type": "entry",
-          "settings": {
-            "key": "1-01",
-            "number": "1/01",
-            "name": "Skirts",
-            "url": "/collections/skirts",
-            "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_TOKYO_SHIRT_IKAT.jpg",
-            "alt": "A handwoven khadi skirt with an ikat shirt",
-            "shape": "tall",
-            "focus_x": 50,
-            "focus_y": 40
-          }
-        },
-        "e_1_02": {
-          "type": "entry",
-          "settings": {
-            "key": "1-02",
-            "number": "1/02",
-            "name": "Shirts",
-            "url": "/collections/shirts",
-            "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_TRIBECA_SKIRT_KHADI_AMMAN_SHIRT.jpg",
-            "alt": "A handwoven khadi shirt",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 25
-          }
-        },
-        "e_1_03": {
-          "type": "entry",
-          "settings": {
-            "key": "1-03",
-            "number": "1/03",
-            "name": "Trousers",
-            "url": "/collections/trousers",
-            "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_PARIS_TROUSERS_KHADI_TWILL_AMMAN_SHIRT.jpg",
-            "alt": "Handwoven khadi twill trousers",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 60
-          }
-        },
-        "e_1_04": {
-          "type": "entry",
-          "settings": {
-            "key": "1-04",
-            "number": "1/04",
-            "name": "Dresses & Coats",
-            "url": "/collections/apparel#dresses-and-coats",
-            "image": "shopify://shop_images/001_HARTWICK_HANDWOVEN_MARYLEBONE_COAT_IKAT_BOMBAY_TROUSERS_SITGES_TOTEBAG.jpg",
-            "alt": "A quilted handwoven ikat coat",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 30
-          }
-        },
-        "e_1_05": {
-          "type": "entry",
-          "settings": {
-            "key": "1-05",
-            "number": "1/05",
-            "name": "Loungewear",
-            "url": "/collections/loungewear",
-            "image": "shopify://shop_images/001_HARTWICK_OKANAGAN_ROBE_SUMMERVINE_BLOCKPRINT.jpg",
-            "alt": "A block-printed organic cotton robe",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 30
-          }
-        },
-        "g_silk": {
-          "type": "group",
-          "settings": {
-            "number": "02",
-            "heading": "Fine Silk",
-            "count_label": "Seven formats",
-            "anchor": "idx-silk",
-            "layout": "silk",
-            "view_all_text": "View all silk scarves",
-            "view_all_url": "/collections/fine-silk",
-            "dir_mode": "summary",
-            "dir_summary": "Silk scarves",
-            "dir_second": "Explore silk formats",
-            "editorial_image": "shopify://shop_images/196_HARTWICK_FINESILK_PETITSQUARE01_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-            "editorial_alt": "Block-printed fine silk in the studio",
-            "url": "/collections/fine-silk",
-            "dir_summary_url": "/collections/fine-silk",
-            "dir_second_url": "/collections/fine-silk#clothing-top"
-          }
-        },
-        "e_2_01": {
-          "type": "entry",
-          "settings": {
-            "key": "2-01",
-            "number": "2/01",
-            "name": "Petit Square",
-            "secondary": "33 × 33 cm",
-            "url": "/collections/petit-square-scarves",
-            "image": "shopify://shop_images/077_HARTWICK_FINESILK_PETITSQUARE01_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-            "alt": "Petit Square, block-printed fine silk in natural dye",
-            "shape": "square",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_2_02": {
-          "type": "entry",
-          "settings": {
-            "key": "2-02",
-            "number": "2/02",
-            "name": "Rich Ribbon",
-            "secondary": "81 × 15 cm",
-            "url": "/collections/fine-silk",
-            "image": "shopify://shop_images/041004_HARTWICK_FINE_SILK_RICHRIBBON_4R1A4211.jpg",
-            "alt": "Rich Ribbon, block-printed fine silk in natural dye",
-            "shape": "square",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_2_03": {
-          "type": "entry",
-          "settings": {
-            "key": "2-03",
-            "number": "2/03",
-            "name": "Medium Square",
-            "secondary": "75 × 75 cm",
-            "url": "/collections/medium-square-scarves",
-            "image": "shopify://shop_images/054_HARTWICK_FINESILK_MEDIUMSQUARE03_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-            "alt": "Medium Square, block-printed fine silk in natural dye",
-            "shape": "square",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_2_04": {
-          "type": "entry",
-          "settings": {
-            "key": "2-04",
-            "number": "2/04",
-            "name": "Large Square",
-            "secondary": "110 × 110 cm",
-            "url": "/collections/large-squares",
-            "image": "shopify://shop_images/001_HARTWICK_FINESILK_LARGESQUARE03_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-            "alt": "Large Square, block-printed fine silk in natural dye",
-            "shape": "square",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_2_05": {
-          "type": "entry",
-          "settings": {
-            "key": "2-05",
-            "number": "2/05",
-            "name": "Classic Stole",
-            "secondary": "200 × 55 cm",
-            "url": "/collections/classic-stoles-scarves",
-            "image": "shopify://shop_images/003_HARTWICK_HANDWOVEN_BOMBAY_TROUSERS_IKAT_JODHPUR_SHIRT_FINESILK_STOLE_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-            "alt": "Classic Stole, block-printed fine silk in natural dye",
-            "shape": "square",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_2_06": {
-          "type": "entry",
-          "settings": {
-            "key": "2-06",
-            "number": "2/06",
-            "name": "Shayla",
-            "secondary": "95 × 175 cm",
-            "url": "/collections/fine-silk",
-            "image": "shopify://shop_images/039004_HARTWICK_FINE_SILK_SHAYLA_4R1A0628.jpg",
-            "alt": "Shayla, block-printed fine silk in natural dye",
-            "shape": "square",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_2_07": {
-          "type": "entry",
-          "settings": {
-            "key": "2-07",
-            "number": "2/07",
-            "name": "Oversize Dupatta",
-            "secondary": "250 × 100 cm",
-            "url": "/collections/dupatta-oversize-scarves",
-            "image": "shopify://shop_images/229_HARTWICK_FINESILK_DUPATTA_SCARF_NATURALDYE_BLOCKPRINT.jpg",
-            "alt": "Oversize Dupatta, block-printed fine silk in natural dye",
-            "shape": "square",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "g_jewellery": {
-          "type": "group",
-          "settings": {
-            "number": "03",
-            "heading": "Fine Jewellery",
-            "count_label": "Four categories",
-            "anchor": "idx-jewellery",
-            "layout": "jewellery",
-            "view_all_text": "View all jewellery",
-            "view_all_url": "/collections/fine-jewellery",
-            "dir_mode": "entries",
-            "dir_show_secondary": false,
-            "dir_direct": true,
-            "url": "/collections/fine-jewellery"
-          }
-        },
-        "e_3_01": {
-          "type": "entry",
-          "settings": {
-            "key": "3-01",
-            "number": "3/01",
-            "name": "Rings",
-            "secondary": "Fingers",
-            "url": "/collections/rings",
-            "image": "shopify://shop_images/001CROP02_HARTWICK_LIMINAL_STEP_RINGS_23KGOLD_EMERALD_SILVER_RHODOLITE.jpg",
-            "alt": "Rings from the Liminal collection",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_3_02": {
-          "type": "entry",
-          "settings": {
-            "key": "3-02",
-            "number": "3/02",
-            "name": "Earrings",
-            "secondary": "Ear",
-            "url": "/collections/earrings",
-            "image": "shopify://shop_images/001HARTWICK_LIMINAL_POLKI_DIAMOND_CITRINE_ARTDECO_EARRINGS.jpg",
-            "alt": "Earrings from the Liminal collection",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_3_03": {
-          "type": "entry",
-          "settings": {
-            "key": "3-03",
-            "number": "3/03",
-            "name": "Bangles & Bracelets",
-            "secondary": "Wrist",
-            "url": "/collections/bangles-and-bracelets",
-            "image": "shopify://shop_images/HARTWICK_LIMINAL_SILVER_18KGOLD_EMERALD_ANATOLIAN_BRACELET_IMG_5775.jpg",
-            "alt": "Bangles & Bracelets from the Liminal collection",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "e_3_04": {
-          "type": "entry",
-          "settings": {
-            "key": "3-04",
-            "number": "3/04",
-            "name": "Necklaces & Pendants",
-            "secondary": "Neck",
-            "url": "/collections/necklaces-and-pendants",
-            "image": "shopify://shop_images/HARTWICK_LIMINAL_EMERALD_BEADBOX_NECKLACE_IMG_5771.jpg",
-            "alt": "Necklaces & Pendants from the Liminal collection",
-            "shape": "wide",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        },
-        "g_yoga": {
-          "type": "group",
-          "settings": {
-            "number": "04",
-            "heading": "Yoga",
-            "count_label": "Yoga mats",
-            "anchor": "idx-yoga",
-            "layout": "yoga",
-            "view_all_text": "",
-            "dir_mode": "entries",
-            "dir_show_secondary": false,
-            "dir_direct": true,
-            "url": "/collections/yoga"
-          }
-        },
-        "e_4_01": {
-          "type": "entry",
-          "settings": {
-            "key": "4-01",
-            "number": "4/01",
-            "name": "Yoga mats",
-            "note": "For your practice.",
-            "url": "/collections/yoga",
-            "image": "shopify://shop_images/HartwickAtelier-CollectionHeader-Yoga.jpg",
-            "alt": "A handwoven yoga mat laid on rock",
-            "shape": "feature",
-            "focus_x": 50,
-            "focus_y": 50
-          }
-        }
-      },
-      "block_order": [
-        "g_clothing",
-        "e_1_01",
-        "e_1_02",
-        "e_1_03",
-        "e_1_04",
-        "e_1_05",
-        "g_silk",
-        "e_2_01",
-        "e_2_02",
-        "e_2_03",
-        "e_2_04",
-        "e_2_05",
-        "e_2_06",
-        "e_2_07",
-        "g_jewellery",
-        "e_3_01",
-        "e_3_02",
-        "e_3_03",
-        "e_3_04",
-        "g_yoga",
-        "e_4_01"
-      ],
-      "settings": {
-        "header_image": "shopify://shop_images/HartwickAtelier-Loom-Warp-4R1A4471.jpg",
-        "header_focus_x": 50,
-        "header_focus_y": 50,
-        "crumb": "Collection",
-        "heading": "The Collection Index",
-        "intro": "Apparel, silk scarves, fine jewellery and yoga mats. Find your way by category.",
-        "dir_label": "Explore the index",
-        "dir_count": "",
-        "back_text": "Back to index",
-        "empty_text": "Photograph to supply",
-        "show_placeholder_note": true,
-        "placeholder_text": "Provisional photographs from the store's own files until approved, correctly matched images are supplied; the header awaits the loom photograph.",
-        "header_paper": "shopify://shop_images/HA_CONTACT_PAPER_GREY_TOP.jpg"
+        "title": "Collections",
+        "description": "",
+        "title_alignment": "center",
+        "sort": "alphabetical",
+        "card_layout": "stacked",
+        "card_heading_size": "h4",
+        "card_heading_position": "center",
+        "image_ratio": "portrait",
+        "media_radius_top_only": false,
+        "columns_mobile": "1",
+        "columns_tablet": 3,
+        "columns_desktop": 3,
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     }
   },
