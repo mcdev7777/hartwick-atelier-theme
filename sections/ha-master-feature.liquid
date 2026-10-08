@@ -148,6 +148,33 @@
   endif
 
   assign number = section.settings.number | default: '01'
+
+  # MASTER TECHNIQUE — a content area, not final text (Aloha, 8 October
+  # 2026): "This could eventually contain photography, film or information
+  # about the relevant Master/technique. Again the structure needs to be
+  # flexible depending on what content we have." So the band takes, in this
+  # order and only what exists:
+  #   film   the product's hartwick.technique_film (a video file), else the
+  #          section's film (uploaded, or a YouTube / Vimeo link)
+  #   photo  the Master's workshop photograph, else the technique's tool
+  #   words  the Master's name and discipline, or the tool; and, if switched
+  #          on, the technique record's own description (hartwick.techniques)
+  # With none of these the band is hidden, or — "Show the empty slot" on
+  # the unpublished theme — it reads INSERT MASTER TECHNIQUE, as drawn.
+  assign film = mf.technique_film.value
+  assign film_kind = ''
+  if film != blank
+    assign film_kind = 'media'
+  elsif section.settings.film != blank
+    assign film = section.settings.film
+    assign film_kind = 'media'
+  elsif section.settings.film_url != blank
+    assign film_kind = 'external'
+  endif
+  assign technique_text = ''
+  if section.settings.show_technique_text
+    assign technique_text = mf.techniques.value.first.description | metafield_tag
+  endif
 -%}
 
 {%- comment -%}
@@ -164,9 +191,33 @@
     assign show_tool = true
   endif
 -%}
-{%- if has_identity or show_tool or section.settings.show_slot -%}
-<section class="ha-section ha-section--field-peat ha-masterfeat{% if photo != blank %} ha-masterfeat--photo{% endif %}{% if show_tool %} ha-masterfeat--tool{% elsif has_identity == false %} ha-masterfeat--slot{% endif %}"{% if tool != blank %} data-tool="{{ tool.settings.anchor | escape }}"{% endif %}>
-  {%- if photo != blank -%}
+{%- liquid
+  assign is_empty = true
+  if has_identity or show_tool or film_kind != blank
+    assign is_empty = false
+  endif
+-%}
+{%- if is_empty == false or section.settings.show_slot -%}
+<section class="ha-section ha-section--field-peat ha-masterfeat{% if film_kind != blank %} ha-masterfeat--film{% elsif photo != blank %} ha-masterfeat--photo{% endif %}{% if show_tool %} ha-masterfeat--tool{% elsif has_identity == false %} ha-masterfeat--slot{% endif %}{% if is_empty %} ha-masterfeat--empty{% endif %}"{% if tool != blank %} data-tool="{{ tool.settings.anchor | escape }}"{% endif %} id="master-technique">
+  {%- if is_empty -%}
+    {%- comment -%} The wireframe's own placeholder: a dark content area awaiting its content. {%- endcomment -%}
+    <div class="ha-wrap ha-masterfeat__insert">
+      <p class="ha-masterfeat__insert-label ha-label">{{ section.settings.insert_label }}</p>
+      {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+        text: 'Master Technique — a content area for the Master or technique of this piece: a film (hartwick.technique_film), a workshop photograph or the Master record (hartwick.masters). Hidden on a published theme until one exists.' -%}
+    </div>
+  {%- else -%}
+  {%- if film_kind != blank -%}
+    <div class="ha-masterfeat__film">
+      {%- if film_kind == 'media' -%}
+        {{ film | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '2000x', class: 'ha-masterfeat__video' }}
+      {%- elsif section.settings.film_url.type == 'youtube' -%}
+        <iframe class="ha-masterfeat__video" src="https://www.youtube-nocookie.com/embed/{{ section.settings.film_url.id }}?rel=0&modestbranding=1&playsinline=1" title="{{ section.settings.film_caption | default: section.settings.eyebrow | escape }}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+      {%- elsif section.settings.film_url.type == 'vimeo' -%}
+        <iframe class="ha-masterfeat__video" src="https://player.vimeo.com/video/{{ section.settings.film_url.id }}?dnt=1&title=0&byline=0&portrait=0" title="{{ section.settings.film_caption | default: section.settings.eyebrow | escape }}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      {%- endif -%}
+    </div>
+  {%- elsif photo != blank -%}
     <div class="ha-masterfeat__media ha-grain-block ha-grain-block--over">
       {{ photo
         | image_url: width: 2800
@@ -187,7 +238,9 @@
       {%- if show_tool -%}{{ section.settings.tool_eyebrow }}{%- else -%}{{ section.settings.eyebrow }}{%- endif %} / {{ number }}</p>
 
     <p class="ha-masterfeat__slotlabel ha-record">
-      {%- if photo_is_tool -%}
+      {%- if film_kind != blank -%}
+        {{ section.settings.film_caption }}
+      {%- elsif photo_is_tool -%}
         {{ tool.settings.caption }}
       {%- elsif photo != blank and section.settings.photo_caption != blank -%}
         {{ section.settings.photo_caption }}
@@ -209,14 +262,17 @@
           {{ section.settings.slot_discipline }} / {{ section.settings.slot_place }}
         {%- endif -%}
       </p>
+      {%- if technique_text != blank -%}
+        <div class="ha-masterfeat__text ha-body ha-narrate">{{ technique_text }}</div>
+      {%- endif -%}
       <hr class="ha-masterfeat__rule">
       {%- if has_identity and href != blank -%}
-        <a class="ha-masterfeat__link ha-record" href="{{ href }}">{{ section.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+        <a class="ha-masterfeat__link ha-record" href="{{ href }}">{{ section.settings.link_text }}</a>
       {%- elsif show_tool and tool_href != blank -%}
-        <a class="ha-masterfeat__link ha-record" href="{{ tool_href }}">{{ section.settings.tool_link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>
+        <a class="ha-masterfeat__link ha-record" href="{{ tool_href }}">{{ section.settings.tool_link_text }}</a>
       {%- elsif show_tool -%}
       {%- else -%}
-        <span class="ha-masterfeat__link ha-masterfeat__link--inert ha-record" aria-disabled="true">{{ section.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></span>
+        <span class="ha-masterfeat__link ha-masterfeat__link--inert ha-record" aria-disabled="true">{{ section.settings.link_text }}</span>
       {%- endif -%}
     </div>
 
@@ -229,6 +285,7 @@
         text: 'No Master is linked to this garment yet — the slot publishes from the master record in hartwick.masters (name, discipline, place, workshop photograph, record link).' -%}
     {%- endif -%}
   </div>
+  {%- endif -%}
 </section>
 {%- endif -%}
 
@@ -250,7 +307,14 @@
     { "type": "header", "content": "The Master's tool", "info": "Aloha, 23 Sept: feature the tool of the technique the product is labelled with. Add one Tool block per technique; the first matching word in the product's label wins." },
     { "type": "text", "id": "tool_eyebrow", "label": "Eyebrow when a tool is shown", "default": "The Master's Tool" },
     { "type": "text", "id": "tool_link_text", "label": "Tool link text", "default": "Visit The Masters" },
+    { "type": "header", "content": "Film", "info": "Aloha, 8 Oct 2026: the band may hold a film of the Master or technique. A product's own hartwick.technique_film (video file) wins over the film below." },
+    { "type": "video", "id": "film", "label": "Film (uploaded to Shopify)" },
+    { "type": "video_url", "id": "film_url", "label": "…or a YouTube / Vimeo link", "accept": ["youtube", "vimeo"] },
+    { "type": "text", "id": "film_caption", "label": "Film caption" },
+    { "type": "header", "content": "Information" },
+    { "type": "checkbox", "id": "show_technique_text", "label": "Show the technique's own description", "default": false, "info": "The description field of the first technique record in hartwick.techniques, under the name. Off until those descriptions are approved for product pages." },
     { "type": "header", "content": "The empty slot (design annotations)" },
+    { "type": "text", "id": "insert_label", "label": "Empty content area reads", "default": "Insert Master Technique" },
     { "type": "text", "id": "slot_photo_label", "label": "Photo slot label", "default": "Workshop photograph / to supply" },
     { "type": "text", "id": "slot_name", "label": "Name slot", "default": "[Master name]" },
     { "type": "text", "id": "slot_discipline", "label": "Discipline slot", "default": "[Discipline]" },

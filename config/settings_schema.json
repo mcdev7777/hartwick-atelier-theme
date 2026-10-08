@@ -108,6 +108,13 @@
       },
       {
         "type": "color",
+        "id": "ha_info_panel",
+        "label": "Information panels (the “+” items)",
+        "default": "#F8F5ED",
+        "info": "Aloha, 8 October 2026: the overlay behind Fit & Measurements, Description, Delivery & Returns, Care & Ageing."
+      },
+      {
+        "type": "color",
         "id": "ha_field_dark",
         "label": "Dark field",
         "default": "#332820"

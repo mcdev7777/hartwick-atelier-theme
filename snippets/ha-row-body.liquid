@@ -51,7 +51,7 @@
       <div class="{{ cls }} ha-body ha-narrate">{{ block.settings.content }}</div>
     {%- endif -%}
     {%- if block.settings.link_text != blank and block.settings.link_url != blank -%}
-      <p class="ha-row-links"><a class="ha-row-link ha-record" href="{{ block.settings.link_url }}">{{ block.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a></p>
+      <p class="ha-row-links"><a class="ha-row-link ha-record" href="{{ block.settings.link_url }}">{{ block.settings.link_text }}</a></p>
     {%- endif -%}
   {%- when 'policies' -%}
     {%- comment -%}
@@ -61,8 +61,8 @@
     {%- endcomment -%}
     {%- if shipping_url != blank or refund_url != blank -%}
       <p class="ha-row-links">
-        {%- if shipping_url != blank and block.settings.link_text != blank -%}<a class="ha-row-link ha-record" href="{{ shipping_url }}">{{ block.settings.link_text }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>{%- endif -%}
-        {%- if refund_url != blank and block.settings.link_text_2 != blank -%}<a class="ha-row-link ha-record" href="{{ refund_url }}">{{ block.settings.link_text_2 }}<span class="ha-pdp__arrow" aria-hidden="true"></span></a>{%- endif -%}
+        {%- if shipping_url != blank and block.settings.link_text != blank -%}<a class="ha-row-link ha-record" href="{{ shipping_url }}">{{ block.settings.link_text }}</a>{%- endif -%}
+        {%- if refund_url != blank and block.settings.link_text_2 != blank -%}<a class="ha-row-link ha-record" href="{{ refund_url }}">{{ block.settings.link_text_2 }}</a>{%- endif -%}
       </p>
     {%- endif -%}
     {%- if shipping_body != blank -%}

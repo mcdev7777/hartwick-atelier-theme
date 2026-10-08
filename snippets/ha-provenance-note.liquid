@@ -1,11 +1,17 @@
 {%- comment -%}
-  The old site's paragraph for a process mark, kept as a closed disclosure
-  beneath its stage. Native <details>: keyboard, touch and no-JavaScript all
-  work, and the text is in the page for a crawler even while closed.
+  The old site's paragraph for a process mark, under its stage in From Fibre
+  to Garment. Since 8 October 2026 it is a "+" item — ABOUT THE TECHNIQUE +,
+  as Aloha's wireframe draws it — opening as an overlay (snippets/ha-info-pop)
+  rather than a disclosure that lengthens the record. The text stays in the
+  page for a reader or a crawler.
+
+    {%- render 'ha-provenance-note', id: 'spinning', title: 'Handspun', body: body, label: 'About the technique' -%}
 {%- endcomment -%}
 {%- if body != blank -%}
-  <details class="ha-provenance__note">
-    <summary class="ha-provenance__note-summary ha-record">{{ label | default: 'About' }} {{ title | downcase }}</summary>
+  {%- capture note_body -%}
+    {%- if title != blank -%}<p class="ha-provenance__note-title ha-record">{{ title }}</p>{%- endif -%}
     <div class="ha-provenance__note-body ha-body ha-narrate">{{ body }}</div>
-  </details>
+  {%- endcapture -%}
+  {%- assign note_id = 'technique-' | append: id -%}
+  {%- render 'ha-info-pop', id: note_id, title: label, content: note_body, class: 'ha-provenance__note' -%}
 {%- endif -%}

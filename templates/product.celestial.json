@@ -19,10 +19,13 @@
  * stay in view, a size that must be chosen, Product JSON-LD restored, and a
  * Delivery row that reads Settings > Policies.
  *
- * Below it, the V2 order: Origin + Process (one record of five stages), The
- * Cloth / Material Record (numbered index and staggered detail photographs),
- * The Master (from the shared master record), Lot Record, Care & Repair /
- * Shipping & Returns, Related Works, then The Register.
+ * 8 October 2026 — Aloha's product-page notes: PRODUCT, PURCHASE, PROCESS,
+ * MATERIAL, MAKING / PROVENANCE, RELATED COLLECTION. Below the opening:
+ * From Fibre to Garment (five stages, film-ready), the material (Matka Silk,
+ * at most three photographs, Care & Ageing +), A Record of the Making (the
+ * Lot record), the Master Technique band, then Related Collections — small.
+ * Care & Repair / Shipping & Returns (ha_living) is off: its content is the
+ * opening's Delivery & Returns + and the material's Care & Ageing +.
  *
  * The compositions the V2 replaced — The Garment, the 13-row Material Record,
  * Authorship, The Origin route, Process, A Wearer's Note, Continue — are
@@ -304,7 +307,8 @@
         "eyebrow": "",
         "heading": "",
         "paper": "shopify://shop_images/HA_CIRCLE_HEADER_PAPER_GREY.jpg"
-      }
+      },
+      "disabled": true
     },
     "ha_continue": {
       "type": "ha-continue",
@@ -352,7 +356,8 @@
         "ref_label": "Provenance",
         "show_status": true,
         "show_placeholder_note": true,
-        "paper": "shopify://shop_images/HA_PRODUCT_PROVENANCE_PAPER_GREY.jpg"
+        "paper": "shopify://shop_images/HA_PRODUCT_PROVENANCE_PAPER_GREY.jpg",
+        "note_label": "About the technique"
       }
     },
     "ha_cloth": {
@@ -360,11 +365,14 @@
       "settings": {
         "field": "page",
         "eyebrow": "The Cloth / Material Record",
-        "max_images": 4,
+        "max_images": 3,
         "closer_eyebrow": "Look closer",
         "closer_line": "Surface, fastening, cut.",
         "show_full_record": false,
-        "show_placeholder_note": true
+        "show_placeholder_note": true,
+        "care_heading": "Care & Ageing",
+        "care_link_text": "Ask about care",
+        "care_link_url": "/pages/contact-us"
       }
     },
     "ha_master": {
@@ -447,8 +455,8 @@
       "type": "ha-lot-record",
       "settings": {
         "field": "page",
-        "eyebrow": "Lot Record",
-        "heading": "The Production Record",
+        "eyebrow": "",
+        "heading": "A Record of the Making",
         "show_placeholder_note": true
       }
     },
@@ -456,11 +464,12 @@
       "type": "ha-related-works",
       "settings": {
         "field": "page",
-        "eyebrow": "Related Works",
-        "all_text": "View the collection",
+        "eyebrow": "Related Collections",
+        "all_text": "Back to the Collection Index",
         "count": 3,
-        "show_empty": true,
-        "show_placeholder_note": true
+        "show_empty": false,
+        "show_placeholder_note": true,
+        "link_to": "index"
       }
     }
   },
@@ -468,10 +477,10 @@
     "main",
     "ha_provenance",
     "ha_cloth",
-    "ha_master",
     "ha_lot",
-    "ha_living",
+    "ha_master",
     "ha_related",
+    "ha_living",
     "ha_register",
     "ha_garment",
     "ha_record",

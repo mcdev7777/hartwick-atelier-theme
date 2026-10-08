@@ -71,6 +71,39 @@
     endif
   endif
 
+  # A RECORD OF THE MAKING (Aloha, 8 October 2026): "This should feel more
+  # like a factual record rather than marketing copy. This is where the
+  # provenance / making information sits. Masters, origin, technique, cloth
+  # information etc depending on what information we actually have for each
+  # product." The four rows below print only when the fact exists — no
+  # bracket, no guess. A Master is named only from a record with a name.
+  capture f_technique
+    render 'ha-product-fact', product: product, field: 'technique'
+  endcapture
+  capture f_fibre
+    render 'ha-product-fact', product: product, field: 'fibre'
+  endcapture
+  capture f_made
+    render 'ha-product-fact', product: product, field: 'made_in'
+  endcapture
+  assign f_technique = f_technique | strip
+  assign f_made = f_made | strip
+  assign cloth_cell = mf.fibre_ratio | default: f_fibre | strip
+  assign masters_cell = ''
+  for m in mf.masters.value
+    if m.name.value != blank
+      assign m_line = m.name.value
+      if m.role.value != blank
+        assign m_line = m_line | append: ', ' | append: m.role.value
+      endif
+      if masters_cell == ''
+        assign masters_cell = m_line
+      else
+        assign masters_cell = masters_cell | append: ' / ' | append: m_line
+      endif
+    endif
+  endfor
+
   assign open_facts = false
   if f_reference == blank or lot_cell == blank or dates_cell == blank
     assign open_facts = true
@@ -89,11 +122,15 @@
     <table class="ha-lotrec__table ha-record">
       <caption class="visually-hidden">{{ section.settings.heading }}</caption>
       <tbody>
-        <tr><th scope="row">{{ section.settings.row_style }}</th><td>{%- render 'ha-style-name', name: f_style -%}</td></tr>
-        <tr><th scope="row">{{ section.settings.row_expression }}</th><td>{{ f_expression | default: section.settings.confirm_expression }}</td></tr>
+        {%- comment -%} One row, as the wireframe draws it: STYLE / EXPRESSION — Tribeca Skirt / Handspun Matka Silk, Emerald Changeant. {%- endcomment -%}
+        <tr><th scope="row">{{ section.settings.row_style }} / {{ section.settings.row_expression }}</th><td>{%- render 'ha-style-name', name: f_style -%} / {{ f_expression | default: section.settings.confirm_expression }}</td></tr>
         <tr><th scope="row">{{ section.settings.row_reference }}</th><td>{% if f_reference != blank %}{{ f_reference }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_reference }}</span>{% endif %}</td></tr>
         <tr><th scope="row">{{ section.settings.row_lot }}</th><td>{% if lot_cell != blank %}{{ lot_cell }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_lot }}</span>{% endif %}</td></tr>
         <tr><th scope="row">{{ section.settings.row_dates }}</th><td>{% if dates_cell != blank %}{{ dates_cell }}{% else %}<span class="ha-lotrec__open">{{ section.settings.confirm_dates }}</span>{% endif %}</td></tr>
+        {%- if masters_cell != blank -%}<tr><th scope="row">{{ section.settings.row_masters }}</th><td>{{ masters_cell }}</td></tr>{%- endif -%}
+        {%- if f_made != blank -%}<tr><th scope="row">{{ section.settings.row_origin }}</th><td>{{ f_made }}</td></tr>{%- endif -%}
+        {%- if f_technique != blank -%}<tr><th scope="row">{{ section.settings.row_technique }}</th><td>{{ f_technique }}</td></tr>{%- endif -%}
+        {%- if cloth_cell != blank -%}<tr><th scope="row">{{ section.settings.row_cloth }}</th><td>{{ cloth_cell }}</td></tr>{%- endif -%}
       </tbody>
     </table>
   </div>
@@ -108,7 +145,7 @@
 
 {% schema %}
 {
-  "name": "HA — Lot Record",
+  "name": "HA — Record of the Making",
   "tag": "section",
   "class": "ha-section-wrapper",
   "settings": [
@@ -117,13 +154,17 @@
       { "value": "page", "label": "Page ground" }, { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" }
     ] },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Lot Record" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "The Production Record" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A Record of the Making" },
     { "type": "header", "content": "Row labels" },
     { "type": "text", "id": "row_style", "label": "Style", "default": "Style" },
     { "type": "text", "id": "row_expression", "label": "Expression", "default": "Expression" },
     { "type": "text", "id": "row_reference", "label": "Product reference", "default": "Product reference" },
     { "type": "text", "id": "row_lot", "label": "Lot / quantity", "default": "Lot / Quantity" },
     { "type": "text", "id": "row_dates", "label": "Production / completion", "default": "Production / Completion" },
+    { "type": "text", "id": "row_masters", "label": "Masters (only with a named Master)", "default": "The Masters" },
+    { "type": "text", "id": "row_origin", "label": "Origin (only when recorded)", "default": "Origin" },
+    { "type": "text", "id": "row_technique", "label": "Technique (only when recorded)", "default": "Technique" },
+    { "type": "text", "id": "row_cloth", "label": "Cloth (only when recorded)", "default": "Cloth" },
     { "type": "header", "content": "Open facts (design annotations)" },
     { "type": "text", "id": "confirm_expression", "label": "Expression unknown", "default": "[Confirm Expression name]" },
     { "type": "text", "id": "confirm_reference", "label": "Reference unknown", "default": "[Confirm product reference]" },

@@ -34,9 +34,15 @@
 
   The old site's process marks each carried a paragraph ("In India, artisans
   have used hand carved wooden blocks…"). That is existing, approved editorial
-  text, so it is kept: a quiet "About …" disclosure beneath the stage it
-  belongs to, content present in the page for a reader or a crawler, closed by
-  default so the record stays a record.
+  text, so it is kept: ABOUT THE TECHNIQUE + beneath the stage it belongs to,
+  an overlay since 8 October 2026 (snippets/ha-info-pop), so the record stays
+  a record and the page never grows.
+
+  8 OCTOBER 2026 — Aloha: "This isn't just a decorative diagram!! The idea is
+  to show how many stages are involved in making of just one Hartwick
+  garment … it takes a village to create a forever piece." And: build it so
+  it "can eventually accept video without us having to completely redesign
+  the page" — see THE PROCESS FILM below.
 {%- endcomment -%}
 
 {%- liquid
@@ -223,6 +229,32 @@
     assign dye_method = mf.dye_process
   endif
   assign construction_method = mf.construction_method
+
+  # THE PROCESS FILM (Aloha, 8 October 2026): "Eventually we will produce
+  # short films showing these processes. When we have those films, this
+  # area can become the place for the process film instead of us needing
+  # lots of text explaining every stage … build this section in a way that
+  # can eventually accept video without us having to completely redesign
+  # the page." The film is a slot, not a redesign: the product's own
+  # hartwick.process_film (a video file) first, then the section's film
+  # (an uploaded video, or a YouTube / Vimeo link) for a film shared by many
+  # pieces. With a film, "Film and stages" keeps the five-stage record
+  # beneath it; "Film only" shows the film with the five stages as one line
+  # of chapters, so the number of hands is still counted.
+  assign film = mf.process_film.value
+  assign film_kind = ''
+  if film != blank
+    assign film_kind = 'media'
+  elsif section.settings.film != blank
+    assign film = section.settings.film
+    assign film_kind = 'media'
+  elsif section.settings.film_url != blank
+    assign film_kind = 'external'
+  endif
+  assign stages_compact = false
+  if film_kind != blank and section.settings.film_mode == 'replace'
+    assign stages_compact = true
+  endif
 -%}
 
 <section class="ha-section ha-provenance{% unless section.settings.field == 'page' or section.settings.field == blank %} ha-section--field-{{ section.settings.field }}{% endunless %}{% if section.settings.paper %} ha-provenance--paper{% endif %}" id="origin-and-process"{% if section.settings.paper %} style="--ha-provenance-paper: url({{ section.settings.paper | image_url: width: 2400 }});"{% endif %}>
@@ -237,6 +269,32 @@
       <p class="ha-provenance__ref ha-record">{{ section.settings.ref_label }} / {{ f_style }}</p>
     </div>
 
+    {%- if film_kind != blank -%}
+      <figure class="ha-provenance__film">
+        <div class="ha-provenance__film-frame">
+          {%- if film_kind == 'media' -%}
+            {{ film | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '1800x', class: 'ha-provenance__video' }}
+          {%- elsif section.settings.film_url.type == 'youtube' -%}
+            <iframe class="ha-provenance__video" src="https://www.youtube-nocookie.com/embed/{{ section.settings.film_url.id }}?rel=0&modestbranding=1&playsinline=1" title="{{ section.settings.film_caption | default: section.settings.heading | escape }}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+          {%- elsif section.settings.film_url.type == 'vimeo' -%}
+            <iframe class="ha-provenance__video" src="https://player.vimeo.com/video/{{ section.settings.film_url.id }}?dnt=1&title=0&byline=0&portrait=0" title="{{ section.settings.film_caption | default: section.settings.heading | escape }}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.film_caption != blank -%}
+          <figcaption class="ha-provenance__film-caption ha-record">{{ section.settings.film_caption }}</figcaption>
+        {%- endif -%}
+      </figure>
+    {%- endif -%}
+
+    {%- if stages_compact -%}
+      <ol class="ha-provenance__chapters ha-record" role="list" aria-label="{{ section.settings.heading | escape }}">
+        <li><span class="ha-provenance__num">01</span> {{ section.settings.stage_1 }}</li>
+        <li><span class="ha-provenance__num">02</span> {{ section.settings.stage_2 }}</li>
+        <li><span class="ha-provenance__num">03</span> {{ section.settings.stage_3 }}</li>
+        <li><span class="ha-provenance__num">04</span> {{ section.settings.stage_4 }}</li>
+        <li><span class="ha-provenance__num">05</span> {{ section.settings.stage_5 }}</li>
+      </ol>
+    {%- else -%}
     <ol class="ha-provenance__stages" role="list">
 
       {%- comment -%} 01 FIBRE {%- endcomment -%}
@@ -265,7 +323,7 @@
           <div class="ha-provenance__line"><dt>{{ section.settings.label_place }}</dt><dd>{{ mf.place_of_spinning.value.place | default: confirm }}</dd></div>
         </dl>
         {%- render 'ha-provenance-tag', tag: tag_spinning, verified: verified, show_status: section.settings.show_status, known: f_yarn, confirm: confirm -%}
-        {%- render 'ha-provenance-note', title: note_spinning_title, body: note_spinning, label: section.settings.note_label -%}
+        {%- render 'ha-provenance-note', id: 'spinning', title: note_spinning_title, body: note_spinning, label: section.settings.note_label -%}
       </li>
 
       {%- comment -%} 03 WEAVING {%- endcomment -%}
@@ -280,7 +338,7 @@
           <div class="ha-provenance__line"><dt>{{ section.settings.label_place }}</dt><dd>{{ mf.place_of_weaving.value.place | default: confirm }}</dd></div>
         </dl>
         {%- render 'ha-provenance-tag', tag: tag_weaving, verified: verified, show_status: section.settings.show_status, known: f_weave, confirm: confirm -%}
-        {%- render 'ha-provenance-note', title: note_weaving_title, body: note_weaving, label: section.settings.note_label -%}
+        {%- render 'ha-provenance-note', id: 'weaving', title: note_weaving_title, body: note_weaving, label: section.settings.note_label -%}
       </li>
 
       {%- comment -%} 04 DYEING {%- endcomment -%}
@@ -295,7 +353,7 @@
           <div class="ha-provenance__line"><dt>{{ section.settings.label_place }}</dt><dd>{{ mf.place_of_dyeing.value.place | default: confirm }}</dd></div>
         </dl>
         {%- render 'ha-provenance-tag', tag: tag_dyeing, verified: verified, show_status: section.settings.show_status, known: dye_method, confirm: confirm -%}
-        {%- render 'ha-provenance-note', title: note_dyeing_title, body: note_dyeing, label: section.settings.note_label -%}
+        {%- render 'ha-provenance-note', id: 'dyeing', title: note_dyeing_title, body: note_dyeing, label: section.settings.note_label -%}
       </li>
 
       {%- comment -%} 05 CONSTRUCTION {%- endcomment -%}
@@ -312,8 +370,9 @@
         {%- render 'ha-provenance-tag', tag: tag_construction, verified: verified, show_status: section.settings.show_status, known: construction_method, confirm: confirm -%}
       </li>
     </ol>
+    {%- endif -%}
 
-    {%- unless verified -%}
+    {%- unless verified or stages_compact -%}
       {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
         text: 'Provenance not yet verified — every [Confirm] above is an open fact. Publishes from hartwick.* once Angela and the Masters confirm it.' -%}
     {%- endunless -%}
@@ -350,7 +409,15 @@
     { "type": "header", "content": "Honesty" },
     { "type": "text", "id": "confirm_text", "label": "Unknown fact reads", "default": "[Confirm]" },
     { "type": "checkbox", "id": "show_status", "label": "Append “/ Unverified” to classifications until provenance is verified", "default": true, "info": "Verified = hartwick.provenance_verified_on is set on the product." },
-    { "type": "text", "id": "note_label", "label": "Process note label", "default": "About", "info": "The old site's paragraph for a process mark opens under its stage." },
+    { "type": "text", "id": "note_label", "label": "Technique “+” label", "default": "About the technique", "info": "The old site's paragraph for a process mark, as a “+” under its stage. Opens as an overlay." },
+    { "type": "header", "content": "Process film", "info": "Aloha, 8 Oct 2026: this area becomes the place for the process film when it exists. A product's own hartwick.process_film (video file) wins over the film below." },
+    { "type": "video", "id": "film", "label": "Film (uploaded to Shopify)" },
+    { "type": "video_url", "id": "film_url", "label": "…or a YouTube / Vimeo link", "accept": ["youtube", "vimeo"] },
+    { "type": "text", "id": "film_caption", "label": "Film caption" },
+    { "type": "select", "id": "film_mode", "label": "With a film, show", "default": "replace", "options": [
+      { "value": "replace", "label": "Film only — the five stages as one line of chapters" },
+      { "value": "above", "label": "Film, then the five-stage record" }
+    ] },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true }
   ],
   "presets": [{ "name": "HA — Origin + Process" }]

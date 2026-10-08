@@ -34,13 +34,20 @@
   do on the native template. Variants, inventory, analytics and checkout are
   untouched.
 
-  TERMINOLOGY (CLAUDE.md). The heading is the Style's customer-facing name —
-  since 21 September 2026 the location name, Tribeca Skirt (Aloha: "We've
-  returned to the original names … Style codes and product IDs stay
-  internal"); the line beneath it is the material; the Expression is a
-  labelled row in the buy rail. The Lot is customer-facing as a Roman numeral.
-  No Edition number renders unless the garment is individually numbered — see
-  snippets/ha-pdp-identity.
+  8 OCTOBER 2026 — Aloha's product-page notes (docs/product-page-v3-2026-10-08.md):
+  left = product story + material information; centre = photography (at most
+  three pictures); right = product name + price + size + purchase. The "+"
+  items (Fit & Measurements, Description, Delivery & Returns) open as
+  overlays (snippets/ha-info-pop), never as accordions that lengthen the page.
+
+  TERMINOLOGY (CLAUDE.md). The heading is the individual product's name —
+  TRIBECA EMERALD (Aloha and Angela, 8 October 2026), from
+  hartwick.product_name; the Style (Tribeca) is the crumb before it. Until a
+  product carries the field, the Style's customer-facing name (Tribeca Skirt)
+  stands in and the unpublished theme says so. The line beneath is the
+  material; the Expression is a labelled row. The Lot is customer-facing as a
+  Roman numeral, in A Record of the Making. No Edition number renders unless
+  the garment is individually numbered.
 {%- endcomment -%}
 
 {%- liquid
@@ -78,9 +85,6 @@
   capture selector
     render 'ha-product-fact', product: product, field: 'selector'
   endcapture
-  capture technique_line
-    render 'ha-product-fact', product: product, field: 'material_line'
-  endcapture
   assign style_name = style_name | strip | default: product.title
   assign fact_fibre = fact_fibre | strip | default: section.settings.ph_fibre
   # The opening's WEAVE fact is the first fragment only; the further lines of
@@ -89,17 +93,17 @@
   assign fact_made = fact_made | strip | default: section.settings.ph_made_in
   assign expression = expression | strip | default: section.settings.ph_expression
 
-  # Aloha's product-copy sheet, tab 01 (16 September): the serif line under
-  # the Style is the "Short hero subtitle" — the Expression before its comma
-  # ("Handspun Matka Silk"); the record label beneath it is the "Material /
-  # technique line" ("HANDSPUN / HANDWOVEN"); the buy rail's Expression row
-  # and the COLOUR fact are the "Colour / expression selector" ("Emerald
-  # Changeant"). The full Expression stays in the Lot record.
+  # Aloha's product-copy sheet, tab 01 (16 September): the line under the
+  # name is the "Short hero subtitle" — the Expression before its comma
+  # ("Handspun Matka Silk"); the buy rail's Expression row and the COLOUR
+  # fact are the "Colour / expression selector" ("Emerald Changeant"). The
+  # full Expression stays in the Lot record. (The "Material / technique
+  # line", HANDSPUN / HANDWOVEN, left the opening on 8 October: the WEAVE
+  # fact and the subtitle already carry it, and the top stays clean.)
   assign material_line = subtitle | strip
   if material_line == blank
     assign material_line = material_line_fallback | strip | default: section.settings.ph_cloth
   endif
-  assign cloth = technique_line | strip
   assign selector = selector | strip
   if selector == blank
     assign selector = fact_colour | strip
@@ -107,13 +111,32 @@
   assign fact_colour = selector | default: section.settings.ph_colour
   assign expression_row = selector | default: expression
 
-  # The Lot, customer-facing as a Roman numeral (Framework v3). With the Edition
-  # gone, this is the opening label Aloha asked for: "If the garments are not
-  # individually numbered, the opening label should simply show the confirmed Lot
-  # information." It renders only when a real Lot exists — never a placeholder.
-  assign lot_label = ''
-  if mf.lot.value.number_roman != blank
-    assign lot_label = 'Lot ' | append: mf.lot.value.number_roman
+  # THE PRODUCT NAME (Aloha, 8 October 2026, confirmed by Angela): "Tribeca
+  # is the Style. Tribeca Emerald is the actual individual product name, so
+  # please keep TRIBECA EMERALD as the main product title." The hierarchy is
+  # SKIRTS > TRIBECA > TRIBECA EMERALD. The name is a product fact, so it is
+  # read, never composed: hartwick.product_name. Until a product carries it,
+  # the Style name stands in (as before) and the unpublished theme says so.
+  assign product_name = mf.product_name | strip
+  assign name_pending = false
+  if product_name == blank
+    assign product_name = style_name
+    assign name_pending = true
+  endif
+
+  # The Style crumb is the Style's location name alone — "Tribeca" from
+  # "Tribeca Skirt" — the garment word being the crumb before it. A Style
+  # with no garment word in its name (fine silk, "Shayla 03") is printed whole.
+  assign style_crumb = style_name
+  assign style_category = mf.style.value.category.value | strip | downcase
+  assign style_categories = style_category | append: 's'
+  assign style_words = style_name | strip | split: ' '
+  if style_words.size > 1 and style_category != blank
+    assign last_word = style_words | last | downcase
+    if last_word == style_category or last_word == style_categories
+      assign keep = style_words.size | minus: 1
+      assign style_crumb = style_words | slice: 0, keep | join: ' '
+    endif
   endif
 
   # Key facts render only when present; an absent field leaves no orphaned
@@ -270,83 +293,73 @@
 >
   <div class="ha-pdp__grid">
 
+    {%- comment -%}
+      The breadcrumb runs across the top of the opening, above all three
+      columns, as the 8 October wireframe draws it — and so on a phone it
+      stays first, above the photographs, however the columns are ordered.
+    {%- endcomment -%}
+    {%- if section.settings.show_breadcrumb -%}
+      <nav class="ha-pdp__crumbs ha-record" aria-label="Breadcrumb">
+        <a href="{{ routes.collections_url }}">{{ section.settings.crumb_root }}</a>
+        {%- comment -%}
+          Tab 05: "COLLECTION / APPAREL — adapt the category for
+          accessories and fine silks." The leaf is the collection the
+          visitor came from; otherwise the product's own first
+          collection; the typed fallback only when it belongs to none.
+        {%- endcomment -%}
+        {%- comment -%}
+          4 October 2026 (Ivan): the path runs through the range page —
+          COLLECTION / APPAREL / SHIRTS — and SHIRTS leads to its section
+          there (snippets/ha-range-url), never to a page of its own.
+        {%- endcomment -%}
+        {%- assign crumb_sub = nil -%}
+        {%- assign crumb_sub_url = '' -%}
+        {%- for pc in product.collections -%}
+          {%- capture pc_to -%}{%- render 'ha-range-url', handle: pc.handle -%}{%- endcapture -%}
+          {%- assign pc_to = pc_to | strip -%}
+          {%- if pc_to != blank -%}{%- assign crumb_sub = pc -%}{%- assign crumb_sub_url = pc_to -%}{%- break -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if crumb_sub != nil -%}
+          {%- assign crumb_range_handle = crumb_sub_url | split: '#' | first | split: '/collections/' | last -%}
+          {%- assign crumb_range = collections[crumb_range_handle] -%}
+          <span aria-hidden="true"> / </span>
+          <a href="{{ crumb_range.url }}">{{ crumb_range.title }}</a>
+          <span aria-hidden="true"> / </span>
+          <a href="{{ crumb_sub_url }}">{{ crumb_sub.title }}</a>
+        {%- elsif collection.title != blank -%}
+          <span aria-hidden="true"> / </span>
+          <a href="{{ collection.url }}">{{ collection.title }}</a>
+        {%- elsif product.collections.first != blank -%}
+          <span aria-hidden="true"> / </span>
+          <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+        {%- elsif section.settings.crumb_leaf != blank -%}
+          <span aria-hidden="true"> / </span>{{ section.settings.crumb_leaf }}
+        {%- endif -%}
+        {%- comment -%}
+          8 October 2026 (Aloha): SKIRTS > TRIBECA > TRIBECA EMERALD —
+          the Style, then the piece itself. The Lot is no longer in the
+          path; it is in A Record of the Making.
+        {%- endcomment -%}
+        {%- if style_crumb != blank and style_crumb != product_name -%}
+          <span aria-hidden="true"> / </span><span class="ha-pdp__crumb-style">{{ style_crumb }}</span>
+        {%- endif -%}
+        <span aria-hidden="true"> / </span><span class="ha-pdp__crumb-here" aria-current="page">{{ product_name }}</span>
+      </nav>
+    {%- endif -%}
+
     {%- comment -%} ---------- LEFT RAIL (sticky) ---------- {%- endcomment -%}
     <div class="ha-pdp__rail ha-pdp__rail--left">
       <div class="ha-pdp__rail-inner">
 
-        {%- if section.settings.show_breadcrumb -%}
-          <nav class="ha-pdp__crumbs ha-record" aria-label="Breadcrumb">
-            <a href="{{ routes.collections_url }}">{{ section.settings.crumb_root }}</a>
-            {%- comment -%}
-              Tab 05: "COLLECTION / APPAREL — adapt the category for
-              accessories and fine silks." The leaf is the collection the
-              visitor came from; otherwise the product's own first
-              collection; the typed fallback only when it belongs to none.
-            {%- endcomment -%}
-            {%- comment -%}
-              4 October 2026 (Ivan): the path runs through the range page —
-              COLLECTION / APPAREL / SHIRTS — and SHIRTS leads to its section
-              there (snippets/ha-range-url), never to a page of its own.
-            {%- endcomment -%}
-            {%- assign crumb_sub = nil -%}
-            {%- assign crumb_sub_url = '' -%}
-            {%- for pc in product.collections -%}
-              {%- capture pc_to -%}{%- render 'ha-range-url', handle: pc.handle -%}{%- endcapture -%}
-              {%- assign pc_to = pc_to | strip -%}
-              {%- if pc_to != blank -%}{%- assign crumb_sub = pc -%}{%- assign crumb_sub_url = pc_to -%}{%- break -%}{%- endif -%}
-            {%- endfor -%}
-            {%- if crumb_sub != nil -%}
-              {%- assign crumb_range_handle = crumb_sub_url | split: '#' | first | split: '/collections/' | last -%}
-              {%- assign crumb_range = collections[crumb_range_handle] -%}
-              <span aria-hidden="true"> / </span>
-              <a href="{{ crumb_range.url }}">{{ crumb_range.title }}</a>
-              <span aria-hidden="true"> / </span>
-              <a href="{{ crumb_sub_url }}">{{ crumb_sub.title }}</a>
-            {%- elsif collection.title != blank -%}
-              <span aria-hidden="true"> / </span>
-              <a href="{{ collection.url }}">{{ collection.title }}</a>
-            {%- elsif product.collections.first != blank -%}
-              <span aria-hidden="true"> / </span>
-              <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
-            {%- elsif section.settings.crumb_leaf != blank -%}
-              <span aria-hidden="true"> / </span>{{ section.settings.crumb_leaf }}
-            {%- endif -%}
-            {%- if lot_label != blank -%}
-              <span aria-hidden="true"> / </span><span class="ha-pdp__lot">{{ lot_label }}</span>
-            {%- endif -%}
-          </nav>
-        {%- elsif lot_label != blank -%}
-          <p class="ha-pdp__crumbs ha-record"><span class="ha-pdp__lot">{{ lot_label }}</span></p>
-        {%- endif -%}
 
         {%- comment -%}
-          The Style name is set in NARRATE (Junicode), not IDENTIFY (Porter), on
-          Aloha's feedback. Porter is subset to A-Z and space, so a Style name is
-          the one heading it cannot set: "SHIRT 001" was rendering its letters in
-          Porter and its digits in Junicode, which is what made the name look
-          like two fonts spliced together. Junicode carries the whole string in
-          one face. The heading keeps its uppercase and its size from
-          .ha-pdp__title — only the voice changes.
-        {%- endcomment -%}
-        <h1 class="ha-pdp__title ha-narrate">{%- render 'ha-style-name', name: style_name -%}</h1>
+          8 October 2026 (Aloha): "Left = product story + material
+          information. Centre = main product photography. Right = product
+          name + price + size + purchase information." The name, the
+          material line and the price moved to the buy rail; this rail is the
+          story, the material facts, and the "+" items.
 
-        {%- comment -%}
-          V2 design: the material as a serif line directly under the Style
-          ("Handspun / Silk and Linen"), then the record label only where it
-          adds a fact the serif line does not carry.
-        {%- endcomment -%}
-        {%- if material_line != blank -%}
-          <p class="ha-pdp__material ha-narrate">{{ material_line }}</p>
-        {%- endif -%}
-        {%- if cloth != blank -%}
-          <p class="ha-pdp__cloth ha-record">{{ cloth }}</p>
-        {%- endif -%}
-
-        {%- comment -%}
-          A SHORT opening only. Aloha: when the purchase information runs long the
-          visitor can only finish reading it after scrolling past every image, so
-          the long copy moves into the accordion rows below. The excerpt is the
-          first sentences; the whole description is the "Description" row.
+          A SHORT opening only. The long copy is the Description "+".
         {%- endcomment -%}
         {%- if intro_excerpt != blank -%}
           <div class="ha-pdp__intro ha-body ha-narrate{% if hero_intro != blank %} ha-pdp__intro--rich{% endif %}">{{ intro_excerpt }}</div>
@@ -361,44 +374,53 @@
           </dl>
         {%- endif -%}
 
-        {%- if section.settings.record_anchor != blank -%}
-          <a class="ha-pdp__record-link ha-record" href="{{ section.settings.record_anchor }}">
-            {{ section.settings.record_link_text }}
-            <span class="ha-pdp__arrow" aria-hidden="true"></span>
-          </a>
-        {%- endif -%}
-
-        {%- if fit_a != blank or fit_b != blank or fit_body != blank -%}
-          <div class="ha-pdp__fit">
-            <h2 class="ha-pdp__fit-title ha-label">{{ section.settings.fit_heading }}</h2>
-            {%- if fit_a != blank -%}<p class="ha-record">{{ fit_a }}</p>{%- endif -%}
-            {%- if fit_body != blank -%}<p class="ha-pdp__fit-body ha-body ha-narrate">{{ fit_body | newline_to_br }}</p>{%- endif -%}
-            {%- if fit_b != blank -%}<p class="ha-record">{{ fit_b }}</p>{%- endif -%}
-          </div>
-        {%- endif -%}
-
         {%- comment -%}
-          Two quiet rows close the left rail. Luxe's own accordion markup and its
-          global.js behaviour — see snippets/ha-panel-row.liquid for why this is
-          the theme's accordion rather than a second one.
+          THE "+" ITEMS (Aloha, 8 October 2026): FIT & MEASUREMENTS +,
+          DESCRIPTION +, DELIVERY & RETURNS +. "These are secondary
+          information. The customer can access them very easily without us
+          having to show everything at once." Each opens as an overlay
+          (snippets/ha-info-pop) — the page never grows. Delivery & Returns
+          is a "Buy rail row" block for history's sake; it is listed here,
+          with any "Left rail row" blocks, in block order.
         {%- endcomment -%}
-        {%- if description_is_long or details_html != blank or construction_html != blank -%}
-          {%- capture description_body -%}
-            <div class="ha-pdp__row-body ha-body ha-narrate">
-              {{ construction_html }}
-              {%- if description_is_long -%}{{ full_description }}{%- endif -%}
-              {{ details_html }}
-            </div>
-          {%- endcapture -%}
-          {%- render 'ha-panel-row', id: 'description', title: section.settings.description_row_title, content: description_body -%}
-        {%- endif -%}
-
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'left_row' -%}
-            {%- capture row_body -%}{%- render 'ha-row-body', block: block, class: 'ha-pdp__row-body', product: product -%}{%- endcapture -%}
-            {%- render 'ha-panel-row', id: block.id, title: block.settings.heading, content: row_body -%}
+        <div class="ha-pdp__pops">
+          {%- if fit_a != blank or fit_b != blank or fit_body != blank -%}
+            {%- capture fit_content -%}
+              {%- if fit_a != blank -%}<p class="ha-record">{{ fit_a }}</p>{%- endif -%}
+              {%- if fit_body != blank -%}<p class="ha-pdp__fit-body ha-body ha-narrate">{{ fit_body | newline_to_br }}</p>{%- endif -%}
+              {%- if fit_b != blank -%}<p class="ha-record">{{ fit_b }}</p>{%- endif -%}
+              {%- if section.settings.size_guide_page != blank -%}
+                <p class="ha-row-links"><a class="ha-row-link ha-record" href="{{ section.settings.size_guide_page.url }}">Size guide</a></p>
+              {%- endif -%}
+            {%- endcapture -%}
+            {%- render 'ha-info-pop', id: 'fit', title: section.settings.fit_heading, content: fit_content -%}
           {%- endif -%}
-        {%- endfor -%}
+
+          {%- if description_is_long or details_html != blank or construction_html != blank -%}
+            {%- capture description_body -%}
+              <div class="ha-pdp__row-body ha-body ha-narrate">
+                {{ construction_html }}
+                {%- if description_is_long -%}{{ full_description }}{%- endif -%}
+                {{ details_html }}
+              </div>
+            {%- endcapture -%}
+            {%- render 'ha-info-pop', id: 'description', title: section.settings.description_row_title, content: description_body -%}
+          {%- endif -%}
+
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'left_row' or block.type == 'buy_row' -%}
+              {%- capture row_body -%}{%- render 'ha-row-body', block: block, class: 'ha-pdp__row-body', product: product -%}{%- endcapture -%}
+              {%- render 'ha-info-pop', id: block.id, title: block.settings.heading, content: row_body -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="ha-pdp__links">
+          {%- if section.settings.record_anchor != blank -%}
+            <a class="ha-pdp__record-link ha-record" href="{{ section.settings.record_anchor }}">{{ section.settings.record_link_text }}</a>
+          {%- endif -%}
+          {%- render 'ha-appointment', text: section.settings.appointment_text -%}
+        </div>
 
         {%- if is_placeholder -%}
           {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
@@ -418,8 +440,15 @@
       (default 3); the rest stay on the product for the sections below and
       for the Lot record. Dots, readout and count follow the limit.
     {%- endcomment -%}
+    {%- comment -%}
+      8 October 2026 (Aloha): "Maximum 3 detail/product images in this
+      section … Depending on the product we can use 1, 2 or maximum 3
+      images. The images need to have a reason for being there." Three is a
+      ceiling, not a target: the rail shows the product's first pictures up
+      to the setting, never more than three, and never pads a gap.
+    {%- endcomment -%}
     {%- liquid
-      assign media_limit = section.settings.media_limit | default: 3
+      assign media_limit = section.settings.media_limit | default: 3 | at_most: 3
       assign media_count = product.media.size
       if media_count > media_limit
         assign media_count = media_limit
@@ -515,7 +544,7 @@
           {%- if media_count > 1 -%}
             <div class="ha-pdp__readout ha-record" aria-hidden="true">
               <span class="ha-pdp__count" data-count-of="{{ media_count }}">01 / {{ media_count | prepend: '0' | slice: -2, 2 }}</span>
-              <span class="ha-pdp__scroll-hint">{{ section.settings.scroll_hint }}<span class="ha-pdp__scroll-arrow" aria-hidden="true"></span></span>
+              <span class="ha-pdp__scroll-hint">{{ section.settings.scroll_hint }}</span>
             </div>
             <p class="visually-hidden" aria-live="polite" data-count-live></p>
           {%- endif -%}
@@ -530,17 +559,25 @@
     <div class="ha-pdp__rail ha-pdp__rail--buy{% if section.settings.enable_sticky_buttons %} sticky-buy-buttons sticky-buy-buttons--border-{{ section.settings.sticky_buttons_border }}{% endif %}">
       <div class="ha-pdp__rail-inner">
 
+        {%- comment -%}
+          The product name, the material line and the price head the buy
+          rail (8 October 2026). The name is an editorial heading — Junicode
+          (the type roles at the foot of ha-sections.css); the material line
+          and the price are information — Porter.
+        {%- endcomment -%}
+        <h1 class="ha-pdp__title ha-narrate">{%- render 'ha-style-name', name: product_name -%}</h1>
+        {%- if material_line != blank -%}
+          <p class="ha-pdp__material ha-record">{{ material_line }}</p>
+        {%- endif -%}
+
         <div class="ha-pdp__price">
           {%- render 'price', product: product, use_variant: true, show_badges: false, price_class: '' -%}
         </div>
-        {%- if section.settings.tax_note != blank -%}
-          <p class="ha-pdp__tax ha-record">{{ section.settings.tax_note }}</p>
-        {%- endif -%}
 
         {%- if expression_row != blank -%}
           <div class="ha-pdp__field">
             <p class="ha-pdp__field-label ha-record">{{ section.settings.expression_label }}</p>
-            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-narrate">{{ expression_row }}</p>
+            <p class="ha-pdp__field-value ha-pdp__field-value--lead ha-record">{{ expression_row }}</p>
           </div>
         {%- endif -%}
 
@@ -571,7 +608,7 @@
                   {%- capture sib_name -%}{%- render 'ha-product-fact', product: sib, field: 'expression' -%}{%- endcapture -%}
                   {%- assign sib_name = sib_name | strip | default: sib.title -%}
                 {%- endif -%}
-                <li><a class="ha-pdp__expr-link ha-narrate" href="{{ sib.url }}">{{ sib_name }}</a></li>
+                <li><a class="ha-pdp__expr-link ha-record" href="{{ sib.url }}">{{ sib_name }}</a></li>
               {%- endfor -%}
             {%- endfor -%}
           {%- endcapture -%}
@@ -627,13 +664,6 @@
           </div>
         {%- endif -%}
 
-        {%- if ship_date != blank -%}
-          <div class="ha-pdp__field">
-            <p class="ha-pdp__field-label ha-record">{{ section.settings.dispatch_label }}</p>
-            <p class="ha-pdp__field-value ha-record">{{ ship_date }}</p>
-          </div>
-        {%- endif -%}
-
         {%- render 'buy-buttons',
           block: section,
           product: product,
@@ -643,27 +673,23 @@
           show_payment_methods: false,
           show_pickup_availability: false -%}
 
-        {%- render 'ha-appointment', text: section.settings.appointment_text -%}
-
-        {%- comment -%}
-          The longer purchase terms are a row, not a paragraph, so the buy rail
-          stays short enough to read without scrolling the media.
-        {%- endcomment -%}
-        {%- comment -%}
-          "The delivery accordion shows the same approved policy as the service
-          section below" (brief). A row set to the policies source reads
-          Settings > Policies — the same text checkout shows — so there is one
-          copy of the delivery terms on the site, not two.
-        {%- endcomment -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'buy_row' -%}
-            {%- capture buy_body -%}{%- render 'ha-row-body', block: block, class: 'ha-pdp__row-body', product: product -%}{%- endcapture -%}
-            {%- render 'ha-panel-row', id: block.id, title: block.settings.heading, content: buy_body -%}
-          {%- endif -%}
-        {%- endfor -%}
-
+        {%- if section.settings.tax_note != blank -%}
+          <p class="ha-pdp__tax ha-record">{{ section.settings.tax_note }}</p>
+        {%- endif -%}
         {%- if section.settings.payment_note != blank -%}
           <p class="ha-pdp__payment ha-record">{{ section.settings.payment_note }}</p>
+        {%- endif -%}
+
+        {%- if ship_date != blank -%}
+          <div class="ha-pdp__field ha-pdp__field--dispatch">
+            <p class="ha-pdp__field-label ha-record">{{ section.settings.dispatch_label }}</p>
+            <p class="ha-pdp__field-value ha-record">{{ ship_date }}</p>
+          </div>
+        {%- endif -%}
+
+        {%- if name_pending -%}
+          {%- render 'ha-placeholder-note', show: section.settings.show_placeholder_note,
+            text: section.settings.name_pending_note -%}
         {%- endif -%}
       </div>
     </div>
@@ -730,6 +756,7 @@
     { "type": "text", "id": "ph_fit_line_one", "label": "Fit line 1", "default": "Relaxed through the body." },
     { "type": "text", "id": "ph_fit_line_two", "label": "Fit line 2" },
     { "type": "checkbox", "id": "show_placeholder_note", "label": "Show placeholder notice", "default": true },
+    { "type": "text", "id": "name_pending_note", "label": "Product-name notice", "default": "Product name pending — the heading publishes from hartwick.product_name (e.g. “Tribeca Emerald”, Aloha and Angela, 8 Oct 2026). The Style name stands in until then.", "info": "Shown while the product has no hartwick.product_name; never on a published theme." },
     { "type": "text", "id": "draft_note", "label": "Draft-copy notice", "default": "Draft copy — awaiting Angela’s review (sheet tab 01, Approval notes). Not for publication.", "info": "Shown when hartwick.copy_status is “draft”, with the placeholder notices; never on a published theme." },
 
     { "type": "header", "content": "Shopify form (read by Luxe's own snippets)", "info": "These are the settings snippets/product-variant-picker.liquid and snippets/buy-buttons.liquid read from their calling section. Leave them alone unless the form misbehaves." },
@@ -740,7 +767,7 @@
     { "type": "checkbox", "id": "enable_sticky_buttons", "label": "Sticky Add to Bag (mobile)", "default": true, "info": "Required by the mobile brief. Pins the buy form to the bottom of the viewport below 990px." },
     { "type": "checkbox", "id": "sticky_buttons_border", "label": "Hairline above the sticky bar", "default": true },
     { "type": "checkbox", "id": "enable_sticky_buttons_desktop", "label": "Sticky Add to Bag (desktop)", "default": false },
-    { "type": "range", "id": "media_limit", "label": "Pictures in the first section", "min": 1, "max": 12, "step": 1, "default": 3, "info": "Ivan, 1 October 2026: three. The product's other pictures stay available to the sections below." },
+    { "type": "range", "id": "media_limit", "label": "Pictures in the first section", "min": 1, "max": 3, "step": 1, "default": 3, "info": "Aloha, 8 October 2026: 1, 2 or at most 3, each with a reason (full garment, construction, cloth). The rail shows the product's first pictures, so order the product's media accordingly." },
     { "type": "select", "id": "gallery_aspect_ratio", "label": "Variant image ratio", "options": [{ "value": "portrait-4x6", "label": "Portrait 2:3" }, { "value": "portrait", "label": "Portrait 4:5" }, { "value": "square", "label": "Square" }], "default": "portrait-4x6" }
   ],
   "blocks": [

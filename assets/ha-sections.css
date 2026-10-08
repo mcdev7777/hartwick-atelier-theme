@@ -8769,12 +8769,16 @@ body:has(#SiteHeader.ha-trans:not(.ha-trans-light)) .ha-paper-head { padding-top
    the bag in the menu bar (the mono (now Typewriter) SemiBold, locked 24 September).
    ========================================================================== */
 
-/* 1 — Troja */
+/* 1 — Troja until 8 October 2026; now Junicode Light (--ha-role-title, see
+   TYPE ROLES, 8 OCTOBER at the end). Capitals, as Aloha's wireframe sets
+   FROM FIBRE TO GARMENT, MATKA SILK, A RECORD OF THE MAKING, TRIBECA EMERALD
+   — and as every title already read, Troja being drawn in capitals. */
 html body :is(h1, h2, h3, .h0, .h1, .h2, .h3, [class*="__title"], [class*="__heading"], .ha-jnl-display):not(.ha-pull, .ha-label, .ha-identify, .ha-record, .ha-eyebrow, .ha-home__eyebrow, [class*="__eyebrow"], [class*="-title-h3"], .ha-home-story__title, .ha-clothing__name, .ha-mst__row-head, .ha-contact__word, .ha-reg-letter__title, .ha-abl__founder, .visually-hidden, #SiteHeader *, .ha-nav *, footer *, .ha-landing *) {
   font-family: var(--ha-role-title) !important;
   font-style: normal;
   font-weight: 400 !important;
   letter-spacing: 0.005em;
+  text-transform: uppercase;
 }
 
 /* 2 — Porter: labels take Medium (the TYPE ROLES block above reads the
@@ -8790,10 +8794,10 @@ html body :is(a.ha-record, button.ha-record, .ha-record > a, .button, button.but
    rather than a colour, so a paragraph keeps whatever ink its section gives
    it (white on a photograph, wine on a collection head). */
 html body #MainContent :is(p, .rte li):not(.ha-label, .ha-identify, .ha-eyebrow, [class*="__eyebrow"], .ha-record, .ha-pull, .ha-placeholder-note, [class*="__title"], [class*="__heading"], [class*="__num"], [class*="__cta"], [class*="price"], .ha-landing *, .ha-reg-letter *, .ha-reg-note *, :is(p, .rte li, h1, h2, h3, a, button) *) {
-  opacity: 0.82;
+  opacity: var(--ha-text-alpha);   /* 0.82 for the Typewriter; full ink since 8 October */
 }
 html body .ha-register--site .ha-register__body,
-html body .ha-drawer p:not(.ha-label, .ha-eyebrow, [class*="__eyebrow"], .ha-pull, [class*="__title"]) { opacity: 0.82; }
+html body .ha-drawer p:not(.ha-label, .ha-eyebrow, [class*="__eyebrow"], .ha-pull, [class*="__title"]) { opacity: var(--ha-text-alpha); }
 
 /* 2 — breadcrumbs and reference lines over a title ("PRIVATE ACCESSORIES /
    PERSONAL ATTENTION / SHARED STORIES", "01 / WITHIN THE CIRCLE") tell the
@@ -8851,7 +8855,7 @@ html body .ha-reg-letter .ha-reg-letter__word { font-family: "Junicode", Georgia
    them, and the introduction (text straight in the block, no <p>) at the
    paragraphs' 82%. */
 html body .ha-pdp .ha-pdp__material { margin-bottom: 1.4rem; }
-html body .ha-pdp .ha-pdp__intro { opacity: 0.82; }
+html body .ha-pdp .ha-pdp__intro { opacity: var(--ha-text-alpha); }
 
 
 /* ==========================================================================
@@ -9562,4 +9566,364 @@ html body .ha-section.ha-footer.ha-footer--ledger {
   }
   .ha-footer--ledger .ha-footer__mark--ledger { grid-column: auto; }
   .ha-footer--ledger .ha-footer__base { margin-top: 2.4rem; }
+}
+
+
+/* ==========================================================================
+   TYPE ROLES, 8 OCTOBER — Aloha and Angela: "we can now officially confirm
+   the typography … This time we are done with fonts."
+
+     PORTER   = INFORMATION / FUNCTION   navigation, breadcrumbs, buttons,
+                product information, labels, prices, sizes, material
+                records, technical information, small UI text, grids
+     JUNICODE = STORY / EDITORIAL        Junicode Light for stories,
+                paragraphs, descriptions, material stories, Journal copy;
+                larger for editorial headings
+
+   The faces are in snippets/ha-fonts.liquid ("THE TYPOGRAPHY OF 8 OCTOBER
+   2026"): every older role now points at one of the two, and Junicode is
+   Light whatever weight a rule asks for. What is left here are the few
+   places that named a role the new rule moves: information that had been
+   set in the editorial voice. This block sits last, so it has the final word.
+   ========================================================================== */
+
+/* Expression lines under a product name (cards, range pages, related pieces,
+   the product page): product information — Porter. */
+html body #MainContent .ha-clothing__expr.ha-clothing__expr.ha-clothing__expr,
+html body #MainContent .ha-card-expr.ha-card-expr.ha-card-expr,
+html body .ha-related__expr,
+html body .ha-pdp .ha-pdp__material,
+html body .ha-pdp .ha-pdp__field-value--lead {
+  font-family: var(--ha-role-record) !important;
+  font-weight: var(--ha-role-record-weight) !important;
+  font-style: normal !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-variant-numeric: lining-nums;
+}
+
+/* The size picker's SIZE (Luxe's legend) is a label: Porter. */
+html body .ha-pdp .ha-pdp__size .form__label {
+  font-family: var(--ha-role-label) !important;
+  font-weight: var(--ha-role-label-weight) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* A label on the homepage Masters band that had been the Typewriter Bold. */
+html body .ha-home-masters__list-label {
+  font-family: var(--ha-role-label) !important;
+  font-weight: var(--ha-role-label-weight) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Figures in any Porter line are Junicode's (HA Porter Figures): lining. */
+html body :is(.ha-record, .ha-label, .ha-identify, .price, .price *, [class*="__num"], [class*="__crumb"], .ha-num) {
+  font-variant-numeric: lining-nums;
+}
+
+
+/* ==========================================================================
+   PRODUCT PAGE, 8 OCTOBER — Aloha's notes on the full product page
+   (docs/product-page-v3-2026-10-08.md). The page reads PRODUCT, PURCHASE,
+   PROCESS, MATERIAL, MAKING / PROVENANCE, RELATED COLLECTION.
+   ========================================================================== */
+
+/* No arrows: "Please also DELETE ALL ARROW ILLUSTRATIONS from the page."
+   The markup no longer prints them; this keeps any older block from doing so. */
+.lx-template--product .ha-pdp__arrow,
+.lx-template--product .ha-pdp__scroll-arrow { display: none !important; }
+
+/* --- the opening: left = story + material, right = name, price, purchase */
+.ha-pdp__rail--buy .ha-pdp__title { margin: 0 0 0.8rem; }
+.ha-pdp__rail--buy .ha-pdp__material {
+  max-width: none;
+  margin: 0 0 2.4rem;
+  font-size: var(--ha-t-meta);
+  line-height: 1.4;
+}
+html body .ha-pdp .ha-pdp__material { margin-bottom: 2.4rem; }
+.ha-pdp__rail--buy .ha-pdp__price { margin: 0; }
+.ha-pdp__rail--buy .ha-pdp__tax { margin: 1.6rem 0 0; }
+.ha-pdp__rail--buy .ha-pdp__payment { margin: 1.2rem 0 0; }
+.ha-pdp__field--dispatch { margin-top: 2.4rem; }
+.ha-pdp__crumb-here { color: var(--ha-text); }
+
+.ha-pdp__rail--left .ha-pdp__intro { margin-bottom: 3.2rem; }
+.ha-pdp__pops { margin: 3.2rem 0 0; display: grid; }
+.ha-pdp__links {
+  display: grid;
+  justify-items: start;
+  gap: 0;
+  margin: 3.2rem 0 0;
+}
+.ha-pdp__links .ha-pdp__appointment { margin: 0; }
+.ha-pdp .ha-pdp__links .ha-pdp__appointment { margin-top: 0; }
+
+/* The breadcrumb is a row of its own across the three columns. */
+.ha-pdp__grid > .ha-pdp__crumbs { grid-column: 1 / -1; margin: 0; }
+@media screen and (min-width: 990px) {
+  .ha-pdp__grid > .ha-pdp__crumbs { margin: 0 0 3.2rem; }
+}
+
+/* Phones: the path, the photographs, then the name, price and purchase,
+   then the story. */
+@media screen and (max-width: 989px) {
+  .ha-pdp__grid > .ha-pdp__crumbs { order: -2; }
+  .ha-pdp__media { order: -1; }
+  .ha-pdp__rail--buy { order: 0; }
+  .ha-pdp__rail--left { order: 1; }
+}
+
+
+/* --- the "+" items (snippets/ha-info-pop, assets/ha-info-pop.js) --------- */
+.ha-pop { position: relative; }
+.ha-pop__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.8rem 0;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--ha-rule);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ha-role-label) !important;
+  font-weight: var(--ha-role-label-weight) !important;
+  font-size: var(--ha-t-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.ha-pop:first-child .ha-pop__trigger { border-top: 1px solid var(--ha-rule); }
+.ha-pop__label { flex: 1 1 auto; }
+/* the "+", drawn — no font carries it the same size in both voices */
+.ha-pop__plus {
+  position: relative;
+  flex: 0 0 auto;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.ha-pop__plus::before,
+.ha-pop__plus::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: currentColor;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.ha-pop__plus::before { width: 100%; height: 1px; transform: translate(-50%, -50%); }
+.ha-pop__plus::after { width: 1px; height: 100%; transform: translate(-50%, -50%); }
+.ha-pop.is-open .ha-pop__plus::after { transform: translate(-50%, -50%) scaleY(0); opacity: 0; }
+.ha-pop__trigger:hover .ha-pop__label,
+.ha-pop.is-open .ha-pop__label { font-weight: var(--ha-role-nav-hover); }
+.ha-pop__trigger:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+/* the panel: hidden until opened; without JavaScript it simply shows in
+   place, so nothing is ever out of reach */
+.js .ha-pop:not(.is-ready) .ha-pop__panel,
+.ha-pop__panel[hidden] { display: none; }
+.no-js .ha-pop__panel { padding: 1.6rem 0 2.4rem; }
+.no-js .ha-pop__close { display: none; }
+
+body > .ha-pop__panel {
+  position: fixed;
+  z-index: 60;
+  box-sizing: border-box;
+  background: var(--ha-info-panel, #F8F5ED);
+  color: var(--ha-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.22s ease;
+}
+body > .ha-pop__panel.is-open { opacity: 1; }
+
+/* desktop: a small window beside its "+" */
+.ha-pop__panel--window {
+  width: min(38rem, calc(100vw - 2rem));
+  padding: 2rem 2.4rem 2.4rem;
+  border: 1px solid var(--ha-rule);
+  box-shadow: 0 1.2rem 3.2rem rgba(20, 14, 10, 0.12);
+  transform: translateY(0.4rem);
+}
+.ha-pop__panel--window.is-open { transform: none; }
+
+/* phone / touch: a panel over the page from the foot of the screen */
+.ha-pop__panel--sheet {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  width: 100%;
+  max-height: min(78svh, 78vh);
+  padding: 2rem var(--ha-gutter, 2rem) calc(2.8rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--ha-rule);
+  transform: translateY(100%);
+}
+.ha-pop__panel--sheet.is-open { transform: none; }
+/* display set outright: Luxe's base.css hides every empty <div>, and the
+   veil is one */
+.ha-pop-veil:not([hidden]) { display: block; }
+.ha-pop-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: rgba(20, 14, 10, 0.32);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.ha-pop-veil.is-open { opacity: 1; }
+body.ha-pop-lock { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  body > .ha-pop__panel, .ha-pop-veil, .ha-pop__plus::before, .ha-pop__plus::after { transition: none; }
+}
+
+.ha-pop__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  margin: 0 0 1.6rem;
+  padding: 0 0 1.2rem;
+  border-bottom: 1px solid var(--ha-rule);
+}
+.ha-pop__name {
+  margin: 0;
+  font-family: var(--ha-role-label) !important;
+  font-weight: var(--ha-role-label-weight);
+  font-size: var(--ha-t-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+/* ×, drawn */
+.ha-pop__close {
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  margin: -1.2rem -1.2rem -1.2rem 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.ha-pop__close::before,
+.ha-pop__close::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.4rem;
+  height: 1px;
+  background: currentColor;
+}
+.ha-pop__close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.ha-pop__close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.ha-pop__close:focus-visible { outline: 1px solid currentColor; outline-offset: -6px; }
+
+.ha-pop__body { font-size: var(--ha-t-body); line-height: var(--ha-t-body-lh, 1.6); }
+.ha-pop__body .ha-body,
+.ha-pop__body .ha-pdp__row-body { max-width: none; margin: 0 0 1.2rem; }
+.ha-pop__body p { margin: 0 0 1rem; }
+.ha-pop__body > :last-child,
+.ha-pop__body .ha-pdp__row-body > :last-child { margin-bottom: 0; }
+.ha-pop__body .ha-record { font-size: var(--ha-t-meta); letter-spacing: var(--ha-track-label, 0.04em); }
+.ha-pop__body ul { margin: 0.8rem 0 1rem; padding-left: 1.6rem; }
+.ha-pop__body .ha-row-links { margin: 1.6rem 0 0; }
+.ha-pop__body .ha-placeholder-note { margin: 1.2rem 0 0; }
+.ha-pop__body .ha-policy-body h1,
+.ha-pop__body .ha-policy-body h2,
+.ha-pop__body .ha-policy-body h3 { font-size: var(--ha-t-label); margin: 1.6rem 0 0.8rem; }
+
+
+/* --- From Fibre to Garment: the "+" under a stage, and the film slot ------ */
+.ha-provenance__note { margin-top: 1.6rem; }
+.ha-provenance__note .ha-pop__trigger { border-top: 0 !important; border-bottom: 0; padding: 0.4rem 0; min-height: 36px; justify-content: flex-start; font-size: var(--ha-t-meta); }
+.ha-provenance__note .ha-pop__label { flex: 0 0 auto; }
+.ha-provenance__note-title { margin: 0 0 0.8rem; font-size: var(--ha-t-meta); }
+.ha-provenance--paper .ha-provenance__note .ha-pop__trigger { color: inherit; }
+
+.ha-provenance__film { margin: 0 0 4rem; }
+.ha-provenance__film-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--ha-field-dark);
+  overflow: hidden;
+}
+.ha-provenance__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; display: block; }
+.ha-provenance__film-caption { margin: 1.2rem 0 0; font-size: var(--ha-t-meta); color: var(--ha-text-quiet); }
+/* "Film only": the five stages as one line of chapters, so the number of
+   hands is still counted beneath the film */
+.ha-provenance__chapters {
+  list-style: none;
+  margin: 0;
+  padding: 1.6rem 0 0;
+  border-top: 1px solid var(--ha-rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 3.2rem;
+  font-size: var(--ha-t-label);
+  letter-spacing: 0.06em;
+}
+.ha-provenance__chapters .ha-provenance__num { margin-right: 0.6rem; color: var(--ha-text-quiet); }
+
+
+/* --- the material: Care & Ageing + --------------------------------------- */
+.ha-cloth__pops { margin: 2.8rem 0 0; max-width: 34rem; }
+.ha-cloth__statement.ha-record { font-size: var(--ha-t-meta); letter-spacing: 0.06em; line-height: 1.5; }
+
+
+/* --- Master Technique: film, or the empty content area -------------------- */
+.ha-masterfeat--film { display: block; min-height: 0; }
+.ha-masterfeat__film { position: relative; aspect-ratio: 16 / 9; max-height: 86vh; width: 100%; background: #000; }
+.ha-masterfeat__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; border: 0; display: block; }
+.ha-masterfeat--film .ha-masterfeat__grid { min-height: 0; padding-top: 3.2rem; padding-bottom: 4rem; grid-template-rows: auto auto; }
+.ha-masterfeat--film .ha-masterfeat__identity { grid-row: 2; }
+.ha-masterfeat__text { margin: 1.6rem 0 0; color: var(--ha-text-invert); max-width: 52ch; }
+.ha-masterfeat--empty { min-height: clamp(36rem, 52vh, 60rem); place-items: center; }
+.ha-masterfeat__insert { text-align: center; display: grid; justify-items: center; gap: 2.4rem; }
+.ha-masterfeat__insert-label { margin: 0; color: var(--ha-text-invert); font-size: var(--ha-t-label); letter-spacing: 0.12em; }
+.ha-masterfeat__insert .ha-placeholder-note { max-width: 56rem; text-align: left; }
+
+
+/* --- A Record of the Making ----------------------------------------------- */
+.ha-lotrec__lead .ha-lotrec__heading { margin: 0; }
+
+
+/* --- Related Collections: small and editorial ----------------------------- */
+.ha-related--small .ha-related__layout { display: grid; gap: 2.4rem; }
+.ha-related--small .ha-related__head {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 0.4rem;
+  margin: 0;
+}
+.ha-related--small .ha-related__grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(1.2rem, 2vw, 2.4rem);
+  row-gap: 2.4rem;
+}
+.ha-related--small .ha-related__figure { aspect-ratio: 4 / 3; }
+.ha-related--small .ha-related__name { margin: 1rem 0 0; font-size: var(--ha-t-meta); line-height: 1.3; }
+.ha-related--small .ha-related__expr { display: block; margin: 0.4rem 0 0; font-size: var(--ha-t-legal, 1rem); line-height: 1.35; color: var(--ha-text-quiet); }
+.ha-related--small .ha-related__note { margin-top: 1.6rem; }
+@media screen and (min-width: 990px) {
+  .ha-related--small .ha-related__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    column-gap: clamp(3.2rem, 5vw, 8rem);
+    align-items: start;
+  }
+  .ha-related--small .ha-related__layout > :not(.ha-related__head) { grid-column: 2; }
+}
+@media screen and (max-width: 749px) {
+  .ha-related--small .ha-related__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

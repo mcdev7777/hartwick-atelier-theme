@@ -29,10 +29,9 @@
                 built only from facts that exist -> nothing
     photographs hartwick.cloth_details (file list; the image's alt is its
                 caption) -> the old site's custom.featured_photo first, then
-                every gallery picture the opening (ha-product) does not show
-                — Aloha, 4 Oct 2026: "all images except the ones in the info
-                section, the first the featured image" — with the caption
-                from each image's alt text. Repeated crops are what the brief warns
+                the gallery pictures the opening (ha-product) does not show,
+                with the caption from each image's alt text. AT MOST THREE
+                (Aloha, 8 Oct 2026, replacing the 4 Oct "all images"). Repeated crops are what the brief warns
                 against, so this fallback is marked provisional on the page.
     composition hartwick.fibre_ratio -> "[Confirm]"
     record      the variant SKU -> "[Confirm]" (no old product carries a SKU)
@@ -106,10 +105,10 @@
   if details == blank
     assign provisional = true
   endif
-  assign max = section.settings.max_images
-  if section.settings.show_all
-    assign max = 50
-  endif
+  # 8 October 2026 (Aloha): "Maximum 3 images and if only 1 or 2 are
+  # useful, then just use 1 or 2." Three is the ceiling whatever the
+  # setting; the 4 October "every remaining picture" rule is retired.
+  assign max = section.settings.max_images | default: 3 | at_most: 3
   # The opening shows the first N gallery pictures (ha-product media_limit);
   # the detail photographs start after them, never repeating the featured photo.
   assign skip = section.settings.skip_opening
@@ -128,10 +127,35 @@
       {%- endif -%}
       <h2 class="ha-display ha-narrate ha-cloth__heading">{{ heading }}</h2>
       {%- if statement != blank -%}
-        <p class="ha-cloth__statement ha-narrate">{{ statement }}</p>
+        <p class="ha-cloth__statement ha-record">{{ statement }}</p>
       {%- endif -%}
       {%- if explanation != blank -%}
         <p class="ha-cloth__explanation ha-body ha-narrate">{{ explanation | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- comment -%}
+        CARE & AGEING + (Aloha, 8 October 2026: the material section is
+        "where we can explain the material, expression, care and ageing").
+        A "+" item like the opening's: an overlay, never a longer page. It
+        reads the product's hartwick.care_instructions, ageing_patina and
+        repairs; until they exist the marked placeholder below stands in.
+      {%- endcomment -%}
+      {%- if section.settings.care_heading != blank -%}
+        {%- capture care_body -%}
+          {%- if mf.care_instructions != blank or mf.ageing_patina != blank or mf.repairs != blank -%}
+            {%- if mf.care_instructions != blank -%}<div class="ha-pdp__row-body ha-body ha-narrate">{{ mf.care_instructions | metafield_tag }}</div>{%- endif -%}
+            {%- if mf.ageing_patina != blank -%}<div class="ha-pdp__row-body ha-body ha-narrate">{{ mf.ageing_patina | metafield_tag }}</div>{%- endif -%}
+            {%- if mf.repairs != blank -%}<div class="ha-pdp__row-body ha-body ha-narrate">{{ mf.repairs | metafield_tag }}</div>{%- endif -%}
+          {%- elsif section.settings.care_placeholder != blank -%}
+            <div class="ha-pdp__row-body ha-body ha-narrate">{{ section.settings.care_placeholder }}</div>
+          {%- endif -%}
+          {%- if section.settings.care_link_text != blank and section.settings.care_link_url != blank -%}
+            <p class="ha-row-links"><a class="ha-row-link ha-record" href="{{ section.settings.care_link_url }}">{{ section.settings.care_link_text }}</a></p>
+          {%- endif -%}
+        {%- endcapture -%}
+        <div class="ha-cloth__pops">
+          {%- render 'ha-info-pop', id: 'care', title: section.settings.care_heading, content: care_body -%}
+        </div>
       {%- endif -%}
 
       {%- comment -%}
@@ -252,13 +276,17 @@
     ] },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Cloth / Material Record" },
     { "type": "text", "id": "index_label", "label": "Index accessible name", "default": "Details of the cloth" },
-    { "type": "range", "id": "max_images", "label": "Photographs", "min": 1, "max": 4, "step": 1, "default": 4 },
-    { "type": "checkbox", "id": "show_all", "label": "Show every remaining photograph", "default": true, "info": "Aloha, 4 Oct 2026: all the product's pictures except those in the opening. Off, the count above applies." },
+    { "type": "range", "id": "max_images", "label": "Photographs (at most)", "min": 1, "max": 3, "step": 1, "default": 3, "info": "Aloha, 8 Oct 2026: at most three, and only as many as are useful. A product with hartwick.cloth_details shows those; otherwise its own gallery pictures after the opening's." },
     { "type": "range", "id": "skip_opening", "label": "Skip the first gallery pictures", "min": 0, "max": 12, "step": 1, "default": 3, "info": "Match \"Pictures in the first section\" on the product opening, so no picture shows twice. The featured photo always comes first." },
     { "type": "text", "id": "composition_label", "label": "Composition label", "default": "Composition" },
     { "type": "text", "id": "record_label", "label": "Record label", "default": "Record" },
     { "type": "text", "id": "closer_eyebrow", "label": "Foot eyebrow", "default": "Look closer" },
     { "type": "text", "id": "closer_line", "label": "Foot line", "default": "Surface, fastening, cut." },
+    { "type": "header", "content": "Care & Ageing +" },
+    { "type": "text", "id": "care_heading", "label": "Heading", "default": "Care & Ageing", "info": "Opens as an overlay. Empty = no Care item." },
+    { "type": "richtext", "id": "care_placeholder", "label": "Placeholder", "default": "<p><em>Placeholder — care, ageing and repair guidance pending Angela's approval. Publishes from the product's hartwick.care_instructions, ageing_patina and repairs fields.</em></p>", "info": "Shown only while the product has none of the three care fields." },
+    { "type": "text", "id": "care_link_text", "label": "Link text", "default": "Ask about care" },
+    { "type": "url", "id": "care_link_url", "label": "Link URL" },
     { "type": "checkbox", "id": "show_full_record", "label": "Show the full record table beneath", "default": false, "info": "The 13-row Material Record from the earlier design." },
     { "type": "header", "content": "Provisional content" },
     { "type": "text", "id": "confirm_text", "label": "Unknown fact reads", "default": "[Confirm]" },

@@ -47,6 +47,14 @@ customer-facing product names again, with the Expression beneath. Style codes
 re-issued to match — flagged to Aloha. Store title format: `Tribeca Skirt | Handspun
 Matka Silk, Emerald Changeant`.
 
+**Product name, 8 Oct 2026 (Aloha, confirmed by Angela):** the individual product's
+name is **TRIBECA EMERALD** (Style = Tribeca); it is the product page's main title, from
+`hartwick.product_name`. Hierarchy: SKIRTS > TRIBECA > TRIBECA EMERALD. See
+`docs/product-page-v3-2026-10-08.md`.
+
+**Typography, 8 Oct 2026 (final, Aloha + Angela):** PORTER = information / function;
+JUNICODE LIGHT = story / editorial. No other faces. `snippets/ha-fonts.liquid`.
+
 ## Content rules
 - **Never invent** artisan names, provenance, materials, production detail, health claims,
   product facts, or Circle member quotations. Anything unverified ships as a clearly

@@ -1,0 +1,73 @@
+{%- comment -%}
+  Hartwick Atelier — a "+" item: secondary information in an overlay.
+
+  Aloha, 8 October 2026 (product page notes):
+
+    "Anything marked with a "+" is interactive. On desktop I don't want these
+     sections opening downwards and making the whole page longer. The idea is
+     that when someone hovers/clicks the +, a small simple overlay/window
+     appears with the information. When they move away or close it, the page
+     returns exactly as it is."
+
+    "On mobile … the + should work by tap. My preference would be a small
+     drawer/panel that opens over the page, rather than a long accordion
+     pushing all the content underneath further down. Just a simple
+     background colour of #F8F5ED. Tap "+" > info panel opens > x / close or
+     tap outside > product page back to visibility."
+
+  So this replaces the accordion rows (snippets/ha-panel-row) on the product
+  page. The trigger is a line in the page; the panel never takes space in the
+  layout. assets/ha-info-pop.js moves every panel to <body> on load (so a
+  sticky, scrolling rail cannot clip it) and drives it:
+
+    desktop (a mouse, 990px and wider)  hover opens a small window beside the
+                                        "+"; leaving closes it. A click pins
+                                        it open until ×, Escape or a click
+                                        elsewhere.
+    touch / narrower screens            tap opens a panel over the page from
+                                        the foot of the screen, on #F8F5ED;
+                                        ×, Escape or a tap outside closes it.
+
+  Without JavaScript the panel stays where it is and simply shows, so nothing
+  is ever out of reach.
+
+  `content` is already-rendered HTML — capture it at the call site:
+
+    {%- capture body -%}…{%- endcapture -%}
+    {%- render 'ha-info-pop', id: 'description', title: 'Description', content: body -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign pop_id = 'ha-pop-' | append: id
+  assign pop_title_id = pop_id | append: '-title'
+-%}
+
+{%- if content != blank -%}
+  <div class="ha-pop{% if class != blank %} {{ class }}{% endif %}" data-ha-pop>
+    <button
+      type="button"
+      class="ha-pop__trigger"
+      aria-expanded="false"
+      aria-controls="{{ pop_id }}"
+      aria-haspopup="dialog"
+    >
+      <span class="ha-pop__label">{{ title }}</span>
+      <span class="ha-pop__plus" aria-hidden="true"></span>
+    </button>
+    <div
+      class="ha-pop__panel"
+      id="{{ pop_id }}"
+      role="dialog"
+      aria-labelledby="{{ pop_title_id }}"
+      data-smooth-prevent
+    >
+      <div class="ha-pop__head">
+        <p class="ha-pop__name" id="{{ pop_title_id }}">{{ title }}</p>
+        <button type="button" class="ha-pop__close" data-ha-pop-close aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"></button>
+      </div>
+      <div class="ha-pop__body">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
